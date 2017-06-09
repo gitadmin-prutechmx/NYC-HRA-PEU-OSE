@@ -7,14 +7,8 @@ target 'Knock' do
 
   # Pods for Knock
 
-  target 'KnockTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'KnockUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+   # Pods for Encrypt and Decrypt
+  pod 'RNCryptor' , '~> 5.0'
+  pod 'CryptoSwift'
 
 end

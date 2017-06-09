@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5D56CF0A1EE007060019882F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5D56CF0A1EE007060019882F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
 		5D56CF0D1EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D56CF101EE007060019882F /* Knock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Knock.xcdatamodel; sourceTree = "<group>"; };
 		5D56CF121EE007060019882F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,8 +99,13 @@
 		5D56CF071EE007060019882F /* Knock */ = {
 			isa = PBXGroup;
 			children = (
+				5DC9E99B1EEA60FE009A6396 /* Controller */,
+				5DC9E99C1EEA60FE009A6396 /* Extension */,
+				5DC9E99D1EEA60FE009A6396 /* Model */,
+				5DC9E99E1EEA60FE009A6396 /* SharedResources */,
+				5DC9E99F1EEA60FE009A6396 /* Utility */,
+				5DC9E9A01EEA60FE009A6396 /* View */,
 				5D56CF081EE007060019882F /* AppDelegate.swift */,
-				5D56CF0A1EE007060019882F /* ViewController.swift */,
 				5D56CF0C1EE007060019882F /* Main.storyboard */,
 				5D56CF121EE007060019882F /* Assets.xcassets */,
 				5D56CF141EE007060019882F /* LaunchScreen.storyboard */,
@@ -126,6 +131,49 @@
 				5D56CF2D1EE007070019882F /* Info.plist */,
 			);
 			path = KnockUITests;
+			sourceTree = "<group>";
+		};
+		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5D56CF0A1EE007060019882F /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5DC9E99C1EEA60FE009A6396 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		5DC9E99D1EEA60FE009A6396 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5DC9E99E1EEA60FE009A6396 /* SharedResources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SharedResources;
+			sourceTree = "<group>";
+		};
+		5DC9E99F1EEA60FE009A6396 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		5DC9E9A01EEA60FE009A6396 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -425,7 +473,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.Knock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -439,7 +487,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.Knock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};
@@ -520,6 +568,7 @@
 				5D56CF321EE007070019882F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5D56CF331EE007070019882F /* Build configuration list for PBXNativeTarget "KnockTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +577,7 @@
 				5D56CF351EE007070019882F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5D56CF361EE007070019882F /* Build configuration list for PBXNativeTarget "KnockUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +586,7 @@
 				5D56CF381EE007070019882F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
