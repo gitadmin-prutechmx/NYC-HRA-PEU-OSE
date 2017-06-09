@@ -10,5 +10,7 @@ target 'Knock' do
    # Pods for Encrypt and Decrypt
   pod 'RNCryptor' , '~> 5.0'
   pod 'CryptoSwift'
+  pod 'Alamofire'
+  pod 'Toast-Swift'
 
 end

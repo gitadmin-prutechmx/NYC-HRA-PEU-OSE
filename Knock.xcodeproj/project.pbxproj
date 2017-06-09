@@ -15,6 +15,10 @@
 		5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF141EE007060019882F /* LaunchScreen.storyboard */; };
 		5D56CF211EE007060019882F /* KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF201EE007060019882F /* KnockTests.swift */; };
 		5D56CF2C1EE007070019882F /* KnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF2B1EE007070019882F /* KnockUITests.swift */; };
+		5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */; };
+		5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E31EEA7DF9009A6396 /* SVProgressHUD.bundle */; };
+		5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */; };
+		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Knock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D56CF0A1EE007060019882F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +54,15 @@
 		5D56CF271EE007070019882F /* KnockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KnockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF2B1EE007070019882F /* KnockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockUITests.swift; sourceTree = "<group>"; };
 		5D56CF2D1EE007070019882F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5DC9E9E01EEA7DF9009A6396 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		5DC9E9E21EEA7DF9009A6396 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		5DC9E9E31EEA7DF9009A6396 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		5DC9E9E41EEA7DF9009A6396 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		5DC9E9E91EEA7E59009A6396 /* Knock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Knock-Bridging-Header.h"; sourceTree = "<group>"; };
+		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
+		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +91,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3EE8BD51BAB8EC44A5D4B3EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5D56CEFC1EE007060019882F = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +106,8 @@
 				5D56CF1F1EE007060019882F /* KnockTests */,
 				5D56CF2A1EE007070019882F /* KnockUITests */,
 				5D56CF061EE007060019882F /* Products */,
+				B5C91A6AF2348DD30289CED2 /* Pods */,
+				3EE8BD51BAB8EC44A5D4B3EC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +136,7 @@
 				5D56CF141EE007060019882F /* LaunchScreen.storyboard */,
 				5D56CF171EE007060019882F /* Info.plist */,
 				5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */,
+				5DC9E9E91EEA7E59009A6396 /* Knock-Bridging-Header.h */,
 			);
 			path = Knock;
 			sourceTree = "<group>";
@@ -158,6 +184,7 @@
 		5DC9E99E1EEA60FE009A6396 /* SharedResources */ = {
 			isa = PBXGroup;
 			children = (
+				5DC9E9DE1EEA7DF9009A6396 /* Libraries */,
 			);
 			path = SharedResources;
 			sourceTree = "<group>";
@@ -176,6 +203,36 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		5DC9E9DE1EEA7DF9009A6396 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				5DC9E9DF1EEA7DF9009A6396 /* SVProgressHUD */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		5DC9E9DF1EEA7DF9009A6396 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				5DC9E9E01EEA7DF9009A6396 /* SVIndefiniteAnimatedView.h */,
+				5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */,
+				5DC9E9E21EEA7DF9009A6396 /* SVProgressHUD-Prefix.pch */,
+				5DC9E9E31EEA7DF9009A6396 /* SVProgressHUD.bundle */,
+				5DC9E9E41EEA7DF9009A6396 /* SVProgressHUD.h */,
+				5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		B5C91A6AF2348DD30289CED2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */,
+				8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -183,9 +240,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D56CF301EE007070019882F /* Build configuration list for PBXNativeTarget "Knock" */;
 			buildPhases = (
+				15A6CA9A2B540A17086C9137 /* [CP] Check Pods Manifest.lock */,
 				5D56CF011EE007060019882F /* Sources */,
 				5D56CF021EE007060019882F /* Frameworks */,
 				5D56CF031EE007060019882F /* Resources */,
+				E4687B4C7958AA9D0F159D53 /* [CP] Embed Pods Frameworks */,
+				3C006FB73344B9F646ED5E36 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -289,6 +349,7 @@
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
+				5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +369,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		15A6CA9A2B540A17086C9137 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3C006FB73344B9F646ED5E36 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Knock/Pods-Knock-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4687B4C7958AA9D0F159D53 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Knock/Pods-Knock-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5D56CF011EE007060019882F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -315,7 +424,9 @@
 			files = (
 				5D56CF0B1EE007060019882F /* ViewController.swift in Sources */,
 				5D56CF091EE007060019882F /* AppDelegate.swift in Sources */,
+				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
+				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +576,7 @@
 		};
 		5D56CF311EE007070019882F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
@@ -473,12 +585,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.Knock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Knock/Knock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
 		5D56CF321EE007070019882F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
@@ -487,6 +601,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.Knock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Knock/Knock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;

@@ -8,6 +8,12 @@
 
 import UIKit
 
+/*import Alamofire
+import Toast_Swift
+import RNCryptor
+import CryptoSwift
+*/
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
