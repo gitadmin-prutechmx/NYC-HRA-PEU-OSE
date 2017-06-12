@@ -122,11 +122,39 @@ class ViewController: UIViewController {
                 
               //  decryptData = Utilities.decryptJsonData(json: data!) as NSData?
                 
+              
+                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Event")
+                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Assignment")
+                
               self.readJSONData(jsonObject: Utilities.convertToJSON(text: decryptData) as! Dictionary<String, AnyObject>)
                 
                
+                let eventData =  ManageCoreData.fetchData(salesforceEntityName: "Event",predicateFormat: "companyName == %@" ,predicateValue: companyName, isPredicate:false) as! [Event]
+                
+                if(eventData.count > 0){
+                    print("Event \(eventData.count)")
+                    
+                    for obj in eventData{
+                      let res =  obj.eventAssignementR
+                        print(res)
+                    }
+                }
                 
                 
+                let assignmentData =  ManageCoreData.fetchData(salesforceEntityName: "Assignment",predicateFormat: "eventId == %@" ,predicateValue: companyName, isPredicate:false) as! [Assignment]
+                
+                if(assignmentData.count > 0){
+                    print("Assignment \(assignmentData.count)")
+                }
+
+              //delete records
+//                if let result = try? context.fetch(fetchRequest) {
+//                    for object in result {
+//                        context.delete(object)
+//                    }
+//                }
+                
+     
                 
             }
             
@@ -155,23 +183,34 @@ class ViewController: UIViewController {
     func readJSONData(jsonObject: Dictionary<String, AnyObject>){
         
         guard let errorMessage = jsonObject["errorMessage"] as? String,
-            let results = jsonObject["Event"] as? [[String: AnyObject]] else { return }
+            let eventResults = jsonObject["Event"] as? [[String: AnyObject]] else { return }
         
-        for data in results {
+        for eventData in eventResults {
          
-            print(data)
-            /*let event = data["event"] as? String  ?? ""
-            let assignment = data["assignmentName"] as? String ?? ""
-            let assignmentId = data["assignmentId"] as? String ?? ""
-            let totalUnits = data["totalUnits"] as? String ?? ""
-            let totalLocations = data["totalLocations"] as? String ?? ""
-            let completePercentage =  data["completePercantage"] as? String ?? ""
-            */
+            let eventObject = Event(context: context)
+            eventObject.id = eventData["eventId"] as? String  ?? ""
+            eventObject.name = eventData["name"] as? String  ?? ""  //confusi
+            eventObject.startDate = eventData["startDate"] as? String  ?? ""
+            eventObject.endDate = eventData["endDate"] as? String  ?? ""
             
             
             
+            appDelegate.saveContext()
             
+            guard let assignmentResults = eventData["Assignment"] as? [[String: AnyObject]]  else { break }
+            
+            for assignmentData in assignmentResults {
+                let assignmentObject = Assignment(context: context)
+                assignmentObject.id = assignmentData["assignmentId"] as? String  ?? ""
+                assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""  //confusi
+                assignmentObject.status = assignmentData["status"] as? String  ?? ""
+                assignmentObject.eventId = eventObject.id
+                
+                appDelegate.saveContext()
+
+            }
         }
+        
 
         
     }

@@ -40,4 +40,21 @@ class ManageCoreData{
        
     }
     
+    static func DeleteAllRecords(salesforceEntityName:String){
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
+        let request = NSBatchDeleteRequest(fetchRequest: fetch)
+        
+        do {
+            
+            try context.execute(request)
+
+            
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            
+        }
+        
+    }
+    
 }
