@@ -1,4 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Assignment" representedClassName="Assignment" syncable="YES" codeGenerationType="class">
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="assignmentEventR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="eventAssignementR" inverseEntity="Event" syncable="YES"/>
+        <relationship name="assignmentLocR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="locAssignmentR" inverseEntity="Location" syncable="YES"/>
+    </entity>
+    <entity name="Canvasser" representedClassName="Canvasser" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="eventAssignementR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentEventR" inverseEntity="Assignment" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="locAssignmentR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentLocR" inverseEntity="Assignment" syncable="YES"/>
+        <relationship name="locUnitR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Unit" inverseName="unitLocR" inverseEntity="Unit" syncable="YES"/>
+    </entity>
+    <entity name="SalesforceOrgConfig" representedClassName="SalesforceOrgConfig" syncable="YES" codeGenerationType="class">
+        <attribute name="clientId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientSecret" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endPointUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SurveyQuestion" representedClassName="SurveyQuestion" syncable="YES" codeGenerationType="class">
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyQuestionData" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES" codeGenerationType="class"/>
+    <entity name="Unit" representedClassName="Unit" syncable="YES" codeGenerationType="class">
+        <attribute name="apartment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="floor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="unitLocR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locUnitR" inverseEntity="Location" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Assignment" positionX="-333" positionY="-18" width="128" height="133"/>
+        <element name="Event" positionX="-162" positionY="153" width="128" height="118"/>
+        <element name="Location" positionX="-2" positionY="-36" width="128" height="178"/>
+        <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="135"/>
+        <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="75"/>
+        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="45"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="133"/>
+        <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
+    </elements>
 </model>

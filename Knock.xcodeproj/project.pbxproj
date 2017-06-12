@@ -18,6 +18,12 @@
 		5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */; };
 		5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E31EEA7DF9009A6396 /* SVProgressHUD.bundle */; };
 		5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */; };
+		5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9EB1EEE81A6009A6396 /* SalesforceRestApiUrl.swift */; };
+		5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9ED1EEE8313009A6396 /* SalesforceConnection.swift */; };
+		5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9EF1EEE8391009A6396 /* StringExtension.swift */; };
+		5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F11EEEB647009A6396 /* ManageCoreData.swift */; };
+		5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F31EEEE63D009A6396 /* SalesforceConfig.swift */; };
+		5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +67,12 @@
 		5DC9E9E41EEA7DF9009A6396 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		5DC9E9E91EEA7E59009A6396 /* Knock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Knock-Bridging-Header.h"; sourceTree = "<group>"; };
+		5DC9E9EB1EEE81A6009A6396 /* SalesforceRestApiUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesforceRestApiUrl.swift; sourceTree = "<group>"; };
+		5DC9E9ED1EEE8313009A6396 /* SalesforceConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesforceConnection.swift; sourceTree = "<group>"; };
+		5DC9E9EF1EEE8391009A6396 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		5DC9E9F11EEEB647009A6396 /* ManageCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCoreData.swift; sourceTree = "<group>"; };
+		5DC9E9F31EEEE63D009A6396 /* SalesforceConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesforceConfig.swift; sourceTree = "<group>"; };
+		5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,6 +182,7 @@
 		5DC9E99C1EEA60FE009A6396 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				5DC9E9EF1EEE8391009A6396 /* StringExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -192,6 +205,11 @@
 		5DC9E99F1EEA60FE009A6396 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				5DC9E9EB1EEE81A6009A6396 /* SalesforceRestApiUrl.swift */,
+				5DC9E9ED1EEE8313009A6396 /* SalesforceConnection.swift */,
+				5DC9E9F11EEEB647009A6396 /* ManageCoreData.swift */,
+				5DC9E9F31EEEE63D009A6396 /* SalesforceConfig.swift */,
+				5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -424,7 +442,13 @@
 			files = (
 				5D56CF0B1EE007060019882F /* ViewController.swift in Sources */,
 				5D56CF091EE007060019882F /* AppDelegate.swift in Sources */,
+				5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */,
+				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
+				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
+				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
+				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
+				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
 				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 			);
