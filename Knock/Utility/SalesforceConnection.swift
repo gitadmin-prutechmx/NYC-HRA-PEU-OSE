@@ -43,6 +43,11 @@ class SalesforceConnection{
                 if  let json = response.result.value as? [String: Any],
                     let accessToken = json["access_token"] as? String
                 {
+                 
+                    //update accessToken
+                    ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", accessToken: accessToken, predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
+                    
+                    
                     salesforceAccessToken = accessToken
                     completion(true)
                 } else {
@@ -63,6 +68,28 @@ class SalesforceConnection{
     
     
     static func SalesforceData(restApiUrl:String, params:[String:String]? = nil, completion: @escaping AccessTokenCompletion) {
+        
+        
+//        let baseURLString = "https://some.domain-behind-oauth2.com"
+//        
+//        let oauthHandler = OAuth2Handler(
+//            clientID: "12345678",
+//            baseURLString: baseURLString,
+//            accessToken: "abcd1234",
+//            refreshToken: "ef56789a"
+//        )
+        
+//        let sessionManager = SessionManager()
+//        sessionManager.adapter = oauthHandler
+//        sessionManager.retrier = oauthHandler
+//        
+//        let urlString = "\(baseURLString)/some/endpoint"
+//        
+//        sessionManager.request(urlString).validate().responseJSON { response in
+//            debugPrint(response)
+//        }
+
+        
         
         
         let url = URL(string: SalesforceConfig.hostUrl + restApiUrl)!

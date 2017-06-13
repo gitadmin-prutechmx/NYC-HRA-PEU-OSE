@@ -40,6 +40,39 @@ class ManageCoreData{
        
     }
     
+    static func updateData(salesforceEntityName:String,accessToken:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
+        fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        
+        do
+        {
+            let salesforceConfigData = try context.fetch(fetchRequest)
+            if salesforceConfigData.count == 1
+            {
+                let objectUpdate = salesforceConfigData[0] as! NSManagedObject
+                objectUpdate.setValue(accessToken, forKey: "accessToken")
+                
+                do{
+                    try context.save()
+                }
+                catch
+                {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        catch
+        {
+            print(error.localizedDescription)
+        }
+        
+        
+        
+    }
+    
+    
+    
     static func DeleteAllRecords(salesforceEntityName:String){
         
                             //delete records

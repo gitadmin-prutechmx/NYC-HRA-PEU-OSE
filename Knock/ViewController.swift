@@ -102,6 +102,7 @@ class ViewController: UIViewController {
             
         }
         
+        //Need to be handle refresh token as well
         
         SalesforceConnection.loginToSalesforce(companyName: companyName) { response in
             

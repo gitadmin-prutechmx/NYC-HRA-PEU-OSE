@@ -32,6 +32,7 @@
         <relationship name="locUnitR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Unit" inverseName="unitLocR" inverseEntity="Unit" syncable="YES"/>
     </entity>
     <entity name="SalesforceOrgConfig" representedClassName="SalesforceOrgConfig" syncable="YES" codeGenerationType="class">
+        <attribute name="accessToken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientSecret" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
@@ -56,7 +57,7 @@
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="133"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="118"/>
         <element name="Location" positionX="-2" positionY="-36" width="128" height="178"/>
-        <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="135"/>
+        <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="148"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="75"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="45"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="133"/>
