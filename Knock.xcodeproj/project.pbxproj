@@ -26,6 +26,8 @@
 		5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */; };
 		5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */; };
 		5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F91EEF8958009A6396 /* OAuth2Handler.swift */; };
+		5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */; };
+		5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9681EEFE74500012C47 /* LoginViewController.swift */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +79,8 @@
 		5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDO.swift; sourceTree = "<group>"; };
 		5DC9E9F91EEF8958009A6396 /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
+		5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
+		5DE3C9681EEFE74500012C47 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,6 +144,7 @@
 		5D56CF071EE007060019882F /* Knock */ = {
 			isa = PBXGroup;
 			children = (
+				5DE3C9651EEFE71700012C47 /* CustomUI */,
 				5DC9E99B1EEA60FE009A6396 /* Controller */,
 				5DC9E99C1EEA60FE009A6396 /* Extension */,
 				5DC9E99D1EEA60FE009A6396 /* Model */,
@@ -179,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				5D56CF0A1EE007060019882F /* ViewController.swift */,
+				5DE3C9681EEFE74500012C47 /* LoginViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -246,6 +252,14 @@
 				5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		5DE3C9651EEFE71700012C47 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */,
+			);
+			path = CustomUI;
 			sourceTree = "<group>";
 		};
 		B5C91A6AF2348DD30289CED2 /* Pods */ = {
@@ -449,6 +463,8 @@
 				5D56CF0B1EE007060019882F /* ViewController.swift in Sources */,
 				5D56CF091EE007060019882F /* AppDelegate.swift in Sources */,
 				5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */,
+				5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */,
+				5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
