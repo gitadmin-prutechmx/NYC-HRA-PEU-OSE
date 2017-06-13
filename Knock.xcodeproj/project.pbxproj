@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5D56CF091EE007060019882F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF081EE007060019882F /* AppDelegate.swift */; };
-		5D56CF0B1EE007060019882F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF0A1EE007060019882F /* ViewController.swift */; };
 		5D56CF0E1EE007060019882F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF0C1EE007060019882F /* Main.storyboard */; };
 		5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */; };
 		5D56CF131EE007060019882F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF121EE007060019882F /* Assets.xcassets */; };
@@ -28,6 +27,11 @@
 		5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F91EEF8958009A6396 /* OAuth2Handler.swift */; };
 		5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */; };
 		5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9681EEFE74500012C47 /* LoginViewController.swift */; };
+		5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C96C1EF007BF00012C47 /* DashBoardViewController.swift */; };
+		5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DE3C96E1EF00EA000012C47 /* HeaderTableViewCell.xib */; };
+		5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C96F1EF00EA000012C47 /* HeaderTableViewCell.swift */; };
+		5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */; };
+		5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9741EF0241900012C47 /* AssignmentDO.swift */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +56,6 @@
 		032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Knock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5D56CF0A1EE007060019882F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
 		5D56CF0D1EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D56CF101EE007060019882F /* Knock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Knock.xcdatamodel; sourceTree = "<group>"; };
 		5D56CF121EE007060019882F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,6 +84,11 @@
 		5DC9E9F91EEF8958009A6396 /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
 		5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
 		5DE3C9681EEFE74500012C47 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5DE3C96C1EF007BF00012C47 /* DashBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardViewController.swift; sourceTree = "<group>"; };
+		5DE3C96E1EF00EA000012C47 /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
+		5DE3C96F1EF00EA000012C47 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
+		5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAssignmentViewCell.swift; sourceTree = "<group>"; };
+		5DE3C9741EF0241900012C47 /* AssignmentDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentDO.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -183,8 +191,8 @@
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5D56CF0A1EE007060019882F /* ViewController.swift */,
 				5DE3C9681EEFE74500012C47 /* LoginViewController.swift */,
+				5DE3C96C1EF007BF00012C47 /* DashBoardViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */,
+				5DE3C9741EF0241900012C47 /* AssignmentDO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -229,6 +238,8 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5DE3C96E1EF00EA000012C47 /* HeaderTableViewCell.xib */,
+				5DE3C96F1EF00EA000012C47 /* HeaderTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -258,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */,
+				5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -387,6 +399,7 @@
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
+				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
 				5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,7 +473,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D56CF0B1EE007060019882F /* ViewController.swift in Sources */,
 				5D56CF091EE007060019882F /* AppDelegate.swift in Sources */,
 				5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */,
 				5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */,
@@ -472,9 +484,13 @@
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
+				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
+				5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */,
 				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
+				5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
+				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

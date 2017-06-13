@@ -194,70 +194,43 @@ class LoginViewController: UIViewController {
                 
                 ManageCoreData.DeleteAllRecords(salesforceEntityName: "Event")
                 ManageCoreData.DeleteAllRecords(salesforceEntityName: "Assignment")
+                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Location")
+                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Unit")
                 
                 self.readJSONData(jsonObject: jsonData.1)
                 
                 
-                let eventData =  ManageCoreData.fetchData(salesforceEntityName: "Event", isPredicate:false) as! [Event]
-                
-                if(eventData.count > 0){
-                    print("Event \(eventData.count)")
-                    
-                    
-                }
-                
-                
-                let assignmentData =  ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
-                
-                if(assignmentData.count > 0){
-                    print("Assignment \(assignmentData.count)")
-                }
                 
                 
                 SVProgressHUD.dismiss()
-                
-                
-            }
-            
-            
-        }
-        
-        
-        
-    }
-    
-    
-    func createEventDictionary(){
-        
-        var eventDict: [String:EventDO] = [:]
-        
-        let eventResults =  ManageCoreData.fetchData(salesforceEntityName: "Event", isPredicate:false) as! [Event]
-        
-        if(eventResults.count > 0){
-            
-            for eventData in eventResults{
-                
-                if eventDict[eventData.id!] == nil{
-                    eventDict[eventData.id!] = EventDO(eventId: eventData.id!, eventName: eventData.name!, startDate: eventData.startDate!, endDate: eventData.endDate!)
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                 }
                 
                 
             }
+            
+            
         }
+        
+        
         
     }
     
     
+       
     func readJSONData(jsonObject: Dictionary<String, AnyObject>){
         
         guard let _ = jsonObject["errorMessage"] as? String,
             let eventResults = jsonObject["Event"] as? [[String: AnyObject]] else { return }
         
+        //need to check location id and unit id
+        
         for eventData in eventResults {
             
             let eventObject = Event(context: context)
             eventObject.id = eventData["eventId"] as? String  ?? ""
-            eventObject.name = eventData["name"] as? String  ?? ""  //confusi
+            eventObject.name = eventData["Name"] as? String  ?? ""
             eventObject.startDate = eventData["startDate"] as? String  ?? ""
             eventObject.endDate = eventData["endDate"] as? String  ?? ""
             
@@ -274,9 +247,70 @@ class LoginViewController: UIViewController {
                 assignmentObject.status = assignmentData["status"] as? String  ?? ""
                 assignmentObject.eventId = eventObject.id
                 
+                
+                var totalUnits = 0;
+                
+                 guard let locationResults = assignmentData["assignmentLocation"] as? [[String: AnyObject]]  else { break }
+                
+ //assignment--> locations[{unit[{},{}]},{unit[{},{}]}]
+                
+                if(locationResults.count>0){
+                    
+                    assignmentObject.totalLocations = String(locationResults.count)
+                    
+                    for locationData in locationResults {
+                        
+                        let unit = locationData["totalUnits"] as? String  ?? "0"
+                        
+                        totalUnits =  totalUnits + Int(unit)!
+
+                        
+                      /*   guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
+                        
+                        if(unitResults.count>0){
+                             totalUnits =  totalUnits + unitResults.count
+                            
+                        }
+                        */
+                        
+                    }
+                }
+                
+               assignmentObject.totalUnits = String(totalUnits)
+                
                 appDelegate.saveContext()
                 
-            }
+                    for locationData in locationResults {
+                     
+                        let locationObject = Location(context: context)
+                        locationObject.id = locationData["locId"] as? String  ?? ""
+                        locationObject.name = locationData["name"] as? String  ?? ""
+                        locationObject.state = locationData["state"] as? String  ?? ""
+                        locationObject.city = locationData["city"] as? String  ?? ""
+                        locationObject.zip = locationData["zip"] as? String  ?? ""
+                        locationObject.street = locationData["street"] as? String  ?? ""
+                        
+                        appDelegate.saveContext()
+                        
+                        guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
+                       
+                         for unitData in unitResults {
+                            
+                            
+                            let unitObject = Unit(context: context)
+                            unitObject.id = unitData["locationUnitId"] as? String  ?? ""
+                            unitObject.name = unitData["Name"] as? String  ?? ""
+                            unitObject.apartment = unitData["apartmentNumber"] as? String  ?? ""
+                            unitObject.floor = unitData["floorNumber"] as? String  ?? ""
+
+                            appDelegate.saveContext()
+                        }
+                        
+                    }
+                }
+                
+                
+            
         }
         
         
