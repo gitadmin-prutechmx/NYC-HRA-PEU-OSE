@@ -34,16 +34,11 @@ class ViewController: UIViewController {
     
     func getDataFromSalesforce(){
        
-        var companyName = "PEU"
-        var email = "nik@mtxb2b.com"
+        let companyName = "PEU"
+        let email = "nik@mtxb2b.com"
         
         var emailParams : [String:String] = [:]
         
-        //        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SalesforceOrgConfig")
-        //        fetchRequest.predicate = NSPredicate(format: "companyName = PEU")
-        //
-        //        do{
-        //
         salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: companyName, isPredicate:true) as! [SalesforceOrgConfig]
         
         if(salesforceConfigData.count > 0){
@@ -77,6 +72,7 @@ class ViewController: UIViewController {
         }
         else{
             //one time activity
+            
             //Save data
             let configData = SalesforceOrgConfig(context: context)
             configData.companyName = "PEU"
@@ -109,7 +105,6 @@ class ViewController: UIViewController {
         
         SalesforceConnection.loginToSalesforce(companyName: companyName) { response in
             
-            print(response.1!)
             
              let encryptEmailStr = try! email.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
             
@@ -118,71 +113,66 @@ class ViewController: UIViewController {
             
             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllCanverssorData, params: emailParams){ jsonData in
                 
-              let decryptData =  Utilities.decryptJsonData(jsonEncryptString: jsonData.1!)
-                
-              //  decryptData = Utilities.decryptJsonData(json: data!) as NSData?
-                
-              
+    
                 ManageCoreData.DeleteAllRecords(salesforceEntityName: "Event")
                 ManageCoreData.DeleteAllRecords(salesforceEntityName: "Assignment")
                 
-              self.readJSONData(jsonObject: Utilities.convertToJSON(text: decryptData) as! Dictionary<String, AnyObject>)
+                self.readJSONData(jsonObject: jsonData.1)
                 
                
-                let eventData =  ManageCoreData.fetchData(salesforceEntityName: "Event",predicateFormat: "companyName == %@" ,predicateValue: companyName, isPredicate:false) as! [Event]
+                let eventData =  ManageCoreData.fetchData(salesforceEntityName: "Event", isPredicate:false) as! [Event]
                 
                 if(eventData.count > 0){
                     print("Event \(eventData.count)")
                     
-                    for obj in eventData{
-                      let res =  obj.eventAssignementR
-                        print(res)
-                    }
+                    
                 }
                 
                 
-                let assignmentData =  ManageCoreData.fetchData(salesforceEntityName: "Assignment",predicateFormat: "eventId == %@" ,predicateValue: companyName, isPredicate:false) as! [Assignment]
+                let assignmentData =  ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
                 
                 if(assignmentData.count > 0){
                     print("Assignment \(assignmentData.count)")
                 }
-
-              //delete records
-//                if let result = try? context.fetch(fetchRequest) {
-//                    for object in result {
-//                        context.delete(object)
-//                    }
-//                }
                 
+
+ 
      
                 
             }
             
-         
-            
-         
             
         }
     
         
-        
-        //        }
-        //        catch{
-        //
-        //        }
-        
-        // fetchRequest.predicate = NSPredicate(format: "companyName = \(NSNumber(bool:true))")
-        //let fetchRequest =  try! context.fetch(SalesforceOrgConfig.fetchRequest())
-        
-        
-        
 
+    }
+    
+    
+    func createEventDictionary(){
+        
+        var eventDict: [String:EventDO] = [:]
+        
+        let eventResults =  ManageCoreData.fetchData(salesforceEntityName: "Event", isPredicate:false) as! [Event]
+        
+        if(eventResults.count > 0){
+            
+            for eventData in eventResults{
+                
+                if eventDict[eventData.id!] == nil{
+                    eventDict[eventData.id!] = EventDO(eventId: eventData.id!, eventName: eventData.name!, startDate: eventData.startDate!, endDate: eventData.endDate!)
+                }
+                
+                
+            }
+        }
+        
     }
 
     
     func readJSONData(jsonObject: Dictionary<String, AnyObject>){
         
-        guard let errorMessage = jsonObject["errorMessage"] as? String,
+        guard let _ = jsonObject["errorMessage"] as? String,
             let eventResults = jsonObject["Event"] as? [[String: AnyObject]] else { return }
         
         for eventData in eventResults {

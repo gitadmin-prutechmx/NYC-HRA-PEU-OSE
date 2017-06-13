@@ -24,6 +24,7 @@
 		5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F11EEEB647009A6396 /* ManageCoreData.swift */; };
 		5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F31EEEE63D009A6396 /* SalesforceConfig.swift */; };
 		5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */; };
+		5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		5DC9E9F11EEEB647009A6396 /* ManageCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCoreData.swift; sourceTree = "<group>"; };
 		5DC9E9F31EEEE63D009A6396 /* SalesforceConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesforceConfig.swift; sourceTree = "<group>"; };
 		5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDO.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +192,7 @@
 		5DC9E99D1EEA60FE009A6396 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
+				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
 				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 			);

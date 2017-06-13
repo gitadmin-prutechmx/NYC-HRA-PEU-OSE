@@ -12,7 +12,7 @@ import CoreData
 class ManageCoreData{
     
     
-    static func fetchData(salesforceEntityName:String,predicateFormat:String,predicateValue:String,isPredicate:Bool) -> [Any]{
+    static func fetchData(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool) -> [Any]{
         
         var results = [Any]()
         
@@ -22,7 +22,7 @@ class ManageCoreData{
         
         if(isPredicate){
             // fetchRequest.predicate = NSPredicate(format: predicateFormat)
-            fetchRequest.predicate = NSPredicate(format: predicateFormat, predicateValue)
+            fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
 
         }
       
@@ -41,6 +41,15 @@ class ManageCoreData{
     }
     
     static func DeleteAllRecords(salesforceEntityName:String){
+        
+                            //delete records
+        //                if let result = try? context.fetch(fetchRequest) {
+        //                    for object in result {
+        //                        context.delete(object)
+        //                    }
+        //                }
+        
+        
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         let request = NSBatchDeleteRequest(fetchRequest: fetch)
         

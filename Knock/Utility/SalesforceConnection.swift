@@ -19,13 +19,13 @@ class SalesforceConnection{
     private static var salesforceAccessToken:String=""
     
     
-    typealias AccessTokenCompletion = (_ succeeded: Bool, _ accessToken: String?) -> Void
+    typealias AccessTokenCompletion = (_ succeeded: Bool, _ jsonData: Dictionary<String, AnyObject>) -> Void
     
     //Refresh token handle
     
     
     
-    static func loginToSalesforce(companyName:String , completion: @escaping AccessTokenCompletion) {
+    static func loginToSalesforce(companyName:String , completion: @escaping (Bool) -> ()) {
         
         
         let loginUrl: String = SalesforceConfig.hostUrl + "/services/oauth2/token?grant_type=password&client_id=\(SalesforceConfig.clientId)&client_secret=\(SalesforceConfig.clientSecret)&username=\(SalesforceConfig.userName)&password=\(SalesforceConfig.password)"
@@ -44,14 +44,14 @@ class SalesforceConnection{
                     let accessToken = json["access_token"] as? String
                 {
                     salesforceAccessToken = accessToken
-                    completion(true, accessToken)
+                    completion(true)
                 } else {
-                    completion(false, "")
+                    completion(false)
                 }
                 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(false, "")
+                completion(false)
                 
             }
         }
@@ -71,7 +71,7 @@ class SalesforceConnection{
         
         
         do {
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
+            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
         } catch {
             // No-op
         }
@@ -85,11 +85,14 @@ class SalesforceConnection{
             switch response.result {
                 
             case .success:
-                    completion(true, response.result.value)
+                    let decryptData =  Utilities.decryptJsonData(jsonEncryptString: response.result.value!)
+                    let jsonData = Utilities.convertToJSON(text: decryptData)
+                    completion(true, jsonData as! Dictionary<String, AnyObject>)
                 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(false, "")
+                return
+               // completion(false,)
                 
             }
         }
