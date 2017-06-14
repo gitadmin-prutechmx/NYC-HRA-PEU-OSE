@@ -98,6 +98,9 @@ class LoginViewController: UIViewController {
     @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
         
         
+        
+
+        
         getDataFromSalesforce()
         
         
@@ -175,6 +178,13 @@ class LoginViewController: UIViewController {
             
         }
         
+       /*
+         let assignmentResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
+        
+        if(assignmentResults.count == 0){
+            
+            */
+        
         SVProgressHUD.show(withStatus: "Fetching data from salesforce..", maskType: SVProgressHUDMaskType.gradient)
         
 
@@ -206,16 +216,21 @@ class LoginViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                 }
-                
-                
             }
             
-            
+                
         }
-        
-        
-        
+            
+            
+    /*
+         }
+    else{
+        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
     }
+        
+        
+       */
+ }
     
     
        

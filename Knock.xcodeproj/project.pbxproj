@@ -32,6 +32,7 @@
 		5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C96F1EF00EA000012C47 /* HeaderTableViewCell.swift */; };
 		5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */; };
 		5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9741EF0241900012C47 /* AssignmentDO.swift */; };
+		5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9801EF1264800012C47 /* MBProgressHUD.m */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +90,8 @@
 		5DE3C96F1EF00EA000012C47 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAssignmentViewCell.swift; sourceTree = "<group>"; };
 		5DE3C9741EF0241900012C47 /* AssignmentDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentDO.swift; sourceTree = "<group>"; };
+		5DE3C97F1EF1264800012C47 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		5DE3C9801EF1264800012C47 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -247,6 +250,7 @@
 		5DC9E9DE1EEA7DF9009A6396 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5DE3C97C1EF125DD00012C47 /* MBProgressHUD */,
 				5DC9E9DF1EEA7DF9009A6396 /* SVProgressHUD */,
 			);
 			path = Libraries;
@@ -272,6 +276,15 @@
 				5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */,
 			);
 			path = CustomUI;
+			sourceTree = "<group>";
+		};
+		5DE3C97C1EF125DD00012C47 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				5DE3C97F1EF1264800012C47 /* MBProgressHUD.h */,
+				5DE3C9801EF1264800012C47 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		B5C91A6AF2348DD30289CED2 /* Pods */ = {
@@ -480,6 +493,7 @@
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
+				5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,

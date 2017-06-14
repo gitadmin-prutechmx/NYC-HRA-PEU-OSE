@@ -13,5 +13,6 @@ target 'Knock' do
   pod 'Alamofire'
   pod 'Toast-Swift'
   pod 'PieCharts'
+  pod 'Charts'
 
 end
