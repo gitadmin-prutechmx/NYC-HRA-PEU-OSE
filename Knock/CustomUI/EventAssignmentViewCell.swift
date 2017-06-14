@@ -19,6 +19,9 @@ class EventAssignmentViewCell: UITableViewCell {
     @IBOutlet weak var units: UILabel!
     
     @IBOutlet weak var completePercent: UILabel!
+    
+    
+    @IBOutlet weak var assignmentId: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -7,24 +7,17 @@
 //
 
 import UIKit
-import PieCharts
+import Charts
 
 class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    
+    @IBOutlet weak var circleChartView: PieChartView!
+    
+    @IBOutlet weak var barChartView: PieChartView!
+    
+    @IBOutlet weak var pieChartView: PieChartView!
+    
     @IBOutlet weak var tableView: UITableView!
-    
-    @IBOutlet weak var pieChart2: PieChart!
-    @IBOutlet weak var tblData: UITableView!
-    var isCricleChart:Bool!
-    var isPieChart:Bool!
-    @IBOutlet weak var vwHidden: UIView!
-    @IBOutlet weak var btnShow: UIButton!
-    @IBOutlet weak var pieChartHidden: PieChart!
-    @IBOutlet weak var btnCross: UIButton!
-    @IBOutlet weak var pieChart3: PieChart!
-    @IBOutlet weak var pieChart1: PieChart!
-    
-    fileprivate static let alpha: CGFloat = 0.5
-    
     
     
     var assignmentIdArray = [String]()
@@ -38,21 +31,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     
     
-    let colors = [
-        UIColor.magenta.withAlphaComponent(alpha),
-        UIColor.cyan.withAlphaComponent(alpha),
-        UIColor.blue.withAlphaComponent(alpha),
-        UIColor.magenta.withAlphaComponent(alpha),
-        UIColor.cyan.withAlphaComponent(alpha),
-        UIColor.red.withAlphaComponent(alpha),
-        UIColor.magenta.withAlphaComponent(alpha),
-        UIColor.orange.withAlphaComponent(alpha),
-        UIColor.brown.withAlphaComponent(alpha),
-        UIColor.lightGray.withAlphaComponent(alpha),
-        UIColor.gray.withAlphaComponent(alpha),
-        ]
     
-    fileprivate var currentColorIndex = 0
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -67,39 +46,98 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
 
         
         
-        isPieChart = true
-        tblData.delegate = self
-        tblData.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         
-        self.tblData.tableFooterView = UIView()
+        self.tableView.tableFooterView = UIView()
         let nib = UINib(nibName: "HeaderTableViewCell", bundle: nil)
         
-        tblData.register(nib, forCellReuseIdentifier: "headerCellID")
+        tableView.register(nib, forCellReuseIdentifier: "headerCellID")
         
-        tblData.headerView(forSection: 0)
+        tableView.headerView(forSection: 0)
         
     }
     
     override func viewDidAppear(_ animated: Bool)
     {
         
-        pieChart1.layers = [createCustomViewsLayer(), createTextLayer()]
-        pieChart1.models = createModels()
+         createCharts(chartType: circleChartView,radius: 0.5)
+         createCharts(chartType: pieChartView,radius: 0.0)
+         createCharts(chartType: barChartView,radius: 0.0)
+         populateEventAssignmentData()
         
-        pieChart2.layers = [createPlainTextLayer1()]
-        
-        pieChart2.models = createModels1()
-        
-        pieChart3.layers = [createCustomViewsLayer(),createTextLayer()]
-        pieChart3.models = createModels()
-        
-        populateEventAssignmentData()
-        
-        //
-        //        pieChartHidden.layers = [createCustomViewsLayer(), createTextLayer()]
-        //        // pieChart1.delegate = self
-        //        pieChartHidden.models = createModels()
     }
+    
+    func createCharts(chartType:PieChartView,radius:CGFloat){
+        
+        let status = ["Completed", "In Progress", "Pending"]
+        let values = [4.0, 3.0, 3.0]
+        
+        var colors: [UIColor] = []
+        
+        // Color object : get rgb
+        
+        
+        let completedColor = UIColor(red: CGFloat(18.0/255), green: CGFloat(136.0/255), blue: CGFloat(189.0/255), alpha: 1)
+        let InProgressColor = UIColor(red: CGFloat(173.0/255), green: CGFloat(235.0/255), blue: CGFloat(253.0/255), alpha: 1)
+        let PendingColor = UIColor(red: CGFloat(54.0/255), green: CGFloat(191.0/255), blue: CGFloat(244.0/255), alpha: 1)
+       // let BlankColor = UIColor(red: CGFloat(235.0/255), green: CGFloat(237.0/255), blue: CGFloat(248.0/255), alpha: 1)
+        
+        colors.append(completedColor)
+        colors.append(InProgressColor)
+        colors.append(PendingColor)
+       // colors.append(BlankColor)
+        
+        
+        var entries = [PieChartDataEntry]()
+        for (index, value) in values.enumerated() {
+            let entry = PieChartDataEntry()
+            entry.y = value
+            entry.label = status[index]
+            entries.append( entry)
+        }
+        
+        // 3. chart setup
+        let set = PieChartDataSet( values: entries, label: "")
+        // this is custom extension method. Download the code for more details.
+        
+        
+        
+        /* for _ in 0..<values.count {
+         //let red = Double(arc4random_uniform(256))
+         let red = Double(arc4random_uniform(256))
+         let green = Double(arc4random_uniform(256))
+         let blue = Double(arc4random_uniform(256))
+         
+         let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+         colors.append(color)
+         }
+         
+         */
+        
+        set.colors = colors
+        let data = PieChartData(dataSet: set)
+        chartType.data = data
+        chartType.noDataText = "No data available"
+        // user interaction
+        chartType.isUserInteractionEnabled = true
+        
+        let d = Description()
+        d.text = ""
+        chartType.chartDescription = d
+        //pieChartView.centerText = "Pie Chart"
+        chartType.holeRadiusPercent = radius
+        chartType.transparentCircleColor = UIColor.clear
+        
+        chartType.animate(xAxisDuration: TimeInterval(5))
+        
+        
+        
+        
+      
+    }
+    
+    
     
     func populateEventAssignmentData(){
       
@@ -156,107 +194,6 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     // MARK: - Models
     
-    fileprivate func createModels() -> [PieSliceModel]
-    {
-        let alpha: CGFloat = 0.5
-        
-        return [
-            PieSliceModel(value: 3, color: UIColor.cyan.withAlphaComponent(alpha)),
-            PieSliceModel(value: 1, color: UIColor.blue.withAlphaComponent(alpha)),
-            PieSliceModel(value: 1, color: UIColor.magenta.withAlphaComponent(alpha)),
-            
-            PieSliceModel(value: 4, color: UIColor.cyan.withAlphaComponent(alpha)),
-            PieSliceModel(value: 2, color: UIColor.blue.withAlphaComponent(alpha)),
-            PieSliceModel(value: 1.5, color: UIColor.magenta.withAlphaComponent(alpha)),
-            PieSliceModel(value: 0.5, color: UIColor.orange.withAlphaComponent(alpha))
-            
-        ]
-    }
-    
-    // MARK: - Layers
-    
-    fileprivate func createCustomViewsLayer() -> PieCustomViewsLayer {
-        let viewLayer = PieCustomViewsLayer()
-        
-        let settings = PieCustomViewsLayerSettings()
-        settings.viewRadius = 135
-        settings.hideOnOverflow = false
-        viewLayer.settings = settings
-        
-        // viewLayer.viewGenerator = createViewGenerator()
-        
-        return viewLayer
-    }
-    
-    fileprivate func createTextLayer() -> PiePlainTextLayer {
-        let textLayerSettings = PiePlainTextLayerSettings()
-        textLayerSettings.viewRadius = 60
-        textLayerSettings.hideOnOverflow = true
-        textLayerSettings.label.font = UIFont.systemFont(ofSize: 12)
-        
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        textLayerSettings.label.textGenerator = {slice in
-            return formatter.string(from: slice.data.percentage * 100 as NSNumber)!
-        }
-        
-        let textLayer = PiePlainTextLayer()
-        textLayer.settings = textLayerSettings
-        return textLayer
-    }
-    
-    // MARK: - Models
-    
-    fileprivate func createModels1() -> [PieSliceModel] {
-        
-        let models = [
-            PieSliceModel(value: 2, color: colors[0]),
-            PieSliceModel(value: 2, color: colors[1]),
-            PieSliceModel(value: 2, color: colors[2])
-        ]
-        
-        currentColorIndex = models.count
-        return models
-    }
-    
-    
-    
-    // MARK: - Layers
-    
-    fileprivate func createPlainTextLayer1() -> PiePlainTextLayer {
-        
-        let textLayerSettings = PiePlainTextLayerSettings()
-        textLayerSettings.viewRadius = 55
-        textLayerSettings.hideOnOverflow = true
-        textLayerSettings.label.font = UIFont.systemFont(ofSize: 8)
-        
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        textLayerSettings.label.textGenerator = {slice in
-            return formatter.string(from: slice.data.percentage * 100 as NSNumber)!
-            //.map{"\($0)%"} ?? ""
-        }
-        
-        let textLayer = PiePlainTextLayer()
-        textLayer.settings = textLayerSettings
-        return textLayer
-    }
-    
-    fileprivate func createTextWithLinesLayer1() -> PieLineTextLayer {
-        let lineTextLayer = PieLineTextLayer()
-        var lineTextLayerSettings = PieLineTextLayerSettings()
-        lineTextLayerSettings.lineColor = UIColor.lightGray
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        lineTextLayerSettings.label.font = UIFont.systemFont(ofSize: 14)
-        lineTextLayerSettings.label.textGenerator = {slice in
-            return formatter.string(from: slice.data.model.value as NSNumber).map{"\($0)"} ?? ""
-        }
-        
-        lineTextLayer.settings = lineTextLayerSettings
-        return lineTextLayer
-    }
-    
     
     
     // MARK: UITableView
@@ -285,6 +222,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         cell.locations.text = totalLocArray[indexPath.row]
         cell.units.text = totalUnitsArray[indexPath.row]
+        cell.assignmentId.text = assignmentIdArray[indexPath.row]
 
         cell.completePercent.text = "0%"
         

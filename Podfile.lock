@@ -4,7 +4,6 @@ PODS:
     - Charts/Core (= 3.0.1)
   - Charts/Core (3.0.1)
   - CryptoSwift (0.6.7)
-  - PieCharts (0.0.4)
   - RNCryptor (5.0.1)
   - Toast-Swift (2.0.0)
 
@@ -12,7 +11,6 @@ DEPENDENCIES:
   - Alamofire
   - Charts
   - CryptoSwift
-  - PieCharts
   - RNCryptor (~> 5.0)
   - Toast-Swift
 
@@ -20,10 +18,9 @@ SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
   Charts: 0e84f4418e87dad6a9edde221fba37ebb51d3ba7
   CryptoSwift: 685ae257941e5447474348a2b545583e1a16b573
-  PieCharts: 5303e2b21f9c4a3f2def74ab10b7718577432958
   RNCryptor: 2e352a488779d1a9184ab629be22a7c5bc84acb5
   Toast-Swift: 5b2f8f720f7e78e48511f693df1f9c9a6e38a25a
 
-PODFILE CHECKSUM: 6bc978d1d613785b6ed6a31d6d973d32b3bd3b99
+PODFILE CHECKSUM: 59a75b768caca5d7d79d410b597ebc14bc4c20dc
 
 COCOAPODS: 1.1.1
