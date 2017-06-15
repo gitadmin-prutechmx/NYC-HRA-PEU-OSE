@@ -113,6 +113,8 @@ class LoginViewController: UIViewController {
         let companyName = "PEU"
         let email = "nik@mtxb2b.com"
         
+        let userName = "nik+peu@mtxb2b.com.dev"
+        
         var emailParams : [String:String] = [:]
         
         salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: companyName, isPredicate:true) as! [SalesforceOrgConfig]
@@ -150,13 +152,21 @@ class LoginViewController: UIViewController {
             //one time activity
             
             //Save data
+            
+            let encodedUserName = userName.addingPercentEncoding(withAllowedCharacters: .alphanumerics)
+            
             let configData = SalesforceOrgConfig(context: context)
             configData.companyName = "PEU"
             configData.endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
             configData.clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
             configData.clientSecret = "5050630969965231251"
-            configData.userName = "nik%2bpeu%40mtxb2b%2Ecom%2Edev"
+            configData.userName = encodedUserName
             configData.password = "peuprutech1234"
+            
+            //"nik%2Bpeu%40mtxb2b%2Ecom%2Edev"
+            
+            
+            //nik+peu@mtxb2b.com.dev
             
             appDelegate.saveContext()
             

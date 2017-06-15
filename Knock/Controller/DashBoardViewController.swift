@@ -13,7 +13,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     @IBOutlet weak var circleChartView: PieChartView!
     
-    @IBOutlet weak var barChartView: PieChartView!
+    @IBOutlet weak var barChartView: BarChartView!
     
     @IBOutlet weak var pieChartView: PieChartView!
     
@@ -30,6 +30,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     var eventDict: [String:EventDO] = [:]
     
     
+    let status = ["Completed", "In Progress", "Pending"]
+    let values = [4.0, 3.0, 3.0]
     
     
     override func viewDidLoad()
@@ -61,17 +63,55 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     override func viewDidAppear(_ animated: Bool)
     {
         
-         createCharts(chartType: circleChartView,radius: 0.5)
-         createCharts(chartType: pieChartView,radius: 0.0)
-         createCharts(chartType: barChartView,radius: 0.0)
-         populateEventAssignmentData()
+         createPieCircleChart(chartType: circleChartView,radius: 0.5)
+         createPieCircleChart(chartType: pieChartView,radius: 0.0)
+        
+        
+        createBarChart(dataPoints: status, values: values)
+        populateEventAssignmentData()
         
     }
     
-    func createCharts(chartType:PieChartView,radius:CGFloat){
+ 
+ 
+    
+    func createBarChart(dataPoints: [String], values: [Double])
+    {
         
-        let status = ["Completed", "In Progress", "Pending"]
-        let values = [4.0, 3.0, 3.0]
+        barChartView.noDataText = "You need to provide data for the chart."
+   
+        var dataEntries: [BarChartDataEntry] = []
+        //String(describing: languages)
+        for i in 0..<dataPoints.count
+        {
+            // let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
+            let dataEntry =   BarChartDataEntry(x: values[i], y: Double(i))
+            
+            dataEntries.append(dataEntry)
+        }
+        
+        let chartDataSet = BarChartDataSet(values: dataEntries, label: "")
+       
+        
+        chartDataSet.colors = [UIColor(red: 173.0/255, green: 235.0/255, blue: 253.0/255, alpha: 1)]
+        
+        
+        let chartData = BarChartData(dataSet: chartDataSet)
+        barChartView.data = chartData
+        
+        let d = Description()
+        d.text = ""
+        barChartView.chartDescription = d
+        barChartView.animate(xAxisDuration: TimeInterval(5))
+        
+       
+       // barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
+        
+    }
+    
+    func createPieCircleChart(chartType:PieChartView,radius:CGFloat){
+        
+        
         
         var colors: [UIColor] = []
         
@@ -243,6 +283,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return  67.0
+    }
+    
+    
+    
+    @IBAction func UnwindBackFromMapLocation(segue:UIStoryboardSegue) {
+        
+        print("Back")
+        
     }
 
 
