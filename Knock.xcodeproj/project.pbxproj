@@ -37,8 +37,6 @@
 		5DE3C9851EF2656C00012C47 /* LocationCustomViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9841EF2656C00012C47 /* LocationCustomViewCell.swift */; };
 		5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
-		7021AC331EF2A72900BE1076 /* eye-zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7021AC321EF2A72900BE1076 /* eye-zoom.png */; };
-		7021AC351EF2A74800BE1076 /* ZoomImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7021AC341EF2A74800BE1076 /* ZoomImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,8 +95,6 @@
 		5DE3C9741EF0241900012C47 /* AssignmentDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentDO.swift; sourceTree = "<group>"; };
 		5DE3C97F1EF1264800012C47 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		5DE3C9801EF1264800012C47 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		7021AC321EF2A72900BE1076 /* eye-zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "eye-zoom.png"; path = "View/eye-zoom.png"; sourceTree = "<group>"; };
-		7021AC341EF2A74800BE1076 /* ZoomImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZoomImage.png; sourceTree = "<group>"; };
 		5DE3C9821EF262C400012C47 /* MapLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
 		5DE3C9841EF2656C00012C47 /* LocationCustomViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCustomViewCell.swift; sourceTree = "<group>"; };
 		5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ArcGIS.bundle; sourceTree = "<group>"; };
@@ -179,8 +175,6 @@
 				5D56CF141EE007060019882F /* LaunchScreen.storyboard */,
 				5D56CF171EE007060019882F /* Info.plist */,
 				5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */,
-				7021AC341EF2A74800BE1076 /* ZoomImage.png */,
-				7021AC321EF2A72900BE1076 /* eye-zoom.png */,
 				5DC9E9E91EEA7E59009A6396 /* Knock-Bridging-Header.h */,
 			);
 			path = Knock;
@@ -428,9 +422,7 @@
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
-				7021AC351EF2A74800BE1076 /* ZoomImage.png in Resources */,
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
-				7021AC331EF2A72900BE1076 /* eye-zoom.png in Resources */,
 				5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
