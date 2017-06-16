@@ -109,6 +109,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
+        self.tableView.tableFooterView = UIView()
         
         populateLocationData()
         
@@ -182,7 +183,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     func populateLocationData(){
         
  
-        let locationResults = ManageCoreData.fetchData(salesforceEntityName: "Location",isPredicate:false) as! [Location]
+       
+        
+        let locationResults = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [Location]
         
         if(locationResults.count > 0){
             

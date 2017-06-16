@@ -123,6 +123,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         tableView.dataSource = self
         tableView.delegate = self
         
+        self.tableView.tableFooterView = UIView()
         
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
@@ -335,7 +336,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     override func viewDidLayoutSubviews() {
         
-        self.heightConstraint.constant = tableView.contentSize.height
+        //self.heightConstraint.constant = tableView.contentSize.height
     }
     
     
@@ -436,6 +437,25 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
+    /*
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // Dequeue with the reuse identifier
+        
+        let identifier = "unitCellId"
+        var cell: UnitsHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
+        if cell == nil {
+            tableView.register(UINib(nibName: "UnitsHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
+        }
+        
+        return cell
+        
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return  67.0
+    }
+    
+    */
     
      func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         
