@@ -313,6 +313,8 @@ class LoginViewController: UIViewController {
                         locationObject.zip = locationData["zip"] as? String  ?? ""
                         locationObject.street = locationData["street"] as? String  ?? ""
                         
+                        locationObject.assignmentId = assignmentObject.id!
+                        
                         appDelegate.saveContext()
                         
                         guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
@@ -326,6 +328,8 @@ class LoginViewController: UIViewController {
                             unitObject.apartment = unitData["apartmentNumber"] as? String  ?? ""
                             unitObject.floor = unitData["floorNumber"] as? String  ?? ""
 
+                            unitObject.locationId = locationObject.id!
+                            
                             appDelegate.saveContext()
                         }
                         

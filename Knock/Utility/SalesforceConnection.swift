@@ -13,7 +13,8 @@ import CoreData
 class SalesforceConnection{
     
     
-   
+    static var assignmentId:String = ""
+    static var locationId:String = ""
         
  
     private static var salesforceAccessToken:String=""

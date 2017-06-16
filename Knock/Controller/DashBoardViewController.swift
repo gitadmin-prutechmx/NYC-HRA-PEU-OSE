@@ -334,6 +334,26 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         print("UnwindBackFromMapLocation")
         
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Row selected, so set textField to relevant value, hide tableView
+        // endEditing can trigger some other action according to requirements
+        
+        SalesforceConnection.assignmentId =  assignmentIdArray[indexPath.row]
+        
+        
+        
+        
+    }
+    
+     func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        
+        let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! EventAssignmentViewCell
+        
+        
+        SalesforceConnection.assignmentId =  currentCell.assignmentId.text!
+        
+    }
 
 
 }
