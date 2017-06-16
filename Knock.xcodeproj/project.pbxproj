@@ -41,6 +41,8 @@
 		5DE3C98F1EF3ACEC00012C47 /* UnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C98E1EF3ACEC00012C47 /* UnitsViewController.swift */; };
 		5DE3C9911EF3B10000012C47 /* UnitsCustomViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9901EF3B10000012C47 /* UnitsCustomViewCell.swift */; };
 		5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9921EF3DD8000012C47 /* EditLocationViewController.swift */; };
+		5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9941EF406E200012C47 /* UnitsHeaderTableViewCell.swift */; };
+		5DE3C9971EF406E200012C47 /* UnitsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DE3C9951EF406E200012C47 /* UnitsHeaderTableViewCell.xib */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +111,8 @@
 		5DE3C98E1EF3ACEC00012C47 /* UnitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitsViewController.swift; sourceTree = "<group>"; };
 		5DE3C9901EF3B10000012C47 /* UnitsCustomViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitsCustomViewCell.swift; sourceTree = "<group>"; };
 		5DE3C9921EF3DD8000012C47 /* EditLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLocationViewController.swift; sourceTree = "<group>"; };
+		5DE3C9941EF406E200012C47 /* UnitsHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitsHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		5DE3C9951EF406E200012C47 /* UnitsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnitsHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -263,6 +267,8 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5DE3C9941EF406E200012C47 /* UnitsHeaderTableViewCell.swift */,
+				5DE3C9951EF406E200012C47 /* UnitsHeaderTableViewCell.xib */,
 				5DE3C96E1EF00EA000012C47 /* HeaderTableViewCell.xib */,
 				5DE3C96F1EF00EA000012C47 /* HeaderTableViewCell.swift */,
 			);
@@ -445,6 +451,7 @@
 			files = (
 				5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */,
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
+				5DE3C9971EF406E200012C47 /* UnitsHeaderTableViewCell.xib in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
@@ -544,6 +551,7 @@
 				5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */,
 				5DE3C98D1EF36E1900012C47 /* SideMenuViewController.swift in Sources */,
 				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
+				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 				5DE3C98F1EF3ACEC00012C47 /* UnitsViewController.swift in Sources */,
 				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
