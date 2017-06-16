@@ -188,12 +188,11 @@ class LoginViewController: UIViewController {
             
         }
         
-       /*
-         let assignmentResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
+    let assignmentResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
         
         if(assignmentResults.count == 0){
             
-            */
+        
         
         SVProgressHUD.show(withStatus: "Fetching data from salesforce..", maskType: SVProgressHUDMaskType.gradient)
         
@@ -203,7 +202,8 @@ class LoginViewController: UIViewController {
         
         SalesforceConnection.loginToSalesforce(companyName: companyName) { response in
             
-            
+        if(response)
+          {
             let encryptEmailStr = try! email.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
             
             
@@ -211,35 +211,33 @@ class LoginViewController: UIViewController {
             
             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllCanverssorData, params: emailParams){ jsonData in
                 
+                SVProgressHUD.dismiss()
                 
-                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Event")
-                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Assignment")
-                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Location")
-                ManageCoreData.DeleteAllRecords(salesforceEntityName: "Unit")
+                ManageCoreData.DeleteAllDataFromEntities()
                 
+               
                 self.readJSONData(jsonObject: jsonData.1)
                 
                 
                 
                 
-                SVProgressHUD.dismiss()
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+               
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                    }
                 }
-            }
             
+            }
                 
         }
-            
-            
-    /*
-         }
+
+   }
     else{
         self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
     }
         
         
-       */
+ 
  }
     
     
@@ -345,6 +343,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func UnwindBackFromLogout(segue:UIStoryboardSegue) {
         
+        ManageCoreData.DeleteAllDataFromEntities()
         print("UnwindBackFromLogout")
         
     }
