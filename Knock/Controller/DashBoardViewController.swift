@@ -99,6 +99,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func createBarChart(dataPoints: [String], values: [Double])
     {
         
+        let colors = getColors()
+        
         barChartView.noDataText = "You need to provide data for the chart."
    
         var dataEntries: [BarChartDataEntry] = []
@@ -108,20 +110,21 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             // let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
             let dataEntry =   BarChartDataEntry(x: values[i], y: Double(i))
             
+            
             dataEntries.append(dataEntry)
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "")
        
         
-        chartDataSet.colors = [UIColor(red: 173.0/255, green: 235.0/255, blue: 253.0/255, alpha: 1)]
+        chartDataSet.colors = colors
         
         
         let chartData = BarChartData(dataSet: chartDataSet)
         barChartView.data = chartData
         
         let d = Description()
-        d.text = ""
+        d.text = " "
         barChartView.chartDescription = d
         barChartView.animate(xAxisDuration: TimeInterval(5))
         
@@ -130,9 +133,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
     
-    func createPieCircleChart(chartType:PieChartView,radius:CGFloat){
-        
-        
+    
+    func getColors()->[UIColor]{
         
         var colors: [UIColor] = []
         
@@ -142,12 +144,21 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         let completedColor = UIColor(red: CGFloat(18.0/255), green: CGFloat(136.0/255), blue: CGFloat(189.0/255), alpha: 1)
         let InProgressColor = UIColor(red: CGFloat(173.0/255), green: CGFloat(235.0/255), blue: CGFloat(253.0/255), alpha: 1)
         let PendingColor = UIColor(red: CGFloat(54.0/255), green: CGFloat(191.0/255), blue: CGFloat(244.0/255), alpha: 1)
-       // let BlankColor = UIColor(red: CGFloat(235.0/255), green: CGFloat(237.0/255), blue: CGFloat(248.0/255), alpha: 1)
+        // let BlankColor = UIColor(red: CGFloat(235.0/255), green: CGFloat(237.0/255), blue: CGFloat(248.0/255), alpha: 1)
         
         colors.append(completedColor)
         colors.append(InProgressColor)
         colors.append(PendingColor)
-       // colors.append(BlankColor)
+        
+        return colors
+        // colors.append(BlankColor)
+
+    }
+    
+    func createPieCircleChart(chartType:PieChartView,radius:CGFloat){
+        
+        
+        let colors = getColors()
         
         
         var entries = [PieChartDataEntry]()
