@@ -11,6 +11,8 @@ import Charts
 
 class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var menuBtn: UIBarButtonItem!
+    
     @IBOutlet weak var circleChartView: PieChartView!
     
     @IBOutlet weak var barChartView: BarChartView!
@@ -38,12 +40,31 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     {
         super.viewDidLoad()
         
+        if self.revealViewController() != nil {
+            
+            
+            menuBtn.target = self.revealViewController()
+            menuBtn.action = #selector(SWRevealViewController.revealToggle(_:))
+            // self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
+        }
+        
+        
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         
        
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
+        imageView.contentMode = .scaleAspectFit
+        
+        
+        let image = UIImage(named: "MTXLogoWhite")
+        imageView.image = image
+        self.navigationItem.titleView = imageView
+        
+        //self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
 
         
@@ -59,19 +80,19 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         tableView.headerView(forSection: 0)
         
     }
-    
-    override func viewDidAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-         createPieCircleChart(chartType: circleChartView,radius: 0.5)
-         createPieCircleChart(chartType: pieChartView,radius: 0.0)
+        createPieCircleChart(chartType: circleChartView,radius: 0.5)
+        createPieCircleChart(chartType: pieChartView,radius: 0.0)
         
         
         createBarChart(dataPoints: status, values: values)
         populateEventAssignmentData()
-        
+
     }
     
+   
  
  
     
@@ -182,6 +203,16 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func populateEventAssignmentData(){
       
         
+        assignmentIdArray = []
+        assignmentArray = []
+        assignmentEventIdArray = []
+        totalLocArray = []
+        totalUnitsArray = []
+        eventDict = [:]
+        
+        
+        
+        
         createEventDictionary()
         
         //location count and unit count
@@ -289,7 +320,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     @IBAction func UnwindBackFromMapLocation(segue:UIStoryboardSegue) {
         
-        print("Back")
+        print("UnwindBackFromMapLocation")
         
     }
 

@@ -36,6 +36,8 @@
 		5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9821EF262C400012C47 /* MapLocationViewController.swift */; };
 		5DE3C9851EF2656C00012C47 /* LocationCustomViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9841EF2656C00012C47 /* LocationCustomViewCell.swift */; };
 		5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */; };
+		5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C98A1EF36A7B00012C47 /* SWRevealViewController.m */; };
+		5DE3C98D1EF36E1900012C47 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C98C1EF36E1900012C47 /* SideMenuViewController.swift */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +100,9 @@
 		5DE3C9821EF262C400012C47 /* MapLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationViewController.swift; sourceTree = "<group>"; };
 		5DE3C9841EF2656C00012C47 /* LocationCustomViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCustomViewCell.swift; sourceTree = "<group>"; };
 		5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ArcGIS.bundle; sourceTree = "<group>"; };
+		5DE3C9891EF36A7B00012C47 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		5DE3C98A1EF36A7B00012C47 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		5DE3C98C1EF36E1900012C47 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,6 +206,7 @@
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5DE3C98C1EF36E1900012C47 /* SideMenuViewController.swift */,
 				5DE3C9681EEFE74500012C47 /* LoginViewController.swift */,
 				5DE3C96C1EF007BF00012C47 /* DashBoardViewController.swift */,
 				5DE3C9821EF262C400012C47 /* MapLocationViewController.swift */,
@@ -258,6 +264,7 @@
 		5DC9E9DE1EEA7DF9009A6396 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5DE3C9881EF36A7B00012C47 /* SWRevealController */,
 				5DE3C97C1EF125DD00012C47 /* MBProgressHUD */,
 				5DC9E9DF1EEA7DF9009A6396 /* SVProgressHUD */,
 			);
@@ -294,6 +301,15 @@
 				5DE3C9801EF1264800012C47 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		5DE3C9881EF36A7B00012C47 /* SWRevealController */ = {
+			isa = PBXGroup;
+			children = (
+				5DE3C9891EF36A7B00012C47 /* SWRevealViewController.h */,
+				5DE3C98A1EF36A7B00012C47 /* SWRevealViewController.m */,
+			);
+			path = SWRevealController;
 			sourceTree = "<group>";
 		};
 		B5C91A6AF2348DD30289CED2 /* Pods */ = {
@@ -515,6 +531,8 @@
 				5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */,
 				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
 				5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */,
+				5DE3C98D1EF36E1900012C47 /* SideMenuViewController.swift in Sources */,
+				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
 			);
