@@ -157,15 +157,17 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                         
                         if((self?.locDataArray.count)! > 0){
                             
-                            self!.address = (self?.locDataArray[0].fullAddress)!
+                            SalesforceConnection.fullAddress = (self?.locDataArray[0].fullAddress)!
                             self!.locationId = (self?.locDataArray[0].locId)!
+                            
+                            SalesforceConnection.locationId = self!.locationId
                             
                             IsInitialViewPoint = false
                         }
                         
                         //SVProgressHUD.dismiss()
                         
-                        weakSelf.geocodeSearchText(text: self!.address,setIntialViewPoint: IsInitialViewPoint)
+                        weakSelf.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: IsInitialViewPoint)
                         
                     }
                     else {
@@ -287,7 +289,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     //method returns a graphic object for the point and attributes provided
     private func graphicForPoint(point: AGSPoint, attributes: [String: AnyObject]?) -> AGSGraphic {
-        let markerImage = UIImage(named: "MapMarker")!
+        let markerImage = UIImage(named: "MapPin")!
         let symbol = AGSPictureMarkerSymbol(image: markerImage)
         symbol.leaderOffsetY = markerImage.size.height/2
         symbol.offsetY = markerImage.size.height/2
@@ -490,10 +492,12 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Row selected, so set textField to relevant value, hide tableView
         // endEditing can trigger some other action according to requirements
+       
+        SalesforceConnection.locationId = locDataArray[indexPath.row].locId
         
-        let fullAddress =  locDataArray[indexPath.row].fullAddress
+        SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
         
-        self.geocodeSearchText(text: fullAddress,setIntialViewPoint: false)
+        self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
         
         
         

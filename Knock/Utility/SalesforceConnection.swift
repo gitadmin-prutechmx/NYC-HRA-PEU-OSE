@@ -15,6 +15,8 @@ class SalesforceConnection{
     
     static var assignmentId:String = ""
     static var locationId:String = ""
+    static var fullAddress:String = ""
+   
         
  
     private static var salesforceAccessToken:String=""

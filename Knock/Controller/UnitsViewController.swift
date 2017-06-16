@@ -91,14 +91,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         // make sure imageView can be interacted with by user
         newCaseLbl.isUserInteractionEnabled = true
         
-        let floorFilterViewTapGesture = UITapGestureRecognizer(target: self, action: Selector(("FloorFilterViewTapped:")))
+       /* let floorFilterViewTapGesture = UITapGestureRecognizer(target: self, action: Selector(("FloorFilterViewTapped:")))
         
         // add it to the image view;
         floorFilterView.addGestureRecognizer(floorFilterViewTapGesture)
         // make sure imageView can be interacted with by user
         floorFilterView.isUserInteractionEnabled = true
         
-        
+        */
         
         
     
@@ -129,7 +129,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
         
-        dataFullAddress.text = locName // SalesforceRestApi.currentFullAddress
+        dataFullAddress.text = SalesforceConnection.fullAddress
         //SalesforceRestApi.currentFullAddress = locName
       
         
@@ -140,12 +140,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         self.myPicker.delegate = self
         self.myPicker.dataSource = self
         
-        let openFloorPickerTapGesture = UITapGestureRecognizer(target: self, action: Selector(("OpenFloorPickerTapped:")))
+       /* let openFloorPickerTapGesture = UITapGestureRecognizer(target: self, action: Selector(("OpenFloorPickerTapped:")))
         
         // add it to the image view;
         floorSelectImage.addGestureRecognizer(openFloorPickerTapGesture)
         // make sure imageView can be interacted with by user
         floorSelectImage.isUserInteractionEnabled = true
+ 
+ */
         
     }
     
@@ -202,11 +204,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func updateTableViewData(){
         
-        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",isPredicate:false) as! [Unit]
+        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Unit]
         
         if(unitResults.count > 0){
             
             for unitData in unitResults{
+                
+                if(unitData.floor! != ""){
+                    floorArray.append(unitData.floor!)
+                }
                 
                 let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, floor: unitData.floor!, surveyStatus: "", syncDate: "")
                 
@@ -217,14 +223,19 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         OriginalUnitDataArray = UnitDataArray
         
-        self.floorTextField.text = "All"
-        self.tableView.reloadData()
         
-       /*  DispatchQueue.main.async {
+        floorFilteredArray = removeDuplicates(array: floorArray)
+        floorFilteredArray.insert("All", at: 0)
+        
+
+       // self.floorTextField.text = "All"
+       // self.tableView.reloadData()
+        
+         DispatchQueue.main.async {
             self.floorTextField.text = "All"
             self.tableView.reloadData()
             self.viewDidLayoutSubviews()
-        }*/
+        }
         
  
         

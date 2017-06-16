@@ -1028,7 +1028,7 @@
                                     </scopeButtonTitles>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="73" id="blS-T6-WHQ" customClass="LocationCustomViewCell" customModule="Knock" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="73" id="blS-T6-WHQ" customClass="LocationCustomViewCell" customModule="Knock" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="275" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="blS-T6-WHQ" id="hop-f0-ayP">
@@ -1490,7 +1490,7 @@
                                     <outlet property="delegate" destination="X4x-mi-Qob" id="6Q9-E4-smf"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="maV-fF-4b8" userLabel="ToolBarView">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="maV-fF-4b8" userLabel="ToolBarView">
                                 <rect key="frame" x="0.0" y="600" width="375" height="67"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hFH-Ic-T8r" userLabel="SubView">
@@ -1614,9 +1614,6 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="textFieldShouldBeginEditing:" destination="X4x-mi-Qob" eventType="editingDidBegin" id="QQP-hP-SIw"/>
-                                        </connections>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DownArrow" translatesAutoresizingMaskIntoConstraints="NO" id="gbZ-dZ-8M6">
                                         <rect key="frame" x="82" y="8" width="16" height="15"/>
@@ -1652,7 +1649,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapMarker" translatesAutoresizingMaskIntoConstraints="NO" id="O9x-YH-W4J">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="O9x-YH-W4J">
                                         <rect key="frame" x="0.0" y="4" width="31" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="G9a-43-X3l"/>
@@ -2044,7 +2041,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapMarker" translatesAutoresizingMaskIntoConstraints="NO" id="39N-fN-KQd">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="39N-fN-KQd">
                                         <rect key="frame" x="0.0" y="4" width="31" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Lxg-ic-f94"/>
@@ -2121,7 +2118,7 @@
         <image name="Globe1" width="25" height="25"/>
         <image name="Logout" width="30" height="30"/>
         <image name="MTXLogo" width="300" height="300"/>
-        <image name="MapMarker" width="60" height="60"/>
+        <image name="MapPin" width="100" height="100"/>
         <image name="NavigatorArrow" width="123" height="122"/>
         <image name="Offline" width="120" height="110"/>
         <image name="Setting" width="30" height="30"/>
