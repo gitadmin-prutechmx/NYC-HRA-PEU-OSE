@@ -11,9 +11,11 @@ import Charts
 
 class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var menuBtn: UIBarButtonItem!
+    
     @IBOutlet weak var circleChartView: PieChartView!
     
-    @IBOutlet weak var barChartView: PieChartView!
+    @IBOutlet weak var barChartView: BarChartView!
     
     @IBOutlet weak var pieChartView: PieChartView!
     
@@ -30,18 +32,39 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     var eventDict: [String:EventDO] = [:]
     
     
+    let status = ["Completed", "In Progress", "Pending"]
+    let values = [4.0, 3.0, 3.0]
     
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        if self.revealViewController() != nil {
+            
+            
+            menuBtn.target = self.revealViewController()
+            menuBtn.action = #selector(SWRevealViewController.revealToggle(_:))
+            // self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
+        }
+        
+        
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         
        
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
+        imageView.contentMode = .scaleAspectFit
+        
+        
+        let image = UIImage(named: "MTXLogoWhite")
+        imageView.image = image
+        self.navigationItem.titleView = imageView
+        
+        //self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
 
         
@@ -57,21 +80,59 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         tableView.headerView(forSection: 0)
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        createPieCircleChart(chartType: circleChartView,radius: 0.5)
+        createPieCircleChart(chartType: pieChartView,radius: 0.0)
+        
+        
+        createBarChart(dataPoints: status, values: values)
+        populateEventAssignmentData()
+
+    }
     
-    override func viewDidAppear(_ animated: Bool)
+   
+ 
+ 
+    
+    func createBarChart(dataPoints: [String], values: [Double])
     {
         
-         createCharts(chartType: circleChartView,radius: 0.5)
-         createCharts(chartType: pieChartView,radius: 0.0)
-         createCharts(chartType: barChartView,radius: 0.0)
-         populateEventAssignmentData()
+        barChartView.noDataText = "You need to provide data for the chart."
+   
+        var dataEntries: [BarChartDataEntry] = []
+        //String(describing: languages)
+        for i in 0..<dataPoints.count
+        {
+            // let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
+            let dataEntry =   BarChartDataEntry(x: values[i], y: Double(i))
+            
+            dataEntries.append(dataEntry)
+        }
+        
+        let chartDataSet = BarChartDataSet(values: dataEntries, label: "")
+       
+        
+        chartDataSet.colors = [UIColor(red: 173.0/255, green: 235.0/255, blue: 253.0/255, alpha: 1)]
+        
+        
+        let chartData = BarChartData(dataSet: chartDataSet)
+        barChartView.data = chartData
+        
+        let d = Description()
+        d.text = ""
+        barChartView.chartDescription = d
+        barChartView.animate(xAxisDuration: TimeInterval(5))
+        
+       
+       // barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
         
     }
     
-    func createCharts(chartType:PieChartView,radius:CGFloat){
+    func createPieCircleChart(chartType:PieChartView,radius:CGFloat){
         
-        let status = ["Completed", "In Progress", "Pending"]
-        let values = [4.0, 3.0, 3.0]
+        
         
         var colors: [UIColor] = []
         
@@ -141,6 +202,16 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func populateEventAssignmentData(){
       
+        
+        assignmentIdArray = []
+        assignmentArray = []
+        assignmentEventIdArray = []
+        totalLocArray = []
+        totalUnitsArray = []
+        eventDict = [:]
+        
+        
+        
         
         createEventDictionary()
         
@@ -243,6 +314,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return  67.0
+    }
+    
+    
+    
+    @IBAction func UnwindBackFromMapLocation(segue:UIStoryboardSegue) {
+        
+        print("UnwindBackFromMapLocation")
+        
     }
 
 
