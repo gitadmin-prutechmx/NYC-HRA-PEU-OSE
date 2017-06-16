@@ -99,4 +99,11 @@ class ManageCoreData{
         
     }
     
+    static func DeleteAllDataFromEntities(){
+        DeleteAllRecords(salesforceEntityName: "Event")
+        DeleteAllRecords(salesforceEntityName: "Assignment")
+        DeleteAllRecords(salesforceEntityName: "Location")
+        DeleteAllRecords(salesforceEntityName: "Unit")
+    }
+    
 }
