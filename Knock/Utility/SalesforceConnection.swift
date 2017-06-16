@@ -55,7 +55,8 @@ class SalesforceConnection{
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                showErrorMessage(error: error as NSError)
+                //print(error.localizedDescription)
                 completion(false)
                 
             }
@@ -117,9 +118,10 @@ class SalesforceConnection{
                     completion(true, jsonData as! Dictionary<String, AnyObject>)
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                
+                showErrorMessage(error: error as NSError)
                 return
-               // completion(false,)
+
                 
             }
         }
@@ -129,7 +131,10 @@ class SalesforceConnection{
 
     
     
-    
+    static func showErrorMessage(error:NSError){
+        SVProgressHUD.dismiss()
+        SVProgressHUD.showError(withStatus: error.localizedDescription)
+    }
     
     
 }
