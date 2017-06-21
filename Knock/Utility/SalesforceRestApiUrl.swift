@@ -10,7 +10,9 @@ import Foundation
 
 class SalesforceRestApiUrl{
     
-    static let getAllCanverssorData = "/services/apexrest/assignmentdetail"
+    static let getAllEventAssignmentData = "/services/apexrest/assignmentdetail"
     
+    static let getAllSurveyData = "/services/apexrest/assignmentSurvey"
     
+    static let submitSurveyResponse = "/services/apexrest/surveyresponse"
 }

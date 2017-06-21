@@ -12,7 +12,7 @@ import CoreData
 class ManageCoreData{
     
     
-    static func fetchData(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool) -> [Any]{
+    static func fetchData(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,isPredicate:Bool) -> [Any]{
         
         var results = [Any]()
         
@@ -20,11 +20,19 @@ class ManageCoreData{
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         
-        if(isPredicate){
-            // fetchRequest.predicate = NSPredicate(format: predicateFormat)
-            fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        if(isPredicate)
+        {
+            if(predicateValue2 == nil){
+                // fetchRequest.predicate = NSPredicate(format: predicateFormat)
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+
+                }
+            else if(predicateValue2 != nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
+            }
 
         }
+        
       
       
         do {
@@ -40,7 +48,7 @@ class ManageCoreData{
        
     }
     
-    static func updateData(salesforceEntityName:String,accessToken:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
+    static func updateData(salesforceEntityName:String,valueToBeUpdate:String,updatekey:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
@@ -51,7 +59,7 @@ class ManageCoreData{
             if salesforceConfigData.count == 1
             {
                 let objectUpdate = salesforceConfigData[0] as! NSManagedObject
-                objectUpdate.setValue(accessToken, forKey: "accessToken")
+                objectUpdate.setValue(valueToBeUpdate, forKey: updatekey)
                 
                 do{
                     try context.save()
@@ -104,6 +112,9 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "Assignment")
         DeleteAllRecords(salesforceEntityName: "Location")
         DeleteAllRecords(salesforceEntityName: "Unit")
+        DeleteAllRecords(salesforceEntityName: "SurveyQuestion")
+        DeleteAllRecords(salesforceEntityName: "SurveyUnit")
+        DeleteAllRecords(salesforceEntityName: "SurveyResponse")
     }
     
 }

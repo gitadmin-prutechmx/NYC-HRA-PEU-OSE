@@ -13,6 +13,9 @@ class LocationCustomViewCell: UITableViewCell {
     @IBOutlet weak var dataLocation: UILabel!
     @IBOutlet weak var dataFullAddress: UILabel!
     @IBOutlet weak var dataLocId: UILabel!
+    
+    @IBOutlet weak var editLocBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

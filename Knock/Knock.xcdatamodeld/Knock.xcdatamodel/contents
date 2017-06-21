@@ -43,12 +43,26 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SurveyQuestion" representedClassName="SurveyQuestion" syncable="YES" codeGenerationType="class">
-        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyQuestionData" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES" codeGenerationType="class"/>
+    <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyResponse" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SurveyUnit" representedClassName="SurveyUnit" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Unit" representedClassName="Unit" syncable="YES" codeGenerationType="class">
         <attribute name="apartment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="floor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
@@ -61,8 +75,9 @@
         <element name="Event" positionX="-162" positionY="153" width="128" height="118"/>
         <element name="Location" positionX="-2" positionY="-36" width="128" height="178"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="148"/>
-        <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="75"/>
-        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="45"/>
-        <element name="Unit" positionX="-162" positionY="-108" width="128" height="133"/>
+        <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="105"/>
+        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="120"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="150"/>
+        <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="90"/>
     </elements>
 </model>
