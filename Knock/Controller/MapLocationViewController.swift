@@ -187,7 +187,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     @IBAction func editLocAction(_ sender: Any) {
         
-    self.performSegue(withIdentifier: "showEditLocationIdentifier", sender: nil)
+        let indexRow = (sender as AnyObject).tag
+        
+        SalesforceConnection.locationId =  locDataArray[indexRow!].locId
+        
+        
+
+        
+        self.performSegue(withIdentifier: "showEditLocationIdentifier", sender: nil)
   
        //
     }

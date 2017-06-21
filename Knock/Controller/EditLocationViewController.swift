@@ -67,8 +67,14 @@ class EditLocationViewController: UIViewController {
         
         // You can also use localizationKeysDataSource instead. Check the docs.
         chooseStatusDropDown.dataSource = [
-            "iPhone SE | Black | 64G",
-            "Samsung S7"
+            "Canvassed",
+            "Not Canvassed",
+            "Permanently Inaccessible",
+            "Temporarily Inaccessible",
+            "Incomplete",
+            "Address not Found",
+            "Not a Target Building",
+            "Do not Knock"
         ]
         
         // Action triggered on selection

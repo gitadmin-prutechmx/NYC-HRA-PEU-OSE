@@ -393,17 +393,29 @@ class LoginViewController: UIViewController {
             for assignmentData in assignmentResults {
                 let assignmentObject = Assignment(context: context)
                 assignmentObject.id = assignmentData["assignmentId"] as? String  ?? ""
-                assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""  //confusi
+                assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""
+                
+              /*  "totalSurvey":0,
+                "totalLocationUnit":18,
+                "totalLocation":12,
+                */
+                
                 assignmentObject.status = assignmentData["status"] as? String  ?? ""
                 assignmentObject.eventId = eventObject.id
                 
+             /*   assignmentObject.totalLocations = (assignmentData["totalLocation"] as? Int64)!
+                
+                 assignmentObject.totalUnits = (assignmentData["totalLocationUnit"] as? Int64)!
+                
+ */
                 assignmentIdArray.append(assignmentObject.id!)
                 
-                var totalUnits = 0;
+                
                 
                  guard let locationResults = assignmentData["assignmentLocation"] as? [[String: AnyObject]]  else { break }
                 
- //assignment--> locations[{unit[{},{}]},{unit[{},{}]}]
+
+                 var totalUnits = 0;
                 
                 if(locationResults.count>0){
                     
@@ -416,14 +428,6 @@ class LoginViewController: UIViewController {
                         totalUnits =  totalUnits + Int(unit)!
 
                         
-                      /*   guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
-                        
-                        if(unitResults.count>0){
-                             totalUnits =  totalUnits + unitResults.count
-                            
-                        }
-                        */
-                        
                     }
                 }
                 else{
@@ -431,6 +435,10 @@ class LoginViewController: UIViewController {
                 }
                 
                assignmentObject.totalUnits = String(totalUnits)
+                
+
+                
+                
                 
                 appDelegate.saveContext()
                 
