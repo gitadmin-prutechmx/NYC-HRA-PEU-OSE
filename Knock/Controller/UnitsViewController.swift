@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 struct UnitsDataStruct
 {
@@ -20,7 +21,7 @@ struct UnitsDataStruct
 
 class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    
+   
 
     @IBOutlet weak var menuBtn: UIBarButtonItem!
     
@@ -64,6 +65,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     @IBOutlet weak var cellContentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         if self.revealViewController() != nil {
             
@@ -151,6 +154,21 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
+    @IBAction func moreAction(_ sender: Any) {
+        
+    /*    let buttonPosition = (sender as AnyObject).convert(CGPoint(), to: tableView)
+        let index = tableView.indexPathForRow(at: buttonPosition)
+    */
+         let indexRow = (sender as AnyObject).tag
+        
+         SalesforceConnection.unitId =  UnitDataArray[indexRow!].unitId
+        
+         showActionSheet()
+       
+        
+    }
+    
+   
     @IBAction func backBtn(sender: AnyObject) {
         
         
@@ -160,11 +178,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-    @IBAction func UnwindBackFromSubmitSurvey(segue:UIStoryboardSegue) {
-        
-        print("UnwindBackFromSubmitSurvey")
-        
-    }
+   
     
     func NewUnitLblTapped(gesture: UIGestureRecognizer) {
         // if the tapped view is a UIImageView then set it to imageview
@@ -204,7 +218,13 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func updateTableViewData(){
         
-        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Unit]
+       UnitDataArray = [UnitsDataStruct]()
+       OriginalUnitDataArray = [UnitsDataStruct]()
+       floorArray = []
+        
+        
+        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [Unit]
+ 
         
         if(unitResults.count > 0){
             
@@ -237,6 +257,17 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             self.viewDidLayoutSubviews()
         }
         
+        
+       /*
+         DispatchQueue.global(qos: .background).async {
+            print("This is run on the background queue")
+            
+            DispatchQueue.main.async {
+                print("This is run on the main queue, after the previous code in outer block")
+            }
+        }
+        
+        */
  
         
     
@@ -378,14 +409,26 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         cell.dataUnit.text = UnitDataArray[indexPath.row].unitName
-       
-        /*
         
-        if(SalesforceRestApi.currentUnitId != nil && unitIdArray[indexPath.row] == SalesforceRestApi.currentUnitId && SalesforceRestApi.isSubmitSurvey == true){
+        
+        cell.moreBtn.tag = indexPath.row
+       
+        
+        
+        if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
+            
+            let date = Date()
+            let formatter = DateFormatter()
+            
+            formatter.dateFormat = "MM/dd/yyyy"
+            
+          
+            cell.dataSyncDate.text =   formatter.string(from: date)
+            
+            cell.dataSyncStatus.text = "Completed"
             
             
-            
-            if(Reachability.isConnectedToNetwork()){
+          /*  if(Reachability.isConnectedToNetwork()){
                 cell.pendingIcon.isHidden = true
                 cell.dataSyncDate.text = "Pending"
                 cell.dataSyncDate.isHidden = false
@@ -398,6 +441,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             
             cell.dataSyncStatus.text = "Completed"
+ */
             
         }
             
@@ -414,15 +458,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
         }
         
-        */
         
         
-        cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
         
-        cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
-        
-        cell.pendingIcon.isHidden = true
-        cell.dataSyncDate.isHidden = false
         
         
         cell.dataUnitId.text = UnitDataArray[indexPath.row].unitId
@@ -439,11 +477,443 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
+    func getSurveyUnitResults()->[SurveyUnit]{
+        
+      // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
+        
+         let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyUnit]
+        
+         return surveyUnitResults
+        
+    }
     
     
     
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        SalesforceConnection.unitId =  UnitDataArray[indexPath.row].unitId
+        
+        SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
+        
+        
+    if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
+        
+        let surveyUnitResults = getSurveyUnitResults()
+        
+        //update or delete particular surveyunit
+        //add multiple conditions in predicateformat
+        
+        if(surveyUnitResults.count == 0){
+        
+            self.view.makeToast("Please choose survey from More button", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    print("completion from tap")
+                } else {
+                    print("completion without tap")
+                }
+            }
+            
+        }
+        else{
+            
+            
+            
+                SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
+            
+                let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.surveyId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
+                
+                if(surveyQuestionResults.count == 1){
+                    
+                    
+                    
+                    let jsonData =  Utilities.convertToJSON(text: surveyQuestionResults[0].surveyQuestionData!) as!Dictionary<String, AnyObject>
+
+                    
+                    readSurveyJSONObject(object: jsonData)
+                    
+                    Utilities.totalSurveyQuestions =  Utilities.surveyQuestionArray.count
+                    
+                    //Utilities.currentUnitId = ""
+                    //SalesforceRestApi.currentUnitName = ""
+                    
+                    if(Utilities.totalSurveyQuestions > 0){
+                        
+                        showSurveyQuestions()
+                        print("ShowSurveyQuestions")
+                    }
+                    
+                }
+            
+            
+        }
+    }
+        
+    else{
+        
+        let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! UnitsCustomViewCell
+        
+        currentCell.shake(duration: 0.3, pathLength: 15)
+     
+        
+        self.view.makeToast("Survey has been completed already.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if didTap {
+                print("completion from tap")
+            } else {
+                print("completion without tap")
+            }
+        }
+        
+        }
+
+
+    }
+    
+    
+    
+    var skipLogicArray : [[String:SkipLogic]] = []
+    var skipLogicDict = [String: SkipLogic]()
+    var skipLogicParentChildArray = [SkipLogicParentChild]()
+    
+    func addSurveyObject(_ questionId:String,questionType:String,questionText:String,questionNumber:String,required:Bool,choices:String,isSkipLogic:String,answer:String,questionChoiceList:[[String: AnyObject]]){
+        
+        skipLogicArray = []
+        
+        skipLogicDict = [:]
+        
+        
+        
+        var options = ""
+        
+        
+        
+        
+        
+        for questionChoice in questionChoiceList{
+            
+            let skipLogicType = questionChoice["skipLogicType"] as? String ?? ""
+            let choice = questionChoice["choice"] as? String ?? ""
+            let isSkipLogicPresent = questionChoice["isSkipLogicPresent"] as? Bool
+            let childQuestionNumber = questionChoice["questionNumber"] as? String ?? ""
+            
+            let showTextValue = questionChoice["showText"] as? String ?? ""
+            
+            
+            options = options + choice + ";"
+            
+            if(isSkipLogicPresent == true){
+                
+                let objectSkipLogic:SkipLogic = SkipLogic(skipLogicType: skipLogicType, questionNumber: childQuestionNumber,selectedAnswer: choice,showTextValue:showTextValue)
+                
+                skipLogicDict[choice] = objectSkipLogic
+                
+                skipLogicArray.append(skipLogicDict)
+                
+                if(skipLogicType == "Skip to Question"){
+                    skipLogicParentChildArray.append(SkipLogicParentChild(childQuesionNumber: childQuestionNumber, parentQuestionNumber: questionNumber, selectedAnswer: choice, skipLogicType: skipLogicType,showTextValue:showTextValue))
+                }
+                
+                
+            }
+            
+            
+            
+        }
+        
+        
+        //options = options.substring(to: options.characters.index(before: options.endIndex))
+        
+        options = String(options.characters.dropLast())
+        
+        
+        let  objSurveyQues = SurveyQuestionDO(questionId: questionId, questionText: questionText,questionType:questionType,questionNumber:questionNumber,isRequired: required,choices: options , skipLogicArray:skipLogicArray , isSkipLogic: isSkipLogic,getDescriptionAnswer: answer)
+        
+        
+        let objectStruct:structSurveyQuestion = structSurveyQuestion(key: questionId, objectSurveyQuestion: objSurveyQues)
+        
+        
+        Utilities.surveyQuestionArray.append(objectStruct)
+        
+        
+        
+    }
+    
+    
+    func readSurveyJSONObject(object:Dictionary<String, AnyObject>) {
+        
+        Utilities.surveyQuestionArray = []
+        
+        skipLogicParentChildArray = []
+        
+        
+        Utilities.skipLogicParentChildDict = [:]
+        
+        Utilities.prevSkipLogicParentChildDict = [:]
+       
+
+        
+        
+        
+        guard let surveyName = object["surveyName"] as? String
+            , let results = object["Question"] as? [[String: AnyObject]] else { return }
+        
+        
+        
+        for data in results {
+            
+            print("data: \(data)")
+            
+            guard let questionType = data["questionType"] as? String else {break}
+            
+            guard let required = data["required"] as? Bool else { break }
+            
+            guard let questionText = data["questionText"] as? String else { break }
+            guard let questionId = data["questionId"] as? String else { break }
+            guard let questionNumber = data["questionNumber"] as? String else{break}
+            //guard let choices = data["choices"] as? String else {break}
+            
+            
+            //skip logic
+            guard let skipLogic = data["skipLogic"] as? String else {break}
+            // guard let answer = data["answer"] as? String? else {break}  //for getdescription text
+            guard let questionChoiceList = data["questionChoiceList"] as? [[String: AnyObject]]  else {break}
+            
+            
+            
+            // let updatedAnswer = answer ?? ""
+            
+            
+            
+            addSurveyObject(questionId, questionType: questionType, questionText: questionText, questionNumber: questionNumber, required: required, choices: "", isSkipLogic: skipLogic, answer: "", questionChoiceList: questionChoiceList)
+            
+        }
+        
+        
+        
+        var tempArray = [SkipLogic]()
+        
+        
+        for skipLogicparentChild in skipLogicParentChildArray{
+            
+            tempArray = []
+            
+            if Utilities.skipLogicParentChildDict[skipLogicparentChild.parentQuestionNumber] != nil {
+                
+                var arrayValue:[SkipLogic] =  Utilities.skipLogicParentChildDict[skipLogicparentChild.parentQuestionNumber]!
+                
+                arrayValue.append(SkipLogic(skipLogicType: skipLogicparentChild.skipLogicType, questionNumber: skipLogicparentChild.childQuesionNumber, selectedAnswer: skipLogicparentChild.selectedAnswer,showTextValue:skipLogicparentChild.showTextValue))
+                
+                Utilities.skipLogicParentChildDict[skipLogicparentChild.parentQuestionNumber] = arrayValue
+                
+            }
+                
+            else{
+                
+                tempArray.append(SkipLogic(skipLogicType: skipLogicparentChild.skipLogicType, questionNumber: skipLogicparentChild.childQuesionNumber, selectedAnswer: skipLogicparentChild.selectedAnswer,showTextValue:skipLogicparentChild.showTextValue))
+                
+                Utilities.skipLogicParentChildDict[skipLogicparentChild.parentQuestionNumber] = tempArray
+                
+            }
+            
+        }
+        
+        
+        //For Previous button
+        var prevTempArray = [SkipLogic]()
+        
+        
+        for skipLogicparentChild in skipLogicParentChildArray{
+            
+            prevTempArray = []
+            
+            if Utilities.prevSkipLogicParentChildDict[skipLogicparentChild.childQuesionNumber] != nil {
+                
+                var arrayValue:[SkipLogic] =  Utilities.prevSkipLogicParentChildDict[skipLogicparentChild.childQuesionNumber]!
+                
+                arrayValue.append(SkipLogic(skipLogicType: skipLogicparentChild.skipLogicType, questionNumber: skipLogicparentChild.parentQuestionNumber, selectedAnswer: skipLogicparentChild.selectedAnswer,showTextValue:skipLogicparentChild.showTextValue))
+                
+                Utilities.prevSkipLogicParentChildDict[skipLogicparentChild.childQuesionNumber] = arrayValue
+                
+            }
+                
+            else{
+                
+                prevTempArray.append(SkipLogic(skipLogicType: skipLogicparentChild.skipLogicType, questionNumber: skipLogicparentChild.parentQuestionNumber, selectedAnswer: skipLogicparentChild.selectedAnswer,showTextValue:skipLogicparentChild.showTextValue))
+                
+                Utilities.prevSkipLogicParentChildDict[skipLogicparentChild.childQuesionNumber] = prevTempArray
+                
+            }
+            
+        }
+
+        
+        
+        
+        
+        print(Utilities.surveyQuestionArray)
+        
+        
+    }
+    
+    
+    
+
+    
+    
+    func showSurveyQuestions(){
+        
+        
+        Utilities.SurveyOutput = [:]
+        Utilities.answerSurvey = ""
+        
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        Utilities.surveyQuestionArrayIndex = 0
+        
+        
+        //SalesforceRestApi.surveyQuestionArrayIndex = SalesforceRestApi.surveyQuestionArrayIndex + 1
+        
+        Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex + 1
+        
+        let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
+        
+        if(objSurveyQues?.questionType == "Single Select"){
+            
+            let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
+            
+            self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
+            
+            /*
+             let surveyRadioButtonVC = storyboard.instantiateViewControllerWithIdentifier("surveyRadioButtonVCIdentifier") as! SurveyRadioButtonViewController
+             
+             self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
+             
+             */
+        }
+        else if(objSurveyQues?.questionType == "Multi Select"){
+            
+            let surveyMultiButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyMultiOptionVCIdentifier") as! SurveyMultiOptionViewController
+            
+            self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
+            
+            
+        }
+        else if(objSurveyQues?.questionType == "Text Area"){
+            
+            let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
+            
+            self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+            
+            
+            /*  let surveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("surveyTextFiedVCIdentifier") as! SurveyTextFieldViewController
+             
+             self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+             
+             */
+        }
+        
+        
+    }
+    
+    
+    
+    
+    //canEditRowAt
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        print("editingStyle")
+        
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let more = UITableViewRowAction(style: .normal, title: "More") { action, index in
+            
+        
+            //self.isEditing = false
+            self.showActionSheet()
+        }
+        
+      
+        
+        more.backgroundColor = UIColor(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1.0) // UIColor.blue
+      
+        
+        return [more]
+    }
+    
+    
+    func showActionSheet(){
+        
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .alert)
+        
+        // 2
+        let unitAction = UIAlertAction(title: "Unit Information", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Unit Information")
+            
+            Utilities.currentSegmentedControl = "Unit"
+            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+            
+        })
+        let tenantAction = UIAlertAction(title: "Tenant Information", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Tenant Information")
+            
+             Utilities.currentSegmentedControl = "Tenant"
+             self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+        })
+        
+        //
+        let surveyAction = UIAlertAction(title: "Choose a Survey", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Choose a Survey")
+            
+            Utilities.currentSegmentedControl = "Survey"
+            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+            
+            /*
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let moreOptionsVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
+            
+            self.navigationController?.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            
+            
+            //self.present(moreOptionsVC, animated: true, completion: nil)
+            
+        
+            
+             self.navigationController?.pushViewController(moreOptionsVC, animated: true)
+ */
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancel")
+        })
+        
+        
+        
+        // 4
+        optionMenu.addAction(unitAction)
+        optionMenu.addAction(tenantAction)
+        optionMenu.addAction(surveyAction)
+        optionMenu.addAction(cancelAction)
+        
+        // optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        
+        //optionMenu.popoverPresentationController?.sourceView = self.view
+        //optionMenu.popoverPresentationController?.sourceRect = self.view.bounds
+        
+        // 5
+        self.present(optionMenu, animated: true, completion: nil)
         
     }
     
@@ -595,6 +1065,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         sender.inputView = myPicker
         sender.inputAccessoryView = toolBar
        
+    }
+    
+    @IBAction func UnwindBackFromSurvey(segue:UIStoryboardSegue) {
+        
+        print("UnwindBackFromSurvey")
+        
     }
     
 }

@@ -24,10 +24,14 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginBtn: UIButton!
     
-    
+    var assignmentIdArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        saveUserInfo()
+        
+        //temporaryFunc()
         
         /*
          
@@ -86,6 +90,11 @@ class LoginViewController: UIViewController {
      */
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emailTextField.text = ""
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -93,31 +102,14 @@ class LoginViewController: UIViewController {
     }
     
     
-    
-    
-    @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
+    func saveUserInfo(){
         
-        
-        
-
-        
-        getDataFromSalesforce()
-        
-        
-    }
-    
-    
-    
-    func getDataFromSalesforce(){
-        
-        let companyName = "PEU"
-        let email = "nik@mtxb2b.com"
-        
+        SalesforceConnection.companyName = "PEU"
         let userName = "nik+peu@mtxb2b.com.dev"
         
-        var emailParams : [String:String] = [:]
+       
         
-        salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: companyName, isPredicate:true) as! [SalesforceOrgConfig]
+        salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: SalesforceConnection.companyName, isPredicate:true) as! [SalesforceOrgConfig]
         
         if(salesforceConfigData.count > 0){
             
@@ -156,7 +148,7 @@ class LoginViewController: UIViewController {
             let encodedUserName = userName.addingPercentEncoding(withAllowedCharacters: .alphanumerics)
             
             let configData = SalesforceOrgConfig(context: context)
-            configData.companyName = "PEU"
+            configData.companyName = SalesforceConnection.companyName
             configData.endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
             configData.clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
             configData.clientSecret = "5050630969965231251"
@@ -171,7 +163,7 @@ class LoginViewController: UIViewController {
             appDelegate.saveContext()
             
             //load data
-            salesforceConfigData =  ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: companyName, isPredicate:true) as! [SalesforceOrgConfig]
+            salesforceConfigData =  ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: SalesforceConnection.companyName, isPredicate:true) as! [SalesforceOrgConfig]
             
             if(salesforceConfigData.count > 0){
                 
@@ -188,11 +180,50 @@ class LoginViewController: UIViewController {
             
         }
         
+
+    }
+    
+    
+    
+    @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
+        
+        DispatchQueue.main.async {
+              self.loginView.endEditing(true)
+        }
+    
+
+        
+        getDataFromSalesforce()
+        
+        
+    }
+    
+    
+    
+    func getDataFromSalesforce(){
+        
+        let email = "nik@mtxb2b.com"
+        
+        var emailParams : [String:String] = [:]
+        
+        var assignmentIdParams : [String:String] = [:]
+        
+        var assignmentIdDict : [String:AnyObject] = [:]
+        
+        
+        var emailText = emailTextField.text
+        
+        if emailText == nil {
+            
+            emailText = ""
+        }
+        
     let assignmentResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
         
-        if(assignmentResults.count == 0){
-            
         
+        
+    if ((emailText?.lowercased() == "clear") || assignmentResults.count == 0){
+            
         
         SVProgressHUD.show(withStatus: "Fetching data from salesforce..", maskType: SVProgressHUDMaskType.gradient)
         
@@ -200,31 +231,50 @@ class LoginViewController: UIViewController {
         
         //Need to be handle refresh token as well
         
-        SalesforceConnection.loginToSalesforce(companyName: companyName) { response in
+        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
             
         if(response)
           {
             let encryptEmailStr = try! email.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
             
-            
+
             emailParams["email"] = encryptEmailStr
             
-            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllCanverssorData, params: emailParams){ jsonData in
+            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ jsonData in
                 
-                SVProgressHUD.dismiss()
+                
+                
                 
                 ManageCoreData.DeleteAllDataFromEntities()
                 
                
-                self.readJSONData(jsonObject: jsonData.1)
+                self.parseEventAssignmentData(jsonObject: jsonData.1)
+                
+                //get survey data
+                
+                assignmentIdDict["assignmentIds"] = self.assignmentIdArray as AnyObject?
+                
+                let convertedString = Utilities.jsonToString(json: assignmentIdDict as AnyObject)
+                
+                 let encryptAssignmentIdStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+                
+                 assignmentIdParams["Assignment"] = encryptAssignmentIdStr
                 
                 
                 
-                
-               
+                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllSurveyData, params: assignmentIdParams){ jsonData in
+                    
+                    SVProgressHUD.dismiss()
+
+                     self.parseSurveyData(jsonObject: jsonData.1)
+                    
+                    
                     DispatchQueue.main.async {
                         self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                        }
                     }
+               
+                
                 }
             
             }
@@ -239,10 +289,87 @@ class LoginViewController: UIViewController {
         
  
  }
+    /*
+    
+    func temporaryFunc(){
+        
+        let stringarr = ["a0J35000000nMJt"]
+        //let surveyarr = ["a0J35000000nMJt"]
+        
+        var dic:[String:AnyObject]=[:]
+        
+        dic["assignmentIds"] = stringarr as AnyObject?
+        
+        var str = Utilities.jsonToString(json: dic as AnyObject)
+        
+       // str = str!.replacingOccurrences(of: "\n", with: "")
+        
+        print(str)
+        
+    }
+    */
+    
+    
+    func parseSurveyData(jsonObject: Dictionary<String, AnyObject>){
+        
+        
+        guard let _ = jsonObject["errorMessage"] as? String,
+            let surveyResults = jsonObject["AssignmentSurvey"] as? [[String: AnyObject]] else { return }
+        
+        
+        for surveyData in surveyResults {
+            
+            let assignmentId = surveyData["assignmentId"] as? String  ?? ""
+            let surveyId = surveyData["surveyId"] as? String  ?? ""
+            let surveyName = surveyData["surveyName"] as? String  ?? ""
+            
+             let convertedJsonString = Utilities.jsonToString(json: surveyData as AnyObject)
+            
+            
+            
+            let surveyObject = SurveyQuestion(context: context)
+            surveyObject.assignmentId = assignmentId
+            surveyObject.surveyId = surveyId
+            surveyObject.surveyName = surveyName
+            surveyObject.surveyQuestionData = convertedJsonString
+            
+            
+            
+            appDelegate.saveContext()
+            
+            //  convertedJsonString = convertedJsonString!.replacingOccurrences(of: "\n", with: "")
+            
+            
+            
+          /*   let jsonData = Utilities.convertToJSON(text: convertedJsonString!) as!Dictionary<String, AnyObject>
+            
+            
+            
+            guard let  surveyName = jsonData["surveyName"] as? String,
+                let surveyQuestionResults = jsonData["SurveyQuestion"] as? [[String: AnyObject]] else { return }
+            
+            //print(surveyName)
+            
+            for temp in surveyQuestionResults{
+                
+                guard let questionName = temp["questionName"] as? String else{return}
+                
+               
+                
+            }
+ 
+ */
+            
+            
+            
+        }
+    }
     
     
        
-    func readJSONData(jsonObject: Dictionary<String, AnyObject>){
+    func parseEventAssignmentData(jsonObject: Dictionary<String, AnyObject>){
+        
+       
         
         guard let _ = jsonObject["errorMessage"] as? String,
             let eventResults = jsonObject["Event"] as? [[String: AnyObject]] else { return }
@@ -270,6 +397,7 @@ class LoginViewController: UIViewController {
                 assignmentObject.status = assignmentData["status"] as? String  ?? ""
                 assignmentObject.eventId = eventObject.id
                 
+                assignmentIdArray.append(assignmentObject.id!)
                 
                 var totalUnits = 0;
                 
@@ -297,6 +425,9 @@ class LoginViewController: UIViewController {
                         */
                         
                     }
+                }
+                else{
+                    assignmentObject.totalLocations = "0"
                 }
                 
                assignmentObject.totalUnits = String(totalUnits)
@@ -327,6 +458,7 @@ class LoginViewController: UIViewController {
                             unitObject.name = unitData["Name"] as? String  ?? ""
                             unitObject.apartment = unitData["apartmentNumber"] as? String  ?? ""
                             unitObject.floor = unitData["floorNumber"] as? String  ?? ""
+                            unitObject.assignmentId = assignmentObject.id!
 
                             unitObject.locationId = locationObject.id!
                             

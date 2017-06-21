@@ -13,6 +13,8 @@ class EditLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+      
+        
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         
         self.navigationController?.navigationBar.tintColor = UIColor.white

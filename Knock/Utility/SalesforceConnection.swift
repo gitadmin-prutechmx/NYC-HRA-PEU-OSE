@@ -15,7 +15,12 @@ class SalesforceConnection{
     
     static var assignmentId:String = ""
     static var locationId:String = ""
+    static var unitId:String = ""
+    static var unitName:String = ""
+    static var surveyId:String = ""
     static var fullAddress:String = ""
+    
+    static var companyName:String = ""
    
         
  
@@ -48,7 +53,7 @@ class SalesforceConnection{
                 {
                  
                     //update accessToken
-                    ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", accessToken: accessToken, predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
+                    ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", valueToBeUpdate: accessToken,updatekey:"accessToken", predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
                     
                     
                     salesforceAccessToken = accessToken
@@ -118,6 +123,7 @@ class SalesforceConnection{
             case .success:
                     let decryptData =  Utilities.decryptJsonData(jsonEncryptString: response.result.value!)
                     let jsonData = Utilities.convertToJSON(text: decryptData)
+ 
                     completion(true, jsonData as! Dictionary<String, AnyObject>)
                 
             case .failure(let error):

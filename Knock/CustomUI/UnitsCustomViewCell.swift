@@ -22,6 +22,9 @@ class UnitsCustomViewCell: UITableViewCell {
     
     @IBOutlet weak var dataSyncDate: UILabel!
     @IBOutlet weak var dataSyncStatus: UILabel!
+    
+    @IBOutlet weak var moreBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,26 +33,28 @@ class UnitsCustomViewCell: UITableViewCell {
 
 
 extension UITableViewCell {
-    /*func shake(duration: CFTimeInterval = 0.3, pathLength: CGFloat = 15) {
+    func shake(duration: CFTimeInterval = 0.3, pathLength: CGFloat = 15) {
         let position: CGPoint = self.center
         
         let path: UIBezierPath = UIBezierPath()
-        path.move(to: CGPointMake(position.x, position.y))
-        path.addLine(to: CGPointMake(position.x-pathLength, position.y))
-        path.addLineToPoint(CGPointMake(position.x+pathLength, position.y))
-        path.addLineToPoint(CGPointMake(position.x-pathLength, position.y))
-        path.addLineToPoint(CGPointMake(position.x+pathLength, position.y))
-        path.addLineToPoint(CGPointMake(position.x, position.y))
+        
+      
+        path.move(to:  CGPoint(x: position.x, y: position.y))
+        path.addLine(to: CGPoint(x:position.x-pathLength, y:position.y))
+        path.addLine(to: CGPoint(x:position.x+pathLength, y:position.y))
+        path.addLine(to: CGPoint(x:position.x-pathLength, y:position.y))
+        path.addLine(to: CGPoint(x:position.x+pathLength, y:position.y))
+        path.addLine(to: CGPoint(x:position.x, y:position.y))
         
         let positionAnimation = CAKeyframeAnimation(keyPath: "position")
         
-        positionAnimation.path = path.CGPath
+        positionAnimation.path = path.cgPath
         positionAnimation.duration = duration
         positionAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         
         CATransaction.begin()
-        self.layer.addAnimation(positionAnimation, forKey: nil)
+        self.layer.add(positionAnimation, forKey: nil)
         CATransaction.commit()
     }
- */
+ 
 }
