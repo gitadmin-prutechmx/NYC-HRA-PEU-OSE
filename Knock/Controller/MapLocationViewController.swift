@@ -185,6 +185,12 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     }
     
     
+    @IBAction func editLocAction(_ sender: Any) {
+        
+    self.performSegue(withIdentifier: "showEditLocationIdentifier", sender: nil)
+  
+       //
+    }
     
     var locDataArray = [locationDataStruct]()
     
@@ -488,6 +494,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             cell.dataLocId.text = locDataArray[indexPath.row].locId
             
         }
+         cell.editLocBtn.tag = indexPath.row
         
         return cell
         

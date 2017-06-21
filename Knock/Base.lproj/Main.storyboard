@@ -965,36 +965,6 @@
             </objects>
             <point key="canvasLocation" x="287" y="-1585"/>
         </scene>
-        <!--EditLocationViewController-->
-        <scene sceneID="nea-vr-c8F">
-            <objects>
-                <viewController id="5ov-BQ-9Ww" userLabel="EditLocationViewController" customClass="EditLocationViewController" customModule="Knock" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3kH-i7-sAI"/>
-                        <viewControllerLayoutGuide type="bottom" id="4ip-bI-pwt"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8TH-SE-05c">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Edit Location" id="Rxu-wh-0KV">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="IK0-CM-Py1">
-                            <connections>
-                                <action selector="saveLocation:" destination="5ov-BQ-9Ww" id="Xsh-UL-KWZ"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="gXv-p8-Dul">
-                            <connections>
-                                <action selector="cancelLocation:" destination="5ov-BQ-9Ww" id="i7f-I0-N6e"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cY3-09-pNb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5080.8000000000002" y="-1308.3958020989505"/>
-        </scene>
         <!--MapLocationsViewController-->
         <scene sceneID="FYD-FD-fL7">
             <objects>
@@ -1060,7 +1030,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0MA-aO-zjZ">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0MA-aO-zjZ" userLabel="EditLoc">
                                                     <rect key="frame" x="237" y="27" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="B84-c7-ly4"/>
@@ -1068,7 +1038,7 @@
                                                     </constraints>
                                                     <state key="normal" backgroundImage="Edit"/>
                                                     <connections>
-                                                        <segue destination="olH-2A-nPf" kind="presentation" identifier="showEditLocationIdentifier" modalPresentationStyle="formSheet" id="eKC-05-Ufl"/>
+                                                        <action selector="editLocAction:" destination="9jG-W6-93z" eventType="touchUpInside" id="rxj-qe-EWH"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1092,6 +1062,7 @@
                                             <outlet property="dataFullAddress" destination="W6A-XP-3HN" id="Zgr-1w-yeQ"/>
                                             <outlet property="dataLocId" destination="e6C-Yt-X3Q" id="7bf-eA-Au8"/>
                                             <outlet property="dataLocation" destination="t16-Eb-h9K" id="Rav-BS-GRg"/>
+                                            <outlet property="editLocBtn" destination="0MA-aO-zjZ" id="YhP-NR-bhz"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1272,6 +1243,7 @@
                         <outlet property="tableView" destination="vgB-zQ-jOS" id="yCT-f4-ngi"/>
                         <outlet property="toolBarView" destination="sev-2g-6wn" id="GMV-J7-dlv"/>
                         <segue destination="X4x-mi-Qob" kind="show" identifier="ShowUnitsIdentifier" id="M9o-E9-v0K"/>
+                        <segue destination="olH-2A-nPf" kind="presentation" identifier="showEditLocationIdentifier" modalPresentationStyle="formSheet" id="acU-VB-xy6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cLN-VI-UI6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1290,7 +1262,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="5ov-BQ-9Ww" kind="relationship" relationship="rootViewController" id="a2C-j2-i1Z"/>
+                        <segue destination="k4D-Vl-Mqe" kind="relationship" relationship="rootViewController" id="L4Y-CW-Yic"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2RS-2d-KtN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3160,6 +3132,160 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G0I-Tu-h7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5896.8000000000002" y="68.815592203898049"/>
+        </scene>
+        <!--EditLocationViewController-->
+        <scene sceneID="uTG-GH-uIy">
+            <objects>
+                <viewController id="k4D-Vl-Mqe" userLabel="EditLocationViewController" customClass="EditLocationViewController" customModule="Knock" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5VK-MJ-ayg"/>
+                        <viewControllerLayoutGuide type="bottom" id="bTi-jq-0sc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MAq-7o-Ihc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c39-Fx-m0C" userLabel="LocationScrollView" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ZI-IW-gn1">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="605"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="117  Wooster St New York New York 110234" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mb7-PO-bZG" userLabel="FullAddressLbl">
+                                                <rect key="frame" x="12" y="30" width="350" height="70"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="350" id="FF7-er-2q5"/>
+                                                    <constraint firstAttribute="height" constant="70" id="mHv-xf-dht"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Attempt?" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dH-2I-dZO" userLabel="AttemptLbl">
+                                                <rect key="frame" x="20" y="129" width="93" height="23"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Canvassing Status" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ml2-cs-CmF" userLabel="CanvassingStatusLbl">
+                                                <rect key="frame" x="20" y="173" width="93" height="41"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="# of Units" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROd-su-Ug0" userLabel="NoOfUnitsLbl">
+                                                <rect key="frame" x="20" y="235" width="94" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notes" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpf-mp-rJq" userLabel="NotesLbl">
+                                                <rect key="frame" x="20" y="285" width="93" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C4j-Jt-VTc" userLabel="NoOfUnitsTextField">
+                                                <rect key="frame" x="139" y="232" width="216" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Area" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hHs-q0-7uH" userLabel="NotesTextArea">
+                                                <rect key="frame" x="138" y="289" width="216" height="128"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pxa-5A-AMc" customClass="DropDownButton" customModule="Knock" customModuleProvider="target">
+                                                <rect key="frame" x="139" y="178" width="215" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Choose Status"/>
+                                                <connections>
+                                                    <action selector="chooseStatus:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="up6-6C-ljp"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VcP-LU-YTP" customClass="DLRadioButton">
+                                                <rect key="frame" x="164" y="126" width="46" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Yes">
+                                                    <color key="titleColor" red="0.0" green="0.48797842250000001" blue="0.98569711540000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="jby-qj-cd5"/>
+                                                    <outletCollection property="otherButtons" destination="sbP-WU-uFb" id="c9K-cM-Oku"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sbP-WU-uFb" customClass="DLRadioButton">
+                                                <rect key="frame" x="308" y="126" width="46" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="No">
+                                                    <color key="titleColor" red="0.0" green="0.48797842250000001" blue="0.98569711540000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="JkR-ab-iK9"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.96017393122564099" green="0.96017393122564099" blue="0.96017393122564099" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="605" id="V0U-Ci-mqv"/>
+                                            <constraint firstItem="mb7-PO-bZG" firstAttribute="top" secondItem="0ZI-IW-gn1" secondAttribute="top" constant="30" id="e22-Fu-5aH"/>
+                                            <constraint firstItem="mb7-PO-bZG" firstAttribute="centerX" secondItem="0ZI-IW-gn1" secondAttribute="centerX" id="pWb-Ca-3Ns"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="0ZI-IW-gn1" firstAttribute="leading" secondItem="c39-Fx-m0C" secondAttribute="leading" id="8IN-L6-Vqa"/>
+                                    <constraint firstItem="0ZI-IW-gn1" firstAttribute="centerX" secondItem="c39-Fx-m0C" secondAttribute="centerX" id="Er0-Zo-mQk"/>
+                                    <constraint firstAttribute="trailing" secondItem="0ZI-IW-gn1" secondAttribute="trailing" id="Liz-He-ecq"/>
+                                    <constraint firstItem="0ZI-IW-gn1" firstAttribute="top" secondItem="c39-Fx-m0C" secondAttribute="top" id="aYj-jn-cNN"/>
+                                    <constraint firstAttribute="bottom" secondItem="0ZI-IW-gn1" secondAttribute="bottom" id="i4G-hU-cIA"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="k4D-Vl-Mqe" id="3Gs-vm-JPx"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="c39-Fx-m0C" firstAttribute="top" secondItem="MAq-7o-Ihc" secondAttribute="top" id="F9B-Me-ILI"/>
+                            <constraint firstItem="bTi-jq-0sc" firstAttribute="top" secondItem="c39-Fx-m0C" secondAttribute="bottom" id="wGJ-wH-FzE"/>
+                            <constraint firstAttribute="trailing" secondItem="c39-Fx-m0C" secondAttribute="trailing" id="wRE-d7-INq"/>
+                            <constraint firstItem="c39-Fx-m0C" firstAttribute="leading" secondItem="MAq-7o-Ihc" secondAttribute="leading" id="yXI-20-jeg"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Location" id="aLO-9T-XhO">
+                        <barButtonItem key="leftBarButtonItem" title="Save" id="IbA-PQ-CMI">
+                            <connections>
+                                <action selector="saveLocation:" destination="k4D-Vl-Mqe" id="k9Q-Of-iCe"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="bId-9H-caI">
+                            <connections>
+                                <action selector="cancelLocation:" destination="k4D-Vl-Mqe" id="Ouc-bE-Puz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="NoOfUnitsTextField" destination="C4j-Jt-VTc" id="vF7-Zc-ACD"/>
+                        <outlet property="NotesTextArea" destination="hHs-q0-7uH" id="trC-h0-nh3"/>
+                        <outlet property="canvassingStatusDropDown" destination="Pxa-5A-AMc" id="Isq-Sh-ttU"/>
+                        <outlet property="fullAddressLbl" destination="mb7-PO-bZG" id="LWO-rF-d2M"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YMj-Im-g9P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5172" y="-1308.3958020989505"/>
         </scene>
     </scenes>
     <resources>

@@ -13,5 +13,8 @@ target 'Knock' do
   pod 'Alamofire'
   pod 'Toast-Swift'
   pod 'Charts'
+  pod 'DropDown'
+  pod 'DLRadioButton'
+  pod 'TPKeyboardAvoiding'
 
 end
