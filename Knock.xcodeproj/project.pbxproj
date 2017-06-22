@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */; };
 		5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */; };
+		5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */; };
+		5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */; };
+		5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */; };
 		5D56CF091EE007060019882F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF081EE007060019882F /* AppDelegate.swift */; };
 		5D56CF0E1EE007060019882F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF0C1EE007060019882F /* Main.storyboard */; };
 		5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */; };
@@ -55,8 +58,7 @@
 		5DE3C9A71EF7CBF300012C47 /* SubmitSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9A31EF7CBF300012C47 /* SubmitSurveyViewController.swift */; };
 		5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9A81EF7CF7B00012C47 /* SurveyQuestionDO.swift */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
-		70E7465A1EFBD5C400060D79 /* TenanatHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E746581EFBD5C400060D79 /* TenanatHeaderTableViewCell.swift */; };
-		70E7465B1EFBD5C400060D79 /* TenanatHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E746591EFBD5C400060D79 /* TenanatHeaderTableViewCell.xib */; };
+		70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,9 @@
 		032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Knock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveEditTenantViewController.swift; sourceTree = "<group>"; };
+		5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TenantHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewUnitViewController.swift; sourceTree = "<group>"; };
+		5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantViewCell.swift; sourceTree = "<group>"; };
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D56CF0D1EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -137,8 +142,7 @@
 		5DE3C9A21EF7CBF300012C47 /* SurveyTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyTextViewController.swift; sourceTree = "<group>"; };
 		5DE3C9A31EF7CBF300012C47 /* SubmitSurveyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitSurveyViewController.swift; sourceTree = "<group>"; };
 		5DE3C9A81EF7CF7B00012C47 /* SurveyQuestionDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyQuestionDO.swift; sourceTree = "<group>"; };
-		70E746581EFBD5C400060D79 /* TenanatHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenanatHeaderTableViewCell.swift; sourceTree = "<group>"; };
-		70E746591EFBD5C400060D79 /* TenanatHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TenanatHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -254,6 +258,7 @@
 				5DE3C9921EF3DD8000012C47 /* EditLocationViewController.swift */,
 				5DE3C99A1EF76C6E00012C47 /* MoreOptionsViewController.swift */,
 				5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */,
+				5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -301,12 +306,12 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */,
 				5DE3C9941EF406E200012C47 /* UnitsHeaderTableViewCell.swift */,
 				5DE3C9951EF406E200012C47 /* UnitsHeaderTableViewCell.xib */,
 				5DE3C96E1EF00EA000012C47 /* HeaderTableViewCell.xib */,
 				5DE3C96F1EF00EA000012C47 /* HeaderTableViewCell.swift */,
-				70E746581EFBD5C400060D79 /* TenanatHeaderTableViewCell.swift */,
-				70E746591EFBD5C400060D79 /* TenanatHeaderTableViewCell.xib */,
+				70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 				5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */,
 				5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */,
 				5DE3C99C1EF7A90500012C47 /* SurveyCollectionViewCell.swift */,
+				5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -494,7 +500,7 @@
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
-				70E7465B1EFBD5C400060D79 /* TenanatHeaderTableViewCell.xib in Resources */,
+				5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */,
 				5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,7 +534,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		3C006FB73344B9F646ED5E36 /* [CP] Copy Pods Resources */ = {
@@ -603,8 +609,10 @@
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,
 				5DE3C9A51EF7CBF300012C47 /* SurveyRadioOptionViewController.swift in Sources */,
+				5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */,
+				5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
-				70E7465A1EFBD5C400060D79 /* TenanatHeaderTableViewCell.swift in Sources */,
+				70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */,
 				5DE3C98F1EF3ACEC00012C47 /* UnitsViewController.swift in Sources */,
 				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
 			);

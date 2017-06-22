@@ -37,6 +37,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     var tenantStatus:String = ""
     var inTakeStatus:String = ""
     
+   
     @IBOutlet weak var notesTextArea: UITextView!
     
     @IBOutlet weak var tblTeanantVw: UITableView!
@@ -47,6 +48,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     @IBOutlet weak var chooseSurveyView: UIView!
     @IBOutlet weak var chooseUnitInfoView: UIView!
+    @IBOutlet weak var chooseTenantInfoView: UIView!
     
     @IBOutlet weak var surveyCollectionView: UICollectionView!
     
@@ -84,6 +86,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
          setUpDropDowns()
         
+        NotificationCenter.default.addObserver(self, selector:#selector(MoreOptionsViewController.UpdateTenantView), name: NSNotification.Name(rawValue: "UpdateTenantView"), object:nil
+        )
+        
         fullAddressText.text = "59 Wooster St, New York, NY 10012"// SalesforceConnection.fullAddress
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
@@ -106,17 +111,25 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             chooseUnitInfoView.isHidden = false
             chooseSurveyView.isHidden = true
+            chooseTenantInfoView.isHidden = true
         }
         else if(Utilities.currentSegmentedControl == "Tenant"){
             segmentedControl.selectedSegmentIndex = 1
             
+            chooseTenantInfoView.isHidden = false
+            
             chooseUnitInfoView.isHidden = true
             chooseSurveyView.isHidden = true
+            
+            
+            populateTenantData()
+            
         }
         else if(Utilities.currentSegmentedControl == "Survey"){
             segmentedControl.selectedSegmentIndex = 2
             
             chooseUnitInfoView.isHidden = true
+            chooseTenantInfoView.isHidden = true
             chooseSurveyView.isHidden = false
             
              populateSurveyData()
@@ -128,6 +141,24 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
 
         // Do any additional setup after loading the view.
     }
+    
+    
+    func UpdateTenantView(){
+        populateTenantData()
+    }
+    
+    // Cleanup notifications added in viewDidLoad
+    deinit {
+        NotificationCenter.default.removeObserver("UpdateTenantView")
+    }
+
+    
+    @IBAction func addTenant(_ sender: Any) {
+        
+        self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
+    }
+    
+    
     
     func setSelectedSurveyId(){
         
@@ -219,6 +250,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             }
         }
         
+        self.tblTeanantVw.reloadData()
         
         //self.surveyCollectionView.reloadData()
         
@@ -282,9 +314,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
-    // MARK: UITableView
+    // MARK: UITenantTableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        return tenantDataArray.count
     }
     
     // cell height
@@ -298,7 +330,14 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tenanatId", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TenantViewCell
+        
+        cell.email.text = tenantDataArray[indexPath.row].email
+        cell.phone.text = tenantDataArray[indexPath.row].phone
+        cell.name.text = tenantDataArray[indexPath.row].name
+        cell.age.text = tenantDataArray[indexPath.row].age
+        cell.tenantId.text = tenantDataArray[indexPath.row].tenantId
+       
         
         return cell
     }
@@ -306,11 +345,11 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Dequeue with the reuse identifier
         
-        let identifier = "teanentHeader"
-        var cell: TenanatHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenanatHeaderTableViewCell
+        let identifier = "tenantHeader"
+        var cell: TenantHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
         if cell == nil {
-            tableView.register(UINib(nibName: "TenanatHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenanatHeaderTableViewCell
+            tableView.register(UINib(nibName: "TenantHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
         }
         
         return cell
@@ -351,15 +390,19 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         switch (sender as AnyObject).selectedSegmentIndex {
         case 0:
              chooseSurveyView.isHidden = true
+             chooseTenantInfoView.isHidden = true
              chooseUnitInfoView.isHidden = false
              Utilities.currentSegmentedControl = "Unit"
         case 1:
+             chooseTenantInfoView.isHidden = false
              chooseSurveyView.isHidden = true
              chooseUnitInfoView.isHidden = true
              Utilities.currentSegmentedControl = "Tenant"
+             populateTenantData()
         case 2:
              chooseSurveyView.isHidden = false
              chooseUnitInfoView.isHidden = true
+             chooseTenantInfoView.isHidden = true
              Utilities.currentSegmentedControl = "Survey"
              populateSurveyData()
              setSelectedSurveyId()
@@ -368,6 +411,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         default:
             chooseSurveyView.isHidden = false
             chooseUnitInfoView.isHidden = false
+            chooseTenantInfoView.isHidden = false
             Utilities.currentSegmentedControl = "Default"
         }
     }
@@ -378,10 +422,6 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     @IBAction func save(_ sender: Any) {
 
-         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
-        
-      
-        /*
   if(Utilities.currentSegmentedControl == "Survey"){
             
     
@@ -482,7 +522,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     }
  
- */
+
         
    
         

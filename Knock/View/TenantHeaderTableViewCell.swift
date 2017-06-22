@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TenanatHeaderTableViewCell: UITableViewCell {
+class TenantHeaderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -167,6 +167,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             
                             SalesforceConnection.locationId = self!.locationId
                             
+                             SalesforceConnection.assignmentLocationId = (self?.locDataArray[0].assignmentLocId)!
+                            
                             IsInitialViewPoint = false
                         }
                         
@@ -191,6 +193,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             self.locationId = (self.locDataArray[0].locId)
             
             SalesforceConnection.locationId = self.locationId
+            
+             SalesforceConnection.assignmentLocationId = (self.locDataArray[0].assignmentLocId)
             
         }
         self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
@@ -234,8 +238,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             
             for locationData in locationResults{
                 
-                let locationName = locationData.street! + " " + locationData.city!
-                
+                let locationName = locationData.street!
                 let partialAddressData = locationData.city! + ", " + locationData.state! + ", " + locationData.zip!
 
                 
@@ -548,6 +551,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         // endEditing can trigger some other action according to requirements
        
         SalesforceConnection.locationId = locDataArray[indexPath.row].locId
+        
+        SalesforceConnection.assignmentLocationId = locDataArray[indexPath.row].assignmentLocId
         
         SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
         

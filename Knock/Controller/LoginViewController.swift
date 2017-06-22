@@ -489,7 +489,7 @@ class LoginViewController: UIViewController {
                                 tenantObject.age = tenantData["age"] as? String  ?? ""
                                 tenantObject.assignmentId = assignmentObject.id!
                                 tenantObject.locationId = locationObject.id!
-                                tenantObject.unitId = locationObject.id!
+                                tenantObject.unitId = unitObject.id!
                                 
                                 appDelegate.saveContext()
                                 

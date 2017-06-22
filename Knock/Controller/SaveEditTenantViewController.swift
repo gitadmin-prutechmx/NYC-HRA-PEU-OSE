@@ -10,6 +10,7 @@ import UIKit
 
 class SaveEditTenantViewController: UIViewController
 {
+    @IBOutlet weak var lastNameView: UIView!
     
     @IBOutlet weak var firstNameTxtField: UITextField!
     
@@ -25,7 +26,22 @@ class SaveEditTenantViewController: UIViewController
     
 var picker = UIDatePicker()
     
+    
     @IBOutlet weak var txtDob: UITextField!
+    
+    
+    
+    
+    var firstName:String = ""
+    
+    var lastName:String = ""
+    
+    var email:String = ""
+    
+    var phone:String = ""
+    
+    var dob:String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,9 +52,9 @@ var picker = UIDatePicker()
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
         
         
-        let todayBtn = UIBarButtonItem(title: "Today", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.tappedToolBarBtn))
+        let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.cancelPressed))
         
-        let okBarBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SaveEditTenantViewController.donePressed))
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SaveEditTenantViewController.donePressed))
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         
@@ -50,13 +66,13 @@ var picker = UIDatePicker()
         
         label.textColor = UIColor.white
         
-        label.text = "Select a due date"
+        label.text = "Select a DOB"
         
         label.textAlignment = NSTextAlignment.center
         
         let textBtn = UIBarButtonItem(customView: label)
         
-        toolBar.setItems([todayBtn,flexSpace,textBtn,flexSpace,okBarBtn], animated: true)
+        toolBar.setItems([cancelBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
         
         txtDob.inputAccessoryView = toolBar
 
@@ -72,9 +88,318 @@ var picker = UIDatePicker()
     }
     
     @IBAction func save(_ sender: Any) {
-       self.navigationController?.popViewController(animated: true);
+        
+        self.saveTenantInfo()
+      
     }
     
+    
+    func isValidEmail(testStr:String) -> Bool {
+        // print("validate calendar: \(testStr)")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+    
+    func saveTenantInfo(){
+        
+        var editTenantDict : [String:String] = [:]
+        
+        var updateTenant : [String:String] = [:]
+        
+        
+        
+        
+        
+        if let lastNameTemp = lastNameTxtField.text{
+            
+            lastName = lastNameTemp
+            
+        }
+        
+        
+        
+        if(lastName.isEmpty){
+            
+            lastNameView.shake()
+            
+            self.view.makeToast("Please fill last name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if let phoneTemp = phoneTextField.text{
+            
+            phone = phoneTemp
+            
+        }
+        
+        if(!phone.isEmpty && phone.characters.count < 10){
+            
+            self.view.makeToast("Phone number should be in 10 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if let emailTemp = emailTxtField.text{
+            
+            email = emailTemp
+            
+        }
+        
+        if(!email.isEmpty && !isValidEmail(testStr: email)){
+            
+            self.view.makeToast("Email should be in proper format.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+
+
+        
+        
+            
+            if let firstNameTemp = firstNameTxtField.text{
+                
+                firstName = firstNameTemp
+                
+            }
+            
+        
+            
+        
+            
+            if let dobTemp = txtDob.text{
+                
+                dob = dobTemp
+                
+            }
+            
+            
+            
+        
+        
+            
+            
+            
+            editTenantDict["locationUnitId"] = SalesforceConnection.unitId
+            
+            editTenantDict["firstName"] = firstName
+            
+            editTenantDict["lastName"] = lastName
+            
+            editTenantDict["email"] = email
+            
+            editTenantDict["phone"] = phone
+            
+            editTenantDict["birthdate"] = dob
+            
+            
+            
+        
+            
+            
+            let convertedString = Utilities.jsonToString(json: editTenantDict as AnyObject)
+            
+            
+            
+            let encryptEditTenantStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            
+            
+            
+            updateTenant["tenant"] = encryptEditTenantStr
+            
+            
+            
+            SVProgressHUD.show(withStatus: "Saving tenant...", maskType: SVProgressHUDMaskType.gradient)
+        
+        
+    SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        
+            if(response)
+                
+            {
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createTenant, params: updateTenant){ jsonData in
+                    
+                    
+                    
+                   // self.saveTenantInCoreData()
+                    
+                    
+                    
+                    
+                    
+                    SVProgressHUD.dismiss()
+                    
+                    self.parseResponse(jsonObject: jsonData.1)
+                    
+                    
+//                    self.view.makeToast("Tenant information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                        
+//                        if didTap {
+//                            
+//                            self.navigationController?.popViewController(animated: true);
+//                            
+//                        } else {
+//                            
+//                            self.navigationController?.popViewController(animated: true);
+//                            
+//                        }
+//                        
+//                    }
+                    
+                    
+                    
+                    //print(jsonData.1)
+                    
+                    
+                    
+                }
+                
+            }
+            
+            
+        }
+        
+        
+        
+            
+    }
+    
+    func parseResponse(jsonObject: Dictionary<String, AnyObject>){
+     
+        guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let tenantDataDict = jsonObject["tenantData"] as? [String: AnyObject] else { return }
+        
+        
+
+        
+        if(isError == false){
+            
+           
+                
+                let tenantObject = Tenant(context: context)
+                
+                
+                tenantObject.id = tenantDataDict["tenantId"] as! String?
+                
+                 tenantObject.name = firstName + " " + lastName
+                 
+                 tenantObject.phone = phone
+                 
+                 tenantObject.email = email
+                
+                 tenantObject.age = ""
+                
+                
+                
+                tenantObject.assignmentId = SalesforceConnection.assignmentId
+                
+                tenantObject.locationId = SalesforceConnection.locationId
+                
+                tenantObject.unitId = SalesforceConnection.unitId
+                
+                
+                
+                appDelegate.saveContext()
+                
+                
+                
+            
+            
+            
+            
+            self.view.makeToast("Tenant information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+                    
+                    
+
+                    self.navigationController?.popViewController(animated: true);
+                    
+                } else {
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+                    
+                    
+
+                    self.navigationController?.popViewController(animated: true);
+                    
+                }
+                
+            }
+            
+            
+            
+            
+            
+        }
+            
+        else{
+            
+            self.view.makeToast("Error while updating Tenant info", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    
+                    print("completion from tap")
+                    
+                } else {
+                    
+                    print("completion without tap")
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+    
+   
     @IBAction func editingDidBegain(_ sender: UITextField)
     {
        // let datePickerView: UIDatePicker = UIDatePicker()
@@ -83,7 +408,8 @@ var picker = UIDatePicker()
         sender.inputView = picker
         
        // txtDob.inputView = picker
-        picker.addTarget(self, action: #selector(SaveEditTenantViewController.datePickerValueChanged), for: UIControlEvents.valueChanged)
+        
+       // picker.addTarget(self, action: #selector(SaveEditTenantViewController.datePickerValueChanged), for: UIControlEvents.valueChanged)
         
         
         
@@ -92,25 +418,24 @@ var picker = UIDatePicker()
     func datePickerValueChanged(sender: UIDatePicker) {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         txtDob.text = dateFormatter.string(from: picker.date)
         //txtDob.text = dateFormatter.string(from: sender.date)
         
     }
+    
   
-    func tappedToolBarBtn(sender: UIBarButtonItem)
+    func cancelPressed(sender: UIBarButtonItem)
     {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        txtDob.text = dateFormatter.string(from: picker.date)
-
-        //txtDob.text = dateformatter.string(from: NSDate() as Date)
         
         txtDob.resignFirstResponder()
     }
 
     func donePressed(sender: UIBarButtonItem) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        txtDob.text = dateFormatter.string(from: picker.date)
         
         txtDob.resignFirstResponder()
         
@@ -129,3 +454,5 @@ var picker = UIDatePicker()
     */
 
 }
+
+

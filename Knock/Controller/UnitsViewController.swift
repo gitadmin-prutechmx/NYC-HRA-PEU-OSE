@@ -20,13 +20,13 @@ struct UnitsDataStruct
 }
 
 
-class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
    
 
     @IBOutlet weak var menuBtn: UIBarButtonItem!
     
-    @IBOutlet weak var floorFilterView: UIView!
+   
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
@@ -36,8 +36,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     @IBOutlet weak var toolBarView: UIView!
     
     
-    @IBOutlet weak var floorSelectImage: UIImageView!
-    @IBOutlet weak var floorTextField: UITextField!
+    
     var locId:String!
     var locName:String!
     var updatedUnitId:String?
@@ -54,16 +53,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     @IBOutlet weak var newCaseLbl: UILabel!
     
     
-    let picker_values = ["val 1", "val 2", "val 3", "val 4"]
-    var floorFilteredArray = [String]()
-    var selectedFloorValue:String = "All"
+    
     
     var UnitDataArray = [UnitsDataStruct]()
-    
-    var myPicker: UIPickerView! = UIPickerView()
+   
     
     @IBOutlet weak var unitView: UIStackView!
     @IBOutlet weak var cellContentView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,18 +91,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         newCaseLbl.addGestureRecognizer(newCaseTapGesture)
         // make sure imageView can be interacted with by user
         newCaseLbl.isUserInteractionEnabled = true
-        
-       /* let floorFilterViewTapGesture = UITapGestureRecognizer(target: self, action: Selector(("FloorFilterViewTapped:")))
-        
-        // add it to the image view;
-        floorFilterView.addGestureRecognizer(floorFilterViewTapGesture)
-        // make sure imageView can be interacted with by user
-        floorFilterView.isUserInteractionEnabled = true
-        
-        */
-        
-        
-    
+      
          NotificationCenter.default.addObserver(self, selector:#selector(UnitsViewController.UpdateUnitView), name: NSNotification.Name(rawValue: "UpdateUnitView"), object:nil
         )
         
@@ -137,21 +123,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         //SalesforceRestApi.currentFullAddress = locName
       
         
-       
-        self.myPicker  = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 300))
-        //self.myPicker.backgroundColor = .whiteColor()
-        self.myPicker.showsSelectionIndicator = true
-        self.myPicker.delegate = self
-        self.myPicker.dataSource = self
-        
-       /* let openFloorPickerTapGesture = UITapGestureRecognizer(target: self, action: Selector(("OpenFloorPickerTapped:")))
-        
-        // add it to the image view;
-        floorSelectImage.addGestureRecognizer(openFloorPickerTapGesture)
-        // make sure imageView can be interacted with by user
-        floorSelectImage.isUserInteractionEnabled = true
- 
- */
         
     }
     
@@ -185,7 +156,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func NewUnitLblTapped(gesture: UIGestureRecognizer) {
         // if the tapped view is a UIImageView then set it to imageview
-       // self.performSegue(withIdentifier: "showAddNewUnitIdentifier", sender: nil)
+        self.performSegue(withIdentifier: "showAddUnitIdentifier", sender: nil)
     }
     
     func NewCaseLblTapped(gesture: UIGestureRecognizer) {
@@ -193,15 +164,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         //self.performSegue(withIdentifier: "showAddNewCaseIdentifier", sender: nil)
     }
     
-    func OpenFloorPickerTapped(gesture: UIGestureRecognizer) {
-        self.floorTextField.becomeFirstResponder()
-    }
-    
-    func FloorFilterViewTapped(gesture: UIGestureRecognizer) {
-        self.floorTextField.becomeFirstResponder()
-    }
-    
-    
+   
     
     
     func UpdateUnitView(){
@@ -222,7 +185,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     func updateTableViewData(){
         
        UnitDataArray = [UnitsDataStruct]()
-       OriginalUnitDataArray = [UnitsDataStruct]()
        floorArray = []
         
         
@@ -233,29 +195,24 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             for unitData in unitResults{
                 
-                if(unitData.floor! != ""){
-                    floorArray.append(unitData.floor!)
-                }
-                
-                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, floor: unitData.floor!, surveyStatus: "", syncDate: "",assignmentLocUnitId:unitData.assignmentLocUnitId!)
+//                if(unitData.floor! != ""){
+//                    floorArray.append(unitData.floor!)
+//                }
+//                
+                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, floor: "", surveyStatus: "", syncDate: "",assignmentLocUnitId:unitData.assignmentLocUnitId!)
                 
                 UnitDataArray.append(objectUnitStruct)
                 
             }
         }
         
-        OriginalUnitDataArray = UnitDataArray
-        
-        
-        floorFilteredArray = removeDuplicates(array: floorArray)
-        floorFilteredArray.insert("All", at: 0)
         
 
        // self.floorTextField.text = "All"
        // self.tableView.reloadData()
         
          DispatchQueue.main.async {
-            self.floorTextField.text = "All"
+           
             self.tableView.reloadData()
             self.viewDidLayoutSubviews()
         }
@@ -963,12 +920,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
-    @IBAction func NewUnitBtn(sender: AnyObject) {
-        
-        
-        //self.performSegue(withIdentifier: "showAddNewUnitIdentifier", sender: sender)
+   
+    @IBAction func NewUnit(_ sender: Any) {
+        self.performSegue(withIdentifier: "showAddUnitIdentifier", sender: sender)
     }
-    
     
     @IBAction func NewCaseBtn(sender: AnyObject) {
         
@@ -979,96 +934,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     
-    func cancelPicker() {
-        //Remove view when select cancel
-        self.floorTextField.resignFirstResponder() // To resign the inputView on clicking done.
-    }
-    
-    var filterActive : Bool = false
-    var filteredStruct = [UnitsDataStruct]()
-    var OriginalUnitDataArray = [UnitsDataStruct]()
-    
-    func doneButton() {
-        //Remove view when select cancel
-        self.floorTextField.resignFirstResponder() // To resign the inputView on clicking done.
-        floorTextField.text = selectedFloorValue
-        
-        
-        if(selectedFloorValue != "All"){
-            
-            filteredStruct = OriginalUnitDataArray.filter {
-                
-                $0.floor  == selectedFloorValue
-            }
-            
-            UnitDataArray = filteredStruct
-            print(UnitDataArray.count)
-        }
-        else{
-            
-            UnitDataArray = OriginalUnitDataArray
-        }
-        
-        if(UnitDataArray.count == 0){
-            filterActive = false;
-        } else {
-            filterActive = true;
-        }
-        self.tableView.reloadData()
-        
-        
-        
-    }
     
     
     //MARK: - Delegates and data sources
     
-    @available(iOS 2.0, *)
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-         return 1
-    }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return floorFilteredArray.count
-    }
-    
-    //MARK: Delegates
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return floorFilteredArray[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedFloorValue = floorFilteredArray[row]
-    }
-    
-    
-    @IBAction func textFieldShouldBeginEditing(sender: UITextField) {
-        
-        
-        
-        
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 255/255, alpha: 1)
-        toolBar.sizeToFit()
-        
-        
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.bordered, target: self, action: #selector(UnitsViewController.doneButton))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.bordered, target: self, action: #selector(UnitsViewController.cancelPicker))
-        
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        
-        sender.inputView = myPicker
-        sender.inputAccessoryView = toolBar
-       
-    }
+  
     
     @IBAction func UnwindBackFromSurvey(segue:UIStoryboardSegue) {
         
