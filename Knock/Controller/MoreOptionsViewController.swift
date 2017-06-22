@@ -28,7 +28,7 @@ struct TenantDataStruct
 }
 
 
-class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource {
     
     var attempt:String = ""
     var contact:String = ""
@@ -38,6 +38,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     var inTakeStatus:String = ""
     
     @IBOutlet weak var notesTextArea: UITextView!
+    
+    @IBOutlet weak var tblTeanantVw: UITableView!
 
     @IBOutlet weak var ChooseInTakeStatusBtn: UIButton!
     @IBOutlet weak var ChooseTenantStatusBtn: UIButton!
@@ -97,8 +99,6 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         //NotesTextArea.text = "Description"
         notesTextArea.textColor = UIColor.black
 
-        
-        
        
         
         if(Utilities.currentSegmentedControl == "Unit"){
@@ -281,6 +281,45 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         
     }
+    
+    // MARK: UITableView
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 9
+    }
+    
+    // cell height
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tenanatId", for: indexPath)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // Dequeue with the reuse identifier
+        
+        let identifier = "teanentHeader"
+        var cell: TenanatHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenanatHeaderTableViewCell
+        if cell == nil {
+            tableView.register(UINib(nibName: "TenanatHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenanatHeaderTableViewCell
+        }
+        
+        return cell
+        
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return  44.0
+    }
+
     
     @IBAction func selectAttempt(_ sender: DLRadioButton) {
          attempt = sender.selected()!.titleLabel!.text!
