@@ -10,6 +10,19 @@ import UIKit
 
 class SaveEditTenantViewController: UIViewController
 {
+    
+    @IBOutlet weak var firstNameTxtField: UITextField!
+    
+    @IBOutlet weak var lastNameTxtField: UITextField!
+    
+    @IBOutlet weak var emailTxtField: UITextField!
+    
+    
+    @IBOutlet weak var phoneTextField: UITextField!
+    
+    
+    @IBOutlet weak var dobTextField: UITextField!
+    
 var picker = UIDatePicker()
     
     @IBOutlet weak var txtDob: UITextField!

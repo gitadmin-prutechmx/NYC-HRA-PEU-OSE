@@ -395,19 +395,19 @@ class LoginViewController: UIViewController {
                 assignmentObject.id = assignmentData["assignmentId"] as? String  ?? ""
                 assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""
                 
-              /*  "totalSurvey":0,
-                "totalLocationUnit":18,
-                "totalLocation":12,
-                */
+              
                 
                 assignmentObject.status = assignmentData["status"] as? String  ?? ""
                 assignmentObject.eventId = eventObject.id
                 
-             /*   assignmentObject.totalLocations = (assignmentData["totalLocation"] as? Int64)!
+               assignmentObject.totalLocations = String(assignmentData["totalLocation"] as! Int)
+               assignmentObject.totalUnits = String(assignmentData["totalLocationUnit"] as! Int)
+               assignmentObject.totalSurvey = String(assignmentData["totalSurvey"] as! Int)
+               assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
                 
-                 assignmentObject.totalUnits = (assignmentData["totalLocationUnit"] as? Int64)!
+               //var totalSurveyTemp = assignmentData["totalSurvey"] as! Int
+               //var totalCanvassedTemp = assignmentData["totalCanvassed"] as! Int
                 
- */
                 assignmentIdArray.append(assignmentObject.id!)
                 
                 
@@ -415,7 +415,7 @@ class LoginViewController: UIViewController {
                  guard let locationResults = assignmentData["assignmentLocation"] as? [[String: AnyObject]]  else { break }
                 
 
-                 var totalUnits = 0;
+             /*    var totalUnits = 0;
                 
                 if(locationResults.count>0){
                     
@@ -436,7 +436,7 @@ class LoginViewController: UIViewController {
                 
                assignmentObject.totalUnits = String(totalUnits)
                 
-
+*/
                 
                 
                 

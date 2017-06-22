@@ -19,4 +19,6 @@ class SalesforceRestApiUrl{
     static let updateLocation = "/services/apexrest/updateLocation"
     
     static let updateUnit = "/services/apexrest/updateUnit"
+    
+    static let createTenant = "/services/apexrest/createTenant"
 }
