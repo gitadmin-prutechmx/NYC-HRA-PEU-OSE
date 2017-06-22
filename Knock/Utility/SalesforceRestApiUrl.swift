@@ -15,4 +15,8 @@ class SalesforceRestApiUrl{
     static let getAllSurveyData = "/services/apexrest/assignmentSurvey"
     
     static let submitSurveyResponse = "/services/apexrest/surveyresponse"
+    
+    static let updateLocation = "/services/apexrest/updateLocation"
+    
+    static let updateUnit = "/services/apexrest/updateUnit"
 }

@@ -14,8 +14,13 @@ class SalesforceConnection{
     
     
     static var assignmentId:String = ""
+    
     static var locationId:String = ""
+    static var assignmentLocationId:String = ""
+    
     static var unitId:String = ""
+    static var assignmentLocationUnitId:String = ""
+    
     static var unitName:String = ""
     static var surveyId:String = ""
     static var fullAddress:String = ""

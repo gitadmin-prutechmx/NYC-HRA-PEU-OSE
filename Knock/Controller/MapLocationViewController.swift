@@ -14,6 +14,7 @@ struct locationDataStruct
     var locId : String = ""
     var locName : String = ""
     var fullAddress: String = ""
+    var assignmentLocId:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
@@ -191,6 +192,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         SalesforceConnection.locationId =  locDataArray[indexRow!].locId
         
+        SalesforceConnection.assignmentLocationId = locDataArray[indexRow!].assignmentLocId
+        
+        SalesforceConnection.fullAddress =  locDataArray[indexRow!].fullAddress
         
 
         
@@ -212,7 +216,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             
             for locationData in locationResults{
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: "NO LOCATION NAME",fullAddress: locationData.name!)
+                
+                
+        let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: "NO LOCATION NAME",fullAddress: locationData.name!,assignmentLocId:locationData.assignmentLocId!)
                 
                 
                 locDataArray.append(objectLocStruct)
@@ -493,14 +499,18 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             cell.dataFullAddress.text = filteredStruct[indexPath.row].fullAddress
             cell.dataLocation.text = filteredStruct[indexPath.row].locName
             cell.dataLocId.text = filteredStruct[indexPath.row].locId
+           // cell.dataLocId.text = filteredStruct[indexPath.row].assignmentLocId
         }
         else{
             
             cell.dataLocation.text = locDataArray[indexPath.row].locName
             cell.dataFullAddress.text = locDataArray[indexPath.row].fullAddress
             cell.dataLocId.text = locDataArray[indexPath.row].locId
+           // cell.dataLocId.text = locDataArray[indexPath.row].assignmentLocId
             
         }
+        
+        
          cell.editLocBtn.tag = indexPath.row
         
         return cell

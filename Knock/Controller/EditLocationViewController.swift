@@ -12,6 +12,8 @@ import DLRadioButton
 
 class EditLocationViewController: UIViewController {
     
+     var attempt:String = ""
+     var canvassingStatus:String = ""
     
     @IBOutlet weak var fullAddressLbl: UILabel!
 
@@ -37,6 +39,8 @@ class EditLocationViewController: UIViewController {
         
        setupStatusDropDown()
         
+        fullAddressLbl.text = SalesforceConnection.fullAddress
+        
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
@@ -47,7 +51,7 @@ class EditLocationViewController: UIViewController {
         NotesTextArea.clipsToBounds = true
         
         //NotesTextArea.text = "Description"
-        NotesTextArea.textColor = UIColor.lightGray
+        NotesTextArea.textColor = UIColor.black
         
 
 
@@ -79,8 +83,11 @@ class EditLocationViewController: UIViewController {
         
         // Action triggered on selection
         chooseStatusDropDown.selectionAction = { [unowned self] (index, item) in
+            
+            self.canvassingStatus = item
             self.canvassingStatusDropDown.setTitle(item, for: .normal)
         }
+        
         
         // Action triggered on dropdown cancelation (hide)
         //		dropDown.cancelAction = { [unowned self] in
@@ -102,26 +109,126 @@ class EditLocationViewController: UIViewController {
         chooseStatusDropDown.show()
     }
     
-    
+   
     @IBAction func selectAttempt(_ sender: DLRadioButton) {
+        
+       
+        attempt = sender.selected()!.titleLabel!.text!
+        
+//        if (sender.isMultipleSelectionEnabled) {
+//            for button in sender.selectedButtons() {
+//                print(String(format: "%@ is selected.\n", button.titleLabel!.text!));
+//            }
+//        } else {
+//            print(String(format: "%@ is selected.\n", sender.selected()!.titleLabel!.text!));
+//        }
+//        
+//    }
+
     }
 
     @IBAction func saveLocation(_ sender: Any) {
-         self.dismiss(animated: true, completion: nil)
+        
+        /*  { \"canvassingStatus\":\"Canvassed\",\"assignmentLocationId\":\"a0K35000000rhQw\",\"Notes\":\"jaipur Notes\",\"attempt\":\"Yes\",\"numberOfUnits\":\"5\"}
+         */
+        
+        var editLocDict : [String:String] = [:]
+        var updateLocation : [String:String] = [:]
+        
+        var numberOfUnits:String = ""
+        if let numberofUnitsTemp = NoOfUnitsTextField.text{
+            numberOfUnits = numberofUnitsTemp
+        }
+        
+        var notes:String = ""
+        if let notesTemp = NotesTextArea.text{
+            notes = notesTemp
+        }
+        
+        
+         editLocDict["canvassingStatus"] = canvassingStatus
+         editLocDict["assignmentLocationId"] = SalesforceConnection.assignmentLocationId
+         editLocDict["Notes"] = notes
+         editLocDict["attempt"] = attempt
+         editLocDict["numberOfUnits"] = numberOfUnits
+        
+         //updateLocation["assignmentIds"] = editLocDict as AnyObject?
+        
+        let convertedString = Utilities.jsonToString(json: editLocDict as AnyObject)
+        
+        let encryptEditLocStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+        
+        updateLocation["location"] = encryptEditLocStr
+        
+          SVProgressHUD.show(withStatus: "Updating location...", maskType: SVProgressHUDMaskType.gradient)
+        
+        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+            
+            if(response)
+            {
+
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: updateLocation){ jsonData in
+            
+                    SVProgressHUD.dismiss()
+                    self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        if didTap {
+                            self.dismiss(animated: true, completion: nil)
+                        } else {
+                             self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                   
+                    
+            
+                    //print(jsonData.1)
+                    //self.parseMessage(jsonObject: jsonData.1)
+                }
+            }
+
+        }
+        
+        
+            
+        
+        
+    }
+    
+    
+    func parseMessage(jsonObject: Dictionary<String, AnyObject>){
+    
+        guard let isError = jsonObject["hasError"] as? Int64 else { return }
+        
+       
+      
+ 
+        
+        if(isError == 0){
+            self.view.makeToast("Location has been updated successfully.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    print("completion from tap")
+                } else {
+                    print("completion without tap")
+                }
+            }
+             self.dismiss(animated: true, completion: nil)
+        }
+        else{
+            self.view.makeToast("Error while updating location", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    print("completion from tap")
+                } else {
+                    print("completion without tap")
+                }
+            }
+
+        }
+        
     }
     
     @IBAction func cancelLocation(_ sender: Any) {
          self.dismiss(animated: true, completion: nil)
     }
     
-    
-    
-//    @IBAction func saveLocation(_ sender: Any) {
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//
-//    @IBAction func cancelLocation(_ sender: Any) {
-//        self.dismiss(animated: true, completion: nil)
-//    }
+
    
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import DLRadioButton
+import DropDown
 
 struct SurveyDataStruct
 {
@@ -18,8 +20,21 @@ struct SurveyDataStruct
 
 class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-   
+    var attempt:String = ""
+    var contact:String = ""
+    var reknockNeeded:String = ""
+    
+    var tenantStatus:String = ""
+    var inTakeStatus:String = ""
+    
+    @IBOutlet weak var notesTextArea: UITextView!
+
+    @IBOutlet weak var ChooseInTakeStatusBtn: UIButton!
+    @IBOutlet weak var ChooseTenantStatusBtn: UIButton!
+    
+    
     @IBOutlet weak var chooseSurveyView: UIView!
+    @IBOutlet weak var chooseUnitInfoView: UIView!
     
     @IBOutlet weak var surveyCollectionView: UICollectionView!
     
@@ -35,9 +50,23 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     var surveyUnitResults = [SurveyUnit]()
     
 
+    let chooseTenantStatusDropDown = DropDown()
+    let chooseInTakeStatusDropDown = DropDown()
+    
+    
+    
+    lazy var dropDowns: [DropDown] = {
+        return [
+            self.chooseTenantStatusDropDown,
+            self.chooseInTakeStatusDropDown
+        ]
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+         setUpDropDowns()
         
         fullAddressText.text = "59 Wooster St, New York, NY 10012"// SalesforceConnection.fullAddress
         
@@ -45,32 +74,39 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
-        populateSurveyData()
+        
+        notesTextArea.layer.cornerRadius = 5
+        notesTextArea.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
+        notesTextArea.layer.borderWidth = 0.5
+        notesTextArea.clipsToBounds = true
+        
+        //NotesTextArea.text = "Description"
+        notesTextArea.textColor = UIColor.black
+
+        
+        
+       
         
         if(Utilities.currentSegmentedControl == "Unit"){
             segmentedControl.selectedSegmentIndex = 0
             
+            chooseUnitInfoView.isHidden = false
             chooseSurveyView.isHidden = true
         }
         else if(Utilities.currentSegmentedControl == "Tenant"){
             segmentedControl.selectedSegmentIndex = 1
             
+            chooseUnitInfoView.isHidden = true
             chooseSurveyView.isHidden = true
         }
         else if(Utilities.currentSegmentedControl == "Survey"){
             segmentedControl.selectedSegmentIndex = 2
             
+            chooseUnitInfoView.isHidden = true
             chooseSurveyView.isHidden = false
             
-            surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId,isPredicate:true) as! [SurveyUnit]
-            
-            if(surveyUnitResults.count == 1){
-                selectedSurveyId = surveyUnitResults[0].surveyId!
-            }
-            else{
-                selectedSurveyId = ""
-            }
-            
+             populateSurveyData()
+            setSelectedSurveyId()
             
             
            
@@ -79,9 +115,80 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         // Do any additional setup after loading the view.
     }
     
+    func setSelectedSurveyId(){
+        
+        surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId,isPredicate:true) as! [SurveyUnit]
+        
+        if(surveyUnitResults.count == 1){
+            selectedSurveyId = surveyUnitResults[0].surveyId!
+        }
+        else{
+            selectedSurveyId = ""
+        }
+
+    }
+    
+    func setUpDropDowns(){
+        setUpTenantStatusDropDown()
+        setUpInTakeStatusDropDown()
+
+    }
+    
+    func setUpTenantStatusDropDown(){
+        chooseTenantStatusDropDown.anchorView = ChooseTenantStatusBtn
+        
+        
+        chooseTenantStatusDropDown.bottomOffset = CGPoint(x: 0, y: ChooseTenantStatusBtn.bounds.height)
+        
+        // You can also use localizationKeysDataSource instead. Check the docs.
+        chooseTenantStatusDropDown.dataSource = [
+            "Not Home",
+            "Refused",
+            "Vacant",
+            "Do Not Attempt",
+            "Canvass Again"
+        ]
+        
+        // Action triggered on selection
+        chooseTenantStatusDropDown.selectionAction = { [unowned self] (index, item) in
+            
+            self.tenantStatus = item
+            self.ChooseTenantStatusBtn.setTitle(item, for: .normal)
+        }
+
+    }
+    
+    func setUpInTakeStatusDropDown(){
+        chooseInTakeStatusDropDown.anchorView = ChooseInTakeStatusBtn
+        
+        
+        chooseInTakeStatusDropDown.bottomOffset = CGPoint(x: 0, y: ChooseInTakeStatusBtn.bounds.height)
+        
+        // You can also use localizationKeysDataSource instead. Check the docs.
+        chooseInTakeStatusDropDown.dataSource = [
+            "No Issues",
+            "Refused",
+            "Not Primary Tenant",
+            "Superintendent Door",
+            "Landlords Door",
+            "Privacy Concern",
+            "Left Contact Info",
+            "Laguage Barrier"
+        ]
+        
+        // Action triggered on selection
+        chooseInTakeStatusDropDown.selectionAction = { [unowned self] (index, item) in
+            
+            self.inTakeStatus = item
+            self.ChooseInTakeStatusBtn.setTitle(item, for: .normal)
+        }
+        
+    }
+    
     
     func populateSurveyData(){
         
+        surveyDataArray = [SurveyDataStruct]()
         //let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Unit]
         
         let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
@@ -120,23 +227,54 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
+    @IBAction func selectAttempt(_ sender: DLRadioButton) {
+         attempt = sender.selected()!.titleLabel!.text!
+    }
 
+    
+    @IBAction func selectContact(_ sender: DLRadioButton) {
+         contact = sender.selected()!.titleLabel!.text!
+    }
+    
+    
+    @IBAction func selectReknock(_ sender: DLRadioButton) {
+         reknockNeeded = sender.selected()!.titleLabel!.text!
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func selectTenantStatus(_ sender: Any) {
+        chooseTenantStatusDropDown.show()
+    }
+    
+    @IBAction func selectInTakeStatus(_ sender: Any) {
+        chooseInTakeStatusDropDown.show()
     }
     
     @IBAction func changeSegmented(_ sender: Any) {
         switch (sender as AnyObject).selectedSegmentIndex {
         case 0:
              chooseSurveyView.isHidden = true
+             chooseUnitInfoView.isHidden = false
+             Utilities.currentSegmentedControl = "Unit"
         case 1:
              chooseSurveyView.isHidden = true
+             chooseUnitInfoView.isHidden = true
+             Utilities.currentSegmentedControl = "Tenant"
         case 2:
              chooseSurveyView.isHidden = false
+             chooseUnitInfoView.isHidden = true
+             Utilities.currentSegmentedControl = "Survey"
+             populateSurveyData()
+             setSelectedSurveyId()
+            
+            
         default:
             chooseSurveyView.isHidden = false
+            chooseUnitInfoView.isHidden = false
+            Utilities.currentSegmentedControl = "Default"
         }
     }
 
@@ -168,9 +306,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 if didTap {
-                    print("completion from tap")
+                    self.dismiss(animated: true, completion: nil)
                 } else {
-                    print("completion without tap")
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
             
@@ -180,10 +318,82 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             //update
              ManageCoreData.updateData(salesforceEntityName: "SurveyUnit", valueToBeUpdate: selectedSurveyId,updatekey:"surveyId", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
             
+            self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+            
         }
     }
         
-  }
+  else  if(Utilities.currentSegmentedControl == "Unit"){
+    
+    var editUnitDict : [String:String] = [:]
+    var updateUnit : [String:String] = [:]
+    
+   
+    
+    var notes:String = ""
+    if let notesTemp = notesTextArea.text{
+        notes = notesTemp
+    }
+    
+    /*
+     { \r\n   \"assignmentLocationUnitId\":\"a0L35000000F6Ab\",\r\n   \"contact\":\"Yes\",\r\n   \"attempt\":\"No\",\r\n   \"notes\":\"test test\",\r\n   \"surveyId\":\"a0G35000000kQfv\",\r\n   \"tenantStatus\":\"Not Home\",\r\n\"intakeStatus\":\"No Issues\",\r\n\"reKnockNeeded\":\"Yes\"\r\n}
+     
+ 
+ */
+        
+    editUnitDict["tenantStatus"] = tenantStatus
+    editUnitDict["assignmentLocationUnitId"] = SalesforceConnection.assignmentLocationUnitId
+    editUnitDict["notes"] = notes
+    editUnitDict["attempt"] = attempt
+    editUnitDict["contact"] = contact
+    editUnitDict["reKnockNeeded"] = reknockNeeded
+    editUnitDict["intakeStatus"] = inTakeStatus
+    
+    //updateLocation["assignmentIds"] = editLocDict as AnyObject?
+    
+    let convertedString = Utilities.jsonToString(json: editUnitDict as AnyObject)
+    
+    let encryptEditUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+    
+    updateUnit["unit"] = encryptEditUnitStr
+    
+    SVProgressHUD.show(withStatus: "Updating unit...", maskType: SVProgressHUDMaskType.gradient)
+    
+    SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        
+        if(response)
+        {
+            
+            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
+                
+                SVProgressHUD.dismiss()
+                self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+                
+                
+                
+                //print(jsonData.1)
+                //self.parseMessage(jsonObject: jsonData.1)
+            }
+        }
+        
+    }
+
+    
+    }
+        
+}
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return surveyDataArray.count
@@ -216,7 +426,11 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.centeredVertically)
             cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
         }
-        
+        else{
+            cell.isSelected = false
+             cell.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
+            
+        }
         cell.surveyName.text = surveyDataArray[indexPath.row].surveyName
         cell.surveyId.text = surveyDataArray[indexPath.row].surveyId
         

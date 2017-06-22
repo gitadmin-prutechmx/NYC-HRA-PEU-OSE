@@ -16,6 +16,7 @@ struct UnitsDataStruct
     var floor: String = ""
     var surveyStatus: String = ""
     var syncDate: String = ""
+    var assignmentLocUnitId:String = ""
 }
 
 
@@ -163,6 +164,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
          SalesforceConnection.unitId =  UnitDataArray[indexRow!].unitId
         
+        SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexRow!].assignmentLocUnitId
+        
          showActionSheet()
        
         
@@ -234,7 +237,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     floorArray.append(unitData.floor!)
                 }
                 
-                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, floor: unitData.floor!, surveyStatus: "", syncDate: "")
+                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, floor: unitData.floor!, surveyStatus: "", syncDate: "",assignmentLocUnitId:unitData.assignmentLocUnitId!)
                 
                 UnitDataArray.append(objectUnitStruct)
                 

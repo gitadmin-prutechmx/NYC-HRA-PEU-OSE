@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lai-Sg-4Jk">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lai-Sg-4Jk">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -617,7 +617,7 @@
                                         <rect key="frame" x="0.0" y="22" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="doM-Ee-p83" id="M3M-3h-eiE">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Assignment" translatesAutoresizingMaskIntoConstraints="NO" id="D3N-J0-FeV" userLabel="MenuIcon">
@@ -652,7 +652,7 @@
                                         <rect key="frame" x="0.0" y="74" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sP6-SL-S4r" id="GsC-2d-xmF">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="fWL-pX-0SX" userLabel="MenuIcon">
@@ -688,7 +688,7 @@
                                         <rect key="frame" x="0.0" y="126" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S7n-wK-EIB" id="957-dH-B3W">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SurveyTaken" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-Cd-Wgw" userLabel="MenuIcon">
@@ -728,7 +728,7 @@
                                         <rect key="frame" x="0.0" y="222" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xHx-7w-D8w" id="2nQ-zW-WoY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Setting" translatesAutoresizingMaskIntoConstraints="NO" id="1vI-zc-bHf" userLabel="MenuIcon">
@@ -764,7 +764,7 @@
                                         <rect key="frame" x="0.0" y="274" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GE4-Rz-SrN" id="Zwm-2V-Ycc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myaccount" translatesAutoresizingMaskIntoConstraints="NO" id="bIu-mM-HPQ" userLabel="MenuIcon">
@@ -800,7 +800,7 @@
                                         <rect key="frame" x="0.0" y="326" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SK8-ys-RvT" id="PMA-2r-4GR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info" translatesAutoresizingMaskIntoConstraints="NO" id="fv0-hy-gFy" userLabel="MenuIcon">
@@ -836,7 +836,7 @@
                                         <rect key="frame" x="0.0" y="378" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b9q-bh-cgn" id="7yp-QG-Irk">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logout" translatesAutoresizingMaskIntoConstraints="NO" id="59K-bT-lZ0" userLabel="MenuIcon">
@@ -966,7 +966,7 @@
                                         <rect key="frame" x="0.0" y="72" width="275" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="blS-T6-WHQ" id="hop-f0-ayP">
-                                            <rect key="frame" x="0.0" y="0.0" width="275" height="72.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="275" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELIMA OPTIQUE" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t16-Eb-h9K" userLabel="datalocationName">
@@ -1253,7 +1253,7 @@
                                         <rect key="frame" x="0.0" y="28" width="343" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVF-0e-rOl" id="qgq-Lf-vR9">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="73.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="73"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUf-1q-4u2" userLabel="UnitView">
@@ -1673,7 +1673,7 @@
                                         <rect key="frame" x="0.0" y="28" width="343" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4bg-Oy-5aN" id="rKe-Hm-uE9">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="73.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="73"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZQ-2N-rf5" userLabel="UnitView">
@@ -2138,7 +2138,6 @@
                                         </connections>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.54901960780000003" green="0.47058823529999999" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="EUW-e8-7dn" firstAttribute="top" secondItem="1Zr-Qt-t3v" secondAttribute="top" constant="10" id="8IL-GP-yQ7"/>
                                     <constraint firstAttribute="bottom" secondItem="EUW-e8-7dn" secondAttribute="bottom" id="JzH-bY-exz"/>
@@ -2169,13 +2168,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvR-eM-TMd" userLabel="UnitInfoView">
                                 <rect key="frame" x="16" y="133" width="343" height="477"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hnv-mh-8kI" customClass="TPKeyboardAvoidingScrollView">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hnv-mh-8kI" userLabel="UnitInfoScrollView" customClass="TPKeyboardAvoidingScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="477"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yj-ml-evL">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="477"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPC-rj-uzr" customClass="DLRadioButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPC-rj-uzr" userLabel="AttemptNo" customClass="DLRadioButton">
                                                         <rect key="frame" x="214" y="31" width="46" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="YPe-F2-I11"/>
@@ -2186,10 +2185,10 @@
                                                             <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="1cD-cs-cLm"/>
+                                                            <action selector="selectAttempt:" destination="Mzc-jm-CBa" eventType="touchUpInside" id="j03-Nm-Yxy"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaN-aG-zcn" customClass="DLRadioButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaN-aG-zcn" userLabel="AttemptYes" customClass="DLRadioButton">
                                                         <rect key="frame" x="132" y="31" width="56" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="56" id="0VX-sa-773"/>
@@ -2200,11 +2199,11 @@
                                                             <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="2Yf-3g-5Q4"/>
+                                                            <action selector="selectAttempt:" destination="Mzc-jm-CBa" eventType="touchUpInside" id="d8w-6I-doC"/>
                                                             <outletCollection property="otherButtons" destination="XPC-rj-uzr" id="ivp-UB-X6B"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcj-Vv-YJc" customClass="DLRadioButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcj-Vv-YJc" userLabel="ContactNo" customClass="DLRadioButton">
                                                         <rect key="frame" x="214" y="83" width="46" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="cQS-S2-19H"/>
@@ -2214,10 +2213,10 @@
                                                             <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="w9b-em-45b"/>
+                                                            <action selector="selectContact:" destination="Mzc-jm-CBa" eventType="touchUpInside" id="Wsc-1C-LQS"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1o-Bz-77U" customClass="DLRadioButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1o-Bz-77U" userLabel="ContactYes" customClass="DLRadioButton">
                                                         <rect key="frame" x="132" y="83" width="56" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="DZ7-ua-gVC"/>
@@ -2227,11 +2226,11 @@
                                                             <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="UuZ-BL-W94"/>
+                                                            <action selector="selectContact:" destination="Mzc-jm-CBa" eventType="touchUpInside" id="M9I-BT-aup"/>
                                                             <outletCollection property="otherButtons" destination="kcj-Vv-YJc" id="fyd-bl-0jw"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPC-k4-T4b" userLabel="Contact">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPC-k4-T4b" userLabel="ContactLbl">
                                                         <rect key="frame" x="16" y="83" width="93" height="23"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="23" id="82g-If-YPx"/>
@@ -2250,7 +2249,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tenant Status" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZF-P6-xM2" userLabel="TeantLbl">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tenant Status" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZF-P6-xM2" userLabel="TenantStatusLbl">
                                                         <rect key="frame" x="16" y="134" width="93" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="41" id="0xc-00-ZBQ"/>
@@ -2259,7 +2258,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDr-oe-UsU" customClass="DropDownButton" customModule="Knock" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDr-oe-UsU" userLabel="ChooseTenantStatusBtn" customClass="DropDownButton" customModule="Knock" customModuleProvider="target">
                                                         <rect key="frame" x="132" y="134" width="207" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="Cb3-7H-rfE"/>
@@ -2270,9 +2269,10 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="chooseStatus:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="O0k-7M-XML"/>
+                                                            <action selector="selectTenantStatus:" destination="Mzc-jm-CBa" eventType="touchUpInside" id="gCh-4Z-e2T"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intake status" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBe-8P-REu">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intake status" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBe-8P-REu" userLabel="IntakeStatusLbl">
                                                         <rect key="frame" x="16" y="204" width="93" height="48"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="A1i-YX-194"/>
@@ -2281,7 +2281,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UYB-sO-cjF" customClass="DLRadioButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UYB-sO-cjF" userLabel="ReKnockYes" customClass="DLRadioButton">
                                                         <rect key="frame" x="132" y="281" width="56" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="57Q-8w-uUO"/>
@@ -2291,10 +2291,11 @@
                                                             <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="UfJ-sM-4qz"/>
+                                                            <action selector="selectReknock:" destination="Mzc-jm-CBa" eventType="touchUpInside" id="h2v-sO-hWw"/>
+                                                            <outletCollection property="otherButtons" destination="NTN-qV-46m" id="RaY-y8-KNr"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTN-qV-46m" customClass="DLRadioButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTN-qV-46m" userLabel="ReKnockNo" customClass="DLRadioButton">
                                                         <rect key="frame" x="214" y="281" width="46" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="hc7-AM-430"/>
@@ -2303,11 +2304,8 @@
                                                             <color key="titleColor" red="0.0" green="0.48797842250000001" blue="0.98569711540000005" alpha="1" colorSpace="calibratedRGB"/>
                                                             <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="selectAttempt:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="xdn-JM-gtr"/>
-                                                        </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re knock needed?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isg-d4-yfe">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re knock needed?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isg-d4-yfe" userLabel="ReKnockNeededLbl">
                                                         <rect key="frame" x="16" y="281" width="93" height="64"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="64" id="Z97-6j-e2j"/>
@@ -2316,7 +2314,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aee-Wa-6Fl">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aee-Wa-6Fl" userLabel="UnitNotesLbl">
                                                         <rect key="frame" x="16" y="373" width="93" height="24"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="24" id="zs2-Ja-lbJ"/>
@@ -2325,7 +2323,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Area" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="okJ-KI-Roh">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="okJ-KI-Roh" userLabel="NotesTextArea">
                                                         <rect key="frame" x="132" y="373" width="207" height="104"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
@@ -2334,7 +2332,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XzS-mH-LNz" customClass="DropDownButton" customModule="Knock" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XzS-mH-LNz" userLabel="ChooseInTakeStatusBtn" customClass="DropDownButton" customModule="Knock" customModuleProvider="target">
                                                         <rect key="frame" x="132" y="204" width="207" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="xdB-5R-Rca"/>
@@ -2345,6 +2343,7 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="chooseStatus:" destination="k4D-Vl-Mqe" eventType="touchUpInside" id="zPx-8i-hXJ"/>
+                                                            <action selector="selectInTakeStatus:" destination="Mzc-jm-CBa" eventType="touchUpInside" id="pfC-if-GRM"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -2448,8 +2447,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="ChooseInTakeStatusBtn" destination="XzS-mH-LNz" id="NM2-jN-M09"/>
+                        <outlet property="ChooseTenantStatusBtn" destination="PDr-oe-UsU" id="0Id-yJ-We1"/>
                         <outlet property="chooseSurveyView" destination="1Zr-Qt-t3v" id="wm0-VF-hxc"/>
+                        <outlet property="chooseUnitInfoView" destination="KvR-eM-TMd" id="xCH-oV-kg2"/>
                         <outlet property="fullAddressText" destination="Y0k-C3-sEw" id="cJd-sR-rCh"/>
+                        <outlet property="notesTextArea" destination="okJ-KI-Roh" id="Tb3-K1-FoO"/>
                         <outlet property="segmentedControl" destination="KgX-Eq-sCO" id="egb-pL-aas"/>
                         <outlet property="surveyCollectionView" destination="EUW-e8-7dn" id="E81-rf-lBh"/>
                     </connections>
@@ -3431,7 +3434,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Area" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hHs-q0-7uH" userLabel="NotesTextArea">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hHs-q0-7uH" userLabel="NotesTextArea">
                                                 <rect key="frame" x="139" y="333" width="215" height="183"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>

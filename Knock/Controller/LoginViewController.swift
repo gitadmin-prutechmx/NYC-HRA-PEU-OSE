@@ -452,6 +452,8 @@ class LoginViewController: UIViewController {
                         locationObject.zip = locationData["zip"] as? String  ?? ""
                         locationObject.street = locationData["street"] as? String  ?? ""
                         
+                        locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
+                        
                         locationObject.assignmentId = assignmentObject.id!
                         
                         appDelegate.saveContext()
@@ -470,7 +472,28 @@ class LoginViewController: UIViewController {
 
                             unitObject.locationId = locationObject.id!
                             
+                             unitObject.assignmentLocUnitId = unitData["assignmentLocUnitId"] as? String  ?? ""
+                            
                             appDelegate.saveContext()
+                            
+                            
+                            guard let tenantInfoResults = unitData["TenantInfo"] as? [[String: AnyObject]]  else { break }
+                            
+                            for tenantData in tenantInfoResults {
+                                
+                                let tenantObject = Tenant(context: context)
+                                tenantObject.id = tenantData["tenantId"] as? String  ?? ""
+                                tenantObject.name = tenantData["name"] as? String  ?? ""
+                                 tenantObject.phone = tenantData["phone"] as? String  ?? ""
+                                 tenantObject.email = tenantData["email"] as? String  ?? ""
+                                tenantObject.age = tenantData["age"] as? String  ?? ""
+                                tenantObject.assignmentId = assignmentObject.id!
+                                tenantObject.locationId = locationObject.id!
+                                tenantObject.unitId = locationObject.id!
+                                
+                                appDelegate.saveContext()
+                                
+                            }
                         }
                         
                     }
