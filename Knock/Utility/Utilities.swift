@@ -11,6 +11,8 @@ import UIKit
 
 class Utilities {
     
+   // static var basemapPackage AGSMobileMapPackage
+    
     static var skipLogicParentChildDict : [String:[SkipLogic]] = [:]
     
     static var prevSkipLogicParentChildDict : [String:[SkipLogic]] = [:]
