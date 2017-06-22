@@ -12,7 +12,7 @@ import CoreData
 class ManageCoreData{
     
     
-    static func fetchData(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,isPredicate:Bool) -> [Any]{
+    static func fetchData(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,isPredicate:Bool) -> [Any]{
         
         var results = [Any]()
         
@@ -29,6 +29,9 @@ class ManageCoreData{
                 }
             else if(predicateValue2 != nil){
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
+            }
+            else if(predicateValue3 != nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!)
             }
 
         }

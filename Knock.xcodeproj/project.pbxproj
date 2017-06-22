@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */; };
+		5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */; };
 		5D56CF091EE007060019882F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF081EE007060019882F /* AppDelegate.swift */; };
 		5D56CF0E1EE007060019882F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF0C1EE007060019882F /* Main.storyboard */; };
 		5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */; };
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Knock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
+		5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveEditTenantViewController.swift; sourceTree = "<group>"; };
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D56CF0D1EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				5DE3C98E1EF3ACEC00012C47 /* UnitsViewController.swift */,
 				5DE3C9921EF3DD8000012C47 /* EditLocationViewController.swift */,
 				5DE3C99A1EF76C6E00012C47 /* MoreOptionsViewController.swift */,
+				5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
 				5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */,
+				5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */,
 				5DE3C9911EF3B10000012C47 /* UnitsCustomViewCell.swift in Sources */,
 				5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,

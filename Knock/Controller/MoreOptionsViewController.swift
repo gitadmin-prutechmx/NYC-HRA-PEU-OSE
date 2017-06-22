@@ -17,6 +17,16 @@ struct SurveyDataStruct
     
 }
 
+struct TenantDataStruct
+{
+    var tenantId : String = ""
+    var name : String = ""
+    var email : String = ""
+    var phone : String = ""
+    var age : String = ""
+    
+}
+
 
 class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -43,11 +53,15 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
 
     @IBOutlet weak var fullAddressText: UILabel!
     
-    
-    var surveyDataArray = [SurveyDataStruct]()
     var selectedSurveyId:String = ""
     
+
+    var surveyDataArray = [SurveyDataStruct]()
     var surveyUnitResults = [SurveyUnit]()
+    
+    var tenantDataArray = [TenantDataStruct]()
+    var tenantResults = [Tenant]()
+    
     
 
     let chooseTenantStatusDropDown = DropDown()
@@ -185,6 +199,47 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
+    func populateTenantData(){
+        
+        tenantDataArray = [TenantDataStruct]()
+      
+        
+        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,isPredicate:true) as! [Tenant]
+        
+        
+        if(tenantResults.count > 0){
+            
+            for tenantData in tenantResults{
+                
+                
+                let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!, name: tenantData.name!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!)
+                
+                tenantDataArray.append(objectTenantStruct)
+                
+            }
+        }
+        
+        
+        //self.surveyCollectionView.reloadData()
+        
+        
+        /*
+         DispatchQueue.global(qos: .background).async {
+         print("This is run on the background queue")
+         
+         DispatchQueue.main.async {
+         print("This is run on the main queue, after the previous code in outer block")
+         }
+         }
+         
+         */
+        
+        
+        
+        
+        
+    }
+    
     
     func populateSurveyData(){
         
@@ -283,7 +338,11 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }
     
     @IBAction func save(_ sender: Any) {
+
+         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
         
+      
+        /*
   if(Utilities.currentSegmentedControl == "Survey"){
             
     
@@ -303,32 +362,27 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             appDelegate.saveContext()
             
-            
-            self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-            
         }
         else{
             
             //update
              ManageCoreData.updateData(salesforceEntityName: "SurveyUnit", valueToBeUpdate: selectedSurveyId,updatekey:"surveyId", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
             
-            self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
             
         }
+    
+    
+    self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        if didTap {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
-        
+    
+    
+  }
+    
   else  if(Utilities.currentSegmentedControl == "Unit"){
     
     var editUnitDict : [String:String] = [:]
@@ -341,11 +395,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         notes = notesTemp
     }
     
-    /*
-     { \r\n   \"assignmentLocationUnitId\":\"a0L35000000F6Ab\",\r\n   \"contact\":\"Yes\",\r\n   \"attempt\":\"No\",\r\n   \"notes\":\"test test\",\r\n   \"surveyId\":\"a0G35000000kQfv\",\r\n   \"tenantStatus\":\"Not Home\",\r\n\"intakeStatus\":\"No Issues\",\r\n\"reKnockNeeded\":\"Yes\"\r\n}
-     
- 
- */
+    
         
     editUnitDict["tenantStatus"] = tenantStatus
     editUnitDict["assignmentLocationUnitId"] = SalesforceConnection.assignmentLocationUnitId
@@ -392,6 +442,10 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
 
     
     }
+ 
+ */
+        
+   
         
 }
     
@@ -481,6 +535,6 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }
 
 
-    
+ 
 
 }
