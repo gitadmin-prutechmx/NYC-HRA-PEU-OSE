@@ -20,6 +20,8 @@ class TenantViewCell: UITableViewCell {
     
     @IBOutlet weak var age: UILabel!
     
+    @IBOutlet weak var editBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

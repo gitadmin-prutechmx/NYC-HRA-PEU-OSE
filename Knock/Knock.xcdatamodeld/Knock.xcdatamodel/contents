@@ -67,9 +67,10 @@
         <attribute name="age" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -94,7 +95,7 @@
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="105"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="120"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="90"/>
+        <element name="Tenant" positionX="-126" positionY="45" width="128" height="180"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="195"/>
-        <element name="Tenant" positionX="-126" positionY="45" width="128" height="165"/>
     </elements>
 </model>

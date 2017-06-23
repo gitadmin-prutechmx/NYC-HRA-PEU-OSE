@@ -142,6 +142,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             else {
                 if let weakSelf = self {
                     if weakSelf.mapPackage.maps.count > 0 {
+                        
+                        
+                        
                         //assign the first map from the map package to the map view
                         weakSelf.mapView.map = weakSelf.mapPackage.maps[0]
                         
@@ -153,7 +156,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                         
                         self?.locatorTask = self?.mapPackage.locatorTask
                         
-                        //print(weakSelf.mapPackage.locatorTask)
+                        Utilities.basemapMobileMapPackage = weakSelf.mapPackage
+                        Utilities.basemapLocator = self?.locatorTask
                         
                         
                         
@@ -351,6 +355,13 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     private func geocodeSearchText(text:String,setIntialViewPoint:Bool) {
         
+//        if Utilities.basemapLocator == nil{
+//            return
+//        }
+//        else{
+//             self.locatorTask = Utilities.basemapLocator
+//        }
+//        
         if self.locatorTask == nil {
             return
         }

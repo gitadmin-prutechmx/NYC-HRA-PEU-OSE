@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lai-Sg-4Jk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lai-Sg-4Jk">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -3748,12 +3748,15 @@
                                                                         <constraint firstAttribute="width" constant="30" id="n8j-9r-kFx"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="svf-GA-JaB">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="svf-GA-JaB" userLabel="EditBtn">
                                                                     <rect key="frame" x="275" y="9" width="46" height="46"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="46" id="mLi-H9-rkq"/>
                                                                         <constraint firstAttribute="width" constant="46" id="pQq-yV-nc8"/>
                                                                     </constraints>
+                                                                    <connections>
+                                                                        <action selector="editTenantAction:" destination="0WK-hQ-Bv5" eventType="touchUpInside" id="AdM-as-eOy"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Ayushi jain papdiwal" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wF1-yT-vhU" userLabel="name">
                                                                     <rect key="frame" x="8" y="17" width="98" height="30"/>
@@ -3819,6 +3822,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="age" destination="5tR-Wm-0O0" id="bYU-8e-1nY"/>
+                                                    <outlet property="editBtn" destination="svf-GA-JaB" id="r2u-pr-zE6"/>
                                                     <outlet property="email" destination="zk4-zW-Oxg" id="too-XG-4S0"/>
                                                     <outlet property="name" destination="wF1-yT-vhU" id="F7l-Nn-fRx"/>
                                                     <outlet property="phone" destination="Ad3-cf-axf" id="SVv-JI-VmY"/>
@@ -3881,6 +3885,7 @@
                     <connections>
                         <outlet property="ChooseInTakeStatusBtn" destination="h2I-Y1-3hB" id="0Lm-dL-fgG"/>
                         <outlet property="ChooseTenantStatusBtn" destination="TxF-ER-sTO" id="htE-5B-DOb"/>
+                        <outlet property="addTenantOutlet" destination="oHv-Gi-Enh" id="mR7-gi-gTr"/>
                         <outlet property="chooseSurveyView" destination="8b3-g9-V3Y" id="8sg-Vq-QAu"/>
                         <outlet property="chooseTenantInfoView" destination="vNv-3Y-zGt" id="H8f-Xb-5nV"/>
                         <outlet property="chooseUnitInfoView" destination="qaQ-Gs-v7f" id="8D2-vV-cUH"/>

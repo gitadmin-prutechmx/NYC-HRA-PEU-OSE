@@ -20,7 +20,8 @@ struct SurveyDataStruct
 struct TenantDataStruct
 {
     var tenantId : String = ""
-    var name : String = ""
+    var firstName : String = ""
+    var lastName : String = ""
     var email : String = ""
     var phone : String = ""
     var age : String = ""
@@ -37,6 +38,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     var tenantStatus:String = ""
     var inTakeStatus:String = ""
     
+    @IBOutlet weak var addTenantOutlet: UIButton!
    
     @IBOutlet weak var notesTextArea: UITextView!
     
@@ -155,6 +157,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     @IBAction func addTenant(_ sender: Any) {
         
+        SalesforceConnection.currentTenantId =  ""
+        
         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
     }
     
@@ -170,6 +174,15 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         else{
             selectedSurveyId = ""
         }
+
+    }
+    @IBAction func editTenantAction(_ sender: Any) {
+        
+        let indexRow = (sender as AnyObject).tag
+        
+        SalesforceConnection.currentTenantId =  tenantDataArray[indexRow!].tenantId
+        
+        self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
 
     }
     
@@ -243,7 +256,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             for tenantData in tenantResults{
                 
                 
-                let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!, name: tenantData.name!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!)
+                let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!, firstName: tenantData.firstName!, lastName: "", email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!)
                 
                 tenantDataArray.append(objectTenantStruct)
                 
@@ -334,9 +347,11 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         cell.email.text = tenantDataArray[indexPath.row].email
         cell.phone.text = tenantDataArray[indexPath.row].phone
-        cell.name.text = tenantDataArray[indexPath.row].name
+        cell.name.text = tenantDataArray[indexPath.row].firstName
         cell.age.text = tenantDataArray[indexPath.row].age
         cell.tenantId.text = tenantDataArray[indexPath.row].tenantId
+        
+        cell.editBtn.tag = indexPath.row
        
         
         return cell

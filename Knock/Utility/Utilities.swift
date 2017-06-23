@@ -8,11 +8,19 @@
 
 import Foundation
 import UIKit
+import ArcGIS
 
 class Utilities {
     
-   // static var basemapPackage AGSMobileMapPackage
+   
     
+    static var basemapMobileMapPackage:AGSMobileMapPackage!
+    
+    static var basemapLocator:AGSLocatorTask?
+    
+    static var currentSegmentedControl:String = ""
+    
+    // for skiplogic survey
     static var skipLogicParentChildDict : [String:[SkipLogic]] = [:]
     
     static var prevSkipLogicParentChildDict : [String:[SkipLogic]] = [:]
@@ -31,7 +39,6 @@ class Utilities {
     
     static var totalSurveyQuestions = 0
     
-    static var currentSegmentedControl:String = ""
 
     
     class func deleteSkipSurveyData(startingIndex:Int,count:Int){

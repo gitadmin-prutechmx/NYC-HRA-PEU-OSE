@@ -483,7 +483,9 @@ class LoginViewController: UIViewController {
                                 
                                 let tenantObject = Tenant(context: context)
                                 tenantObject.id = tenantData["tenantId"] as? String  ?? ""
-                                tenantObject.name = tenantData["name"] as? String  ?? ""
+                                tenantObject.firstName = tenantData["name"] as? String  ?? ""
+                                tenantObject.lastName =  ""
+                                
                                  tenantObject.phone = tenantData["phone"] as? String  ?? ""
                                  tenantObject.email = tenantData["email"] as? String  ?? ""
                                 tenantObject.age = tenantData["age"] as? String  ?? ""

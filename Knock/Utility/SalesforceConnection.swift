@@ -12,6 +12,7 @@ import CoreData
 
 class SalesforceConnection{
     
+    static var currentTenantId:String =  ""
     
     static var assignmentId:String = ""
     static var assignmentName:String = ""

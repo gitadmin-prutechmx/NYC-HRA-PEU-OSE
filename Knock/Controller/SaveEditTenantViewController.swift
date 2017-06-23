@@ -45,6 +45,10 @@ var picker = UIDatePicker()
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        
+        
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         
         
@@ -75,7 +79,25 @@ var picker = UIDatePicker()
         toolBar.setItems([cancelBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
         
         txtDob.inputAccessoryView = toolBar
+        
+        if(SalesforceConnection.currentTenantId != ""){
+            fillTenantInfo()
+        }
 
+    }
+    
+    func fillTenantInfo(){
+        
+         let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@ AND id == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,predicateValue4: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
+        
+        if(tenantResults.count > 0){
+            
+            firstNameTxtField.text = tenantResults[0].firstName
+            lastNameTxtField.text = tenantResults[0].lastName
+            emailTxtField.text = tenantResults[0].email
+            
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -321,7 +343,9 @@ var picker = UIDatePicker()
                 
                 tenantObject.id = tenantDataDict["tenantId"] as! String?
                 
-                 tenantObject.name = firstName + " " + lastName
+                 tenantObject.firstName = firstName + " " + lastName
+            
+                 tenantObject.lastName = ""
                  
                  tenantObject.phone = phone
                  
