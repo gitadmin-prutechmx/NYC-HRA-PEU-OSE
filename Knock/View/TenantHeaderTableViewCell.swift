@@ -1,21 +1,15 @@
 //
-//  LocationCustomViewCell.swift
-//  MTXGIS
+//  TenanatHeaderTableViewCell.swift
+//  Knock
 //
-//  Created by Kamal on 23/02/17.
+//  Created by Biju rajan on 22/06/17.
 //  Copyright © 2017 mtxb2b. All rights reserved.
 //
 
 import UIKit
 
-class LocationCustomViewCell: UITableViewCell {
+class TenantHeaderTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var dataLocation: UILabel!
-    @IBOutlet weak var dataFullAddress: UILabel!
-    @IBOutlet weak var dataLocId: UILabel!
-    
-    @IBOutlet weak var editLocBtn: UIButton!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,5 +20,5 @@ class LocationCustomViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }

@@ -5,7 +5,9 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalCanvassed" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalLocations" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalSurvey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalUnits" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="assignmentEventR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="eventAssignementR" inverseEntity="Event" syncable="YES"/>
         <relationship name="assignmentLocR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="locAssignmentR" inverseEntity="Location" syncable="YES"/>
@@ -24,6 +26,7 @@
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -43,26 +46,55 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SurveyQuestion" representedClassName="SurveyQuestion" syncable="YES" codeGenerationType="class">
-        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyQuestionData" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES" codeGenerationType="class"/>
+    <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyResponse" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SurveyUnit" representedClassName="SurveyUnit" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Tenant" representedClassName="Tenant" syncable="YES" codeGenerationType="class">
+        <attribute name="age" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Unit" representedClassName="Unit" syncable="YES" codeGenerationType="class">
         <attribute name="apartment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="floor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="surveyStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="syncDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="unitLocR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locUnitR" inverseEntity="Location" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Assignment" positionX="-333" positionY="-18" width="128" height="165"/>
+        <element name="Assignment" positionX="-333" positionY="-18" width="128" height="195"/>
         <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="118"/>
-        <element name="Location" positionX="-2" positionY="-36" width="128" height="178"/>
+        <element name="Location" positionX="-2" positionY="-36" width="128" height="195"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="148"/>
-        <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="75"/>
-        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="45"/>
-        <element name="Unit" positionX="-162" positionY="-108" width="128" height="133"/>
+        <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="105"/>
+        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="120"/>
+        <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="90"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="195"/>
+        <element name="Tenant" positionX="-126" positionY="45" width="128" height="165"/>
     </elements>
 </model>

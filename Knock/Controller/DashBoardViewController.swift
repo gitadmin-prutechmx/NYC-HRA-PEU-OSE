@@ -352,6 +352,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         SalesforceConnection.assignmentId =  currentCell.assignmentId.text!
+        SalesforceConnection.assignmentName = currentCell.assignmentName.text!
         
     }
 

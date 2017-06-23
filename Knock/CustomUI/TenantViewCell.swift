@@ -1,20 +1,24 @@
 //
-//  LocationCustomViewCell.swift
-//  MTXGIS
+//  TenantViewCell.swift
+//  Knock
 //
-//  Created by Kamal on 23/02/17.
+//  Created by Kamal on 22/06/17.
 //  Copyright © 2017 mtxb2b. All rights reserved.
 //
 
 import UIKit
 
-class LocationCustomViewCell: UITableViewCell {
+class TenantViewCell: UITableViewCell {
 
-    @IBOutlet weak var dataLocation: UILabel!
-    @IBOutlet weak var dataFullAddress: UILabel!
-    @IBOutlet weak var dataLocId: UILabel!
+    @IBOutlet weak var email: UILabel!
     
-    @IBOutlet weak var editLocBtn: UIButton!
+    @IBOutlet weak var phone: UILabel!
+    
+    @IBOutlet weak var name: UILabel!
+    
+    @IBOutlet weak var tenantId: UILabel!
+    
+    @IBOutlet weak var age: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

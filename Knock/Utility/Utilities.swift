@@ -10,7 +10,52 @@ import Foundation
 import UIKit
 
 class Utilities {
+    
+   // static var basemapPackage AGSMobileMapPackage
+    
+    static var skipLogicParentChildDict : [String:[SkipLogic]] = [:]
+    
+    static var prevSkipLogicParentChildDict : [String:[SkipLogic]] = [:]
+    
+    static var isSubmitSurvey:Bool = false
 
+    static var answerSurvey:String = ""
+   
+    static var SurveyOutput:[String:SurveyResult]=[:]
+    
+    static var surveyQuestionArray = [structSurveyQuestion]()
+ 
+    static var surveyQuestionArrayIndex = -1
+
+    static var currentSurveyPage = 0
+    
+    static var totalSurveyQuestions = 0
+    
+    static var currentSegmentedControl:String = ""
+
+    
+    class func deleteSkipSurveyData(startingIndex:Int,count:Int){
+        
+        for questionIndex in startingIndex...count {
+            
+            
+            //Clear data which questions skipped
+            let objTempSurveyQues =  Utilities.surveyQuestionArray[questionIndex].objectSurveyQuestion
+            
+            if(Utilities.SurveyOutput[(objTempSurveyQues?.questionNumber)!] != nil){
+                
+                //delete data from dictionary
+                Utilities.SurveyOutput.removeValue(forKey: (objTempSurveyQues?.questionNumber)!)
+            }
+            
+            
+        }
+        
+        
+        
+    }
+
+    
     class func convertToJSON(text: String) ->  [String: Any]? {
         
         if let data = text.data(using: .utf8) {
@@ -25,6 +70,28 @@ class Utilities {
                 
             }
             
+        }
+        
+        return nil
+        
+    }
+    
+    class func jsonToString(json: AnyObject)->String?{
+        do {
+            let data1 =  try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted) // first of all convert json to the data
+            
+           
+            
+            let convertedString = String(data: data1, encoding: String.Encoding.utf8) // the data will be converted to the string
+            
+           // print(convertedString!)
+            
+            return convertedString!
+            
+           // print(convertedString) // <-- here is ur string
+            
+        } catch let myJSONError {
+            print(myJSONError)
         }
         
         return nil

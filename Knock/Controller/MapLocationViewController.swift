@@ -14,6 +14,8 @@ struct locationDataStruct
     var locId : String = ""
     var locName : String = ""
     var fullAddress: String = ""
+    var assignmentLocId:String = ""
+    var partialAddress:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
@@ -111,15 +113,12 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         self.tableView.tableFooterView = UIView()
         
-        populateLocationData()
+        //populateLocationData()
         
         
-        dataAssignment.text = assignmentName
+        dataAssignment.text = SalesforceConnection.assignmentName
         
-        //initialize map package
-        self.mapPackage = AGSMobileMapPackage(name: "NewYorkCity")
-        
-        //initialize geocode params
+               //initialize geocode params
         self.geocodeParameters = AGSGeocodeParameters()
         self.geocodeParameters.resultAttributeNames.append(contentsOf: ["Match_addr"])
         self.geocodeParameters.minScore = 75
@@ -127,7 +126,13 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         SVProgressHUD.show(withStatus: "Loading Map..", maskType: SVProgressHUDMaskType.gradient)
         
+    if(self.mapPackage == nil){
+            
         
+        //initialize map package
+        self.mapPackage = AGSMobileMapPackage(name: "NewYorkCity")
+        
+
         
         //load map package
         self.mapPackage.load { [weak self] (error: Error?) in
@@ -157,15 +162,19 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                         
                         if((self?.locDataArray.count)! > 0){
                             
-                            self!.address = (self?.locDataArray[0].fullAddress)!
+                            SalesforceConnection.fullAddress = (self?.locDataArray[0].fullAddress)!
                             self!.locationId = (self?.locDataArray[0].locId)!
+                            
+                            SalesforceConnection.locationId = self!.locationId
+                            
+                             SalesforceConnection.assignmentLocationId = (self?.locDataArray[0].assignmentLocId)!
                             
                             IsInitialViewPoint = false
                         }
                         
                         //SVProgressHUD.dismiss()
                         
-                        weakSelf.geocodeSearchText(text: self!.address,setIntialViewPoint: IsInitialViewPoint)
+                        weakSelf.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: IsInitialViewPoint)
                         
                     }
                     else {
@@ -174,16 +183,54 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 }
             }
         }
+            
+    }//end of if
+    else{
+        
+        if((self.locDataArray.count) > 0){
+            
+            SalesforceConnection.fullAddress = (self.locDataArray[0].fullAddress)
+            self.locationId = (self.locDataArray[0].locId)
+            
+            SalesforceConnection.locationId = self.locationId
+            
+             SalesforceConnection.assignmentLocationId = (self.locDataArray[0].assignmentLocId)
+            
+        }
+        self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
+     }
+}
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        populateLocationData()
     }
     
     
+    @IBAction func editLocAction(_ sender: Any) {
+        
+        let indexRow = (sender as AnyObject).tag
+        
+        SalesforceConnection.locationId =  locDataArray[indexRow!].locId
+        
+        SalesforceConnection.assignmentLocationId = locDataArray[indexRow!].assignmentLocId
+        
+        SalesforceConnection.fullAddress =  locDataArray[indexRow!].fullAddress
+        
+
+        
+        self.performSegue(withIdentifier: "showEditLocationIdentifier", sender: nil)
+  
+       //
+    }
     
     var locDataArray = [locationDataStruct]()
     
     func populateLocationData(){
         
  
-       
+       locDataArray = [locationDataStruct]()
         
         let locationResults = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [Location]
         
@@ -191,7 +238,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             
             for locationData in locationResults{
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: "NO LOCATION NAME",fullAddress: locationData.name!)
+                let locationName = locationData.street!
+                let partialAddressData = locationData.city! + ", " + locationData.state! + ", " + locationData.zip!
+
+                
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: locationData.name!,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData)
                 
                 
                 locDataArray.append(objectLocStruct)
@@ -244,13 +295,16 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             
             var isSearch = false
             
-            isSearch =  ($0.locName.lowercased() as NSString).contains(searchText.lowercased())
+              isSearch = ($0.fullAddress.lowercased() as NSString).contains(searchText.lowercased())
+            
+            /*isSearch =  ($0.locName.lowercased() as NSString).contains(searchText.lowercased())
             
             if(isSearch == false){
                 isSearch = ($0.fullAddress.lowercased() as NSString).contains(searchText.lowercased())
                 
                 
             }
+            */
             
             return isSearch
             
@@ -287,7 +341,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     //method returns a graphic object for the point and attributes provided
     private func graphicForPoint(point: AGSPoint, attributes: [String: AnyObject]?) -> AGSGraphic {
-        let markerImage = UIImage(named: "MapMarker")!
+        let markerImage = UIImage(named: "MapPin")!
         let symbol = AGSPictureMarkerSymbol(image: markerImage)
         symbol.leaderOffsetY = markerImage.size.height/2
         symbol.offsetY = markerImage.size.height/2
@@ -469,17 +523,22 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
          }*/
         
         if(searchActive){
-            cell.dataFullAddress.text = filteredStruct[indexPath.row].fullAddress
+            cell.dataFullAddress.text = filteredStruct[indexPath.row].partialAddress
             cell.dataLocation.text = filteredStruct[indexPath.row].locName
             cell.dataLocId.text = filteredStruct[indexPath.row].locId
+           // cell.dataLocId.text = filteredStruct[indexPath.row].assignmentLocId
         }
         else{
             
             cell.dataLocation.text = locDataArray[indexPath.row].locName
-            cell.dataFullAddress.text = locDataArray[indexPath.row].fullAddress
+            cell.dataFullAddress.text = locDataArray[indexPath.row].partialAddress
             cell.dataLocId.text = locDataArray[indexPath.row].locId
+           // cell.dataLocId.text = locDataArray[indexPath.row].assignmentLocId
             
         }
+        
+        
+         cell.editLocBtn.tag = indexPath.row
         
         return cell
         
@@ -490,10 +549,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Row selected, so set textField to relevant value, hide tableView
         // endEditing can trigger some other action according to requirements
+       
+        SalesforceConnection.locationId = locDataArray[indexPath.row].locId
         
-        let fullAddress =  locDataArray[indexPath.row].fullAddress
+        SalesforceConnection.assignmentLocationId = locDataArray[indexPath.row].assignmentLocId
         
-        self.geocodeSearchText(text: fullAddress,setIntialViewPoint: false)
+        SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
+        
+        self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
         
         
         
