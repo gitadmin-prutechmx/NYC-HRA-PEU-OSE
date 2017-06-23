@@ -38,13 +38,16 @@ class AddNewUnitViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func save(_ sender: Any) {
-        saveUnitInfo()
-    }
+
     
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func save(_ sender: Any) {
+        saveUnitInfo()
+    }
+    
     
     func saveUnitInfo(){
         
@@ -88,11 +91,7 @@ class AddNewUnitViewController: UIViewController {
         }
         
         
-        
-      /*
-        {  \r\n   \"unitName\":\"jaipur unit\",\r\n   \"notes\":\"jaipur note\",\r\n   \"locationId\":\"a0M35000000GCOm\",\r\n   \"apartmentNumber\":\"305\",\r\n   \"assignLocId\":\"a0K35000000rhQw\"\r\n}
-       */
-        
+      
         
         saveUnitDict["locationUnitId"] = SalesforceConnection.unitId
         

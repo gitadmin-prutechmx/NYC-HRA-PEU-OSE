@@ -26,6 +26,7 @@ struct TenantDataStruct
     var email : String = ""
     var phone : String = ""
     var age : String = ""
+    var dob:String = ""
     
 }
 
@@ -39,6 +40,10 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     var tenantStatus:String = ""
     var inTakeStatus:String = ""
     
+    var selectedTenantId:String = ""
+    
+    
+    @IBOutlet weak var saveOutlet: UIBarButtonItem!
     @IBOutlet weak var addTenantOutlet: UIButton!
    
     @IBOutlet weak var notesTextArea: UITextView!
@@ -117,6 +122,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             chooseUnitInfoView.isHidden = false
             chooseSurveyView.isHidden = true
             chooseTenantInfoView.isHidden = true
+            
+            self.saveOutlet.title = "Save"
         }
         else if(Utilities.currentSegmentedControl == "Tenant"){
             segmentedControl.selectedSegmentIndex = 1
@@ -125,6 +132,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             chooseUnitInfoView.isHidden = true
             chooseSurveyView.isHidden = true
+            
+            self.saveOutlet.title = "Assign Tenant"
             
             
             populateTenantData()
@@ -136,6 +145,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             chooseUnitInfoView.isHidden = true
             chooseTenantInfoView.isHidden = true
             chooseSurveyView.isHidden = false
+            
+            self.saveOutlet.title = "Save"
             
              populateSurveyData()
             setSelectedSurveyId()
@@ -259,7 +270,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             for tenantData in tenantResults{
                 
                 
-                let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!)
+                let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!)
                 
                 tenantDataArray.append(objectTenantStruct)
                 
@@ -348,6 +359,15 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TenantViewCell
         
+//        if(tenantDataArray[indexPath.row].tenantId == "00335000003YbUOAA0"){
+//            
+//          
+//            cell.isSelected = true
+//            cell.setSelected(true, animated: true)
+//            
+//            
+//        }
+//        
         cell.email.text = tenantDataArray[indexPath.row].email
         cell.phone.text = tenantDataArray[indexPath.row].phone
         cell.name.text = tenantDataArray[indexPath.row].name
@@ -359,6 +379,28 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         return cell
     }
+    
+   
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath) as! TenantViewCell
+        
+      //cell.tenantView.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
+        
+        
+        cell.contentView.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
+     
+        
+       selectedTenantId = tenantDataArray[indexPath.row].tenantId
+        
+    }
+    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        let cell = tableView.cellForRow(at: indexPath) as! TenantViewCell
+//         cell.contentView.backgroundColor = UIColor.white
+//    }
+//    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Dequeue with the reuse identifier
@@ -411,17 +453,20 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
              chooseTenantInfoView.isHidden = true
              chooseUnitInfoView.isHidden = false
              Utilities.currentSegmentedControl = "Unit"
+             self.saveOutlet.title = "Save"
         case 1:
              chooseTenantInfoView.isHidden = false
              chooseSurveyView.isHidden = true
              chooseUnitInfoView.isHidden = true
              Utilities.currentSegmentedControl = "Tenant"
+             self.saveOutlet.title = "Assign Tenant"
              populateTenantData()
         case 2:
              chooseSurveyView.isHidden = false
              chooseUnitInfoView.isHidden = true
              chooseTenantInfoView.isHidden = true
              Utilities.currentSegmentedControl = "Survey"
+             self.saveOutlet.title = "Save"
              populateSurveyData()
              setSelectedSurveyId()
             
@@ -431,6 +476,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             chooseUnitInfoView.isHidden = false
             chooseTenantInfoView.isHidden = false
             Utilities.currentSegmentedControl = "Default"
+            self.saveOutlet.title = "Save"
         }
     }
 
@@ -439,112 +485,203 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }
     
     @IBAction func save(_ sender: Any) {
-
-  if(Utilities.currentSegmentedControl == "Survey"){
-            
-    
         
-        //update or delete particular surveyunit
-        //add multiple conditions in predicateformat
+          if(Utilities.currentSegmentedControl == "Survey"){
         
-        if(surveyUnitResults.count == 0){
-            
-            //save the record
-            let surveyUnitObject = SurveyUnit(context: context)
-            surveyUnitObject.assignmentId = SalesforceConnection.assignmentId
-            surveyUnitObject.surveyId = selectedSurveyId
-            surveyUnitObject.unitId = SalesforceConnection.unitId
-            
-            
-            
-            appDelegate.saveContext()
-            
-        }
-        else{
-            
-            //update
-             ManageCoreData.updateData(salesforceEntityName: "SurveyUnit", valueToBeUpdate: selectedSurveyId,updatekey:"surveyId", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
-            
-            
-        }
-    
-    
-    self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-        if didTap {
-            self.dismiss(animated: true, completion: nil)
-        } else {
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    
-  }
-    
-  else  if(Utilities.currentSegmentedControl == "Unit"){
-    
-    var editUnitDict : [String:String] = [:]
-    var updateUnit : [String:String] = [:]
-    
-   
-    
-    var notes:String = ""
-    if let notesTemp = notesTextArea.text{
-        notes = notesTemp
-    }
-    
-    
         
-    editUnitDict["tenantStatus"] = tenantStatus
-    editUnitDict["assignmentLocationUnitId"] = SalesforceConnection.assignmentLocationUnitId
-    editUnitDict["notes"] = notes
-    editUnitDict["attempt"] = attempt
-    editUnitDict["contact"] = contact
-    editUnitDict["reKnockNeeded"] = reknockNeeded
-    editUnitDict["intakeStatus"] = inTakeStatus
-    
-    //updateLocation["assignmentIds"] = editLocDict as AnyObject?
-    
-    let convertedString = Utilities.jsonToString(json: editUnitDict as AnyObject)
-    
-    let encryptEditUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-    
-    updateUnit["unit"] = encryptEditUnitStr
-    
-    SVProgressHUD.show(withStatus: "Updating unit...", maskType: SVProgressHUDMaskType.gradient)
-    
-    SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
         
-        if(response)
-        {
+                //update or delete particular surveyunit
+                //add multiple conditions in predicateformat
+        
+                if(surveyUnitResults.count == 0){
+        
+                    //save the record
+                    let surveyUnitObject = SurveyUnit(context: context)
+                    surveyUnitObject.assignmentId = SalesforceConnection.assignmentId
+                    surveyUnitObject.surveyId = selectedSurveyId
+                    surveyUnitObject.unitId = SalesforceConnection.unitId
+        
+        
+        
+                    appDelegate.saveContext()
+        
+                }
+                else{
+        
+                    //update
+                     ManageCoreData.updateData(salesforceEntityName: "SurveyUnit", valueToBeUpdate: selectedSurveyId,updatekey:"surveyId", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
+        
+        
+                }
+        
+        
+            self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        
+        
+          }
+         else if(Utilities.currentSegmentedControl == "Tenant"){
             
-            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
+            if(selectedTenantId == ""){
                 
-                SVProgressHUD.dismiss()
-                self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please select tenant", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     if didTap {
                         self.dismiss(animated: true, completion: nil)
                     } else {
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
+
                 
-                
-                
-                //print(jsonData.1)
-                //self.parseMessage(jsonObject: jsonData.1)
+                return
             }
+            
+            var tenantAssignDict : [String:String] = [:]
+            var updateTenantAssign : [String:String] = [:]
+            
+            
+            
+           
+            
+            tenantAssignDict["contactId"] = selectedTenantId
+            tenantAssignDict["assignmentLocationUnitId"] = SalesforceConnection.assignmentLocationUnitId
+            
+           
+            let convertedString = Utilities.jsonToString(json: tenantAssignDict as AnyObject)
+            
+            let encryptTenantAssignStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            
+            updateTenantAssign["tenantAssignmentDetail"] = encryptTenantAssignStr
+            
+            SVProgressHUD.show(withStatus: "Updating tenant...", maskType: SVProgressHUDMaskType.gradient)
+            
+            SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+                
+                if(response)
+                {
+                    
+                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignTenant, params: updateTenantAssign){ jsonData in
+                        
+                        SVProgressHUD.dismiss()
+                        self.parseResponse(jsonObject: jsonData.1)
+                        
+                        self.selectedTenantId = ""
+
+                        
+                        
+                    }
+                    
+                }//end of response
+                
+            }
+            
+            
         }
         
+          else  if(Utilities.currentSegmentedControl == "Unit"){
+        
+            var editUnitDict : [String:String] = [:]
+            var updateUnit : [String:String] = [:]
+        
+        
+        
+            var notes:String = ""
+            if let notesTemp = notesTextArea.text{
+                notes = notesTemp
+            }
+        
+        
+        
+            editUnitDict["tenantStatus"] = tenantStatus
+            editUnitDict["assignmentLocationUnitId"] = SalesforceConnection.assignmentLocationUnitId
+            editUnitDict["notes"] = notes
+            editUnitDict["attempt"] = attempt
+            editUnitDict["contact"] = contact
+            editUnitDict["reKnockNeeded"] = reknockNeeded
+            editUnitDict["intakeStatus"] = inTakeStatus
+        
+            //updateLocation["assignmentIds"] = editLocDict as AnyObject?
+        
+            let convertedString = Utilities.jsonToString(json: editUnitDict as AnyObject)
+        
+            let encryptEditUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+        
+            updateUnit["unit"] = encryptEditUnitStr
+        
+            SVProgressHUD.show(withStatus: "Updating unit...", maskType: SVProgressHUDMaskType.gradient)
+        
+            SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        
+                if(response)
+                {
+        
+                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
+        
+                        
+                        SVProgressHUD.dismiss()
+                        self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                            if didTap {
+                                self.dismiss(animated: true, completion: nil)
+                            } else {
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                        
+                        
+                        
+                    }
+                }
+                
+            }
+        
+            
+        }
+         
+        
+                
+           
+        
     }
-
     
-    }
- 
+    func parseResponse(jsonObject: Dictionary<String, AnyObject>){
+        
+        guard let isError = jsonObject["hasError"] as? Bool else { return }
+        
+        
+        if(isError == false){
+            self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
 
-        
-   
-        
-}
+        }
+        else{
+            
+            self.view.makeToast("Error while assigning Tenant info", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    
+                    print("completion from tap")
+                    
+                } else {
+                    
+                    print("completion without tap")
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return surveyDataArray.count

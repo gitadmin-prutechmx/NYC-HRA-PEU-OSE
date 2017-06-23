@@ -9,6 +9,7 @@
 import UIKit
 
 class TenantViewCell: UITableViewCell {
+    @IBOutlet weak var tenantView: UIView!
 
     @IBOutlet weak var email: UILabel!
     

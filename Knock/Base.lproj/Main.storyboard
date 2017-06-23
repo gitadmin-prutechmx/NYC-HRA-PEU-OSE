@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lai-Sg-4Jk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lai-Sg-4Jk">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -617,7 +617,7 @@
                                         <rect key="frame" x="0.0" y="22" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="doM-Ee-p83" id="M3M-3h-eiE">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Assignment" translatesAutoresizingMaskIntoConstraints="NO" id="D3N-J0-FeV" userLabel="MenuIcon">
@@ -652,7 +652,7 @@
                                         <rect key="frame" x="0.0" y="74" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sP6-SL-S4r" id="GsC-2d-xmF">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="fWL-pX-0SX" userLabel="MenuIcon">
@@ -688,7 +688,7 @@
                                         <rect key="frame" x="0.0" y="126" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S7n-wK-EIB" id="957-dH-B3W">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SurveyTaken" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-Cd-Wgw" userLabel="MenuIcon">
@@ -728,7 +728,7 @@
                                         <rect key="frame" x="0.0" y="222" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xHx-7w-D8w" id="2nQ-zW-WoY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Setting" translatesAutoresizingMaskIntoConstraints="NO" id="1vI-zc-bHf" userLabel="MenuIcon">
@@ -764,7 +764,7 @@
                                         <rect key="frame" x="0.0" y="274" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GE4-Rz-SrN" id="Zwm-2V-Ycc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myaccount" translatesAutoresizingMaskIntoConstraints="NO" id="bIu-mM-HPQ" userLabel="MenuIcon">
@@ -800,7 +800,7 @@
                                         <rect key="frame" x="0.0" y="326" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SK8-ys-RvT" id="PMA-2r-4GR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info" translatesAutoresizingMaskIntoConstraints="NO" id="fv0-hy-gFy" userLabel="MenuIcon">
@@ -836,7 +836,7 @@
                                         <rect key="frame" x="0.0" y="378" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b9q-bh-cgn" id="7yp-QG-Irk">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logout" translatesAutoresizingMaskIntoConstraints="NO" id="59K-bT-lZ0" userLabel="MenuIcon">
@@ -966,7 +966,7 @@
                                         <rect key="frame" x="0.0" y="72" width="275" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="blS-T6-WHQ" id="hop-f0-ayP">
-                                            <rect key="frame" x="0.0" y="0.0" width="275" height="72"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="275" height="73"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELIMA OPTIQUE" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t16-Eb-h9K" userLabel="datalocationName">
@@ -1258,7 +1258,7 @@
                                         <rect key="frame" x="0.0" y="28" width="343" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVF-0e-rOl" id="qgq-Lf-vR9">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="73"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUf-1q-4u2" userLabel="UnitView">
@@ -1630,7 +1630,7 @@
                                         <rect key="frame" x="0.0" y="28" width="343" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4bg-Oy-5aN" id="rKe-Hm-uE9">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="73"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZQ-2N-rf5" userLabel="UnitView">
@@ -3390,14 +3390,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Location" id="aLO-9T-XhO">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="IbA-PQ-CMI">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="IbA-PQ-CMI">
                             <connections>
-                                <action selector="saveLocation:" destination="k4D-Vl-Mqe" id="k9Q-Of-iCe"/>
+                                <action selector="cancelLocation:" destination="k4D-Vl-Mqe" id="3bG-8b-yCv"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="bId-9H-caI">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="bId-9H-caI">
                             <connections>
-                                <action selector="cancelLocation:" destination="k4D-Vl-Mqe" id="Ouc-bE-Puz"/>
+                                <action selector="saveLocation:" destination="k4D-Vl-Mqe" id="HZW-yh-cfr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3873,28 +3873,14 @@
                                     <constraint firstAttribute="trailing" secondItem="lCZ-VE-Dgf" secondAttribute="trailing" id="kLB-er-IrU"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vNv-3Y-zGt" userLabel="TenantView">
-                                <rect key="frame" x="375" y="133" width="343" height="477"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNv-3Y-zGt" userLabel="TenantView">
+                                <rect key="frame" x="16" y="133" width="343" height="477"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHv-Gi-Enh" userLabel="AddTenantBtn">
-                                        <rect key="frame" x="16" y="428" width="312" height="44"/>
-                                        <color key="backgroundColor" red="0.17300331960409254" green="0.59518459075772112" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="njP-4y-Xft"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                                        <state key="normal" title="Add Tenant">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addTenant:" destination="0WK-hQ-Bv5" eventType="touchUpInside" id="xRi-4u-JRN"/>
-                                        </connections>
-                                    </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7jM-J9-jNT" userLabel="TableView">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="417"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="74" id="HHg-ea-rcT" userLabel="cell" customClass="TenantViewCell" customModule="Knock" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="74" id="HHg-ea-rcT" userLabel="cell" customClass="TenantViewCell" customModule="Knock" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="343" height="74"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HHg-ea-rcT" id="xV1-rF-oRc">
@@ -4012,6 +3998,7 @@
                                                     <outlet property="name" destination="wF1-yT-vhU" id="F7l-Nn-fRx"/>
                                                     <outlet property="phone" destination="Ad3-cf-axf" id="SVv-JI-VmY"/>
                                                     <outlet property="tenantId" destination="Y0x-G2-sD2" id="qNx-At-3tw"/>
+                                                    <outlet property="tenantView" destination="lgf-ey-858" id="afn-Ej-szf"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -4020,16 +4007,30 @@
                                             <outlet property="delegate" destination="0WK-hQ-Bv5" id="pQ3-a6-I2Y"/>
                                         </connections>
                                     </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHv-Gi-Enh" userLabel="AddTenantBtn">
+                                        <rect key="frame" x="114" y="425" width="115" height="44"/>
+                                        <color key="backgroundColor" red="0.17300331960409254" green="0.59518459075772112" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="njP-4y-Xft"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                        <state key="normal" title="Add Tenant">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addTenant:" destination="0WK-hQ-Bv5" eventType="touchUpInside" id="xRi-4u-JRN"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="oHv-Gi-Enh" secondAttribute="trailing" constant="15" id="4p2-dH-M6f"/>
-                                    <constraint firstItem="oHv-Gi-Enh" firstAttribute="leading" secondItem="vNv-3Y-zGt" secondAttribute="leading" constant="16" id="Dxf-jb-ffb"/>
+                                    <constraint firstAttribute="trailing" secondItem="oHv-Gi-Enh" secondAttribute="trailing" constant="114" id="4p2-dH-M6f"/>
+                                    <constraint firstItem="oHv-Gi-Enh" firstAttribute="leading" secondItem="vNv-3Y-zGt" secondAttribute="leading" constant="114" id="Dxf-jb-ffb"/>
                                     <constraint firstItem="7jM-J9-jNT" firstAttribute="top" secondItem="vNv-3Y-zGt" secondAttribute="top" id="Gyr-7v-pl9"/>
                                     <constraint firstAttribute="trailing" secondItem="7jM-J9-jNT" secondAttribute="trailing" id="XvU-ex-iWq"/>
                                     <constraint firstItem="7jM-J9-jNT" firstAttribute="leading" secondItem="vNv-3Y-zGt" secondAttribute="leading" id="aio-l0-yvG"/>
-                                    <constraint firstAttribute="bottom" secondItem="oHv-Gi-Enh" secondAttribute="bottom" constant="5" id="deQ-lJ-34a"/>
-                                    <constraint firstItem="oHv-Gi-Enh" firstAttribute="top" secondItem="7jM-J9-jNT" secondAttribute="bottom" constant="11" id="dg6-tI-u6r"/>
+                                    <constraint firstAttribute="bottom" secondItem="oHv-Gi-Enh" secondAttribute="bottom" constant="8" id="deQ-lJ-34a"/>
+                                    <constraint firstItem="oHv-Gi-Enh" firstAttribute="top" secondItem="7jM-J9-jNT" secondAttribute="bottom" constant="8" id="dg6-tI-u6r"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -4056,14 +4057,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="M4n-Ck-M2W">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="S27-nB-S4C">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="S27-nB-S4C">
                             <connections>
-                                <action selector="save:" destination="0WK-hQ-Bv5" id="8Vp-ig-Mmt"/>
+                                <action selector="cancel:" destination="0WK-hQ-Bv5" id="fhZ-Wi-Wgo"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="Mt6-Vk-hui">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="Mt6-Vk-hui">
                             <connections>
-                                <action selector="cancel:" destination="0WK-hQ-Bv5" id="Xx7-EC-baO"/>
+                                <action selector="save:" destination="0WK-hQ-Bv5" id="dJO-Jn-g0m"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -4076,6 +4077,7 @@
                         <outlet property="chooseUnitInfoView" destination="qaQ-Gs-v7f" id="8D2-vV-cUH"/>
                         <outlet property="fullAddressText" destination="xSj-Si-tRM" id="yby-O8-Faw"/>
                         <outlet property="notesTextArea" destination="2RU-TE-cZt" id="elA-fT-LPm"/>
+                        <outlet property="saveOutlet" destination="Mt6-Vk-hui" id="ZPQ-8j-Ud0"/>
                         <outlet property="segmentedControl" destination="4bb-5T-s3L" id="1Hq-EM-B3j"/>
                         <outlet property="surveyCollectionView" destination="bGk-2F-cYZ" id="1Nr-7i-olM"/>
                         <outlet property="tblTeanantVw" destination="7jM-J9-jNT" id="MQg-mc-BFJ"/>
@@ -4202,14 +4204,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Unit" id="dB6-vD-1Xb">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="0it-aA-B8n">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="0it-aA-B8n">
                             <connections>
-                                <action selector="save:" destination="YUL-Sc-mvA" id="G5o-1Z-duP"/>
+                                <action selector="cancel:" destination="YUL-Sc-mvA" id="oAJ-6T-Y4x"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="hZj-tG-iQF">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="hZj-tG-iQF">
                             <connections>
-                                <action selector="cancel:" destination="YUL-Sc-mvA" id="a2R-MY-uZk"/>
+                                <action selector="save:" destination="YUL-Sc-mvA" id="UPH-gm-fsf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

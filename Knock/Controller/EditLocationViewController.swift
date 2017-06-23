@@ -127,71 +127,6 @@ class EditLocationViewController: UIViewController {
 
     }
 
-    @IBAction func saveLocation(_ sender: Any) {
-        
-        /*  { \"canvassingStatus\":\"Canvassed\",\"assignmentLocationId\":\"a0K35000000rhQw\",\"Notes\":\"jaipur Notes\",\"attempt\":\"Yes\",\"numberOfUnits\":\"5\"}
-         */
-        
-        var editLocDict : [String:String] = [:]
-        var updateLocation : [String:String] = [:]
-        
-        var numberOfUnits:String = ""
-        if let numberofUnitsTemp = NoOfUnitsTextField.text{
-            numberOfUnits = numberofUnitsTemp
-        }
-        
-        var notes:String = ""
-        if let notesTemp = NotesTextArea.text{
-            notes = notesTemp
-        }
-        
-        
-         editLocDict["canvassingStatus"] = canvassingStatus
-         editLocDict["assignmentLocationId"] = SalesforceConnection.assignmentLocationId
-         editLocDict["Notes"] = notes
-         editLocDict["attempt"] = attempt
-         editLocDict["numberOfUnits"] = numberOfUnits
-        
-         //updateLocation["assignmentIds"] = editLocDict as AnyObject?
-        
-        let convertedString = Utilities.jsonToString(json: editLocDict as AnyObject)
-        
-        let encryptEditLocStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        updateLocation["location"] = encryptEditLocStr
-        
-          SVProgressHUD.show(withStatus: "Updating location...", maskType: SVProgressHUDMaskType.gradient)
-        
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
-            
-            if(response)
-            {
-
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: updateLocation){ jsonData in
-            
-                    SVProgressHUD.dismiss()
-                    self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        if didTap {
-                            self.dismiss(animated: true, completion: nil)
-                        } else {
-                             self.dismiss(animated: true, completion: nil)
-                        }
-                    }
-                   
-                    
-            
-                    //print(jsonData.1)
-                    //self.parseMessage(jsonObject: jsonData.1)
-                }
-            }
-
-        }
-        
-        
-            
-        
-        
-    }
     
     
     func parseMessage(jsonObject: Dictionary<String, AnyObject>){
@@ -226,9 +161,67 @@ class EditLocationViewController: UIViewController {
     }
     
     @IBAction func cancelLocation(_ sender: Any) {
-         self.dismiss(animated: true, completion: nil)
+        
+        self.dismiss(animated: true, completion: nil)
+        
     }
     
+    
+    @IBAction func saveLocation(_ sender: Any) {
+        var editLocDict : [String:String] = [:]
+        var updateLocation : [String:String] = [:]
+        
+        var numberOfUnits:String = ""
+        if let numberofUnitsTemp = NoOfUnitsTextField.text{
+            numberOfUnits = numberofUnitsTemp
+        }
+        
+        var notes:String = ""
+        if let notesTemp = NotesTextArea.text{
+            notes = notesTemp
+        }
+        
+        
+        editLocDict["canvassingStatus"] = canvassingStatus
+        editLocDict["assignmentLocationId"] = SalesforceConnection.assignmentLocationId
+        editLocDict["Notes"] = notes
+        editLocDict["attempt"] = attempt
+        editLocDict["numberOfUnits"] = numberOfUnits
+        
+        //updateLocation["assignmentIds"] = editLocDict as AnyObject?
+        
+        let convertedString = Utilities.jsonToString(json: editLocDict as AnyObject)
+        
+        let encryptEditLocStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+        
+        updateLocation["location"] = encryptEditLocStr
+        
+        SVProgressHUD.show(withStatus: "Updating location...", maskType: SVProgressHUDMaskType.gradient)
+        
+        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+            
+            if(response)
+            {
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: updateLocation){ jsonData in
+                    
+                    SVProgressHUD.dismiss()
+                    self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        if didTap {
+                            self.dismiss(animated: true, completion: nil)
+                        } else {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                    
+                    
+                }
+            }
+            
+        }
+        
+
+    }
 
    
 }

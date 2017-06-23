@@ -345,19 +345,22 @@ var picker = UIDatePicker()
             
             
            
+            var msg:String = ""
             
             if(SalesforceConnection.currentTenantId == ""){
                 saveTenantInCoreData(tenantDataDict: tenantDataDictonary)
+                msg = "Tenant information has been created successfully."
             }
             else{
                  updateTenantInCoreData(tenantDataDict: tenantDataDictonary)
+                 msg = "Tenant information has been updated successfully."
             }
 
                 
             
+           
             
-            
-            self.view.makeToast("Tenant information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast(msg, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 if didTap {
                     
@@ -417,15 +420,19 @@ var picker = UIDatePicker()
         
         tenantObject.id = tenantDataDict["tenantId"] as! String?
         
-        tenantObject.firstName = firstName + " " + lastName
+        tenantObject.name = tenantDataDict["name"] as? String  ?? ""
         
-        tenantObject.lastName = ""
+        tenantObject.firstName = tenantDataDict["firstName"] as? String  ?? ""
         
-        tenantObject.phone = phone
+        tenantObject.lastName = tenantDataDict["lastName"] as? String  ?? ""
         
-        tenantObject.email = email
+        tenantObject.phone = tenantDataDict["phone"] as? String  ?? ""
         
-        tenantObject.age = ""
+        tenantObject.email = tenantDataDict["email"] as? String  ?? ""
+        
+        tenantObject.age = tenantDataDict["age"] as? String  ?? ""
+        
+        tenantObject.dob =  tenantDataDict["birthdate"] as? String  ?? ""
         
         
         
@@ -450,15 +457,19 @@ var picker = UIDatePicker()
         
         //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
         
-        updateObjectDic["firstName"] = firstName
+        updateObjectDic["name"] = tenantDataDict["name"] as? String  ?? ""
+
+        updateObjectDic["firstName"] = tenantDataDict["firstName"] as? String  ?? ""
         
-        updateObjectDic["lastName"] = lastName
+        updateObjectDic["lastName"] = tenantDataDict["lastName"] as? String  ?? ""
         
-        updateObjectDic["phone"] = phone
+        updateObjectDic["phone"] = tenantDataDict["phone"] as? String  ?? ""
         
-        updateObjectDic["email"] = email
+        updateObjectDic["email"] = tenantDataDict["email"] as? String  ?? ""
         
-        updateObjectDic["dob"] = dob
+        updateObjectDic["dob"] = tenantDataDict["birthdate"] as? String  ?? ""
+        
+        updateObjectDic["age"] = tenantDataDict["age"]  as? String  ?? ""
 
         
         
