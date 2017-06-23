@@ -20,6 +20,7 @@ struct SurveyDataStruct
 struct TenantDataStruct
 {
     var tenantId : String = ""
+    var name:String = ""
     var firstName : String = ""
     var lastName : String = ""
     var email : String = ""
@@ -85,6 +86,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addTenantOutlet.layer.cornerRadius = 5
         
          setUpDropDowns()
         
@@ -256,7 +259,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             for tenantData in tenantResults{
                 
                 
-                let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!, firstName: tenantData.firstName!, lastName: "", email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!)
+                let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!)
                 
                 tenantDataArray.append(objectTenantStruct)
                 
@@ -347,7 +350,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         cell.email.text = tenantDataArray[indexPath.row].email
         cell.phone.text = tenantDataArray[indexPath.row].phone
-        cell.name.text = tenantDataArray[indexPath.row].firstName
+        cell.name.text = tenantDataArray[indexPath.row].name
         cell.age.text = tenantDataArray[indexPath.row].age
         cell.tenantId.text = tenantDataArray[indexPath.row].tenantId
         

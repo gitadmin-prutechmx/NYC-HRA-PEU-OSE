@@ -57,6 +57,11 @@ class ManageCoreData{
     static func updateData(salesforceEntityName:String,valueToBeUpdate:String,updatekey:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
+        
+       
+
+        
+        
         fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
         
         do
@@ -84,6 +89,64 @@ class ManageCoreData{
         
         
     }
+    
+    
+    static func updateData1(salesforceEntityName:String,updateKeyValue:[String:String],predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,isPredicate:Bool){
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
+        
+        if(isPredicate)
+        {
+            if(predicateValue2 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+                
+            }
+            else if(predicateValue3 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
+            }
+            else if(predicateValue4 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!)
+            }
+            else if(predicateValue4 != nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!)
+            }
+            
+        }
+        
+       // fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        
+        do
+        {
+            let salesforceConfigData = try context.fetch(fetchRequest)
+            if salesforceConfigData.count == 1
+            {
+                let objectUpdate = salesforceConfigData[0] as! NSManagedObject
+                
+                for (key,value) in updateKeyValue{
+                    
+                    objectUpdate.setValue(value, forKey: key)
+                }
+                
+                
+                
+                do{
+                    try context.save()
+                }
+                catch
+                {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        catch
+        {
+            print(error.localizedDescription)
+        }
+        
+        
+        
+    }
+
     
     
     

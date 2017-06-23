@@ -95,6 +95,8 @@ var picker = UIDatePicker()
             firstNameTxtField.text = tenantResults[0].firstName
             lastNameTxtField.text = tenantResults[0].lastName
             emailTxtField.text = tenantResults[0].email
+            phoneTextField.text = tenantResults[0].phone
+            txtDob.text = tenantResults[0].dob
             
         }
         
@@ -110,6 +112,7 @@ var picker = UIDatePicker()
     }
     
     @IBAction func save(_ sender: Any) {
+        
         
         self.saveTenantInfo()
       
@@ -238,7 +241,9 @@ var picker = UIDatePicker()
         
         
             
-            
+        if(SalesforceConnection.currentTenantId != ""){
+            editTenantDict["tenantId"] = SalesforceConnection.currentTenantId
+        }
             
             editTenantDict["locationUnitId"] = SalesforceConnection.unitId
             
@@ -329,7 +334,7 @@ var picker = UIDatePicker()
      
         guard let isError = jsonObject["hasError"] as? Bool,
             
-            let tenantDataDict = jsonObject["tenantData"] as? [String: AnyObject] else { return }
+            let tenantDataDictonary = jsonObject["tenantData"] as? [String: AnyObject] else { return }
         
         
 
@@ -337,37 +342,18 @@ var picker = UIDatePicker()
         if(isError == false){
             
            
-                
-                let tenantObject = Tenant(context: context)
-                
-                
-                tenantObject.id = tenantDataDict["tenantId"] as! String?
-                
-                 tenantObject.firstName = firstName + " " + lastName
             
-                 tenantObject.lastName = ""
-                 
-                 tenantObject.phone = phone
-                 
-                 tenantObject.email = email
-                
-                 tenantObject.age = ""
-                
-                
-                
-                tenantObject.assignmentId = SalesforceConnection.assignmentId
-                
-                tenantObject.locationId = SalesforceConnection.locationId
-                
-                tenantObject.unitId = SalesforceConnection.unitId
-                
-                
-                
-                appDelegate.saveContext()
-                
-                
-                
             
+           
+            
+            if(SalesforceConnection.currentTenantId == ""){
+                saveTenantInCoreData(tenantDataDict: tenantDataDictonary)
+            }
+            else{
+                 updateTenantInCoreData(tenantDataDict: tenantDataDictonary)
+            }
+
+                
             
             
             
@@ -422,6 +408,65 @@ var picker = UIDatePicker()
         
         
     }
+    
+    
+    func saveTenantInCoreData(tenantDataDict: [String: AnyObject]){
+        
+        let tenantObject = Tenant(context: context)
+        
+        
+        tenantObject.id = tenantDataDict["tenantId"] as! String?
+        
+        tenantObject.firstName = firstName + " " + lastName
+        
+        tenantObject.lastName = ""
+        
+        tenantObject.phone = phone
+        
+        tenantObject.email = email
+        
+        tenantObject.age = ""
+        
+        
+        
+        tenantObject.assignmentId = SalesforceConnection.assignmentId
+        
+        tenantObject.locationId = SalesforceConnection.locationId
+        
+        tenantObject.unitId = SalesforceConnection.unitId
+        
+        
+        
+        appDelegate.saveContext()
+        
+        
+        
+        
+
+    }
+    func updateTenantInCoreData(tenantDataDict: [String: AnyObject]){
+        
+        var updateObjectDic:[String:String] = [:]
+        
+        //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
+        
+        updateObjectDic["firstName"] = firstName
+        
+        updateObjectDic["lastName"] = lastName
+        
+        updateObjectDic["phone"] = phone
+        
+        updateObjectDic["email"] = email
+        
+        updateObjectDic["dob"] = dob
+
+        
+        
+         ManageCoreData.updateData1(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@ AND locationId == %@ AND unitId == %@", predicateValue: SalesforceConnection.currentTenantId,predicateValue2: SalesforceConnection.assignmentId, predicateValue3: SalesforceConnection.locationId,predicateValue4: SalesforceConnection.unitId,isPredicate: true)
+        
+        
+    }
+    
     
    
     @IBAction func editingDidBegain(_ sender: UITextField)
