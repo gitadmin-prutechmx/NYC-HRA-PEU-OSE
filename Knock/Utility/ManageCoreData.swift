@@ -91,7 +91,7 @@ class ManageCoreData{
     }
     
     
-    static func updateData1(salesforceEntityName:String,updateKeyValue:[String:String],predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,isPredicate:Bool){
+    static func updateRecord(salesforceEntityName:String,updateKeyValue:[String:String],predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         

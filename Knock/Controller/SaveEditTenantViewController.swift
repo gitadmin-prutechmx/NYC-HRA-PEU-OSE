@@ -473,7 +473,7 @@ var picker = UIDatePicker()
 
         
         
-         ManageCoreData.updateData1(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@ AND locationId == %@ AND unitId == %@", predicateValue: SalesforceConnection.currentTenantId,predicateValue2: SalesforceConnection.assignmentId, predicateValue3: SalesforceConnection.locationId,predicateValue4: SalesforceConnection.unitId,isPredicate: true)
+         ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@ AND locationId == %@ AND unitId == %@", predicateValue: SalesforceConnection.currentTenantId,predicateValue2: SalesforceConnection.assignmentId, predicateValue3: SalesforceConnection.locationId,predicateValue4: SalesforceConnection.unitId,isPredicate: true)
         
         
     }
