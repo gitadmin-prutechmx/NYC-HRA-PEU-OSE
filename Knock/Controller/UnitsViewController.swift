@@ -134,6 +134,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
          let indexRow = (sender as AnyObject).tag
         
          SalesforceConnection.unitId =  UnitDataArray[indexRow!].unitId
+        SalesforceConnection.unitName = UnitDataArray[indexRow!].unitName
         
         SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexRow!].assignmentLocUnitId
         
@@ -170,7 +171,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     func UpdateUnitView(){
         print("updateTabledata")
         
-        updateSurveyStatus()
+        if(Utilities.isSubmitSurvey){
+             updateSurveyStatus()
+        }
+       
         updateTableViewData()
     }
     
@@ -467,7 +471,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
       // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
         
-         let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyUnit]
+         let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [SurveyUnit]
+        
+        //ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyUnit]
         
          return surveyUnitResults
         

@@ -240,7 +240,7 @@ class EditLocationViewController: UIViewController {
         }
         
         
-        editLocDict["canvassingStatus"] = canvassingStatus
+        editLocDict["status"] = canvassingStatus
         editLocDict["assignmentLocationId"] = SalesforceConnection.assignmentLocationId
         editLocDict["Notes"] = notes
         editLocDict["attempt"] = attempt

@@ -527,6 +527,21 @@ class LoginViewController: UIViewController {
                             appDelegate.saveContext()
 
                             
+                            //AssignSurvey
+                            
+                            
+                            //save the record
+                            let surveyUnitObject = SurveyUnit(context: context)
+                            surveyUnitObject.locationId = locationObject.id!
+                            surveyUnitObject.assignmentId = assignmentObject.id!
+                            surveyUnitObject.assignmentLocId = locationObject.assignmentLocId!
+                            surveyUnitObject.unitId = unitObject.id!
+                            surveyUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                            surveyUnitObject.surveyId = unitData["survey"] as? String  ?? ""
+                            
+                            
+                            appDelegate.saveContext()
+
                             
                             guard let tenantInfoResults = unitData["TenantInfo"] as? [[String: AnyObject]]  else { break }
                             

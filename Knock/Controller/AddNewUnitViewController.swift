@@ -194,12 +194,14 @@ class AddNewUnitViewController: UIViewController {
                 
                 if didTap {
                     
+                    Utilities.isSubmitSurvey = false
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                     self.dismiss(animated: true, completion: nil)
                     
                     
                 } else {
                     
+                    Utilities.isSubmitSurvey = false
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                     
                     self.dismiss(animated: true, completion: nil)

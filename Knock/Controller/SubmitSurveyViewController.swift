@@ -66,6 +66,7 @@ class SubmitSurveyViewController: UIViewController {
         
         let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
             self.isexitSurvey = true
+            Utilities.isSubmitSurvey = false
             self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
             //Do some other stuff
         }

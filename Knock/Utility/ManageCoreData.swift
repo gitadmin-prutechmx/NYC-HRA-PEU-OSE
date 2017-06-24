@@ -12,7 +12,7 @@ import CoreData
 class ManageCoreData{
     
     
-    static func fetchData(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,predicateValue5:String?=nil,isPredicate:Bool) -> [Any]{
+    static func fetchData(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,predicateValue5:String?=nil,predicateValue6:String?=nil,isPredicate:Bool) -> [Any]{
         
         var results = [Any]()
         
@@ -36,8 +36,11 @@ class ManageCoreData{
             else if(predicateValue5 == nil){
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!)
             }
-            else if(predicateValue5 != nil){
+            else if(predicateValue6 == nil){
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!,predicateValue5!)
+            }
+            else if(predicateValue6 != nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!,predicateValue5!,predicateValue6!)
             }
 
         }
@@ -94,7 +97,7 @@ class ManageCoreData{
     }
     
     
-    static func updateRecord(salesforceEntityName:String,updateKeyValue:[String:String],predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,predicateValue5:String?=nil,isPredicate:Bool){
+    static func updateRecord(salesforceEntityName:String,updateKeyValue:[String:String],predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,predicateValue5:String?=nil,predicateValue6:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         
@@ -113,8 +116,11 @@ class ManageCoreData{
             else if(predicateValue5 == nil){
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!)
             }
-            else if(predicateValue5 != nil){
+            else if(predicateValue6 == nil){
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!,predicateValue5!)
+            }
+            else if(predicateValue6 != nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!,predicateValue5!,predicateValue6!)
             }
             
         }

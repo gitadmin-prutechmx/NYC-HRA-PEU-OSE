@@ -340,7 +340,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         // endEditing can trigger some other action according to requirements
         
         SalesforceConnection.assignmentId =  assignmentIdArray[indexPath.row]
-        
+          SalesforceConnection.assignmentName = assignmentArray[indexPath.row]
         
         
         
