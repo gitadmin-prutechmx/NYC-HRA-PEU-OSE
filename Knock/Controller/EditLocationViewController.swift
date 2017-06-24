@@ -12,8 +12,16 @@ import DLRadioButton
 
 class EditLocationViewController: UIViewController {
     
-     var attempt:String = ""
-     var canvassingStatus:String = ""
+    
+    @IBOutlet weak var attemptYes: DLRadioButton!
+    
+    @IBOutlet weak var attemptNo: DLRadioButton!
+    
+    var attempt:String = ""
+    var canvassingStatus:String = ""
+    var numberOfUnits:String = ""
+    var notes:String = ""
+    
     
     @IBOutlet weak var fullAddressLbl: UILabel!
 
@@ -53,9 +61,40 @@ class EditLocationViewController: UIViewController {
         //NotesTextArea.text = "Description"
         NotesTextArea.textColor = UIColor.black
         
+        
+        populateEditLocation()
+        
 
 
         // Do any additional setup after loading the view.
+    }
+    
+    func populateEditLocation(){
+        
+        let editLocationResults = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, isPredicate:true) as! [EditLocation]
+        
+        if(editLocationResults.count > 0){
+            
+            if(editLocationResults[0].canvassingStatus! != ""){
+                self.canvassingStatusDropDown.setTitle(editLocationResults[0].canvassingStatus!, for: .normal)
+            }
+            
+            canvassingStatus = editLocationResults[0].canvassingStatus!
+            
+            NoOfUnitsTextField.text = editLocationResults[0].noOfUnits!
+            NotesTextArea.text = editLocationResults[0].notes!
+            
+            if(editLocationResults[0].attempt == "Yes"){
+                attemptYes.isSelected = true
+            }
+            else if (editLocationResults[0].attempt == "No"){
+                attemptNo.isSelected = true
+            }
+            
+            attempt = editLocationResults[0].attempt!
+            
+        }
+
     }
     
     func setupStatusDropDown() {
@@ -129,15 +168,15 @@ class EditLocationViewController: UIViewController {
 
     
     
-    func parseMessage(jsonObject: Dictionary<String, AnyObject>){
+    func parseResponse(jsonObject: Dictionary<String, AnyObject>){
     
-        guard let isError = jsonObject["hasError"] as? Int64 else { return }
+        guard let isError = jsonObject["hasError"] as? Bool else { return }
         
-       
-      
- 
         
-        if(isError == 0){
+        if(isError == false){
+            
+            updateEditLocationInDatabase()
+            
             self.view.makeToast("Location has been updated successfully.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 if didTap {
                     print("completion from tap")
@@ -159,6 +198,25 @@ class EditLocationViewController: UIViewController {
         }
         
     }
+
+    func updateEditLocationInDatabase(){
+            
+            var updateObjectDic:[String:String] = [:]
+            
+            //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
+            
+            updateObjectDic["attempt"] = attempt
+            updateObjectDic["canvassingStatus"] = canvassingStatus
+            updateObjectDic["noOfUnits"] = numberOfUnits
+            updateObjectDic["notes"] = notes
+        
+            
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "EditLocation", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ ", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,isPredicate: true)
+            
+        
+        
+    }
     
     @IBAction func cancelLocation(_ sender: Any) {
         
@@ -171,12 +229,12 @@ class EditLocationViewController: UIViewController {
         var editLocDict : [String:String] = [:]
         var updateLocation : [String:String] = [:]
         
-        var numberOfUnits:String = ""
+      
         if let numberofUnitsTemp = NoOfUnitsTextField.text{
             numberOfUnits = numberofUnitsTemp
         }
         
-        var notes:String = ""
+       
         if let notesTemp = NotesTextArea.text{
             notes = notesTemp
         }
@@ -205,14 +263,18 @@ class EditLocationViewController: UIViewController {
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: updateLocation){ jsonData in
                     
+                    
                     SVProgressHUD.dismiss()
-                    self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        if didTap {
-                            self.dismiss(animated: true, completion: nil)
-                        } else {
-                            self.dismiss(animated: true, completion: nil)
-                        }
-                    }
+                    
+                     self.parseResponse(jsonObject: jsonData.1)
+                    
+//                    self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                        if didTap {
+//                            self.dismiss(animated: true, completion: nil)
+//                        } else {
+//                            self.dismiss(animated: true, completion: nil)
+//                        }
+//                    }
                     
                     
                 }

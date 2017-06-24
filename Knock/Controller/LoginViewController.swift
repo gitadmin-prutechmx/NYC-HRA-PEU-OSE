@@ -458,6 +458,19 @@ class LoginViewController: UIViewController {
                         
                         appDelegate.saveContext()
                         
+                        //EditLocation
+                        
+                        let editlocationObject = EditLocation(context: context)
+                        editlocationObject.locationId = locationData["locId"] as? String  ?? ""
+                        editlocationObject.assignmentId = assignmentObject.id!
+                        editlocationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
+                        editlocationObject.canvassingStatus = locationData["status"] as? String  ?? ""
+                        editlocationObject.attempt = locationData["attempt"] as? String  ?? ""
+                        editlocationObject.noOfUnits = locationData["numberOfUnits"] as? String  ?? ""
+                        editlocationObject.notes = locationData["notes"] as? String  ?? ""
+                        
+                        appDelegate.saveContext()
+                        
                         guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
                        
                          for unitData in unitResults {
@@ -472,9 +485,47 @@ class LoginViewController: UIViewController {
 
                             unitObject.locationId = locationObject.id!
                             
+                            unitObject.surveyStatus = ""
+                            unitObject.syncDate = ""
+                            
                              unitObject.assignmentLocUnitId = unitData["assignmentLocUnitId"] as? String  ?? ""
                             
                             appDelegate.saveContext()
+                            
+                            //EditUnit
+                            
+                            let editUnitObject = EditUnit(context: context)
+                            editUnitObject.locationId = locationObject.id!
+                            editUnitObject.assignmentId = assignmentObject.id!
+                            editUnitObject.assignmentLocId = locationObject.assignmentLocId!
+                            editUnitObject.unitId = unitObject.id!
+                            editUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                            editUnitObject.attempt = unitData["attempt"] as? String  ?? ""
+                            editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
+                            editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
+                            editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
+                            editUnitObject.unitNotes = unitData["notes"] as? String  ?? ""
+                             editUnitObject.isContact = unitData["isContact"] as? String  ?? ""
+                            
+                            
+                            appDelegate.saveContext()
+                            
+                            //TenantStatus
+                            
+                            let tenantAssignObject = TenantAssign(context: context)
+                            
+                           
+                            tenantAssignObject.locationId = locationObject.id!
+                            tenantAssignObject.assignmentId = assignmentObject.id!
+                            tenantAssignObject.assignmentLocId = locationObject.assignmentLocId!
+                            tenantAssignObject.unitId = unitObject.id!
+                            tenantAssignObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                            tenantAssignObject.tenantId = unitData["tenant"] as? String  ?? ""
+                            
+                            
+                            
+                            appDelegate.saveContext()
+
                             
                             
                             guard let tenantInfoResults = unitData["TenantInfo"] as? [[String: AnyObject]]  else { break }

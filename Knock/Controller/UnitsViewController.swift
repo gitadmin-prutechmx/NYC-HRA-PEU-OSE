@@ -13,7 +13,7 @@ struct UnitsDataStruct
 {
     var unitId : String = ""
     var unitName : String = ""
-    var floor: String = ""
+    var apartment: String = ""
     var surveyStatus: String = ""
     var syncDate: String = ""
     var assignmentLocUnitId:String = ""
@@ -169,6 +169,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func UpdateUnitView(){
         print("updateTabledata")
+        
+        updateSurveyStatus()
         updateTableViewData()
     }
     
@@ -182,6 +184,28 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     // var unitDataArray = [UnitsDataStruct]()
     
     
+    func updateSurveyStatus(){
+        var updateObjectDic:[String:String] = [:]
+        
+        let date = Date()
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "MM/dd/yyyy"
+        
+        
+       
+        
+        updateObjectDic["surveyStatus"] = "Completed"
+        updateObjectDic["syncDate"] = formatter.string(from: date)
+        
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "Unit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND id == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.unitId, predicateValue4: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
+        
+        
+        
+
+    }
     func updateTableViewData(){
         
        UnitDataArray = [UnitsDataStruct]()
@@ -199,7 +223,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
 //                    floorArray.append(unitData.floor!)
 //                }
 //                
-                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, floor: "", surveyStatus: "", syncDate: "",assignmentLocUnitId:unitData.assignmentLocUnitId!)
+                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.syncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
                 
                 UnitDataArray.append(objectUnitStruct)
                 
@@ -377,15 +401,17 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
             
-            let date = Date()
-            let formatter = DateFormatter()
+//            let date = Date()
+//            let formatter = DateFormatter()
+//            
+//            formatter.dateFormat = "MM/dd/yyyy"
+//            
+//          
+            cell.dataSyncDate.text =  UnitDataArray[indexPath.row].syncDate
+            //formatter.string(from: date)
             
-            formatter.dateFormat = "MM/dd/yyyy"
-            
-          
-            cell.dataSyncDate.text =   formatter.string(from: date)
-            
-            cell.dataSyncStatus.text = "Completed"
+            cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
+            //"Completed"
             
             
           /*  if(Reachability.isConnectedToNetwork()){
@@ -407,7 +433,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
         else{
             
-            
+            //cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
             
             cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
             
@@ -425,7 +451,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         cell.dataUnitId.text = UnitDataArray[indexPath.row].unitId
         
-        cell.dataFloor.text = UnitDataArray[indexPath.row].floor
+        cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
         
         
         
@@ -517,7 +543,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         currentCell.shake(duration: 0.3, pathLength: 15)
      
         
-        self.view.makeToast("Survey has been completed already.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             if didTap {
                 print("completion from tap")
             } else {

@@ -17,6 +17,28 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="EditLocation" representedClassName="EditLocation" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attempt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="canvassingStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noOfUnits" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EditUnit" representedClassName="EditUnit" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attempt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inTakeStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isContact" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reKnockNeeded" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tenantStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitNotes" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -76,6 +98,14 @@
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="TenantAssign" representedClassName="TenantAssign" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tenantId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Unit" representedClassName="Unit" syncable="YES" codeGenerationType="class">
         <attribute name="apartment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
@@ -99,5 +129,8 @@
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="Tenant" positionX="-126" positionY="45" width="128" height="210"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="195"/>
+        <element name="EditLocation" positionX="-117" positionY="54" width="128" height="150"/>
+        <element name="EditUnit" positionX="-108" positionY="63" width="128" height="210"/>
+        <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="135"/>
     </elements>
 </model>

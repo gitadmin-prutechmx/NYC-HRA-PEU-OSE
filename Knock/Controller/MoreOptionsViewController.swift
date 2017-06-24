@@ -33,12 +33,25 @@ struct TenantDataStruct
 
 class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var attemptNo: DLRadioButton!
+    @IBOutlet weak var attemptYes: DLRadioButton!
+    
+    @IBOutlet weak var contactNo: DLRadioButton!
+    @IBOutlet weak var contactYes: DLRadioButton!
+    
+    
+    @IBOutlet weak var reKnockYes: DLRadioButton!
+    @IBOutlet weak var reKnockNo: DLRadioButton!
+    
+    
     var attempt:String = ""
     var contact:String = ""
     var reknockNeeded:String = ""
     
     var tenantStatus:String = ""
     var inTakeStatus:String = ""
+    
+     var notes:String = ""
     
     var selectedTenantId:String = ""
     
@@ -122,6 +135,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             chooseUnitInfoView.isHidden = false
             chooseSurveyView.isHidden = true
             chooseTenantInfoView.isHidden = true
+            
+            populateEditUnit()
             
             self.saveOutlet.title = "Save"
         }
@@ -277,6 +292,19 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             }
         }
         
+        
+
+        
+        
+        let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [TenantAssign]
+        
+        
+        if(tenantAssignResults.count > 0){
+            
+            selectedTenantId = tenantAssignResults[0].tenantId!
+            
+        }
+        
         self.tblTeanantVw.reloadData()
         
         //self.surveyCollectionView.reloadData()
@@ -359,15 +387,17 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TenantViewCell
         
-//        if(tenantDataArray[indexPath.row].tenantId == "00335000003YbUOAA0"){
-//            
-//          
-//            cell.isSelected = true
-//            cell.setSelected(true, animated: true)
-//            
-//            
-//        }
-//        
+        if(tenantDataArray[indexPath.row].tenantId == selectedTenantId){
+            
+            
+           cell.tenantView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+           cell.contentView.backgroundColor =  UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+            cell.isSelected = true
+            cell.setSelected(true, animated: true)
+            
+            
+        }
+        
         cell.email.text = tenantDataArray[indexPath.row].email
         cell.phone.text = tenantDataArray[indexPath.row].phone
         cell.name.text = tenantDataArray[indexPath.row].name
@@ -384,13 +414,27 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let cell = tableView.cellForRow(at: indexPath) as! TenantViewCell
+        let indexPathArray = tableView.indexPathsForVisibleRows
         
-      //cell.tenantView.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
-        
-        
-        cell.contentView.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
-     
+        for indexPath in indexPathArray!{
+            
+             let cell = tableView.cellForRow(at: indexPath) as! TenantViewCell
+            
+            if tableView.indexPathForSelectedRow != indexPath {
+               
+                cell.tenantView.backgroundColor = UIColor.white
+                cell.contentView.backgroundColor = UIColor.clear
+                
+            }
+            else{
+                
+                cell.tenantView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+                
+                cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+                
+
+            }
+        }
         
        selectedTenantId = tenantDataArray[indexPath.row].tenantId
         
@@ -454,6 +498,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
              chooseUnitInfoView.isHidden = false
              Utilities.currentSegmentedControl = "Unit"
              self.saveOutlet.title = "Save"
+             populateEditUnit()
+            
         case 1:
              chooseTenantInfoView.isHidden = false
              chooseSurveyView.isHidden = true
@@ -477,6 +523,55 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             chooseTenantInfoView.isHidden = false
             Utilities.currentSegmentedControl = "Default"
             self.saveOutlet.title = "Save"
+        }
+    }
+    
+    func populateEditUnit(){
+        let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+        
+        if(editUnitResults.count > 0){
+            if(editUnitResults[0].attempt == "Yes"){
+                attemptYes.isSelected = true
+            }
+            else  if(editUnitResults[0].attempt == "No"){
+                attemptNo.isSelected = true
+            }
+            
+            attempt = editUnitResults[0].attempt!
+            
+            if(editUnitResults[0].isContact == "Yes"){
+                contactYes.isSelected = true
+            }
+            else if(editUnitResults[0].isContact == "No"){
+                contactNo.isSelected = true
+            }
+            
+            contact = editUnitResults[0].isContact!
+            
+            if(editUnitResults[0].reKnockNeeded == "Yes"){
+                reKnockYes.isSelected = true
+            }
+            else if(editUnitResults[0].reKnockNeeded == "No"){
+            
+                reKnockNo.isSelected = true
+            }
+            
+            reknockNeeded = editUnitResults[0].reKnockNeeded!
+            
+            if(editUnitResults[0].tenantStatus! != ""){
+                    tenantStatus = editUnitResults[0].tenantStatus!
+                
+                    self.ChooseTenantStatusBtn.setTitle(editUnitResults[0].tenantStatus , for: .normal)
+            }
+            if(editUnitResults[0].inTakeStatus! != ""){
+                    inTakeStatus = editUnitResults[0].inTakeStatus!
+                
+                    self.ChooseInTakeStatusBtn.setTitle(editUnitResults[0].inTakeStatus , for: .normal)
+            }
+            
+            notesTextArea.text = editUnitResults[0].unitNotes
+            
+            
         }
     }
 
@@ -558,7 +653,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             updateTenantAssign["tenantAssignmentDetail"] = encryptTenantAssignStr
             
-            SVProgressHUD.show(withStatus: "Updating tenant...", maskType: SVProgressHUDMaskType.gradient)
+            SVProgressHUD.show(withStatus: "Assigning tenant...", maskType: SVProgressHUDMaskType.gradient)
             
             SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
                 
@@ -590,7 +685,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         
         
-            var notes:String = ""
+           
             if let notesTemp = notesTextArea.text{
                 notes = notesTemp
             }
@@ -620,18 +715,14 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 if(response)
                 {
         
+                    
                     SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
         
+                       // updateEditUnitInDatabase()
                         
                         SVProgressHUD.dismiss()
-                        self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                            if didTap {
-                                self.dismiss(animated: true, completion: nil)
-                            } else {
-                                self.dismiss(animated: true, completion: nil)
-                            }
-                        }
                         
+                         self.parseEditUnitResponse(jsonObject: jsonData.1)
                         
                         
                     }
@@ -648,12 +739,115 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
+    func parseEditUnitResponse(jsonObject: Dictionary<String, AnyObject>){
+        
+        guard let isError = jsonObject["hasError"] as? Bool else { return }
+        
+        
+        if(isError == false){
+            
+            let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+            
+            if(editUnitResults.count > 0){
+            
+             updateEditUnitInDatabase()
+           }
+            else{
+                saveEditUnitInDatabase()
+
+            }
+            
+            self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+            self.dismiss(animated: true, completion: nil)
+        }
+        else{
+            self.view.makeToast("Error while updating unit", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    print("completion from tap")
+                } else {
+                    print("completion without tap")
+                }
+            }
+            
+        }
+        
+    }
+    
+
+    func saveEditUnitInDatabase(){
+        
+        let editUnitObject = EditUnit(context: context)
+        editUnitObject.locationId = SalesforceConnection.locationId
+        editUnitObject.assignmentId = SalesforceConnection.assignmentId
+        editUnitObject.assignmentLocId = SalesforceConnection.assignmentLocationId
+        editUnitObject.unitId = SalesforceConnection.unitId
+        editUnitObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
+        editUnitObject.attempt = attempt
+        editUnitObject.inTakeStatus = inTakeStatus
+        editUnitObject.reKnockNeeded = reknockNeeded
+        editUnitObject.tenantStatus = tenantStatus
+        editUnitObject.unitNotes = notes
+        editUnitObject.isContact = contact
+        
+        
+        appDelegate.saveContext()
+
+    }
+    
+    
+    func updateEditUnitInDatabase(){
+        
+        var updateObjectDic:[String:String] = [:]
+        
+        //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
+        
+        
+        updateObjectDic["tenantStatus"] = tenantStatus
+        updateObjectDic["inTakeStatus"] = inTakeStatus
+        updateObjectDic["unitNotes"] = notes
+        updateObjectDic["attempt"] = attempt
+        updateObjectDic["isContact"] = contact
+        updateObjectDic["reKnockNeeded"] = reknockNeeded
+        
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
+        
+        
+        
+    }
+    
+    
+    
+    
+    
     func parseResponse(jsonObject: Dictionary<String, AnyObject>){
         
         guard let isError = jsonObject["hasError"] as? Bool else { return }
         
         
         if(isError == false){
+            
+            let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [TenantAssign]
+            
+            
+            if(tenantAssignResults.count > 0){
+                
+               updateTenantAssignInDatabase()
+                
+            }
+
+            else{
+                saveTenantAssignInDatabase()
+            }
+            
+            
             self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 if didTap {
                     self.dismiss(animated: true, completion: nil)
@@ -680,6 +874,40 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             }
             
         }
+    }
+    
+    func updateTenantAssignInDatabase(){
+        var updateObjectDic:[String:String] = [:]
+        
+        //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
+        
+        updateObjectDic["tenantId"] = selectedTenantId
+        
+        
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
+        
+        
+        
+
+    }
+    
+    func saveTenantAssignInDatabase(){
+        
+        let tenantAssignObject = TenantAssign(context: context)
+        
+        
+        tenantAssignObject.locationId = SalesforceConnection.locationId
+        tenantAssignObject.assignmentId = SalesforceConnection.assignmentId
+        tenantAssignObject.assignmentLocId = SalesforceConnection.assignmentLocationId
+        tenantAssignObject.unitId = SalesforceConnection.unitId
+        tenantAssignObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
+        tenantAssignObject.tenantId = selectedTenantId
+        
+        
+        
+        appDelegate.saveContext()
     }
     
     

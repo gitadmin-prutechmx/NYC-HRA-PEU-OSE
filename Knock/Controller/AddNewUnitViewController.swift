@@ -9,11 +9,13 @@
 import UIKit
 
 class AddNewUnitViewController: UIViewController {
-    @IBOutlet weak var unitName: UITextField!
-
+   
     @IBOutlet weak var apartmentName: UITextField!
-    
+
     @IBOutlet weak var notesTextArea: UITextView!
+//    @IBOutlet weak var apartmentName: UITextField!
+//    
+//    @IBOutlet weak var notesTextArea: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +58,7 @@ class AddNewUnitViewController: UIViewController {
         var saveUnit : [String:String] = [:]
         
         
-        var unitNameVal:String = ""
+       
         var apartmentNumberVal:String = ""
         var notesVal:String = ""
         
@@ -64,20 +66,7 @@ class AddNewUnitViewController: UIViewController {
         
        
         
-        
-        if let unitNameTemp = unitName.text{
-            
-            unitNameVal = unitNameTemp
-            
-        }
-        
-        
-        if let unitNameTemp = unitName.text{
-            
-            unitNameVal = unitNameTemp
-            
-        }
-        
+       
         if let apartmentNumberTemp = apartmentName.text{
             
             apartmentNumberVal = apartmentNumberTemp
@@ -95,7 +84,7 @@ class AddNewUnitViewController: UIViewController {
         
         saveUnitDict["locationUnitId"] = SalesforceConnection.unitId
         
-        saveUnitDict["unitName"] = unitNameVal
+        saveUnitDict["unitName"] = "Apt " + apartmentNumberVal
         
         saveUnitDict["apartmentNumber"] = apartmentNumberVal
         
@@ -188,7 +177,8 @@ class AddNewUnitViewController: UIViewController {
             
             unitObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
             
-            
+            unitObject.surveyStatus = ""
+            unitObject.syncDate = ""
             
             appDelegate.saveContext()
             
