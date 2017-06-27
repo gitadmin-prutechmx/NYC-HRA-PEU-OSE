@@ -18,10 +18,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var dontAccountLbl: UILabel!
     @IBOutlet weak var createAccountLbl: UIButton!
     
+    @IBOutlet weak var vwEmail: UIView!
     @IBOutlet var loginView: UIView!
     @IBOutlet weak var emailTextField: DesignableTextField!
     @IBOutlet weak var passwordTextField: DesignableTextField!
+   
     
+    @IBOutlet weak var vwPassword: UIView!
     @IBOutlet weak var loginBtn: UIButton!
     
     var assignmentIdArray = [String]()
@@ -191,14 +194,79 @@ class LoginViewController: UIViewController {
               self.loginView.endEditing(true)
         }
     
-
-        
-        getDataFromSalesforce()
-        
+        if validation()
+        {
+            getDataFromSalesforce()
+        }
         
     }
     
+    func validation() -> Bool
+    {
+        if (emailTextField.text?.isEmpty)!
+        {
+            vwEmail.shake()
+            self.view.makeToast("Please insert email.",duration: 2.0, position: .center , title: nil, image: nil, style:nil){ (didTap: Bool) -> Void in
+                if didTap {
+                    
+                }
+                else
+                {
+                    
+                }
+
+            }
+            return false
+        }
+        
+        if  validate(YourEMailAddress: emailTextField.text!) == true
+        {
+            
+        }
+        else
+        {
+            self.view.makeToast("Please insert vaild email", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    
+                } else
+                {
+                    
+                }
+            }
+            
+            return false
+        }
+        
+        if (passwordTextField.text?.isEmpty)!
+        {
+            vwPassword.shake()
+            self.view.makeToast("Please insert password.",duration: 2.0, position: .center , title: nil, image: nil, style:nil){ (didTap: Bool) -> Void in
+                if didTap {
+                    
+                }
+                else
+                {
+                    
+                }
+                
+            }
+            return false
+        }
+        
+        
+        return true
+    }
     
+    
+    func validate(YourEMailAddress: String) -> Bool {
+        let REGEX: String
+        REGEX = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", REGEX).evaluate(with: YourEMailAddress)
+    }
+    
+    //MARK: - isBlank
+    
+
     
     func getDataFromSalesforce(){
         
