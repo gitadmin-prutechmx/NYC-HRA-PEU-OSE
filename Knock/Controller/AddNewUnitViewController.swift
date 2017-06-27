@@ -82,7 +82,7 @@ class AddNewUnitViewController: UIViewController {
         
       
         
-        saveUnitDict["locationUnitId"] = SalesforceConnection.unitId
+       // saveUnitDict["locationUnitId"] = SalesforceConnection.unitId
         
         saveUnitDict["unitName"] = "Apt " + apartmentNumberVal
         
@@ -93,6 +93,26 @@ class AddNewUnitViewController: UIViewController {
         saveUnitDict["assignLocId"] = SalesforceConnection.assignmentLocationId
         
         saveUnitDict["notes"] = notesVal
+        
+        //...............create unit
+        
+        //update static values as well check then update SalesforceConnection
+        
+        // saveUnitDict["iosLocUnitId"] = new loc unit id
+        // saveUnitDict["iosAssignmentLocUnitId"] = new assignment loc unit id
+        
+        
+        // save whole data into database with type "create"
+        
+        //then check connection is on or off if yes then convert into string and push to salesforce and when response (if error then hide progress and show message) and update database with unit id and assilocunitid and type also
+        
+        //.................update unit
+        
+        //where call 2 min syncing?
+        
+        
+        
+
         
         
         
@@ -161,7 +181,7 @@ class AddNewUnitViewController: UIViewController {
             let unitObject = Unit(context: context)
             
             
-            unitObject.id = unitDataDict["unitId"] as! String?
+            unitObject.id = unitDataDict["locUnitId"] as! String?
             
             unitObject.name = unitDataDict["unitName"] as! String?
             
@@ -175,7 +195,7 @@ class AddNewUnitViewController: UIViewController {
             
             unitObject.locationId = SalesforceConnection.locationId
             
-            unitObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
+            unitObject.assignmentLocUnitId = unitDataDict["assignmentLocUnitId"] as! String?
             
             unitObject.surveyStatus = ""
             unitObject.syncDate = ""

@@ -19,6 +19,7 @@
 		5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF141EE007060019882F /* LaunchScreen.storyboard */; };
 		5D56CF211EE007060019882F /* KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF201EE007060019882F /* KnockTests.swift */; };
 		5D56CF2C1EE007070019882F /* KnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF2B1EE007070019882F /* KnockUITests.swift */; };
+		5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */; };
 		5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */; };
 		5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E31EEA7DF9009A6396 /* SVProgressHUD.bundle */; };
 		5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */; };
@@ -98,6 +99,7 @@
 		5D56CF271EE007070019882F /* KnockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KnockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF2B1EE007070019882F /* KnockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockUITests.swift; sourceTree = "<group>"; };
 		5D56CF2D1EE007070019882F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		5DC9E9E01EEA7DF9009A6396 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		5DC9E9E21EEA7DF9009A6396 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				5DC9E9EF1EEE8391009A6396 /* StringExtension.swift */,
+				5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 				5DE3C99D1EF7A90500012C47 /* SurveyCollectionViewCell.swift in Sources */,
 				5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */,
 				5DE3C9A71EF7CBF300012C47 /* SubmitSurveyViewController.swift in Sources */,
+				5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */,
 				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
 				5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */,
 				5DE3C99B1EF76C6E00012C47 /* MoreOptionsViewController.swift in Sources */,

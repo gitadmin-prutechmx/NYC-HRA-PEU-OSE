@@ -194,11 +194,12 @@ class LoginViewController: UIViewController {
               self.loginView.endEditing(true)
         }
     
-        if validation()
-        {
-            getDataFromSalesforce()
-        }
+//        if validation()
+//        {
+//            getDataFromSalesforce()
+//        }
         
+        getDataFromSalesforce()
     }
     
     func validation() -> Bool
@@ -316,11 +317,18 @@ class LoginViewController: UIViewController {
                 ManageCoreData.DeleteAllDataFromEntities()
                 
                
+                SVProgressHUD.dismiss()
+                
                 self.parseEventAssignmentData(jsonObject: jsonData.1)
                 
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                }
+            
+            
                 //get survey data
                 
-                assignmentIdDict["assignmentIds"] = self.assignmentIdArray as AnyObject?
+             /*   assignmentIdDict["assignmentIds"] = self.assignmentIdArray as AnyObject?
                 
                 let convertedString = Utilities.jsonToString(json: assignmentIdDict as AnyObject)
                 
@@ -342,6 +350,7 @@ class LoginViewController: UIViewController {
                         }
                     }
                
+                */
                 
                 }
             
@@ -473,13 +482,37 @@ class LoginViewController: UIViewController {
                assignmentObject.totalSurvey = String(assignmentData["totalSurvey"] as! Int)
                assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
                 
-               //var totalSurveyTemp = assignmentData["totalSurvey"] as! Int
-               //var totalCanvassedTemp = assignmentData["totalCanvassed"] as! Int
                 
                 assignmentIdArray.append(assignmentObject.id!)
                 
+                //read surveydata
+                guard let surveyResults = assignmentData["AssignmentSurvey"] as? [[String: AnyObject]] else { break }
                 
                 
+                for surveyData in surveyResults {
+                    
+                    let assignmentId = assignmentObject.id!
+                    let surveyId = surveyData["surveyId"] as? String  ?? ""
+                    let surveyName = surveyData["surveyName"] as? String  ?? ""
+                    
+                    let convertedJsonString = Utilities.jsonToString(json: surveyData as AnyObject)
+                    
+                    
+                    
+                    let surveyObject = SurveyQuestion(context: context)
+                    surveyObject.assignmentId = assignmentId
+                    surveyObject.surveyId = surveyId
+                    surveyObject.surveyName = surveyName
+                    surveyObject.surveyQuestionData = convertedJsonString
+                    
+                    
+                    
+                    appDelegate.saveContext()
+                }
+                
+                
+                
+                //read location data
                  guard let locationResults = assignmentData["assignmentLocation"] as? [[String: AnyObject]]  else { break }
                 
 
