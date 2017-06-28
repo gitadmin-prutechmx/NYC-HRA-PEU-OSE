@@ -168,7 +168,7 @@ class EditLocationViewController: UIViewController {
 
     
     
-    func parseResponse(jsonObject: Dictionary<String, AnyObject>){
+    func parseEditLocationResponse(jsonObject: Dictionary<String, AnyObject>){
     
         guard let isError = jsonObject["hasError"] as? Bool else { return }
         
@@ -246,13 +246,10 @@ class EditLocationViewController: UIViewController {
         editLocDict["attempt"] = attempt
         editLocDict["numberOfUnits"] = numberOfUnits
         
-        //updateLocation["assignmentIds"] = editLocDict as AnyObject?
         
-        let convertedString = Utilities.jsonToString(json: editLocDict as AnyObject)
         
-        let encryptEditLocStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        updateLocation["location"] = encryptEditLocStr
+        updateLocation["location"] = Utilities.encryptedParams(dictParameters: editLocDict as AnyObject)
+
         
         SVProgressHUD.show(withStatus: "Updating location...", maskType: SVProgressHUDMaskType.gradient)
         
@@ -266,15 +263,8 @@ class EditLocationViewController: UIViewController {
                     
                     SVProgressHUD.dismiss()
                     
-                     self.parseResponse(jsonObject: jsonData.1)
+                     self.parseEditLocationResponse(jsonObject: jsonData.1)
                     
-//                    self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                        if didTap {
-//                            self.dismiss(animated: true, completion: nil)
-//                        } else {
-//                            self.dismiss(animated: true, completion: nil)
-//                        }
-//                    }
                     
                     
                 }

@@ -10,7 +10,13 @@ import Foundation
 import UIKit
 import ArcGIS
 
+import Toast_Swift
+
+
 class Utilities {
+    
+    static var isSyncing:Bool = false
+    
     
    
     
@@ -138,6 +144,112 @@ class Utilities {
         
         return decryptData
         
+    }
+    
+    class func encryptedParams(dictParameters:AnyObject)-> String{
+        let convertedString = Utilities.jsonToString(json: dictParameters as AnyObject)
+        
+        
+        
+        let encryptSaveUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+        
+        return encryptSaveUnitStr!
+    }
+    
+    class func showErrorMessage(toastView:UIView,message:String,delay:TimeInterval,toastPosition:ToastPosition){
+        
+        toastView.makeToast(message, duration: delay, position: toastPosition)
+    }
+    
+    
+    class func createUnitDicData(unitName:String,apartmentNumber:String,locationId:String,assignmentLocId:String,notes:String,iosLocUnitId:String,iosAssignLocUnitId:String)->[String:String]{
+        
+        var newUnitDic:[String:String] = [:]
+        
+        newUnitDic["unitName"] =  unitName//"Apt " + apartmentNumberVal
+        
+        newUnitDic["apartmentNumber"] = apartmentNumber
+        
+        newUnitDic["locationId"] = locationId//SalesforceConnection.locationId
+        
+        newUnitDic["assignLocId"] = assignmentLocId//SalesforceConnection.assignmentLocationId
+        
+        newUnitDic["notes"] = notes//notesVal
+        
+        //................
+        newUnitDic["iOSLocUnitId"] = iosLocUnitId //UUID().uuidString
+        
+        newUnitDic["iOSAssignmentLocUnitId"] = iosAssignLocUnitId//UUID().uuidString
+        
+        return newUnitDic
+    }
+    
+    
+    class func parseAddNewUnitResponse(jsonObject: Dictionary<String, AnyObject>)->Bool {
+        
+        
+        guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let unitDataDict = jsonObject["unitData"] as? [String: AnyObject] else { return true}
+        
+        
+        
+        
+        if(isError == false){
+            
+            
+            updateUnitDetail(unitDataDict: unitDataDict)
+            
+            updateAssignmentUnitCount()
+            
+           // updateAssignmentUnitCount()
+            
+        }
+        
+        
+        return isError
+        
+        
+        
+    }
+    
+    class func updateUnitDetail(unitDataDict:[String:AnyObject]){
+        
+        
+        let locUnitId = unitDataDict["unitId"] as! String?
+        let locAssignmentUnitId = unitDataDict["assignmentLocUnitId"] as! String?
+        let iosLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
+        let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
+        
+        
+        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND id == %@ AND assignmentLocUnitId ==%@",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: iosLocUnitId, predicateValue5: iosAssignmentLocUnitId,isPredicate:true) as! [Unit]
+        
+        
+        
+        if(unitResults.count > 0){
+            
+            
+            var updateObjectDic:[String:String] = [:]
+            updateObjectDic["id"] = locUnitId
+            updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
+            updateObjectDic["actionStatus"] = ""
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "Unit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND id == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: iosLocUnitId, predicateValue5: iosAssignmentLocUnitId,isPredicate: true)
+        }
+        
+    }
+    
+    class func updateAssignmentUnitCount(){
+        
+        let assignementResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [Assignment]
+        
+        if(assignementResults.count > 0){
+            
+            let totalUnits = String(Int(assignementResults[0].totalUnits!)! + 1)
+            
+            
+            ManageCoreData.updateData(salesforceEntityName: "Assignment", valueToBeUpdate: totalUnits,updatekey:"totalUnits", predicateFormat: "id == %@", predicateValue: SalesforceConnection.assignmentId, isPredicate: true)
+        }
     }
 
 }

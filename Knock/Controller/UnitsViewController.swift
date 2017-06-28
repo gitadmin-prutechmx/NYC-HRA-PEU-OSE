@@ -204,7 +204,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         
-        ManageCoreData.updateRecord(salesforceEntityName: "Unit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND id == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.unitId, predicateValue4: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
+        ManageCoreData.updateRecord(salesforceEntityName: "Unit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND id == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId, predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
         
         
         
@@ -215,8 +215,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
        UnitDataArray = [UnitsDataStruct]()
        floorArray = []
         
+       
+
         
-        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [Unit]
+        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@ AND assignmentLocId == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,predicateValue3: SalesforceConnection.assignmentLocationId, isPredicate:true) as! [Unit]
  
         
         if(unitResults.count > 0){

@@ -195,12 +195,12 @@ class LoginViewController: UIViewController {
               self.loginView.endEditing(true)
         }
     
-        if validation()
-        {
-            getDataFromSalesforce()
-        }
+//        if validation()
+//        {
+//            getDataFromSalesforce()
+//        }
         
-        //getDataFromSalesforce()
+        getDataFromSalesforce()
     }
     
     func validation() -> Bool
@@ -268,25 +268,7 @@ class LoginViewController: UIViewController {
     
     //MARK: - isBlank
     
-    func getDataFromDataBase()
-    {
-        
-        var dictUserInfo = [String : AnyObject]()
-        
-        let userData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig", isPredicate: false) as! [SalesforceOrgConfig]
-         if(userData.count > 0)
-         {
-            for data in userData
-            {
-            
-           dictUserInfo = ["clientId":data.clientId! as AnyObject,"clientSecret":data.clientSecret! as AnyObject,"clientUserName":data.userName! as AnyObject,"clientPasswaord":data.password! as AnyObject]
-            }
-            let convertedString = Utilities.jsonToString(json: dictUserInfo as AnyObject)
-        
-            let encryptDictData = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        }
-    }
+ 
     
     func getDataFromSalesforce(){
         
@@ -294,26 +276,28 @@ class LoginViewController: UIViewController {
         
         var emailParams : [String:String] = [:]
         
-        var assignmentIdParams : [String:String] = [:]
+//        var assignmentIdParams : [String:String] = [:]
+//        
+//        var assignmentIdDict : [String:AnyObject] = [:]
+//        
+//        
         
-        var assignmentIdDict : [String:AnyObject] = [:]
-        
-        
-        
-        SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+      //  SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
 
-        SalesforceConfig.password = passwordTextField.text!
+       // SalesforceConfig.password = passwordTextField.text!
         
-//        if emailText == nil {
-//            
-//            emailText = ""
-//        }
+        var emailText = emailTextField.text
+        
+        if emailText == nil {
+            
+            emailText = ""
+        }
         
     let assignmentResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
         
         
         
-    //if ((emailText?.lowercased() == "clear") || assignmentResults.count == 0){
+    if ((emailText?.lowercased() == "clear") || assignmentResults.count == 0){
             
         
         SVProgressHUD.show(withStatus: "Fetching data from salesforce..", maskType: SVProgressHUDMaskType.gradient)
@@ -380,10 +364,10 @@ class LoginViewController: UIViewController {
                 
         }
 
-//   }
-//    else{
-//        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-//    }
+   }
+    else{
+        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+    }
         
         
  
@@ -607,6 +591,9 @@ class LoginViewController: UIViewController {
                             unitObject.assignmentId = assignmentObject.id!
 
                             unitObject.locationId = locationObject.id!
+                            unitObject.assignmentLocId = locationObject.assignmentLocId!
+                            
+                            unitObject.actionStatus = ""
                             
                             unitObject.surveyStatus = ""
                             unitObject.syncDate = ""

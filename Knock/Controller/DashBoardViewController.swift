@@ -35,6 +35,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     let status = ["Completed", "In Progress", "Pending"]
     let values = [4.0, 3.0, 3.0]
     
+    var timer = Timer()
     
     override func viewDidLoad()
     {
@@ -79,7 +80,103 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         tableView.headerView(forSection: 0)
         
+        startTwoMinSyncing()
+        
     }
+    
+    
+    
+    func startTwoMinSyncing(){
+        // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
+        timer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
+    }
+    
+    func checkConnection(){
+        
+        if(Network.reachability?.isReachable)!{
+            
+            syncDataWithSalesforce()
+        }
+
+    }
+    
+    func syncDataWithSalesforce(){
+        
+        
+        
+    if(Utilities.isSyncing ==  false){
+        
+        var count:Int = 0;
+        
+        var unitDict:[String:String] = [:]
+        var saveUnit : [String:String] = [:]
+        
+       
+        
+        //first sync editlocation data...right now we are not handling new location so always get actionstatus == 'edit'
+//        let editLocationResults = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [EditLocation]
+//        
+//        if(editLocationResults.count > 0){
+//            
+//        }
+        
+        
+        
+        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Unit]
+        
+        //isSyncing =false
+        //sync symbol
+        //edit unit
+        //create , assign and edit tenant
+        //assign survey
+        //survey
+        //get unit id and check every table whether it contains "edit/create" action status
+        
+        
+        if(unitResults.count > 0){
+            
+             Utilities.isSyncing = true
+            
+            for unitData in unitResults{
+                
+                 unitDict = Utilities.createUnitDicData(unitName: unitData.name!, apartmentNumber: unitData.apartment!, locationId: unitData.locationId!, assignmentLocId: unitData.assignmentLocId!, notes: unitData.notes!, iosLocUnitId: unitData.id!, iosAssignLocUnitId: unitData.assignmentLocUnitId!)
+                
+               
+                
+                saveUnit["unit"] = Utilities.encryptedParams(dictParameters: unitDict as AnyObject)
+                
+                
+                
+                SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+                    
+                    if(response)
+                        
+                    {
+                        
+                        SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createUnit, params: saveUnit){ jsonData in
+                            
+                            
+                            
+                            _ = Utilities.parseAddNewUnitResponse(jsonObject: jsonData.1)
+                            count = count + 1
+                            if(count ==  unitResults.count){
+                                Utilities.isSyncing =  false
+                            }
+
+                        }//login to unit rest api
+                    }//end of if response
+                }//login to salesforce
+                
+            }//end for loop
+            
+        }//end of if
+
+    }
+        
+            
+}
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

@@ -10,6 +10,8 @@ import UIKit
 
 class AddNewUnitViewController: UIViewController {
    
+    var saveUnitDict : [String:String] = [:]
+    
     @IBOutlet weak var apartmentName: UITextField!
 
     @IBOutlet weak var notesTextArea: UITextView!
@@ -53,12 +55,6 @@ class AddNewUnitViewController: UIViewController {
     
     func saveUnitInfo(){
         
-        var saveUnitDict : [String:String] = [:]
-        
-        var saveUnit : [String:String] = [:]
-        
-        
-       
         var apartmentNumberVal:String = ""
         var notesVal:String = ""
         
@@ -82,52 +78,63 @@ class AddNewUnitViewController: UIViewController {
         
       
         
-       // saveUnitDict["locationUnitId"] = SalesforceConnection.unitId
+       
+        saveUnitDict = Utilities.createUnitDicData(unitName: "Apt " + apartmentNumberVal, apartmentNumber: apartmentNumberVal, locationId: SalesforceConnection.locationId, assignmentLocId: SalesforceConnection.assignmentLocationId, notes: notesVal, iosLocUnitId: UUID().uuidString, iosAssignLocUnitId: UUID().uuidString)
         
-        saveUnitDict["unitName"] = "Apt " + apartmentNumberVal
         
-        saveUnitDict["apartmentNumber"] = apartmentNumberVal
+        saveNewlyCreatedUnitData()
         
-        saveUnitDict["locationId"] = SalesforceConnection.locationId
-        
-        saveUnitDict["assignLocId"] = SalesforceConnection.assignmentLocationId
-        
-        saveUnitDict["notes"] = notesVal
         
         //...............create unit
         
+        
         //update static values as well check then update SalesforceConnection
         
-        // saveUnitDict["iosLocUnitId"] = new loc unit id
-        // saveUnitDict["iosAssignmentLocUnitId"] = new assignment loc unit id
-        
-        
-        // save whole data into database with type "create"
         
         //then check connection is on or off if yes then convert into string and push to salesforce and when response (if error then hide progress and show message) and update database with unit id and assilocunitid and type also
         
-        //.................update unit
-        
-        //where call 2 min syncing?
-        
+       
+            
         
         
+        if(Utilities.isSyncing == false){
+    
+            if(Network.reachability?.isReachable)!{
+    
+                        pushUnitDataToSalesforce()
+                }
+            else{
+                self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    Utilities.isSubmitSurvey = false
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                }
+            }
+        
+        }
+        else{
+            //locally in database
+            self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                Utilities.isSubmitSurvey = false
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }
+        }
+      
 
         
+    }
+    
+    func pushUnitDataToSalesforce(){
+        var saveUnit : [String:String] = [:]
         
-        
-        
-        
-        
-        let convertedString = Utilities.jsonToString(json: saveUnitDict as AnyObject)
-        
-        
-        
-        let encryptSaveUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        
-        
-        saveUnit["unit"] = encryptSaveUnitStr
+        saveUnit["unit"] = Utilities.encryptedParams(dictParameters: saveUnitDict as AnyObject)
         
         
         
@@ -144,12 +151,28 @@ class AddNewUnitViewController: UIViewController {
                     
                     
                     
-                    
-                    
                     SVProgressHUD.dismiss()
                     
-                    self.parseResponse(jsonObject: jsonData.1)
+                    let isError = Utilities.parseAddNewUnitResponse(jsonObject: jsonData.1)
                     
+                    if(isError==false){
+                        self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                            
+                            Utilities.isSubmitSurvey = false
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                            
+                            self.dismiss(animated: true, completion: nil)
+                            
+                        }
+                        
+                        
+                    }
+                    else{
+                        
+                        Utilities.showErrorMessage(toastView: self.view, message: "Error while updating Tenant info", delay: 1.0, toastPosition: .center)
+                        
+                        
+                    }
                     
                     
                     
@@ -159,118 +182,50 @@ class AddNewUnitViewController: UIViewController {
             
             
         }
-        
-        
-        
-        
     }
     
-    func parseResponse(jsonObject: Dictionary<String, AnyObject>){
-        
-        guard let isError = jsonObject["hasError"] as? Bool,
-            
-            let unitDataDict = jsonObject["unitData"] as? [String: AnyObject] else { return }
-        
-        
-        
-        
-        if(isError == false){
-            
-            
-            
-            let unitObject = Unit(context: context)
-            
-            
-            unitObject.id = unitDataDict["locUnitId"] as! String?
-            
-            unitObject.name = unitDataDict["unitName"] as! String?
-            
-            unitObject.apartment = unitDataDict["apartmentNumber"] as! String?
-            
-            
-            
-            
-            
-            unitObject.assignmentId = SalesforceConnection.assignmentId
-            
-            unitObject.locationId = SalesforceConnection.locationId
-            
-            unitObject.assignmentLocUnitId = unitDataDict["assignmentLocUnitId"] as! String?
-            
-            unitObject.surveyStatus = ""
-            unitObject.syncDate = ""
-            
-            appDelegate.saveContext()
-            
-            updateAssignmentUnit()
-            
-            
-            
-            
-            
-            
-            
-            self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    
-                    Utilities.isSubmitSurvey = false
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                    self.dismiss(animated: true, completion: nil)
-                    
-                    
-                } else {
-                    
-                    Utilities.isSubmitSurvey = false
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                    
-                    self.dismiss(animated: true, completion: nil)
-                    
-                    
-                }
-                
-            }
-            
-            
-            
-            
-            
-        }
-            
-        else{
-            
-            self.view.makeToast("Error while updating Tenant info", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    
-                    print("completion from tap")
-                    
-                } else {
-                    
-                    print("completion without tap")
-                    
-                }
-                
-            }
-            
-            
-            
-        }
-        
-        
-        
-    }
     
-    func updateAssignmentUnit(){
+   
+    
+    
+    func saveNewlyCreatedUnitData(){
+         let unitObject = Unit(context: context)
         
-        let assignementResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [Assignment]
+        unitObject.id = saveUnitDict["iOSLocUnitId"]
         
-        if(assignementResults.count > 0){
-            
-           let totalUnits = String(Int(assignementResults[0].totalUnits!)! + 1)
-            
+        unitObject.assignmentLocUnitId = saveUnitDict["iOSAssignmentLocUnitId"]
+        
+        
+        
+        unitObject.locationId = SalesforceConnection.locationId
+        
+        unitObject.assignmentLocId = SalesforceConnection.assignmentLocationId
 
-        ManageCoreData.updateData(salesforceEntityName: "Assignment", valueToBeUpdate: totalUnits,updatekey:"totalUnits", predicateFormat: "id == %@", predicateValue: SalesforceConnection.assignmentId, isPredicate: true)
-       }
+        
+        
+        unitObject.name = saveUnitDict["unitName"]
+        
+        unitObject.apartment = saveUnitDict["apartmentNumber"]
+
+        unitObject.notes = saveUnitDict["notes"]
+  
+        unitObject.assignmentId = SalesforceConnection.assignmentId
+        
+        
+        
+        
+        
+        unitObject.actionStatus = "create"
+        
+        unitObject.surveyStatus = ""
+        unitObject.syncDate = ""
+        
+        appDelegate.saveContext()
     }
+    
+    
+    
+    
+    
+  
 }

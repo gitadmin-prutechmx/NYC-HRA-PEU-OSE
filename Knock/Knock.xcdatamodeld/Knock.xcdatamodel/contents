@@ -110,13 +110,16 @@
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Unit" representedClassName="Unit" syncable="YES" codeGenerationType="class">
+        <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="apartment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="floor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="syncDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="unitLocR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locUnitR" inverseEntity="Location" syncable="YES"/>
@@ -134,6 +137,6 @@
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="135"/>
         <element name="Tenant" positionX="-126" positionY="45" width="128" height="210"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="135"/>
-        <element name="Unit" positionX="-162" positionY="-108" width="128" height="195"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
     </elements>
 </model>
