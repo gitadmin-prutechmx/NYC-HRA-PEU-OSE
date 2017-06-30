@@ -82,7 +82,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
 
     var surveyDataArray = [SurveyDataStruct]()
-    var surveyUnitResults = [SurveyUnit]()
+    var surveyUnitResults = [EditUnit]()
     
     var tenantDataArray = [TenantDataStruct]()
     var tenantResults = [Tenant]()
@@ -102,6 +102,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }()
     
     
+      var editUnitDict : [String:String] = [:]
+      var tenantAssignDict : [String:String] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,6 +113,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
          setUpDropDowns()
         
         NotificationCenter.default.addObserver(self, selector:#selector(MoreOptionsViewController.UpdateTenantView), name: NSNotification.Name(rawValue: "UpdateTenantView"), object:nil
+        )
+        
+        NotificationCenter.default.addObserver(self, selector:#selector(MoreOptionsViewController.UpdateSurveyView), name: NSNotification.Name(rawValue: "UpdateSurveyView"), object:nil
         )
         
         fullAddressText.text = "59 Wooster St, New York, NY 10012"// SalesforceConnection.fullAddress
@@ -176,13 +182,21 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     
     func UpdateTenantView(){
+        print("UpdateTenantView")
         populateTenantData()
+    }
+    
+    func UpdateSurveyView(){
+       print("UpdateSurveyView")
+        populateSurveyData()
     }
     
     // Cleanup notifications added in viewDidLoad
     deinit {
         NotificationCenter.default.removeObserver("UpdateTenantView")
+        NotificationCenter.default.removeObserver("UpdateSurveyView")
     }
+    
 
     
     @IBAction func addTenant(_ sender: Any) {
@@ -196,9 +210,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     func setSelectedSurveyId(){
         
-        surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [SurveyUnit]
+        surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
         
-        //ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId,isPredicate:true) as! [SurveyUnit]
+       
         
         if(surveyUnitResults.count == 1){
             selectedSurveyId = surveyUnitResults[0].surveyId!
@@ -298,15 +312,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
 
         
-        
-        let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [TenantAssign]
-        
-        
-        if(tenantAssignResults.count > 0){
-            
-            selectedTenantId = tenantAssignResults[0].tenantId!
-            
-        }
+        setSelectedTenant()
         
         self.tblTeanantVw.reloadData()
         
@@ -330,6 +336,18 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
+    func setSelectedTenant(){
+        
+        let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+        
+        
+        if(tenantAssignResults.count > 0){
+            
+            selectedTenantId = tenantAssignResults[0].tenantId!
+            
+        }
+
+    }
     
     func populateSurveyData(){
         
@@ -606,45 +624,42 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 return
             }
             
-            var tenantAssignDict : [String:String] = [:]
-            var updateTenantAssign : [String:String] = [:]
             
             
             
-           
+            let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId, isPredicate:true) as! [EditUnit]
             
-            tenantAssignDict["contactId"] = selectedTenantId
-            tenantAssignDict["assignmentLocationUnitId"] = SalesforceConnection.assignmentLocationUnitId
             
-           
-            let convertedString = Utilities.jsonToString(json: tenantAssignDict as AnyObject)
-            
-            let encryptTenantAssignStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-            
-            updateTenantAssign["tenantAssignmentDetail"] = encryptTenantAssignStr
-            
-            SVProgressHUD.show(withStatus: "Assigning tenant...", maskType: SVProgressHUDMaskType.gradient)
-            
-            SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+            if(tenantAssignResults.count > 0){
                 
-                if(response)
-                {
-                    
-                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignTenant, params: updateTenantAssign){ jsonData in
-                        
-                        SVProgressHUD.dismiss()
-                        self.parseResponse(jsonObject: jsonData.1)
-                        
-                        self.selectedTenantId = ""
-
-                        
-                        
-                    }
-                    
-                }//end of response
+                updateTenantAssignInDatabase()
+                
+            }
+                
+            else{
+                saveTenantAssignInDatabase()
+            }
+            
+            self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.dismiss(animated: true, completion: nil)
                 
             }
             
+//            if(Network.reachability?.isReachable)!{
+//                
+//                pushAssignTenantDataToSalesforce()
+//            }
+//                
+//            else{
+//                self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                    
+//                    self.dismiss(animated: true, completion: nil)
+//                    
+//                }
+//            }
+            
+
             
         }
         
@@ -659,42 +674,129 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
+   
+    
+    func pushAssignTenantDataToSalesforce(){
+        var updateTenantAssign : [String:String] = [:]
+        
+        updateTenantAssign["tenantAssignmentDetail"] = Utilities.encryptedParams(dictParameters: tenantAssignDict as AnyObject)
+        
+
+        
+       SVProgressHUD.show(withStatus: "Assigning tenant...", maskType: SVProgressHUDMaskType.gradient)
+        
+        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+            
+            if(response)
+            {
+                
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateTenantAssign){ jsonData in
+                    
+                    SVProgressHUD.dismiss()
+                    self.selectedTenantId = ""
+                    
+                    
+                    self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        self.dismiss(animated: true, completion: nil)
+                        
+                    }
+                    
+                    
+                    
+                }
+            }
+            
+        }
+        
+    }
+    
+    
     
     
     func updateUnitAndSurvey(type:String){
-        var editUnitDict : [String:String] = [:]
-        var updateUnit : [String:String] = [:]
-        
-        
-        
-        
+      
+     
         if let notesTemp = notesTextArea.text{
             notes = notesTemp
         }
         
-       
-        editUnitDict["assignmentLocationUnitId"] = SalesforceConnection.assignmentLocationUnitId
+        
+   
         
         if(type == "Updating Unit.."){
-            editUnitDict["tenantStatus"] = tenantStatus
-            editUnitDict["notes"] = notes
-            editUnitDict["attempt"] = attempt
-            editUnitDict["contact"] = contact
-            editUnitDict["reKnockNeeded"] = reknockNeeded
-            editUnitDict["intakeStatus"] = inTakeStatus
+            
+//            editUnitDict = Utilities.editUnitAndSurveyDicData(tenantStatus: tenantStatus, notes: notes, attempt: attempt, contact: contact, reKnockNeeded: reknockNeeded, inTakeStatus: inTakeStatus, assignmentLocationUnitId: SalesforceConnection.assignmentLocationUnitId,type:type)
+            
+            let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+            
+            if(editUnitResults.count > 0){
+                
+                updateEditUnitInDatabase()
+            }
+            else{
+                saveEditUnitInDatabase(currentAttempt: attempt, currentInTakeStatus: inTakeStatus, currentReknockNeeded: reknockNeeded, currentTenantStatus: tenantStatus, currentNotes: notes, currentIsContact: contact, currentTenantId: "", currentSurveyId: "")
+                
+            }
         }
+            
         else{
-             editUnitDict["surveyId"] = selectedSurveyId
+            
+//            editUnitDict = Utilities.editUnitAndSurveyDicData(selectedSurveyId:selectedSurveyId,type:type)
+            
+            let editSurveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+            
+            if(editSurveyUnitResults.count > 0){
+                
+                updateEditUnitSurveyInDatabase()
+            }
+            else{
+                saveEditUnitSurveyInDatabase()
+                
+            }
         }
       
         
-        //updateLocation["assignmentIds"] = editLocDict as AnyObject?
+        self.view.makeToast("Unit information has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+           // Utilities.isSubmitSurvey = false
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+
         
-        let convertedString = Utilities.jsonToString(json: editUnitDict as AnyObject)
+       
         
-        let encryptEditUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+//        if(Network.reachability?.isReachable)!{
+//            
+//            pushEditUnitDataToSalesforce(type:type)
+//        }
+//            
+//        else{
+//            self.view.makeToast("Unit information has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                Utilities.isSubmitSurvey = false
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+//                
+//                self.dismiss(animated: true, completion: nil)
+//                
+//            }
+//        }
         
-        updateUnit["unit"] = encryptEditUnitStr
+        
+
+    }
+    
+    
+    
+    func pushEditUnitDataToSalesforce(type:String){
+        
+        var updateUnit : [String:String] = [:]
+        
+        updateUnit["unit"] = Utilities.encryptedParams(dictParameters: editUnitDict as AnyObject)
         
         SVProgressHUD.show(withStatus: type, maskType: SVProgressHUDMaskType.gradient)
         
@@ -706,98 +808,33 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
                     
-                    // updateEditUnitInDatabase()
-                    
                     SVProgressHUD.dismiss()
                     
-                    if(type == "Updating Unit.."){
-                        self.parseEditUnitResponse(jsonObject: jsonData.1)
-                    }
-                    else{
-                          self.parseEditUnitSurveyResponse(jsonObject: jsonData.1)
-                    }
+                    
+                        self.view.makeToast("Unit information has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                            
+                            //Utilities.isSubmitSurvey = false
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                            
+                            self.dismiss(animated: true, completion: nil)
+                            
+                        }
+                        
+                        
                     
                 }
             }
             
         }
-        
+
 
     }
     
-    //update or delete particular surveyunit
-    //add multiple conditions in predicateformat
     
-//    if(surveyUnitResults.count == 0){
-//    
-//    //save the record
-//    let surveyUnitObject = SurveyUnit(context: context)
-//    surveyUnitObject.assignmentId = SalesforceConnection.assignmentId
-//    surveyUnitObject.surveyId = selectedSurveyId
-//    surveyUnitObject.unitId = SalesforceConnection.unitId
-//    
-//    
-//    
-//    appDelegate.saveContext()
-//    
-//    }
-//    else{
-//    
-//    //update
-//    ManageCoreData.updateData(salesforceEntityName: "SurveyUnit", valueToBeUpdate: selectedSurveyId,updatekey:"surveyId", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
-//    
-//    
-//    }
-//    
-//    
-//    self.view.makeToast("Changes has been done successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//    if didTap {
-//    self.dismiss(animated: true, completion: nil)
-//    } else {
-//    self.dismiss(animated: true, completion: nil)
-//    }
-//    }
-//    
-
-    func parseEditUnitSurveyResponse(jsonObject: Dictionary<String, AnyObject>){
-        
-        guard let isError = jsonObject["hasError"] as? Bool else { return }
-        
-        
-        if(isError == false){
-            
-            let editSurveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [SurveyUnit]
-            
-            if(editSurveyUnitResults.count > 0){
-                
-                updateEditUnitSurveyInDatabase()
-            }
-            else{
-                saveEditUnitSurveyInDatabase()
-                
-            }
-            
-            self.view.makeToast("Survey has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-            self.dismiss(animated: true, completion: nil)
-        }
-        else{
-            self.view.makeToast("Error while assigning survey", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
-            
-        }
-        
-    }
+   
+    
+    
+  
     
     func updateEditUnitSurveyInDatabase(){
         
@@ -807,91 +844,93 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         
         updateObjectDic["surveyId"] = selectedSurveyId
+        updateObjectDic["actionStatus"] = "edit"
         
         
-        
-        ManageCoreData.updateRecord(salesforceEntityName: "SurveyUnit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
+        ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
         
 
     }
 
-    func saveEditUnitSurveyInDatabase(){
-            //save the record
-            let surveyUnitObject = SurveyUnit(context: context)
-            surveyUnitObject.assignmentId = SalesforceConnection.assignmentId
-            surveyUnitObject.surveyId = selectedSurveyId
-            surveyUnitObject.unitId = SalesforceConnection.unitId
-            surveyUnitObject.locationId = SalesforceConnection.locationId
-            surveyUnitObject.assignmentLocId = SalesforceConnection.assignmentLocationId
-            surveyUnitObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
-        
-        
-            
-            appDelegate.saveContext()
-    }
-    
-    
-    
-    func parseEditUnitResponse(jsonObject: Dictionary<String, AnyObject>){
-        
-        guard let isError = jsonObject["hasError"] as? Bool else { return }
-        
-        
-        if(isError == false){
-            
-            let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
-            
-            if(editUnitResults.count > 0){
-            
-             updateEditUnitInDatabase()
-           }
-            else{
-                saveEditUnitInDatabase()
+  
 
-            }
-            
-            self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-            self.dismiss(animated: true, completion: nil)
-        }
-        else{
-            self.view.makeToast("Error while updating unit", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
-            
-        }
-        
-    }
+//    func saveEditUnitInDatabase(){
+//        
+//        let editUnitObject = EditUnit(context: context)
+//        
+//        editUnitObject.locationId = SalesforceConnection.locationId
+//        editUnitObject.assignmentId = SalesforceConnection.assignmentId
+//        editUnitObject.assignmentLocId = SalesforceConnection.assignmentLocationId
+//        editUnitObject.unitId = SalesforceConnection.unitId
+//        editUnitObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
+//        editUnitObject.actionStatus = "create"
+//        
+//        
+//        editUnitObject.attempt = attempt
+//        editUnitObject.inTakeStatus = inTakeStatus
+//        editUnitObject.reKnockNeeded = reknockNeeded
+//        editUnitObject.tenantStatus = tenantStatus
+//        editUnitObject.unitNotes = notes
+//        editUnitObject.isContact = contact
+//        
+//        editUnitObject.tenantId = selectedTenantId
+//        
+//        editUnitObject.surveyId = selectedSurveyId
+//
+//        
+//        appDelegate.saveContext()
+//
+//    }
     
-
-    func saveEditUnitInDatabase(){
+    
+    
+    func saveEditUnitInDatabase(currentAttempt:String,currentInTakeStatus:String,currentReknockNeeded:String,currentTenantStatus:String,currentNotes:String,currentIsContact:String,currentTenantId:String,currentSurveyId:String){
+        
         
         let editUnitObject = EditUnit(context: context)
+        
         editUnitObject.locationId = SalesforceConnection.locationId
         editUnitObject.assignmentId = SalesforceConnection.assignmentId
         editUnitObject.assignmentLocId = SalesforceConnection.assignmentLocationId
         editUnitObject.unitId = SalesforceConnection.unitId
         editUnitObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
-        editUnitObject.attempt = attempt
-        editUnitObject.inTakeStatus = inTakeStatus
-        editUnitObject.reKnockNeeded = reknockNeeded
-        editUnitObject.tenantStatus = tenantStatus
-        editUnitObject.unitNotes = notes
-        editUnitObject.isContact = contact
+        editUnitObject.actionStatus = "create"
+        
+        
+        editUnitObject.attempt = currentAttempt
+        editUnitObject.inTakeStatus = currentInTakeStatus
+        editUnitObject.reKnockNeeded = currentReknockNeeded
+        editUnitObject.tenantStatus = currentTenantStatus
+        editUnitObject.unitNotes = currentNotes
+        editUnitObject.isContact = currentIsContact
+        
+        
+        editUnitObject.tenantId = currentTenantId
+        
+        editUnitObject.surveyId = currentSurveyId
         
         
         appDelegate.saveContext()
 
     }
+    
+    func saveTenantAssignInDatabase(){
+        
+        saveEditUnitInDatabase(currentAttempt: "", currentInTakeStatus: "", currentReknockNeeded: "", currentTenantStatus: "", currentNotes: "", currentIsContact: "", currentTenantId: selectedTenantId, currentSurveyId: "")
+        
+        
+    }
+    
+    func saveEditUnitSurveyInDatabase(){
+        
+        saveEditUnitInDatabase(currentAttempt: "", currentInTakeStatus: "", currentReknockNeeded: "", currentTenantStatus: "", currentNotes: "", currentIsContact: "", currentTenantId: "", currentSurveyId: selectedSurveyId)
+        
+    }
+    
+    
+    
+    
+
     
     
     func updateEditUnitInDatabase(){
@@ -907,6 +946,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         updateObjectDic["attempt"] = attempt
         updateObjectDic["isContact"] = contact
         updateObjectDic["reKnockNeeded"] = reknockNeeded
+        updateObjectDic["actionStatus"] = "edit"
         
         
         
@@ -920,88 +960,21 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     
     
-    func parseResponse(jsonObject: Dictionary<String, AnyObject>){
-        
-        guard let isError = jsonObject["hasError"] as? Bool else { return }
-        
-        
-        if(isError == false){
-            
-            let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [TenantAssign]
-            
-            
-            if(tenantAssignResults.count > 0){
-                
-               updateTenantAssignInDatabase()
-                
-            }
-
-            else{
-                saveTenantAssignInDatabase()
-            }
-            
-            
-            self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-
-        }
-        else{
-            
-            self.view.makeToast("Error while assigning Tenant info", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    
-                    print("completion from tap")
-                    
-                } else {
-                    
-                    print("completion without tap")
-                    
-                }
-                
-            }
-            
-        }
-    }
-    
+      
     func updateTenantAssignInDatabase(){
         var updateObjectDic:[String:String] = [:]
         
         //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
         
         updateObjectDic["tenantId"] = selectedTenantId
+        updateObjectDic["actionStatus"] = "edit"
+       
         
+        ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
         
-        
-        
-        ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
-        
-        
-        
-
+     
     }
     
-    func saveTenantAssignInDatabase(){
-        
-        let tenantAssignObject = TenantAssign(context: context)
-        
-        
-        tenantAssignObject.locationId = SalesforceConnection.locationId
-        tenantAssignObject.assignmentId = SalesforceConnection.assignmentId
-        tenantAssignObject.assignmentLocId = SalesforceConnection.assignmentLocationId
-        tenantAssignObject.unitId = SalesforceConnection.unitId
-        tenantAssignObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
-        tenantAssignObject.tenantId = selectedTenantId
-        
-        
-        
-        appDelegate.saveContext()
-    }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

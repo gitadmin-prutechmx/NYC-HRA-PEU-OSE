@@ -12,7 +12,7 @@ import CoreData
 
 class SalesforceConnection{
     
-    static var currentTenantId:String =  ""
+    static var currentUserEmail:String = ""
     
     static var assignmentId:String = ""
     static var assignmentName:String = ""
@@ -22,6 +22,8 @@ class SalesforceConnection{
     
     static var unitId:String = ""
     static var assignmentLocationUnitId:String = ""
+    
+    static var currentTenantId:String =  ""
     
     static var unitName:String = ""
     static var surveyId:String = ""

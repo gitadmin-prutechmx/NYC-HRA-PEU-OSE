@@ -176,9 +176,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             IsInitialViewPoint = false
                         }
                         
-                        //SVProgressHUD.dismiss()
-                        
-                        weakSelf.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: IsInitialViewPoint)
+                        if(SalesforceConnection.fullAddress != ""){
+                       
+                            weakSelf.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: IsInitialViewPoint)
+                        }
+                        else{
+                            SVProgressHUD.dismiss()
+                            
+                        }
                         
                     }
                     else {
@@ -203,8 +208,25 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         }
         self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
      }
+
+    NotificationCenter.default.addObserver(self, selector:#selector(MapLocationViewController.UpdateLocationView), name: NSNotification.Name(rawValue: "UpdateLocationView"), object:nil
+        )
+        
 }
     
+    
+    func UpdateLocationView(){
+        
+        print("UpdateLocationView")
+        populateLocationData()
+        
+    }
+
+    
+    // Cleanup notifications added in viewDidLoad
+    deinit {
+        NotificationCenter.default.removeObserver("UpdateLocationView")
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -424,35 +446,32 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.mapView.callout.delegate = self
         self.mapView.callout.accessoryButtonImage = UIImage(named: "ForwardIcon")
         
+        let nib = UINib(nibName: "MapViewCollout", bundle: nil)
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! MapViewCollout
+        
+        
+        view.btnArrow.addTarget(self, action: #selector(MapLocationViewController.navigateToUnitView(_:)), for: .touchUpInside)
+        
+        self.mapView.callout.customView = view
         self.mapView.callout.show(for: graphic, tapLocation: tapLocation, animated: animated)
         
     }
     
+    // MARK: Button Action
+    func navigateToUnitView(_ sender: AnyObject?)
+    {
+        self.performSegue(withIdentifier: "ShowUnitsIdentifier", sender: nil)
+    }
+    
     //MARK: - AGSCalloutDelegate
     
-    func didTapAccessoryButton(for callout: AGSCallout) {
-        //hide the callout
-        //self.mapView.callout.dismiss()
-        
-        //confirmation
-        /*let alertController = UIAlertController(title: "Go to Units", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-         //action for Yes
-         let alertAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: nil)
-         alertController.addAction(alertAction)
-         
-         //action for cancel
-         let cancelAlertAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
-         alertController.addAction(cancelAlertAction)*/
-        
-        
-        //present alert controller
-        //self.presentViewController(alertController, animated: true, completion: nil)
-        
-        
-         self.performSegue(withIdentifier: "ShowUnitsIdentifier", sender: nil)
-        
-
-    }
+//    func didTapAccessoryButton(for callout: AGSCallout) {
+//      
+//        
+//         self.performSegue(withIdentifier: "ShowUnitsIdentifier", sender: nil)
+//        
+//
+//    }
     
     
    

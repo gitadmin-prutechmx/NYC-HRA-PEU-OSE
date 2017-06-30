@@ -142,6 +142,7 @@ class ManageCoreData{
                 
                 
                 do{
+                    
                     try context.save()
                 }
                 catch
@@ -192,13 +193,16 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "Event")
         DeleteAllRecords(salesforceEntityName: "Assignment")
         DeleteAllRecords(salesforceEntityName: "Location")
-        DeleteAllRecords(salesforceEntityName: "Unit")
         DeleteAllRecords(salesforceEntityName: "SurveyQuestion")
-        DeleteAllRecords(salesforceEntityName: "SurveyUnit")
-        DeleteAllRecords(salesforceEntityName: "SurveyResponse")
+        
+        DeleteAllRecords(salesforceEntityName: "Unit")
+        
+       // DeleteAllRecords(salesforceEntityName: "SurveyUnit")
         DeleteAllRecords(salesforceEntityName: "Tenant")
         
-        DeleteAllRecords(salesforceEntityName: "TenantAssign")
+        DeleteAllRecords(salesforceEntityName: "SurveyResponse")
+        
+        //DeleteAllRecords(salesforceEntityName: "TenantAssign")
         DeleteAllRecords(salesforceEntityName: "EditUnit")
         DeleteAllRecords(salesforceEntityName: "EditLocation")
     }

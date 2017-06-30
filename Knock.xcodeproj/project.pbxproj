@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */; };
+		5D1BD4F01F067B7500C8FAF5 /* MapViewCollout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */; };
+		5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BD4F11F067B9000C8FAF5 /* ChartCollectionViewCell.swift */; };
+		5D1BD4F61F067FB100C8FAF5 /* GaugeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BD4F41F067FB100C8FAF5 /* GaugeLayer.swift */; };
+		5D1BD4F71F067FB100C8FAF5 /* GaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BD4F51F067FB100C8FAF5 /* GaugeView.swift */; };
 		5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */; };
 		5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */; };
 		5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */; };
@@ -82,6 +87,11 @@
 
 /* Begin PBXFileReference section */
 		032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Knock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewCollout.swift; sourceTree = "<group>"; };
+		5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewCollout.xib; sourceTree = "<group>"; };
+		5D1BD4F11F067B9000C8FAF5 /* ChartCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCollectionViewCell.swift; sourceTree = "<group>"; };
+		5D1BD4F41F067FB100C8FAF5 /* GaugeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeLayer.swift; sourceTree = "<group>"; };
+		5D1BD4F51F067FB100C8FAF5 /* GaugeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
 		5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveEditTenantViewController.swift; sourceTree = "<group>"; };
 		5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TenantHeaderTableViewCell.xib; sourceTree = "<group>"; };
@@ -183,6 +193,15 @@
 				032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5D1BD4F31F067FB100C8FAF5 /* GuageChart */ = {
+			isa = PBXGroup;
+			children = (
+				5D1BD4F41F067FB100C8FAF5 /* GaugeLayer.swift */,
+				5D1BD4F51F067FB100C8FAF5 /* GaugeView.swift */,
+			);
+			path = GuageChart;
 			sourceTree = "<group>";
 		};
 		5D56CEFC1EE007060019882F = {
@@ -312,6 +331,8 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */,
+				5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */,
 				5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */,
 				5DE3C9941EF406E200012C47 /* UnitsHeaderTableViewCell.swift */,
 				5DE3C9951EF406E200012C47 /* UnitsHeaderTableViewCell.xib */,
@@ -325,6 +346,7 @@
 		5DC9E9DE1EEA7DF9009A6396 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5D1BD4F31F067FB100C8FAF5 /* GuageChart */,
 				5DE3C9881EF36A7B00012C47 /* SWRevealController */,
 				5DE3C97C1EF125DD00012C47 /* MBProgressHUD */,
 				5DC9E9DF1EEA7DF9009A6396 /* SVProgressHUD */,
@@ -348,6 +370,7 @@
 		5DE3C9651EEFE71700012C47 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				5D1BD4F11F067B9000C8FAF5 /* ChartCollectionViewCell.swift */,
 				5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */,
 				5DE3C99E1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift */,
 				5DE3C9901EF3B10000012C47 /* UnitsCustomViewCell.swift */,
@@ -508,6 +531,7 @@
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
 				5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */,
 				5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */,
+				5D1BD4F01F067B7500C8FAF5 /* MapViewCollout.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +625,7 @@
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
 				5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */,
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
+				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
 				5DE3C99D1EF7A90500012C47 /* SurveyCollectionViewCell.swift in Sources */,
 				5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */,
@@ -614,11 +639,14 @@
 				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
 				5DE3C9991EF6B66000012C47 /* YPDrawSignatureView.swift in Sources */,
 				5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */,
+				5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */,
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
+				5D1BD4F71F067FB100C8FAF5 /* GaugeView.swift in Sources */,
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,
 				5DE3C9A51EF7CBF300012C47 /* SurveyRadioOptionViewController.swift in Sources */,
 				5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */,
 				5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */,
+				5D1BD4F61F067FB100C8FAF5 /* GaugeLayer.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 				70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */,
 				5DE3C98F1EF3ACEC00012C47 /* UnitsViewController.swift in Sources */,

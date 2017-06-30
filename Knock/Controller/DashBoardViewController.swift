@@ -9,18 +9,14 @@
 import UIKit
 import Charts
 
-class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    
+
+class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate
+{
+    let reuseIdentifier = "cell"
     @IBOutlet weak var menuBtn: UIBarButtonItem!
     
-    @IBOutlet weak var circleChartView: PieChartView!
-    
-    @IBOutlet weak var barChartView: BarChartView!
-    
-    @IBOutlet weak var pieChartView: PieChartView!
-    
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var colChart: UICollectionView!
     
     var assignmentIdArray = [String]()
     var assignmentArray = [String]()
@@ -40,6 +36,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     override func viewDidLoad()
     {
         super.viewDidLoad()
+//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//        var width = UIScreen.main.bounds.width
+//        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+//        width = width - 10
+//        layout.itemSize = CGSize(width: width / 2, height: width / 2)
+//        layout.minimumInteritemSpacing = 0
+//        layout.minimumLineSpacing = 0
+//        colChart!.collectionViewLayout = layout
         
         if self.revealViewController() != nil {
             
@@ -82,13 +86,32 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         startTwoMinSyncing()
         
+        NotificationCenter.default.addObserver(self, selector:#selector(DashBoardViewController.UpdateAssignmentView), name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object:nil
+        )
+        
+    }
+    
+    
+    func UpdateAssignmentView(){
+        
+        print("UpdateAssignmentView")
+        populateEventAssignmentData()
+        
+        
+        //updateTableViewData()
+    }
+    
+    
+    // Cleanup notifications added in viewDidLoad
+    deinit {
+        NotificationCenter.default.removeObserver("UpdateAssignmentView")
     }
     
     
     
     func startTwoMinSyncing(){
         // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
     }
     
     func checkConnection(){
@@ -97,137 +120,669 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             syncDataWithSalesforce()
         }
-
+        
     }
+    
+    var editLocationResultsArr = [EditLocation]()
+    var unitResultsArr = [Unit]()
+    var editUnitResultsArr = [EditUnit]()
+    var surveyUnitResultsArr = [SurveyUnit]()
+    var tenantResultsArr  = [Tenant]()
+    var tenantAssignResultsArr = [TenantAssign]()
+    var surveyResResultsArr = [SurveyResponse]()
     
     func syncDataWithSalesforce(){
         
         
         
-    if(Utilities.isSyncing ==  false){
         
-        var count:Int = 0;
-        
-        var unitDict:[String:String] = [:]
-        var saveUnit : [String:String] = [:]
-        
-       
-        
-        //first sync editlocation data...right now we are not handling new location so always get actionstatus == 'edit'
-//        let editLocationResults = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [EditLocation]
-//        
-//        if(editLocationResults.count > 0){
-//            
-//        }
-        
-        
-        
-        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Unit]
-        
-        //isSyncing =false
-        //sync symbol
-        //edit unit
-        //create , assign and edit tenant
-        //assign survey
-        //survey
-        //get unit id and check every table whether it contains "edit/create" action status
-        
-        
-        if(unitResults.count > 0){
+        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) {_ in
             
-             Utilities.isSyncing = true
+            self.editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
             
-            for unitData in unitResults{
+            self.unitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [Unit]
+            
+            self.tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
+            
+            self.surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [SurveyResponse]
+            
+            
+            self.editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
+            
+            // self.surveyUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [SurveyUnit]
+            
+            
+            
+            // self.tenantAssignResultsArr = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [TenantAssign]
+            
+            
+            
+            //sync symbol
+            
+            
+            //AssignmentDetail api and chart api call after push : Here data delete?
+            
+            
+            if(self.editLocationResultsArr.count > 0){
+                self.updateEditLocData()
+            }
+            else if(self.unitResultsArr.count > 0){
+                self.updateUnitData()
+            }//end of if
+            else if(self.tenantResultsArr.count > 0){
+                self.updateTenantData()
+            }
+            else if(self.surveyResResultsArr.count > 0){
+                self.updateSurveyResponseData()
+            }
+            else if(self.editUnitResultsArr.count > 0){
+                self.updateEditUnitData()
+            }
                 
-                 unitDict = Utilities.createUnitDicData(unitName: unitData.name!, apartmentNumber: unitData.apartment!, locationId: unitData.locationId!, assignmentLocId: unitData.assignmentLocId!, notes: unitData.notes!, iosLocUnitId: unitData.id!, iosAssignLocUnitId: unitData.assignmentLocUnitId!)
+                //
+                //        else if(self.surveyUnitResultsArr.count > 0){
+                //            self.updateSurveyUnitData()
+                //        }
+                //
+                //        else if(self.tenantAssignResultsArr.count > 0){
+                //            self.updateTenantAssignData()
+                //        }
                 
-               
+            else{
+                Utilities.fetchAllDataFromSalesforce()
+                // AssignmentDetail api and chart api call after push
+            }
+            
+            
+        }
+    }
+    
+    
+    
+    func updateEditLocData(){
+        
+        let locGroup = DispatchGroup()
+        
+        
+        
+        var locDict:[String:String] = [:]
+        var editLoc : [String:String] = [:]
+        
+        
+        
+        
+        
+        if(self.editLocationResultsArr.count>0){
+            
+            for editLocData in self.editLocationResultsArr{
                 
-                saveUnit["unit"] = Utilities.encryptedParams(dictParameters: unitDict as AnyObject)
+                locGroup.enter()
+                
+                locDict = Utilities.editLocData(canvassingStatus: editLocData.canvassingStatus!, assignmentLocationId: editLocData.assignmentLocId!, notes: editLocData.notes!, attempt: editLocData.attempt!, numberOfUnits: editLocData.noOfUnits!)
                 
                 
                 
-                SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+                editLoc["location"] = Utilities.encryptedParams(dictParameters: locDict as AnyObject)
+                
+                
+                
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: editLoc){ jsonData in
                     
-                    if(response)
-                        
-                    {
-                        
-                        SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createUnit, params: saveUnit){ jsonData in
-                            
-                            
-                            
-                            _ = Utilities.parseAddNewUnitResponse(jsonObject: jsonData.1)
-                            count = count + 1
-                            if(count ==  unitResults.count){
-                                Utilities.isSyncing =  false
-                            }
-
-                        }//login to unit rest api
-                    }//end of if response
-                }//login to salesforce
+                    
+                    //                            ediLocCount = ediLocCount + 1
+                    //                            if(ediLocCount == self.editLocationResultsArr.count){
+                    //                               Utilities.resetAllActionStatusFromEditLocation()
+                    //                            }
+                    //
+                    Utilities.parseEditLocation(jsonObject: jsonData.1)
+                    locGroup.leave()
+                    
+                    
+                    print("locGroup: \(editLocData.notes!)")
+                    
+                    
+                    
+                }//login to unit rest api
+                
                 
             }//end for loop
             
         }//end of if
-
-    }
-        
             
-}
+        else{
+            locGroup.enter()
+            locGroup.leave()
+        }
+        
+        locGroup.notify(queue: .main) {
+            
+            //Utilities.resetAllActionStatusFromEditLocation()
+            
+            if(self.unitResultsArr.count>0){
+                self.updateUnitData()
+            }
+            else if(self.tenantResultsArr.count > 0){
+                self.updateTenantData()
+            }
+            else if(self.surveyResResultsArr.count > 0){
+                self.updateSurveyResponseData()
+            }
+            else if(self.editUnitResultsArr.count > 0){
+                self.updateEditUnitData()
+            }
+            else{
+                Utilities.fetchAllDataFromSalesforce()
+                // AssignmentDetail api and chart api call after push
+            }
+            
+        }
+        
+    }
+    
+    
+    func updateUnitData(){
+        
+        let unitGroup = DispatchGroup()
+        
+        
+        
+        var unitDict:[String:String] = [:]
+        var saveUnit : [String:String] = [:]
+        
+        
+        if(self.unitResultsArr.count > 0){
+            
+            
+            
+            for unitData in self.unitResultsArr{
+                
+                unitGroup.enter()
+                
+                unitDict = Utilities.createUnitDicData(unitName: unitData.name!, apartmentNumber: unitData.apartment!, locationId: unitData.locationId!, assignmentLocId: unitData.assignmentLocId!, notes: unitData.notes!, iosLocUnitId: unitData.id!, iosAssignLocUnitId: unitData.assignmentLocUnitId!)
+                
+                
+                
+                saveUnit["unit"] = Utilities.encryptedParams(dictParameters: unitDict as AnyObject)
+                
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createUnit, params: saveUnit){ jsonData in
+                    
+                    
+                    
+                    _ = Utilities.parseAddNewUnitResponse(jsonObject: jsonData.1)
+                    
+                    unitGroup.leave()
+                    
+                    print("UnitGroup: \(unitData.name!)")
+                    
+                }//login to salesforce
+                
+            }//end for loop
+            
+        }
+        else{
+            unitGroup.enter()
+            unitGroup.leave()
+        }
+        
+        
+        
+        unitGroup.notify(queue: .main) {
+            
+            //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
+            if(self.tenantResultsArr.count > 0){
+                self.updateTenantData()
+            }
+            else if(self.surveyResResultsArr.count > 0){
+                self.updateSurveyResponseData()
+            }
+            else if(self.editUnitResultsArr.count > 0){
+                self.updateEditUnitData()
+            }
+            else{
+                Utilities.fetchAllDataFromSalesforce()
+                // AssignmentDetail api and chart api call after push
+            }
+            
+        }
+    }
+    
+    
+    func updateTenantData(){
+        
+        let tenantGroup = DispatchGroup()
+        
+        var tenantDict:[String:String] = [:]
+        var editTenant : [String:String] = [:]
+        
+        
+        
+        if(self.tenantResultsArr.count > 0){
+            
+            
+            
+            for tenantData in self.tenantResultsArr{
+                
+                tenantGroup.enter()
+                
+                let tenantId = tenantData.id!
+                let locUnitId = tenantData.unitId!
+                
+                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,type:tenantData.actionStatus!)
+                
+                
+                
+                editTenant["tenant"] = Utilities.encryptedParams(dictParameters: tenantDict as AnyObject)
+                
+                
+                
+                
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createTenant, params: editTenant){ jsonData in
+                    
+                    
+                    _ = Utilities.parseTenantResponse(jsonObject: jsonData.1)
+                    tenantGroup.leave()
+                    print("tenantGroup: \(tenantData.firstName!)")
+                    
+                    
+                }//login to unit rest api
+            }//end for loop
+            
+        }
+        else{
+            tenantGroup.enter()
+            tenantGroup.leave()
+        }
+        
+        
+        
+        tenantGroup.notify(queue: .main) {
+            //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+            
+            if(self.surveyResResultsArr.count > 0){
+                self.updateSurveyResponseData()
+            }
+            else if(self.editUnitResultsArr.count > 0){
+                self.updateEditUnitData()
+            }
+            else{
+                Utilities.fetchAllDataFromSalesforce()
+                // AssignmentDetail api and chart api call after push
+            }
+            
+        }
+        
+        
+        
+    }
+    
+    
+    func updateSurveyResponseData(){
+        
+        let surveyResponseGroup = DispatchGroup()
+        
+        
+        var surveyResponseStr:String = ""
+        var formatString:String = ""
+        var responseDict : [String:AnyObject] = [:]
+        var surveyResponseParam : [String:String] = [:]
+        
+        
+        if(self.surveyResResultsArr.count > 0){
+            
+            for surveyResData in self.surveyResResultsArr{
+                
+                surveyResponseGroup.enter()
+                
+                responseDict["surveyId"] = surveyResData.surveyId! as AnyObject?
+                responseDict["assignmentLocUnitId"] = surveyResData.assignmentLocUnitId! as AnyObject?
+                //unitid
+                responseDict["QuestionList"] = surveyResData.surveyQuestionRes! as AnyObject?
+                
+                
+                formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
+                
+                print("formatString \(formatString)")
+                
+                surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+                
+                print("surveyResponseStr \(surveyResponseStr)")
+                
+                surveyResponseParam["surveyResponseFile"] = surveyResponseStr
+                
+                
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.submitSurveyResponse, params: surveyResponseParam){ jsonData in
+                    
+                    
+                    Utilities.parseSurveyResponse(jsonObject: jsonData.1)
+                    surveyResponseGroup.leave()
+                    print("surveyResponseGroup: \(surveyResData.surveyId!)")
+                    
+                }//login to unit rest api
+            }//end for loop
+            
+        }
+            
+        else{
+            surveyResponseGroup.enter()
+            surveyResponseGroup.leave()
+        }
+        
+        surveyResponseGroup.notify(queue: .main) {
+            
+            if(self.editUnitResultsArr.count > 0){
+                self.updateEditUnitData()
+            }
+            else{
+                Utilities.fetchAllDataFromSalesforce()
+            }
+            
+            //assignmentdetail and charrts api
+            
+        }
+        
+        
+    }
+    
+    
+    
+    
+    func updateEditUnitData(){
+        
+        let editUnitGroup = DispatchGroup()
+        
+        
+        
+        var updateUnit : [String:String] = [:]
+        var editUnitDict : [String:String] = [:]
+        
+        
+        
+        
+        if(self.editUnitResultsArr.count > 0){
+            
+            
+            for editUnitData in self.editUnitResultsArr{
+                
+                editUnitGroup.enter()
+                
+                
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(tenantStatus: editUnitData.tenantStatus!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, inTakeStatus: editUnitData.inTakeStatus!, assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
+                
+                
+                
+                updateUnit["unit"] = Utilities.encryptedParams(dictParameters: editUnitDict as AnyObject)
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
+                    
+                    Utilities.parseEditUnit(jsonObject: jsonData.1)
+                    editUnitGroup.leave()
+                    print("editUnitGroup: \(editUnitData.tenantStatus!)")
+                    
+                }//login to unit rest api
+                
+                
+                
+            }
+        }
+            
+        else{
+            editUnitGroup.enter()
+            editUnitGroup.leave()
+        }
+        
+        
+        
+        
+        
+        editUnitGroup.notify(queue: .main) {
+            
+            Utilities.fetchAllDataFromSalesforce()
+            // AssignmentDetail api and chart api call after push
+            
+            
+        }
+        
+    }
+    
+    
+    //    func updateSurveyUnitData(){
+    //
+    //       let surveyUnitGroup = DispatchGroup()
+    //
+    //        var updateSurveyUnit : [String:String] = [:]
+    //        var surveyUnitDict : [String:String] = [:]
+    //
+    //
+    //
+    //        if(self.surveyUnitResultsArr.count > 0){
+    //
+    //
+    //            for surveyUnitData in self.surveyUnitResultsArr{
+    //
+    //                surveyUnitGroup.enter()
+    //
+    //                surveyUnitDict = Utilities.editUnitAndSurveyDicData(assignmentLocationUnitId: surveyUnitData.assignmentLocUnitId!,selectedSurveyId:surveyUnitData.surveyId!,type: "Updating Survey Unit..")
+    //
+    //
+    //
+    //                updateSurveyUnit["unit"] = Utilities.encryptedParams(dictParameters: surveyUnitDict as AnyObject)
+    //
+    //                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateSurveyUnit){ jsonData in
+    //
+    //                     Utilities.parseSurveyUnit(jsonObject: jsonData.1)
+    //                   surveyUnitGroup.leave()
+    //                    print("surveyUnitGroup: \(surveyUnitData.surveyId!)")
+    //
+    //                }//login to unit rest api
+    //
+    //
+    //
+    //            }
+    //        }
+    //
+    //        else{
+    //            surveyUnitGroup.enter()
+    //            surveyUnitGroup.leave()
+    //        }
+    //
+    //
+    //        surveyUnitGroup.notify(queue: .main) {
+    //
+    //             //Utilities.resetAllActionStatusFromSurveyUnit()
+    //
+    //            if(self.tenantResultsArr.count > 0){
+    //                self.updateTenantData()
+    //            }
+    //            else if(self.tenantAssignResultsArr.count > 0){
+    //                self.updateTenantAssignData()
+    //            }
+    //            else if(self.surveyResResultsArr.count > 0){
+    //                self.updateSurveyResponseData()
+    //            }
+    //            else{
+    //                Utilities.fetchAllDataFromSalesforce()
+    //                // AssignmentDetail api and chart api call after push
+    //            }
+    //        }
+    //    }
+    //
+    //
+    //
+    //    func updateTenantAssignData(){
+    //
+    //        let tenantAssignGroup = DispatchGroup()
+    //
+    //        var tenantAssignDict:[String:String] = [:]
+    //        var editTenantAssign : [String:String] = [:]
+    //
+    //
+    //
+    //        if(self.tenantAssignResultsArr.count > 0){
+    //
+    //            for tenantAssignData in self.tenantAssignResultsArr{
+    //
+    //                tenantAssignGroup.enter()
+    //
+    //                tenantAssignDict = Utilities.assignTenantDicData(selectedTenantId: tenantAssignData.tenantId!, assignmentLocUnitId: tenantAssignData.assignmentLocUnitId!)
+    //
+    //
+    //
+    //
+    //                editTenantAssign["tenantAssignmentDetail"] = Utilities.encryptedParams(dictParameters: tenantAssignDict as AnyObject)
+    //
+    //
+    //
+    //
+    //
+    //                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignTenant, params: editTenantAssign){ jsonData in
+    //
+    //
+    //                     Utilities.parseAssignTenant(jsonObject: jsonData.1)
+    //                    tenantAssignGroup.leave()
+    //                    print("tenantAssignGroup: \(tenantAssignData.tenantId!)")
+    //                    
+    //                }//login to unit rest api
+    //            }//end for loop
+    //            
+    //        }
+    //            
+    //        else{
+    //            tenantAssignGroup.enter()
+    //            tenantAssignGroup.leave()
+    //        }
+    //        
+    //        tenantAssignGroup.notify(queue: .main) {
+    //            
+    //          // Utilities.resetAllActionStatusFromTenantAssign()
+    //            if(self.surveyResResultsArr.count > 0){
+    //                self.updateSurveyResponseData()
+    //            }
+    //            else{
+    //                Utilities.fetchAllDataFromSalesforce()
+    //                //assignmentdetail and charrts api
+    //            }
+    //        }
+    //        
+    //        
+    //        
+    //        
+    //    }
+    //    
+    
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        createPieCircleChart(chartType: circleChartView,radius: 0.5)
-        createPieCircleChart(chartType: pieChartView,radius: 0.0)
         
-        
-        createBarChart(dataPoints: status, values: values)
         populateEventAssignmentData()
 
     }
     
-   
+   //MARK: - chartMethods
  
- 
-    
-    func createBarChart(dataPoints: [String], values: [Double])
+    func barChartData(custumView:UIView)
     {
         
         let colors = getColors()
         
-        barChartView.noDataText = "You need to provide data for the chart."
-   
+        let chart = BarChartView(frame: custumView.frame)
+  
+     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
+        
         var dataEntries: [BarChartDataEntry] = []
-        //String(describing: languages)
-        for i in 0..<dataPoints.count
+        //String(describing: languages)z
+        for i in 0..<months.count
         {
-            // let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
-            let dataEntry =   BarChartDataEntry(x: values[i], y: Double(i))
-            
-            
+            let dataEntry =   BarChartDataEntry(x: unitsSold[i], y: Double(i))
             dataEntries.append(dataEntry)
         }
         
-        let chartDataSet = BarChartDataSet(values: dataEntries, label: "")
-       
+        // 3. chart setup
+        let set = BarChartDataSet( values: dataEntries, label: "")
         
-        chartDataSet.colors = colors
+        set.colors = colors
         
         
-        let chartData = BarChartData(dataSet: chartDataSet)
-        barChartView.data = chartData
+        let chartData = BarChartData(dataSet: set)
+        chart.data = chartData
+        chart.noDataText = "No data available"
+       chart.isUserInteractionEnabled = true
         
         let d = Description()
-        d.text = " "
-        barChartView.chartDescription = d
-        barChartView.animate(xAxisDuration: TimeInterval(5))
+        //d.text = "iOSCharts.io"
+        chart.chartDescription = d
+        custumView.addSubview(chart)
         
-       
-       // barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
         
+    }
+    
+    func circleChartData(custumView:UIView)
+    {
+       // let colors = getColors()
+        
+        
+        let chart = GaugeView(frame: custumView.frame)
+        
+        chart.percentage = 80
+        chart.thickness = 10
+        
+        chart.labelFont = UIFont.systemFont(ofSize: 40, weight: UIFontWeightThin)
+        chart.labelColor = UIColor.lightGray
+        chart.gaugeBackgroundColor = UIColor.lightGray
+        chart.labelText = "80%"
+        chart.isUserInteractionEnabled = true
+        chart.accessibilityLabel = "Gauge"
+
+        
+//        set.colors = colors
+//        let data = PieChartData(dataSet: set)
+        
+        
+        custumView.addSubview(chart)
+    }
+
+    func updateChartData(custumView:UIView)
+    {
+        
+        let chart = LineChartView(frame: custumView.frame)
+        var entries = [PieChartDataEntry]()
+        for (index, value) in values.enumerated() {
+            let entry = PieChartDataEntry()
+            entry.y = value
+            entry.label = status[index]
+            entries.append( entry)
+        }
+        // 3. chart setup
+        let set = LineChartDataSet( values: entries, label: "")
+      
+        var colors: [UIColor] = []
+        
+        for _ in 0..<values.count {
+            let red = Double(arc4random_uniform(256))
+            let green = Double(arc4random_uniform(256))
+            let blue = Double(arc4random_uniform(256))
+            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+            colors.append(color)
+        }
+        set.colors = colors
+        let data = LineChartData(dataSet: set)
+        chart.data = data
+        chart.noDataText = "No data available"
+        chart.isUserInteractionEnabled = true
+        
+        let d = Description()
+        //d.text = "iOSCharts.io"
+        chart.chartDescription = d
+        
+        custumView.addSubview(chart)
     }
     
     
@@ -236,7 +791,6 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         var colors: [UIColor] = []
         
         // Color object : get rgb
-        
         
         let completedColor = UIColor(red: CGFloat(18.0/255), green: CGFloat(136.0/255), blue: CGFloat(189.0/255), alpha: 1)
         let InProgressColor = UIColor(red: CGFloat(173.0/255), green: CGFloat(235.0/255), blue: CGFloat(253.0/255), alpha: 1)
@@ -252,73 +806,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
 
     }
     
-    func createPieCircleChart(chartType:PieChartView,radius:CGFloat){
-        
-        
-        let colors = getColors()
-        
-        
-        var entries = [PieChartDataEntry]()
-        for (index, value) in values.enumerated() {
-            let entry = PieChartDataEntry()
-            entry.y = value
-            entry.label = status[index]
-            entries.append( entry)
-        }
-        
-        // 3. chart setup
-        let set = PieChartDataSet( values: entries, label: "")
-        // this is custom extension method. Download the code for more details.
-        
-        
-        
-        /* for _ in 0..<values.count {
-         //let red = Double(arc4random_uniform(256))
-         let red = Double(arc4random_uniform(256))
-         let green = Double(arc4random_uniform(256))
-         let blue = Double(arc4random_uniform(256))
-         
-         let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-         colors.append(color)
-         }
-         
-         */
-        
-        set.colors = colors
-        let data = PieChartData(dataSet: set)
-        chartType.data = data
-        chartType.noDataText = "No data available"
-        // user interaction
-        chartType.isUserInteractionEnabled = true
-        
-        let d = Description()
-        d.text = ""
-        chartType.chartDescription = d
-        //pieChartView.centerText = "Pie Chart"
-        chartType.holeRadiusPercent = radius
-        chartType.transparentCircleColor = UIColor.clear
-        
-        chartType.animate(xAxisDuration: TimeInterval(5))
-        
-        
-        
-        
-      
-    }
-    
-    
-    
-    func populateEventAssignmentData(){
-      
-        
+    func populateEventAssignmentData()
+    {
         assignmentIdArray = []
         assignmentArray = []
         assignmentEventIdArray = []
         totalLocArray = []
         totalUnitsArray = []
         eventDict = [:]
-        
-        
         
         
         createEventDictionary()
@@ -373,7 +868,53 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     // MARK: - Models
     
+    // MARK: - UICollectionViewDataSource protocol
     
+    // tell the collection view how many cells to make
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    // make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath)as!ChartCollectionViewCell
+        if indexPath.row == 0
+        {
+            barChartData(custumView: cell.chartView)
+           cell.lblChart.text = "Chart 1"
+        }
+        
+        if indexPath.row == 1
+        {
+            circleChartData(custumView: cell.chartView)
+            cell.lblChart.text = "Unit Attemped"
+        }
+        if indexPath.row == 2
+        {
+            circleChartData(custumView: cell.chartView)
+           cell.lblChart.text = "Unit knocked"
+        }
+        if indexPath.row == 3
+        {
+            cell.lblChart.text = "Chart 4"
+            updateChartData(custumView: cell.chartView)
+            
+        }
+        //cell.myLabel.text = self.items[indexPath.item]
+        //cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
+        
+        return cell
+    }
+    
+    // MARK: - UICollectionViewDelegate protocol
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // handle tap events
+        print("You selected cell #\(indexPath.item)!")
+    }
+
     
     // MARK: UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -421,7 +962,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return  67.0
+        return  35.0
     }
     
     

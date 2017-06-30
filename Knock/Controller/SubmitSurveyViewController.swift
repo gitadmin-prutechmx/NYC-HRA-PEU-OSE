@@ -129,16 +129,78 @@ class SubmitSurveyViewController: UIViewController {
     
     
     
-    var surveyResponseStr:String = ""
+   
+    var questionArray = [[String: String]]()
+    
+     var surveyResponseStr:String = ""
+     var formatString:String = ""
+    var responseDict : [String:AnyObject] = [:]
+
     
     func prepareSurveyData(){
-        var formatString:String = ""
-        
-        print(Utilities.SurveyOutput)
         
         //"{\"surveyId\":\"a0G35000000kQID\",\"response\":[{\"answer\":\"encrypt\",\"questionId\":\"a0F35000000EqIQ\",\"description\":\"Testing desc\"}]}"
         
-        formatString = "{\"surveyId\":\"\(SalesforceConnection.surveyId)\",\"response\":["
+
+        
+       
+        
+        print(Utilities.SurveyOutput)
+        
+        
+      
+        var questionResponseDict:[String:String] = [:]
+        
+        for (_, value) in Utilities.SurveyOutput {
+            
+            questionResponseDict["questionId"] = value.questionId!
+            questionResponseDict["description"] = value.getDescription!
+            
+            if(value.questionType == "Single Select" || value.questionType == "Text Area"){
+                
+                questionResponseDict["answer"] = value.selectedAnswer!
+            }
+            else if(value.questionType == "Multi Select"){
+                
+                let multioption = value.multiOption.joined(separator: ";")
+                
+                questionResponseDict["answer"] = multioption
+            }
+            
+            questionArray.append(questionResponseDict)
+            
+        }
+        
+        
+//        responseDict["surveyId"] = SalesforceConnection.surveyId as AnyObject?
+//        responseDict["response"] = questionArray as AnyObject?
+//        
+//
+//        formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
+//        
+//        print(formatString)
+//        
+//        surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+//        
+//        
+//        
+//        print(surveyResponseStr)
+//        
+        
+        saveSurveyToCoreData()
+        
+        //fetchSurveyFromCoreData()
+        
+        Utilities.isSubmitSurvey = true
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+
+        
+       // sendSurveyToSalesforce()
+        
+        
+        /*
+ formatString = "{\"surveyId\":\"\(SalesforceConnection.surveyId)\",\"response\":["
         
         for (key, value) in Utilities.SurveyOutput {
             if(value.questionType == "Single Select" || value.questionType == "Text Area"){
@@ -161,35 +223,61 @@ class SubmitSurveyViewController: UIViewController {
         else{
             formatString =  formatString.substring(to: formatString.characters.index(before: formatString.endIndex)) + "]}"
         }
-        
-        surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        
+ 
+ */
         
         
         
-       // surveyRes["surveyId"] = Utilities.SurveyId
-        //surveyRes["unitId"] = Utilities.currentUnitId
-       
+    }
+    
+    func saveSurveyToCoreData(){
+        let surveyResponseObject = SurveyResponse(context: context)
         
+        surveyResponseObject.surveyId = SalesforceConnection.surveyId
+        
+        surveyResponseObject.unitId = SalesforceConnection.unitId
+        surveyResponseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
+        
+        surveyResponseObject.actionStatus = "edit"
+        
+        surveyResponseObject.surveyQuestionRes = questionArray as NSObject?
+        
+        appDelegate.saveContext()
 
-        print(surveyResponseStr)
-        sendSurveyToSalesforce()
+    }
+    
+    func fetchSurveyFromCoreData(){
+        
+      let surveyResResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",isPredicate:false) as! [SurveyResponse]
+        
+        if(surveyResResults.count > 0){
+           
+            responseDict["surveyId"] = SalesforceConnection.surveyId as AnyObject?
+            responseDict["response"] = surveyResResults[0].surveyQuestionRes! as AnyObject?
+            
+            
+            formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
+            
+            print(formatString)
+            
+            surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            
+            
+            
+            print(surveyResponseStr)
+
+            
+        }
+        
         
     }
     
     
     func sendSurveyToSalesforce(){
         
-        let surveyResponseObject = SurveyResponse(context: context)
-        surveyResponseObject.surveyId = SalesforceConnection.surveyId
-        surveyResponseObject.assignmentId = SalesforceConnection.assignmentId
-        surveyResponseObject.unitId = SalesforceConnection.unitId
-        surveyResponseObject.locationId = SalesforceConnection.locationId
-        surveyResponseObject.surveyResponse = surveyResponseStr
+       // Utilities.isSubmitSurvey = true
         
-        appDelegate.saveContext()
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
         
         
         SVProgressHUD.show(withStatus: "Submit survey response..", maskType: SVProgressHUDMaskType.gradient)
@@ -209,7 +297,7 @@ class SubmitSurveyViewController: UIViewController {
                         
                         SVProgressHUD.dismiss()
                     
-                        Utilities.isSubmitSurvey = true
+                       // Utilities.isSubmitSurvey = true
 
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                         
@@ -224,135 +312,13 @@ class SubmitSurveyViewController: UIViewController {
             }
         }
         
-       /* Utilities.SubmitSurveyResponse(false,successHandler:{
-            
-            (isSurveySuccess) in
-            
-            self.view.makeToast("Survey submitted successfully", duration: 5.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
-            
-            
-            
-            
-        })
- 
- */
-        
-        
-        
-    /*    Utilities.saveResponseDataJSON(surveyRes,key: "SurveyResponse")
-        
-        if Reachability.isConnectedToNetwork() == true {
-            
-            //call to SalesforceRest api method
-            Utilities.SubmitSurveyResponse(false,successHandler:{
-                
-                (isSurveySuccess) in
-                
-                self.view.makeToast("Survey submitted successfully", duration: 5.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        print("completion from tap")
-                    } else {
-                        print("completion without tap")
-                    }
-                }
-                
-
-                
-                
-            })
-            
-            
-        }
-        
-        else{
-            
-            Utilities.ClearResponseCache()
-            
-            self.view.makeToast("No internet", duration: 5.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
-        }
-        
-       
-        */
+     
         
         
     }
     
     
 
-    func SubmitSurveyResponse(_ fromSurveyView:Bool = false){
-        
-       
-        
-   /*     let surveyRes = Utilities.loadResponseDataJSON("SurveyResponse")
-        
-    
-        Utilities.LoginToSurveySalesforce({
-            
-            (accessToken) in
-            
-            //Utilities.GetAndSaveDataFromSalesforce(accessToken, Url: Utilities.submitSurveyRes, HttpMethod: "POST", isSubmitResponse: true, successHandler: {
-            
-            Utilities.GetAndSaveDataFromSalesforce(accessToken, Url: Utilities.submitSurveyRes, Params: surveyRes as [String : AnyObject]?, HttpMethod: "POST", isSubmitResponse: true, successHandler: {
-                
-                (jsonSurveyResponse) in
-                
-                //var res = jsonSurveyResponse as! [String:String]
-                
-                Utilities.currentUnitId = nil
-                Utilities.isSubmitSurvey = false
-                
-                //Delete SurveyResponse data from cache
-                Utilities.DeletJSONData("SurveyResponse")
-                
-                
-              /*
-                 Utilities.GetAndSaveDataFromSalesforce(accessToken, Url: Utilities.getAllUnitsUrl, HttpMethod: "GET", successHandler: {
-                    (jsonUnits) in
-                    
-                    //Delete SurveyResponse data from cache
-                    Utilities.DeletJSONData("Units")
-                    
-                    
-                    //Save Units Data
-                    Utilities.saveJSON(jsonUnits as Data, key: "Units")
-                    
-                    
-                    //SVProgressHUD.dismiss()
-                    
-                    
-                    if(fromSurveyView == true){
-                        _ = self.navigationController?.popViewController(animated: true)
-                    }
-                    
-                    
-                    
-                })
-                
-                */
-                
-              
-            })
-            
-            
-            
-        })
-        
-        
-        */
-        
-    }
     
     
     

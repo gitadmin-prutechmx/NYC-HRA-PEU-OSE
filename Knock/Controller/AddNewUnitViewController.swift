@@ -97,41 +97,38 @@ class AddNewUnitViewController: UIViewController {
             
         
         
-        if(Utilities.isSyncing == false){
+        self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+           // Utilities.isSubmitSurvey = false
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+
     
-            if(Network.reachability?.isReachable)!{
-    
-                        pushUnitDataToSalesforce()
-                }
-            else{
-                self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    
-                    Utilities.isSubmitSurvey = false
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                    
-                    self.dismiss(animated: true, completion: nil)
-                    
-                }
-            }
+//            if(Network.reachability?.isReachable)!{
+//    
+//                  pushAddNewUnitDataToSalesforce()
+//                }
+//                
+//            else{
+//                self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                    
+//                    Utilities.isSubmitSurvey = false
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+//                    
+//                    self.dismiss(animated: true, completion: nil)
+//                    
+//                }
+//            }
+//        
         
-        }
-        else{
-            //locally in database
-            self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                Utilities.isSubmitSurvey = false
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            }
-        }
-      
 
         
     }
     
-    func pushUnitDataToSalesforce(){
+    func pushAddNewUnitDataToSalesforce(){
         var saveUnit : [String:String] = [:]
         
         saveUnit["unit"] = Utilities.encryptedParams(dictParameters: saveUnitDict as AnyObject)
@@ -158,7 +155,7 @@ class AddNewUnitViewController: UIViewController {
                     if(isError==false){
                         self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                             
-                            Utilities.isSubmitSurvey = false
+                           // Utilities.isSubmitSurvey = false
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                             
                             self.dismiss(animated: true, completion: nil)
@@ -203,7 +200,7 @@ class AddNewUnitViewController: UIViewController {
 
         
         
-        unitObject.name = saveUnitDict["unitName"]
+        unitObject.name =  saveUnitDict["unitName"]
         
         unitObject.apartment = saveUnitDict["apartmentNumber"]
 

@@ -42,6 +42,10 @@ var picker = UIDatePicker()
     
     var dob:String = ""
     
+    var age:String = ""
+    
+     var editTenantDict : [String:String] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -128,12 +132,6 @@ var picker = UIDatePicker()
     }
     
     func saveTenantInfo(){
-        
-        var editTenantDict : [String:String] = [:]
-        
-        var updateTenant : [String:String] = [:]
-        
-        
         
         
         
@@ -234,206 +232,155 @@ var picker = UIDatePicker()
                 
                 dob = dobTemp
                 
-            }
-            
-            
-            
-        
-        
-            
-        if(SalesforceConnection.currentTenantId != ""){
-            editTenantDict["tenantId"] = SalesforceConnection.currentTenantId
-        }
-            
-            editTenantDict["locationUnitId"] = SalesforceConnection.unitId
-            
-            editTenantDict["firstName"] = firstName
-            
-            editTenantDict["lastName"] = lastName
-            
-            editTenantDict["email"] = email
-            
-            editTenantDict["phone"] = phone
-            
-            editTenantDict["birthdate"] = dob
-            
-            
-            
-        
-            
-            
-            let convertedString = Utilities.jsonToString(json: editTenantDict as AnyObject)
-            
-            
-            
-            let encryptEditTenantStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-            
-            
-            
-            updateTenant["tenant"] = encryptEditTenantStr
-            
-            
-            
-            SVProgressHUD.show(withStatus: "Saving tenant...", maskType: SVProgressHUDMaskType.gradient)
-        
-        
-    SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
-        
-            if(response)
+                if(dob != ""){
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
                 
+                    let birthdate = dateFormatter.date(from: dob)
+                
+                    let now = Date()
+                    let calendar = Calendar.current
+              
+              
+                    let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
+                    age = String(ageComponents.year!)
+                }
+  
+                
+            }
+        
+        
+        var msg:String = ""
+        
+            
+        if(SalesforceConnection.currentTenantId == ""){
+            saveTenantInCoreData()
+            msg = "Tenant information has been created successfully."
+        }
+        else{
+            updateTenantInCoreData()
+            msg = "Tenant information has been updated successfully."
+        }
+        
+
+        
+//        editTenantDict = Utilities.createAndEditTenantData(firstName: firstName, lastName: lastName, email: email, phone: phone, dob: dob, locationUnitId: SalesforceConnection.unitId, currentTenantId: SalesforceConnection.currentTenantId,iOSTenantId: UUID().uuidString)
+//        
+//        
+//        
+        self.view.makeToast(msg, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+            
+            
+            
+            self.navigationController?.popViewController(animated: true);
+            
+            
+        }
+        
+        
+//        if(Network.reachability?.isReachable)!{
+//            
+//            pushCreateEditTenantDataToSalesforce(message:msg)
+//        }
+//            
+//        else{
+//            self.view.makeToast(msg, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+//                
+//                
+//                
+//                self.navigationController?.popViewController(animated: true);
+//
+//                
+//            }
+//        }
+//        
+        
+        
+            
+    }
+    
+    
+    func pushCreateEditTenantDataToSalesforce(message:String){
+        
+       
+        
+        var updateTenant : [String:String] = [:]
+        
+        
+        
+        updateTenant["tenant"] = Utilities.encryptedParams(dictParameters: editTenantDict as AnyObject)
+        
+        
+        
+        
+       SVProgressHUD.show(withStatus: "Saving tenant...", maskType: SVProgressHUDMaskType.gradient)
+        
+        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+            
+            if(response)
             {
+                
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createTenant, params: updateTenant){ jsonData in
                     
-                    
-                    
-                   // self.saveTenantInCoreData()
-                    
-                    
-                    
-                    
-                    
                     SVProgressHUD.dismiss()
                     
-                    self.parseResponse(jsonObject: jsonData.1)
+                    //Utilities.parseTenantResponse(jsonObject: jsonData.1)
                     
                     
-//                    self.view.makeToast("Tenant information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                        
-//                        if didTap {
-//                            
-//                            self.navigationController?.popViewController(animated: true);
-//                            
-//                        } else {
-//                            
-//                            self.navigationController?.popViewController(animated: true);
-//                            
-//                        }
-//                        
-//                    }
+                    // .parseResponse(jsonObject: jsonData.1)
                     
-                    
-                    
-                    //print(jsonData.1)
+                    self.view.makeToast(message, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+                        
+                        
+                        
+                        self.navigationController?.popViewController(animated: true);
+
+                        
+                    }
                     
                     
                     
                 }
-                
             }
-            
             
         }
-        
-        
-        
-            
-    }
-    
-    func parseResponse(jsonObject: Dictionary<String, AnyObject>){
-     
-        guard let isError = jsonObject["hasError"] as? Bool,
-            
-            let tenantDataDictonary = jsonObject["tenantData"] as? [String: AnyObject] else { return }
-        
-        
 
-        
-        if(isError == false){
-            
-           
-            
-            
-           
-            var msg:String = ""
-            
-            if(SalesforceConnection.currentTenantId == ""){
-                saveTenantInCoreData(tenantDataDict: tenantDataDictonary)
-                msg = "Tenant information has been created successfully."
-            }
-            else{
-                 updateTenantInCoreData(tenantDataDict: tenantDataDictonary)
-                 msg = "Tenant information has been updated successfully."
-            }
-
-                
-            
-           
-            
-            self.view.makeToast(msg, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
-                    
-                    
-
-                    self.navigationController?.popViewController(animated: true);
-                    
-                } else {
-                    
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
-                    
-                    
-
-                    self.navigationController?.popViewController(animated: true);
-                    
-                }
-                
-            }
-            
-            
-            
-            
-            
-        }
-            
-        else{
-            
-            self.view.makeToast("Error while updating Tenant info", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    
-                    print("completion from tap")
-                    
-                } else {
-                    
-                    print("completion without tap")
-                    
-                }
-                
-            }
-            
-            
-            
-        }
-        
-        
-        
     }
     
     
-    func saveTenantInCoreData(tenantDataDict: [String: AnyObject]){
+    
+   
+    
+    
+    func saveTenantInCoreData(){
         
         let tenantObject = Tenant(context: context)
         
         
-        tenantObject.id = tenantDataDict["tenantId"] as! String?
+        tenantObject.id = UUID().uuidString
         
-        tenantObject.name = tenantDataDict["name"] as? String  ?? ""
+        tenantObject.name = firstName + " " + lastName
         
-        tenantObject.firstName = tenantDataDict["firstName"] as? String  ?? ""
+        tenantObject.firstName = firstName
         
-        tenantObject.lastName = tenantDataDict["lastName"] as? String  ?? ""
+        tenantObject.lastName = lastName
         
-        tenantObject.phone = tenantDataDict["phone"] as? String  ?? ""
+        tenantObject.phone = phone
         
-        tenantObject.email = tenantDataDict["email"] as? String  ?? ""
+        tenantObject.email = email
         
-        tenantObject.age = tenantDataDict["age"] as? String  ?? ""
+        tenantObject.age = age
         
-        tenantObject.dob =  tenantDataDict["birthdate"] as? String  ?? ""
+        tenantObject.dob =  dob
         
+        tenantObject.actionStatus = "create"
         
         
         tenantObject.assignmentId = SalesforceConnection.assignmentId
@@ -442,6 +389,7 @@ var picker = UIDatePicker()
         
         tenantObject.unitId = SalesforceConnection.unitId
         
+        tenantObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
         
         
         appDelegate.saveContext()
@@ -451,34 +399,49 @@ var picker = UIDatePicker()
         
 
     }
-    func updateTenantInCoreData(tenantDataDict: [String: AnyObject]){
+    
+    
+    func updateTenantInCoreData(){
         
         var updateObjectDic:[String:String] = [:]
         
         //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
         
-        updateObjectDic["name"] = tenantDataDict["name"] as? String  ?? ""
-
-        updateObjectDic["firstName"] = tenantDataDict["firstName"] as? String  ?? ""
+        updateObjectDic["name"] = firstName + " " + lastName
         
-        updateObjectDic["lastName"] = tenantDataDict["lastName"] as? String  ?? ""
+        updateObjectDic["firstName"] = firstName
         
-        updateObjectDic["phone"] = tenantDataDict["phone"] as? String  ?? ""
+        updateObjectDic["lastName"] = lastName
         
-        updateObjectDic["email"] = tenantDataDict["email"] as? String  ?? ""
+        updateObjectDic["phone"] = phone
         
-        updateObjectDic["dob"] = tenantDataDict["birthdate"] as? String  ?? ""
+        updateObjectDic["email"] = email
         
-        updateObjectDic["age"] = tenantDataDict["age"]  as? String  ?? ""
-
+        updateObjectDic["dob"] = dob
+        
+        updateObjectDic["age"] = age
         
         
-         ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@ AND locationId == %@ AND unitId == %@", predicateValue: SalesforceConnection.currentTenantId,predicateValue2: SalesforceConnection.assignmentId, predicateValue3: SalesforceConnection.locationId,predicateValue4: SalesforceConnection.unitId,isPredicate: true)
+        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
+        
+        if(tenantResults.count > 0){
+            
+            if(tenantResults[0].actionStatus! == ""){
+                 updateObjectDic["actionStatus"] = "edit"
+            }
+        }
+        
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@ AND locationId == %@ AND unitId == %@", predicateValue: SalesforceConnection.currentTenantId,predicateValue2: SalesforceConnection.assignmentId, predicateValue3: SalesforceConnection.locationId,predicateValue4: SalesforceConnection.unitId,isPredicate: true)
         
         
     }
     
     
+    
+    
+   
    
     @IBAction func editingDidBegain(_ sender: UITextField)
     {

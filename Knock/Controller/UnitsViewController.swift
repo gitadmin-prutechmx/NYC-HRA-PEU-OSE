@@ -133,7 +133,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     */
          let indexRow = (sender as AnyObject).tag
         
-         SalesforceConnection.unitId =  UnitDataArray[indexRow!].unitId
+        SalesforceConnection.unitId =  UnitDataArray[indexRow!].unitId
         SalesforceConnection.unitName = UnitDataArray[indexRow!].unitName
         
         SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexRow!].assignmentLocUnitId
@@ -169,7 +169,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     func UpdateUnitView(){
-        print("updateTabledata")
+        print("UpdateUnitView")
         
         if(Utilities.isSubmitSurvey){
              updateSurveyStatus()
@@ -200,12 +200,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
        
         
         updateObjectDic["surveyStatus"] = "Completed"
-        updateObjectDic["syncDate"] = formatter.string(from: date)
+       // updateObjectDic["syncDate"] = "Pending.."
+        //updateObjectDic["syncDate"] = formatter.string(from: date)
         
         
         
         ManageCoreData.updateRecord(salesforceEntityName: "Unit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND id == %@ AND assignmentLocUnitId ==%@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId, predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
         
+        
+        Utilities.isSubmitSurvey = false
         
         
 
@@ -404,15 +407,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         cell.moreBtn.tag = indexPath.row
        
         
-        
+   /*
         if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
             
-//            let date = Date()
-//            let formatter = DateFormatter()
-//            
-//            formatter.dateFormat = "MM/dd/yyyy"
-//            
-//          
+ 
             cell.dataSyncDate.text =  UnitDataArray[indexPath.row].syncDate
             //formatter.string(from: date)
             
@@ -452,7 +450,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         
+        */
         
+        
+        cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
+        
+        cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
         
         
         cell.dataUnitId.text = UnitDataArray[indexPath.row].unitId
@@ -469,13 +472,13 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-    func getSurveyUnitResults()->[SurveyUnit]{
+    func getSurveyUnitResults()->[EditUnit]{
         
       // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
         
-         let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [SurveyUnit]
+         let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
         
-        //ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyUnit]
+       
         
          return surveyUnitResults
         

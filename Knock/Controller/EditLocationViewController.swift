@@ -22,6 +22,7 @@ class EditLocationViewController: UIViewController {
     var numberOfUnits:String = ""
     var notes:String = ""
     
+     var editLocDict : [String:String] = [:]
     
     @IBOutlet weak var fullAddressLbl: UILabel!
 
@@ -168,36 +169,7 @@ class EditLocationViewController: UIViewController {
 
     
     
-    func parseEditLocationResponse(jsonObject: Dictionary<String, AnyObject>){
     
-        guard let isError = jsonObject["hasError"] as? Bool else { return }
-        
-        
-        if(isError == false){
-            
-            updateEditLocationInDatabase()
-            
-            self.view.makeToast("Location has been updated successfully.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
-             self.dismiss(animated: true, completion: nil)
-        }
-        else{
-            self.view.makeToast("Error while updating location", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
-
-        }
-        
-    }
 
     func updateEditLocationInDatabase(){
             
@@ -209,6 +181,7 @@ class EditLocationViewController: UIViewController {
             updateObjectDic["canvassingStatus"] = canvassingStatus
             updateObjectDic["noOfUnits"] = numberOfUnits
             updateObjectDic["notes"] = notes
+            updateObjectDic["actionStatus"] = "edit"
         
             
             
@@ -226,8 +199,8 @@ class EditLocationViewController: UIViewController {
     
     
     @IBAction func saveLocation(_ sender: Any) {
-        var editLocDict : [String:String] = [:]
-        var updateLocation : [String:String] = [:]
+       
+        
         
       
         if let numberofUnitsTemp = NoOfUnitsTextField.text{
@@ -239,31 +212,62 @@ class EditLocationViewController: UIViewController {
             notes = notesTemp
         }
         
+        updateEditLocationInDatabase()
         
-        editLocDict["status"] = canvassingStatus
-        editLocDict["assignmentLocationId"] = SalesforceConnection.assignmentLocationId
-        editLocDict["Notes"] = notes
-        editLocDict["attempt"] = attempt
-        editLocDict["numberOfUnits"] = numberOfUnits
+        self.view.makeToast("Location has been edit successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
         
+//        editLocDict = Utilities.editLocData(canvassingStatus: canvassingStatus, assignmentLocationId: SalesforceConnection.assignmentLocationId, notes: notes, attempt: attempt, numberOfUnits: numberOfUnits)
+//        
+//        if(Network.reachability?.isReachable)!{
+//            
+//            pushEditLocDataToSalesforce()
+//        }
+//            
+//        else{
+//            self.view.makeToast("Location has been edit successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                self.dismiss(animated: true, completion: nil)
+//                
+//            }
+//        }
+//
+// 
         
+
+    }
+    
+    func pushEditLocDataToSalesforce(){
+       
+        var updateLocation : [String:String] = [:]
         
         updateLocation["location"] = Utilities.encryptedParams(dictParameters: editLocDict as AnyObject)
 
         
-        SVProgressHUD.show(withStatus: "Updating location...", maskType: SVProgressHUDMaskType.gradient)
+        
+        
+        SVProgressHUD.show(withStatus: "Updating Location...", maskType: SVProgressHUDMaskType.gradient)
         
         SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
             
             if(response)
             {
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: updateLocation){ jsonData in
-                    
+                
+               SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: updateLocation){ jsonData in
                     
                     SVProgressHUD.dismiss()
-                    
-                     self.parseEditLocationResponse(jsonObject: jsonData.1)
+                
+                   // Utilities.parseEditLocationResponse(jsonObject: jsonData.1)
+                
+                    self.view.makeToast("Location has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        self.dismiss(animated: true, completion: nil)
+                        
+                    }
                     
                     
                     
@@ -271,7 +275,6 @@ class EditLocationViewController: UIViewController {
             }
             
         }
-        
 
     }
 

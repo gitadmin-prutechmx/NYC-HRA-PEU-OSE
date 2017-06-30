@@ -26,5 +26,9 @@ class SalesforceRestApiUrl{
     
     static let assignTenant = "/services/apexrest/assignTenant"
     
+    static let assignmentdetailchart = "/services/apexrest/assignmentdetailchart"
+    
+    static let userDetail = "/services/apexrest/userDetail"
+    
     
 }

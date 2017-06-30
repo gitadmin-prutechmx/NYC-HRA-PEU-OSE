@@ -188,8 +188,19 @@ class LoginViewController: UIViewController {
     }
     
     
+    @IBAction func forgotPassword(_ sender: Any) {
+        
+                if let requestUrl = NSURL(string: "http://dev-nyserda-dev.cs43.force.com/Core_Forgot_Password_Page1")
+                {
+                    UIApplication.shared.openURL(requestUrl as URL)
+                }
+
+    }
     
     @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
+        
+        
+        
         
         DispatchQueue.main.async {
               self.loginView.endEditing(true)
@@ -272,7 +283,9 @@ class LoginViewController: UIViewController {
     
     func getDataFromSalesforce(){
         
-        let email = "nik@mtxb2b.com"
+        SalesforceConnection.currentUserEmail = "nik@mtxb2b.com"
+        
+       
         
         var emailParams : [String:String] = [:]
         
@@ -310,7 +323,7 @@ class LoginViewController: UIViewController {
             
         if(response)
           {
-            let encryptEmailStr = try! email.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            let encryptEmailStr = try! SalesforceConnection.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
             
 
             emailParams["email"] = encryptEmailStr
@@ -318,20 +331,40 @@ class LoginViewController: UIViewController {
             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ jsonData in
                 
                 
+//                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.chartapi, params: emailParams){ jsonData in
+//                    
+//                    ManageCoreData.DeleteAllDataFromEntities()
+//                    
+//                    
+//                    SVProgressHUD.dismiss()
+                
+//                    Utilities.parseChartData(jsonObject: jsonData.1)
+//                    Utilities.parseEventAssignmentData(jsonObject: jsonData.1)
+//                    
+//                    DispatchQueue.main.async {
+//                        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+//                    }
+//                    
+//
+//                    
+//                }
+//                
                 
                 
                 ManageCoreData.DeleteAllDataFromEntities()
                 
-               
+                
                 SVProgressHUD.dismiss()
                 
-                self.parseEventAssignmentData(jsonObject: jsonData.1)
+                
+                Utilities.parseEventAssignmentData(jsonObject: jsonData.1)
                 
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                 }
-            
-            
+                
+
+                
                 //get survey data
                 
              /*   assignmentIdDict["assignmentIds"] = self.assignmentIdArray as AnyObject?
@@ -450,244 +483,7 @@ class LoginViewController: UIViewController {
     
     
        
-    func parseEventAssignmentData(jsonObject: Dictionary<String, AnyObject>){
-        
-       
-        
-        guard let _ = jsonObject["errorMessage"] as? String,
-            let eventResults = jsonObject["Event"] as? [[String: AnyObject]] else { return }
-        
-        //need to check location id and unit id
-        
-        for eventData in eventResults {
-            
-            let eventObject = Event(context: context)
-            eventObject.id = eventData["eventId"] as? String  ?? ""
-            eventObject.name = eventData["Name"] as? String  ?? ""
-            eventObject.startDate = eventData["startDate"] as? String  ?? ""
-            eventObject.endDate = eventData["endDate"] as? String  ?? ""
-            
-            
-            
-            appDelegate.saveContext()
-            
-            guard let assignmentResults = eventData["Assignment"] as? [[String: AnyObject]]  else { break }
-            
-            for assignmentData in assignmentResults {
-                let assignmentObject = Assignment(context: context)
-                assignmentObject.id = assignmentData["assignmentId"] as? String  ?? ""
-                assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""
-                
-              
-                
-                assignmentObject.status = assignmentData["status"] as? String  ?? ""
-                assignmentObject.eventId = eventObject.id
-                
-               assignmentObject.totalLocations = String(assignmentData["totalLocation"] as! Int)
-               assignmentObject.totalUnits = String(assignmentData["totalLocationUnit"] as! Int)
-               assignmentObject.totalSurvey = String(assignmentData["totalSurvey"] as! Int)
-               assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
-                
-                
-                assignmentIdArray.append(assignmentObject.id!)
-                
-                //read surveydata
-                guard let surveyResults = assignmentData["AssignmentSurvey"] as? [[String: AnyObject]] else { break }
-                
-                
-                for surveyData in surveyResults {
-                    
-                    let assignmentId = assignmentObject.id!
-                    let surveyId = surveyData["surveyId"] as? String  ?? ""
-                    let surveyName = surveyData["surveyName"] as? String  ?? ""
-                    
-                    let convertedJsonString = Utilities.jsonToString(json: surveyData as AnyObject)
-                    
-                    
-                    
-                    let surveyObject = SurveyQuestion(context: context)
-                    surveyObject.assignmentId = assignmentId
-                    surveyObject.surveyId = surveyId
-                    surveyObject.surveyName = surveyName
-                    surveyObject.surveyQuestionData = convertedJsonString
-                    
-                    
-                    
-                    appDelegate.saveContext()
-                }
-                
-                
-                
-                //read location data
-                 guard let locationResults = assignmentData["assignmentLocation"] as? [[String: AnyObject]]  else { break }
-                
-
-             /*    var totalUnits = 0;
-                
-                if(locationResults.count>0){
-                    
-                    assignmentObject.totalLocations = String(locationResults.count)
-                    
-                    for locationData in locationResults {
-                        
-                        let unit = locationData["totalUnits"] as? String  ?? "0"
-                        
-                        totalUnits =  totalUnits + Int(unit)!
-
-                        
-                    }
-                }
-                else{
-                    assignmentObject.totalLocations = "0"
-                }
-                
-               assignmentObject.totalUnits = String(totalUnits)
-                
-*/
-                
-                
-                
-                appDelegate.saveContext()
-                
-                    for locationData in locationResults {
-                     
-                        let locationObject = Location(context: context)
-                        locationObject.id = locationData["locId"] as? String  ?? ""
-                        locationObject.name = locationData["name"] as? String  ?? ""
-                        locationObject.state = locationData["state"] as? String  ?? ""
-                        locationObject.city = locationData["city"] as? String  ?? ""
-                        locationObject.zip = locationData["zip"] as? String  ?? ""
-                        locationObject.street = locationData["street"] as? String  ?? ""
-                        
-                        locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
-                        
-                        locationObject.assignmentId = assignmentObject.id!
-                        
-                        appDelegate.saveContext()
-                        
-                        //EditLocation
-                        
-                        let editlocationObject = EditLocation(context: context)
-                        editlocationObject.locationId = locationData["locId"] as? String  ?? ""
-                        editlocationObject.assignmentId = assignmentObject.id!
-                        editlocationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
-                        editlocationObject.canvassingStatus = locationData["status"] as? String  ?? ""
-                        editlocationObject.attempt = locationData["attempt"] as? String  ?? ""
-                        editlocationObject.noOfUnits = locationData["numberOfUnits"] as? String  ?? ""
-                        editlocationObject.notes = locationData["notes"] as? String  ?? ""
-                        
-                        appDelegate.saveContext()
-                        
-                        guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
-                       
-                         for unitData in unitResults {
-                            
-                            
-                            let unitObject = Unit(context: context)
-                            unitObject.id = unitData["locationUnitId"] as? String  ?? ""
-                            unitObject.name = unitData["Name"] as? String  ?? ""
-                            unitObject.apartment = unitData["apartmentNumber"] as? String  ?? ""
-                            unitObject.floor = unitData["floorNumber"] as? String  ?? ""
-                            unitObject.assignmentId = assignmentObject.id!
-
-                            unitObject.locationId = locationObject.id!
-                            unitObject.assignmentLocId = locationObject.assignmentLocId!
-                            
-                            unitObject.actionStatus = ""
-                            
-                            unitObject.surveyStatus = ""
-                            unitObject.syncDate = ""
-                            
-                             unitObject.assignmentLocUnitId = unitData["assignmentLocUnitId"] as? String  ?? ""
-                            
-                            appDelegate.saveContext()
-                            
-                            //EditUnit
-                            
-                            let editUnitObject = EditUnit(context: context)
-                            editUnitObject.locationId = locationObject.id!
-                            editUnitObject.assignmentId = assignmentObject.id!
-                            editUnitObject.assignmentLocId = locationObject.assignmentLocId!
-                            editUnitObject.unitId = unitObject.id!
-                            editUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                            editUnitObject.attempt = unitData["attempt"] as? String  ?? ""
-                            editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
-                            editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
-                            editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
-                            editUnitObject.unitNotes = unitData["notes"] as? String  ?? ""
-                             editUnitObject.isContact = unitData["isContact"] as? String  ?? ""
-                            
-                            
-                            appDelegate.saveContext()
-                            
-                            //TenantStatus
-                            
-                            let tenantAssignObject = TenantAssign(context: context)
-                            
-                           
-                            tenantAssignObject.locationId = locationObject.id!
-                            tenantAssignObject.assignmentId = assignmentObject.id!
-                            tenantAssignObject.assignmentLocId = locationObject.assignmentLocId!
-                            tenantAssignObject.unitId = unitObject.id!
-                            tenantAssignObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                            tenantAssignObject.tenantId = unitData["tenant"] as? String  ?? ""
-                            
-                            
-                            
-                            appDelegate.saveContext()
-
-                            
-                            //AssignSurvey
-                            
-                            
-                            //save the record
-                            let surveyUnitObject = SurveyUnit(context: context)
-                            surveyUnitObject.locationId = locationObject.id!
-                            surveyUnitObject.assignmentId = assignmentObject.id!
-                            surveyUnitObject.assignmentLocId = locationObject.assignmentLocId!
-                            surveyUnitObject.unitId = unitObject.id!
-                            surveyUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                            surveyUnitObject.surveyId = unitData["survey"] as? String  ?? ""
-                            
-                            
-                            appDelegate.saveContext()
-
-                            
-                            guard let tenantInfoResults = unitData["TenantInfo"] as? [[String: AnyObject]]  else { break }
-                            
-                            for tenantData in tenantInfoResults {
-                                
-                                let tenantObject = Tenant(context: context)
-                                tenantObject.id = tenantData["tenantId"] as? String  ?? ""
-                                tenantObject.name = tenantData["name"] as? String  ?? ""
-                                tenantObject.firstName = tenantData["firstName"] as? String  ?? ""
-                                tenantObject.lastName =  tenantData["lastName"] as? String  ?? ""
-                               
-                                 tenantObject.phone = tenantData["phone"] as? String  ?? ""
-                                 tenantObject.email = tenantData["email"] as? String  ?? ""
-                                 tenantObject.age = tenantData["age"] as? String  ?? ""
-                                 tenantObject.dob = tenantData["dob"] as? String  ?? ""
-                                
-                                tenantObject.assignmentId = assignmentObject.id!
-                                tenantObject.locationId = locationObject.id!
-                                tenantObject.unitId = unitObject.id!
-                                
-                                appDelegate.saveContext()
-                                
-                            }
-                        }
-                        
-                    }
-                }
-                
-                
-            
-        }
-        
-        
-        
-    }
-
+    
     
     @IBAction func UnwindBackFromLogout(segue:UIStoryboardSegue) {
         

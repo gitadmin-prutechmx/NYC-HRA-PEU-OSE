@@ -1,46 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headerCellID" id="KGk-i7-Jjw" customClass="HeaderTableViewCell" customModule="Knock" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="67"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="66.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60l-H2-ArX">
-                        <rect key="frame" x="8" y="0.0" width="308" height="34"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assignments" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBW-Vq-ogE">
-                                <rect key="frame" x="8" y="8" width="111" height="18"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="111" id="JIz-lB-fIn"/>
-                                    <constraint firstAttribute="height" constant="18" id="x9s-HY-ppZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.9137254901960784" green="0.92549019607843142" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="cBW-Vq-ogE" firstAttribute="leading" secondItem="60l-H2-ArX" secondAttribute="leading" constant="8" id="SaS-AR-VOG"/>
-                            <constraint firstItem="cBW-Vq-ogE" firstAttribute="top" secondItem="60l-H2-ArX" secondAttribute="top" constant="8" id="T4S-MO-FDN"/>
-                            <constraint firstAttribute="height" constant="34" id="WlB-Fn-mYx"/>
-                        </constraints>
-                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vR3-WE-jQo">
-                        <rect key="frame" x="8" y="34" width="308" height="33"/>
+                        <rect key="frame" x="8" y="2.5" width="308" height="33"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXH-wV-TWA">
                                 <rect key="frame" x="8" y="5" width="60" height="21"/>
@@ -49,7 +28,7 @@
                                     <constraint firstAttribute="height" constant="21" id="lej-CK-JE9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.6464838981628418" green="0.64655846357345581" blue="0.64644098281860352" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.6470588235294118" green="0.6470588235294118" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assignment" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0z-sh-ipX">
@@ -93,7 +72,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.96875482797622681" green="0.96886354684829712" blue="0.9686921238899231" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.9137254901960784" green="0.92549019607843142" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="e0z-sh-ipX" firstAttribute="height" secondItem="ZXH-wV-TWA" secondAttribute="height" id="3xu-C0-jfy"/>
                             <constraint firstAttribute="trailing" secondItem="nW7-k7-kjU" secondAttribute="trailing" constant="8" id="Cmy-s9-Ew3">
@@ -122,11 +101,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="vR3-WE-jQo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="CGA-un-sXY"/>
-                    <constraint firstItem="60l-H2-ArX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="LXw-qg-0gj"/>
-                    <constraint firstItem="vR3-WE-jQo" firstAttribute="top" secondItem="60l-H2-ArX" secondAttribute="bottom" id="YbA-uu-kuJ"/>
                     <constraint firstAttribute="bottom" secondItem="vR3-WE-jQo" secondAttribute="bottom" constant="-1" id="etA-ZC-o8p"/>
-                    <constraint firstItem="60l-H2-ArX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="h4m-I5-kw9"/>
-                    <constraint firstAttribute="trailing" secondItem="60l-H2-ArX" secondAttribute="trailing" constant="4" id="jx0-ns-f0F"/>
                     <constraint firstAttribute="trailing" secondItem="vR3-WE-jQo" secondAttribute="trailing" constant="4" id="qF1-YE-xxP"/>
                 </constraints>
             </tableViewCellContentView>
