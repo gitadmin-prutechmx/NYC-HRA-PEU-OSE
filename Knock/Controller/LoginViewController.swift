@@ -189,18 +189,17 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func forgotPassword(_ sender: Any) {
-        
-                if let requestUrl = NSURL(string: "http://dev-nyserda-dev.cs43.force.com/Core_Forgot_Password_Page1")
+    if let requestUrl = NSURL(string: "http://dev-nyserda-dev.cs43.force.com/Core_Forgot_Password_Page1")
                 {
                     UIApplication.shared.openURL(requestUrl as URL)
                 }
-
+        
+        
     }
     
     @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
         
-        
-        
+
         
         DispatchQueue.main.async {
               self.loginView.endEditing(true)
@@ -328,7 +327,7 @@ class LoginViewController: UIViewController {
 
             emailParams["email"] = encryptEmailStr
             
-            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ jsonData in
+            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
                 
                 
 //                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.chartapi, params: emailParams){ jsonData in
@@ -350,18 +349,29 @@ class LoginViewController: UIViewController {
 //                }
 //                
                 
+                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
+                    
+                    
+                    
+                    ManageCoreData.DeleteAllDataFromEntities()
+                    
+                    
+                    SVProgressHUD.dismiss()
+                    
+                    
+                    Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData.1)
+                    
+                     Utilities.parseChartData(jsonObject: chartJsonData.1)
+                    
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                    }
                 
-                ManageCoreData.DeleteAllDataFromEntities()
-                
-                
-                SVProgressHUD.dismiss()
-                
-                
-                Utilities.parseEventAssignmentData(jsonObject: jsonData.1)
-                
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                    
                 }
+                
+                
+                
                 
 
                 

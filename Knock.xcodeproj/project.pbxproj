@@ -26,6 +26,32 @@
 		5D56CF2C1EE007070019882F /* KnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF2B1EE007070019882F /* KnockUITests.swift */; };
 		5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */; };
 		5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BFC1F035AFB0045A65D /* Reachability.swift */; };
+		5DADD8C81F0753AC009CD89E /* SurveyQuestion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8AE1F0753AC009CD89E /* SurveyQuestion+CoreDataClass.swift */; };
+		5DADD8C91F0753AC009CD89E /* SurveyQuestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8AF1F0753AC009CD89E /* SurveyQuestion+CoreDataProperties.swift */; };
+		5DADD8CA1F0753AC009CD89E /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B01F0753AC009CD89E /* Tenant+CoreDataClass.swift */; };
+		5DADD8CB1F0753AC009CD89E /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B11F0753AC009CD89E /* Tenant+CoreDataProperties.swift */; };
+		5DADD8CC1F0753AC009CD89E /* Canvasser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B21F0753AC009CD89E /* Canvasser+CoreDataClass.swift */; };
+		5DADD8CD1F0753AC009CD89E /* Canvasser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B31F0753AC009CD89E /* Canvasser+CoreDataProperties.swift */; };
+		5DADD8CE1F0753AC009CD89E /* Assignment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B41F0753AC009CD89E /* Assignment+CoreDataClass.swift */; };
+		5DADD8CF1F0753AC009CD89E /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B51F0753AC009CD89E /* Assignment+CoreDataProperties.swift */; };
+		5DADD8D01F0753AC009CD89E /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B61F0753AC009CD89E /* Event+CoreDataClass.swift */; };
+		5DADD8D11F0753AC009CD89E /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B71F0753AC009CD89E /* Event+CoreDataProperties.swift */; };
+		5DADD8D21F0753AC009CD89E /* SurveyResponse+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B81F0753AC009CD89E /* SurveyResponse+CoreDataClass.swift */; };
+		5DADD8D31F0753AC009CD89E /* SurveyResponse+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8B91F0753AC009CD89E /* SurveyResponse+CoreDataProperties.swift */; };
+		5DADD8D41F0753AC009CD89E /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8BA1F0753AC009CD89E /* Unit+CoreDataClass.swift */; };
+		5DADD8D51F0753AC009CD89E /* Unit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8BB1F0753AC009CD89E /* Unit+CoreDataProperties.swift */; };
+		5DADD8D61F0753AC009CD89E /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8BC1F0753AC009CD89E /* Location+CoreDataClass.swift */; };
+		5DADD8D71F0753AC009CD89E /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8BD1F0753AC009CD89E /* Location+CoreDataProperties.swift */; };
+		5DADD8D81F0753AC009CD89E /* EditUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8BE1F0753AC009CD89E /* EditUnit+CoreDataClass.swift */; };
+		5DADD8D91F0753AC009CD89E /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8BF1F0753AC009CD89E /* EditUnit+CoreDataProperties.swift */; };
+		5DADD8DA1F0753AC009CD89E /* SurveyUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C01F0753AC009CD89E /* SurveyUnit+CoreDataClass.swift */; };
+		5DADD8DB1F0753AC009CD89E /* SurveyUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C11F0753AC009CD89E /* SurveyUnit+CoreDataProperties.swift */; };
+		5DADD8DC1F0753AC009CD89E /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C21F0753AC009CD89E /* EditLocation+CoreDataClass.swift */; };
+		5DADD8DD1F0753AC009CD89E /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C31F0753AC009CD89E /* EditLocation+CoreDataProperties.swift */; };
+		5DADD8DE1F0753AC009CD89E /* SalesforceOrgConfig+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C41F0753AC009CD89E /* SalesforceOrgConfig+CoreDataClass.swift */; };
+		5DADD8DF1F0753AC009CD89E /* SalesforceOrgConfig+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C51F0753AC009CD89E /* SalesforceOrgConfig+CoreDataProperties.swift */; };
+		5DADD8E01F0753AC009CD89E /* TenantAssign+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C61F0753AC009CD89E /* TenantAssign+CoreDataClass.swift */; };
+		5DADD8E11F0753AC009CD89E /* TenantAssign+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8C71F0753AC009CD89E /* TenantAssign+CoreDataProperties.swift */; };
 		5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */; };
 		5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E31EEA7DF9009A6396 /* SVProgressHUD.bundle */; };
 		5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */; };
@@ -112,6 +138,32 @@
 		5D56CF2D1EE007070019882F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		5D8C6BFC1F035AFB0045A65D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		5DADD8AE1F0753AC009CD89E /* SurveyQuestion+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyQuestion+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8AF1F0753AC009CD89E /* SurveyQuestion+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyQuestion+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8B01F0753AC009CD89E /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8B11F0753AC009CD89E /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8B21F0753AC009CD89E /* Canvasser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8B31F0753AC009CD89E /* Canvasser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8B41F0753AC009CD89E /* Assignment+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8B51F0753AC009CD89E /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8B61F0753AC009CD89E /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8B71F0753AC009CD89E /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8B81F0753AC009CD89E /* SurveyResponse+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyResponse+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8B91F0753AC009CD89E /* SurveyResponse+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyResponse+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8BA1F0753AC009CD89E /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8BB1F0753AC009CD89E /* Unit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8BC1F0753AC009CD89E /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8BD1F0753AC009CD89E /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8BE1F0753AC009CD89E /* EditUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8BF1F0753AC009CD89E /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8C01F0753AC009CD89E /* SurveyUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8C11F0753AC009CD89E /* SurveyUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8C21F0753AC009CD89E /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8C31F0753AC009CD89E /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8C41F0753AC009CD89E /* SalesforceOrgConfig+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SalesforceOrgConfig+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8C51F0753AC009CD89E /* SalesforceOrgConfig+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SalesforceOrgConfig+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5DADD8C61F0753AC009CD89E /* TenantAssign+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5DADD8C71F0753AC009CD89E /* TenantAssign+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5DC9E9E01EEA7DF9009A6396 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		5DC9E9E21EEA7DF9009A6396 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -229,6 +281,7 @@
 		5D56CF071EE007060019882F /* Knock */ = {
 			isa = PBXGroup;
 			children = (
+				5DADD8791F074F72009CD89E /* GeneratedEntityClass */,
 				5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */,
 				5DE3C9651EEFE71700012C47 /* CustomUI */,
 				5DC9E99B1EEA60FE009A6396 /* Controller */,
@@ -264,6 +317,39 @@
 				5D56CF2D1EE007070019882F /* Info.plist */,
 			);
 			path = KnockUITests;
+			sourceTree = "<group>";
+		};
+		5DADD8791F074F72009CD89E /* GeneratedEntityClass */ = {
+			isa = PBXGroup;
+			children = (
+				5DADD8AE1F0753AC009CD89E /* SurveyQuestion+CoreDataClass.swift */,
+				5DADD8AF1F0753AC009CD89E /* SurveyQuestion+CoreDataProperties.swift */,
+				5DADD8B01F0753AC009CD89E /* Tenant+CoreDataClass.swift */,
+				5DADD8B11F0753AC009CD89E /* Tenant+CoreDataProperties.swift */,
+				5DADD8B21F0753AC009CD89E /* Canvasser+CoreDataClass.swift */,
+				5DADD8B31F0753AC009CD89E /* Canvasser+CoreDataProperties.swift */,
+				5DADD8B41F0753AC009CD89E /* Assignment+CoreDataClass.swift */,
+				5DADD8B51F0753AC009CD89E /* Assignment+CoreDataProperties.swift */,
+				5DADD8B61F0753AC009CD89E /* Event+CoreDataClass.swift */,
+				5DADD8B71F0753AC009CD89E /* Event+CoreDataProperties.swift */,
+				5DADD8B81F0753AC009CD89E /* SurveyResponse+CoreDataClass.swift */,
+				5DADD8B91F0753AC009CD89E /* SurveyResponse+CoreDataProperties.swift */,
+				5DADD8BA1F0753AC009CD89E /* Unit+CoreDataClass.swift */,
+				5DADD8BB1F0753AC009CD89E /* Unit+CoreDataProperties.swift */,
+				5DADD8BC1F0753AC009CD89E /* Location+CoreDataClass.swift */,
+				5DADD8BD1F0753AC009CD89E /* Location+CoreDataProperties.swift */,
+				5DADD8BE1F0753AC009CD89E /* EditUnit+CoreDataClass.swift */,
+				5DADD8BF1F0753AC009CD89E /* EditUnit+CoreDataProperties.swift */,
+				5DADD8C01F0753AC009CD89E /* SurveyUnit+CoreDataClass.swift */,
+				5DADD8C11F0753AC009CD89E /* SurveyUnit+CoreDataProperties.swift */,
+				5DADD8C21F0753AC009CD89E /* EditLocation+CoreDataClass.swift */,
+				5DADD8C31F0753AC009CD89E /* EditLocation+CoreDataProperties.swift */,
+				5DADD8C41F0753AC009CD89E /* SalesforceOrgConfig+CoreDataClass.swift */,
+				5DADD8C51F0753AC009CD89E /* SalesforceOrgConfig+CoreDataProperties.swift */,
+				5DADD8C61F0753AC009CD89E /* TenantAssign+CoreDataClass.swift */,
+				5DADD8C71F0753AC009CD89E /* TenantAssign+CoreDataProperties.swift */,
+			);
+			path = GeneratedEntityClass;
 			sourceTree = "<group>";
 		};
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
@@ -605,17 +691,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D56CF091EE007060019882F /* AppDelegate.swift in Sources */,
+				5DADD8D81F0753AC009CD89E /* EditUnit+CoreDataClass.swift in Sources */,
 				5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */,
 				5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */,
+				5DADD8C81F0753AC009CD89E /* SurveyQuestion+CoreDataClass.swift in Sources */,
 				5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */,
+				5DADD8CA1F0753AC009CD89E /* Tenant+CoreDataClass.swift in Sources */,
+				5DADD8CC1F0753AC009CD89E /* Canvasser+CoreDataClass.swift in Sources */,
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
+				5DADD8CE1F0753AC009CD89E /* Assignment+CoreDataClass.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
+				5DADD8DE1F0753AC009CD89E /* SalesforceOrgConfig+CoreDataClass.swift in Sources */,
+				5DADD8E01F0753AC009CD89E /* TenantAssign+CoreDataClass.swift in Sources */,
+				5DADD8DF1F0753AC009CD89E /* SalesforceOrgConfig+CoreDataProperties.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
+				5DADD8DC1F0753AC009CD89E /* EditLocation+CoreDataClass.swift in Sources */,
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
 				5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */,
 				5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */,
 				5DE3C9911EF3B10000012C47 /* UnitsCustomViewCell.swift in Sources */,
+				5DADD8CF1F0753AC009CD89E /* Assignment+CoreDataProperties.swift in Sources */,
 				5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
 				5DE3C9851EF2656C00012C47 /* LocationCustomViewCell.swift in Sources */,
@@ -625,32 +721,48 @@
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
 				5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */,
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
+				5DADD8D61F0753AC009CD89E /* Location+CoreDataClass.swift in Sources */,
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
 				5DE3C99D1EF7A90500012C47 /* SurveyCollectionViewCell.swift in Sources */,
+				5DADD8DD1F0753AC009CD89E /* EditLocation+CoreDataProperties.swift in Sources */,
 				5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */,
+				5DADD8D21F0753AC009CD89E /* SurveyResponse+CoreDataClass.swift in Sources */,
+				5DADD8D11F0753AC009CD89E /* Event+CoreDataProperties.swift in Sources */,
 				5DE3C9A71EF7CBF300012C47 /* SubmitSurveyViewController.swift in Sources */,
 				5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */,
 				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
 				5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */,
+				5DADD8D51F0753AC009CD89E /* Unit+CoreDataProperties.swift in Sources */,
 				5DE3C99B1EF76C6E00012C47 /* MoreOptionsViewController.swift in Sources */,
+				5DADD8D91F0753AC009CD89E /* EditUnit+CoreDataProperties.swift in Sources */,
 				5DE3C98D1EF36E1900012C47 /* SideMenuViewController.swift in Sources */,
+				5DADD8C91F0753AC009CD89E /* SurveyQuestion+CoreDataProperties.swift in Sources */,
 				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
 				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
 				5DE3C9991EF6B66000012C47 /* YPDrawSignatureView.swift in Sources */,
 				5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */,
+				5DADD8DA1F0753AC009CD89E /* SurveyUnit+CoreDataClass.swift in Sources */,
 				5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */,
+				5DADD8D31F0753AC009CD89E /* SurveyResponse+CoreDataProperties.swift in Sources */,
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
 				5D1BD4F71F067FB100C8FAF5 /* GaugeView.swift in Sources */,
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,
+				5DADD8D71F0753AC009CD89E /* Location+CoreDataProperties.swift in Sources */,
 				5DE3C9A51EF7CBF300012C47 /* SurveyRadioOptionViewController.swift in Sources */,
 				5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */,
 				5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */,
+				5DADD8D41F0753AC009CD89E /* Unit+CoreDataClass.swift in Sources */,
 				5D1BD4F61F067FB100C8FAF5 /* GaugeLayer.swift in Sources */,
+				5DADD8CB1F0753AC009CD89E /* Tenant+CoreDataProperties.swift in Sources */,
+				5DADD8D01F0753AC009CD89E /* Event+CoreDataClass.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
+				5DADD8DB1F0753AC009CD89E /* SurveyUnit+CoreDataProperties.swift in Sources */,
 				70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */,
 				5DE3C98F1EF3ACEC00012C47 /* UnitsViewController.swift in Sources */,
 				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
+				5DADD8CD1F0753AC009CD89E /* Canvasser+CoreDataProperties.swift in Sources */,
+				5DADD8E11F0753AC009CD89E /* TenantAssign+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,6 +992,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.Knock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Knock/Knock-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;

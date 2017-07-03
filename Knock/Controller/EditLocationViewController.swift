@@ -10,7 +10,7 @@ import UIKit
 import DropDown
 import DLRadioButton
 
-class EditLocationViewController: UIViewController {
+class EditLocationViewController: UIViewController,UITextFieldDelegate {
     
     
     @IBOutlet weak var attemptYes: DLRadioButton!
@@ -65,9 +65,32 @@ class EditLocationViewController: UIViewController {
         
         populateEditLocation()
         
+    
+        
+        NoOfUnitsTextField.delegate = self
 
 
         // Do any additional setup after loading the view.
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let aSet = NSCharacterSet(charactersIn:"0123456789abc").inverted
+        let compSepByCharInSet = string.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+       
+        let currentCharacterCount = NoOfUnitsTextField.text?.characters.count ?? 0
+        if (range.length + range.location > currentCharacterCount){
+            return false
+        }
+        let newLength = currentCharacterCount + string.characters.count - range.length
+        if(newLength > 5){
+            return false
+        }
+        
+        
+        return string == numberFiltered
     }
     
     func populateEditLocation(){

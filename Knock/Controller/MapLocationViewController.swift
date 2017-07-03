@@ -16,6 +16,10 @@ struct locationDataStruct
     var fullAddress: String = ""
     var assignmentLocId:String = ""
     var partialAddress:String = ""
+    var street:String = ""
+    var city:String = ""
+    var state:String = ""
+    var zip:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
@@ -173,6 +177,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             
                              SalesforceConnection.assignmentLocationId = (self?.locDataArray[0].assignmentLocId)!
                             
+                            self?.street = (self?.locDataArray[0].street)!
+                            self?.state = (self?.locDataArray[0].state)!
+                            self?.city = (self?.locDataArray[0].city)!
+                            self?.zip = (self?.locDataArray[0].zip)!
+                            
                             IsInitialViewPoint = false
                         }
                         
@@ -268,7 +277,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 let partialAddressData = locationData.city! + ", " + locationData.state! + ", " + locationData.zip!
 
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: locationData.name!,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData)
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: locationData.name!,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!)
                 
                 
                 locDataArray.append(objectLocStruct)
@@ -441,7 +450,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         self.mapView.callout.title = graphic.attributes["Match_addr"] as? String
         
-        //self.mapView.callout.accessoryButtonHidden = true
+        self.mapView.callout.isAccessoryButtonHidden = true
         
         self.mapView.callout.delegate = self
         self.mapView.callout.accessoryButtonImage = UIImage(named: "ForwardIcon")
@@ -449,6 +458,12 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let nib = UINib(nibName: "MapViewCollout", bundle: nil)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! MapViewCollout
         
+        view.lblStreet.text = street
+        view.lblCity.text = city
+        view.lblState.text = state
+        view.lblZip.text = zip
+        
+        view.lblAdress.text = SalesforceConnection.fullAddress
         
         view.btnArrow.addTarget(self, action: #selector(MapLocationViewController.navigateToUnitView(_:)), for: .touchUpInside)
         
@@ -465,13 +480,13 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     //MARK: - AGSCalloutDelegate
     
-//    func didTapAccessoryButton(for callout: AGSCallout) {
-//      
-//        
-//         self.performSegue(withIdentifier: "ShowUnitsIdentifier", sender: nil)
-//        
-//
-//    }
+    func didTapAccessoryButton(for callout: AGSCallout) {
+      
+        
+         self.performSegue(withIdentifier: "ShowUnitsIdentifier", sender: nil)
+        
+
+    }
     
     
    
@@ -575,6 +590,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
     }
     
+    var street:String = ""
+    var city:String = ""
+    var zip:String = ""
+    var state:String = ""
+    
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Row selected, so set textField to relevant value, hide tableView
@@ -585,6 +605,13 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         SalesforceConnection.assignmentLocationId = locDataArray[indexPath.row].assignmentLocId
         
         SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
+        
+        street = locDataArray[indexPath.row].street
+        state = locDataArray[indexPath.row].state
+        city = locDataArray[indexPath.row].city
+        zip = locDataArray[indexPath.row].zip
+        
+
         
         self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
         

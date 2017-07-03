@@ -13,6 +13,10 @@ import CoreData
 class SalesforceConnection{
     
     static var currentUserEmail:String = ""
+    static var currentUserContactId:String = ""
+    static var currentUserExternalId:String = ""
+    
+    static var userId:String = ""
     
     static var assignmentId:String = ""
     static var assignmentName:String = ""
@@ -34,6 +38,8 @@ class SalesforceConnection{
         
  
     private static var salesforceAccessToken:String=""
+    
+   
     
     
     typealias AccessTokenCompletion = (_ succeeded: Bool, _ jsonData: Dictionary<String, AnyObject>) -> Void
@@ -58,14 +64,18 @@ class SalesforceConnection{
             switch response.result {
             case .success:
                 if  let json = response.result.value as? [String: Any],
-                    let accessToken = json["access_token"] as? String
+                    let accessToken = json["access_token"] as? String,
+                    let salesforceUserId = json["id"] as? String
                 {
                  
                     //update accessToken
                     ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", valueToBeUpdate: accessToken,updatekey:"accessToken", predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
                     
                     
-                    salesforceAccessToken = accessToken
+                        salesforceAccessToken = accessToken
+
+                        userId = salesforceUserId.components(separatedBy: "/")[5]
+                    
                     completion(true)
                 } else {
                     completion(false)

@@ -194,6 +194,7 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "Assignment")
         DeleteAllRecords(salesforceEntityName: "Location")
         DeleteAllRecords(salesforceEntityName: "SurveyQuestion")
+        DeleteAllRecords(salesforceEntityName: "Chart")
         
         DeleteAllRecords(salesforceEntityName: "Unit")
         

@@ -10,6 +10,7 @@ import UIKit
 import Charts
 
 
+
 class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate
 {
     let reuseIdentifier = "cell"
@@ -84,7 +85,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         tableView.headerView(forSection: 0)
         
-        startTwoMinSyncing()
+       // startTwoMinSyncing()
         
         NotificationCenter.default.addObserver(self, selector:#selector(DashBoardViewController.UpdateAssignmentView), name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object:nil
         )
@@ -96,6 +97,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         print("UpdateAssignmentView")
         populateEventAssignmentData()
+        populateChartData()
         
         
         //updateTableViewData()
@@ -111,7 +113,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func startTwoMinSyncing(){
         // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 120, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
     }
     
     func checkConnection(){
@@ -682,6 +684,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         populateEventAssignmentData()
+        populateChartData()
 
     }
     
@@ -694,56 +697,61 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         let chart = BarChartView(frame: custumView.frame)
   
-     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
+        //let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        //let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
+        
         
         var dataEntries: [BarChartDataEntry] = []
         //String(describing: languages)z
-        for i in 0..<months.count
+        for i in 0..<chart1StatusArray.count
         {
-            let dataEntry =   BarChartDataEntry(x: unitsSold[i], y: Double(i))
+            let dataEntry =   BarChartDataEntry(x: chart1ValueArray[i], y: Double(i))
             dataEntries.append(dataEntry)
         }
         
-        // 3. chart setup
-        let set = BarChartDataSet( values: dataEntries, label: "")
+      
         
+        //chart.isUserInteractionEnabled = true
+        
+        let d = Description()
+        d.text = " "
+        chart.chartDescription = d
+        
+        
+        let set = BarChartDataSet( values: dataEntries, label: "")
         set.colors = colors
         
         
         let chartData = BarChartData(dataSet: set)
         chart.data = chartData
         chart.noDataText = "No data available"
-       chart.isUserInteractionEnabled = true
         
-        let d = Description()
-        //d.text = "iOSCharts.io"
-        chart.chartDescription = d
         custumView.addSubview(chart)
         
         
     }
     
-    func circleChartData(custumView:UIView)
+    func circleChartData(custumView:UIView,chartValue:String,chartColor:UIColor)
     {
        // let colors = getColors()
         
         
         let chart = GaugeView(frame: custumView.frame)
         
-        chart.percentage = 80
+       // chart.percentage = 80
+        
+        chart.labelText = chartValue
+        
         chart.thickness = 10
         
         chart.labelFont = UIFont.systemFont(ofSize: 40, weight: UIFontWeightThin)
-        chart.labelColor = UIColor.lightGray
-        chart.gaugeBackgroundColor = UIColor.lightGray
-        chart.labelText = "80%"
+        chart.labelColor = UIColor.black
+        //chart.gaugeBackgroundColor = UIColor.green
+        chart.gaugeColor = chartColor
+       
         chart.isUserInteractionEnabled = true
         chart.accessibilityLabel = "Gauge"
 
-        
-//        set.colors = colors
-//        let data = PieChartData(dataSet: set)
         
         
         custumView.addSubview(chart)
@@ -804,6 +812,89 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         return colors
         // colors.append(BlankColor)
 
+    }
+    
+    
+    
+    
+    var chart1Label:String = ""
+    var chart1StatusArray = [String]()
+    var chart1ValueArray = [Double]()
+    
+    var chart2Label:String = ""
+    var chart2Value:String = ""
+    
+    var chart3Label:String = ""
+    var chart3Value:String = ""
+    
+    var chart4Label:String = ""
+    var chart4Value:String = ""
+    
+    
+    func populateChartData(){
+        
+        chart1Label = ""
+        chart1StatusArray = []
+        chart1ValueArray = []
+        
+        chart2Label = ""
+        chart2Value = ""
+        
+        chart3Label = ""
+        chart3Value = ""
+        
+        chart4Label = ""
+        chart4Value = ""
+
+        
+         let chart1Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart1",isPredicate:true) as! [Chart]
+        
+        if(chart1Results.count > 0){
+            
+            for chart1Data in chart1Results{
+              
+                chart1StatusArray.append(chart1Data.chartLabel!)
+                chart1ValueArray.append(Double(chart1Data.chartValue!)!)
+
+               
+
+            }
+        }
+        
+        let chart2Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart2",isPredicate:true) as! [Chart]
+        
+        if(chart2Results.count > 0){
+            
+            chart2Label = chart2Results[0].chartLabel!
+            chart2Value = chart2Results[0].chartValue!
+           
+        }
+        
+        let chart3Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart3",isPredicate:true) as! [Chart]
+        
+        if(chart3Results.count > 0){
+            
+            chart3Label = chart3Results[0].chartLabel!
+            chart3Value = chart3Results[0].chartValue!
+            
+        }
+        
+        let chart4Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart4",isPredicate:true) as! [Chart]
+        
+        if(chart4Results.count > 0){
+            
+            chart4Label = chart4Results[0].chartLabel!
+            chart4Value = chart4Results[0].chartValue!
+            
+        }
+        
+        
+       
+        
+        colChart.reloadData()
+       
+        
+        
     }
     
     func populateEventAssignmentData()
@@ -880,28 +971,45 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath)as!ChartCollectionViewCell
+        
+        //cell.chartView = UIView()
+        
         if indexPath.row == 0
         {
-            barChartData(custumView: cell.chartView)
-           cell.lblChart.text = "Chart 1"
+           
+           barChartData(custumView: cell.chartView)
+            
+           cell.lblChart.text = chart1Label
+           
         }
         
         if indexPath.row == 1
         {
-            circleChartData(custumView: cell.chartView)
-            cell.lblChart.text = "Unit Attemped"
+            circleChartData(custumView: cell.chartView, chartValue: chart2Value, chartColor: UIColor.red)
+            
+             cell.lblChart.text = chart2Label
+           
         }
         if indexPath.row == 2
         {
-            circleChartData(custumView: cell.chartView)
-           cell.lblChart.text = "Unit knocked"
+           circleChartData(custumView: cell.chartView, chartValue: chart3Value, chartColor: UIColor.green)
+           
+             cell.lblChart.text = chart3Label
+            
         }
         if indexPath.row == 3
         {
-            cell.lblChart.text = "Chart 4"
-            updateChartData(custumView: cell.chartView)
+            circleChartData(custumView: cell.chartView, chartValue: chart4Value, chartColor: UIColor.yellow)
+           
+             cell.lblChart.text = chart4Label
+           // updateChartData(custumView: cell.chartView)
             
         }
+        
+        
+       
+        
+        
         //cell.myLabel.text = self.items[indexPath.item]
         //cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
         

@@ -862,15 +862,84 @@ class Utilities {
      
     }
     
+    
+    class func parseUserData(jsonObject: Dictionary<String, AnyObject>){
+        
+        SalesforceConnection.currentUserContactId  = (jsonObject["contactId"] as? String)!
+        SalesforceConnection.currentUserEmail = (jsonObject["Email"] as? String)!
+        SalesforceConnection.currentUserExternalId = (jsonObject["ExternalId"] as? String)!
+    }
+    
+    
     class func parseChartData(jsonObject: Dictionary<String, AnyObject>){
     
-        guard let _ = jsonObject["errorMessage"] as? String,
-        let eventResults = jsonObject["Event"] as? [[String: AnyObject]] else { return }
-    
+      
+        let chart1 = jsonObject["Chart1"] as? [String: AnyObject]
+        let chart2 = jsonObject["Chart2"] as? [String: AnyObject]
+        let chart3 = jsonObject["Chart3"] as? [String: AnyObject]
+        let chart4 = jsonObject["Chart4"] as? [String: AnyObject]
+        
+        let chart1Obj = chart1?["TotalAssignmentsByStatus"] as? [String: AnyObject]
+       
+        let chart1CompObj = Chart(context: context)
+        chart1CompObj.chartType = "Chart1"
+        chart1CompObj.chartField = "Completed"
+        chart1CompObj.chartLabel = "Total AssignmentsByStatus"
+        chart1CompObj.chartValue = String(chart1Obj?["Completed"] as! Int)
+        
+        appDelegate.saveContext()
+        
+        let chart1InProgObj = Chart(context: context)
+        chart1InProgObj.chartType = "Chart1"
+        chart1InProgObj.chartField = "In Progress"
+        chart1InProgObj.chartLabel = "Total AssignmentsByStatus"
+        chart1InProgObj.chartValue = String(chart1Obj?["In Progress"] as! Int)
+        
+        appDelegate.saveContext()
+        
+        let chart1AssignedObj = Chart(context: context)
+        chart1AssignedObj.chartType = "Chart1"
+        chart1AssignedObj.chartField = "Assigned"
+        chart1AssignedObj.chartLabel = "Total AssignmentsByStatus"
+        chart1AssignedObj.chartValue = String(chart1Obj?["Assigned"] as! Int)
+        
+        appDelegate.saveContext()
+        
+      
+        
+        
+        let chart2Object = Chart(context: context)
+        chart2Object.chartType = "Chart2"
+        chart2Object.chartField = "UnitsCompleted"
+        chart2Object.chartLabel = "Units Completed"
+        chart2Object.chartValue = String(chart2?["UnitsCompleted"] as! Int)
+        
+        appDelegate.saveContext()
+        
+        let chart3Object = Chart(context: context)
+        chart3Object.chartType = "Chart3"
+        chart3Object.chartField = "NoResponse"
+        chart3Object.chartLabel = "No Response"
+        chart3Object.chartValue = String(chart3?["NoResponse"] as! Int)
+        
+        appDelegate.saveContext()
+        
+        let chart4Object = Chart(context: context)
+        chart4Object.chartType = "Chart4"
+        chart4Object.chartField = "FollowUpNeeded"
+        chart4Object.chartLabel = "FollowUp Needed"
+        chart4Object.chartValue = String(chart4?["FollowUpNeeded"] as! Int)
+        
+        appDelegate.saveContext()
+        
         //need to check location id and unit id
     
-        for eventData in eventResults {
-        }
+       print(String(chart4?["FollowUpNeeded"] as! Int))
+       print(String(chart3?["NoResponse"] as! Int))
+       print(String(chart2?["UnitsCompleted"] as! Int))
+       
+        
+       
 
     }
     

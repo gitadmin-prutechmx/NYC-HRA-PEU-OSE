@@ -50,7 +50,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7H-ou-AoW">
                                         <rect key="frame" x="75" y="364" width="231" height="46"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MLy-MM-iLx" customClass="DesignableTextField" customModule="Knock" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MLy-MM-iLx" customClass="DesignableTextField" customModule="Knock" customModuleProvider="target">
                                                 <rect key="frame" x="12" y="8" width="206" height="30"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
@@ -796,25 +796,27 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <searchBar contentMode="redraw" placeholder="Search Location" translatesAutoresizingMaskIntoConstraints="NO" id="ZV8-HD-uHS">
+                                <rect key="frame" x="20" y="153" width="275" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="fms-Fm-3gg"/>
+                                </constraints>
+                                <color key="barTintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
                             <tableView clipsSubviews="YES" alpha="0.80000001192092896" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vgB-zQ-jOS">
-                                <rect key="frame" x="20" y="160" width="275" height="421"/>
+                                <rect key="frame" x="20" y="191" width="275" height="388"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="275" id="SRF-kq-Djf"/>
                                 </constraints>
-                                <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search Location" id="ZV8-HD-uHS">
-                                    <rect key="frame" x="0.0" y="0.0" width="275" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <color key="barTintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                    <scopeButtonTitles>
-                                        <string>Title</string>
-                                        <string>Title</string>
-                                    </scopeButtonTitles>
-                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="73" id="blS-T6-WHQ" customClass="LocationCustomViewCell" customModule="Knock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="275" height="73"/>
+                                        <rect key="frame" x="0.0" y="28" width="275" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="blS-T6-WHQ" id="hop-f0-ayP">
                                             <rect key="frame" x="0.0" y="0.0" width="275" height="72"/>
@@ -1028,18 +1030,21 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hbO-Tj-XjZ" firstAttribute="top" secondItem="fgs-Zz-qne" secondAttribute="bottom" id="Cbk-cR-SlC"/>
-                            <constraint firstItem="sev-2g-6wn" firstAttribute="top" secondItem="vgB-zQ-jOS" secondAttribute="bottom" constant="19" id="EBr-5d-KUJ">
+                            <constraint firstItem="sev-2g-6wn" firstAttribute="top" secondItem="vgB-zQ-jOS" secondAttribute="bottom" constant="21" id="EBr-5d-KUJ">
                                 <variation key="heightClass=regular-widthClass=regular" constant="58"/>
                             </constraint>
                             <constraint firstItem="3Yr-aS-rul" firstAttribute="leading" secondItem="noc-nk-vJh" secondAttribute="leading" constant="20" id="FaP-bO-Zc5"/>
+                            <constraint firstItem="ZV8-HD-uHS" firstAttribute="leading" secondItem="3Yr-aS-rul" secondAttribute="leading" id="JIk-a2-shm"/>
                             <constraint firstItem="fgs-Zz-qne" firstAttribute="leading" secondItem="noc-nk-vJh" secondAttribute="leading" id="Kod-Lh-FAw"/>
                             <constraint firstAttribute="trailing" secondItem="sev-2g-6wn" secondAttribute="trailing" id="TUg-cE-Tfy"/>
+                            <constraint firstItem="ZV8-HD-uHS" firstAttribute="trailing" secondItem="3Yr-aS-rul" secondAttribute="trailing" id="UTi-D0-JUu"/>
+                            <constraint firstItem="ZV8-HD-uHS" firstAttribute="top" secondItem="3Yr-aS-rul" secondAttribute="bottom" constant="-8" id="X0H-qM-vaP"/>
                             <constraint firstItem="hbO-Tj-XjZ" firstAttribute="top" secondItem="sev-2g-6wn" secondAttribute="bottom" id="bMC-Kb-CaP"/>
+                            <constraint firstItem="vgB-zQ-jOS" firstAttribute="top" secondItem="ZV8-HD-uHS" secondAttribute="top" constant="38" id="bfh-lH-Gh9"/>
                             <constraint firstItem="fgs-Zz-qne" firstAttribute="top" secondItem="noc-nk-vJh" secondAttribute="top" id="gCt-8F-zyv"/>
                             <constraint firstItem="fgs-Zz-qne" firstAttribute="height" secondItem="noc-nk-vJh" secondAttribute="height" id="k37-LS-B6A"/>
                             <constraint firstAttribute="trailing" secondItem="fgs-Zz-qne" secondAttribute="trailing" id="lwm-xJ-Qek"/>
                             <constraint firstItem="vgB-zQ-jOS" firstAttribute="leading" secondItem="noc-nk-vJh" secondAttribute="leading" constant="20" id="qD1-vy-FUy"/>
-                            <constraint firstItem="vgB-zQ-jOS" firstAttribute="top" secondItem="3Yr-aS-rul" secondAttribute="bottom" constant="-1" id="wdn-Sm-WrT"/>
                             <constraint firstItem="sev-2g-6wn" firstAttribute="leading" secondItem="noc-nk-vJh" secondAttribute="leading" id="yI2-Na-b3a"/>
                             <constraint firstItem="fgs-Zz-qne" firstAttribute="width" secondItem="noc-nk-vJh" secondAttribute="width" id="yqn-Bq-ngq"/>
                             <constraint firstItem="3Yr-aS-rul" firstAttribute="top" secondItem="2MD-k6-Xvk" secondAttribute="bottom" constant="32" id="zBg-FS-HcL"/>
