@@ -29,6 +29,13 @@ class LoginViewController: UIViewController {
     
     var assignmentIdArray = [String]()
     
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        //self.navigationController?.isNavigationBarHidden = false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,6 +102,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
         emailTextField.text = ""
         passwordTextField.text = ""
     }
@@ -188,14 +196,14 @@ class LoginViewController: UIViewController {
     }
     
     
-    @IBAction func forgotPassword(_ sender: Any) {
-    if let requestUrl = NSURL(string: "http://dev-nyserda-dev.cs43.force.com/Core_Forgot_Password_Page1")
-                {
-                    UIApplication.shared.openURL(requestUrl as URL)
-                }
-        
-        
-    }
+//    @IBAction func forgotPassword(_ sender: Any) {
+//    if let requestUrl = NSURL(string: "http://dev-nyserda-dev.cs43.force.com/Core_Forgot_Password_Page1")
+//                {
+//                    UIApplication.shared.openURL(requestUrl as URL)
+//                }
+//        
+//        
+//    }
     
     @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
         
@@ -212,6 +220,14 @@ class LoginViewController: UIViewController {
         
         getDataFromSalesforce()
     }
+    
+    
+    @IBAction func btnForgotPasswordPressa(_ sender: Any)
+    {
+        self.performSegue(withIdentifier: "ForgetPasswordIdentifer", sender: nil)
+    }
+    
+        
     
     func validation() -> Bool
     {
@@ -502,7 +518,12 @@ class LoginViewController: UIViewController {
         
     }
 
-    
+    @IBAction func UnwindBackFromForgotPassword(segue:UIStoryboardSegue) {
+        
+        print("UnwindBackFromForgotPassword")
+        
+    }
+
     
     
     

@@ -10,8 +10,13 @@ import UIKit
 import DropDown
 import DLRadioButton
 
-class EditLocationViewController: UIViewController,UITextFieldDelegate {
+class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource
+{
+    @IBOutlet weak var attemptRdb: UISwitch!
+    @IBOutlet weak var txtUnits: UILabel!
     
+    let pickerView = UIPickerView()
+    @IBOutlet weak var txtStatusList: UITextField!
     
     @IBOutlet weak var attemptYes: DLRadioButton!
     
@@ -21,12 +26,12 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate {
     var canvassingStatus:String = ""
     var numberOfUnits:String = ""
     var notes:String = ""
-    
+     var arrStatusOption = NSMutableArray()
      var editLocDict : [String:String] = [:]
     
     @IBOutlet weak var fullAddressLbl: UILabel!
 
-    @IBOutlet weak var NoOfUnitsTextField: UITextField!
+    
     @IBOutlet weak var NotesTextArea: UITextView!
     
     
@@ -46,10 +51,10 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       setupStatusDropDown()
+       //setupStatusDropDown()
         
         fullAddressLbl.text = SalesforceConnection.fullAddress
-        
+         self.txtStatusList.inputView = pickerView
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
@@ -61,17 +66,102 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate {
         
         //NotesTextArea.text = "Description"
         NotesTextArea.textColor = UIColor.black
+        pickerView.delegate = self
+        arrStatusOption = ["Blocked","Planned","In Progress","Completed"]
+        
+
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         
         
+        
+        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+        
+        
+        let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.cancelPressed))
+        
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SaveEditTenantViewController.donePressed))
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
+        
+        label.font = UIFont(name: "Helvetica", size: 12)
+        
+        label.backgroundColor = UIColor.clear
+        
+        label.textColor = UIColor.white
+        
+        label.text = "Select a DOB"
+        
+        label.textAlignment = NSTextAlignment.center
+        
+        let textBtn = UIBarButtonItem(customView: label)
+        
+        toolBar.setItems([cancelBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
+        
+        txtStatusList.inputAccessoryView = toolBar
         populateEditLocation()
         
     
         
-        NoOfUnitsTextField.delegate = self
-
+      
 
         // Do any additional setup after loading the view.
     }
+    
+    func cancelPressed(sender: UIBarButtonItem)
+    {
+        
+        txtStatusList.resignFirstResponder()
+    }
+    
+    func donePressed(sender: UIBarButtonItem) {
+        
+        //let dateFormatter = DateFormatter()
+        //dateFormatter.dateFormat = "yyyy-MM-dd"
+        txtStatusList.text = canvassingStatus
+        
+        txtStatusList.resignFirstResponder()
+        
+    }
+
+    
+    
+    // MARK: Pickerview Delegates Methods
+       public func numberOfComponents(in pickerView: UIPickerView) -> Int
+       {
+        return 1
+    }
+   
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+        
+            return self.arrStatusOption.count
+        
+       
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
+        
+            canvassingStatus = (arrStatusOption.object(at: row) as? String)!
+        
+            return arrStatusOption.object(at: row) as? String
+        
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        
+          self.txtStatusList.text = arrStatusOption.object(at: row) as? String
+            
+        
+    }
+    
+//MARK: - uitextfiled delegate
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -80,14 +170,14 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate {
         let numberFiltered = compSepByCharInSet.joined(separator: "")
         
        
-        let currentCharacterCount = NoOfUnitsTextField.text?.characters.count ?? 0
-        if (range.length + range.location > currentCharacterCount){
-            return false
-        }
-        let newLength = currentCharacterCount + string.characters.count - range.length
-        if(newLength > 5){
-            return false
-        }
+//        let currentCharacterCount = NoOfUnitsTextField.text?.characters.count ?? 0
+//        if (range.length + range.location > currentCharacterCount){
+//            return false
+//        }
+//        let newLength = currentCharacterCount + string.characters.count - range.length
+//        if(newLength > 5){
+//            return false
+//        }
         
         
         return string == numberFiltered
@@ -99,13 +189,13 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate {
         
         if(editLocationResults.count > 0){
             
-            if(editLocationResults[0].canvassingStatus! != ""){
-                self.canvassingStatusDropDown.setTitle(editLocationResults[0].canvassingStatus!, for: .normal)
-            }
+//            if(editLocationResults[0].canvassingStatus! != ""){
+//                self.canvassingStatusDropDown.setTitle(editLocationResults[0].canvassingStatus!, for: .normal)
+//            }
             
             canvassingStatus = editLocationResults[0].canvassingStatus!
             
-            NoOfUnitsTextField.text = editLocationResults[0].noOfUnits!
+           // NoOfUnitsTextField.text = editLocationResults[0].noOfUnits!
             NotesTextArea.text = editLocationResults[0].notes!
             
             if(editLocationResults[0].attempt == "Yes"){
@@ -226,9 +316,9 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate {
         
         
       
-        if let numberofUnitsTemp = NoOfUnitsTextField.text{
-            numberOfUnits = numberofUnitsTemp
-        }
+//        if let numberofUnitsTemp = NoOfUnitsTextField.text{
+//            numberOfUnits = numberofUnitsTemp
+//        }
         
        
         if let notesTemp = NotesTextArea.text{

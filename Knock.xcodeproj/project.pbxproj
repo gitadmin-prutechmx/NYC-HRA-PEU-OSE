@@ -90,6 +90,7 @@
 		5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9A21EF7CBF300012C47 /* SurveyTextViewController.swift */; };
 		5DE3C9A71EF7CBF300012C47 /* SubmitSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9A31EF7CBF300012C47 /* SubmitSurveyViewController.swift */; };
 		5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9A81EF7CF7B00012C47 /* SurveyQuestionDO.swift */; };
+		62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AC824C1F0A127B00F968FA /* ForgetPasswordViewController.swift */; };
 		6D3493C21945157E9C03D356 /* Pods_Knock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */; };
 		70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -208,6 +209,7 @@
 		5DE3C9A21EF7CBF300012C47 /* SurveyTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyTextViewController.swift; sourceTree = "<group>"; };
 		5DE3C9A31EF7CBF300012C47 /* SubmitSurveyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitSurveyViewController.swift; sourceTree = "<group>"; };
 		5DE3C9A81EF7CF7B00012C47 /* SurveyQuestionDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyQuestionDO.swift; sourceTree = "<group>"; };
+		62AC824C1F0A127B00F968FA /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				5DE3C99A1EF76C6E00012C47 /* MoreOptionsViewController.swift */,
 				5D2AFB091EFB73F7003AC7DD /* SaveEditTenantViewController.swift */,
 				5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */,
+				62AC824C1F0A127B00F968FA /* ForgetPasswordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -650,7 +653,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		3C006FB73344B9F646ED5E36 /* [CP] Copy Pods Resources */ = {
@@ -740,6 +743,7 @@
 				5DADD8C91F0753AC009CD89E /* SurveyQuestion+CoreDataProperties.swift in Sources */,
 				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
 				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
+				62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */,
 				5DE3C9991EF6B66000012C47 /* YPDrawSignatureView.swift in Sources */,
 				5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */,
 				5DADD8DA1F0753AC009CD89E /* SurveyUnit+CoreDataClass.swift in Sources */,
