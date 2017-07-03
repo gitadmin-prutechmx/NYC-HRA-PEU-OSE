@@ -18,14 +18,12 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
     let pickerView = UIPickerView()
     @IBOutlet weak var txtStatusList: UITextField!
     
-    @IBOutlet weak var attemptYes: DLRadioButton!
-    
-    @IBOutlet weak var attemptNo: DLRadioButton!
-    
     var attempt:String = ""
     var canvassingStatus:String = ""
     var numberOfUnits:String = ""
     var notes:String = ""
+    
+    
      var arrStatusOption = NSMutableArray()
      var editLocDict : [String:String] = [:]
     
@@ -35,21 +33,10 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
     @IBOutlet weak var NotesTextArea: UITextView!
     
     
-    @IBOutlet weak var canvassingStatusDropDown: UIButton!
-    
-    let chooseStatusDropDown = DropDown()
-   
-    
-    
-    lazy var dropDowns: [DropDown] = {
-        return [
-            self.chooseStatusDropDown
-        ]
-    }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
        //setupStatusDropDown()
         
@@ -91,7 +78,7 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
         
         label.textColor = UIColor.white
         
-        label.text = "Select a DOB"
+        label.text = "Select Status"
         
         label.textAlignment = NSTextAlignment.center
         
@@ -117,8 +104,7 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
     
     func donePressed(sender: UIBarButtonItem) {
         
-        //let dateFormatter = DateFormatter()
-        //dateFormatter.dateFormat = "yyyy-MM-dd"
+       
         txtStatusList.text = canvassingStatus
         
         txtStatusList.resignFirstResponder()
@@ -145,9 +131,8 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
         
-            canvassingStatus = (arrStatusOption.object(at: row) as? String)!
-        
             return arrStatusOption.object(at: row) as? String
+
         
     }
     
@@ -155,7 +140,9 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         
-          self.txtStatusList.text = arrStatusOption.object(at: row) as? String
+         canvassingStatus = (arrStatusOption.object(at: row) as? String)!
+        
+        //  self.txtStatusList.text = arrStatusOption.object(at: row) as? String
             
         
     }
@@ -195,14 +182,16 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
             
             canvassingStatus = editLocationResults[0].canvassingStatus!
             
-           // NoOfUnitsTextField.text = editLocationResults[0].noOfUnits!
+            txtStatusList.text = canvassingStatus
+            
+            txtUnits.text = editLocationResults[0].noOfUnits!
             NotesTextArea.text = editLocationResults[0].notes!
             
             if(editLocationResults[0].attempt == "Yes"){
-                attemptYes.isSelected = true
+                attemptRdb.isOn = true
             }
             else if (editLocationResults[0].attempt == "No"){
-                attemptNo.isSelected = true
+                attemptRdb.isOn = false
             }
             
             attempt = editLocationResults[0].attempt!
@@ -211,74 +200,14 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
 
     }
     
-    func setupStatusDropDown() {
-        chooseStatusDropDown.anchorView = canvassingStatusDropDown
-        
-        // Will set a custom with instead of anchor view width
-        //		dropDown.width = 100
-        
-        // By default, the dropdown will have its origin on the top left corner of its anchor view
-        // So it will come over the anchor view and hide it completely
-        // If you want to have the dropdown underneath your anchor view, you can do this:
-        chooseStatusDropDown.bottomOffset = CGPoint(x: 0, y: canvassingStatusDropDown.bounds.height)
-        
-        // You can also use localizationKeysDataSource instead. Check the docs.
-        chooseStatusDropDown.dataSource = [
-            "Canvassed",
-            "Not Canvassed",
-            "Permanently Inaccessible",
-            "Temporarily Inaccessible",
-            "Incomplete",
-            "Address not Found",
-            "Not a Target Building",
-            "Do not Knock"
-        ]
-        
-        // Action triggered on selection
-        chooseStatusDropDown.selectionAction = { [unowned self] (index, item) in
-            
-            self.canvassingStatus = item
-            self.canvassingStatusDropDown.setTitle(item, for: .normal)
-        }
-        
-        
-        // Action triggered on dropdown cancelation (hide)
-        //		dropDown.cancelAction = { [unowned self] in
-        //			// You could for example deselect the selected item
-        //			self.dropDown.deselectRowAtIndexPath(self.dropDown.indexForSelectedRow)
-        //			self.actionButton.setTitle("Canceled", forState: .Normal)
-        //		}
-        
-        // You can manually select a row if needed
-        //		dropDown.selectRowAtIndex(3)
-    }
-
-    override func didReceiveMemoryWarning() {
+        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func chooseStatus(_ sender: Any) {
-        chooseStatusDropDown.show()
-    }
-    
+  
    
-    @IBAction func selectAttempt(_ sender: DLRadioButton) {
-        
-       
-        attempt = sender.selected()!.titleLabel!.text!
-        
-//        if (sender.isMultipleSelectionEnabled) {
-//            for button in sender.selectedButtons() {
-//                print(String(format: "%@ is selected.\n", button.titleLabel!.text!));
-//            }
-//        } else {
-//            print(String(format: "%@ is selected.\n", sender.selected()!.titleLabel!.text!));
-//        }
-//        
-//    }
-
-    }
+   
 
     
     
@@ -315,11 +244,7 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
        
         
         
-      
-//        if let numberofUnitsTemp = NoOfUnitsTextField.text{
-//            numberOfUnits = numberofUnitsTemp
-//        }
-        
+
        
         if let notesTemp = NotesTextArea.text{
             notes = notesTemp

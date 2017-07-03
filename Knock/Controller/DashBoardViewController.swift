@@ -66,7 +66,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         imageView.contentMode = .scaleAspectFit
         
         
-        let image = UIImage(named: "MTXLogoWhite")
+        let image = UIImage(named: "NYC")
         imageView.image = image
         self.navigationItem.titleView = imageView
         
@@ -90,6 +90,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         NotificationCenter.default.addObserver(self, selector:#selector(DashBoardViewController.UpdateAssignmentView), name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object:nil
         )
         
+        populateChartData()
     }
     
     
@@ -180,20 +181,6 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             else if(self.editUnitResultsArr.count > 0){
                 self.updateEditUnitData()
             }
-                
-                //
-                //        else if(self.surveyUnitResultsArr.count > 0){
-                //            self.updateSurveyUnitData()
-                //        }
-                //
-                //        else if(self.tenantAssignResultsArr.count > 0){
-                //            self.updateTenantAssignData()
-                //        }
-                
-            else{
-                Utilities.fetchAllDataFromSalesforce()
-                // AssignmentDetail api and chart api call after push
-            }
             
             
         }
@@ -220,7 +207,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 
                 locGroup.enter()
                 
-                locDict = Utilities.editLocData(canvassingStatus: editLocData.canvassingStatus!, assignmentLocationId: editLocData.assignmentLocId!, notes: editLocData.notes!, attempt: editLocData.attempt!, numberOfUnits: editLocData.noOfUnits!)
+                locDict = Utilities.editLocData(canvassingStatus: editLocData.canvassingStatus!, assignmentLocationId: editLocData.assignmentLocId!, notes: editLocData.notes!, attempt: editLocData.attempt!)
                 
                 
                 
@@ -231,12 +218,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: editLoc){ jsonData in
                     
-                    
-                    //                            ediLocCount = ediLocCount + 1
-                    //                            if(ediLocCount == self.editLocationResultsArr.count){
-                    //                               Utilities.resetAllActionStatusFromEditLocation()
-                    //                            }
-                    //
+                   
                     Utilities.parseEditLocation(jsonObject: jsonData.1)
                     locGroup.leave()
                     
@@ -273,10 +255,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             else if(self.editUnitResultsArr.count > 0){
                 self.updateEditUnitData()
             }
-            else{
-                Utilities.fetchAllDataFromSalesforce()
-                // AssignmentDetail api and chart api call after push
-            }
+            
             
         }
         
@@ -343,10 +322,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             else if(self.editUnitResultsArr.count > 0){
                 self.updateEditUnitData()
             }
-            else{
-                Utilities.fetchAllDataFromSalesforce()
-                // AssignmentDetail api and chart api call after push
-            }
+            
             
         }
     }
@@ -410,10 +386,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             else if(self.editUnitResultsArr.count > 0){
                 self.updateEditUnitData()
             }
-            else{
-                Utilities.fetchAllDataFromSalesforce()
-                // AssignmentDetail api and chart api call after push
-            }
+           
             
         }
         
@@ -479,9 +452,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             if(self.editUnitResultsArr.count > 0){
                 self.updateEditUnitData()
             }
-            else{
-                Utilities.fetchAllDataFromSalesforce()
-            }
+          
             
             //assignmentdetail and charrts api
             
@@ -543,140 +514,12 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         editUnitGroup.notify(queue: .main) {
             
-            Utilities.fetchAllDataFromSalesforce()
-            // AssignmentDetail api and chart api call after push
-            
-            
         }
         
     }
     
     
-    //    func updateSurveyUnitData(){
-    //
-    //       let surveyUnitGroup = DispatchGroup()
-    //
-    //        var updateSurveyUnit : [String:String] = [:]
-    //        var surveyUnitDict : [String:String] = [:]
-    //
-    //
-    //
-    //        if(self.surveyUnitResultsArr.count > 0){
-    //
-    //
-    //            for surveyUnitData in self.surveyUnitResultsArr{
-    //
-    //                surveyUnitGroup.enter()
-    //
-    //                surveyUnitDict = Utilities.editUnitAndSurveyDicData(assignmentLocationUnitId: surveyUnitData.assignmentLocUnitId!,selectedSurveyId:surveyUnitData.surveyId!,type: "Updating Survey Unit..")
-    //
-    //
-    //
-    //                updateSurveyUnit["unit"] = Utilities.encryptedParams(dictParameters: surveyUnitDict as AnyObject)
-    //
-    //                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateSurveyUnit){ jsonData in
-    //
-    //                     Utilities.parseSurveyUnit(jsonObject: jsonData.1)
-    //                   surveyUnitGroup.leave()
-    //                    print("surveyUnitGroup: \(surveyUnitData.surveyId!)")
-    //
-    //                }//login to unit rest api
-    //
-    //
-    //
-    //            }
-    //        }
-    //
-    //        else{
-    //            surveyUnitGroup.enter()
-    //            surveyUnitGroup.leave()
-    //        }
-    //
-    //
-    //        surveyUnitGroup.notify(queue: .main) {
-    //
-    //             //Utilities.resetAllActionStatusFromSurveyUnit()
-    //
-    //            if(self.tenantResultsArr.count > 0){
-    //                self.updateTenantData()
-    //            }
-    //            else if(self.tenantAssignResultsArr.count > 0){
-    //                self.updateTenantAssignData()
-    //            }
-    //            else if(self.surveyResResultsArr.count > 0){
-    //                self.updateSurveyResponseData()
-    //            }
-    //            else{
-    //                Utilities.fetchAllDataFromSalesforce()
-    //                // AssignmentDetail api and chart api call after push
-    //            }
-    //        }
-    //    }
-    //
-    //
-    //
-    //    func updateTenantAssignData(){
-    //
-    //        let tenantAssignGroup = DispatchGroup()
-    //
-    //        var tenantAssignDict:[String:String] = [:]
-    //        var editTenantAssign : [String:String] = [:]
-    //
-    //
-    //
-    //        if(self.tenantAssignResultsArr.count > 0){
-    //
-    //            for tenantAssignData in self.tenantAssignResultsArr{
-    //
-    //                tenantAssignGroup.enter()
-    //
-    //                tenantAssignDict = Utilities.assignTenantDicData(selectedTenantId: tenantAssignData.tenantId!, assignmentLocUnitId: tenantAssignData.assignmentLocUnitId!)
-    //
-    //
-    //
-    //
-    //                editTenantAssign["tenantAssignmentDetail"] = Utilities.encryptedParams(dictParameters: tenantAssignDict as AnyObject)
-    //
-    //
-    //
-    //
-    //
-    //                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignTenant, params: editTenantAssign){ jsonData in
-    //
-    //
-    //                     Utilities.parseAssignTenant(jsonObject: jsonData.1)
-    //                    tenantAssignGroup.leave()
-    //                    print("tenantAssignGroup: \(tenantAssignData.tenantId!)")
-    //                    
-    //                }//login to unit rest api
-    //            }//end for loop
-    //            
-    //        }
-    //            
-    //        else{
-    //            tenantAssignGroup.enter()
-    //            tenantAssignGroup.leave()
-    //        }
-    //        
-    //        tenantAssignGroup.notify(queue: .main) {
-    //            
-    //          // Utilities.resetAllActionStatusFromTenantAssign()
-    //            if(self.surveyResResultsArr.count > 0){
-    //                self.updateSurveyResponseData()
-    //            }
-    //            else{
-    //                Utilities.fetchAllDataFromSalesforce()
-    //                //assignmentdetail and charrts api
-    //            }
-    //        }
-    //        
-    //        
-    //        
-    //        
-    //    }
-    //    
-    
-    
+        
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -684,7 +527,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         populateEventAssignmentData()
-        populateChartData()
+        
 
     }
     
@@ -856,7 +699,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 chart1StatusArray.append(chart1Data.chartLabel!)
                 chart1ValueArray.append(Double(chart1Data.chartValue!)!)
 
-               
+               chart1Label = chart1Data.chartLabel!
 
             }
         }
@@ -972,6 +815,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath)as!ChartCollectionViewCell
         
+        //cell.lblChart.text = chart1Label
+        
         //cell.chartView = UIView()
         
         if indexPath.row == 0
@@ -985,14 +830,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         if indexPath.row == 1
         {
-            circleChartData(custumView: cell.chartView, chartValue: chart2Value, chartColor: UIColor.red)
+            circleChartData(custumView: cell.chartView, chartValue: chart2Value, chartColor: UIColor.green)
             
              cell.lblChart.text = chart2Label
            
         }
         if indexPath.row == 2
         {
-           circleChartData(custumView: cell.chartView, chartValue: chart3Value, chartColor: UIColor.green)
+           circleChartData(custumView: cell.chartView, chartValue: chart3Value, chartColor: UIColor.red)
            
              cell.lblChart.text = chart3Label
             
@@ -1052,7 +897,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell.units.text = totalUnitsArray[indexPath.row]
         cell.assignmentId.text = assignmentIdArray[indexPath.row]
 
-        cell.completePercent.text = "0%"
+        cell.completePercent.text = ""
         
         return cell
     }

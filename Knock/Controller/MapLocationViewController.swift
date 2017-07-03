@@ -20,6 +20,7 @@ struct locationDataStruct
     var city:String = ""
     var state:String = ""
     var zip:String = ""
+    var totalUnits:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
@@ -104,7 +105,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         imageView.contentMode = .scaleAspectFit
         
         
-        let image = UIImage(named: "MTXLogoWhite")
+        let image = UIImage(named: "NYC")
         imageView.image = image
         self.navigationItem.titleView = imageView
         
@@ -181,6 +182,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             self?.state = (self?.locDataArray[0].state)!
                             self?.city = (self?.locDataArray[0].city)!
                             self?.zip = (self?.locDataArray[0].zip)!
+                            self?.totalUnits = (self?.locDataArray[0].totalUnits)!
                             
                             IsInitialViewPoint = false
                         }
@@ -277,7 +279,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 let partialAddressData = locationData.city! + ", " + locationData.state! + ", " + locationData.zip!
 
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: locationData.name!,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!)
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: locationData.name!,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!)
                 
                 
                 locDataArray.append(objectLocStruct)
@@ -462,6 +464,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         view.lblCity.text = city
         view.lblState.text = state
         view.lblZip.text = zip
+        view.lblNoOfUnits.text = totalUnits
         
         view.lblAdress.text = SalesforceConnection.fullAddress
         
@@ -594,6 +597,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     var city:String = ""
     var zip:String = ""
     var state:String = ""
+    var totalUnits:String = ""
     
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

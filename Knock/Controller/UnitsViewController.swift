@@ -105,7 +105,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
         imageView.contentMode = .scaleAspectFit
-        let image = UIImage(named: "MTXLogoWhite")
+        let image = UIImage(named: "NYC")
         imageView.image = image
         self.navigationItem.titleView = imageView
         

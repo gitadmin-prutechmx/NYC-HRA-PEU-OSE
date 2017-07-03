@@ -118,7 +118,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         NotificationCenter.default.addObserver(self, selector:#selector(MoreOptionsViewController.UpdateSurveyView), name: NSNotification.Name(rawValue: "UpdateSurveyView"), object:nil
         )
         
-        fullAddressText.text = "59 Wooster St, New York, NY 10012"// SalesforceConnection.fullAddress
+        fullAddressText.text = SalesforceConnection.fullAddress
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         

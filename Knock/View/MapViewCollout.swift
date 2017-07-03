@@ -20,6 +20,8 @@ class MapViewCollout: UIView
     @IBOutlet weak var lblLogitude: UILabel!
     @IBOutlet weak var btnArrow:UIButton!
     @IBOutlet weak var lblAdress: UILabel!
+    
+    @IBOutlet weak var lblNoOfUnits: UILabel!
     override init(frame: CGRect)
     {
         super.init(frame: frame)

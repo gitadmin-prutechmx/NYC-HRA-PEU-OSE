@@ -64,6 +64,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalUnits" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="locAssignmentR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentLocR" inverseEntity="Assignment" syncable="YES"/>
         <relationship name="locUnitR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Unit" inverseName="unitLocR" inverseEntity="Unit" syncable="YES"/>
@@ -144,7 +145,7 @@
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="255"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
-        <element name="Location" positionX="-2" positionY="-36" width="128" height="195"/>
+        <element name="Location" positionX="-2" positionY="-36" width="128" height="210"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="150"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="105"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="120"/>

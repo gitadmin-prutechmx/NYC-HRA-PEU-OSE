@@ -209,7 +209,7 @@ class Utilities {
         return editUnitDict
     }
     
-    class func editLocData(canvassingStatus:String,assignmentLocationId:String,notes:String,attempt:String,numberOfUnits:String)->[String:String]{
+    class func editLocData(canvassingStatus:String,assignmentLocationId:String,notes:String,attempt:String)->[String:String]{
         
         var editLocDict:[String:String] = [:]
         
@@ -217,7 +217,7 @@ class Utilities {
         editLocDict["assignmentLocationId"] = assignmentLocationId
         editLocDict["Notes"] = notes
         editLocDict["attempt"] = attempt
-        editLocDict["numberOfUnits"] = numberOfUnits
+    
         
         return editLocDict
 
@@ -1053,6 +1053,7 @@ class Utilities {
                     locationObject.street = locationData["street"] as? String  ?? ""
                     
                     locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
+                    locationObject.totalUnits = locationData["totalUnits"] as? String  ?? ""
                     
                     locationObject.assignmentId = assignmentObject.id!
                     
@@ -1068,7 +1069,8 @@ class Utilities {
                     
                     editlocationObject.canvassingStatus = locationData["status"] as? String  ?? ""
                     editlocationObject.attempt = locationData["attempt"] as? String  ?? ""
-                    editlocationObject.noOfUnits = locationData["numberOfUnits"] as? String  ?? ""
+                    editlocationObject.noOfUnits = locationObject.totalUnits!
+                    
                     editlocationObject.notes = locationData["notes"] as? String  ?? ""
                     editlocationObject.actionStatus = ""
                     
