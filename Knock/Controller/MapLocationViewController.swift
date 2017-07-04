@@ -225,6 +225,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
 }
     
+    @IBAction func syncData(_ sender: Any) {
+        
+       //  Utilities.fetchAllDataFromSalesforce()
+        
+    }
     
     func UpdateLocationView(){
         

@@ -27,21 +27,16 @@ struct TenantDataStruct
     var phone : String = ""
     var age : String = ""
     var dob:String = ""
+    //var teantStatus:String = ""
+    //var inTakeStaus:String = ""
     
 }
 
 
-class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource {
-    
-    @IBOutlet weak var attemptNo: DLRadioButton!
-    @IBOutlet weak var attemptYes: DLRadioButton!
-    
-    @IBOutlet weak var contactNo: DLRadioButton!
-    @IBOutlet weak var contactYes: DLRadioButton!
+class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate
+{
     
     
-    @IBOutlet weak var reKnockYes: DLRadioButton!
-    @IBOutlet weak var reKnockNo: DLRadioButton!
     
     
     var attempt:String = ""
@@ -55,6 +50,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     var selectedTenantId:String = ""
     
+    let pickerView = UIPickerView()
+    var arrTakeStatus = NSMutableArray()
+    var arrTenantStatus = NSMutableArray()
     
     @IBOutlet weak var saveOutlet: UIBarButtonItem!
     @IBOutlet weak var addTenantOutlet: UIButton!
@@ -63,8 +61,15 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     @IBOutlet weak var tblTeanantVw: UITableView!
 
-    @IBOutlet weak var ChooseInTakeStatusBtn: UIButton!
-    @IBOutlet weak var ChooseTenantStatusBtn: UIButton!
+    @IBOutlet weak var reKnockRdb: UISwitch!
+   
+    @IBOutlet weak var attemptRdb: UISwitch!
+    
+    @IBOutlet weak var contactRdb: UISwitch!
+    
+    @IBOutlet weak var ChooseInTakeStatusTxt: UITextField!
+    @IBOutlet weak var ChooseTenantStatusTxt: UITextField!
+    
     
     
     @IBOutlet weak var chooseSurveyView: UIView!
@@ -88,19 +93,6 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     var tenantResults = [Tenant]()
     
     
-
-    let chooseTenantStatusDropDown = DropDown()
-    let chooseInTakeStatusDropDown = DropDown()
-    
-    
-    
-    lazy var dropDowns: [DropDown] = {
-        return [
-            self.chooseTenantStatusDropDown,
-            self.chooseInTakeStatusDropDown
-        ]
-    }()
-    
     
       var editUnitDict : [String:String] = [:]
       var tenantAssignDict : [String:String] = [:]
@@ -110,7 +102,49 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         addTenantOutlet.layer.cornerRadius = 5
         
-         setUpDropDowns()
+        // setUpDropDowns()
+        pickerView.delegate = self
+        
+        self.ChooseTenantStatusTxt.inputView = pickerView
+        self.ChooseInTakeStatusTxt.inputView = pickerView
+        
+        arrTakeStatus = ["Blocked","Planned","In Progress","Completed"]
+        arrTenantStatus = ["UnBlocked","UnPlanned","Progress","UnCompleted"]
+
+        
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
+        
+        
+        
+        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
+        
+        
+        let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.cancelPressed))
+        
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SaveEditTenantViewController.donePressed))
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
+        
+        label.font = UIFont(name: "Helvetica", size: 12)
+        
+        label.backgroundColor = UIColor.clear
+        
+        label.textColor = UIColor.white
+        
+        label.text = "Select Status"
+        
+        label.textAlignment = NSTextAlignment.center
+        
+        let textBtn = UIBarButtonItem(customView: label)
+        
+        toolBar.setItems([cancelBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
+        
+        ChooseInTakeStatusTxt.inputAccessoryView = toolBar
+        ChooseTenantStatusTxt.inputAccessoryView = toolBar
+        
         
         NotificationCenter.default.addObserver(self, selector:#selector(MoreOptionsViewController.UpdateTenantView), name: NSNotification.Name(rawValue: "UpdateTenantView"), object:nil
         )
@@ -118,7 +152,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         NotificationCenter.default.addObserver(self, selector:#selector(MoreOptionsViewController.UpdateSurveyView), name: NSNotification.Name(rawValue: "UpdateSurveyView"), object:nil
         )
         
-        fullAddressText.text = SalesforceConnection.fullAddress
+        fullAddressText.text =  SalesforceConnection.fullAddress
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         
@@ -134,48 +168,60 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         //NotesTextArea.text = "Description"
         notesTextArea.textColor = UIColor.black
 
-       
         
-        if(Utilities.currentSegmentedControl == "Unit"){
-            segmentedControl.selectedSegmentIndex = 0
-            
-            chooseUnitInfoView.isHidden = false
-            chooseSurveyView.isHidden = true
-            chooseTenantInfoView.isHidden = true
-            
-            populateEditUnit()
-            
-            self.saveOutlet.title = "Save"
-        }
-        else if(Utilities.currentSegmentedControl == "Tenant"){
-            segmentedControl.selectedSegmentIndex = 1
-            
-            chooseTenantInfoView.isHidden = false
-            
-            chooseUnitInfoView.isHidden = true
-            chooseSurveyView.isHidden = true
-            
-            self.saveOutlet.title = "Assign Tenant"
-            
-            
-            populateTenantData()
-            
-        }
-        else if(Utilities.currentSegmentedControl == "Survey"){
-            segmentedControl.selectedSegmentIndex = 2
-            
-            chooseUnitInfoView.isHidden = true
-            chooseTenantInfoView.isHidden = true
-            chooseSurveyView.isHidden = false
-            
-            self.saveOutlet.title = "Save"
-            
-             populateSurveyData()
-            setSelectedSurveyId()
-            
-            
-           
-        }
+        
+        
+        
+        segmentedControl.selectedSegmentIndex = 0
+        
+        chooseUnitInfoView.isHidden = false
+        chooseSurveyView.isHidden = true
+        chooseTenantInfoView.isHidden = true
+        
+        populateEditUnit()
+        
+        
+        
+//        if(Utilities.currentSegmentedControl == "Unit"){
+//            segmentedControl.selectedSegmentIndex = 0
+//            
+//            chooseUnitInfoView.isHidden = false
+//            chooseSurveyView.isHidden = true
+//            chooseTenantInfoView.isHidden = true
+//            
+//            populateEditUnit()
+//            
+//            //self.saveOutlet.title = "Save"
+//        }
+//        else if(Utilities.currentSegmentedControl == "Tenant"){
+//            segmentedControl.selectedSegmentIndex = 1
+//            
+//            chooseTenantInfoView.isHidden = false
+//            
+//            chooseUnitInfoView.isHidden = true
+//            chooseSurveyView.isHidden = true
+//            
+//            //self.saveOutlet.title = "Assign Tenant"
+//            
+//            
+//            populateTenantData()
+//            
+//        }
+//        else if(Utilities.currentSegmentedControl == "Survey"){
+//            segmentedControl.selectedSegmentIndex = 2
+//            
+//            chooseUnitInfoView.isHidden = true
+//            chooseTenantInfoView.isHidden = true
+//            chooseSurveyView.isHidden = false
+//            
+//            self.saveOutlet.title = "Save"
+//            
+//             populateSurveyData()
+//            setSelectedSurveyId()
+//            
+//            
+//           
+//        }
 
         // Do any additional setup after loading the view.
     }
@@ -232,62 +278,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
 
     }
     
-    func setUpDropDowns(){
-        setUpTenantStatusDropDown()
-        setUpInTakeStatusDropDown()
 
-    }
-    
-    func setUpTenantStatusDropDown(){
-        chooseTenantStatusDropDown.anchorView = ChooseTenantStatusBtn
-        
-        
-        chooseTenantStatusDropDown.bottomOffset = CGPoint(x: 0, y: ChooseTenantStatusBtn.bounds.height)
-        
-        // You can also use localizationKeysDataSource instead. Check the docs.
-        chooseTenantStatusDropDown.dataSource = [
-            "Not Home",
-            "Refused",
-            "Vacant",
-            "Do Not Attempt",
-            "Canvass Again"
-        ]
-        
-        // Action triggered on selection
-        chooseTenantStatusDropDown.selectionAction = { [unowned self] (index, item) in
-            
-            self.tenantStatus = item
-            self.ChooseTenantStatusBtn.setTitle(item, for: .normal)
-        }
-
-    }
-    
-    func setUpInTakeStatusDropDown(){
-        chooseInTakeStatusDropDown.anchorView = ChooseInTakeStatusBtn
-        
-        
-        chooseInTakeStatusDropDown.bottomOffset = CGPoint(x: 0, y: ChooseInTakeStatusBtn.bounds.height)
-        
-        // You can also use localizationKeysDataSource instead. Check the docs.
-        chooseInTakeStatusDropDown.dataSource = [
-            "No Issues",
-            "Refused",
-            "Not Primary Tenant",
-            "Superintendent Door",
-            "Landlords Door",
-            "Privacy Concern",
-            "Left Contact Info",
-            "Laguage Barrier"
-        ]
-        
-        // Action triggered on selection
-        chooseInTakeStatusDropDown.selectionAction = { [unowned self] (index, item) in
-            
-            self.inTakeStatus = item
-            self.ChooseInTakeStatusBtn.setTitle(item, for: .normal)
-        }
-        
-    }
     
     func populateTenantData(){
         
@@ -300,6 +291,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         if(tenantResults.count > 0){
             
             for tenantData in tenantResults{
+                
                 
                 
                 let objectTenantStruct:TenantDataStruct = TenantDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!)
@@ -389,6 +381,94 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         
     }
+    
+    //uipickerview
+    func cancelPressed(sender: UIBarButtonItem)
+    {
+        
+        ChooseInTakeStatusTxt.resignFirstResponder()
+        ChooseTenantStatusTxt.resignFirstResponder()
+    }
+    
+    func donePressed(sender: UIBarButtonItem) {
+        
+        if 1 == ChooseTenantStatusTxt.tag
+        {
+            ChooseInTakeStatusTxt.text = inTakeStatus
+            ChooseInTakeStatusTxt.resignFirstResponder()
+        }
+            
+            
+        else
+        {
+            ChooseTenantStatusTxt.text = tenantStatus
+            ChooseTenantStatusTxt.resignFirstResponder()
+        }
+
+        
+        
+        
+        
+    }
+
+    
+    // MARK: Pickerview Delegates Methods
+    
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int
+    {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+        if 1 == ChooseTenantStatusTxt.tag
+        {
+            return self.arrTenantStatus.count
+        }
+        else
+        {
+            return self.arrTakeStatus.count
+        }
+        
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
+        if 1 == ChooseTenantStatusTxt.tag
+        {
+            
+            return arrTenantStatus.object(at: row) as? String
+        }
+            
+        else
+        {
+            return self.arrTakeStatus.object(at: row) as? String
+        }
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        
+        if 1 == ChooseTenantStatusTxt.tag
+        {
+            tenantStatus = (arrTenantStatus.object(at: row) as? String)!
+            
+           // self.ChooseTenantStatusTxt.text = arrTenantStatus.object(at: row) as? String
+            
+        }
+            
+        
+        else
+        {
+             inTakeStatus = (arrTakeStatus.object(at: row) as? String)!
+            
+            //self.ChooseInTakeStatusTxt.text = arrTakeStatus.object(at: row) as? String
+        }
+    }
+    
+
     
     // MARK: UITenantTableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -485,31 +565,13 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }
 
     
-    @IBAction func selectAttempt(_ sender: DLRadioButton) {
-         attempt = sender.selected()!.titleLabel!.text!
-    }
-
-    
-    @IBAction func selectContact(_ sender: DLRadioButton) {
-         contact = sender.selected()!.titleLabel!.text!
-    }
-    
-    
-    @IBAction func selectReknock(_ sender: DLRadioButton) {
-         reknockNeeded = sender.selected()!.titleLabel!.text!
-    }
+   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func selectTenantStatus(_ sender: Any) {
-        chooseTenantStatusDropDown.show()
-    }
-    
-    @IBAction func selectInTakeStatus(_ sender: Any) {
-        chooseInTakeStatusDropDown.show()
-    }
+   
     
     @IBAction func changeSegmented(_ sender: Any) {
         switch (sender as AnyObject).selectedSegmentIndex {
@@ -518,7 +580,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
              chooseTenantInfoView.isHidden = true
              chooseUnitInfoView.isHidden = false
              Utilities.currentSegmentedControl = "Unit"
-             self.saveOutlet.title = "Save"
+             self.saveOutlet.title = "Continue"
              populateEditUnit()
             
         case 1:
@@ -526,7 +588,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
              chooseSurveyView.isHidden = true
              chooseUnitInfoView.isHidden = true
              Utilities.currentSegmentedControl = "Tenant"
-             self.saveOutlet.title = "Assign Tenant"
+             self.saveOutlet.title = "Continue"
              populateTenantData()
         case 2:
              chooseSurveyView.isHidden = false
@@ -543,7 +605,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             chooseUnitInfoView.isHidden = false
             chooseTenantInfoView.isHidden = false
             Utilities.currentSegmentedControl = "Default"
-            self.saveOutlet.title = "Save"
+            self.saveOutlet.title = "Continue"
         }
     }
     
@@ -552,29 +614,29 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         if(editUnitResults.count > 0){
             if(editUnitResults[0].attempt == "Yes"){
-                attemptYes.isSelected = true
+               attemptRdb.isOn = true
             }
             else  if(editUnitResults[0].attempt == "No"){
-                attemptNo.isSelected = true
+               attemptRdb.isOn = false
             }
             
             attempt = editUnitResults[0].attempt!
             
             if(editUnitResults[0].isContact == "Yes"){
-                contactYes.isSelected = true
+               contactRdb.isOn = true
             }
             else if(editUnitResults[0].isContact == "No"){
-                contactNo.isSelected = true
+               contactRdb.isOn = false
             }
             
             contact = editUnitResults[0].isContact!
             
             if(editUnitResults[0].reKnockNeeded == "Yes"){
-                reKnockYes.isSelected = true
+               reKnockRdb.isOn = true
             }
             else if(editUnitResults[0].reKnockNeeded == "No"){
             
-                reKnockNo.isSelected = true
+              reKnockRdb.isOn = false
             }
             
             reknockNeeded = editUnitResults[0].reKnockNeeded!
@@ -582,12 +644,13 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             if(editUnitResults[0].tenantStatus! != ""){
                     tenantStatus = editUnitResults[0].tenantStatus!
                 
-                    self.ChooseTenantStatusBtn.setTitle(editUnitResults[0].tenantStatus , for: .normal)
+                ChooseTenantStatusTxt.text = tenantStatus
+               
             }
             if(editUnitResults[0].inTakeStatus! != ""){
                     inTakeStatus = editUnitResults[0].inTakeStatus!
                 
-                    self.ChooseInTakeStatusBtn.setTitle(editUnitResults[0].inTakeStatus , for: .normal)
+                    ChooseInTakeStatusTxt.text = tenantStatus
             }
             
             notesTextArea.text = editUnitResults[0].unitNotes
@@ -604,7 +667,22 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
           if(Utilities.currentSegmentedControl == "Survey"){
         
-                updateUnitAndSurvey(type:"Updating Survey..")
+            if(selectedSurveyId == ""){
+                
+                self.view.makeToast("Please select survey", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+                
+                
+                return
+            }
+
+            
+            updateUnitAndSurvey(type:"Updating Survey..")
         
             
           }
@@ -646,20 +724,6 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 
             }
             
-//            if(Network.reachability?.isReachable)!{
-//                
-//                pushAssignTenantDataToSalesforce()
-//            }
-//                
-//            else{
-//                self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                    
-//                    self.dismiss(animated: true, completion: nil)
-//                    
-//                }
-//            }
-            
-
             
         }
         
@@ -726,8 +790,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
    
         
         if(type == "Updating Unit.."){
-            
-//            editUnitDict = Utilities.editUnitAndSurveyDicData(tenantStatus: tenantStatus, notes: notes, attempt: attempt, contact: contact, reKnockNeeded: reknockNeeded, inTakeStatus: inTakeStatus, assignmentLocationUnitId: SalesforceConnection.assignmentLocationUnitId,type:type)
+
             
             let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
             

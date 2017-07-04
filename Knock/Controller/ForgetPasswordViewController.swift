@@ -70,7 +70,7 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
        newBackbtn.addTarget(self, action: #selector(ForgetPasswordViewController.navigateToLoginView(_:)), for: .touchUpInside)
         
         let titleLabel = UILabel(frame: CGRect(x:0, y:20.0, width:self.view.frame.size.width, height:40))
-        titleLabel.text = "FORGET PASSWORD"
+        titleLabel.text = "FORGOT PASSWORD"
         titleLabel.textColor = UIColor.white
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textAlignment = NSTextAlignment.center

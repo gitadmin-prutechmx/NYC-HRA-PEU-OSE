@@ -93,6 +93,9 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         populateChartData()
     }
     
+    @IBAction func syncData(_ sender: Any) {
+       // Utilities.fetchAllDataFromSalesforce()
+    }
     
     func UpdateAssignmentView(){
         
@@ -565,9 +568,16 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         set.colors = colors
         
         
-        let chartData = BarChartData(dataSet: set)
-        chart.data = chartData
+        let barChartData = BarChartData(dataSet: set)
+        chart.data = barChartData
         chart.noDataText = "No data available"
+        
+        
+        
+     //   barChartData.xAxis.labelPosition = .Bottom
+        
+        
+        
         
         custumView.addSubview(chart)
         

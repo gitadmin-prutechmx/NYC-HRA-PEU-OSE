@@ -826,7 +826,13 @@ class Utilities {
         
         emailParams["email"] = try! SalesforceConnection.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
         
-        SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ jsonData in
+        
+        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+        
+
+        
+        
+    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
             
 //            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.chartapi, params: emailParams){ jsonData in
 //            
@@ -836,28 +842,37 @@ class Utilities {
 //                                Utilities.parseEventAssignmentData(jsonObject: jsonData.1)
 //            }
             
-            ManageCoreData.DeleteAllDataFromEntities() //need to be rethink
             
-            Utilities.parseEventAssignmentData(jsonObject: jsonData.1)
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object: nil)
+            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
+                
+                SVProgressHUD.dismiss()
+                
+                ManageCoreData.DeleteAllDataFromEntities() //need to be rethink
+                
+                
+                Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData.1)
 
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                
+                Utilities.parseChartData(jsonObject: chartJsonData.1)
+                
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object: nil)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
+                
 
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
-            
-             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
-
-            
-
+                
+                
+            }
             
             
-            //Notification : assignment
-            //Notification : location
-            //Notification  :unit
-            //Notification  :tenant
+            
         }
      
     }
@@ -884,7 +899,7 @@ class Utilities {
         let chart1CompObj = Chart(context: context)
         chart1CompObj.chartType = "Chart1"
         chart1CompObj.chartField = "Completed"
-        chart1CompObj.chartLabel = "Total AssignmentsByStatus"
+        chart1CompObj.chartLabel = "Total Assignments by Status"
         chart1CompObj.chartValue = String(chart1Obj?["Completed"] as! Int)
         
         appDelegate.saveContext()
@@ -892,7 +907,7 @@ class Utilities {
         let chart1InProgObj = Chart(context: context)
         chart1InProgObj.chartType = "Chart1"
         chart1InProgObj.chartField = "In Progress"
-        chart1InProgObj.chartLabel = "Total AssignmentsByStatus"
+        chart1InProgObj.chartLabel = "Total Assignments by Status"
         chart1InProgObj.chartValue = String(chart1Obj?["In Progress"] as! Int)
         
         appDelegate.saveContext()
@@ -900,7 +915,7 @@ class Utilities {
         let chart1AssignedObj = Chart(context: context)
         chart1AssignedObj.chartType = "Chart1"
         chart1AssignedObj.chartField = "Assigned"
-        chart1AssignedObj.chartLabel = "Total AssignmentsByStatus"
+        chart1AssignedObj.chartLabel = "Total Assignments by Status"
         chart1AssignedObj.chartValue = String(chart1Obj?["Assigned"] as! Int)
         
         appDelegate.saveContext()

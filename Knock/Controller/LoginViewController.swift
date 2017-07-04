@@ -368,12 +368,10 @@ class LoginViewController: UIViewController {
                  SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
                     
                     
-                    
-                    ManageCoreData.DeleteAllDataFromEntities()
-                    
-                    
                     SVProgressHUD.dismiss()
                     
+
+                    ManageCoreData.DeleteAllDataFromEntities()
                     
                     Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData.1)
                     

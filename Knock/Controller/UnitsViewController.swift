@@ -138,7 +138,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexRow!].assignmentLocUnitId
         
-         showActionSheet()
+        
+        Utilities.currentSegmentedControl = "Unit"
+        self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+        
+        
+       //  showActionSheet()
        
         
     }
@@ -184,6 +189,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
+    @IBAction func syncData(_ sender: Any) {
+        
+        // Utilities.fetchAllDataFromSalesforce()
+        
+    }
     
     // var unitDataArray = [UnitsDataStruct]()
     
@@ -404,7 +414,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         cell.dataUnit.text = UnitDataArray[indexPath.row].unitName
         
         
-        cell.moreBtn.tag = indexPath.row
+       // cell.moreBtn.tag = indexPath.row
        
         
    /*
@@ -472,15 +482,25 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-    func getSurveyUnitResults()->[EditUnit]{
+    func getSurveyUnitResults()->Bool{
         
       // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
         
          let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
         
-       
+        if(surveyUnitResults.count == 0){
         
-         return surveyUnitResults
+            return false
+            
+        }
+        else if(surveyUnitResults.count > 0 && (surveyUnitResults[0].surveyId?.isEmpty)!){
+            
+            return false
+        }
+       
+        SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
+        
+         return true
         
     }
     
@@ -494,35 +514,34 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
         
+         SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
+        
         
     if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
         
-        let surveyUnitResults = getSurveyUnitResults()
+        let isSurveyAssigned = getSurveyUnitResults()
         
         //update or delete particular surveyunit
         //add multiple conditions in predicateformat
         
-        if(surveyUnitResults.count == 0){
+        if(isSurveyAssigned == false){
         
-            self.view.makeToast("Please choose survey from More button", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
+            
+            Utilities.currentSegmentedControl = "Unit"
+            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+            
             
         }
+           
         else{
             
             
             
-                SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
+               // SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
             
                 let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.surveyId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
                 
                 if(surveyQuestionResults.count == 1){
-                    
                     
                     
                     let jsonData =  Utilities.convertToJSON(text: surveyQuestionResults[0].surveyQuestionData!) as!Dictionary<String, AnyObject>

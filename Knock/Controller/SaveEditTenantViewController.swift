@@ -134,6 +134,35 @@ var picker = UIDatePicker()
     func saveTenantInfo(){
         
         
+        if let firstNameTemp = firstNameTxtField.text{
+            
+            firstName = firstNameTemp
+            
+        }
+        
+        if(firstName.isEmpty){
+            
+            lastNameView.shake()
+            
+            self.view.makeToast("Please fill first name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+
+        
+        
         
         if let lastNameTemp = lastNameTxtField.text{
             
@@ -218,14 +247,6 @@ var picker = UIDatePicker()
         
         
             
-            if let firstNameTemp = firstNameTxtField.text{
-                
-                firstName = firstNameTemp
-                
-            }
-            
-        
-            
         
             
             if let dobTemp = txtDob.text{
@@ -234,7 +255,7 @@ var picker = UIDatePicker()
                 
                 if(dob != ""){
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    dateFormatter.dateFormat = "MM-dd-yyyy"
                 
                     let birthdate = dateFormatter.date(from: dob)
                 
@@ -461,7 +482,7 @@ var picker = UIDatePicker()
     func datePickerValueChanged(sender: UIDatePicker) {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "MM-dd-yyyy"
         txtDob.text = dateFormatter.string(from: picker.date)
         //txtDob.text = dateFormatter.string(from: sender.date)
         
@@ -477,7 +498,7 @@ var picker = UIDatePicker()
     func donePressed(sender: UIBarButtonItem) {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "MM-dd-yyyy"
         txtDob.text = dateFormatter.string(from: picker.date)
         
         txtDob.resignFirstResponder()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddNewUnitViewController: UIViewController {
+class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
    
     var saveUnitDict : [String:String] = [:]
     
@@ -34,7 +34,20 @@ class AddNewUnitViewController: UIViewController {
         notesTextArea.textColor = UIColor.black
 
 
+        apartmentName.delegate = self
+        
         // Do any additional setup after loading the view.
+    }
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let aSet = NSCharacterSet.alphanumerics.inverted
+        //let aSet =  NSCharacterSet(charactersIn:"0123456789abc").inverted
+        let compSepByCharInSet = string.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+        return string == numberFiltered
     }
 
     override func didReceiveMemoryWarning() {
