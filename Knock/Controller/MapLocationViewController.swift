@@ -476,7 +476,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         view.lblZip.text = zip
         view.lblNoOfUnits.text = totalUnits
         
-        view.lblAdress.text = SalesforceConnection.fullAddress
+        view.lblAdress.text = street// SalesforceConnection.fullAddress
         
         view.btnArrow.addTarget(self, action: #selector(MapLocationViewController.navigateToUnitView(_:)), for: .touchUpInside)
         
@@ -618,7 +618,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         SalesforceConnection.assignmentLocationId = locDataArray[indexPath.row].assignmentLocId
         
-        SalesforceConnection.fullAddress =  locDataArray[indexPath.row].street
+        SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
         
         street = locDataArray[indexPath.row].street
         state = locDataArray[indexPath.row].state

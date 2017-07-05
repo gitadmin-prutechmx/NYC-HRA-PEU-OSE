@@ -901,7 +901,7 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
         let chart1Obj = Chart(context: context)
         chart1Obj.chartType = "Chart1"
         chart1Obj.chartField = "TotalUnits"
-        chart1Obj.chartLabel = "Total Assignments by Status"
+        chart1Obj.chartLabel = "Total Units"
         chart1Obj.chartValue = String(chart1?["TotalUnits"] as! Int)
         
         print(chart1Obj.chartValue!)

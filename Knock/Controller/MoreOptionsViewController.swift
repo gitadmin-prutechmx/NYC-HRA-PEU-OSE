@@ -831,12 +831,13 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         if(inTakeRdb.isOn){
             inTake = "Yes"
             chooseInReasonTxt.isEnabled = false
+            chooseInReasonTxt.text = ""
             
         }
         else{
             inTake = "No"
             chooseInReasonTxt.isEnabled = true
-            
+            chooseInReasonTxt.text = reasonStatus
         }
     }
     
@@ -990,6 +991,10 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
 
             
             let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+            
+            if(inTakeRdb.isOn){
+                reasonStatus = ""
+            }
             
             if(editUnitResults.count > 0){
                 
@@ -1225,6 +1230,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
         
+       
         
         updateObjectDic["reason"] = reasonStatus
         updateObjectDic["inTake"] = inTake
