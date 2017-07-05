@@ -39,7 +39,6 @@ public class GaugeView: UIView {
   
   @IBInspectable public var radius: CGFloat
   {
-    print("radius \(self.bounds.width)")
     //return 255.0
     return min(self.bounds.width, 190)/2
   }

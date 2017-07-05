@@ -91,7 +91,12 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         NotificationCenter.default.addObserver(self, selector:#selector(DashBoardViewController.UpdateAssignmentView), name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object:nil
         )
         
-        populateChartData()
+       populateChartData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        colChart.collectionViewLayout.invalidateLayout()
     }
     
     @IBAction func syncData(_ sender: Any) {
@@ -104,7 +109,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
         
         populateEventAssignmentData()
-        populateChartData()
+       // populateChartData()
        
         
         //updateTableViewData()
@@ -138,7 +143,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         populateEventAssignmentData()
-        
+        //populateChartData()
 
     }
     
@@ -201,6 +206,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         chart.percentage = chartValue
         
+        //chart.labelText = ""
         chart.labelText = chartText
         
         chart.thickness = 20
@@ -213,6 +219,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         chart.isUserInteractionEnabled = true
         chart.accessibilityLabel = "Gauge"
 
+        
+        
         
         
         custumView.addSubview(chart)
@@ -344,6 +352,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
        
+        //colChart.collectionViewLayout.invalidateLayout()
         
         colChart.reloadData()
        
@@ -436,7 +445,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 0
         {
          //R165 G225 B255
-         circleChartData(custumView: cell.chartView, chartValue: 100.0, chartText: chart1Value, chartColor: UIColor(red: CGFloat(165.0/255), green: CGFloat(225.0/255), blue: CGFloat(255.0/255), alpha: 1))
+         circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart1Value, chartColor: UIColor(red: CGFloat(165.0/255), green: CGFloat(225.0/255), blue: CGFloat(255.0/255), alpha: 1))
             
             cell.lblChart.text = chart1Label
            
@@ -449,7 +458,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 1
         {
             //Green R91 G192 B74
-            circleChartData(custumView: cell.chartView, chartValue: 100.0, chartText: chart2Value, chartColor: UIColor(red: CGFloat(91.0/255), green: CGFloat(192.0/255), blue: CGFloat(74.0/255), alpha: 1))
+            circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart2Value, chartColor: UIColor(red: CGFloat(91.0/255), green: CGFloat(192.0/255), blue: CGFloat(74.0/255), alpha: 1))
             
              cell.lblChart.text = chart2Label
            
@@ -542,6 +551,12 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     
     @IBAction func UnwindBackFromMapLocation(segue:UIStoryboardSegue) {
+        
+    if (self.revealViewController().frontViewPosition == FrontViewPosition.right)
+         {
+            //self.revealViewController().revealToggle(animated: true)
+            self.revealViewController().revealToggle(animated: true)
+        }
         
         
         print("UnwindBackFromMapLocation")

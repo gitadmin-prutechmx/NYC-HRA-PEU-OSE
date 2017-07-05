@@ -282,10 +282,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             for locationData in locationResults{
                 
                 let locationName = locationData.street!
+                
+                //[Street] [City], [State] [ZIP]
                 let partialAddressData = locationData.city! + ", " + locationData.state! + ", " + locationData.zip!
+                
+        let fullAdress = locationData.street! + " " + locationData.city! + ", " + locationData.state! + " " + locationData.zip!
 
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: locationData.name!,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!)
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!)
                 
                 
                 locDataArray.append(objectLocStruct)
