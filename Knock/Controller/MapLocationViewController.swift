@@ -618,7 +618,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         SalesforceConnection.assignmentLocationId = locDataArray[indexPath.row].assignmentLocId
         
-        SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
+        SalesforceConnection.fullAddress =  locDataArray[indexPath.row].street
         
         street = locDataArray[indexPath.row].street
         state = locDataArray[indexPath.row].state

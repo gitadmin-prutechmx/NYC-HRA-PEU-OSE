@@ -87,6 +87,7 @@ public class GaugeView: UIView {
   //Label property
   @IBInspectable public var labelText: String = "" {
     didSet {
+  
       label.text = labelText
       updateTextLabel()
     }

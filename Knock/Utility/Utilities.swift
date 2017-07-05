@@ -18,7 +18,6 @@ class Utilities {
     static var isSyncing:Bool = false
     
     
-   
     
     static var basemapMobileMapPackage:AGSMobileMapPackage!
     

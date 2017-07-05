@@ -201,12 +201,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     {
        // let colors = getColors()
         
+    
         
         let chart = GaugeView(frame: custumView.frame)
         
         chart.percentage = chartValue
         
-        //chart.labelText = ""
+        
+       // chart.labelText = " "
         chart.labelText = chartText
         
         chart.thickness = 20

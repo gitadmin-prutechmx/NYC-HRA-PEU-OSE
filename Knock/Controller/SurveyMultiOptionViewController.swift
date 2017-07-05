@@ -6,7 +6,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     
     @IBOutlet weak var getDescriptionTextField: UITextField!
     
-    @IBOutlet weak var showTextLbl: UILabel!
+    //@IBOutlet weak var showTextLbl: UILabel!
+    @IBOutlet weak var showTextLbl: UITextView!
     
     @IBOutlet weak var surveyName: UILabel!
     @IBOutlet weak var questionText: UILabel!
