@@ -42,7 +42,9 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
         
         fullAddressLbl.text = SalesforceConnection.fullAddress
          self.txtStatusList.inputView = pickerView
-        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        
+
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
 
@@ -112,6 +114,16 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
     }
 
     
+    @IBAction func attemptChanged(_ sender: Any) {
+        
+        if(attemptRdb.isOn){
+            attempt = "Yes"
+        }
+        else{
+            attempt = "No"
+        }
+
+    }
     
     // MARK: Pickerview Delegates Methods
        public func numberOfComponents(in pickerView: UIPickerView) -> Int
@@ -184,14 +196,20 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
             
             txtStatusList.text = canvassingStatus
             
-            txtUnits.text = editLocationResults[0].noOfUnits!
-            NotesTextArea.text = editLocationResults[0].notes!
+            numberOfUnits = editLocationResults[0].noOfUnits!
+            txtUnits.text = numberOfUnits
+            
+            notes = editLocationResults[0].notes!
+            NotesTextArea.text = notes
             
             if(editLocationResults[0].attempt == "Yes"){
                 attemptRdb.isOn = true
             }
             else if (editLocationResults[0].attempt == "No"){
                 attemptRdb.isOn = false
+            }
+            else{
+                editLocationResults[0].attempt = "No"
             }
             
             attempt = editLocationResults[0].attempt!

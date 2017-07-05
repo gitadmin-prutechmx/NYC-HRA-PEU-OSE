@@ -1,5 +1,5 @@
 //
-//  Unit+CoreDataClass.swift
+//  Chart+CoreDataClass.swift
 //  
 //
 //  Created by Kamal on 05/07/17.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(Unit)
-public class Unit: NSManagedObject {
+@objc(Chart)
+public class Chart: NSManagedObject {
 
 }

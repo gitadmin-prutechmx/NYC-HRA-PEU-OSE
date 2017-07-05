@@ -97,7 +97,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         newCaseLbl.isUserInteractionEnabled = true
 
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        
+
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
@@ -227,8 +229,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     @IBAction func syncData(_ sender: Any) {
         
-       //  Utilities.fetchAllDataFromSalesforce()
-        
+        SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
+       
     }
     
     func UpdateLocationView(){
@@ -237,7 +239,6 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         populateLocationData()
         
     }
-
     
     // Cleanup notifications added in viewDidLoad
     deinit {

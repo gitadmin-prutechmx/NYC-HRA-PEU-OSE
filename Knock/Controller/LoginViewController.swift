@@ -328,7 +328,7 @@ class LoginViewController: UIViewController {
     if ((emailText?.lowercased() == "clear") || assignmentResults.count == 0){
             
         
-        SVProgressHUD.show(withStatus: "Fetching data from salesforce..", maskType: SVProgressHUDMaskType.gradient)
+        SVProgressHUD.show(withStatus: "Loading..", maskType: SVProgressHUDMaskType.gradient)
         
 
         

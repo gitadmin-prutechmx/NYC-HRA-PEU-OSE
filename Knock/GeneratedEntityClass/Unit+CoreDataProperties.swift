@@ -2,7 +2,7 @@
 //  Unit+CoreDataProperties.swift
 //  
 //
-//  Created by Kamal on 01/07/17.
+//  Created by Kamal on 05/07/17.
 //
 //
 
@@ -27,7 +27,8 @@ extension Unit {
     @NSManaged public var name: String?
     @NSManaged public var notes: String?
     @NSManaged public var surveyStatus: String?
-    @NSManaged public var syncDate: String?
+    @NSManaged public var surveySyncDate: String?
+    @NSManaged public var unitSyncDate: String?
     @NSManaged public var unitLocR: Location?
 
 }

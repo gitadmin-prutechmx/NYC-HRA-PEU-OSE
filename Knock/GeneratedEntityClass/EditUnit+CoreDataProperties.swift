@@ -2,7 +2,7 @@
 //  EditUnit+CoreDataProperties.swift
 //  
 //
-//  Created by Kamal on 01/07/17.
+//  Created by Kamal on 05/07/17.
 //
 //
 
@@ -21,13 +21,13 @@ extension EditUnit {
     @NSManaged public var assignmentLocId: String?
     @NSManaged public var assignmentLocUnitId: String?
     @NSManaged public var attempt: String?
-    @NSManaged public var inTakeStatus: String?
+    @NSManaged public var inTake: String?
     @NSManaged public var isContact: String?
     @NSManaged public var locationId: String?
+    @NSManaged public var reason: String?
     @NSManaged public var reKnockNeeded: String?
     @NSManaged public var surveyId: String?
     @NSManaged public var tenantId: String?
-    @NSManaged public var tenantStatus: String?
     @NSManaged public var unitId: String?
     @NSManaged public var unitNotes: String?
 

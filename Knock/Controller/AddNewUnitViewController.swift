@@ -12,6 +12,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
    
     var saveUnitDict : [String:String] = [:]
     
+    @IBOutlet weak var apartmentView: UIView!
     @IBOutlet weak var apartmentName: UITextField!
 
     @IBOutlet weak var notesTextArea: UITextView!
@@ -21,7 +22,9 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        
+
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
@@ -46,6 +49,16 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         //let aSet =  NSCharacterSet(charactersIn:"0123456789abc").inverted
         let compSepByCharInSet = string.components(separatedBy: aSet)
         let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+                let currentCharacterCount = apartmentName.text?.characters.count ?? 0
+                if (range.length + range.location > currentCharacterCount){
+                    return false
+                }
+                let newLength = currentCharacterCount + string.characters.count - range.length
+                if(newLength > 5){
+                    return false
+                }
+        
         
         return string == numberFiltered
     }
@@ -81,6 +94,20 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
             apartmentNumberVal = apartmentNumberTemp
             
         }
+        
+        if(apartmentNumberVal.isEmpty){
+            
+            apartmentView.shake()
+            
+            self.view.makeToast("Please fill apartment.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                               
+            }
+            
+            
+            return
+            
+        }
+
         
         if let notesTemp = notesTextArea.text{
             
@@ -228,7 +255,8 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         unitObject.actionStatus = "create"
         
         unitObject.surveyStatus = ""
-        unitObject.syncDate = ""
+        unitObject.surveySyncDate = ""
+        unitObject.unitSyncDate = ""
         
         appDelegate.saveContext()
     }

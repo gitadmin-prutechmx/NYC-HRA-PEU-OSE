@@ -2,7 +2,7 @@
 //  SalesforceOrgConfig+CoreDataClass.swift
 //  
 //
-//  Created by Kamal on 01/07/17.
+//  Created by Kamal on 05/07/17.
 //
 //
 

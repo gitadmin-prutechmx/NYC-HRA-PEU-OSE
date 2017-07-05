@@ -36,23 +36,25 @@ struct TenantDataStruct
 class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate
 {
     
+    typealias typeCompletionHandler = () -> ()
+    var completion : typeCompletionHandler = {}
+
     
-    
+    var completionHandler : ((_ childVC:MoreOptionsViewController) -> Void)?
     
     var attempt:String = ""
     var contact:String = ""
     var reknockNeeded:String = ""
+    var inTake:String = ""
     
-    var tenantStatus:String = ""
-    var inTakeStatus:String = ""
+    var reasonStatus:String = ""
     
-     var notes:String = ""
+    var notes:String = ""
     
     var selectedTenantId:String = ""
     
     let pickerView = UIPickerView()
-    var arrTakeStatus = NSMutableArray()
-    var arrTenantStatus = NSMutableArray()
+    var arrReasonStatus = NSMutableArray()
     
     @IBOutlet weak var saveOutlet: UIBarButtonItem!
     @IBOutlet weak var addTenantOutlet: UIButton!
@@ -67,10 +69,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     @IBOutlet weak var contactRdb: UISwitch!
     
-    @IBOutlet weak var ChooseInTakeStatusTxt: UITextField!
-    @IBOutlet weak var ChooseTenantStatusTxt: UITextField!
-    
-    
+    @IBOutlet weak var inTakeRdb: UISwitch!
+   
+    @IBOutlet weak var chooseInReasonTxt: UITextField!
     
     @IBOutlet weak var chooseSurveyView: UIView!
     @IBOutlet weak var chooseUnitInfoView: UIView!
@@ -105,11 +106,10 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         // setUpDropDowns()
         pickerView.delegate = self
         
-        self.ChooseTenantStatusTxt.inputView = pickerView
-        self.ChooseInTakeStatusTxt.inputView = pickerView
+        self.chooseInReasonTxt.inputView = pickerView
         
-        arrTakeStatus = ["Blocked","Planned","In Progress","Completed"]
-        arrTenantStatus = ["UnBlocked","UnPlanned","Progress","UnCompleted"]
+        
+        arrReasonStatus = ["No Issues","Refused","Not Primary Tenant","Superintendent Door","Landlords Door","Privacy Concern","Left Contact Info","Laguage Barrier"]
 
         
         
@@ -142,8 +142,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         toolBar.setItems([cancelBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
         
-        ChooseInTakeStatusTxt.inputAccessoryView = toolBar
-        ChooseTenantStatusTxt.inputAccessoryView = toolBar
+        chooseInReasonTxt.inputAccessoryView = toolBar
+        
         
         
         NotificationCenter.default.addObserver(self, selector:#selector(MoreOptionsViewController.UpdateTenantView), name: NSNotification.Name(rawValue: "UpdateTenantView"), object:nil
@@ -154,7 +154,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         fullAddressText.text =  SalesforceConnection.fullAddress
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        
+
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
@@ -230,11 +232,50 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     func UpdateTenantView(){
         print("UpdateTenantView")
         populateTenantData()
+        
+        
     }
     
     func UpdateSurveyView(){
        print("UpdateSurveyView")
         populateSurveyData()
+    }
+    
+    @IBAction func attemptChanged(_ sender: Any) {
+        if(attemptRdb.isOn){
+            attempt = "Yes"
+        }
+        else{
+            attempt = "No"
+        }
+    }
+    
+    
+    @IBAction func inTakeChanged(_ sender: Any) {
+        
+       enableDisableReason()
+        
+    }
+    
+    @IBAction func contactChanged(_ sender: Any) {
+        
+        if(contactRdb.isOn){
+            contact = "Yes"
+        }
+        else{
+            contact = "No"
+        }
+        
+    }
+    
+    @IBAction func reKnockChanged(_ sender: Any) {
+        
+        if(reKnockRdb.isOn){
+            reknockNeeded = "Yes"
+        }
+        else{
+            reknockNeeded = "No"
+        }
     }
     
     // Cleanup notifications added in viewDidLoad
@@ -304,7 +345,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
 
         
-        setSelectedTenant()
+       selectedTenantId = setSelectedTenant()
         
         self.tblTeanantVw.reloadData()
         
@@ -328,18 +369,48 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
-    func setSelectedTenant(){
+     var tempInTake:String = ""
+     var tempAttempt:String = ""
+     var tempContact:String = ""
+     var tempReason:String = ""
+    
+    
+    func getIntakeContactAttempt(){
+        
+        let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+        
+        
+        if(editUnitResults.count > 0){
+            
+            tempInTake = editUnitResults[0].inTake!
+            tempAttempt = editUnitResults[0].attempt!
+            tempContact = editUnitResults[0].isContact!
+            
+            tempReason = editUnitResults[0].reason!
+            
+        }
+        
+        
+    }
+
+    
+    func setSelectedTenant()->String{
         
         let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
         
         
         if(tenantAssignResults.count > 0){
             
-            selectedTenantId = tenantAssignResults[0].tenantId!
+            return tenantAssignResults[0].tenantId!
             
         }
-
+        
+        return ""
+        
+   
     }
+    
+    
     
     func populateSurveyData(){
         
@@ -386,26 +457,16 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     func cancelPressed(sender: UIBarButtonItem)
     {
         
-        ChooseInTakeStatusTxt.resignFirstResponder()
-        ChooseTenantStatusTxt.resignFirstResponder()
+        chooseInReasonTxt.resignFirstResponder()
+        
     }
     
     func donePressed(sender: UIBarButtonItem) {
         
-        if 1 == ChooseTenantStatusTxt.tag
-        {
-            ChooseInTakeStatusTxt.text = inTakeStatus
-            ChooseInTakeStatusTxt.resignFirstResponder()
-        }
+       
+            chooseInReasonTxt.text = reasonStatus
+            chooseInReasonTxt.resignFirstResponder()
             
-            
-        else
-        {
-            ChooseTenantStatusTxt.text = tenantStatus
-            ChooseTenantStatusTxt.resignFirstResponder()
-        }
-
-        
         
         
         
@@ -421,51 +482,25 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
-        if 1 == ChooseTenantStatusTxt.tag
-        {
-            return self.arrTenantStatus.count
-        }
-        else
-        {
-            return self.arrTakeStatus.count
-        }
+        
+       return self.arrReasonStatus.count
+        
         
         
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
-        if 1 == ChooseTenantStatusTxt.tag
-        {
-            
-            return arrTenantStatus.object(at: row) as? String
-        }
-            
-        else
-        {
-            return self.arrTakeStatus.object(at: row) as? String
-        }
+        
+            return self.arrReasonStatus.object(at: row) as? String
+        
     }
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        
-        if 1 == ChooseTenantStatusTxt.tag
-        {
-            tenantStatus = (arrTenantStatus.object(at: row) as? String)!
-            
-           // self.ChooseTenantStatusTxt.text = arrTenantStatus.object(at: row) as? String
-            
-        }
-            
-        
-        else
-        {
-             inTakeStatus = (arrTakeStatus.object(at: row) as? String)!
-            
-            //self.ChooseInTakeStatusTxt.text = arrTakeStatus.object(at: row) as? String
-        }
+       
+            reasonStatus = (arrReasonStatus.object(at: row) as? String)!
     }
     
 
@@ -576,31 +611,29 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     @IBAction func changeSegmented(_ sender: Any) {
         switch (sender as AnyObject).selectedSegmentIndex {
         case 0:
-             chooseSurveyView.isHidden = true
-             chooseTenantInfoView.isHidden = true
-             chooseUnitInfoView.isHidden = false
-             Utilities.currentSegmentedControl = "Unit"
-             self.saveOutlet.title = "Continue"
-             populateEditUnit()
+            
+             showEditUnitView()
+            
+            
             
         case 1:
-             chooseTenantInfoView.isHidden = false
-             chooseSurveyView.isHidden = true
-             chooseUnitInfoView.isHidden = true
-             Utilities.currentSegmentedControl = "Tenant"
-             self.saveOutlet.title = "Continue"
-             populateTenantData()
+            
+            if(isEditViewValid()){
+                showTenantView()
+            }
+            
+          
+           
         case 2:
-             chooseSurveyView.isHidden = false
-             chooseUnitInfoView.isHidden = true
-             chooseTenantInfoView.isHidden = true
-             Utilities.currentSegmentedControl = "Survey"
-             self.saveOutlet.title = "Save"
-             populateSurveyData()
-             setSelectedSurveyId()
+            
+            if(isEditViewValid() && isTenantViewValid()){
+                    showSurveyView()
+            }
+            
             
             
         default:
+            
             chooseSurveyView.isHidden = false
             chooseUnitInfoView.isHidden = false
             chooseTenantInfoView.isHidden = false
@@ -608,6 +641,110 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             self.saveOutlet.title = "Continue"
         }
     }
+    
+    
+    func isTenantViewValid()->Bool{
+        
+        
+        
+        if(setSelectedTenant() == ""){
+            
+            chooseTenantInfoView.shake()
+            
+            segmentedControl.selectedSegmentIndex = 1
+            Utilities.currentSegmentedControl = "Tenant"
+            
+            self.view.makeToast("Please select tenant", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                
+                
+            }
+            
+            return false
+            
+        }
+        else{
+            
+           return true
+        }
+        
+    }
+    
+    func isEditViewValid()->Bool{
+        
+        getIntakeContactAttempt()
+        
+        if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && (tempInTake != "No" || (tempInTake != "Yes" && tempReason != "")))){
+            
+            return true
+        }
+            
+        else{
+            
+            chooseUnitInfoView.shake()
+            
+            segmentedControl.selectedSegmentIndex = 0
+            Utilities.currentSegmentedControl = "Unit"
+            
+            self.view.makeToast("Please select valid information", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
+            
+            return false
+        }
+        
+    }
+    
+    
+    func showEditUnitView(){
+        
+        chooseSurveyView.isHidden = true
+        chooseTenantInfoView.isHidden = true
+        chooseUnitInfoView.isHidden = false
+        segmentedControl.selectedSegmentIndex = 0
+        Utilities.currentSegmentedControl = "Unit"
+        self.saveOutlet.title = "Continue"
+        
+        populateEditUnit()
+        
+    }
+    
+    
+    func showTenantView(){
+        
+        
+        chooseTenantInfoView.isHidden = false
+        chooseSurveyView.isHidden = true
+        chooseUnitInfoView.isHidden = true
+        segmentedControl.selectedSegmentIndex = 1
+        Utilities.currentSegmentedControl = "Tenant"
+        self.saveOutlet.title = "Continue"
+        
+        
+       
+       
+        
+        populateTenantData()
+        
+    }
+    
+    
+    func showSurveyView(){
+        
+        
+        chooseSurveyView.isHidden = false
+        chooseUnitInfoView.isHidden = true
+        chooseTenantInfoView.isHidden = true
+        segmentedControl.selectedSegmentIndex = 2
+        Utilities.currentSegmentedControl = "Survey"
+        self.saveOutlet.title = "Save"
+        
+        populateSurveyData()
+        setSelectedSurveyId()
+
+        
+    }
+    
     
     func populateEditUnit(){
         let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
@@ -619,8 +756,13 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             else  if(editUnitResults[0].attempt == "No"){
                attemptRdb.isOn = false
             }
+            else{
+                editUnitResults[0].attempt = "No"
+            }
             
             attempt = editUnitResults[0].attempt!
+            
+            
             
             if(editUnitResults[0].isContact == "Yes"){
                contactRdb.isOn = true
@@ -628,8 +770,14 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             else if(editUnitResults[0].isContact == "No"){
                contactRdb.isOn = false
             }
+            else{
+                editUnitResults[0].isContact = "No"
+            }
             
             contact = editUnitResults[0].isContact!
+            
+            
+            
             
             if(editUnitResults[0].reKnockNeeded == "Yes"){
                reKnockRdb.isOn = true
@@ -638,28 +786,60 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
               reKnockRdb.isOn = false
             }
+            else{
+                editUnitResults[0].reKnockNeeded = "No"
+            }
             
             reknockNeeded = editUnitResults[0].reKnockNeeded!
             
-            if(editUnitResults[0].tenantStatus! != ""){
-                    tenantStatus = editUnitResults[0].tenantStatus!
-                
-                ChooseTenantStatusTxt.text = tenantStatus
-               
+            
+            
+            
+            if(editUnitResults[0].inTake == "Yes"){
+                inTakeRdb.isOn = true
             }
-            if(editUnitResults[0].inTakeStatus! != ""){
-                    inTakeStatus = editUnitResults[0].inTakeStatus!
+            else if(editUnitResults[0].inTake == "No"){
                 
-                    ChooseInTakeStatusTxt.text = tenantStatus
+                inTakeRdb.isOn = false
+            }
+            else{
+                editUnitResults[0].inTake = "No"
             }
             
+            
+            //inTake = editUnitResults[0].inTake!
+            
+            enableDisableReason()
+            
+            if(editUnitResults[0].reason! != ""){
+                    reasonStatus = editUnitResults[0].reason!
+                
+                chooseInReasonTxt.text = reasonStatus
+               
+            }
+
             notesTextArea.text = editUnitResults[0].unitNotes
             
             
         }
     }
 
+    
+    func enableDisableReason(){
+        if(inTakeRdb.isOn){
+            inTake = "Yes"
+            chooseInReasonTxt.isEnabled = false
+            
+        }
+        else{
+            inTake = "No"
+            chooseInReasonTxt.isEnabled = true
+            
+        }
+    }
+    
     @IBAction func cancel(_ sender: Any) {
+
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -669,12 +849,10 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
             if(selectedSurveyId == ""){
                 
+                 chooseSurveyView.shake()
+                
                 self.view.makeToast("Please select survey", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        self.dismiss(animated: true, completion: nil)
-                    } else {
-                        self.dismiss(animated: true, completion: nil)
-                    }
+                    
                 }
                 
                 
@@ -690,12 +868,10 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             if(selectedTenantId == ""){
                 
+                chooseTenantInfoView.shake()
+                
                 self.view.makeToast("Please select tenant", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        self.dismiss(animated: true, completion: nil)
-                    } else {
-                        self.dismiss(animated: true, completion: nil)
-                    }
+                   
                 }
 
                 
@@ -718,18 +894,36 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 saveTenantAssignInDatabase()
             }
             
-            self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            }
+            showSurveyView()
             
+            
+//            self.view.makeToast("Tenant has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                self.dismiss(animated: true, completion: nil)
+//                
+//            }
+//            
             
         }
         
           else  if(Utilities.currentSegmentedControl == "Unit"){
         
-            updateUnitAndSurvey(type:"Updating Unit..")
+            if(attemptRdb.isOn && contactRdb.isOn && inTakeRdb.isOn){
+                updateUnitAndSurvey(type:"Updating Unit..")
+            }
+            else if(attemptRdb.isOn && contactRdb.isOn && (inTakeRdb.isOn == false && reasonStatus != "")){
+                updateUnitAndSurvey(type:"Updating Unit..")
+            }
+            else{
+                
+                chooseUnitInfoView.shake()
+                
+                self.view.makeToast("Please select valid information", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                   
+                    
+                }
+            }
         }
          
         
@@ -799,14 +993,20 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 updateEditUnitInDatabase()
             }
             else{
-                saveEditUnitInDatabase(currentAttempt: attempt, currentInTakeStatus: inTakeStatus, currentReknockNeeded: reknockNeeded, currentTenantStatus: tenantStatus, currentNotes: notes, currentIsContact: contact, currentTenantId: "", currentSurveyId: "")
+                saveEditUnitInDatabase(currentAttempt: attempt, currentInTake: inTake, currentReknockNeeded: reknockNeeded, currentReason: reasonStatus, currentNotes: notes, currentIsContact: contact, currentTenantId: "", currentSurveyId: "")
                 
             }
-        }
             
+            
+           showTenantView()
+            
+        }
+         
+            
+        //editsurvey
         else{
             
-//            editUnitDict = Utilities.editUnitAndSurveyDicData(selectedSurveyId:selectedSurveyId,type:type)
+
             
             let editSurveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
             
@@ -818,17 +1018,34 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 saveEditUnitSurveyInDatabase()
                 
             }
+            
+            // self.dismiss(animated: true, completion: nil)
+          
+            
+            
+            self.dismiss(animated: true) {
+                SalesforceConnection.surveyId = self.selectedSurveyId
+                self.completionHandler?(self)
+                print("Completion");
+            }
+            
+//            self.dismiss(animated: true, completion: {
+//                
+//                self.completion()
+//                print("Completion");
+//            })
+//        
+            
         }
       
         
-        self.view.makeToast("Unit information has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-            
-           // Utilities.isSubmitSurvey = false
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }
+//        self.view.makeToast("Unit information has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//            
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+//            
+//            self.dismiss(animated: true, completion: nil)
+//            
+//        }
 
         
        
@@ -947,7 +1164,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     
     
-    func saveEditUnitInDatabase(currentAttempt:String,currentInTakeStatus:String,currentReknockNeeded:String,currentTenantStatus:String,currentNotes:String,currentIsContact:String,currentTenantId:String,currentSurveyId:String){
+    func saveEditUnitInDatabase(currentAttempt:String,currentInTake:String,currentReknockNeeded:String,currentReason:String,currentNotes:String,currentIsContact:String,currentTenantId:String,currentSurveyId:String){
         
         
         let editUnitObject = EditUnit(context: context)
@@ -961,9 +1178,12 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         
         editUnitObject.attempt = currentAttempt
-        editUnitObject.inTakeStatus = currentInTakeStatus
+       
         editUnitObject.reKnockNeeded = currentReknockNeeded
-        editUnitObject.tenantStatus = currentTenantStatus
+        
+        editUnitObject.inTake = currentInTake
+        editUnitObject.reason = currentReason
+        
         editUnitObject.unitNotes = currentNotes
         editUnitObject.isContact = currentIsContact
         
@@ -979,14 +1199,14 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     func saveTenantAssignInDatabase(){
         
-        saveEditUnitInDatabase(currentAttempt: "", currentInTakeStatus: "", currentReknockNeeded: "", currentTenantStatus: "", currentNotes: "", currentIsContact: "", currentTenantId: selectedTenantId, currentSurveyId: "")
+        saveEditUnitInDatabase(currentAttempt: "", currentInTake: "", currentReknockNeeded: "", currentReason: "", currentNotes: "", currentIsContact: "", currentTenantId: selectedTenantId, currentSurveyId: "")
         
         
     }
     
     func saveEditUnitSurveyInDatabase(){
         
-        saveEditUnitInDatabase(currentAttempt: "", currentInTakeStatus: "", currentReknockNeeded: "", currentTenantStatus: "", currentNotes: "", currentIsContact: "", currentTenantId: "", currentSurveyId: selectedSurveyId)
+        saveEditUnitInDatabase(currentAttempt: "", currentInTake: "", currentReknockNeeded: "", currentReason: "", currentNotes: "", currentIsContact: "", currentTenantId: "", currentSurveyId: selectedSurveyId)
         
     }
     
@@ -1003,8 +1223,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
         
         
-        updateObjectDic["tenantStatus"] = tenantStatus
-        updateObjectDic["inTakeStatus"] = inTakeStatus
+        updateObjectDic["reason"] = reasonStatus
+        updateObjectDic["inTake"] = inTake
         updateObjectDic["unitNotes"] = notes
         updateObjectDic["attempt"] = attempt
         updateObjectDic["isContact"] = contact
@@ -1126,6 +1346,10 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }
 
 
+    
+    func dismissVCCompletion(completionHandler: @escaping typeCompletionHandler) {
+        self.completion = completionHandler
+    }
  
 
 }

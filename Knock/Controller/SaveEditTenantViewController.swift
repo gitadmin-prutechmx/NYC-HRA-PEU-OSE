@@ -8,9 +8,13 @@
 
 import UIKit
 
-class SaveEditTenantViewController: UIViewController
+class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
 {
     @IBOutlet weak var lastNameView: UIView!
+    @IBOutlet weak var firstNameView: UIView!
+    @IBOutlet weak var emailView: UIView!
+    @IBOutlet weak var phoneView: UIView!
+    @IBOutlet weak var dobView: UIView!
     
     @IBOutlet weak var firstNameTxtField: UITextField!
     
@@ -87,7 +91,29 @@ var picker = UIDatePicker()
         if(SalesforceConnection.currentTenantId != ""){
             fillTenantInfo()
         }
+        
+        phoneTextField.delegate = self
 
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        
+        let aSet =  NSCharacterSet(charactersIn:"0123456789").inverted
+        let compSepByCharInSet = string.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+        let currentCharacterCount = phoneTextField.text?.characters.count ?? 0
+        if (range.length + range.location > currentCharacterCount){
+            return false
+        }
+        let newLength = currentCharacterCount + string.characters.count - range.length
+        if(newLength > 10){
+            return false
+        }
+        
+        
+        return string == numberFiltered
     }
     
     func fillTenantInfo(){
@@ -142,7 +168,7 @@ var picker = UIDatePicker()
         
         if(firstName.isEmpty){
             
-            lastNameView.shake()
+            firstNameView.shake()
             
             self.view.makeToast("Please fill first name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
@@ -199,6 +225,29 @@ var picker = UIDatePicker()
             
         }
         
+        if(phone.isEmpty){
+            
+            phoneView.shake()
+            
+            self.view.makeToast("Please fill last name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        
+        
         if(!phone.isEmpty && phone.characters.count < 10){
             
             self.view.makeToast("Phone number should be in 10 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
@@ -221,6 +270,27 @@ var picker = UIDatePicker()
         if let emailTemp = emailTxtField.text{
             
             email = emailTemp
+            
+        }
+        
+        if(email.isEmpty){
+            
+            emailView.shake()
+            
+            self.view.makeToast("Please fill email.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
             
         }
         

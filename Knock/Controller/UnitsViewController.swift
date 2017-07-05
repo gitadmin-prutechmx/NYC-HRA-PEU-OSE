@@ -99,7 +99,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        
+
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
@@ -190,7 +192,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     @IBAction func syncData(_ sender: Any) {
-        
+        SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
         // Utilities.fetchAllDataFromSalesforce()
         
     }
@@ -242,7 +244,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
 //                    floorArray.append(unitData.floor!)
 //                }
 //                
-                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.syncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
+                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.surveySyncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
                 
                 UnitDataArray.append(objectUnitStruct)
                 
@@ -527,41 +529,51 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         if(isSurveyAssigned == false){
         
             
+          
+            
             Utilities.currentSegmentedControl = "Unit"
-            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
+            
+            SurveyUtility.navigationController = self.navigationController!
+           
+            let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
+            
+                self.showSurveyWizard()
+                print("completed for \(moreOptionVC)")
+            }
+            moreOptionVC.completionHandler=completionHandler
+            
+      
+            
+            
+//            moreOptionVC.dismissVCCompletion(){ () in
+//                 print("kamal")
+//                 //self.showSurveyWizard()
+//            }
+
+            let navigationController = UINavigationController(rootViewController: moreOptionVC)
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            
+           
+            self.present(navigationController, animated: true, completion: nil)
+            
+            
+//            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
             
             
         }
            
         else{
             
-            
+                //SurveyUtility.showSurvey()
             
                // SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
             
-                let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.surveyId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
-                
-                if(surveyQuestionResults.count == 1){
-                    
-                    
-                    let jsonData =  Utilities.convertToJSON(text: surveyQuestionResults[0].surveyQuestionData!) as!Dictionary<String, AnyObject>
-
-                    
-                    readSurveyJSONObject(object: jsonData)
-                    
-                    Utilities.totalSurveyQuestions =  Utilities.surveyQuestionArray.count
-                    
-                    //Utilities.currentUnitId = ""
-                    //SalesforceRestApi.currentUnitName = ""
-                    
-                    if(Utilities.totalSurveyQuestions > 0){
-                        
-                        showSurveyQuestions()
-                        print("ShowSurveyQuestions")
-                    }
-                    
-                }
             
+           showSurveyWizard()
             
         }
     }
@@ -585,6 +597,36 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
 
 
     }
+    
+    func showSurveyWizard(){
+        
+        
+        let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.surveyId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
+        
+        if(surveyQuestionResults.count == 1){
+            
+            
+            let jsonData =  Utilities.convertToJSON(text: surveyQuestionResults[0].surveyQuestionData!) as!Dictionary<String, AnyObject>
+            
+            
+            readSurveyJSONObject(object: jsonData)
+            
+            Utilities.totalSurveyQuestions =  Utilities.surveyQuestionArray.count
+            
+            //Utilities.currentUnitId = ""
+            //SalesforceRestApi.currentUnitName = ""
+            
+            if(Utilities.totalSurveyQuestions > 0){
+                
+                showSurveyQuestions()
+                print("ShowSurveyQuestions")
+            }
+            
+        }
+        
+        
+    }
+    
     
     
     
@@ -666,8 +708,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         Utilities.skipLogicParentChildDict = [:]
         
         Utilities.prevSkipLogicParentChildDict = [:]
-       
-
+        
+        
         
         
         
@@ -762,7 +804,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             
         }
-
+        
         
         
         
@@ -774,7 +816,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     
-
+    
     
     
     func showSurveyQuestions(){
@@ -799,7 +841,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
             
-            self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
+            presentDetail(surveyRadioButtonVC)
+            
+            //self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
             
             /*
              let surveyRadioButtonVC = storyboard.instantiateViewControllerWithIdentifier("surveyRadioButtonVCIdentifier") as! SurveyRadioButtonViewController
@@ -812,7 +856,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let surveyMultiButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyMultiOptionVCIdentifier") as! SurveyMultiOptionViewController
             
-            self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
+             presentDetail(surveyMultiButtonVC)
+            
+            //self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
             
             
         }
@@ -820,7 +866,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
             
-            self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+            
+             presentDetail(surveyTextFieldVC)
+            
+            //self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
             
             
             /*  let surveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("surveyTextFiedVCIdentifier") as! SurveyTextFieldViewController
@@ -833,6 +882,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
+  
     
     
     
@@ -978,6 +1028,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
    
     @IBAction func NewUnit(_ sender: Any) {
+        
         self.performSegue(withIdentifier: "showAddUnitIdentifier", sender: sender)
     }
     
@@ -1003,5 +1054,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
 }
+
 
 

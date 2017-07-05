@@ -184,19 +184,20 @@ class Utilities {
         return newUnitDic
     }
     
-    class func editUnitTenantAndSurveyDicData(tenantStatus:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,inTakeStatus:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
+    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
         
         var editUnitDict:[String:String] = [:]
         
            editUnitDict["assignmentLocationUnitId"] = assignmentLocationUnitId
         
         
-            editUnitDict["tenantStatus"] = tenantStatus
+            editUnitDict["intake"] = intake
+            editUnitDict["reason"] = reason
             editUnitDict["notes"] = notes
             editUnitDict["attempt"] = attempt
             editUnitDict["contact"] = contact
             editUnitDict["reKnockNeeded"] = reKnockNeeded
-            editUnitDict["intakeStatus"] = inTakeStatus
+        
         
             editUnitDict["surveyId"] = selectedSurveyId
             editUnitDict["tenantId"] = selectedTenantId
@@ -829,8 +830,8 @@ class Utilities {
         
         SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         
-
-        
+SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+    
         
     SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
             
@@ -866,16 +867,16 @@ class Utilities {
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
                 
-
                 
-                
+                    }
+        
             }
             
             
             
         }
      
-    }
+    }//end of class
     
     
     class func parseUserData(jsonObject: Dictionary<String, AnyObject>){
@@ -1069,6 +1070,7 @@ class Utilities {
                     
                     locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
                     locationObject.totalUnits = locationData["totalUnits"] as? String  ?? ""
+                    locationObject.syncDate = locationData["locationSyncDate"] as? String  ?? ""
                     
                     locationObject.assignmentId = assignmentObject.id!
                     
@@ -1108,8 +1110,20 @@ class Utilities {
                         
                         unitObject.actionStatus = ""
                         
-                        unitObject.surveyStatus = ""
-                        unitObject.syncDate = ""
+                        
+                        unitObject.unitSyncDate = unitData["unitSyncDate"] as? String  ?? ""
+                        
+                        
+                        unitObject.surveySyncDate = unitData["surveySyncDate"] as? String  ?? ""
+                        
+                        if(unitObject.surveySyncDate != ""){
+                            unitObject.surveyStatus = "Completed"
+                        }
+                        else{
+                            unitObject.surveyStatus = ""
+                        }
+                        
+                        
                         
                         unitObject.assignmentLocUnitId = unitData["assignmentLocUnitId"] as? String  ?? ""
                         
@@ -1124,9 +1138,11 @@ class Utilities {
                         editUnitObject.unitId = unitObject.id!
                         editUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                         editUnitObject.attempt = unitData["attempt"] as? String  ?? ""
-                        editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
+                         editUnitObject.inTake = unitData["intake"] as? String  ?? ""
+                         editUnitObject.reason = unitData["reason"] as? String  ?? ""
+                       // editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
                         editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
-                        editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
+                       // editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
                         editUnitObject.unitNotes = unitData["notes"] as? String  ?? ""
                         editUnitObject.isContact = unitData["isContact"] as? String  ?? ""
                         editUnitObject.actionStatus = ""

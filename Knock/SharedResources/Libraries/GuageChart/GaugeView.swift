@@ -39,6 +39,8 @@ public class GaugeView: UIView {
   
   @IBInspectable public var radius: CGFloat
   {
+    print("radius \(self.bounds.width)")
+    //return 255.0
     return min(self.bounds.width, 190)/2
   }
   
@@ -57,8 +59,8 @@ public class GaugeView: UIView {
     didSet {
       if let gaugeLayer = gaugeLayer {
         gaugeLayer.stopAngle  = convertPercentageInRadius(percentage: percentage)
-        //self.accessibilityValue = "\(percentage)%"
-         self.accessibilityValue = "\(percentage)"
+        self.accessibilityValue = "\(percentage)%"
+        // self.accessibilityValue = "\(percentage)"
       }
     }
   }
@@ -190,8 +192,8 @@ public class GaugeView: UIView {
   
   //MARK: - Utility method
   private func convertPercentageInRadius(percentage: Float) -> Float {
-    //return convertDegreesToRadius(degrees: (360.0 / 100.0 * percentage) + startAngle)
-     return convertDegreesToRadius(degrees: (360.0) + startAngle)
+    return convertDegreesToRadius(degrees: (360.0 / 100.0 * percentage) + startAngle)
+    // return convertDegreesToRadius(degrees: (360.0) + startAngle)
   }
   
   private func convertDegreesToRadius(degrees: Float) -> Float {

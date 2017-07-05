@@ -2,7 +2,7 @@
 //  Location+CoreDataProperties.swift
 //  
 //
-//  Created by Kamal on 03/07/17.
+//  Created by Kamal on 05/07/17.
 //
 //
 
@@ -23,8 +23,9 @@ extension Location {
     @NSManaged public var name: String?
     @NSManaged public var state: String?
     @NSManaged public var street: String?
-    @NSManaged public var zip: String?
+    @NSManaged public var syncDate: String?
     @NSManaged public var totalUnits: String?
+    @NSManaged public var zip: String?
     @NSManaged public var locAssignmentR: Assignment?
     @NSManaged public var locUnitR: NSSet?
 
