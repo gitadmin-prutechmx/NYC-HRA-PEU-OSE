@@ -21,8 +21,6 @@
 		5D5290E91F0C1BCB00D5645F /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290CD1F0C1BCB00D5645F /* EditLocation+CoreDataProperties.swift */; };
 		5D5290EA1F0C1BCB00D5645F /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290CE1F0C1BCB00D5645F /* Unit+CoreDataClass.swift */; };
 		5D5290EB1F0C1BCB00D5645F /* Unit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290CF1F0C1BCB00D5645F /* Unit+CoreDataProperties.swift */; };
-		5D5290EC1F0C1BCB00D5645F /* Assignment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290D01F0C1BCB00D5645F /* Assignment+CoreDataClass.swift */; };
-		5D5290ED1F0C1BCB00D5645F /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290D11F0C1BCB00D5645F /* Assignment+CoreDataProperties.swift */; };
 		5D5290EE1F0C1BCB00D5645F /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290D21F0C1BCB00D5645F /* Location+CoreDataClass.swift */; };
 		5D5290EF1F0C1BCB00D5645F /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290D31F0C1BCB00D5645F /* Location+CoreDataProperties.swift */; };
 		5D5290F01F0C1BCB00D5645F /* Chart+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5290D41F0C1BCB00D5645F /* Chart+CoreDataClass.swift */; };
@@ -133,8 +131,6 @@
 		5D5290CD1F0C1BCB00D5645F /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5290CE1F0C1BCB00D5645F /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5290CF1F0C1BCB00D5645F /* Unit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5290D01F0C1BCB00D5645F /* Assignment+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5290D11F0C1BCB00D5645F /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5290D21F0C1BCB00D5645F /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5290D31F0C1BCB00D5645F /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5290D41F0C1BCB00D5645F /* Chart+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -338,8 +334,6 @@
 				5D5290CD1F0C1BCB00D5645F /* EditLocation+CoreDataProperties.swift */,
 				5D5290CE1F0C1BCB00D5645F /* Unit+CoreDataClass.swift */,
 				5D5290CF1F0C1BCB00D5645F /* Unit+CoreDataProperties.swift */,
-				5D5290D01F0C1BCB00D5645F /* Assignment+CoreDataClass.swift */,
-				5D5290D11F0C1BCB00D5645F /* Assignment+CoreDataProperties.swift */,
 				5D5290D21F0C1BCB00D5645F /* Location+CoreDataClass.swift */,
 				5D5290D31F0C1BCB00D5645F /* Location+CoreDataProperties.swift */,
 				5D5290D41F0C1BCB00D5645F /* Chart+CoreDataClass.swift */,
@@ -710,7 +704,6 @@
 			files = (
 				5D56CF091EE007060019882F /* AppDelegate.swift in Sources */,
 				5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */,
-				5D5290ED1F0C1BCB00D5645F /* Assignment+CoreDataProperties.swift in Sources */,
 				5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */,
 				5D5290EA1F0C1BCB00D5645F /* Unit+CoreDataClass.swift in Sources */,
 				5D5291001F0C1BCB00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */,
@@ -738,7 +731,6 @@
 				5D5290FB1F0C1BCB00D5645F /* SalesforceOrgConfig+CoreDataProperties.swift in Sources */,
 				5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */,
 				5D5290FD1F0C1BCB00D5645F /* SurveyQuestion+CoreDataProperties.swift in Sources */,
-				5D5290EC1F0C1BCB00D5645F /* Assignment+CoreDataClass.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
 				5D5290F41F0C1BCB00D5645F /* Tenant+CoreDataClass.swift in Sources */,

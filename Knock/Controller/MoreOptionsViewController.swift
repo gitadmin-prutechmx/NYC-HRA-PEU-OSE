@@ -638,7 +638,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             chooseUnitInfoView.isHidden = false
             chooseTenantInfoView.isHidden = false
             Utilities.currentSegmentedControl = "Default"
-            self.saveOutlet.title = "Continue"
+            //self.saveOutlet.title = "Continue"
         }
     }
     
@@ -674,7 +674,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         getIntakeContactAttempt()
         
-        if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && (tempInTake != "No" || (tempInTake != "Yes" && tempReason != "")))){
+          if((tempAttempt != "" && tempAttempt != "No")){
+            
+       // if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && (tempInTake != "No" || (tempInTake != "Yes" && tempReason != "")))){
             
             return true
         }
@@ -686,7 +688,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             segmentedControl.selectedSegmentIndex = 0
             Utilities.currentSegmentedControl = "Unit"
             
-            self.view.makeToast("Please select valid information", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please select attempt", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
             }
             
@@ -703,7 +705,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         chooseUnitInfoView.isHidden = false
         segmentedControl.selectedSegmentIndex = 0
         Utilities.currentSegmentedControl = "Unit"
-        self.saveOutlet.title = "Continue"
+        //self.saveOutlet.title = "Continue"
         
         populateEditUnit()
         
@@ -718,7 +720,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         chooseUnitInfoView.isHidden = true
         segmentedControl.selectedSegmentIndex = 1
         Utilities.currentSegmentedControl = "Tenant"
-        self.saveOutlet.title = "Continue"
+       // self.saveOutlet.title = "Continue"
         
         
        
@@ -737,7 +739,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         chooseTenantInfoView.isHidden = true
         segmentedControl.selectedSegmentIndex = 2
         Utilities.currentSegmentedControl = "Survey"
-        self.saveOutlet.title = "Save"
+        //self.saveOutlet.title = "Save"
         
         populateSurveyData()
         setSelectedSurveyId()
@@ -908,17 +910,18 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
           else  if(Utilities.currentSegmentedControl == "Unit"){
         
-            if(attemptRdb.isOn && contactRdb.isOn && inTakeRdb.isOn){
+            //if(attemptRdb.isOn && contactRdb.isOn && inTakeRdb.isOn){
+            if(attemptRdb.isOn){
                 updateUnitAndSurvey(type:"Updating Unit..")
             }
-            else if(attemptRdb.isOn && contactRdb.isOn && (inTakeRdb.isOn == false && reasonStatus != "")){
-                updateUnitAndSurvey(type:"Updating Unit..")
-            }
+//            else if(attemptRdb.isOn && contactRdb.isOn && (inTakeRdb.isOn == false && reasonStatus != "")){
+//                updateUnitAndSurvey(type:"Updating Unit..")
+//            }
             else{
                 
                 chooseUnitInfoView.shake()
                 
-                self.view.makeToast("Please select valid information", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please select attempt", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                    
                     

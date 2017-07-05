@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Assignment" representedClassName="Assignment" syncable="YES">
+    <entity name="Assignment" representedClassName="Assignment" syncable="YES" codeGenerationType="class">
+        <attribute name="completePercent" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -142,7 +143,7 @@
         <relationship name="unitLocR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locUnitR" inverseEntity="Location" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Assignment" positionX="-333" positionY="-18" width="128" height="195"/>
+        <element name="Assignment" positionX="-333" positionY="-18" width="128" height="210"/>
         <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>

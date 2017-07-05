@@ -889,39 +889,27 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
     
     class func parseChartData(jsonObject: Dictionary<String, AnyObject>){
     
+      //  "{\"Chart4\":{\"FollowUpNeeded\":1},\"Chart3\":{\"NoResponse\":0},\"Chart2\":{\"UnitsCompleted\":12.0},\"Chart1\":{\"TotalUnits\":945.0}}"
+        
       
         let chart1 = jsonObject["Chart1"] as? [String: AnyObject]
         let chart2 = jsonObject["Chart2"] as? [String: AnyObject]
         let chart3 = jsonObject["Chart3"] as? [String: AnyObject]
         let chart4 = jsonObject["Chart4"] as? [String: AnyObject]
         
-        let chart1Obj = chart1?["TotalAssignmentsByStatus"] as? [String: AnyObject]
+  
        
-        let chart1CompObj = Chart(context: context)
-        chart1CompObj.chartType = "Chart1"
-        chart1CompObj.chartField = "Completed"
-        chart1CompObj.chartLabel = "Total Assignments by Status"
-        chart1CompObj.chartValue = String(chart1Obj?["Completed"] as! Int)
+        let chart1Obj = Chart(context: context)
+        chart1Obj.chartType = "Chart1"
+        chart1Obj.chartField = "TotalUnits"
+        chart1Obj.chartLabel = "Total Assignments by Status"
+        chart1Obj.chartValue = String(chart1?["TotalUnits"] as! Int)
+        
+        print(chart1Obj.chartValue!)
         
         appDelegate.saveContext()
         
-        let chart1InProgObj = Chart(context: context)
-        chart1InProgObj.chartType = "Chart1"
-        chart1InProgObj.chartField = "In Progress"
-        chart1InProgObj.chartLabel = "Total Assignments by Status"
-        chart1InProgObj.chartValue = String(chart1Obj?["In Progress"] as! Int)
         
-        appDelegate.saveContext()
-        
-        let chart1AssignedObj = Chart(context: context)
-        chart1AssignedObj.chartType = "Chart1"
-        chart1AssignedObj.chartField = "Assigned"
-        chart1AssignedObj.chartLabel = "Total Assignments by Status"
-        chart1AssignedObj.chartValue = String(chart1Obj?["Assigned"] as! Int)
-        
-        appDelegate.saveContext()
-        
-      
         
         
         let chart2Object = Chart(context: context)
@@ -929,6 +917,8 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
         chart2Object.chartField = "UnitsCompleted"
         chart2Object.chartLabel = "Units Completed"
         chart2Object.chartValue = String(chart2?["UnitsCompleted"] as! Int)
+        
+        print(chart2Object.chartValue!)
         
         appDelegate.saveContext()
         
@@ -938,6 +928,8 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
         chart3Object.chartLabel = "No Response"
         chart3Object.chartValue = String(chart3?["NoResponse"] as! Int)
         
+        print( chart3Object.chartValue!)
+        
         appDelegate.saveContext()
         
         let chart4Object = Chart(context: context)
@@ -946,15 +938,10 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
         chart4Object.chartLabel = "FollowUp Needed"
         chart4Object.chartValue = String(chart4?["FollowUpNeeded"] as! Int)
         
+        print(chart4Object.chartValue!)
+        
         appDelegate.saveContext()
-        
-        //need to check location id and unit id
-    
-       print(String(chart4?["FollowUpNeeded"] as! Int))
-       print(String(chart3?["NoResponse"] as! Int))
-       print(String(chart2?["UnitsCompleted"] as! Int))
-       
-        
+     
        
 
     }
@@ -996,7 +983,7 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
                 assignmentObject.totalUnits = String(assignmentData["totalLocationUnit"] as! Int)
                 assignmentObject.totalSurvey = String(assignmentData["totalSurvey"] as! Int)
                 assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
-                
+                assignmentObject.completePercent = String(assignmentData["completePercent"] as! Float)
                 
                 //assignmentIdArray.append(assignmentObject.id!)
                 

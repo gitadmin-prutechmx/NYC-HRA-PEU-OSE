@@ -841,9 +841,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
             
-            presentDetail(surveyRadioButtonVC)
+            //presentDetail(surveyRadioButtonVC)
             
-            //self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
+            self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
             
             /*
              let surveyRadioButtonVC = storyboard.instantiateViewControllerWithIdentifier("surveyRadioButtonVCIdentifier") as! SurveyRadioButtonViewController
@@ -856,9 +856,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let surveyMultiButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyMultiOptionVCIdentifier") as! SurveyMultiOptionViewController
             
-             presentDetail(surveyMultiButtonVC)
+             //presentDetail(surveyMultiButtonVC)
             
-            //self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
+            self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
             
             
         }
@@ -867,9 +867,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
             
             
-             presentDetail(surveyTextFieldVC)
+            // presentDetail(surveyTextFieldVC)
             
-            //self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+            self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
             
             
             /*  let surveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("surveyTextFiedVCIdentifier") as! SurveyTextFieldViewController

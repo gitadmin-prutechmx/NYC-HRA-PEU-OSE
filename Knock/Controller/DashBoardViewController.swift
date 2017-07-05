@@ -22,6 +22,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     var assignmentIdArray = [String]()
     var assignmentArray = [String]()
     var assignmentEventIdArray = [String]()
+    var assignmentCompleteArray = [String]()
     
     var totalLocArray = [String]()
     var totalUnitsArray = [String]()
@@ -103,7 +104,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
         
         populateEventAssignmentData()
-      //  populateChartData()
+        populateChartData()
        
         
         //updateTableViewData()
@@ -156,11 +157,11 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         var dataEntries: [BarChartDataEntry] = []
         //String(describing: languages)z
-        for i in 0..<chart1StatusArray.count
-        {
-            let dataEntry =   BarChartDataEntry(x: chart1ValueArray[i], y: Double(i))
-            dataEntries.append(dataEntry)
-        }
+//        for i in 0..<chart1StatusArray.count
+//        {
+//            let dataEntry =   BarChartDataEntry(x: chart1ValueArray[i], y: Double(i))
+//            dataEntries.append(dataEntry)
+//        }
         
       
         
@@ -278,8 +279,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     
     var chart1Label:String = ""
-    var chart1StatusArray = [String]()
-    var chart1ValueArray = [Double]()
+    var chart1Value:String = ""
     
     var chart2Label:String = ""
     var chart2Value:String = ""
@@ -294,8 +294,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func populateChartData(){
         
         chart1Label = ""
-        chart1StatusArray = []
-        chart1ValueArray = []
+        chart1Value = ""
         
         chart2Label = ""
         chart2Value = ""
@@ -311,14 +310,9 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         if(chart1Results.count > 0){
             
-            for chart1Data in chart1Results{
-              
-                chart1StatusArray.append(chart1Data.chartLabel!)
-                chart1ValueArray.append(Double(chart1Data.chartValue!)!)
-
-               chart1Label = chart1Data.chartLabel!
-
-            }
+            chart1Label = chart1Results[0].chartLabel!
+            chart1Value = chart1Results[0].chartValue!
+ 
         }
         
         let chart2Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart2",isPredicate:true) as! [Chart]
@@ -365,6 +359,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         totalLocArray = []
         totalUnitsArray = []
         eventDict = [:]
+        assignmentCompleteArray = []
         
         
         createEventDictionary()
@@ -385,6 +380,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                     assignmentEventIdArray.append(assignmentdata.eventId!)
                     totalLocArray.append(assignmentdata.totalLocations!)
                     totalUnitsArray.append(assignmentdata.totalUnits!)
+                assignmentCompleteArray.append(assignmentdata.completePercent!)
+                
                 }
             }
 
@@ -434,14 +431,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         //cell.lblChart.text = chart1Label
         
-        //cell.chartView = UIView()
+      //  cell.chartView = UIView()
         
         if indexPath.row == 0
         {
          //R165 G225 B255
-         circleChartData(custumView: cell.chartView, chartValue: 100.0, chartText: "118", chartColor: UIColor(red: CGFloat(165.0/255), green: CGFloat(225.0/255), blue: CGFloat(255.0/255), alpha: 1))
+         circleChartData(custumView: cell.chartView, chartValue: 100.0, chartText: chart1Value, chartColor: UIColor(red: CGFloat(165.0/255), green: CGFloat(225.0/255), blue: CGFloat(255.0/255), alpha: 1))
             
-            cell.lblChart.text = "Total Units"
+            cell.lblChart.text = chart1Label
            
            //barChartData(custumView: cell.chartView)
             
@@ -452,7 +449,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 1
         {
             //Green R91 G192 B74
-            circleChartData(custumView: cell.chartView, chartValue: 80.0, chartText: "80%", chartColor: UIColor(red: CGFloat(91.0/255), green: CGFloat(192.0/255), blue: CGFloat(74.0/255), alpha: 1))
+            circleChartData(custumView: cell.chartView, chartValue: 100.0, chartText: chart2Value, chartColor: UIColor(red: CGFloat(91.0/255), green: CGFloat(192.0/255), blue: CGFloat(74.0/255), alpha: 1))
             
              cell.lblChart.text = chart2Label
            
@@ -460,7 +457,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 2
         {
             //Red R206 G88 B127
-           circleChartData(custumView: cell.chartView, chartValue: 95.0, chartText: "95%", chartColor: UIColor(red: CGFloat(206.0/255), green: CGFloat(88.0/255), blue: CGFloat(127.0/255), alpha: 1))
+           circleChartData(custumView: cell.chartView, chartValue: Float(chart3Value)!, chartText: chart3Value + "%", chartColor: UIColor(red: CGFloat(206.0/255), green: CGFloat(88.0/255), blue: CGFloat(127.0/255), alpha: 1))
            
              cell.lblChart.text = chart3Label
             
@@ -468,7 +465,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 3
         {
             //Yellow R229 G229 B137
-            circleChartData(custumView: cell.chartView, chartValue: 85.0, chartText: "85%", chartColor: UIColor(red: CGFloat(229.0/255), green: CGFloat(229.0/255), blue: CGFloat(137.0/255), alpha: 1))
+            circleChartData(custumView: cell.chartView, chartValue: Float(chart4Value)!, chartText: chart4Value + "%", chartColor: UIColor(red: CGFloat(229.0/255), green: CGFloat(229.0/255), blue: CGFloat(137.0/255), alpha: 1))
            
              cell.lblChart.text = chart4Label
            // updateChartData(custumView: cell.chartView)
@@ -521,7 +518,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell.units.text = totalUnitsArray[indexPath.row]
         cell.assignmentId.text = assignmentIdArray[indexPath.row]
 
-        cell.completePercent.text = ""
+        cell.completePercent.text = assignmentCompleteArray[indexPath.row] + "%"
         
         return cell
     }
