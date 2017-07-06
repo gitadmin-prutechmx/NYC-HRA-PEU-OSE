@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iWB-xI-dhM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iWB-xI-dhM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -310,6 +310,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="PKU-QG-teX" secondAttribute="trailing" id="0QP-za-ZyN"/>
+                                            <constraint firstItem="PKU-QG-teX" firstAttribute="centerX" secondItem="7JG-Nh-pfI" secondAttribute="centerX" id="5lu-mx-Vc8"/>
                                             <constraint firstAttribute="bottom" secondItem="PKU-QG-teX" secondAttribute="bottom" constant="26" id="7bd-a1-hRb"/>
                                             <constraint firstItem="PKU-QG-teX" firstAttribute="leading" secondItem="7JG-Nh-pfI" secondAttribute="leading" id="C5o-dY-DcG"/>
                                             <constraint firstAttribute="trailing" secondItem="tgJ-Hp-NGD" secondAttribute="trailing" constant="1" id="OTm-11-IYc"/>
@@ -343,47 +344,47 @@
                                                     <rect key="frame" x="8" y="2" width="350" height="64"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="World tour NYC" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IdB-Py-OvX">
-                                                            <rect key="frame" x="94" y="17" width="68" height="30"/>
+                                                            <rect key="frame" x="94" y="17" width="68" height="33.5"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="A6g-Yr-N43">
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="A6g-Yr-N43">
                                                                     <variation key="heightClass=regular-widthClass=regular" constant="60"/>
                                                                 </constraint>
                                                                 <constraint firstAttribute="width" constant="68" id="Ssj-4s-cfB">
-                                                                    <variation key="heightClass=regular-widthClass=regular" constant="176"/>
+                                                                    <variation key="heightClass=regular-widthClass=regular" constant="186"/>
                                                                 </constraint>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6t-63-EbM">
-                                                            <rect key="frame" x="195" y="17" width="22" height="30"/>
+                                                            <rect key="frame" x="204.5" y="17" width="23.5" height="33.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="22" id="gpt-Kz-VvZ"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="190" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YkR-gr-3gN">
-                                                            <rect key="frame" x="172" y="17" width="82" height="30"/>
+                                                            <rect key="frame" x="173" y="17" width="82" height="33.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="82" id="jMw-oy-2Yy">
                                                                     <variation key="heightClass=regular-widthClass=regular" constant="53"/>
                                                                 </constraint>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="90%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0RE-mZ-R5I">
-                                                            <rect key="frame" x="322" y="17" width="26" height="30"/>
+                                                            <rect key="frame" x="323" y="17" width="26" height="33.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="26.5" id="R4Y-mS-g5a">
                                                                     <variation key="heightClass=regular-widthClass=regular" constant="64"/>
                                                                 </constraint>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -394,20 +395,20 @@
                                                                 <constraint firstAttribute="width" constant="30" id="wjM-kR-pH3"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Sales Force World Tour" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jcc-iO-eO9">
-                                                            <rect key="frame" x="4" y="17" width="98" height="30"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Sales Force World Tour" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jcc-iO-eO9">
+                                                            <rect key="frame" x="4" y="17" width="98" height="33.5"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="EHe-Rg-030"/>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="EHe-Rg-030"/>
                                                                 <constraint firstAttribute="width" constant="98" id="mS1-0L-u4g">
                                                                     <variation key="heightClass=regular-widthClass=regular" constant="118"/>
                                                                 </constraint>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="assignmentId" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B99-zU-J1R">
-                                                            <rect key="frame" x="213" y="0.0" width="101" height="21"/>
+                                                            <rect key="frame" x="214" y="0.0" width="101" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -418,9 +419,9 @@
                                                         <constraint firstItem="IdB-Py-OvX" firstAttribute="leading" secondItem="Jcc-iO-eO9" secondAttribute="trailing" constant="-8.5" id="147-Sl-gj2">
                                                             <variation key="heightClass=regular-widthClass=regular" constant="70"/>
                                                         </constraint>
-                                                        <constraint firstItem="c6t-63-EbM" firstAttribute="centerX" secondItem="nYo-6y-hpd" secondAttribute="centerX" constant="31" id="3Ir-lV-UT5"/>
+                                                        <constraint firstItem="c6t-63-EbM" firstAttribute="centerX" secondItem="nYo-6y-hpd" secondAttribute="centerX" constant="41.25" id="3Ir-lV-UT5"/>
                                                         <constraint firstItem="B99-zU-J1R" firstAttribute="top" secondItem="nYo-6y-hpd" secondAttribute="top" id="5Tx-EP-ThQ"/>
-                                                        <constraint firstItem="B99-zU-J1R" firstAttribute="leading" secondItem="c6t-63-EbM" secondAttribute="trailing" constant="-4" id="5tw-KD-ad6"/>
+                                                        <constraint firstItem="B99-zU-J1R" firstAttribute="leading" secondItem="c6t-63-EbM" secondAttribute="trailing" constant="-14" id="5tw-KD-ad6"/>
                                                         <constraint firstItem="Jcc-iO-eO9" firstAttribute="top" secondItem="nYo-6y-hpd" secondAttribute="top" constant="17" id="Ln3-dr-ux1"/>
                                                         <constraint firstItem="0RE-mZ-R5I" firstAttribute="leading" secondItem="B99-zU-J1R" secondAttribute="trailing" constant="8" id="NHR-CX-ON8"/>
                                                         <constraint firstItem="0RE-mZ-R5I" firstAttribute="leading" secondItem="YkR-gr-3gN" secondAttribute="trailing" constant="68.5" id="QbY-qD-x79"/>
@@ -439,7 +440,7 @@
                                                         <constraint firstItem="wwI-5m-eon" firstAttribute="centerY" secondItem="nYo-6y-hpd" secondAttribute="centerY" id="suZ-gw-h2e"/>
                                                         <constraint firstItem="YkR-gr-3gN" firstAttribute="top" secondItem="c6t-63-EbM" secondAttribute="top" id="u4v-36-Bvz"/>
                                                         <constraint firstAttribute="height" constant="64" id="wNa-vr-YVI"/>
-                                                        <constraint firstItem="YkR-gr-3gN" firstAttribute="leading" secondItem="c6t-63-EbM" secondAttribute="trailing" constant="-45" id="zG3-08-qOV">
+                                                        <constraint firstItem="YkR-gr-3gN" firstAttribute="leading" secondItem="c6t-63-EbM" secondAttribute="trailing" constant="-55" id="zG3-08-qOV">
                                                             <variation key="heightClass=regular-widthClass=regular" constant="90"/>
                                                         </constraint>
                                                     </constraints>
