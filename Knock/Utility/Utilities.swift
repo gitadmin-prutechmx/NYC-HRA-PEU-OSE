@@ -44,6 +44,8 @@ class Utilities {
     
     static var totalSurveyQuestions = 0
     
+    static var currentLocationRowIndex = 0
+    
 
     
     class func deleteSkipSurveyData(startingIndex:Int,count:Int){

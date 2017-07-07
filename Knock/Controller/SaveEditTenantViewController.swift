@@ -539,6 +539,14 @@ var picker = UIDatePicker()
        // let datePickerView: UIDatePicker = UIDatePicker()
         
         picker.datePickerMode = .date
+        picker.maximumDate =  Date()
+        
+        var components = DateComponents()
+        components.year = -100
+        let minDate = Calendar.current.date(byAdding: components, to: Date())
+        
+        picker.minimumDate = minDate
+        
         sender.inputView = picker
         
        // txtDob.inputView = picker

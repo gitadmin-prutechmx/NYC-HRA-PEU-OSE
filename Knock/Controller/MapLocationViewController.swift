@@ -72,6 +72,17 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       Utilities.currentLocationRowIndex = 0
+        
+        //license the app with the supplied License key
+        do {
+            let result = try AGSArcGISRuntimeEnvironment.setLicenseKey("runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041")
+            print("License Result : \(result.licenseStatus)")
+        }
+        catch let error as NSError {
+            print("error: \(error)")
+        }
 
         if self.revealViewController() != nil {
             
@@ -186,6 +197,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             self?.zip = (self?.locDataArray[0].zip)!
                             self?.totalUnits = (self?.locDataArray[0].totalUnits)!
                             
+                        
+                            
                             IsInitialViewPoint = false
                         }
                         
@@ -229,6 +242,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     @IBAction func syncData(_ sender: Any) {
         
+        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
        
     }
@@ -248,6 +262,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         populateLocationData()
+        let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
+        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        
     }
     
     
@@ -624,8 +641,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         state = locDataArray[indexPath.row].state
         city = locDataArray[indexPath.row].city
         zip = locDataArray[indexPath.row].zip
+        totalUnits = locDataArray[indexPath.row].totalUnits
         
 
+        Utilities.currentLocationRowIndex = indexPath.row
         
         self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
         

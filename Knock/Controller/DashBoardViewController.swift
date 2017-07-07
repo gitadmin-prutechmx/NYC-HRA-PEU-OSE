@@ -100,6 +100,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     @IBAction func syncData(_ sender: Any) {
+        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
     }
     

@@ -141,6 +141,7 @@ class SalesforceConnection{
                 
             case .success:
                     let decryptData =  Utilities.decryptJsonData(jsonEncryptString: response.result.value!)
+                    print(decryptData)
                     let jsonData = Utilities.convertToJSON(text: decryptData)
  
                     completion(true, jsonData as! Dictionary<String, AnyObject>)

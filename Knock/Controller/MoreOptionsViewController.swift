@@ -654,7 +654,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             segmentedControl.selectedSegmentIndex = 1
             Utilities.currentSegmentedControl = "Tenant"
             
-            self.view.makeToast("Please select tenant", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please select continue", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 
                 
@@ -688,7 +688,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             segmentedControl.selectedSegmentIndex = 0
             Utilities.currentSegmentedControl = "Unit"
             
-            self.view.makeToast("Please select attempt", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please select continue", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
             }
             

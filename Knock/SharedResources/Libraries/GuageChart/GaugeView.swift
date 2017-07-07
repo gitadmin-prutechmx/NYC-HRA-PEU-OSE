@@ -40,7 +40,7 @@ public class GaugeView: UIView {
   @IBInspectable public var radius: CGFloat
   {
     //return 255.0
-    return min(self.bounds.width, 190)/2
+    return min(self.bounds.width, 210)/2
   }
   
   @IBInspectable public var thickness: CGFloat = 20 {
@@ -106,6 +106,7 @@ public class GaugeView: UIView {
     didSet {
       if let labelColor = labelColor {
         label.textColor = labelColor
+        //label.text = ""
         updateTextLabel()
       }
     }
@@ -138,7 +139,8 @@ public class GaugeView: UIView {
     
     gaugeLayer.radius = radius
     gaugeLayer.thickness = thickness
-    gaugeLayer.frame = self.bounds
+   // gaugeLayer.frame = self.bounds
+    gaugeLayer.frame = CGRect(x:0,y:-19,width:self.bounds.width,height:self.bounds.height)
     gaugeLayer.gaugeBackgroundColor = gaugeBackgroundColor
     gaugeLayer.gaugeColor = gaugeColor
     gaugeLayer.animationDuration = animationDuration
@@ -165,7 +167,8 @@ public class GaugeView: UIView {
     
     gaugeLayer.radius = radius
     gaugeLayer.thickness = thickness
-    gaugeLayer.frame = self.bounds
+    //gaugeLayer.frame = self.bounds
+   gaugeLayer.frame = CGRect(x:0,y:-19,width:self.bounds.width,height:self.bounds.height)
     gaugeLayer.gaugeBackgroundColor = gaugeBackgroundColor
     gaugeLayer.gaugeColor = gaugeColor
     gaugeLayer.animationDuration = animationDuration
@@ -187,7 +190,7 @@ public class GaugeView: UIView {
   
   private func updateTextLabel() {
     label.sizeToFit()
-    label.center = CGPoint(x: self.bounds.width/2, y: self.bounds.height/2)
+    label.center = CGPoint(x: self.bounds.width/2, y: self.bounds.height/2-20)
   }
   
   //MARK: - Utility method

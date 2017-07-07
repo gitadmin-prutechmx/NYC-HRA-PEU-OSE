@@ -81,9 +81,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         let newUnitTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewUnitLblTapped:")))
         
         // add it to the image view;
-        newUnitLbl.addGestureRecognizer(newUnitTapGesture)
+      //  newUnitLbl.addGestureRecognizer(newUnitTapGesture)
         // make sure imageView can be interacted with by user
-        newUnitLbl.isUserInteractionEnabled = true
+      //  newUnitLbl.isUserInteractionEnabled = true
         
         let newCaseTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewCaseLblTapped:")))
         
@@ -192,6 +192,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     @IBAction func syncData(_ sender: Any) {
+        
+        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
         // Utilities.fetchAllDataFromSalesforce()
         
