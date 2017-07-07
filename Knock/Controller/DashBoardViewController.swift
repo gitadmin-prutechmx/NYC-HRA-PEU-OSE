@@ -214,7 +214,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         chart.thickness = 20
         
-        chart.labelFont = UIFont.systemFont(ofSize: 40, weight: UIFontWeightThin)
+        chart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
         chart.labelColor = UIColor.black
         chart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
         chart.gaugeColor = chartColor

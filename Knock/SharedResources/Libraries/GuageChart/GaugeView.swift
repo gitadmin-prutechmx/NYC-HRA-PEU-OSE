@@ -40,7 +40,7 @@ public class GaugeView: UIView {
   @IBInspectable public var radius: CGFloat
   {
     //return 255.0
-    return min(self.bounds.width, 210)/2
+    return min(self.bounds.width, 130)/2
   }
   
   @IBInspectable public var thickness: CGFloat = 20 {
@@ -140,7 +140,7 @@ public class GaugeView: UIView {
     gaugeLayer.radius = radius
     gaugeLayer.thickness = thickness
    // gaugeLayer.frame = self.bounds
-    gaugeLayer.frame = CGRect(x:0,y:-19,width:self.bounds.width,height:self.bounds.height)
+    gaugeLayer.frame = CGRect(x:0,y:-23,width:self.bounds.width,height:self.bounds.height)
     gaugeLayer.gaugeBackgroundColor = gaugeBackgroundColor
     gaugeLayer.gaugeColor = gaugeColor
     gaugeLayer.animationDuration = animationDuration
@@ -168,7 +168,7 @@ public class GaugeView: UIView {
     gaugeLayer.radius = radius
     gaugeLayer.thickness = thickness
     //gaugeLayer.frame = self.bounds
-   gaugeLayer.frame = CGRect(x:0,y:-19,width:self.bounds.width,height:self.bounds.height)
+   gaugeLayer.frame = CGRect(x:0,y:-23,width:self.bounds.width,height:self.bounds.height)
     gaugeLayer.gaugeBackgroundColor = gaugeBackgroundColor
     gaugeLayer.gaugeColor = gaugeColor
     gaugeLayer.animationDuration = animationDuration
