@@ -475,7 +475,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! MapViewCollout
         
       
-        view.lblNoOfUnits.text = totalUnits
+        view.lblNoOfUnits.text = "# of Units: "  + totalUnits
         
         view.btnEditLocation.addTarget(self, action: #selector(MapLocationViewController.navigateToEditLocationView(_:)), for: .touchUpInside)
         
