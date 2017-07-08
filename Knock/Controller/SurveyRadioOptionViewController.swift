@@ -198,7 +198,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
        self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
         
-        flagView.isHidden = true
+       // flagView.isHidden = true
         
         
         /*if(Utilities.surveyQuestionArrayIndex != 0){

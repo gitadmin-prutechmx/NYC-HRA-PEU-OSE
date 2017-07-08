@@ -474,7 +474,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         cell.dataUnitId.text = UnitDataArray[indexPath.row].unitId
         
-        cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
+      //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
         
         
         

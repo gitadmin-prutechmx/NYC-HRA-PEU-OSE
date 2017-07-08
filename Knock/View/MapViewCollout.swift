@@ -10,18 +10,13 @@ import UIKit
 
 class MapViewCollout: UIView
 {
-    @IBOutlet weak var lblStreet: UILabel!
-    @IBOutlet weak var lblCity: UILabel!
     var nibView: UIView!
-    @IBOutlet weak var lblZip: UILabel!
-    @IBOutlet weak var lblState: UILabel!
-    @IBOutlet weak var lblBorough: UILabel!
-    @IBOutlet weak var lbllattitude: UILabel!
-    @IBOutlet weak var lblLogitude: UILabel!
-    @IBOutlet weak var btnArrow:UIButton!
-    @IBOutlet weak var lblAdress: UILabel!
+    @IBOutlet weak var btnViewUnits: UIButton!
+    @IBOutlet weak var btnEditLocation: UIButton!
     
     @IBOutlet weak var lblNoOfUnits: UILabel!
+    
+
     override init(frame: CGRect)
     {
         super.init(frame: frame)

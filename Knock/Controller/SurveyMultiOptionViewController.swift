@@ -197,7 +197,7 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
         self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
         
-       flagView.isHidden = true
+      // flagView.isHidden = true
         
     }
     

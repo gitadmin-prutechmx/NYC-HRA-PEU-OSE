@@ -191,10 +191,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             
                              SalesforceConnection.assignmentLocationId = (self?.locDataArray[0].assignmentLocId)!
                             
-                            self?.street = (self?.locDataArray[0].street)!
-                            self?.state = (self?.locDataArray[0].state)!
-                            self?.city = (self?.locDataArray[0].city)!
-                            self?.zip = (self?.locDataArray[0].zip)!
+                          
                             self?.totalUnits = (self?.locDataArray[0].totalUnits)!
                             
                         
@@ -270,19 +267,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     @IBAction func editLocAction(_ sender: Any) {
         
-        let indexRow = (sender as AnyObject).tag
-        
-        SalesforceConnection.locationId =  locDataArray[indexRow!].locId
-        
-        SalesforceConnection.assignmentLocationId = locDataArray[indexRow!].assignmentLocId
-        
-        SalesforceConnection.fullAddress =  locDataArray[indexRow!].fullAddress
-        
-
-        
-        self.performSegue(withIdentifier: "showEditLocationIdentifier", sender: nil)
-  
-       //
+      //  let indexRow = (sender as AnyObject).tag
+    
+       
     }
     
     var locDataArray = [locationDataStruct]()
@@ -487,22 +474,26 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let nib = UINib(nibName: "MapViewCollout", bundle: nil)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! MapViewCollout
         
-        view.lblStreet.text = street
-        view.lblCity.text = city
-        view.lblState.text = state
-        view.lblZip.text = zip
+      
         view.lblNoOfUnits.text = totalUnits
         
-        view.lblAdress.text = street// SalesforceConnection.fullAddress
+        view.btnEditLocation.addTarget(self, action: #selector(MapLocationViewController.navigateToEditLocationView(_:)), for: .touchUpInside)
         
-        view.btnArrow.addTarget(self, action: #selector(MapLocationViewController.navigateToUnitView(_:)), for: .touchUpInside)
+        view.btnViewUnits.addTarget(self, action: #selector(MapLocationViewController.navigateToUnitView(_:)), for: .touchUpInside)
         
         self.mapView.callout.customView = view
         self.mapView.callout.show(for: graphic, tapLocation: tapLocation, animated: animated)
         
     }
     
-    // MARK: Button Action
+    // MARK: Button EditLocation Action
+    func navigateToEditLocationView(_ sender: AnyObject?)
+    {
+        
+        self.performSegue(withIdentifier: "showEditLocationIdentifier", sender: nil)
+    }
+    
+    // MARK: Button Unit Action
     func navigateToUnitView(_ sender: AnyObject?)
     {
         self.performSegue(withIdentifier: "ShowUnitsIdentifier", sender: nil)
@@ -620,10 +611,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
     }
     
-    var street:String = ""
-    var city:String = ""
-    var zip:String = ""
-    var state:String = ""
+ 
     var totalUnits:String = ""
     
     // MARK: UITableViewDelegate
@@ -637,10 +625,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
         
-        street = locDataArray[indexPath.row].street
-        state = locDataArray[indexPath.row].state
-        city = locDataArray[indexPath.row].city
-        zip = locDataArray[indexPath.row].zip
+
         totalUnits = locDataArray[indexPath.row].totalUnits
         
 
@@ -648,7 +633,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
         
-        
+ 
         
     }
     
