@@ -239,6 +239,7 @@ class SubmitSurveyViewController: UIViewController {
         surveyResponseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
         
         surveyResponseObject.actionStatus = "edit"
+        surveyResponseObject.surveySignature = base64String
         
         surveyResponseObject.surveyQuestionRes = questionArray as NSObject?
         
@@ -324,7 +325,7 @@ class SubmitSurveyViewController: UIViewController {
     
 
     
-    
+    var base64String:String = ""
 
      override func prepare(for segue: UIStoryboardSegue!, sender: Any!) {
      
@@ -333,16 +334,18 @@ class SubmitSurveyViewController: UIViewController {
                 // Saving signatureImage from the line above to the Photo Roll.
                 // The first time you do this, the app asks for access to your pictures.
             
-             /*   let base64String = self.convertImageToBase64(signatureImage)
-            
-                let signImage = self.convertBase64ToImage(base64String)
+                base64String = self.convertImageToBase64(signatureImage)
             
                 print("base64String: \(base64String)")
-                UIImageWriteToSavedPhotosAlbum(signImage, nil, nil, nil)
+                
+               // let signImage = self.convertBase64ToImage(base64String)
+            
+                
+               // UIImageWriteToSavedPhotosAlbum(signImage, nil, nil, nil)
             
                 // Since the Signature is now saved to the Photo Roll, the View can be cleared anyway.
                 self.signatureView.clear()
- */
+ 
         }
         
             if(isexitSurvey==false){

@@ -16,7 +16,7 @@ class SalesforceConnection{
     static var currentUserContactId:String = ""
     static var currentUserExternalId:String = ""
     
-    static var userId:String = ""
+    static var salesforceUserId:String = ""
     
     static var assignmentId:String = ""
     static var assignmentName:String = ""
@@ -65,7 +65,7 @@ class SalesforceConnection{
             case .success:
                 if  let json = response.result.value as? [String: Any],
                     let accessToken = json["access_token"] as? String,
-                    let salesforceUserId = json["id"] as? String
+                    let userId = json["id"] as? String
                 {
                  
                     //update accessToken
@@ -74,7 +74,7 @@ class SalesforceConnection{
                     
                         salesforceAccessToken = accessToken
 
-                        userId = salesforceUserId.components(separatedBy: "/")[5]
+                        salesforceUserId = userId.components(separatedBy: "/")[5]
                     
                     completion(true)
                 } else {

@@ -8,6 +8,7 @@
 
 import UIKit
 import ArcGIS
+import Crashlytics
 
 struct locationDataStruct
 {
@@ -76,13 +77,13 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
        Utilities.currentLocationRowIndex = 0
         
         //license the app with the supplied License key
-        do {
-            let result = try AGSArcGISRuntimeEnvironment.setLicenseKey("runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041")
-            print("License Result : \(result.licenseStatus)")
-        }
-        catch let error as NSError {
-            print("error: \(error)")
-        }
+//        do {
+//            let result = try AGSArcGISRuntimeEnvironment.setLicenseKey("runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041")
+//            print("License Result : \(result.licenseStatus)")
+//        }
+//        catch let error as NSError {
+//            print("error: \(error)")
+//        }
 
         if self.revealViewController() != nil {
             
@@ -140,7 +141,6 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.geocodeParameters = AGSGeocodeParameters()
         self.geocodeParameters.resultAttributeNames.append(contentsOf: ["Match_addr"])
         self.geocodeParameters.minScore = 75
-        
         
         SVProgressHUD.show(withStatus: "Loading Map..", maskType: SVProgressHUDMaskType.gradient)
         

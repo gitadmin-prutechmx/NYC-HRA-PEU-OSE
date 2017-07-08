@@ -86,11 +86,12 @@
         <attribute name="surveyName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyQuestionData" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES">
+    <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyQuestionRes" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="surveySignature" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SurveyUnit" representedClassName="SurveyUnit" syncable="YES">
@@ -126,7 +127,7 @@
         <attribute name="tenantId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Unit" representedClassName="Unit" syncable="YES">
+    <entity name="Unit" representedClassName="Unit" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="apartment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
@@ -138,7 +139,6 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyStatus" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="surveySyncDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitSyncDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="unitLocR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locUnitR" inverseEntity="Location" syncable="YES"/>
     </entity>
@@ -152,10 +152,10 @@
         <element name="Location" positionX="-2" positionY="-36" width="128" height="225"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="150"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="105"/>
-        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="120"/>
+        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="135"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="Tenant" positionX="-126" positionY="45" width="128" height="240"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
-        <element name="Unit" positionX="-162" positionY="-108" width="128" height="255"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
     </elements>
 </model>

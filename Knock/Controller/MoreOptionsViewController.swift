@@ -654,7 +654,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             segmentedControl.selectedSegmentIndex = 1
             Utilities.currentSegmentedControl = "Tenant"
             
-            self.view.makeToast("Please select continue", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please click next", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 
                 
@@ -674,7 +674,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         getIntakeContactAttempt()
         
-          if((tempAttempt != "" && tempAttempt != "No")){
+          if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No")){
             
        // if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && (tempInTake != "No" || (tempInTake != "Yes" && tempReason != "")))){
             
@@ -688,7 +688,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             segmentedControl.selectedSegmentIndex = 0
             Utilities.currentSegmentedControl = "Unit"
             
-            self.view.makeToast("Please select continue", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please click next", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
             }
             
@@ -912,17 +912,20 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
           else  if(Utilities.currentSegmentedControl == "Unit"){
         
             //if(attemptRdb.isOn && contactRdb.isOn && inTakeRdb.isOn){
-            if(attemptRdb.isOn){
+            if(attemptRdb.isOn && contactRdb.isOn){
                 updateUnitAndSurvey(type:"Updating Unit..")
+                showTenantView()
             }
 //            else if(attemptRdb.isOn && contactRdb.isOn && (inTakeRdb.isOn == false && reasonStatus != "")){
 //                updateUnitAndSurvey(type:"Updating Unit..")
 //            }
             else{
                 
-                chooseUnitInfoView.shake()
                 
-                self.view.makeToast("Please select attempt", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                chooseUnitInfoView.shake()
+                updateUnitAndSurvey(type:"Updating Unit..")
+                
+                self.view.makeToast("You can only proceed to next step if Attempt and Contact selected. ", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                    
                     
@@ -1006,7 +1009,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             }
             
             
-           showTenantView()
+           
             
         }
          

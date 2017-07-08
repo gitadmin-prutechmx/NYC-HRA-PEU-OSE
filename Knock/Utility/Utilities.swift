@@ -1101,10 +1101,10 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
                         
                         unitObject.unitSyncDate = unitData["unitSyncDate"] as? String  ?? ""
                         
-                        
-                        unitObject.surveySyncDate = unitData["surveySyncDate"] as? String  ?? ""
-                        
-                        if(unitObject.surveySyncDate != ""){
+                        let surveySyncDate = unitData["surveySyncDate"] as? String  ?? ""
+
+                       
+                        if(surveySyncDate != ""){
                             unitObject.surveyStatus = "Completed"
                         }
                         else{

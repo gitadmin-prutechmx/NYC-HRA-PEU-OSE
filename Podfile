@@ -16,5 +16,6 @@ target 'Knock' do
   pod 'DropDown'
   pod 'DLRadioButton'
   pod 'TPKeyboardAvoiding'
-
+  pod 'Fabric'
+  pod 'Crashlytics'
 end

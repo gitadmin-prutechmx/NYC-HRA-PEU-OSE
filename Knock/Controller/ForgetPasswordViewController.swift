@@ -48,7 +48,7 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
 //http://apple.com
         webVwForget.delegate = self
         
-        if let url = URL(string:"http://dev-nyserda-dev.cs43.force.com/Core_Forgot_Password_Page1")
+        if let url = URL(string:"https://dev-providers.cs33.force.com/Core_Forgot_Password_Page")
         {
             let request = URLRequest(url: url)
             webVwForget.loadRequest(request)

@@ -255,7 +255,6 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         unitObject.actionStatus = "create"
         
         unitObject.surveyStatus = ""
-        unitObject.surveySyncDate = ""
         unitObject.unitSyncDate = ""
         
         appDelegate.saveContext()

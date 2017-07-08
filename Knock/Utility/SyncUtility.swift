@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 class SyncUtility{
     
@@ -22,6 +23,7 @@ class SyncUtility{
     static var isPullData:Bool = false
     
     class func syncDataWithSalesforce(isPullDataFromSFDC:Bool){
+        
         
         isPullData = isPullDataFromSFDC
         
@@ -320,7 +322,7 @@ class SyncUtility{
                 responseDict["assignmentLocUnitId"] = surveyResData.assignmentLocUnitId! as AnyObject?
                 //unitid
                 responseDict["QuestionList"] = surveyResData.surveyQuestionRes! as AnyObject?
-                
+                responseDict["signature"] = surveyResData.surveySignature! as AnyObject?
                 
                 formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
                 

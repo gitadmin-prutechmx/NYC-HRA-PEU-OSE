@@ -130,6 +130,7 @@ class LoginViewController: UIViewController {
                 SalesforceConfig.clientId = data.clientId!
                 SalesforceConfig.clientSecret = data.clientSecret!
                 SalesforceConfig.hostUrl = data.endPointUrl!
+                
                 SalesforceConfig.userName = data.userName!
                 SalesforceConfig.password = data.password!
                 
@@ -160,16 +161,16 @@ class LoginViewController: UIViewController {
             let encodedUserName = userName.addingPercentEncoding(withAllowedCharacters: .alphanumerics)
             
             let configData = SalesforceOrgConfig(context: context)
+            
             configData.companyName = SalesforceConnection.companyName
             configData.endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
             configData.clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
             configData.clientSecret = "5050630969965231251"
+            
             configData.userName = encodedUserName
             configData.password = "peuprutech1234"
             
             //"nik%2Bpeu%40mtxb2b%2Ecom%2Edev"
-            
-            
             //nik+peu@mtxb2b.com.dev
             
             appDelegate.saveContext()
@@ -184,6 +185,7 @@ class LoginViewController: UIViewController {
                     SalesforceConfig.clientId = data.clientId!
                     SalesforceConfig.clientSecret = data.clientSecret!
                     SalesforceConfig.hostUrl = data.endPointUrl!
+                    
                     SalesforceConfig.userName = data.userName!
                     SalesforceConfig.password = data.password!
                     
@@ -196,14 +198,7 @@ class LoginViewController: UIViewController {
     }
     
     
-//    @IBAction func forgotPassword(_ sender: Any) {
-//    if let requestUrl = NSURL(string: "http://dev-nyserda-dev.cs43.force.com/Core_Forgot_Password_Page1")
-//                {
-//                    UIApplication.shared.openURL(requestUrl as URL)
-//                }
-//        
-//        
-//    }
+
     
     @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
         

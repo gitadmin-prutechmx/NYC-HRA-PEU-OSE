@@ -246,7 +246,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
 //                    floorArray.append(unitData.floor!)
 //                }
 //                
-                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.surveySyncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
+                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.unitSyncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
                 
                 UnitDataArray.append(objectUnitStruct)
                 

@@ -38,10 +38,6 @@
 		5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */; };
 		5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */; };
 		5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */; };
-		5D5291D01F0D3BCF00D5645F /* SurveyResponse+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B41F0D3BCF00D5645F /* SurveyResponse+CoreDataClass.swift */; };
-		5D5291D11F0D3BCF00D5645F /* SurveyResponse+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B51F0D3BCF00D5645F /* SurveyResponse+CoreDataProperties.swift */; };
-		5D5291D21F0D3BCF00D5645F /* Unit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B61F0D3BCF00D5645F /* Unit+CoreDataClass.swift */; };
-		5D5291D31F0D3BCF00D5645F /* Unit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B71F0D3BCF00D5645F /* Unit+CoreDataProperties.swift */; };
 		5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */; };
 		5D5291D51F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */; };
 		5D56CF091EE007060019882F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF081EE007060019882F /* AppDelegate.swift */; };
@@ -148,10 +144,6 @@
 		5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291B41F0D3BCF00D5645F /* SurveyResponse+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyResponse+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291B51F0D3BCF00D5645F /* SurveyResponse+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyResponse+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291B61F0D3BCF00D5645F /* Unit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291B71F0D3BCF00D5645F /* Unit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Unit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,10 +342,6 @@
 				5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */,
 				5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */,
 				5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */,
-				5D5291B41F0D3BCF00D5645F /* SurveyResponse+CoreDataClass.swift */,
-				5D5291B51F0D3BCF00D5645F /* SurveyResponse+CoreDataProperties.swift */,
-				5D5291B61F0D3BCF00D5645F /* Unit+CoreDataClass.swift */,
-				5D5291B71F0D3BCF00D5645F /* Unit+CoreDataProperties.swift */,
 				5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */,
 				5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */,
 			);
@@ -521,6 +509,7 @@
 				5D56CF031EE007060019882F /* Resources */,
 				E4687B4C7958AA9D0F159D53 /* [CP] Embed Pods Frameworks */,
 				3C006FB73344B9F646ED5E36 /* [CP] Copy Pods Resources */,
+				5D5291DD1F0F6B5400D5645F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -680,6 +669,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Knock/Pods-Knock-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5D5291DD1F0F6B5400D5645F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 86a4adbfdfadd29989e70de6c577ae66c5340d6c df2203e6402081baef7e1403f3b4c203e17ad113729d090977230eb5e9c7bb90";
+		};
 		E4687B4C7958AA9D0F159D53 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -708,12 +710,10 @@
 				5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */,
 				5D5291CB1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataProperties.swift in Sources */,
 				5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */,
-				5D5291D01F0D3BCF00D5645F /* SurveyResponse+CoreDataClass.swift in Sources */,
 				5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */,
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
 				5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */,
-				5D5291D11F0D3BCF00D5645F /* SurveyResponse+CoreDataProperties.swift in Sources */,
 				5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */,
 				5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */,
 				5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */,
@@ -721,7 +721,6 @@
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
 				5D5291BE1F0D3BCF00D5645F /* Tenant+CoreDataClass.swift in Sources */,
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
-				5D5291D21F0D3BCF00D5645F /* Unit+CoreDataClass.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
 				5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */,
 				5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */,
@@ -775,7 +774,6 @@
 				5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */,
 				5D1BD4F61F067FB100C8FAF5 /* GaugeLayer.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
-				5D5291D31F0D3BCF00D5645F /* Unit+CoreDataProperties.swift in Sources */,
 				70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */,
 				5DE3C98F1EF3ACEC00012C47 /* UnitsViewController.swift in Sources */,
 				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
@@ -931,6 +929,7 @@
 			baseConfigurationReference = C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -966,6 +965,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Knock/Knock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0.1;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -1010,6 +1010,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Knock/Knock-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0.1;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
