@@ -270,7 +270,13 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
         
         updateEditLocationInDatabase()
         
-        self.view.makeToast("Location has been edit successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        self.view.makeToast("Located has been edited successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+            Utilities.isEditLoc = true
+            Utilities.CanvassingStatus = self.canvassingStatus
+            
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
             
             self.dismiss(animated: true, completion: nil)
             
@@ -307,7 +313,7 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
         
         SVProgressHUD.show(withStatus: "Updating Location...", maskType: SVProgressHUDMaskType.gradient)
         
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        SalesforceConnection.loginToSalesforce() { response in
             
             if(response)
             {

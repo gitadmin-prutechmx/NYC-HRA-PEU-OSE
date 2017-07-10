@@ -119,7 +119,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
       
         
        
-        saveUnitDict = Utilities.createUnitDicData(unitName: "Apt " + apartmentNumberVal, apartmentNumber: apartmentNumberVal, locationId: SalesforceConnection.locationId, assignmentLocId: SalesforceConnection.assignmentLocationId, notes: notesVal, iosLocUnitId: UUID().uuidString, iosAssignLocUnitId: UUID().uuidString)
+        saveUnitDict = Utilities.createUnitDicData(unitName:  apartmentNumberVal, apartmentNumber: apartmentNumberVal, locationId: SalesforceConnection.locationId, assignmentLocId: SalesforceConnection.assignmentLocationId, notes: notesVal, iosLocUnitId: UUID().uuidString, iosAssignLocUnitId: UUID().uuidString)
         
         
         saveNewlyCreatedUnitData()
@@ -178,7 +178,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         SVProgressHUD.show(withStatus: "Saving Unit...", maskType: SVProgressHUDMaskType.gradient)
         
         
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        SalesforceConnection.loginToSalesforce() { response in
             
             if(response)
                 

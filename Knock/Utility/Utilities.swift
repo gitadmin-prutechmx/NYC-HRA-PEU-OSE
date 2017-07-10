@@ -15,6 +15,10 @@ import Toast_Swift
 
 class Utilities {
     
+    static let encryptDecryptKey = "hdsfjksdhf548954"
+    static let encryptDecryptIV = "1234567890123456"
+    
+    
     static var isSyncing:Bool = false
     
     
@@ -31,6 +35,9 @@ class Utilities {
     static var prevSkipLogicParentChildDict : [String:[SkipLogic]] = [:]
     
     static var isSubmitSurvey:Bool = false
+    static var isEditLoc:Bool = false
+    static var CanvassingStatus:String = ""
+    static var isRefreshBtnClick:Bool = false
 
     static var answerSurvey:String = ""
    
@@ -232,6 +239,9 @@ class Utilities {
     if(type == "edit"){
         editTenantDict["tenantId"] = currentTenantId
     }
+        
+       
+        
    
     editTenantDict["iOSTenantId"] = iOSTenantId
     
@@ -246,7 +256,18 @@ class Utilities {
     
     editTenantDict["phone"] = phone
     
-    editTenantDict["birthdate"] = dob
+        if(dob != ""){
+        
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy"
+            let date = dateFormatter.date(from: dob)!
+            
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            editTenantDict["birthdate"] = dateFormatter.string(from: date)
+        }
+        
+   
         
     
     
@@ -406,7 +427,7 @@ class Utilities {
             
             ManageCoreData.updateRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: assignmentLocUnitId,isPredicate: true)
             
-            
+            print("update survey response: \(assignmentLocUnitId)")
         }
         
         
@@ -574,8 +595,9 @@ class Utilities {
         let iosTenantId = tenantDataDict["iOSTenantId"] as! String?
         let tenantId = tenantDataDict["tenantId"] as! String?
         
-        if(SalesforceConnection.currentTenantId == tenantId){
+        if(SalesforceConnection.currentTenantId == iosTenantId){
             SalesforceConnection.currentTenantId =  tenantId!
+            print("tenantId updated")
         }
         
         let tenantCreateResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND id == %@" ,predicateValue: "create",predicateValue2: "edit", predicateValue3: iosTenantId, isPredicate:true) as! [Tenant]
@@ -626,12 +648,14 @@ class Utilities {
         let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
         
         
-        if(SalesforceConnection.unitId == locUnitId){
+        if(SalesforceConnection.unitId == iosLocUnitId){
             SalesforceConnection.unitId =  locUnitId!
+            print("location UnitId updated")
         }
         
-        if(SalesforceConnection.assignmentLocationUnitId == locAssignmentUnitId){
+        if(SalesforceConnection.assignmentLocationUnitId == iosAssignmentLocUnitId){
             SalesforceConnection.assignmentLocationUnitId =  locAssignmentUnitId!
+            print("assignment location UnitId updated")
         }
         
         
@@ -821,17 +845,17 @@ class Utilities {
     //for assignmentDetail api
     
     
-    class func fetchAllDataFromSalesforce(){
+    class func fetchAllDataFromSalesforce(loginViewController:LoginViewController?=nil){
         
          var emailParams : [String:String] = [:]
         
         
-        emailParams["email"] = try! SalesforceConnection.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+        emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
         
         
         SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         
-SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+SalesforceConnection.loginToSalesforce() { response in
     
         
     SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
@@ -857,34 +881,43 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
                 
                 Utilities.parseChartData(jsonObject: chartJsonData.1)
                 
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object: nil)
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
-                
-                
+                if(loginViewController != nil){
+                    DispatchQueue.main.async {
+                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                     }
-        
+                }
+                else{
+                
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object: nil)
+                
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
+                
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+                
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
+                }
+                
+                
+                Utilities.isRefreshBtnClick = false
+                
             }
-            
-            
-            
+        
         }
+            
+            
+            
+     }
      
     }//end of class
     
     
     class func parseUserData(jsonObject: Dictionary<String, AnyObject>){
         
-        SalesforceConnection.currentUserContactId  = (jsonObject["contactId"] as? String)!
-        SalesforceConnection.currentUserEmail = (jsonObject["Email"] as? String)!
-        SalesforceConnection.currentUserExternalId = (jsonObject["ExternalId"] as? String)!
+        SalesforceConfig.currentUserContactId  = (jsonObject["contactId"] as? String)!
+        SalesforceConfig.currentUserEmail = (jsonObject["Email"] as? String)!
+        SalesforceConfig.currentUserExternalId = (jsonObject["ExternalId"] as? String)!
     }
     
     
@@ -945,6 +978,56 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
      
        
 
+    }
+    
+    
+    class func parseUserInfoData(jsonObject: Dictionary<String, AnyObject>){
+       
+        let today = NSDate()
+        let dateAfterThreeDays = today.addDays(daysToAdd: 3)
+        
+        //let dateAfterThreeDays = Calendar.current.date(byAdding: .day, value: 3, to: today)
+        
+        
+        
+        SalesforceConfig.currentUserContactId = jsonObject["contactId"] as? String  ?? ""
+        SalesforceConfig.currentUserExternalId = jsonObject["externalId"] as? String  ?? ""
+        SalesforceConfig.currentUserEmail = jsonObject["email"] as? String  ?? ""
+        
+        let userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
+        
+      
+        if(userInfoData.count == 0){
+            
+           //save userInfo
+            let objUserInfo = UserInfo(context: context)
+        
+            objUserInfo.contactId = SalesforceConfig.currentUserContactId
+            objUserInfo.externalId = SalesforceConfig.currentUserExternalId
+            objUserInfo.contactEmail = SalesforceConfig.currentUserEmail
+            objUserInfo.userName = SalesforceConfig.userName
+            objUserInfo.password = try! SalesforceConfig.password.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+        
+            objUserInfo.passwordExpDate = dateAfterThreeDays
+     
+            appDelegate.saveContext()
+        }
+        else{
+            
+            //update password expiration date
+            var updateObjectDic:[String:AnyObject] = [:]
+            
+            updateObjectDic["passwordExpDate"] = dateAfterThreeDays
+            
+            ManageCoreData.updateDate(salesforceEntityName: "UserInfo", updateKeyValue: updateObjectDic, predicateFormat: "userName == %@", predicateValue: SalesforceConfig.userName,isPredicate: true)
+            
+            SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
+            SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
+            SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
+            
+
+        }
+        
     }
     
     class func parseEventAssignmentData(jsonObject: Dictionary<String, AnyObject>){
@@ -1061,7 +1144,7 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
                     locationObject.syncDate = locationData["locationSyncDate"] as? String  ?? ""
                     
                     locationObject.assignmentId = assignmentObject.id!
-                    
+                    locationObject.locStatus = locationData["status"] as? String  ?? ""
                     
                     appDelegate.saveContext()
                     
@@ -1214,6 +1297,8 @@ SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.company
         
         
     }
+    
+    
 
     
     

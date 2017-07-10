@@ -28,18 +28,15 @@
 		5D5291C31F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */; };
 		5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */; };
 		5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */; };
-		5D5291C61F0D3BCF00D5645F /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AA1F0D3BCF00D5645F /* Location+CoreDataClass.swift */; };
-		5D5291C71F0D3BCF00D5645F /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AB1F0D3BCF00D5645F /* Location+CoreDataProperties.swift */; };
 		5D5291C81F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AC1F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift */; };
 		5D5291C91F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AD1F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift */; };
-		5D5291CA1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AE1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataClass.swift */; };
-		5D5291CB1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AF1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataProperties.swift */; };
 		5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */; };
 		5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */; };
 		5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */; };
 		5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */; };
 		5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */; };
 		5D5291D51F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */; };
+		5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9471F11EB4000623005 /* DateExtension.swift */; };
 		5D56CF091EE007060019882F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF081EE007060019882F /* AppDelegate.swift */; };
 		5D56CF0E1EE007060019882F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF0C1EE007060019882F /* Main.storyboard */; };
 		5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */; };
@@ -134,18 +131,15 @@
 		5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291AA1F0D3BCF00D5645F /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291AB1F0D3BCF00D5645F /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291AC1F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyQuestion+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291AD1F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyQuestion+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291AE1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SalesforceOrgConfig+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291AF1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SalesforceOrgConfig+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5D52F9471F11EB4000623005 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D56CF0D1EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -332,12 +326,8 @@
 				5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */,
 				5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */,
 				5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */,
-				5D5291AA1F0D3BCF00D5645F /* Location+CoreDataClass.swift */,
-				5D5291AB1F0D3BCF00D5645F /* Location+CoreDataProperties.swift */,
 				5D5291AC1F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift */,
 				5D5291AD1F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift */,
-				5D5291AE1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataClass.swift */,
-				5D5291AF1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataProperties.swift */,
 				5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */,
 				5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */,
 				5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */,
@@ -375,6 +365,7 @@
 				5DC9E9EF1EEE8391009A6396 /* StringExtension.swift */,
 				5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */,
 				5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */,
+				5D52F9471F11EB4000623005 /* DateExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -708,7 +699,6 @@
 				5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */,
 				5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */,
 				5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */,
-				5D5291CB1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataProperties.swift in Sources */,
 				5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */,
 				5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */,
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
@@ -734,7 +724,6 @@
 				5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */,
 				5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
-				5D5291C61F0D3BCF00D5645F /* Location+CoreDataClass.swift in Sources */,
 				5D5291BF1F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
@@ -754,8 +743,8 @@
 				5DE3C99B1EF76C6E00012C47 /* MoreOptionsViewController.swift in Sources */,
 				5DE3C98D1EF36E1900012C47 /* SideMenuViewController.swift in Sources */,
 				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
+				5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */,
 				5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */,
-				5D5291CA1F0D3BCF00D5645F /* SalesforceOrgConfig+CoreDataClass.swift in Sources */,
 				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
 				62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */,
 				5DE3C9991EF6B66000012C47 /* YPDrawSignatureView.swift in Sources */,
@@ -763,7 +752,6 @@
 				5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */,
 				5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */,
 				5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */,
-				5D5291C71F0D3BCF00D5645F /* Location+CoreDataProperties.swift in Sources */,
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
 				5D5291C31F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift in Sources */,
 				5D5291C91F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift in Sources */,

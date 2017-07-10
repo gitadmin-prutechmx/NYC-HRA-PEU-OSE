@@ -10,7 +10,10 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    var noOfAttempts  = 0
+    
     var salesforceConfigData = [SalesforceOrgConfig]()
+    var userInfoData = [UserInfo]()
     
     
     @IBOutlet weak var signInLbl: UILabel!
@@ -39,7 +42,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        saveUserInfo()
+        saveSalesforceOrgCredentials()
         
         //temporaryFunc()
         
@@ -103,8 +106,10 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        
         emailTextField.text = ""
         passwordTextField.text = ""
+        noOfAttempts = 0
     }
     
     
@@ -114,85 +119,35 @@ class LoginViewController: UIViewController {
     }
     
     
-    func saveUserInfo(){
+    func saveSalesforceOrgCredentials(){
         
-        SalesforceConnection.companyName = "PEU"
-        let userName = "nik+peu@mtxb2b.com.dev"
+
+        salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig", isPredicate:false) as! [SalesforceOrgConfig]
         
-       
+        if(salesforceConfigData.count == 0){
+            
+            let companyName = "PEU"
+            let endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
+            let clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
+            let clientSecret = "5050630969965231251"
         
-        salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: SalesforceConnection.companyName, isPredicate:true) as! [SalesforceOrgConfig]
         
-        if(salesforceConfigData.count > 0){
-            
-            for data in salesforceConfigData{
-                
-                SalesforceConfig.clientId = data.clientId!
-                SalesforceConfig.clientSecret = data.clientSecret!
-                SalesforceConfig.hostUrl = data.endPointUrl!
-                
-                SalesforceConfig.userName = data.userName!
-                SalesforceConfig.password = data.password!
-                
-                
-            }
-            
-            
-            /*for data in results as! [NSManagedObject]
-             {
-             
-             if let clientId = data.value(forKey: "clientId") as? String{
-             
-             }
-             if let clientSecret = data.value(forKey: "clientSecret") as? String{
-             
-             }
-             
-             }
-             */
-            
-            
-        }
-        else{
-            //one time activity
-            
-            //Save data
-            
-            let encodedUserName = userName.addingPercentEncoding(withAllowedCharacters: .alphanumerics)
-            
+        
             let configData = SalesforceOrgConfig(context: context)
-            
-            configData.companyName = SalesforceConnection.companyName
-            configData.endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
-            configData.clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
-            configData.clientSecret = "5050630969965231251"
-            
-            configData.userName = encodedUserName
-            configData.password = "peuprutech1234"
-            
-            //"nik%2Bpeu%40mtxb2b%2Ecom%2Edev"
-            //nik+peu@mtxb2b.com.dev
-            
+        
+            configData.companyName = try! companyName.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            configData.endPointUrl = try! endPointUrl.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            configData.clientId = try! clientId.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            configData.clientSecret = try! clientSecret.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+        
+        
             appDelegate.saveContext()
-            
-            //load data
-            salesforceConfigData =  ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig",predicateFormat: "companyName == %@" ,predicateValue: SalesforceConnection.companyName, isPredicate:true) as! [SalesforceOrgConfig]
-            
-            if(salesforceConfigData.count > 0){
-                
-                for data in salesforceConfigData{
-                    
-                    SalesforceConfig.clientId = data.clientId!
-                    SalesforceConfig.clientSecret = data.clientSecret!
-                    SalesforceConfig.hostUrl = data.endPointUrl!
-                    
-                    SalesforceConfig.userName = data.userName!
-                    SalesforceConfig.password = data.password!
-                    
-                }
-            }
-            
+
         }
+        
+        
+        
+      
         
 
     }
@@ -207,13 +162,45 @@ class LoginViewController: UIViewController {
         DispatchQueue.main.async {
               self.loginView.endEditing(true)
         }
+        
     
 //        if validation()
 //        {
-//            getDataFromSalesforce()
-//        }
+            if(Network.reachability?.isReachable)!{
+                
+                onlineEnterToDashBoard()
+            }
+            else{
+                
+               
+                
+                let users =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", isPredicate:false) as! [UserInfo]
+                
+                if(users.count == 0){
+                    
+                    self.view.makeToast("No internet connection", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        
+                    }
+
+                }
+                else if(noOfAttempts <= 4){
+                    offlineEnterToDashBoard()
+                }
+                else{
+                    
+                    self.view.makeToast("No internet connection. Please relogin when newtwork gain access.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        
+                    }
+
+                }
+            }
+            
+            
+        //}
         
-        getDataFromSalesforce()
+        
     }
     
     
@@ -287,226 +274,195 @@ class LoginViewController: UIViewController {
         return NSPredicate(format: "SELF MATCHES %@", REGEX).evaluate(with: YourEMailAddress)
     }
     
-    //MARK: - isBlank
     
- 
+    //MARK: - offlineEnterToDashBoard
     
-    func getDataFromSalesforce(){
+    func offlineEnterToDashBoard(){
         
-        SalesforceConnection.currentUserEmail = "nik@mtxb2b.com"
+        SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        
+        SalesforceConfig.password = "peuprutech1234"
+        
+  // SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        
+    userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
+        
+    if(userInfoData.count > 0){
+        
+        if(userInfoData[0].passwordExpDate?.isGreaterThanDate(dateToCompare: NSDate()))!
+        {
+            
+            let password = try! userInfoData[0].password!.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            
+            if(password == SalesforceConfig.password){//passwordTextField.text!){
+                
+                  getSalesforceOrgCredentials()
+               
+                
+                   SalesforceConfig.password = passwordTextField.text!
+                   SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
+                   SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
+                   SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
+                
+                
+                   self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+            }
+            else{
+                
+                noOfAttempts = noOfAttempts + 1
+                
+                if(noOfAttempts > 3){
+                    
+                    //Delete cache? and userInfo table ? and show error message
+                }
+                else{
+                    
+                     //Show error with number of attempts
+                    self.view.makeToast("Please enter valid passsword. Only \(5-noOfAttempts) has been left.After that you have to relogin again when you gain network connectivity.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        
+                    }
+
+                    
+                   
+                   
+                }
+               
+                
+            }
+                
+          }//password expiration date condition
+         else{
+            
+                self.view.makeToast("Your password has been expired. Please relogin when you gain network connectivity.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                
+                }
+            }
+            
+        }
+        else{
+            
+            self.view.makeToast("Please enter valid username.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                
+            }
+
+        }
+
+       
+
         
        
-        
-        var emailParams : [String:String] = [:]
-        
-//        var assignmentIdParams : [String:String] = [:]
-//        
-//        var assignmentIdDict : [String:AnyObject] = [:]
-//        
-//        
-        
-      //  SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+    }
+    
 
-       // SalesforceConfig.password = passwordTextField.text!
+    
+    func onlineEnterToDashBoard(){
+       
+      //  var emailParams : [String:String] = [:]
+        var userParams : [String:String] = [:]
+      
         
-        var emailText = emailTextField.text
-        
-        if emailText == nil {
-            
-            emailText = ""
-        }
-        
-    let assignmentResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
+        getSalesforceOrgCredentials()
         
         
+        SVProgressHUD.show(withStatus: "Signing..", maskType: SVProgressHUDMaskType.gradient)
         
-    if ((emailText?.lowercased() == "clear") || assignmentResults.count == 0){
-            
         
-        SVProgressHUD.show(withStatus: "Loading..", maskType: SVProgressHUDMaskType.gradient)
-        
-
         
         //Need to be handle refresh token as well
         
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        //SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        
+        //SalesforceConfig.password = passwordTextField.text!
+        
+        
+        SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        
+        SalesforceConfig.password = "peuprutech1234"
+        
+        SalesforceConnection.loginToSalesforce() { response in
             
-        if(response)
-          {
-            let encryptEmailStr = try! SalesforceConnection.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
             
+            userParams["userId"] = encryptUserIdStr
+            
+            //get userinfo
+            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams){ userInfoJsonData in
+                
+                //Check if username exist if yes then update exp date otherwise add new record
+                
+                Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
+                
+//                
+//                let encryptEmailStr = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+//                
+//                
+//                emailParams["email"] = encryptEmailStr
+                
+                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true,controller: self)
 
-            emailParams["email"] = encryptEmailStr
-            
-            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
                 
                 
-//                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.chartapi, params: emailParams){ jsonData in
-//                    
-//                    ManageCoreData.DeleteAllDataFromEntities()
+//                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
 //                    
 //                    
-//                    SVProgressHUD.dismiss()
-                
-//                    Utilities.parseChartData(jsonObject: jsonData.1)
-//                    Utilities.parseEventAssignmentData(jsonObject: jsonData.1)
 //                    
-//                    DispatchQueue.main.async {
-//                        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+//                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
+//                        
+//                        
+//                        SVProgressHUD.dismiss()
+//                        
+//                        //First push data to salesforce then delete
+//                        
+//                        ManageCoreData.DeleteAllDataFromEntities()
+//                        
+//                        Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData.1)
+//                        
+//                        Utilities.parseChartData(jsonObject: chartJsonData.1)
+//                        
+//                        DispatchQueue.main.async {
+//                            self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+//                        }
+//                        
+//                        
 //                    }
 //                    
-//
-//                    
 //                }
-//                
-                
-                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
-                    
-                    
-                    SVProgressHUD.dismiss()
-                    
-
-                    ManageCoreData.DeleteAllDataFromEntities()
-                    
-                    Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData.1)
-                    
-                     Utilities.parseChartData(jsonObject: chartJsonData.1)
-                    
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-                    }
-                
-                    
-                }
-                
-                
-                
-                
-
-                
-                //get survey data
-                
-             /*   assignmentIdDict["assignmentIds"] = self.assignmentIdArray as AnyObject?
-                
-                let convertedString = Utilities.jsonToString(json: assignmentIdDict as AnyObject)
-                
-                 let encryptAssignmentIdStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-                
-                 assignmentIdParams["Assignment"] = encryptAssignmentIdStr
-                
-                
-                
-                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllSurveyData, params: assignmentIdParams){ jsonData in
-                    
-                    SVProgressHUD.dismiss()
-
-                     self.parseSurveyData(jsonObject: jsonData.1)
-                    
-                    
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-                        }
-                    }
-               
-                */
-                
-                }
             
             }
-                
-        }
-
-   }
-    else{
-        self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-    }
-        
-        
- 
- }
-    /*
-    
-    func temporaryFunc(){
-        
-        let stringarr = ["a0J35000000nMJt"]
-        //let surveyarr = ["a0J35000000nMJt"]
-        
-        var dic:[String:AnyObject]=[:]
-        
-        dic["assignmentIds"] = stringarr as AnyObject?
-        
-        var str = Utilities.jsonToString(json: dic as AnyObject)
-        
-       // str = str!.replacingOccurrences(of: "\n", with: "")
-        
-        print(str)
-        
-    }
-    */
-    
-    
-    func parseSurveyData(jsonObject: Dictionary<String, AnyObject>){
-        
-        
-        guard let _ = jsonObject["errorMessage"] as? String,
-            let surveyResults = jsonObject["AssignmentSurvey"] as? [[String: AnyObject]] else { return }
-        
-        
-        for surveyData in surveyResults {
-            
-            let assignmentId = surveyData["assignmentId"] as? String  ?? ""
-            let surveyId = surveyData["surveyId"] as? String  ?? ""
-            let surveyName = surveyData["surveyName"] as? String  ?? ""
-            
-             let convertedJsonString = Utilities.jsonToString(json: surveyData as AnyObject)
-            
-            
-            
-            let surveyObject = SurveyQuestion(context: context)
-            surveyObject.assignmentId = assignmentId
-            surveyObject.surveyId = surveyId
-            surveyObject.surveyName = surveyName
-            surveyObject.surveyQuestionData = convertedJsonString
-            
-            
-            
-            appDelegate.saveContext()
-            
-            //  convertedJsonString = convertedJsonString!.replacingOccurrences(of: "\n", with: "")
-            
-            
-            
-          /*   let jsonData = Utilities.convertToJSON(text: convertedJsonString!) as!Dictionary<String, AnyObject>
-            
-            
-            
-            guard let  surveyName = jsonData["surveyName"] as? String,
-                let surveyQuestionResults = jsonData["SurveyQuestion"] as? [[String: AnyObject]] else { return }
-            
-            //print(surveyName)
-            
-            for temp in surveyQuestionResults{
-                
-                guard let questionName = temp["questionName"] as? String else{return}
-                
-               
-                
-            }
- 
- */
-            
-            
-            
         }
     }
     
     
-       
+    
+    func getSalesforceOrgCredentials(){
+        
+        salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig", isPredicate:false) as! [SalesforceOrgConfig]
+        
+        
+        if(salesforceConfigData.count > 0){
+            
+            let clientId = salesforceConfigData[0].clientId!
+            
+            SalesforceConfig.clientId = try! clientId.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            
+            SalesforceConfig.clientSecret = try! salesforceConfigData[0].clientSecret!.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            
+            SalesforceConfig.hostUrl = try! salesforceConfigData[0].endPointUrl!.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            
+            
+        }
+        
+    }
+    
+    
     
     
     @IBAction func UnwindBackFromLogout(segue:UIStoryboardSegue) {
         
-        ManageCoreData.DeleteAllDataFromEntities()
+       // ManageCoreData.DeleteAllDataFromEntities()
         print("UnwindBackFromLogout")
         
     }

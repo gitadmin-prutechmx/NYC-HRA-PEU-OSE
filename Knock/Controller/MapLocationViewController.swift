@@ -22,6 +22,7 @@ struct locationDataStruct
     var state:String = ""
     var zip:String = ""
     var totalUnits:String = ""
+    var locStatus:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
@@ -239,14 +240,30 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     @IBAction func syncData(_ sender: Any) {
         
-        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
-        SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
-       
+        if(Network.reachability?.isReachable)!{
+            
+            Utilities.isRefreshBtnClick = true
+            
+            SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+            SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
+            
+        }
+        else{
+            self.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
+        }
     }
     
     func UpdateLocationView(){
         
+        
         print("UpdateLocationView")
+        
+        if(Utilities.isEditLoc){
+            updateLocationStatus()
+        }
+        
         populateLocationData()
         
     }
@@ -259,6 +276,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         populateLocationData()
+        
         let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
         self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         
@@ -270,6 +288,19 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
       //  let indexRow = (sender as AnyObject).tag
     
        
+    }
+    
+    func updateLocationStatus(){
+        
+        var updateObjectDic:[String:String] = [:]
+        
+        updateObjectDic["locStatus"] = Utilities.CanvassingStatus
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "Location", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND id == %@ AND assignmentLocId == %@", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.assignmentLocationId,isPredicate: true)
+        
+        
+        Utilities.isEditLoc = false
     }
     
     var locDataArray = [locationDataStruct]()
@@ -293,7 +324,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let fullAdress = locationData.street! + " " + locationData.city! + ", " + locationData.state! + " " + locationData.zip!
 
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!)
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!,locStatus:locationData.locStatus!)
                 
                 
                 locDataArray.append(objectLocStruct)
@@ -346,8 +377,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             
             var isSearch = false
             
-              isSearch = ($0.fullAddress.lowercased() as NSString).contains(searchText.lowercased())
-            
+            if(searchText != ""){
+                isSearch = ($0.fullAddress.lowercased() as NSString).contains(searchText.lowercased())
+            }
             /*isSearch =  ($0.locName.lowercased() as NSString).contains(searchText.lowercased())
             
             if(isSearch == false){
@@ -577,6 +609,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)  as!
         LocationCustomViewCell
         
+       
+        
         /*  if(searchActive){
          cell.dataFullAddress.text = filtered[indexPath.row]
          }
@@ -588,10 +622,28 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
          
          }*/
         
-        if(searchActive){
+//        if(indexPath.row == 0){
+//             cell.contentView.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
+//        }
+        
+        if(searchActive && filteredStruct.count > 0){
             cell.dataFullAddress.text = filteredStruct[indexPath.row].partialAddress
             cell.dataLocation.text = filteredStruct[indexPath.row].locName
             cell.dataLocId.text = filteredStruct[indexPath.row].locId
+            
+            if(filteredStruct[indexPath.row].locStatus == "Completed"){
+                cell.dataLocStatus.isHidden = false
+                cell.dataLocStatus.image = UIImage(named: "Complete")
+            }
+            else if(filteredStruct[indexPath.row].locStatus == "In Progress"){
+                cell.dataLocStatus.isHidden = false
+                cell.dataLocStatus.image = UIImage(named: "InProgress")
+            }
+            else{
+                cell.dataLocStatus.isHidden = true
+            }
+
+            
            // cell.dataLocId.text = filteredStruct[indexPath.row].assignmentLocId
         }
         else{
@@ -599,12 +651,27 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             cell.dataLocation.text = locDataArray[indexPath.row].locName
             cell.dataFullAddress.text = locDataArray[indexPath.row].partialAddress
             cell.dataLocId.text = locDataArray[indexPath.row].locId
+            
+            if(locDataArray[indexPath.row].locStatus == "Completed"){
+                cell.dataLocStatus.isHidden = false
+                cell.dataLocStatus.image = UIImage(named: "Complete")
+            }
+            else if(locDataArray[indexPath.row].locStatus == "In Progress"){
+                cell.dataLocStatus.isHidden = false
+                 cell.dataLocStatus.image = UIImage(named: "InProgress")
+            }
+            else{
+                cell.dataLocStatus.isHidden = true
+            }
+            
+           // cell.editLocBtn.
+            //locDataArray[indexPath.row].locStatus
            // cell.dataLocId.text = locDataArray[indexPath.row].assignmentLocId
             
         }
         
         
-         cell.editLocBtn.tag = indexPath.row
+         //cell.editLocBtn.tag = indexPath.row
         
         return cell
         
@@ -631,12 +698,27 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
 
         Utilities.currentLocationRowIndex = indexPath.row
         
+      
+//        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
+//        
+//   
+//        currentCell.contentView.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
+
+        
         self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
         
  
         
     }
     
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        
+//        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
+//        
+//        currentCell.contentView.backgroundColor = UIColor.init(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1) //clear
+//    }
+//    
+  
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.1

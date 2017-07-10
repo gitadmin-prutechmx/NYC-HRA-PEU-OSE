@@ -674,7 +674,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         getIntakeContactAttempt()
         
-          if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No")){
+          if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && tempInTake != "No" )){
             
        // if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && (tempInTake != "No" || (tempInTake != "Yes" && tempReason != "")))){
             
@@ -874,6 +874,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 chooseTenantInfoView.shake()
                 
                 self.view.makeToast("Please select tenant", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    self.dismiss(animated: true, completion: nil)
                    
                 }
 
@@ -911,8 +913,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
           else  if(Utilities.currentSegmentedControl == "Unit"){
         
-            //if(attemptRdb.isOn && contactRdb.isOn && inTakeRdb.isOn){
-            if(attemptRdb.isOn && contactRdb.isOn){
+            if(attemptRdb.isOn && contactRdb.isOn && inTakeRdb.isOn){
                 updateUnitAndSurvey(type:"Updating Unit..")
                 showTenantView()
             }
@@ -925,9 +926,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 chooseUnitInfoView.shake()
                 updateUnitAndSurvey(type:"Updating Unit..")
                 
-                self.view.makeToast("You can only proceed to next step if Attempt and Contact selected. ", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("You can only proceed to next step if Attempt , Contact and Intake selected. ", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
-                   
+                    self.dismiss(animated: true, completion: nil)
                     
                 }
             }
@@ -950,7 +951,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
        SVProgressHUD.show(withStatus: "Assigning tenant...", maskType: SVProgressHUDMaskType.gradient)
         
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        SalesforceConnection.loginToSalesforce() { response in
             
             if(response)
             {
@@ -1091,7 +1092,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         SVProgressHUD.show(withStatus: type, maskType: SVProgressHUDMaskType.gradient)
         
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        SalesforceConnection.loginToSalesforce() { response in
             
             if(response)
             {

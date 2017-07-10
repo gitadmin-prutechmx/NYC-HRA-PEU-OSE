@@ -161,6 +161,53 @@ class ManageCoreData{
     }
 
     
+    static func updateDate(salesforceEntityName:String,updateKeyValue:[String:AnyObject],predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
+        
+        if(isPredicate)
+        {
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+            
+        }
+        
+        // fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        
+        do
+        {
+            let salesforceConfigData = try context.fetch(fetchRequest)
+            if salesforceConfigData.count == 1
+            {
+                let objectUpdate = salesforceConfigData[0] as! NSManagedObject
+                
+                for (key,value) in updateKeyValue{
+                    
+                    objectUpdate.setValue(value, forKey: key)
+                }
+                
+                
+                
+                do{
+                    
+                    try context.save()
+                }
+                catch
+                {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        catch
+        {
+            print(error.localizedDescription)
+        }
+        
+        
+        
+    }
+    
+
+    
     
     
     static func DeleteAllRecords(salesforceEntityName:String){

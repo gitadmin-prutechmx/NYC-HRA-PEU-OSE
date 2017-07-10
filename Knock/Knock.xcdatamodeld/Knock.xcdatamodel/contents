@@ -57,11 +57,12 @@
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="eventAssignementR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentEventR" inverseEntity="Assignment" syncable="YES"/>
     </entity>
-    <entity name="Location" representedClassName="Location" syncable="YES">
+    <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
@@ -71,14 +72,11 @@
         <relationship name="locAssignmentR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentLocR" inverseEntity="Assignment" syncable="YES"/>
         <relationship name="locUnitR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Unit" inverseName="unitLocR" inverseEntity="Unit" syncable="YES"/>
     </entity>
-    <entity name="SalesforceOrgConfig" representedClassName="SalesforceOrgConfig" syncable="YES">
-        <attribute name="accessToken" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="SalesforceOrgConfig" representedClassName="SalesforceOrgConfig" syncable="YES" codeGenerationType="class">
         <attribute name="clientId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientSecret" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endPointUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SurveyQuestion" representedClassName="SurveyQuestion" syncable="YES">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
@@ -142,6 +140,14 @@
         <attribute name="unitSyncDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="unitLocR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locUnitR" inverseEntity="Location" syncable="YES"/>
     </entity>
+    <entity name="UserInfo" representedClassName="UserInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="contactEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="passwordExpDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="210"/>
         <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
@@ -149,13 +155,14 @@
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="255"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
-        <element name="Location" positionX="-2" positionY="-36" width="128" height="225"/>
-        <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="150"/>
+        <element name="Location" positionX="-2" positionY="-36" width="128" height="240"/>
+        <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="105"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="105"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="135"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="Tenant" positionX="-126" positionY="45" width="128" height="240"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
+        <element name="UserInfo" positionX="-126" positionY="45" width="128" height="135"/>
     </elements>
 </model>

@@ -35,6 +35,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var toolBarView: UIView!
     
+    @IBOutlet weak var dataAssignment: UILabel!
     
     
     var locId:String!
@@ -122,6 +123,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         dataFullAddress.text = SalesforceConnection.fullAddress
+        dataAssignment.text = "Assignment: " + SalesforceConnection.assignmentName
+        
         //SalesforceRestApi.currentFullAddress = locName
       
         
@@ -193,9 +196,19 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     @IBAction func syncData(_ sender: Any) {
         
-        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
-        SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
-        // Utilities.fetchAllDataFromSalesforce()
+        if(Network.reachability?.isReachable)!{
+            
+            Utilities.isRefreshBtnClick = true
+            
+            SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+            SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
+            
+        }
+        else{
+            self.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
+        }
         
     }
     
@@ -241,17 +254,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         if(unitResults.count > 0){
             
             for unitData in unitResults{
-                
-//                if(unitData.floor! != ""){
-//                    floorArray.append(unitData.floor!)
-//                }
-//                
+ 
                 let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.unitSyncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
                 
                 UnitDataArray.append(objectUnitStruct)
                 
             }
         }
+        
+         UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
         
         
 
@@ -986,9 +997,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-    /*
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Dequeue with the reuse identifier
+        
         
         let identifier = "unitCellId"
         var cell: UnitsHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
@@ -1001,10 +1011,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return  67.0
+        return  41.0
     }
-    
-    */
     
      func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         

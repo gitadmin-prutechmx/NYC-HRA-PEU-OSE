@@ -283,7 +283,7 @@ class SubmitSurveyViewController: UIViewController {
         
         SVProgressHUD.show(withStatus: "Submit survey response..", maskType: SVProgressHUDMaskType.gradient)
         
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        SalesforceConnection.loginToSalesforce() { response in
             
          if(response)
             {

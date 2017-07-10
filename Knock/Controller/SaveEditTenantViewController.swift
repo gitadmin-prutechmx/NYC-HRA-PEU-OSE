@@ -170,7 +170,7 @@ var picker = UIDatePicker()
             
             firstNameView.shake()
             
-            self.view.makeToast("Please fill first name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please enter first name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 if didTap {
                     print("Completion with tap")
@@ -202,7 +202,7 @@ var picker = UIDatePicker()
             
             lastNameView.shake()
             
-            self.view.makeToast("Please fill last name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please enter last name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 if didTap {
                     print("Completion with tap")
@@ -229,7 +229,7 @@ var picker = UIDatePicker()
             
             phoneView.shake()
             
-            self.view.makeToast("Please fill last name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please enter Phone number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 if didTap {
                     print("Completion with tap")
@@ -277,7 +277,7 @@ var picker = UIDatePicker()
             
             emailView.shake()
             
-            self.view.makeToast("Please fill email.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please enter email.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 if didTap {
                     print("Completion with tap")
@@ -410,7 +410,7 @@ var picker = UIDatePicker()
         
        SVProgressHUD.show(withStatus: "Saving tenant...", maskType: SVProgressHUDMaskType.gradient)
         
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) { response in
+        SalesforceConnection.loginToSalesforce() { response in
             
             if(response)
             {
@@ -558,6 +558,8 @@ var picker = UIDatePicker()
     }
     
     func datePickerValueChanged(sender: UIDatePicker) {
+        
+       // yyyy-MM-dd
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy"

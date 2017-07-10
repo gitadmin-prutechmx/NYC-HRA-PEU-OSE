@@ -10,6 +10,17 @@ import UIKit
 import Charts
 
 
+struct eventAssignmentDataStruct
+{
+    var eventId : String = ""
+    var assignmentId : String = ""
+    var assignmentName : String = ""
+    var totalLocations : String = ""
+    var totalUnits : String = ""
+    var completeAssignment : String = ""
+   
+    
+}
 
 class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate
 {
@@ -28,7 +39,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     var totalUnitsArray = [String]()
     
     var eventDict: [String:EventDO] = [:]
-    
+    var chartResults = [Chart]()
     
     let status = ["Completed", "In Progress", "Pending"]
     let values = [4.0, 3.0, 3.0]
@@ -100,8 +111,21 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     @IBAction func syncData(_ sender: Any) {
-        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
-        SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
+     
+        
+        if(Network.reachability?.isReachable)!{
+            
+               Utilities.isRefreshBtnClick = true
+            
+                SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
+            
+        }
+        else{
+            self.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
+        }
     }
     
     func UpdateAssignmentView(){
@@ -110,7 +134,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
         
         populateEventAssignmentData()
-       // populateChartData()
+        //populateChartData()
        
         
         //updateTableViewData()
@@ -133,7 +157,9 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         if(Network.reachability?.isReachable)!{
             
-            SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: false)
+            if(Utilities.isRefreshBtnClick == false){
+                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: false)
+            }
         }
         
     }
@@ -144,7 +170,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         populateEventAssignmentData()
-        //populateChartData()
+       // populateChartData()
 
     }
     
@@ -315,6 +341,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         chart4Label = ""
         chart4Value = ""
+        
+      chartResults =  ManageCoreData.fetchData(salesforceEntityName: "Chart",isPredicate:false) as! [Chart]
 
         
          let chart1Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart1",isPredicate:true) as! [Chart]
@@ -363,8 +391,12 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
     
+    var eventAssignmentDataArray = [eventAssignmentDataStruct]()
+    
     func populateEventAssignmentData()
     {
+        eventAssignmentDataArray = []
+        
         assignmentIdArray = []
         assignmentArray = []
         assignmentEventIdArray = []
@@ -387,6 +419,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if(assignmentResults.count > 0){
                 
             for assignmentdata in assignmentResults{
+                
                     assignmentArray.append(assignmentdata.name!)
                     assignmentIdArray.append(assignmentdata.id!)
                     assignmentEventIdArray.append(assignmentdata.eventId!)
@@ -394,8 +427,19 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                     totalUnitsArray.append(assignmentdata.totalUnits!)
                 assignmentCompleteArray.append(assignmentdata.completePercent!)
                 
+                 let objectEventAssignmentStruct:eventAssignmentDataStruct = eventAssignmentDataStruct(eventId: assignmentdata.eventId!, assignmentId: assignmentdata.id!, assignmentName: assignmentdata.name!, totalLocations: assignmentdata.totalLocations!, totalUnits: assignmentdata.totalUnits!, completeAssignment: assignmentdata.completePercent!)
+                
+                
+                eventAssignmentDataArray.append(objectEventAssignmentStruct)
+                
+                
                 }
+
             }
+        
+        eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.assignmentName < $1.assignmentName }
+        
+       // assignmentArray.sort()
 
         tableView.reloadData()
         
@@ -432,7 +476,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     // tell the collection view how many cells to make
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return chartResults.count
     }
     
     // make a cell for each cell index path
@@ -520,17 +564,25 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dataRowId", for: indexPath) as! EventAssignmentViewCell
         
-        cell.assignmentName.text = assignmentArray[indexPath.row]
+        cell.assignmentName.text = eventAssignmentDataArray[indexPath.row].assignmentName
+        // assignmentArray[indexPath.row]
         
-        let eventObject = eventDict[assignmentEventIdArray[indexPath.row]]
+        let eventObject = eventDict[eventAssignmentDataArray[indexPath.row].eventId]
+        //eventDict[assignmentEventIdArray[indexPath.row]]
  
         cell.eventName.text = eventObject?.eventName
         
-        cell.locations.text = totalLocArray[indexPath.row]
-        cell.units.text = totalUnitsArray[indexPath.row]
-        cell.assignmentId.text = assignmentIdArray[indexPath.row]
+        cell.locations.text = eventAssignmentDataArray[indexPath.row].totalLocations
+        //totalLocArray[indexPath.row]
+        cell.units.text = eventAssignmentDataArray[indexPath.row].totalUnits
+        //totalUnitsArray[indexPath.row]
+        cell.assignmentId.text = eventAssignmentDataArray[indexPath.row].assignmentId
+        //assignmentIdArray[indexPath.row]
 
-        cell.completePercent.text = assignmentCompleteArray[indexPath.row] + "%"
+        cell.completePercent.text = eventAssignmentDataArray[indexPath.row].completeAssignment + "%"
+        //assignmentCompleteArray[indexPath.row] + "%"
+        
+       
         
         return cell
     }
@@ -570,8 +622,13 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         // Row selected, so set textField to relevant value, hide tableView
         // endEditing can trigger some other action according to requirements
         
-        SalesforceConnection.assignmentId =  assignmentIdArray[indexPath.row]
-          SalesforceConnection.assignmentName = assignmentArray[indexPath.row]
+        SalesforceConnection.assignmentId =  eventAssignmentDataArray[indexPath.row].assignmentId
+//assignmentIdArray[indexPath.row]
+        SalesforceConnection.assignmentName = eventAssignmentDataArray[indexPath.row].assignmentName
+//assignmentArray[indexPath.row]
+        
+        
+     
         
         
         

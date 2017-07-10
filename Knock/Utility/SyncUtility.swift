@@ -21,14 +21,15 @@ class SyncUtility{
     static var surveyResResultsArr = [SurveyResponse]()
     
     static var isPullData:Bool = false
+    static var loginViewController:LoginViewController? = nil
     
-    class func syncDataWithSalesforce(isPullDataFromSFDC:Bool){
+    class func syncDataWithSalesforce(isPullDataFromSFDC:Bool,controller:LoginViewController?=nil){
         
         
         isPullData = isPullDataFromSFDC
+        loginViewController = controller
         
-        
-        SalesforceConnection.loginToSalesforce(companyName: SalesforceConnection.companyName) {_ in
+        SalesforceConnection.loginToSalesforce() {_ in
             
              editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
             
@@ -41,26 +42,15 @@ class SyncUtility{
             
              editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
             
-            //  surveyUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [SurveyUnit]
-            
-            
-            
-            //  tenantAssignResultsArr = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [TenantAssign]
-            
-            
-            
-            //sync symbol
-            
-            
-            //AssignmentDetail api and chart api call after push : Here data delete?
-            
+          
+         
             
             if( editLocationResultsArr.count > 0){
                 updateEditLocData()
             }
             else if( unitResultsArr.count > 0){
                 updateUnitData()
-            }//end of if
+            }
             else if( tenantResultsArr.count > 0){
                 updateTenantData()
             }
@@ -72,7 +62,7 @@ class SyncUtility{
             }
             else{
                 if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce()
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
             }
             
@@ -151,7 +141,7 @@ class SyncUtility{
             }
             else{
                 if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce()
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
             }
             
@@ -209,7 +199,7 @@ class SyncUtility{
         
         unitGroup.notify(queue: .main) {
             
-            //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             if( tenantResultsArr.count > 0){
                  updateTenantData()
@@ -222,7 +212,7 @@ class SyncUtility{
             }
             else{
                 if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce()
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
             }
             
@@ -280,7 +270,7 @@ class SyncUtility{
         
         
         tenantGroup.notify(queue: .main) {
-            //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
             
             if( surveyResResultsArr.count > 0){
                  updateSurveyResponseData()
@@ -290,7 +280,7 @@ class SyncUtility{
             }
             else{
                 if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce()
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
             }
             
@@ -326,12 +316,11 @@ class SyncUtility{
                 
                 formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
                 
-                print("formatString \(formatString)")
+              
                 
                 surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
                 
-                print("surveyResponseStr \(surveyResponseStr)")
-                
+              
                 surveyResponseParam["surveyResponseFile"] = surveyResponseStr
                 
                 
@@ -360,7 +349,7 @@ class SyncUtility{
             }
             else{
                 if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce()
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
             }
             
@@ -394,7 +383,7 @@ class SyncUtility{
                 editUnitGroup.enter()
                 
                 
-                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: SalesforceConfig.currentUserContactId)
                 
                 
                 
@@ -425,7 +414,7 @@ class SyncUtility{
         editUnitGroup.notify(queue: .main) {
             
             if(isPullData){
-                Utilities.fetchAllDataFromSalesforce()
+                Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
             }
             
         }

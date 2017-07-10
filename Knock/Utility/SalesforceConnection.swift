@@ -12,9 +12,7 @@ import CoreData
 
 class SalesforceConnection{
     
-    static var currentUserEmail:String = ""
-    static var currentUserContactId:String = ""
-    static var currentUserExternalId:String = ""
+    
     
     static var salesforceUserId:String = ""
     
@@ -33,8 +31,7 @@ class SalesforceConnection{
     static var surveyId:String = ""
     static var fullAddress:String = ""
     
-    static var companyName:String = ""
-   
+    
         
  
     private static var salesforceAccessToken:String=""
@@ -48,7 +45,7 @@ class SalesforceConnection{
     
     
     
-    static func loginToSalesforce(companyName:String , completion: @escaping (Bool) -> ()) {
+    static func loginToSalesforce(completion: @escaping (Bool) -> ()) {
         
         
         let loginUrl: String = SalesforceConfig.hostUrl + "/services/oauth2/token?grant_type=password&client_id=\(SalesforceConfig.clientId)&client_secret=\(SalesforceConfig.clientSecret)&username=\(SalesforceConfig.userName)&password=\(SalesforceConfig.password)"
@@ -69,9 +66,9 @@ class SalesforceConnection{
                 {
                  
                     //update accessToken
-                    ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", valueToBeUpdate: accessToken,updatekey:"accessToken", predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
-                    
-                    
+//                    ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", valueToBeUpdate: accessToken,updatekey:"accessToken", predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
+//                    
+//                    
                         salesforceAccessToken = accessToken
 
                         salesforceUserId = userId.components(separatedBy: "/")[5]
@@ -82,7 +79,8 @@ class SalesforceConnection{
                 }
                 
             case .failure(let error):
-                showErrorMessage(error: error as NSError)
+                Utilities.isRefreshBtnClick = false
+                showLoginErrorMessage(error: error as NSError)
                 //print(error.localizedDescription)
                 completion(false)
                 
@@ -148,6 +146,7 @@ class SalesforceConnection{
                 
             case .failure(let error):
                 
+                Utilities.isRefreshBtnClick = false
                 showErrorMessage(error: error as NSError)
                 return
 
@@ -163,6 +162,11 @@ class SalesforceConnection{
     static func showErrorMessage(error:NSError){
         SVProgressHUD.dismiss()
         SVProgressHUD.showError(withStatus: error.localizedDescription)
+    }
+    
+    static func showLoginErrorMessage(error:NSError){
+        SVProgressHUD.dismiss()
+        SVProgressHUD.showError(withStatus: "Make sure your username and password is correct")
     }
     
     

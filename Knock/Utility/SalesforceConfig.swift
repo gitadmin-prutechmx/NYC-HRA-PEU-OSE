@@ -18,5 +18,9 @@ class SalesforceConfig{
     static var hostUrl:String = ""
     static var userName:String = ""
     static var password:String = ""
+    
+    static var currentUserEmail:String = ""
+    static var currentUserContactId:String = ""
+    static var currentUserExternalId:String = ""
 
 }

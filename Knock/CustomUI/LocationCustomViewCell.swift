@@ -14,7 +14,7 @@ class LocationCustomViewCell: UITableViewCell {
     @IBOutlet weak var dataFullAddress: UILabel!
     @IBOutlet weak var dataLocId: UILabel!
     
-    @IBOutlet weak var editLocBtn: UIButton!
+    @IBOutlet weak var dataLocStatus: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
