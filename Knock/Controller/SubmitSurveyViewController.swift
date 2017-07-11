@@ -145,7 +145,7 @@ class SubmitSurveyViewController: UIViewController {
         
        
         
-        print(Utilities.SurveyOutput)
+       // print(Utilities.SurveyOutput)
         
         
       
@@ -336,7 +336,7 @@ class SubmitSurveyViewController: UIViewController {
             
                 base64String = self.convertImageToBase64(signatureImage)
             
-                print("base64String: \(base64String)")
+                //print("base64String: \(base64String)")
                 
                // let signImage = self.convertBase64ToImage(base64String)
             

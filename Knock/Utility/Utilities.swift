@@ -27,6 +27,10 @@ class Utilities {
     
     static var basemapLocator:AGSLocatorTask?
     
+    static var basemapAGSMapView:AGSMapView!
+    
+    static var mapLocationViewController:MapLocationViewController? = nil
+    
     static var currentSegmentedControl:String = ""
     
     // for skiplogic survey
@@ -410,6 +414,10 @@ class Utilities {
             
         }
         
+        if(assignmentLocUnitId !=  nil){
+            updateSyncDate(assignmentLocUnitId: assignmentLocUnitId!)
+        }
+        
         
     }
     
@@ -612,7 +620,13 @@ class Utilities {
             
             ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@", predicateValue: iosTenantId,isPredicate: true)
             
+            if(tenantCreateResults[0].assignmentLocUnitId !=  nil){
+                updateSyncDate(assignmentLocUnitId: tenantCreateResults[0].assignmentLocUnitId!)
+            }
+            
         }
+        
+        
     }
     
     class func updateTenantIdInTenantAssign(tenantDataDict:[String:AnyObject]){
@@ -636,7 +650,21 @@ class Utilities {
         }
     }
 
-    
+    class func updateSyncDate(assignmentLocUnitId:String){
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        
+        
+        var updateObjectDic:[String:String] = [:]
+        updateObjectDic["unitSyncDate"]  = dateFormatter.string(from: Date())
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "Unit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId ==%@", predicateValue: assignmentLocUnitId,isPredicate: true)
+        
+        print("Sync Date updated")
+        
+    }
     
     //Tested
     class func updateUnitDetail(unitDataDict:[String:AnyObject]){
@@ -659,11 +687,16 @@ class Utilities {
         }
         
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        
         
         var updateObjectDic:[String:String] = [:]
         updateObjectDic["id"] = locUnitId
         updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
         updateObjectDic["actionStatus"] = ""
+        updateObjectDic["unitSyncDate"]  = dateFormatter.string(from: Date())
+        
         
         ManageCoreData.updateRecord(salesforceEntityName: "Unit", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
         
@@ -758,6 +791,10 @@ class Utilities {
             ManageCoreData.updateRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
             
             print("surveyResResults updated")
+        }
+        
+         if(locAssignmentUnitId !=  nil){
+            updateSyncDate(assignmentLocUnitId: locAssignmentUnitId!)
         }
         
     }

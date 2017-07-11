@@ -449,7 +449,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.mapView.callout.dismiss()
         
         //remove all previous graphics
-        self.markerGraphicsOverlay.graphics.removeAllObjects()
+      //  self.markerGraphicsOverlay.graphics.removeAllObjects()
         
         
         self.locatorTask?.geocode(withSearchText: text, parameters: self.geocodeParameters, completion: { [weak self] (results:[AGSGeocodeResult]?, error:Error?) -> Void in
@@ -463,6 +463,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                     if(setIntialViewPoint==false){
                         //create a graphic for the first result and add to the graphics overlay
                         graphic = self?.graphicForPoint(point: results[0].displayLocation!, attributes: results[0].attributes as [String : AnyObject]?)
+                        
+                    self?.markerGraphicsOverlay.graphics.removeAllObjects()
                         self?.markerGraphicsOverlay.graphics.add(graphic!)
                         
                     }

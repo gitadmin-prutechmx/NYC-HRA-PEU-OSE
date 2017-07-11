@@ -118,15 +118,34 @@ var picker = UIDatePicker()
     
     func fillTenantInfo(){
         
+        
          let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@ AND id == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,predicateValue4: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
         
         if(tenantResults.count > 0){
+            
+            if(tenantResults[0].dob != ""){
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let date = dateFormatter.date(from: tenantResults[0].dob!)
+                
+                if(date != nil){
+                    
+                    dateFormatter.dateFormat = "MM-dd-yyyy"
+                    txtDob.text = dateFormatter.string(from: date!)
+                }
+                else{
+                    txtDob.text = tenantResults[0].dob
+                }
+            }
+            
+
             
             firstNameTxtField.text = tenantResults[0].firstName
             lastNameTxtField.text = tenantResults[0].lastName
             emailTxtField.text = tenantResults[0].email
             phoneTextField.text = tenantResults[0].phone
-            txtDob.text = tenantResults[0].dob
+            
             
         }
         
@@ -511,6 +530,8 @@ var picker = UIDatePicker()
         updateObjectDic["dob"] = dob
         
         updateObjectDic["age"] = age
+        
+        updateObjectDic["assignmentLocUnitId"] = SalesforceConnection.assignmentLocationUnitId
         
         
         let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]

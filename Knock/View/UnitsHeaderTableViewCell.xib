@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Survey Status " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RD3-SG-Mdx">
-                                <rect key="frame" x="2" y="11" width="102" height="21"/>
+                                <rect key="frame" x="-18" y="11" width="102" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="102" id="8xZ-fF-8di"/>
                                     <constraint firstAttribute="height" constant="21" id="RAC-UQ-488"/>
@@ -41,10 +41,10 @@
                                 <color key="textColor" red="0.9882352941176471" green="0.98039215686274506" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SB1-yX-yBk">
-                                <rect key="frame" x="199" y="11" width="41" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SB1-yX-yBk">
+                                <rect key="frame" x="231" y="11" width="81" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="41" id="cWG-d4-4d3"/>
+                                    <constraint firstAttribute="width" constant="81" id="cWG-d4-4d3"/>
                                     <constraint firstAttribute="height" constant="21" id="sUa-xV-niR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -54,12 +54,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.32156862745098036" green="0.54509803921568623" blue="0.71764705882352942" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="SB1-yX-yBk" firstAttribute="centerX" secondItem="Vqk-cw-4nG" secondAttribute="centerX" constant="59" id="CfL-e8-JNx"/>
+                            <constraint firstItem="SB1-yX-yBk" firstAttribute="centerX" secondItem="Vqk-cw-4nG" secondAttribute="centerX" constant="111.5" id="CfL-e8-JNx"/>
                             <constraint firstAttribute="height" constant="41" id="ImR-bN-sxL"/>
                             <constraint firstItem="RD3-SG-Mdx" firstAttribute="top" secondItem="Vqk-cw-4nG" secondAttribute="top" constant="10.800000000000001" id="PCD-fP-diX"/>
                             <constraint firstItem="SB1-yX-yBk" firstAttribute="top" secondItem="RD3-SG-Mdx" secondAttribute="top" id="U8D-vS-A0d"/>
                             <constraint firstItem="NGn-gL-llJ" firstAttribute="top" secondItem="Vqk-cw-4nG" secondAttribute="top" constant="10.800000000000001" id="XMG-tP-eAb"/>
-                            <constraint firstItem="RD3-SG-Mdx" firstAttribute="centerX" secondItem="Vqk-cw-4nG" secondAttribute="centerX" constant="-107" id="nEv-LJ-9wf"/>
+                            <constraint firstItem="RD3-SG-Mdx" firstAttribute="centerX" secondItem="Vqk-cw-4nG" secondAttribute="centerX" constant="-127" id="nEv-LJ-9wf"/>
                             <constraint firstItem="NGn-gL-llJ" firstAttribute="leading" secondItem="Vqk-cw-4nG" secondAttribute="leading" constant="8" id="obV-5M-Mlj"/>
                         </constraints>
                     </view>

@@ -270,6 +270,9 @@ class SyncUtility{
         
         
         tenantGroup.notify(queue: .main) {
+            
+              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
               NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
             
             if( surveyResResultsArr.count > 0){
@@ -344,6 +347,8 @@ class SyncUtility{
         
         surveyResponseGroup.notify(queue: .main) {
             
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
             if( editUnitResultsArr.count > 0){
                  updateEditUnitData()
             }
@@ -412,6 +417,8 @@ class SyncUtility{
         
         
         editUnitGroup.notify(queue: .main) {
+            
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             if(isPullData){
                 Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
