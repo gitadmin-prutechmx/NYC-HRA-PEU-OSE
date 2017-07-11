@@ -18,7 +18,7 @@ protocol canvassingStatusProtocol {
 class EditLocationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,canvassingStatusProtocol
 {
     
-    @IBOutlet weak var tblEditLocation : UITableView?
+   // @IBOutlet weak var tblEditLocation : UITableView?
     
     
     
@@ -32,9 +32,11 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
      var editLocDict : [String:String] = [:]
     
     @IBOutlet weak var fullAddressLbl: UILabel!
+    @IBOutlet weak var tblEditLocation: UITableView!
 
-    
     @IBOutlet weak var NotesTextArea: UITextView!
+    
+   // @IBOutlet weak var NotesTextArea: UITextView!
     
     func getCanvasssingStatus(strCanvassingStatus:String){
         
@@ -55,9 +57,9 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         
        // self.tblEditLocation?.separatorStyle = UITableViewCellSeparatorStyle.none
        
-        //self.tblEditLocation?.tableFooterView = UIView()
-        self.tblEditLocation?.dataSource = self
-        self.tblEditLocation?.delegate = self
+        self.tblEditLocation?.tableFooterView = UIView()
+        //self.tblEditLocation?.dataSource = self
+        //self.tblEditLocation?.delegate = self
         self.navigationController?.navigationBar.tintColor = UIColor.white
 
         NotesTextArea.layer.cornerRadius = 5
@@ -72,6 +74,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         populateEditLocation()
         
     
+       // self.tblEditLocation?.tableFooterView = UIView()
         
       
 
@@ -116,67 +119,90 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             
 
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        if indexPath.section == 0
-        {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "attemptCell", for: indexPath) as! EditLocAttemptTableViewCell
+        if(indexPath.section == 0){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "attemptCell")!
+            cell.backgroundColor = UIColor.clear
+            
+            
+            cell.textLabel?.text = "Attempt"
+            
+            cell.selectionStyle = .none
+            
+            //accessory switch
+            let attemptSwitch = UISwitch(frame: CGRect.zero)
             
             if(attempt == "Yes"){
-               cell.attemptRdb.isOn = true
+                attemptSwitch.isOn = true
             }
             else if (attempt == "No"){
-                cell.attemptRdb.isOn = false
+               attemptSwitch.isOn = false
                 // attemptRdb.isOn = false
             }
             else{
-                cell.attemptRdb.isOn = false
+                attemptSwitch.isOn = false
             }
+
             
-            //cell.attemptRdb.tag = 0
+           
+            attemptSwitch.addTarget(self, action: #selector(EditLocationViewController.attemptChanged(_:)), for: UIControlEvents.valueChanged)
             
-            cell.attemptRdb.addTarget(self, action: #selector(EditLocationViewController.attemptChanged(_:)), for: UIControlEvents.valueChanged)
-            
-        
-            
+            cell.accessoryView = attemptSwitch
             return cell
         }
-        
-        
-    else if indexPath.section == 1
-        {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "statusCell", for: indexPath) as! EditLocStatusTableViewCell
+        else if(indexPath.section == 1){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "statusCell")!
+            cell.backgroundColor = UIColor.clear
             
+            cell.accessoryType = .disclosureIndicator
             
-            if (canvassingStatus.isEmpty)
-            {
-                 cell.btnSelectStatus.setTitle("Select Status", for: .normal)
+            cell.textLabel?.text = "Canvassing Status"
+            //cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+            
+            if(canvassingStatus.isEmpty){
+                cell.detailTextLabel?.text = "Select Status"
+            }
+            else{
+                cell.detailTextLabel?.text = canvassingStatus
             }
             
-            else
-            {
-                cell.btnSelectStatus.setTitle(canvassingStatus, for: .normal)
-                
-            }
+            cell.detailTextLabel?.textColor = UIColor.lightGray
+            
+            //let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 21))
             
             return cell
+            
         }
+
         else
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "noOfUnitsCell", for: indexPath) as! EditLocNoOfUnitsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "noOfUnitsCell", for: indexPath)
             
-            cell.noOfUnits.text = numberOfUnits
+            cell.selectionStyle = .none
+            
+            cell.textLabel?.text = "# of Units"
+            cell.detailTextLabel?.text = numberOfUnits
+            cell.textLabel?.textColor = UIColor.lightGray
             
             return cell
         }
+        
+        
+        
+        
+       
+        
     }
     
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.1
-    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 0.1
+//    }
     
    
 
