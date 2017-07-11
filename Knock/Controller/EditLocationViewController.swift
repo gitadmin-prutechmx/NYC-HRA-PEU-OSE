@@ -10,13 +10,13 @@ import UIKit
 import DropDown
 import DLRadioButton
 
-class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource
+class EditLocationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
 {
-    @IBOutlet weak var attemptRdb: UISwitch!
-    @IBOutlet weak var txtUnits: UILabel!
     
-    let pickerView = UIPickerView()
-    @IBOutlet weak var txtStatusList: UITextField!
+    @IBOutlet weak var tblEditLocation : UITableView?
+    
+    var strStatus: String!
+   
     
     var attempt:String = ""
     var canvassingStatus:String = ""
@@ -41,11 +41,14 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
        //setupStatusDropDown()
         
         fullAddressLbl.text = SalesforceConnection.fullAddress
-         self.txtStatusList.inputView = pickerView
+         //self.txtStatusList.inputView = pickerView
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
-
-        
+       // self.tblEditLocation?.separatorStyle = UITableViewCellSeparatorStyle.none
+       
+        //self.tblEditLocation?.tableFooterView = UIView()
+        self.tblEditLocation?.dataSource = self
+        self.tblEditLocation?.delegate = self
         self.navigationController?.navigationBar.tintColor = UIColor.white
 
         NotesTextArea.layer.cornerRadius = 5
@@ -53,43 +56,11 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
         NotesTextArea.layer.borderWidth = 0.5
         NotesTextArea.clipsToBounds = true
         
-        //NotesTextArea.text = "Description"
+       
         NotesTextArea.textColor = UIColor.black
-        pickerView.delegate = self
-        arrStatusOption = ["Blocked","Planned","In Progress","Completed"]
         
-
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
-        
-        
-        
-        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
-        
-        
-        let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.cancelPressed))
-        
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SaveEditTenantViewController.donePressed))
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
-        
-        label.font = UIFont(name: "Helvetica", size: 12)
-        
-        label.backgroundColor = UIColor.clear
-        
-        label.textColor = UIColor.white
-        
-        label.text = "Select Status"
-        
-        label.textAlignment = NSTextAlignment.center
-        
-        let textBtn = UIBarButtonItem(customView: label)
-        
-        toolBar.setItems([cancelBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
-        
-        txtStatusList.inputAccessoryView = toolBar
-        populateEditLocation()
+      
+       // populateEditLocation()
         
     
         
@@ -98,89 +69,88 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
         // Do any additional setup after loading the view.
     }
     
-    func cancelPressed(sender: UIBarButtonItem)
-    {
-        
-        txtStatusList.resignFirstResponder()
-    }
     
-    func donePressed(sender: UIBarButtonItem) {
-        
-       
-        txtStatusList.text = canvassingStatus
-        
-        txtStatusList.resignFirstResponder()
-        
-    }
-
     
-    @IBAction func attemptChanged(_ sender: Any) {
-        
-        if(attemptRdb.isOn){
-            attempt = "Yes"
-        }
-        else{
-            attempt = "No"
-        }
-
-    }
     
-    // MARK: Pickerview Delegates Methods
-       public func numberOfComponents(in pickerView: UIPickerView) -> Int
-       {
+    //Mark: tableview delegets
+   
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-   
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    
+    func numberOfSections(in tableView: UITableView) -> Int
     {
-        
-            return self.arrStatusOption.count
-        
-       
+        return 3
     }
     
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-    {
-        
-            return arrStatusOption.object(at: row) as? String
-
-        
+    // cell height
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        
-         canvassingStatus = (arrStatusOption.object(at: row) as? String)!
-        
-        //  self.txtStatusList.text = arrStatusOption.object(at: row) as? String
+        if indexPath.section == 0
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "attemptCell", for: indexPath) as! EditLocAttemptTableViewCell
             
+         //   cell.switchOn.addTarget(self, action: #selector(EditLocationViewController.attemptChanged(_:)), for: .valueChanged)
+            
+            return cell
+        }
         
+        
+    else if indexPath.section == 1
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "statusCell", for: indexPath) as! EditLocStatusTableViewCell
+            
+            
+            if (strStatus ?? "").isEmpty
+            {
+                 cell.btnSelectStatus.setTitle("Select Status", for: .normal)
+            }
+            
+            else
+            {
+                cell.btnSelectStatus.setTitle(strStatus, for: .normal)
+                
+            }
+            
+           
+            
+            //cell.btnSelcetStatus.index = selectedItem.row
+            return cell
+        }
+        else
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "noOfUnitsCell", for: indexPath) as! EditLocNoOfUnitsTableViewCell
+            
+            return cell
+        }
     }
     
-//MARK: - uitextfiled delegate
     
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        let aSet = NSCharacterSet(charactersIn:"0123456789abc").inverted
-        let compSepByCharInSet = string.components(separatedBy: aSet)
-        let numberFiltered = compSepByCharInSet.joined(separator: "")
-        
-       
-//        let currentCharacterCount = NoOfUnitsTextField.text?.characters.count ?? 0
-//        if (range.length + range.location > currentCharacterCount){
-//            return false
-//        }
-//        let newLength = currentCharacterCount + string.characters.count - range.length
-//        if(newLength > 5){
-//            return false
-//        }
-        
-        
-        return string == numberFiltered
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.1
     }
+    
+    
+//     func attemptChanged(_ sender: Any)
+//     {
+//    
+//            if(attemptRdb.isOn){
+//                attempt = "Yes"
+//            }
+//            else{
+//                attempt = "No"
+//            }
+//    
+//        }
+ 
     
     func populateEditLocation(){
         
@@ -188,25 +158,23 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
         
         if(editLocationResults.count > 0){
             
-//            if(editLocationResults[0].canvassingStatus! != ""){
-//                self.canvassingStatusDropDown.setTitle(editLocationResults[0].canvassingStatus!, for: .normal)
-//            }
+
             
             canvassingStatus = editLocationResults[0].canvassingStatus!
             
-            txtStatusList.text = canvassingStatus
+          //  txtStatusList.text = canvassingStatus
             
             numberOfUnits = editLocationResults[0].noOfUnits!
-            txtUnits.text = numberOfUnits
+          //  txtUnits.text = numberOfUnits
             
             notes = editLocationResults[0].notes!
             NotesTextArea.text = notes
             
             if(editLocationResults[0].attempt == "Yes"){
-                attemptRdb.isOn = true
+               // attemptRdb.isOn = true
             }
             else if (editLocationResults[0].attempt == "No"){
-                attemptRdb.isOn = false
+               // attemptRdb.isOn = false
             }
             else{
                 editLocationResults[0].attempt = "No"
@@ -260,85 +228,23 @@ class EditLocationViewController: UIViewController,UITextFieldDelegate,UIPickerV
     
     @IBAction func saveLocation(_ sender: Any) {
        
-        
-        
-
-       
         if let notesTemp = NotesTextArea.text{
             notes = notesTemp
         }
         
         updateEditLocationInDatabase()
         
-        self.view.makeToast("Located has been edited successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-            
-            Utilities.isEditLoc = true
-            Utilities.CanvassingStatus = self.canvassingStatus
-            
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
+        self.view.makeToast("Location has been edited successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
             self.dismiss(animated: true, completion: nil)
             
         }
         
-//        editLocDict = Utilities.editLocData(canvassingStatus: canvassingStatus, assignmentLocationId: SalesforceConnection.assignmentLocationId, notes: notes, attempt: attempt, numberOfUnits: numberOfUnits)
-//        
-//        if(Network.reachability?.isReachable)!{
-//            
-//            pushEditLocDataToSalesforce()
-//        }
-//            
-//        else{
-//            self.view.makeToast("Location has been edit successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                
-//                self.dismiss(animated: true, completion: nil)
-//                
-//            }
-//        }
-//
-// 
+
         
 
     }
     
-    func pushEditLocDataToSalesforce(){
-       
-        var updateLocation : [String:String] = [:]
-        
-        updateLocation["location"] = Utilities.encryptedParams(dictParameters: editLocDict as AnyObject)
-
-        
-        
-        
-        SVProgressHUD.show(withStatus: "Updating Location...", maskType: SVProgressHUDMaskType.gradient)
-        
-        SalesforceConnection.loginToSalesforce() { response in
-            
-            if(response)
-            {
-                
-                
-               SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: updateLocation){ jsonData in
-                    
-                    SVProgressHUD.dismiss()
-                
-                   // Utilities.parseEditLocationResponse(jsonObject: jsonData.1)
-                
-                    self.view.makeToast("Location has been assigned successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        
-                        self.dismiss(animated: true, completion: nil)
-                        
-                    }
-                    
-                    
-                    
-                }
-            }
-            
-        }
-
-    }
-
+   
    
 }

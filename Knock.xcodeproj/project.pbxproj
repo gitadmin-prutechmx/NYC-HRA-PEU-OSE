@@ -39,6 +39,10 @@
 		5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9471F11EB4000623005 /* DateExtension.swift */; };
 		5D52F94A1F149DC300623005 /* EditUnitDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9491F149DC300623005 /* EditUnitDO.swift */; };
 		5D52F94C1F14A3FB00623005 /* TenantDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F94B1F14A3FB00623005 /* TenantDO.swift */; };
+		5D52F94E1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F94D1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift */; };
+		5D52F9521F14D43500623005 /* EditLocAttemptTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F94F1F14D43500623005 /* EditLocAttemptTableViewCell.swift */; };
+		5D52F9531F14D43500623005 /* EditLocNoOfUnitsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9501F14D43500623005 /* EditLocNoOfUnitsTableViewCell.swift */; };
+		5D52F9541F14D43500623005 /* EditLocStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9511F14D43500623005 /* EditLocStatusTableViewCell.swift */; };
 		5D56CF091EE007060019882F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF081EE007060019882F /* AppDelegate.swift */; };
 		5D56CF0E1EE007060019882F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF0C1EE007060019882F /* Main.storyboard */; };
 		5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */; };
@@ -144,6 +148,10 @@
 		5D52F9471F11EB4000623005 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		5D52F9491F149DC300623005 /* EditUnitDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUnitDO.swift; sourceTree = "<group>"; };
 		5D52F94B1F14A3FB00623005 /* TenantDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantDO.swift; sourceTree = "<group>"; };
+		5D52F94D1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCanvasssingStatusViewController.swift; sourceTree = "<group>"; };
+		5D52F94F1F14D43500623005 /* EditLocAttemptTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLocAttemptTableViewCell.swift; sourceTree = "<group>"; };
+		5D52F9501F14D43500623005 /* EditLocNoOfUnitsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLocNoOfUnitsTableViewCell.swift; sourceTree = "<group>"; };
+		5D52F9511F14D43500623005 /* EditLocStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditLocStatusTableViewCell.swift; sourceTree = "<group>"; };
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D56CF0D1EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -345,6 +353,7 @@
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5D52F94D1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift */,
 				5DE3C9A01EF7CBF300012C47 /* SurveyMultiOptionViewController.swift */,
 				5DE3C9A11EF7CBF300012C47 /* SurveyRadioOptionViewController.swift */,
 				5DE3C9A21EF7CBF300012C47 /* SurveyTextViewController.swift */,
@@ -453,6 +462,9 @@
 		5DE3C9651EEFE71700012C47 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				5D52F94F1F14D43500623005 /* EditLocAttemptTableViewCell.swift */,
+				5D52F9501F14D43500623005 /* EditLocNoOfUnitsTableViewCell.swift */,
+				5D52F9511F14D43500623005 /* EditLocStatusTableViewCell.swift */,
 				5D1BD4F11F067B9000C8FAF5 /* ChartCollectionViewCell.swift */,
 				5D2AFB071EFA3788003AC7DD /* DropDownButton.swift */,
 				5DE3C99E1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift */,
@@ -709,12 +721,14 @@
 				5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */,
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
+				5D52F9531F14D43500623005 /* EditLocNoOfUnitsTableViewCell.swift in Sources */,
 				5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */,
 				5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */,
 				5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */,
 				5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */,
 				5D5291C21F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
+				5D52F9541F14D43500623005 /* EditLocStatusTableViewCell.swift in Sources */,
 				5D5291BE1F0D3BCF00D5645F /* Tenant+CoreDataClass.swift in Sources */,
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
@@ -737,8 +751,10 @@
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
 				5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */,
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
+				5D52F9521F14D43500623005 /* EditLocAttemptTableViewCell.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
 				5D5291C81F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift in Sources */,
+				5D52F94E1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift in Sources */,
 				5DE3C99D1EF7A90500012C47 /* SurveyCollectionViewCell.swift in Sources */,
 				5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */,
 				5DE3C9A71EF7CBF300012C47 /* SubmitSurveyViewController.swift in Sources */,
