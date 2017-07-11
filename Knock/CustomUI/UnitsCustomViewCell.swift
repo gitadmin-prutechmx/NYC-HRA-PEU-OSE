@@ -15,13 +15,16 @@ class UnitsCustomViewCell: UITableViewCell {
     @IBOutlet weak var dataSyncDate: UILabel!
     @IBOutlet weak var dataUnitId: UILabel!*/
     
-    @IBOutlet weak var dataUnit: UILabel!
-    @IBOutlet weak var dataUnitId: UILabel!
-    @IBOutlet weak var dataFloor: UILabel!
-    @IBOutlet weak var pendingIcon: UIImageView!
     
-    @IBOutlet weak var dataSyncDate: UILabel!
-    @IBOutlet weak var dataSyncStatus: UILabel!
+    
+    @IBOutlet weak var unit: UILabel!
+    @IBOutlet weak var attempt: UIImageView!
+    @IBOutlet weak var contact: UIImageView!
+    @IBOutlet weak var surveyStatus: UIImageView!
+    @IBOutlet weak var sync: UIImageView!
+    @IBOutlet weak var syncDate: UILabel!
+    @IBOutlet weak var unitId: UILabel!
+    
     
     @IBOutlet weak var moreBtn: UIButton!
     

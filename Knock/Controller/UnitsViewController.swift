@@ -426,7 +426,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         
-        cell.dataUnit.text = UnitDataArray[indexPath.row].unitName
+        cell.unit.text = UnitDataArray[indexPath.row].unitName
         
         
        // cell.moreBtn.tag = indexPath.row
@@ -478,12 +478,18 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         */
         
         
-        cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
+        cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
         
-        cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
+        if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
+            cell.surveyStatus.isHidden = false
+            cell.surveyStatus.image = UIImage(named: "Complete")
+        }
+        else{
+            cell.surveyStatus.isHidden = true
+            
+        }
         
-        
-        cell.dataUnitId.text = UnitDataArray[indexPath.row].unitId
+        cell.unitId.text = UnitDataArray[indexPath.row].unitId
         
       //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
         
