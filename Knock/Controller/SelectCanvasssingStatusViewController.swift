@@ -11,20 +11,18 @@ import UIKit
 class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
 {
     
+    var canvassingStatusProtocol:canvassingStatusProtocol?
+    var selectedCanvassingStatus:String = ""
     
     @IBOutlet weak var tblSelectStatus: UITableView!
 
     var statusArray: [String]!
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-      
-        
-    }
+   
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
-        self.navigationController?.isNavigationBarHidden = false
+        //self.navigationController?.isNavigationBarHidden = false
     }
     
 
@@ -37,12 +35,7 @@ class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSou
     
     
     
-    func navigateToEditLocationView(_ sender: AnyObject?)
-    {
-        
-        self.navigationController!.popViewController(animated: true)
-        
-    }
+   
     // MARK: - table view methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -68,7 +61,16 @@ class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSou
     {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
+        
            cell.textLabel?.text = statusArray[indexPath.row]
+        
+            if(selectedCanvassingStatus ==  cell.textLabel?.text){
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark;
+            }
+            else{
+                cell.accessoryType = UITableViewCellAccessoryType.none;
+            }
+        
             return cell
         
     }
@@ -79,12 +81,18 @@ class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-         let viewController = self.storyboard!.instantiateViewController(withIdentifier: "editLocationIdentifier") as? EditLocationViewController
+       
         
-        var selectedItem = indexPath
-        viewController?.strStatus = statusArray[selectedItem.row]
-    
-        self.navigationController?.pushViewController(viewController!, animated: true)
+        canvassingStatusProtocol?.getCanvasssingStatus(strCanvassingStatus: statusArray[indexPath.row])
+        
+         self.navigationController?.popViewController(animated: true);
+        
+//         let viewController = self.storyboard!.instantiateViewController(withIdentifier: "editLocationIdentifier") as? EditLocationViewController
+//        
+//        var selectedItem = indexPath
+//        viewController?.strStatus = statusArray[selectedItem.row]
+//    
+//        self.navigationController?.pushViewController(viewController!, animated: true)
  
         
     }

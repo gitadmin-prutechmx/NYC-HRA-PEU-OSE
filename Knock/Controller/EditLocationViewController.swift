@@ -10,13 +10,17 @@ import UIKit
 import DropDown
 import DLRadioButton
 
-class EditLocationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
+
+protocol canvassingStatusProtocol {
+    func getCanvasssingStatus(strCanvassingStatus:String)
+}
+
+class EditLocationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,canvassingStatusProtocol
 {
     
     @IBOutlet weak var tblEditLocation : UITableView?
     
-    var strStatus: String!
-   
+    
     
     var attempt:String = ""
     var canvassingStatus:String = ""
@@ -32,7 +36,12 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
     
     @IBOutlet weak var NotesTextArea: UITextView!
     
-    
+    func getCanvasssingStatus(strCanvassingStatus:String){
+        
+        canvassingStatus = strCanvassingStatus
+        tblEditLocation?.reloadData()
+       
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +69,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         NotesTextArea.textColor = UIColor.black
         
       
-       // populateEditLocation()
+        populateEditLocation()
         
     
         
@@ -92,13 +101,45 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         return true
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.section == 1{
+            
+            
+            let canvassingStatusVC = self.storyboard!.instantiateViewController(withIdentifier: "canvassingStatusIdentifier") as? SelectCanvasssingStatusViewController
+            
+            canvassingStatusVC?.canvassingStatusProtocol = self
+            
+            canvassingStatusVC?.selectedCanvassingStatus = canvassingStatus
+            
+            self.navigationController?.pushViewController(canvassingStatusVC!, animated: true)
+            
+
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         if indexPath.section == 0
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "attemptCell", for: indexPath) as! EditLocAttemptTableViewCell
             
-         //   cell.switchOn.addTarget(self, action: #selector(EditLocationViewController.attemptChanged(_:)), for: .valueChanged)
+            if(attempt == "Yes"){
+               cell.attemptRdb.isOn = true
+            }
+            else if (attempt == "No"){
+                cell.attemptRdb.isOn = false
+                // attemptRdb.isOn = false
+            }
+            else{
+                cell.attemptRdb.isOn = false
+            }
+            
+            //cell.attemptRdb.tag = 0
+            
+            cell.attemptRdb.addTarget(self, action: #selector(EditLocationViewController.attemptChanged(_:)), for: UIControlEvents.valueChanged)
+            
+        
             
             return cell
         }
@@ -109,25 +150,24 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             let cell = tableView.dequeueReusableCell(withIdentifier: "statusCell", for: indexPath) as! EditLocStatusTableViewCell
             
             
-            if (strStatus ?? "").isEmpty
+            if (canvassingStatus.isEmpty)
             {
                  cell.btnSelectStatus.setTitle("Select Status", for: .normal)
             }
             
             else
             {
-                cell.btnSelectStatus.setTitle(strStatus, for: .normal)
+                cell.btnSelectStatus.setTitle(canvassingStatus, for: .normal)
                 
             }
             
-           
-            
-            //cell.btnSelcetStatus.index = selectedItem.row
             return cell
         }
         else
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "noOfUnitsCell", for: indexPath) as! EditLocNoOfUnitsTableViewCell
+            
+            cell.noOfUnits.text = numberOfUnits
             
             return cell
         }
@@ -138,18 +178,25 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         return 0.1
     }
     
+   
+
+
+
+
+     func attemptChanged(_ sender: UISwitch)
+     {
+        
+        //let index = sender.tag
+        if(sender.isOn){
+            attempt = "Yes"
+        }
+        else{
+            attempt = "No"
+        }
+        
+        //let indexRow = (sender as AnyObject).tag
     
-//     func attemptChanged(_ sender: Any)
-//     {
-//    
-//            if(attemptRdb.isOn){
-//                attempt = "Yes"
-//            }
-//            else{
-//                attempt = "No"
-//            }
-//    
-//        }
+     }
  
     
     func populateEditLocation(){
@@ -161,41 +208,27 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
 
             
             canvassingStatus = editLocationResults[0].canvassingStatus!
-            
-          //  txtStatusList.text = canvassingStatus
+
             
             numberOfUnits = editLocationResults[0].noOfUnits!
-          //  txtUnits.text = numberOfUnits
-            
+        
             notes = editLocationResults[0].notes!
             NotesTextArea.text = notes
             
-            if(editLocationResults[0].attempt == "Yes"){
-               // attemptRdb.isOn = true
-            }
-            else if (editLocationResults[0].attempt == "No"){
-               // attemptRdb.isOn = false
-            }
-            else{
-                editLocationResults[0].attempt = "No"
-            }
-            
+           
             attempt = editLocationResults[0].attempt!
             
         }
 
     }
     
-        override func didReceiveMemoryWarning() {
+ 
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
   
-   
-   
-
-    
     
     
 

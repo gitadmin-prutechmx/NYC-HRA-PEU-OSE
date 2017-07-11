@@ -3249,7 +3249,6 @@
                                                         <color key="backgroundColor" red="0.98823529409999999" green="0.98039215690000003" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <connections>
                                                             <outlet property="btnSelectStatus" destination="0oC-Hs-HrO" id="mSc-56-SkI"/>
-                                                            <segue destination="LhI-vw-B3O" kind="show" id="QXl-o8-J9d"/>
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="noOfUnitsCell" rowHeight="64" id="t5R-MW-oUV" customClass="EditLocNoOfUnitsTableViewCell" customModule="Knock" customModuleProvider="target">
@@ -3390,7 +3389,7 @@
         <!--SelectStatusViewController-->
         <scene sceneID="QKD-61-h2e">
             <objects>
-                <viewController storyboardIdentifier="statusId" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LhI-vw-B3O" userLabel="SelectStatusViewController" customClass="SelectCanvasssingStatusViewController" customModule="Knock" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="canvassingStatusIdentifier" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LhI-vw-B3O" userLabel="SelectStatusViewController" customClass="SelectCanvasssingStatusViewController" customModule="Knock" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m0t-7C-H05"/>
                         <viewControllerLayoutGuide type="bottom" id="it4-W4-w6E"/>
@@ -3400,7 +3399,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="61" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hRS-3p-8bK">
-                                <rect key="frame" x="11" y="64" width="351" height="603"/>
+                                <rect key="frame" x="11" y="20" width="351" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="54" id="AJy-7e-rGA">
