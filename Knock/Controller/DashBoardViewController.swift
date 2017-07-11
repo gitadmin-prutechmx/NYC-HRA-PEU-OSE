@@ -448,6 +448,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
      
     }
     
+    
     func createEventDictionary(){
         
         
@@ -565,22 +566,22 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "dataRowId", for: indexPath) as! EventAssignmentViewCell
         
         cell.assignmentName.text = eventAssignmentDataArray[indexPath.row].assignmentName
-        // assignmentArray[indexPath.row]
+        
         
         let eventObject = eventDict[eventAssignmentDataArray[indexPath.row].eventId]
-        //eventDict[assignmentEventIdArray[indexPath.row]]
+        
  
         cell.eventName.text = eventObject?.eventName
         
         cell.locations.text = eventAssignmentDataArray[indexPath.row].totalLocations
-        //totalLocArray[indexPath.row]
+        
         cell.units.text = eventAssignmentDataArray[indexPath.row].totalUnits
-        //totalUnitsArray[indexPath.row]
+        
         cell.assignmentId.text = eventAssignmentDataArray[indexPath.row].assignmentId
-        //assignmentIdArray[indexPath.row]
+        
 
         cell.completePercent.text = eventAssignmentDataArray[indexPath.row].completeAssignment + "%"
-        //assignmentCompleteArray[indexPath.row] + "%"
+        
         
        
         

@@ -67,6 +67,8 @@ class SubmitSurveyViewController: UIViewController {
         let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
             self.isexitSurvey = true
             Utilities.isSubmitSurvey = false
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
             //Do some other stuff
         }

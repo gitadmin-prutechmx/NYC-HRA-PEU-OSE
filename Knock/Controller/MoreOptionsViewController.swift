@@ -654,7 +654,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             segmentedControl.selectedSegmentIndex = 1
             Utilities.currentSegmentedControl = "Tenant"
             
-            self.view.makeToast("Please click next", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please click next", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 
                 
@@ -688,7 +688,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             segmentedControl.selectedSegmentIndex = 0
             Utilities.currentSegmentedControl = "Unit"
             
-            self.view.makeToast("Please click next", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please click next", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
             }
             
@@ -843,6 +843,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     @IBAction func cancel(_ sender: Any) {
 
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+        
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -854,7 +856,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 
                  chooseSurveyView.shake()
                 
-                self.view.makeToast("Please select survey", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please select survey", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                 }
                 
@@ -873,7 +875,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 
                 chooseTenantInfoView.shake()
                 
-                self.view.makeToast("Please select tenant", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please select tenant", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                     
                     self.dismiss(animated: true, completion: nil)
                    
@@ -926,7 +930,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 chooseUnitInfoView.shake()
                 updateUnitAndSurvey(type:"Updating Unit..")
                 
-                self.view.makeToast("You can only proceed to next step if Attempt , Contact and Intake selected. ", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("You can only proceed to next step if Attempt , Contact and Intake selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                     
                     self.dismiss(animated: true, completion: nil)
                     

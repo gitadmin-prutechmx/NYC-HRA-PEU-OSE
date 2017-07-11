@@ -24,6 +24,7 @@ class UnitsCustomViewCell: UITableViewCell {
     @IBOutlet weak var sync: UIImageView!
     @IBOutlet weak var syncDate: UILabel!
     @IBOutlet weak var unitId: UILabel!
+    @IBOutlet weak var noOfTenants: UILabel!
     
     
     @IBOutlet weak var moreBtn: UIButton!

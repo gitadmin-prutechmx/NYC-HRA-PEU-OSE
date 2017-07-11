@@ -218,7 +218,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     func updateSurveyStatus(){
         var updateObjectDic:[String:String] = [:]
         
-        let date = Date()
+        _ = Date()
         let formatter = DateFormatter()
         
         formatter.dateFormat = "MM/dd/yyyy"
@@ -240,13 +240,71 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
 
     }
+    
+     var editUnitDict: [String:EditUnitDO] = [:]
+     var tenantDict: [String:String] = [:]
+     var countTenants:Int  = 1
+    
+    func createEditUnitDictionary(){
+        
+        
+        
+        let editUnitResults =  ManageCoreData.fetchData(salesforceEntityName: "EditUnit", isPredicate:false) as! [EditUnit]
+        
+        if(editUnitResults.count > 0){
+            
+            for editUnitData in editUnitResults{
+                
+                if editUnitDict[editUnitData.unitId!] == nil{
+                    editUnitDict[editUnitData.unitId!] = EditUnitDO(attempt: editUnitData.attempt!, contact: editUnitData.isContact!)
+                }
+                
+                
+            }
+        }
+        
+    }
+    
+   
+    
+    func createTenantDictionary(){
+        
+        let tenantResults =  ManageCoreData.fetchData(salesforceEntityName: "Tenant", isPredicate:false) as! [Tenant]
+        
+        if(tenantResults.count > 0){
+            
+            for tenantData in tenantResults{
+                
+                if tenantDict[tenantData.unitId!] == nil{
+                    
+                    countTenants = 1
+                    tenantDict[tenantData.unitId!] = String(countTenants)
+                }
+                else{
+                    
+                    let count = tenantDict[tenantData.unitId!]
+                    countTenants = Int(count!)! + 1
+                    tenantDict[tenantData.unitId!] = String(countTenants)
+                }
+                
+                
+            }
+        }
+        
+    }
+
+    
+    
     func updateTableViewData(){
         
        UnitDataArray = [UnitsDataStruct]()
        floorArray = []
         
-       
+        editUnitDict = [:]
+        tenantDict = [:]
 
+        createEditUnitDictionary()
+        createTenantDictionary()
         
         let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@ AND assignmentLocId == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,predicateValue3: SalesforceConnection.assignmentLocationId, isPredicate:true) as! [Unit]
  
@@ -480,6 +538,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
         
+        if(UnitDataArray[indexPath.row].syncDate != ""){
+            cell.sync.isHidden = false
+            cell.sync.image = UIImage(named: "Complete")
+        }
+        else{
+             cell.sync.isHidden = true
+        }
+        
         if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
             cell.surveyStatus.isHidden = false
             cell.surveyStatus.image = UIImage(named: "Complete")
@@ -490,6 +556,39 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
         cell.unitId.text = UnitDataArray[indexPath.row].unitId
+        
+        let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
+        let noOfTenants = tenantDict[UnitDataArray[indexPath.row].unitId]
+        
+        cell.noOfTenants.text = noOfTenants
+        
+        if(editUnitObject?.attempt == "Yes"){
+             cell.attempt.isHidden = false
+             cell.attempt.image = UIImage(named: "Complete")
+        }
+        else if(editUnitObject?.attempt == "No"){
+             cell.attempt.isHidden = false
+             cell.attempt.image = UIImage(named: "No")
+        }
+        else{
+            cell.attempt.isHidden = true
+        }
+        
+        
+        
+        if(editUnitObject?.contact == "Yes"){
+            cell.contact.isHidden = false
+            cell.contact.image = UIImage(named: "Complete")
+        }
+        else if(editUnitObject?.contact == "No"){
+            cell.contact.isHidden = false
+            cell.contact.image = UIImage(named: "No")
+        }
+        else{
+            cell.contact.isHidden = true
+        }
+
+        
         
       //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
         
