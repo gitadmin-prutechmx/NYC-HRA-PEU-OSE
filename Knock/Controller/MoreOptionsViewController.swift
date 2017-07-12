@@ -32,8 +32,13 @@ struct TenantDataStruct
     
 }
 
+protocol ReasonStatusProtocol {
+    func getReasonStatus(strReasonStatus:String)
+}
 
-class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate
+
+
+class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource,ReasonStatusProtocol
 {
     
     typealias typeCompletionHandler = () -> ()
@@ -54,24 +59,18 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     var selectedTenantId:String = ""
     
     let pickerView = UIPickerView()
-    var arrReasonStatus = NSMutableArray()
+  
     
     @IBOutlet weak var saveOutlet: UIBarButtonItem!
     @IBOutlet weak var addTenantOutlet: UIButton!
    
-    @IBOutlet weak var notesTextArea: UITextView!
+   // @IBOutlet weak var notesTextArea: UITextView!
     
     @IBOutlet weak var tblTeanantVw: UITableView!
 
-    @IBOutlet weak var reKnockRdb: UISwitch!
-   
-    @IBOutlet weak var attemptRdb: UISwitch!
+    @IBOutlet weak var notesTextArea: UITextView!
     
-    @IBOutlet weak var contactRdb: UISwitch!
-    
-    @IBOutlet weak var inTakeRdb: UISwitch!
-   
-    @IBOutlet weak var chooseInReasonTxt: UITextField!
+    @IBOutlet weak var tblEditUnit: UITableView!
     
     @IBOutlet weak var chooseSurveyView: UIView!
     @IBOutlet weak var chooseUnitInfoView: UIView!
@@ -103,46 +102,12 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         addTenantOutlet.layer.cornerRadius = 5
         
-        // setUpDropDowns()
-        pickerView.delegate = self
-        
-        self.chooseInReasonTxt.inputView = pickerView
         
         
-        arrReasonStatus = ["No Issues","Refused","Not Primary Tenant","Superintendent Door","Landlords Door","Privacy Concern","Left Contact Info","Laguage Barrier"]
-
+   
         
         
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
-        
-        
-        
-        toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
-        
-        
-        let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.cancelPressed))
-        
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SaveEditTenantViewController.donePressed))
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
-        
-        label.font = UIFont(name: "Helvetica", size: 12)
-        
-        label.backgroundColor = UIColor.clear
-        
-        label.textColor = UIColor.white
-        
-        label.text = "Select Status"
-        
-        label.textAlignment = NSTextAlignment.center
-        
-        let textBtn = UIBarButtonItem(customView: label)
-        
-        toolBar.setItems([cancelBtn,flexSpace,textBtn,flexSpace,doneBtn], animated: true)
-        
-        chooseInReasonTxt.inputAccessoryView = toolBar
+       
         
         
         
@@ -228,6 +193,12 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         // Do any additional setup after loading the view.
     }
     
+    func getReasonStatus(strReasonStatus:String){
+        
+        reasonStatus = strReasonStatus
+        tblEditUnit?.reloadData()
+
+    }
     
     func UpdateTenantView(){
         print("UpdateTenantView")
@@ -241,8 +212,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         populateSurveyData()
     }
     
-    @IBAction func attemptChanged(_ sender: Any) {
-        if(attemptRdb.isOn){
+    func attemptChanged(_ sender: UISwitch) {
+        if(sender.isOn){
             attempt = "Yes"
         }
         else{
@@ -251,15 +222,23 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }
     
     
-    @IBAction func inTakeChanged(_ sender: Any) {
+    func inTakeChanged(_ sender: UISwitch) {
         
-       enableDisableReason()
+        if(sender.isOn){
+            inTake = "Yes"
+        }
+        else{
+            inTake = "No"
+        }
+        
+    
+
         
     }
     
-    @IBAction func contactChanged(_ sender: Any) {
+    func contactChanged(_ sender: UISwitch) {
         
-        if(contactRdb.isOn){
+        if(sender.isOn){
             contact = "Yes"
         }
         else{
@@ -268,9 +247,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
     }
     
-    @IBAction func reKnockChanged(_ sender: Any) {
+    func reKnockChanged(_ sender: UISwitch) {
         
-        if(reKnockRdb.isOn){
+        if(sender.isOn){
             reknockNeeded = "Yes"
         }
         else{
@@ -452,62 +431,27 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         
     }
+  
     
-    //uipickerview
-    func cancelPressed(sender: UIBarButtonItem)
+    // MARK: UITenantTableView and UIEditTableView
+    
+    func numberOfSections(in tableView: UITableView) -> Int
     {
-        
-        chooseInReasonTxt.resignFirstResponder()
-        
+         if(tableView == tblTeanantVw){
+            return 1
+        }
+         else{
+            return 5
+        }
     }
     
-    func donePressed(sender: UIBarButtonItem) {
-        
-       
-            chooseInReasonTxt.text = reasonStatus
-            chooseInReasonTxt.resignFirstResponder()
-            
-        
-        
-        
-    }
-
-    
-    // MARK: Pickerview Delegates Methods
-    
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int
-    {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
-    {
-        
-       return self.arrReasonStatus.count
-        
-        
-        
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-    {
-        
-            return self.arrReasonStatus.object(at: row) as? String
-        
-    }
-    
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
-    {
-       
-            reasonStatus = (arrReasonStatus.object(at: row) as? String)!
-    }
-    
-
-    
-    // MARK: UITenantTableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tenantDataArray.count
+        if(tableView == tblTeanantVw){
+            return tenantDataArray.count
+        }
+        else{
+            return 1
+        }
     }
     
     // cell height
@@ -515,12 +459,16 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         return UITableViewAutomaticDimension
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
+        
+        
+    if(tableView == tblTeanantVw){
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TenantViewCell
         
         if(tenantDataArray[indexPath.row].tenantId == selectedTenantId){
@@ -543,13 +491,172 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         cell.editBtn.tag = indexPath.row
        
         
-        return cell
-    }
+            return cell
+        }
+        
+    else{
+        
+        if(indexPath.section == 0){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "attemptCell", for: indexPath)
+        
+            cell.backgroundColor = UIColor.clear
+        
+        
+            cell.textLabel?.text = "Attempt?"
+        
+            cell.selectionStyle = .none
+        
+            //accessory switch
+            let attemptSwitch = UISwitch(frame: CGRect.zero)
+        
+            if(attempt == "Yes"){
+                attemptSwitch.isOn = true
+            }
+            else if (attempt == "No"){
+                attemptSwitch.isOn = false
+            // attemptRdb.isOn = false
+            }
+            else{
+                attemptSwitch.isOn = false
+            }
+        
+        
+        
+            attemptSwitch.addTarget(self, action: #selector(MoreOptionsViewController.attemptChanged(_:)), for: UIControlEvents.valueChanged)
+        
+            cell.accessoryView = attemptSwitch
+            return cell
+          }
+        else if(indexPath.section == 1){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath)
+            
+            cell.backgroundColor = UIColor.clear
+            
+            
+            cell.textLabel?.text = "Contact?"
+            
+            cell.selectionStyle = .none
+            
+            //accessory switch
+            let contactSwitch = UISwitch(frame: CGRect.zero)
+            
+            if(contact == "Yes"){
+                contactSwitch.isOn = true
+            }
+            else if (contact == "No"){
+                contactSwitch.isOn = false
+                // attemptRdb.isOn = false
+            }
+            else{
+                contactSwitch.isOn = false
+            }
+            
+            
+            
+            contactSwitch.addTarget(self, action: #selector(MoreOptionsViewController.contactChanged(_:)), for: UIControlEvents.valueChanged)
+            
+            cell.accessoryView = contactSwitch
+            return cell
+
+        }
+        else if(indexPath.section == 2){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "inTakeCell", for: indexPath)
+            
+            cell.backgroundColor = UIColor.clear
+            
+            
+            cell.textLabel?.text = "Intake?"
+            
+            cell.selectionStyle = .none
+            
+            //accessory switch
+            let inTakeSwitch = UISwitch(frame: CGRect.zero)
+            
+            if(inTake == "Yes"){
+                inTakeSwitch.isOn = true
+            }
+            else if (inTake == "No"){
+                inTakeSwitch.isOn = false
+                // attemptRdb.isOn = false
+            }
+            else{
+                
+                inTakeSwitch.isOn = false
+            }
+            
+            
+            
+            inTakeSwitch.addTarget(self, action: #selector(MoreOptionsViewController.inTakeChanged(_:)), for: UIControlEvents.valueChanged)
+            
+            cell.accessoryView = inTakeSwitch
+            return cell
+            
+        }
+        else if(indexPath.section == 3){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "reasonCell", for: indexPath)
+            
+            cell.accessoryType = .disclosureIndicator
+            
+            cell.backgroundColor = UIColor.clear
+            
+            
+            cell.textLabel?.text = "Reason"
+            
+            if(reasonStatus.isEmpty){
+                cell.detailTextLabel?.text = "Select Reason"
+            }
+            else{
+                cell.detailTextLabel?.text = reasonStatus
+            }
+            
+            cell.detailTextLabel?.textColor = UIColor.lightGray
+
+           
+            return cell
+            
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "reKnockCell", for: indexPath)
+            
+            cell.backgroundColor = UIColor.clear
+            
+            
+            cell.textLabel?.text = "Reknock needed?"
+            
+            cell.selectionStyle = .none
+            
+            //accessory switch
+            let reKnockSwitch = UISwitch(frame: CGRect.zero)
+            
+            if(reknockNeeded == "Yes"){
+                reKnockSwitch.isOn = true
+            }
+            else if (reknockNeeded == "No"){
+                reKnockSwitch.isOn = false
+                // attemptRdb.isOn = false
+            }
+            else{
+                reKnockSwitch.isOn = false
+            }
+            
+            
+            
+            reKnockSwitch.addTarget(self, action: #selector(MoreOptionsViewController.reKnockChanged(_:)), for: UIControlEvents.valueChanged)
+            
+            cell.accessoryView = reKnockSwitch
+            return cell
+            
+        }
+        
+      }
+        
+  }
     
    
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    if(tableView == tblTeanantVw){
         let indexPathArray = tableView.indexPathsForVisibleRows
         
         for indexPath in indexPathArray!{
@@ -572,7 +679,42 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             }
         }
         
-       selectedTenantId = tenantDataArray[indexPath.row].tenantId
+            selectedTenantId = tenantDataArray[indexPath.row].tenantId
+        }
+    else{
+        
+        if indexPath.section == 3{
+            
+            if(inTake == "No"){
+                
+                
+                let reasonStatusVC = self.storyboard!.instantiateViewController(withIdentifier: "reasonStatusIdentifier") as? SelectReasonStatusViewController
+                
+                reasonStatusVC?.reasonStatusProtocol = self
+                
+                reasonStatusVC?.selectedReasonStatus = reasonStatus
+                
+                self.navigationController?.pushViewController(reasonStatusVC!, animated: true)
+                
+                //tableView.cellforRow
+//                for (var i = 0; i < [self.tableView numberOfRowsInSection:indexPath.section]; i++) {
+//                    if (i != indexPath.row) {
+//                        UITableViewCell* cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:indexPath.section]];
+//                        //Do your stuff
+//                    }
+//                }
+                
+
+            }
+            
+        }
+        
+    
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+        }
         
     }
     
@@ -584,19 +726,34 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Dequeue with the reuse identifier
-        
-        let identifier = "tenantHeader"
-        var cell: TenantHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
-        if cell == nil {
-            tableView.register(UINib(nibName: "TenantHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
+        if tableView == tblTeanantVw
+        {
+            let identifier = "tenantHeader"
+            var cell: TenantHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
+            
+            if cell == nil {
+                tableView.register(UINib(nibName: "TenantHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+                cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
+            }
+            
+            return cell
         }
-        
-        return cell
-        
+        else{
+            return UIView()
+        }
+    
+       
+      
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return  44.0
+        if tableView == tblTeanantVw
+        {
+            return 44.0
+        }
+        else{
+            return  0.0
+        }
     }
 
     
@@ -752,72 +909,47 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
         
         if(editUnitResults.count > 0){
-            if(editUnitResults[0].attempt == "Yes"){
-               attemptRdb.isOn = true
-            }
-            else  if(editUnitResults[0].attempt == "No"){
-               attemptRdb.isOn = false
-            }
-            else{
-                editUnitResults[0].attempt = "No"
+            
+            if(editUnitResults[0].attempt == ""){
+               editUnitResults[0].attempt = "No"
             }
             
             attempt = editUnitResults[0].attempt!
             
             
             
-            if(editUnitResults[0].isContact == "Yes"){
-               contactRdb.isOn = true
+            if(editUnitResults[0].isContact == ""){
+               editUnitResults[0].isContact = "No"
             }
-            else if(editUnitResults[0].isContact == "No"){
-               contactRdb.isOn = false
-            }
-            else{
-                editUnitResults[0].isContact = "No"
-            }
+        
             
             contact = editUnitResults[0].isContact!
             
             
             
             
-            if(editUnitResults[0].reKnockNeeded == "Yes"){
-               reKnockRdb.isOn = true
+            if(editUnitResults[0].reKnockNeeded == ""){
+               editUnitResults[0].reKnockNeeded = "No"
             }
-            else if(editUnitResults[0].reKnockNeeded == "No"){
-            
-              reKnockRdb.isOn = false
-            }
-            else{
-                editUnitResults[0].reKnockNeeded = "No"
-            }
+          
             
             reknockNeeded = editUnitResults[0].reKnockNeeded!
             
             
             
             
-            if(editUnitResults[0].inTake == "Yes"){
-                inTakeRdb.isOn = true
-            }
-            else if(editUnitResults[0].inTake == "No"){
-                
-                inTakeRdb.isOn = false
-            }
-            else{
-                editUnitResults[0].inTake = "No"
+            if(editUnitResults[0].inTake == ""){
+               editUnitResults[0].inTake = "No"
             }
             
+            inTake = editUnitResults[0].inTake!
             
-            //inTake = editUnitResults[0].inTake!
-            
-            enableDisableReason()
+           
             
             if(editUnitResults[0].reason! != ""){
-                    reasonStatus = editUnitResults[0].reason!
                 
-                chooseInReasonTxt.text = reasonStatus
-               
+                reasonStatus = editUnitResults[0].reason!
+      
             }
 
             notesTextArea.text = editUnitResults[0].unitNotes
@@ -827,19 +959,6 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     }
 
     
-    func enableDisableReason(){
-        if(inTakeRdb.isOn){
-            inTake = "Yes"
-            chooseInReasonTxt.isEnabled = false
-            chooseInReasonTxt.text = ""
-            
-        }
-        else{
-            inTake = "No"
-            chooseInReasonTxt.isEnabled = true
-            chooseInReasonTxt.text = reasonStatus
-        }
-    }
     
     @IBAction func cancel(_ sender: Any) {
 
@@ -917,7 +1036,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
           else  if(Utilities.currentSegmentedControl == "Unit"){
         
-            if(attemptRdb.isOn && contactRdb.isOn && inTakeRdb.isOn){
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" ){
                 updateUnitAndSurvey(type:"Updating Unit..")
                 showTenantView()
             }
@@ -1002,7 +1121,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
             
-            if(inTakeRdb.isOn){
+            if(inTake == "Yes"){
                 reasonStatus = ""
             }
             

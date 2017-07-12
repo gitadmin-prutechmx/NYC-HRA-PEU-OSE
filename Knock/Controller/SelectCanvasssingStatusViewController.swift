@@ -11,10 +11,10 @@ import UIKit
 class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
 {
     
-    var canvassingStatusProtocol:canvassingStatusProtocol?
+    var canvassingStatusProtocol:CanvassingStatusProtocol?
     var selectedCanvassingStatus:String = ""
     
-    @IBOutlet weak var tblSelectStatus: UITableView!
+   
 
     var statusArray: [String]!
     

@@ -11,11 +11,11 @@ import DropDown
 import DLRadioButton
 
 
-protocol canvassingStatusProtocol {
+protocol CanvassingStatusProtocol {
     func getCanvasssingStatus(strCanvassingStatus:String)
 }
 
-class EditLocationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,canvassingStatusProtocol
+class EditLocationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,CanvassingStatusProtocol
 {
     
    // @IBOutlet weak var tblEditLocation : UITableView?
@@ -187,7 +187,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             
             cell.textLabel?.text = "# of Units"
             cell.detailTextLabel?.text = numberOfUnits
-            cell.textLabel?.textColor = UIColor.lightGray
+            cell.detailTextLabel?.textColor = UIColor.lightGray
             
             return cell
         }
@@ -294,6 +294,12 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         updateEditLocationInDatabase()
         
         self.view.makeToast("Location has been edited successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+            Utilities.isEditLoc = true
+            Utilities.CanvassingStatus = self.canvassingStatus
+            
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
             
             self.dismiss(animated: true, completion: nil)
             
