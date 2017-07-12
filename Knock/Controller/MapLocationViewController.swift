@@ -76,6 +76,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         super.viewDidLoad()
         
        Utilities.currentLocationRowIndex = 0
+       // self.tableView.allowsSelection = false
         
         //license the app with the supplied License key
 //        do {
@@ -128,9 +129,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.tableView.delegate = self
         self.searchBar.delegate = self
         
+        populateLocationData()
+        let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
+        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        
         self.tableView.tableFooterView = UIView()
         
         //populateLocationData()
@@ -144,6 +147,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.geocodeParameters.minScore = 75
         
         SVProgressHUD.show(withStatus: "Loading Map..", maskType: SVProgressHUDMaskType.gradient)
+        
         
     if(self.mapPackage == nil){
             
@@ -273,16 +277,22 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         NotificationCenter.default.removeObserver("UpdateLocationView")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
-        populateLocationData()
         
-        let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
-        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+       
         
     }
     
-    
+//    override func viewDidDisappear(_ animated: Bool)
+//    {
+//        super.viewDidDisappear(animated)
+//        let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
+//        self.tableView.deselectRow(at: indexPath, animated: true)
+//    }
+//    
+//    
     @IBAction func editLocAction(_ sender: Any) {
         
       //  let indexRow = (sender as AnyObject).tag
@@ -611,8 +621,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)  as!
         LocationCustomViewCell
         
+        if indexPath.row == 0
+        {
+            cell.contentView.backgroundColor = UIColor.init(red: 47.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1)
+        }
        
-        
         /*  if(searchActive){
          cell.dataFullAddress.text = filtered[indexPath.row]
          }
@@ -674,6 +687,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         
          //cell.editLocBtn.tag = indexPath.row
+        // cell.selectionStyle = UITableViewCellSelectionStyle.none
         
         return cell
         
@@ -701,10 +715,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         Utilities.currentLocationRowIndex = indexPath.row
         
       
-//        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-//        
-//   
-//        currentCell.contentView.backgroundColor = UIColor.init(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1) //gray
+        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
+        
+   
+        currentCell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1) //gray
 
         
         self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
@@ -713,14 +727,33 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
     }
     
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
+        
+        currentCell.contentView.backgroundColor = UIColor.clear
+        currentCell.backgroundColor = UIColor.black
+        //UIColor.init(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1) //clear
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+//     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
 //        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-//        
-//        currentCell.contentView.backgroundColor = UIColor.init(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1) //clear
+//        currentCell.contentView.backgroundColor = UIColor.clear
+//        currentCell.backgroundColor = UIColor.clear
+//       
 //    }
-//    
-  
+    
+//     func tableView(_ tableView: UITableView,  didUnhighlightRowAt indexPath: IndexPath) {
+//        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
+//        // Set unhighlighted color
+//        currentCell.contentView.backgroundColor = UIColor.black
+//        currentCell.backgroundColor = UIColor.black
+//    }
+    
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.1
