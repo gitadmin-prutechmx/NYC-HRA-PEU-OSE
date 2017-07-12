@@ -994,7 +994,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 
                 chooseTenantInfoView.shake()
                 
-                self.view.makeToast("Please select tenant", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please select client", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                     

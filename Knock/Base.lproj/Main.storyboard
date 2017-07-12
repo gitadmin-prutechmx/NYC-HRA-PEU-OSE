@@ -1600,7 +1600,7 @@
                             <constraint firstItem="RcH-XD-oXX" firstAttribute="leading" secondItem="iaQ-X6-3fP" secondAttribute="leading" id="sMM-co-YB7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Save Tenant Info" id="4tK-ct-5Kc">
+                    <navigationItem key="navigationItem" title="Save Client Info" id="4tK-ct-5Kc">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="GYD-xP-jpa">
                             <connections>
                                 <action selector="cancel:" destination="LaU-vP-gOE" id="gp7-Ei-fzS"/>
@@ -2411,7 +2411,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
                                                 <segment title="Unit Information"/>
-                                                <segment title="Tenant Information"/>
+                                                <segment title="Client Information"/>
                                                 <segment title="Choose Survey"/>
                                             </segments>
                                             <connections>
@@ -2779,7 +2779,7 @@
                                             <constraint firstAttribute="height" constant="44" id="njP-4y-Xft"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                                        <state key="normal" title="Add Tenant">
+                                        <state key="normal" title="Add Client">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -2926,7 +2926,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFr-UG-VUz" userLabel="ApartmentView">
                                                 <rect key="frame" x="10" y="30" width="355" height="55"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apartment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uH6-fw-Tu4">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uH6-fw-Tu4">
                                                         <rect key="frame" x="0.0" y="12" width="126" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="Ocf-7N-4Cj"/>
