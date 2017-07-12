@@ -18,6 +18,7 @@ struct eventAssignmentDataStruct
     var totalLocations : String = ""
     var totalUnits : String = ""
     var completeAssignment : String = ""
+    var noOfClients:String = ""
    
     
 }
@@ -134,7 +135,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
         
         populateEventAssignmentData()
-        //populateChartData()
+        populateChartData(isTwoMinuteSync: true)
        
         
         //updateTableViewData()
@@ -170,7 +171,6 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         populateEventAssignmentData()
-       // populateChartData()
 
     }
     
@@ -224,35 +224,108 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
     
-    func circleChartData(custumView:UIView,chartValue:Float,chartText:String, chartColor:UIColor)
+    var totalUnitsChart:GaugeView!
+    var unitsCompletedChart:GaugeView!
+    var noResponseChart:GaugeView!
+    var followUpNeededChart:GaugeView!
+    
+    func circleChartData(custumView:UIView,chartValue:Float,chartText:String, chartColor:UIColor,chartType:String)
     {
        // let colors = getColors()
         
     
+        if(chartType == "Total Units"){
         
-        let chart = GaugeView(frame: custumView.frame)
+            totalUnitsChart = GaugeView(frame: custumView.frame)
         
-        chart.percentage = chartValue
+            totalUnitsChart.percentage = chartValue
         
         
-       // chart.labelText = " "
-        chart.labelText = chartText
+            // chart.labelText = " "
+            totalUnitsChart.labelText = chartText
         
-        chart.thickness = 20
+            totalUnitsChart.thickness = 20
         
-        chart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
-        chart.labelColor = UIColor.black
-        chart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
-        chart.gaugeColor = chartColor
+            totalUnitsChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            totalUnitsChart.labelColor = UIColor.black
+            totalUnitsChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
+            totalUnitsChart.gaugeColor = chartColor
        
-        chart.isUserInteractionEnabled = true
-        chart.accessibilityLabel = "Gauge"
+            totalUnitsChart.isUserInteractionEnabled = true
+            totalUnitsChart.accessibilityLabel = "Gauge"
 
         
-        
-        
-        
-        custumView.addSubview(chart)
+            custumView.addSubview(totalUnitsChart)
+        }
+        else if(chartType == "Units Completed"){
+            
+            unitsCompletedChart = GaugeView(frame: custumView.frame)
+            
+            unitsCompletedChart.percentage = chartValue
+            
+            
+            // chart.labelText = " "
+            unitsCompletedChart.labelText = chartText
+            
+            unitsCompletedChart.thickness = 20
+            
+            unitsCompletedChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            unitsCompletedChart.labelColor = UIColor.black
+            unitsCompletedChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
+            unitsCompletedChart.gaugeColor = chartColor
+            
+            unitsCompletedChart.isUserInteractionEnabled = true
+            unitsCompletedChart.accessibilityLabel = "Gauge"
+            
+            
+            custumView.addSubview(unitsCompletedChart)
+        }
+        else if(chartType == "No Response"){
+            
+            noResponseChart = GaugeView(frame: custumView.frame)
+            
+            noResponseChart.percentage = chartValue
+            
+            
+            // chart.labelText = " "
+            noResponseChart.labelText = chartText
+            
+            noResponseChart.thickness = 20
+            
+            noResponseChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            noResponseChart.labelColor = UIColor.black
+            noResponseChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
+            noResponseChart.gaugeColor = chartColor
+            
+            noResponseChart.isUserInteractionEnabled = true
+            noResponseChart.accessibilityLabel = "Gauge"
+            
+            
+            custumView.addSubview(noResponseChart)
+        }
+        else{
+            
+            followUpNeededChart = GaugeView(frame: custumView.frame)
+            
+            followUpNeededChart.percentage = chartValue
+            
+            
+            // chart.labelText = " "
+            followUpNeededChart.labelText = chartText
+            
+            followUpNeededChart.thickness = 20
+            
+            followUpNeededChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            followUpNeededChart.labelColor = UIColor.black
+            followUpNeededChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
+            followUpNeededChart.gaugeColor = chartColor
+            
+            followUpNeededChart.isUserInteractionEnabled = true
+            followUpNeededChart.accessibilityLabel = "Gauge"
+            
+            
+            custumView.addSubview(followUpNeededChart)
+        }
     }
 
     func updateChartData(custumView:UIView)
@@ -328,7 +401,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     var chart4Value:String = ""
     
     
-    func populateChartData(){
+    func populateChartData(isTwoMinuteSync:Bool?=false){
         
         chart1Label = ""
         chart1Value = ""
@@ -382,10 +455,24 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
         
         
-       
-        //colChart.collectionViewLayout.invalidateLayout()
-        
-        colChart.reloadData()
+        if(isTwoMinuteSync!){
+            totalUnitsChart.percentage = 100
+            totalUnitsChart.labelText = chart1Value
+            
+            unitsCompletedChart.percentage = 100
+            unitsCompletedChart.labelText = chart2Value
+            
+            noResponseChart.percentage = Float(chart3Value)!
+            noResponseChart.labelText = chart3Value + "%"
+            
+            followUpNeededChart.percentage = Float(chart4Value)!
+            followUpNeededChart.labelText = chart4Value + "%"
+            
+            
+        }
+        else{
+            colChart.reloadData()
+        }
        
         
         
@@ -427,7 +514,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                     totalUnitsArray.append(assignmentdata.totalUnits!)
                 assignmentCompleteArray.append(assignmentdata.completePercent!)
                 
-                 let objectEventAssignmentStruct:eventAssignmentDataStruct = eventAssignmentDataStruct(eventId: assignmentdata.eventId!, assignmentId: assignmentdata.id!, assignmentName: assignmentdata.name!, totalLocations: assignmentdata.totalLocations!, totalUnits: assignmentdata.totalUnits!, completeAssignment: assignmentdata.completePercent!)
+                let objectEventAssignmentStruct:eventAssignmentDataStruct = eventAssignmentDataStruct(eventId: assignmentdata.eventId!, assignmentId: assignmentdata.id!, assignmentName: assignmentdata.name!, totalLocations: assignmentdata.totalLocations!, totalUnits: assignmentdata.totalUnits!, completeAssignment: assignmentdata.completePercent!,noOfClients:assignmentdata.noOfClients!)
                 
                 
                 eventAssignmentDataArray.append(objectEventAssignmentStruct)
@@ -493,7 +580,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 0
         {
          //R165 G225 B255
-         circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart1Value, chartColor: UIColor(red: CGFloat(165.0/255), green: CGFloat(225.0/255), blue: CGFloat(255.0/255), alpha: 1))
+            circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart1Value, chartColor: UIColor(red: CGFloat(165.0/255), green: CGFloat(225.0/255), blue: CGFloat(255.0/255), alpha: 1),chartType:chart1Label)
             
             cell.lblChart.text = chart1Label
            
@@ -506,7 +593,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 1
         {
             //Green R91 G192 B74
-            circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart2Value, chartColor: UIColor(red: CGFloat(91.0/255), green: CGFloat(192.0/255), blue: CGFloat(74.0/255), alpha: 1))
+            circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart2Value, chartColor: UIColor(red: CGFloat(91.0/255), green: CGFloat(192.0/255), blue: CGFloat(74.0/255), alpha: 1),chartType:chart2Label)
             
              cell.lblChart.text = chart2Label
            
@@ -514,7 +601,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 2
         {
             //Red R206 G88 B127
-           circleChartData(custumView: cell.chartView, chartValue: Float(chart3Value)!, chartText: chart3Value + "%", chartColor: UIColor(red: CGFloat(206.0/255), green: CGFloat(88.0/255), blue: CGFloat(127.0/255), alpha: 1))
+           circleChartData(custumView: cell.chartView, chartValue: Float(chart3Value)!, chartText: chart3Value + "%", chartColor: UIColor(red: CGFloat(206.0/255), green: CGFloat(88.0/255), blue: CGFloat(127.0/255), alpha: 1),chartType:chart3Label)
            
              cell.lblChart.text = chart3Label
             
@@ -522,7 +609,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 3
         {
             //Yellow R229 G229 B137
-            circleChartData(custumView: cell.chartView, chartValue: Float(chart4Value)!, chartText: chart4Value + "%", chartColor: UIColor(red: CGFloat(229.0/255), green: CGFloat(229.0/255), blue: CGFloat(137.0/255), alpha: 1))
+            circleChartData(custumView: cell.chartView, chartValue: Float(chart4Value)!, chartText: chart4Value + "%", chartColor: UIColor(red: CGFloat(229.0/255), green: CGFloat(229.0/255), blue: CGFloat(137.0/255), alpha: 1),chartType:chart4Label)
            
              cell.lblChart.text = chart4Label
            // updateChartData(custumView: cell.chartView)
@@ -580,8 +667,9 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell.assignmentId.text = eventAssignmentDataArray[indexPath.row].assignmentId
         
 
-        cell.completePercent.text = eventAssignmentDataArray[indexPath.row].completeAssignment + "%"
+        cell.completePercent.text = eventAssignmentDataArray[indexPath.row].completeAssignment //+ "%"
         
+        cell.noOfClients.text = eventAssignmentDataArray[indexPath.row].noOfClients
         
        
         

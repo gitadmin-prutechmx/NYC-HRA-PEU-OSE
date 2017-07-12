@@ -1104,7 +1104,9 @@ SalesforceConnection.loginToSalesforce() { response in
                 assignmentObject.totalUnits = String(assignmentData["totalLocationUnit"] as! Int)
                 assignmentObject.totalSurvey = String(assignmentData["totalSurvey"] as! Int)
                 assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
-                assignmentObject.completePercent = String(assignmentData["completePercent"] as! Int)
+                assignmentObject.completePercent = String(assignmentData["totalCanvassed"] as! Int)
+                assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
+                //String(assignmentData["completePercent"] as! Int)
                 
                 //assignmentIdArray.append(assignmentObject.id!)
                 

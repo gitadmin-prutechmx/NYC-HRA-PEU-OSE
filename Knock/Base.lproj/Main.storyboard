@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iWB-xI-dhM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iWB-xI-dhM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -410,7 +410,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYJ-kt-Edc" userLabel="units no">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYJ-kt-Edc" userLabel="noOfClients">
                                                             <rect key="frame" x="275" y="22" width="30" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="4lI-5F-dKr"/>
@@ -473,6 +473,7 @@
                                             <outlet property="completePercent" destination="0RE-mZ-R5I" id="6rh-ap-eP5"/>
                                             <outlet property="eventName" destination="Jcc-iO-eO9" id="JQH-eE-6Ha"/>
                                             <outlet property="locations" destination="c6t-63-EbM" id="sxa-v3-NM7"/>
+                                            <outlet property="noOfClients" destination="MYJ-kt-Edc" id="W76-Qo-iJS"/>
                                             <outlet property="units" destination="YkR-gr-3gN" id="yah-fV-fG7"/>
                                             <segue destination="9jG-W6-93z" kind="push" identifier="showMapIdentifier" id="3Ot-Su-OdM"/>
                                         </connections>
@@ -1965,10 +1966,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pkS-Hj-hIN">
-                                        <rect key="frame" x="74" y="0.0" width="64" height="64"/>
+                                        <rect key="frame" x="74" y="0.0" width="63.5" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="India" translatesAutoresizingMaskIntoConstraints="NO" id="Hu6-Vi-wtv">
-                                                <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="63.5" height="64"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1980,7 +1981,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1KN-hP-JxN">
-                                        <rect key="frame" x="148" y="0.0" width="64" height="64"/>
+                                        <rect key="frame" x="147.5" y="0.0" width="64" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bangladesh" translatesAutoresizingMaskIntoConstraints="NO" id="NYt-Xh-saY">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -1995,10 +1996,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-Rz-3sg">
-                                        <rect key="frame" x="222" y="0.0" width="63" height="64"/>
+                                        <rect key="frame" x="221.5" y="0.0" width="63.5" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Israel2" translatesAutoresizingMaskIntoConstraints="NO" id="qxI-gc-yDc">
-                                                <rect key="frame" x="0.0" y="0.0" width="63" height="64"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="63.5" height="64"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

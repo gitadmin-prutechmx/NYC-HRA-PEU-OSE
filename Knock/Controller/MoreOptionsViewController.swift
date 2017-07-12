@@ -352,6 +352,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
      var tempAttempt:String = ""
      var tempContact:String = ""
      var tempReason:String = ""
+     var tempReKnock:String = ""
     
     
     func getIntakeContactAttempt(){
@@ -366,7 +367,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             tempContact = editUnitResults[0].isContact!
             
             tempReason = editUnitResults[0].reason!
-            
+            tempReKnock = editUnitResults[0].reKnockNeeded!
         }
         
         
@@ -831,9 +832,11 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         getIntakeContactAttempt()
         
-          if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && tempInTake != "No" )){
+         // if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && tempInTake != "No" )){
             
-       // if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && (tempInTake != "No" || (tempInTake != "Yes" && tempReason != "")))){
+        if((tempAttempt != "" && tempAttempt != "No")
+            && (tempContact != "" && tempContact != "No")
+            && ((tempInTake != "" && tempInTake != "Yes" )&&(tempReKnock != "" && tempReKnock != "No"))){
             
             return true
         }
@@ -1036,7 +1039,9 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
           else  if(Utilities.currentSegmentedControl == "Unit"){
         
-            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" ){
+           // Intake = No but Re-knock = Yes
+            
+            if(attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")){
                 updateUnitAndSurvey(type:"Updating Unit..")
                 showTenantView()
             }
@@ -1049,7 +1054,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
                 chooseUnitInfoView.shake()
                 updateUnitAndSurvey(type:"Updating Unit..")
                 
-                self.view.makeToast("You can only proceed to next step if Attempt , Contact and Intake selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("You can only proceed to next step if Attempt , Contact and Reknock selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                     

@@ -5,6 +5,7 @@
         <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noOfClients" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalCanvassed" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalLocations" optional="YES" attributeType="String" syncable="YES"/>
@@ -149,7 +150,7 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Assignment" positionX="-333" positionY="-18" width="128" height="210"/>
+        <element name="Assignment" positionX="-333" positionY="-18" width="128" height="225"/>
         <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>

@@ -623,7 +623,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         if indexPath.row == 0
         {
-            cell.contentView.backgroundColor = UIColor.init(red: 47.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1)
+            cell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1)
         }
        
         /*  if(searchActive){

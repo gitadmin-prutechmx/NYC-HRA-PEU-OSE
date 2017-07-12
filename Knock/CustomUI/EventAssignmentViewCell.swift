@@ -20,6 +20,7 @@ class EventAssignmentViewCell: UITableViewCell {
     
     @IBOutlet weak var completePercent: UILabel!
     
+    @IBOutlet weak var noOfClients: UILabel!
     
     @IBOutlet weak var assignmentId: UILabel!
     override func awakeFromNib() {
