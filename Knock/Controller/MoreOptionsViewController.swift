@@ -60,6 +60,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     let pickerView = UIPickerView()
   
+    var reasonCell:UITableViewCell!
     
     @IBOutlet weak var saveOutlet: UIBarButtonItem!
     @IBOutlet weak var addTenantOutlet: UIButton!
@@ -224,15 +225,21 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
     
     func inTakeChanged(_ sender: UISwitch) {
         
-        if(sender.isOn){
+        if(sender.isOn)
+        {
             inTake = "Yes"
+            reasonCell.detailTextLabel?.isEnabled = false
+            reasonCell.detailTextLabel?.text = "Select Reason"
+            
+            
         }
-        else{
+        else
+        {
             inTake = "No"
+            reasonCell.detailTextLabel?.isEnabled = true
+            reasonCell.detailTextLabel?.text = reasonStatus
+            
         }
-        
-    
-
         
     }
     
@@ -594,26 +601,26 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
         }
         else if(indexPath.section == 3){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "reasonCell", for: indexPath)
+            reasonCell = tableView.dequeueReusableCell(withIdentifier: "reasonCell", for: indexPath)
             
-            cell.accessoryType = .disclosureIndicator
+            reasonCell.accessoryType = .disclosureIndicator
             
-            cell.backgroundColor = UIColor.clear
+            reasonCell.backgroundColor = UIColor.clear
             
             
-            cell.textLabel?.text = "Reason"
+            reasonCell.textLabel?.text = "Reason"
             
             if(reasonStatus.isEmpty){
-                cell.detailTextLabel?.text = "Select Reason"
+                reasonCell.detailTextLabel?.text = "Select Reason"
             }
             else{
-                cell.detailTextLabel?.text = reasonStatus
+                reasonCell.detailTextLabel?.text = reasonStatus
             }
             
-            cell.detailTextLabel?.textColor = UIColor.lightGray
+            reasonCell.detailTextLabel?.textColor = UIColor.lightGray
 
            
-            return cell
+            return reasonCell
             
         }
         else {

@@ -610,6 +610,9 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <segue destination="FZD-GS-Hal" kind="presentation" modalPresentationStyle="formSheet" id="t9W-R6-KEn"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="52" id="b9q-bh-cgn">
                                         <rect key="frame" x="0.0" y="170" width="375" height="52"/>
@@ -1856,7 +1859,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v0D-CG-Cuj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="fcI-NF-H10" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7677.6000000000004" y="-2022.6386806596704"/>
+            <point key="canvasLocation" x="8616.7999999999993" y="-2022.6386806596704"/>
         </scene>
         <!--SurveyTextViewController-->
         <scene sceneID="GpV-oh-Jjc">
@@ -2079,7 +2082,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dtJ-bQ-VEl" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="O6V-rW-8Am" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="9754.3999999999996" y="-1930.8845577211396"/>
+            <point key="canvasLocation" x="10693.6" y="-1930.8845577211396"/>
         </scene>
         <!--SurveyMultiOptionsViewController-->
         <scene sceneID="LmA-2p-VJj">
@@ -2290,7 +2293,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="84c-9l-yMV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="dgb-l8-x9p" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="8797.6000000000004" y="-1930.8845577211396"/>
+            <point key="canvasLocation" x="9736.7999999999993" y="-1930.8845577211396"/>
         </scene>
         <!--SurveySubmitViewController-->
         <scene sceneID="ENB-J2-yrf">
@@ -2364,7 +2367,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qik-qT-kHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="aAx-C0-ZPz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="12274" y="-2646"/>
+            <point key="canvasLocation" x="13212" y="-2646.0269865067467"/>
         </scene>
         <!--MoreOptionsNavigationController-->
         <scene sceneID="aZF-xf-rPF">
@@ -3303,6 +3306,127 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZG-Iv-qyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6729" y="-1308"/>
+        </scene>
+        <!--SettingsViewController-->
+        <scene sceneID="j4x-Ug-TbK">
+            <objects>
+                <tableViewController id="ksi-Nf-6J7" userLabel="SettingsViewController" customClass="SettingsTableViewController" customModule="Knock" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="QTG-zI-nvx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Sync Time" footerTitle="This will adjust your offline syncing timing" id="E9T-hn-m7J">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xLo-d9-gCR" userLabel="SyncTimeCell">
+                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xLo-d9-gCR" id="sKa-0u-jc7">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RET-Nn-Lj4" userLabel="SyncTimeView">
+                                                    <rect key="frame" x="17" y="0.0" width="341" height="45"/>
+                                                    <subviews>
+                                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="2" maxValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="e7i-ft-HsQ" userLabel="syncTimeSlider">
+                                                            <rect key="frame" x="6" y="9" width="235" height="31"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="knT-sA-vW3"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="syncTimeSlider:" destination="ksi-Nf-6J7" eventType="valueChanged" id="067-7R-iEf"/>
+                                                            </connections>
+                                                        </slider>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwC-tk-84C" userLabel="syncTimeLbl">
+                                                            <rect key="frame" x="308" y="13" width="25" height="21"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="25" id="hLD-3E-lkC"/>
+                                                                <constraint firstAttribute="height" constant="21" id="lCd-9H-KFb"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="e7i-ft-HsQ" firstAttribute="leading" secondItem="RET-Nn-Lj4" secondAttribute="leading" constant="8" id="53B-Ra-w8g"/>
+                                                        <constraint firstAttribute="bottom" secondItem="e7i-ft-HsQ" secondAttribute="bottom" constant="6" id="EQB-Mw-4ek"/>
+                                                        <constraint firstItem="qwC-tk-84C" firstAttribute="trailing" secondItem="RET-Nn-Lj4" secondAttribute="trailingMargin" id="FAB-bt-RF3"/>
+                                                        <constraint firstItem="qwC-tk-84C" firstAttribute="top" secondItem="RET-Nn-Lj4" secondAttribute="topMargin" constant="5" id="KbT-GL-icl"/>
+                                                        <constraint firstItem="qwC-tk-84C" firstAttribute="leading" secondItem="e7i-ft-HsQ" secondAttribute="trailing" constant="69" id="pE6-6A-JUF"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="qwC-tk-84C" secondAttribute="bottom" constant="3" id="zpk-F5-JRI"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="RET-Nn-Lj4" firstAttribute="leading" secondItem="sKa-0u-jc7" secondAttribute="leading" constant="17" id="5Rb-Ei-K7R"/>
+                                                <constraint firstAttribute="bottom" secondItem="RET-Nn-Lj4" secondAttribute="bottom" constant="-1" id="Eg5-yu-K8a"/>
+                                                <constraint firstAttribute="trailing" secondItem="RET-Nn-Lj4" secondAttribute="trailing" constant="17" id="dJF-xQ-WET"/>
+                                                <constraint firstItem="RET-Nn-Lj4" firstAttribute="top" secondItem="sKa-0u-jc7" secondAttribute="top" id="f8d-64-ql5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Sync Date" id="XHi-vE-S1F">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NLA-5n-s2v" userLabel="SyncDateCell">
+                                        <rect key="frame" x="0.0" y="169" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NLA-5n-s2v" id="v0j-mo-ayr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="ksi-Nf-6J7" id="Wjb-yU-r5e"/>
+                            <outlet property="delegate" destination="ksi-Nf-6J7" id="FeT-Be-c7e"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="OQ0-yL-XHp">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="vU9-Jr-MDM">
+                            <connections>
+                                <action selector="cancel:" destination="ksi-Nf-6J7" id="eYQ-Qb-3CY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="jwG-g7-jCv">
+                            <connections>
+                                <action selector="save:" destination="ksi-Nf-6J7" id="67j-vb-97V"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="syncTimeLbl" destination="qwC-tk-84C" id="rbs-mz-gyL"/>
+                        <outlet property="syncTimeView" destination="RET-Nn-Lj4" id="1fr-1h-mcH"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UOq-fa-xDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5397.6000000000004" y="-2431.0344827586209"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="i1X-as-uP4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FZD-GS-Hal" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="huR-hj-3xO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ksi-Nf-6J7" kind="relationship" relationship="rootViewController" id="Qxr-DN-FcY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YU1-ug-cuf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4458.3999999999996" y="-2431.0344827586209"/>
         </scene>
     </scenes>
     <resources>
