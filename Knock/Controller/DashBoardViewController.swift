@@ -303,7 +303,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             custumView.addSubview(noResponseChart)
         }
-        else{
+        else if(chartType == "FollowUp Needed"){
             
             followUpNeededChart = GaugeView(frame: custumView.frame)
             
@@ -456,17 +456,25 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         if(isTwoMinuteSync!){
-            totalUnitsChart.percentage = 100
-            totalUnitsChart.labelText = chart1Value
             
-            unitsCompletedChart.percentage = 100
-            unitsCompletedChart.labelText = chart2Value
+            if(totalUnitsChart != nil){
+                totalUnitsChart.percentage = 100
+                totalUnitsChart.labelText = chart1Value
+            }
+            if(unitsCompletedChart != nil){
+                unitsCompletedChart.percentage = 100
+                unitsCompletedChart.labelText = chart2Value
+            }
             
-            noResponseChart.percentage = Float(chart3Value)!
-            noResponseChart.labelText = chart3Value + "%"
+            if(noResponseChart != nil){
+                noResponseChart.percentage = Float(chart3Value)!
+                noResponseChart.labelText = chart3Value + "%"
+            }
             
-            followUpNeededChart.percentage = Float(chart4Value)!
-            followUpNeededChart.labelText = chart4Value + "%"
+            if(followUpNeededChart != nil){
+                followUpNeededChart.percentage = Float(chart4Value)!
+                followUpNeededChart.labelText = chart4Value + "%"
+            }
             
             
         }
