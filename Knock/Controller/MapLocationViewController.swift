@@ -23,9 +23,11 @@ struct locationDataStruct
     var zip:String = ""
     var totalUnits:String = ""
     var locStatus:String = ""
+    var salesforceLocationName:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
+    
     @IBOutlet weak var toolBarView: UIView!
     @IBOutlet weak var newLocLbl: UILabel!
     @IBOutlet weak var newCaseLbl: UILabel!
@@ -46,6 +48,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     var address:String = "Waterville, NewYork, USA"
     var locationId:String!
     
+    var firstLocationNameInArray:String = ""
     
     
     var locationDictionaryArray:Dictionary<String, AnyObject> = [:]
@@ -67,10 +70,16 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     private var markerGraphicsOverlay = AGSGraphicsOverlay()
     private var routeGraphicsOverlay = AGSGraphicsOverlay()
     
+    private var geodatabase:AGSGeodatabase!
+    
+    private var map:AGSMap!
     
     var searchActive : Bool = false
     var filtered:[String] = []
 
+    var timer = Timer()
+    var geodatabaseFeatureTable:AGSGeodatabaseFeatureTable!
+    var geodatabaseFeatureLayer:AGSFeatureLayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,11 +175,13 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 if let weakSelf = self {
                     if weakSelf.mapPackage.maps.count > 0 {
                         
+                        weakSelf.map = weakSelf.mapPackage.maps[0]
                         
+                        weakSelf.mapView.map = weakSelf.map
                         
-                        //assign the first map from the map package to the map view
-                        weakSelf.mapView.map = weakSelf.mapPackage.maps[0]
+                        weakSelf.map?.initialViewpoint = AGSViewpoint(latitude: 40.67662801823, longitude: -73.9963965312946,scale: 2256.9943525)
                         
+                       
                         //touch delegate
                         weakSelf.mapView.touchDelegate = weakSelf
                         
@@ -184,8 +195,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                         
                         
                         
-                        var IsInitialViewPoint:Bool = true
-                        
+                      
                         
                         if((self?.locDataArray.count)! > 0){
                             
@@ -199,19 +209,28 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                           
                             self?.totalUnits = (self?.locDataArray[0].totalUnits)!
                             
+                            self?.firstLocationNameInArray = (self?.locDataArray[0].salesforceLocationName)!
                         
                             
-                            IsInitialViewPoint = false
+                           
                         }
                         
-                        if(SalesforceConnection.fullAddress != ""){
-                       
-                            weakSelf.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: IsInitialViewPoint)
-                        }
-                        else{
-                            SVProgressHUD.dismiss()
-                            
-                        }
+                         self?.showLayers()
+                        
+                         self?.startSearchingFirstText()
+                   
+                        
+//                        if(SalesforceConnection.fullAddress != ""){
+//      
+//                            
+//                             weakSelf.geocodeSearchText(text: (self?.locDataArray[0].salesforceLocationName)!)
+//                            
+//                           
+//                        }
+//                        else{
+//                            SVProgressHUD.dismiss()
+//                            
+//                        }
                         
                     }
                     else {
@@ -234,13 +253,130 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
              SalesforceConnection.assignmentLocationId = (self.locDataArray[0].assignmentLocId)
             
         }
-        self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
+        //self.geocodeSearchText(text: SalesforceConnection.fullAddress)
      }
+        
+        
+        
 
-    NotificationCenter.default.addObserver(self, selector:#selector(MapLocationViewController.UpdateLocationView), name: NSNotification.Name(rawValue: "UpdateLocationView"), object:nil
-        )
+    NotificationCenter.default.addObserver(self, selector:#selector (MapLocationViewController.UpdateLocationView), name: NSNotification.Name(rawValue: "UpdateLocationView"), object:nil)
         
 }
+    
+  
+    
+    func startSearchingFirstText(){
+        // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
+        timer = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(MapLocationViewController.searchFirstText), userInfo: nil, repeats: false)
+    }
+    
+    func searchFirstText(){
+        
+        SVProgressHUD.dismiss()
+        
+        self.geodatabaseFeatureLayer.definitionExpression = filterfeaturesExpression
+        
+        self.selectFeature(addressName: (self.firstLocationNameInArray))
+        
+    }
+    
+   
+    
+    
+    func showLayers(){
+        
+        //instantiate geodatabase with name
+        self.geodatabase = AGSGeodatabase(name: "NewYorkLayers")
+        
+        //load the geodatabase for feature tables
+        self.geodatabase.load { [weak self] (error: Error?) in
+            if let error = error {
+                SVProgressHUD.showError(withStatus: error.localizedDescription, maskType: .gradient)
+            }
+            else {
+                
+                let tables = self!.geodatabase.geodatabaseFeatureTables
+                
+       
+                for featureLayerTable in tables
+                    
+                {
+                    
+                    self?.geodatabaseFeatureTable = self!.geodatabase.geodatabaseFeatureTable(withName: featureLayerTable.tableName)!
+                    
+                    self?.geodatabaseFeatureLayer = AGSFeatureLayer(featureTable: (self?.geodatabaseFeatureTable)!)
+                    
+                    self?.mapView.map?.operationalLayers.add(self?.geodatabaseFeatureLayer)
+                    
+                }
+                
+
+
+            }
+            
+            
+            
+             //self?.selectFeature(addressName: (self?.firstLocationNameInArray)!)
+           
+            //self?.geocodeSearchText(text: (self?.firstLocationNameInArray)!)
+                
+            
+        }
+        
+    }
+    
+    
+
+    
+    func selectFeature(addressName:String){
+        
+//        if self.selectedFeatures.count > 0 {
+//            self.featureLayer.unselectFeatures(self.selectedFeatures)
+//        }
+//        
+//        
+        
+        let queryParams = AGSQueryParameters()
+        queryParams.whereClause = "Name LIKE '%\(addressName)%'"
+        
+        
+
+        
+        self.geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: { [weak self] (result:AGSFeatureQueryResult?, error:Error?) -> Void in
+            if let error = error {
+                print(error.localizedDescription)
+                
+                //update selected features array
+               // self?.selectedFeatures.removeAll(keepingCapacity: false)
+            }
+            else if let features = result?.featureEnumerator().allObjects {
+                if features.count > 0 {
+                    
+                    SVProgressHUD.dismiss()
+                    
+                    //zoom to the selected feature
+                    
+                    self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,completion: nil)
+                    //,scale: 10000
+                    
+                    self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false)
+                    
+                    
+                    
+                    
+
+                }
+                else {
+                    SVProgressHUD.showError(withStatus: "No state by that name", maskType: .gradient)
+                }
+               
+            }
+        })
+        
+        
+    }
+    
+    
     
     @IBAction func syncData(_ sender: Any) {
         
@@ -285,6 +421,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
     }
     
+    
+   
+    
+    
+   // self.selectFeature(addressName: (self.firstLocationNameInArray))
 //    override func viewDidDisappear(_ animated: Bool)
 //    {
 //        super.viewDidDisappear(animated)
@@ -314,9 +455,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     }
     
     var locDataArray = [locationDataStruct]()
+     var filterfeaturesExpression:String = ""
     
     func populateLocationData(){
         
+       
  
        locDataArray = [locationDataStruct]()
         
@@ -326,6 +469,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             
             for locationData in locationResults{
                 
+                
+                
                 let locationName = locationData.street!
                 
                 //[Street] [City], [State] [ZIP]
@@ -334,16 +479,24 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let fullAdress = locationData.street! + " " + locationData.city! + ", " + locationData.state! + " " + locationData.zip!
 
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!,locStatus:locationData.locStatus!)
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!,locStatus:locationData.locStatus!,salesforceLocationName:locationData.name!)
                 
                 
                 locDataArray.append(objectLocStruct)
                
+                //filterfeaturesExpression = filterfeaturesExpression + "Name = '" + locationData.name! + "'OR "
+                
+                filterfeaturesExpression = filterfeaturesExpression + "Name = '\(locationData.name!)'OR "
             }
         }
         
+        let endIndex = filterfeaturesExpression.index(filterfeaturesExpression.endIndex, offsetBy: -3)
+        filterfeaturesExpression = self.filterfeaturesExpression.substring(to: endIndex)
+        
+        
         tableView.reloadData()
         
+        //self.featureLayer.definitionExpression = "Name = '621 WATER STREET, NEW YORK, NY ,10002' OR Name = '47 MARKET STREET, NEW YORK, NY ,10002'"
         
         
         
@@ -442,15 +595,66 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         return graphic
     }
     
-    private func geocodeSearchText(text:String,setIntialViewPoint:Bool) {
-        
-//        if Utilities.basemapLocator == nil{
+//    private func geocodeSearchText(text:String,setIntialViewPoint:Bool) {
+//        
+//    
+//        if self.locatorTask == nil {
 //            return
 //        }
-//        else{
-//             self.locatorTask = Utilities.basemapLocator
-//        }
 //        
+//        //dismiss the callout if already visible
+//        self.mapView.callout.dismiss()
+//        
+//        
+//        self.locatorTask?.geocode(withSearchText: text, parameters: self.geocodeParameters, completion: { [weak self] (results:[AGSGeocodeResult]?, error:Error?) -> Void in
+//            if let error = error {
+//               print(error.localizedDescription)
+//            }
+//            else {
+//                if let results = results , results.count > 0 {
+//                    
+//                    
+//                    var graphic:AGSGraphic?=nil
+//                    
+//                    if(setIntialViewPoint==false){
+//                        //create a graphic for the first result and add to the graphics overlay
+//                        graphic = self?.graphicForPoint(point: results[0].displayLocation!, attributes: results[0].attributes as [String : AnyObject]?)
+//                        
+//                        //self?.markerGraphicsOverlay.graphics.removeAllObjects()
+//                        //self?.markerGraphicsOverlay.graphics.add(graphic!)
+//                        
+//                    }
+//                    
+//                    //zoom to the extent of the result
+//                    if let extent = results[0].extent {
+//                        
+//                        
+//                        self?.mapView.setViewpointGeometry(extent, completion: nil)
+//                        
+//                        
+//                        if(setIntialViewPoint==false){
+//                            
+//                        
+//                            self?.showCalloutForGraphic(graphic: graphic!, tapLocation: results[0].displayLocation!, animated: true, offset: false)
+//                        }
+//                        
+//                        SVProgressHUD.dismiss()
+//                    }
+//                    
+//                    
+//                }
+//                else {
+//                    //provide feedback in case of failure
+//                    //self?.showAlert("No results found")
+//                }
+//            }
+//        })
+//        
+//    }
+    
+    private func geocodeSearchText(text:String) {
+        
+        
         if self.locatorTask == nil {
             return
         }
@@ -458,38 +662,22 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         //dismiss the callout if already visible
         self.mapView.callout.dismiss()
         
-        //remove all previous graphics
-      //  self.markerGraphicsOverlay.graphics.removeAllObjects()
-        
         
         self.locatorTask?.geocode(withSearchText: text, parameters: self.geocodeParameters, completion: { [weak self] (results:[AGSGeocodeResult]?, error:Error?) -> Void in
             if let error = error {
-               print(error.localizedDescription)
+                print(error.localizedDescription)
             }
             else {
                 if let results = results , results.count > 0 {
-                    var graphic:AGSGraphic?=nil
-                    
-                    if(setIntialViewPoint==false){
-                        //create a graphic for the first result and add to the graphics overlay
-                        graphic = self?.graphicForPoint(point: results[0].displayLocation!, attributes: results[0].attributes as [String : AnyObject]?)
-                        
-                    self?.markerGraphicsOverlay.graphics.removeAllObjects()
-                        self?.markerGraphicsOverlay.graphics.add(graphic!)
-                        
-                    }
                     
                     //zoom to the extent of the result
                     if let extent = results[0].extent {
+                        
+                        
                         self?.mapView.setViewpointGeometry(extent, completion: nil)
                         
+                        self?.selectFeature(addressName: text)
                         
-                        if(setIntialViewPoint==false){
-                            
-                            self?.showCalloutForGraphic(graphic: graphic!, tapLocation: results[0].displayLocation!, animated: true, offset: false)
-                        }
-                        
-                        SVProgressHUD.dismiss()
                     }
                     
                     
@@ -506,9 +694,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     private func showCalloutForGraphic(graphic:AGSGraphic, tapLocation:AGSPoint, animated:Bool, offset:Bool) {
         
-        
-        
-        self.mapView.callout.title = graphic.attributes["Match_addr"] as? String
+//        if(graphic.attributes !=  nil){
+//            self.mapView.callout.title = graphic.attributes["Match_addr"] as? String
+//        }
         
         self.mapView.callout.isAccessoryButtonHidden = true
         
@@ -560,30 +748,100 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     //MARK: - AGSGeoViewTouchDelegate
     
+//    func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
+//        
+//        
+//        //show the callout for the first graphic found
+//        //  self.showCalloutForGraphic(result.graphics.first!, tapLocation: mapPoint, animated: true, offset: false)
+//        
+//        //dismiss the callout if already visible
+//        self.mapView.callout.dismiss()
+//        
+//        //identify graphics at the tapped location
+//        self.mapView.identify(self.markerGraphicsOverlay, screenPoint: screenPoint, tolerance: 5, returnPopupsOnly: false, maximumResults: 1) { (result: AGSIdentifyGraphicsOverlayResult) -> Void in
+//            if let error = result.error {
+//                print(error)
+//            }
+//           
+//            else if result.graphics.count > 0 {
+//                
+////                for result in result {
+////                    for geoElement in result.geoElements {
+////                        popups.append(AGSPopup(geoElement: geoElement))
+////                    }
+////                }
+//                
+//                //show callout for the first graphic in the array
+//                //self.showCalloutForGraphic(result.graphics.first!, tapLocation: mapPoint, animated: true, offset: false)
+//                
+//                self.showCalloutForGraphic(graphic: result.graphics[0], tapLocation: mapPoint, animated: true, offset: false)
+//            }
+//            else{
+//                
+//                SVProgressHUD.show(withStatus: "Loading layer data..", maskType: .gradient)
+//                
+//                self.mapView.identifyLayers(atScreenPoint: screenPoint, tolerance: 12, returnPopupsOnly: false, maximumResultsPerLayer: 10) { [weak self] (results: [AGSIdentifyLayerResult]?, error: Error?) -> Void in
+//                    
+//                    if let error = error {
+//                        SVProgressHUD.showError(withStatus: error.localizedDescription)
+//                    }
+//                    else {
+//                        SVProgressHUD.dismiss()
+//                        
+//                        
+//                        for result in results! {
+//                            for geoElement in result.geoElements {
+//                                
+//                                //self?.showCalloutForGraphic(graphic: result.graphics[0], tapLocation: mapPoint, animated: true, offset: false)
+//                                //print(geoElement)
+//                               // popups.append(AGSPopup(geoElement: geoElement))
+//                            }
+//                        }
+//                        
+//                    }
+//                }//end of geoview layers
+//            }
+//        }
+//    }
+//    
+    
+    
+    
     func geoView(_ geoView: AGSGeoView, didTapAtScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         
         
-        //show the callout for the first graphic found
-        //  self.showCalloutForGraphic(result.graphics.first!, tapLocation: mapPoint, animated: true, offset: false)
         
         
         //dismiss the callout if already visible
         self.mapView.callout.dismiss()
         
-        //identify graphics at the tapped location
-        self.mapView.identify(self.markerGraphicsOverlay, screenPoint: screenPoint, tolerance: 5, returnPopupsOnly: false, maximumResults: 1) { (result: AGSIdentifyGraphicsOverlayResult) -> Void in
-            if let error = result.error {
-                print(error)
-            }
-            else if result.graphics.count > 0 {
-                //show callout for the first graphic in the array
-                //self.showCalloutForGraphic(result.graphics.first!, tapLocation: mapPoint, animated: true, offset: false)
-                
-                self.showCalloutForGraphic(graphic: result.graphics[0], tapLocation: mapPoint, animated: true, offset: false)
-            }
+       
+                self.mapView.identifyLayers(atScreenPoint: screenPoint, tolerance: 12, returnPopupsOnly: false, maximumResultsPerLayer: 10) { [weak self] (results: [AGSIdentifyLayerResult]?, error: Error?) -> Void in
+                    
+                    if let error = error {
+                        SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    }
+                    else {
+                        SVProgressHUD.dismiss()
+                        
+                        
+                        for result in results! {
+                            for geoElement in result.geoElements {
+                             
+                                let address = geoElement.attributes["Name"] as! String
+                              
+                                if(self?.locDataArray.contains {$0.salesforceLocationName == address})!{
+                                
+                                    self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: geoElement.geometry! as! AGSPoint, animated: true, offset: false)
+                                }
+                                
+                            }
+                        }
+                        
+                    }
+                }//end of geoview layers
+        
         }
-    }
-    
     
     
     
@@ -715,13 +973,21 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         Utilities.currentLocationRowIndex = indexPath.row
         
       
+        
         let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
         
    
-        currentCell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1) //gray
-
+      
         
-        self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
+            currentCell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1) //gray
+        
+        
+        
+        self.selectFeature(addressName: locDataArray[indexPath.row].salesforceLocationName)
+
+        // self.geocodeSearchText(text: locDataArray[indexPath.row].salesforceLocationName)
+        
+        //self.geocodeSearchText(text: SalesforceConnection.fullAddress,setIntialViewPoint: false)
         
  
         

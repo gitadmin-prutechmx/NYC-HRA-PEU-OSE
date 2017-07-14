@@ -518,7 +518,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nmI-px-8de" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3519.1999999999998" y="-646.32683658170924"/>
+            <point key="canvasLocation" x="3394" y="-660"/>
         </scene>
         <!--SideMenuViewController-->
         <scene sceneID="XOP-AL-lSK">
@@ -611,7 +611,7 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="FZD-GS-Hal" kind="presentation" modalPresentationStyle="formSheet" id="t9W-R6-KEn"/>
+                                            <segue destination="FZD-GS-Hal" kind="presentation" identifier="Settings" modalPresentationStyle="formSheet" id="t9W-R6-KEn"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="52" id="b9q-bh-cgn">
@@ -669,7 +669,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1xY-gl-YSf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xhy-VR-qYx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3479.1999999999998" y="-1585.4572713643179"/>
+            <point key="canvasLocation" x="3730" y="-2307"/>
         </scene>
         <!--SideMenuNavigationController-->
         <scene sceneID="uNX-wN-kKs">
@@ -2869,7 +2869,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cwf-7M-wus" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8824.7999999999993" y="47.226386806596707"/>
+            <point key="canvasLocation" x="8794" y="-169"/>
         </scene>
         <!--SelectReasonStatusViewController-->
         <scene sceneID="6e6-mh-4AK">
@@ -3316,7 +3316,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Sync Time" footerTitle="This will adjust your offline syncing timing" id="E9T-hn-m7J">
+                            <tableViewSection headerTitle="Sync Time (in minutes)" footerTitle="This will adjust your offline syncing timing" id="E9T-hn-m7J">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xLo-d9-gCR" userLabel="SyncTimeCell">
                                         <rect key="frame" x="0.0" y="56" width="375" height="44"/>
@@ -3373,13 +3373,112 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Sync Date" id="XHi-vE-S1F">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NLA-5n-s2v" userLabel="SyncDateCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="NLA-5n-s2v" userLabel="SyncDateCell">
                                         <rect key="frame" x="0.0" y="169" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NLA-5n-s2v" id="v0j-mo-ayr">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dW-q7-g6p" userLabel="SyncDateView">
+                                                    <rect key="frame" x="17" y="0.0" width="341" height="45"/>
+                                                    <subviews>
+                                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgq-0L-emf">
+                                                            <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
+                                                            <connections>
+                                                                <action selector="btnShowTimeAction:" destination="ksi-Nf-6J7" eventType="touchUpInside" id="r0P-CN-Ydh"/>
+                                                            </connections>
+                                                        </button>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHL-Vw-UMl">
+                                                            <rect key="frame" x="0.0" y="42" width="341" height="1"/>
+                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="3hD-bK-4ug"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SYNC DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clv-he-ztP">
+                                                            <rect key="frame" x="8" y="8" width="108" height="29"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="29" id="Lvs-bV-A7i"/>
+                                                                <constraint firstAttribute="width" constant="108" id="nw4-39-s9F"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11:90" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGe-9Z-ZZy">
+                                                            <rect key="frame" x="228" y="11" width="98" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="98" id="PzT-AM-QX1"/>
+                                                                <constraint firstAttribute="height" constant="24" id="gZj-hy-TNg"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="CGe-9Z-ZZy" secondAttribute="trailing" constant="15" id="2AM-Dx-1B3"/>
+                                                        <constraint firstItem="NHL-Vw-UMl" firstAttribute="leading" secondItem="7dW-q7-g6p" secondAttribute="leading" id="LiI-NI-rSb"/>
+                                                        <constraint firstItem="CGe-9Z-ZZy" firstAttribute="top" secondItem="7dW-q7-g6p" secondAttribute="top" constant="11" id="OBa-z7-8dg"/>
+                                                        <constraint firstItem="sgq-0L-emf" firstAttribute="top" secondItem="7dW-q7-g6p" secondAttribute="top" id="aBE-hk-OH8"/>
+                                                        <constraint firstAttribute="bottom" secondItem="sgq-0L-emf" secondAttribute="bottom" constant="1" id="aYd-fl-h3j"/>
+                                                        <constraint firstAttribute="trailing" secondItem="NHL-Vw-UMl" secondAttribute="trailing" id="bDF-TM-DGU"/>
+                                                        <constraint firstItem="NHL-Vw-UMl" firstAttribute="top" secondItem="clv-he-ztP" secondAttribute="bottom" constant="5" id="jiA-89-KIx"/>
+                                                        <constraint firstAttribute="trailing" secondItem="sgq-0L-emf" secondAttribute="trailing" id="l6X-ya-uQt"/>
+                                                        <constraint firstItem="clv-he-ztP" firstAttribute="leading" secondItem="7dW-q7-g6p" secondAttribute="leading" constant="8" id="qNF-vP-GaU"/>
+                                                        <constraint firstItem="sgq-0L-emf" firstAttribute="leading" secondItem="7dW-q7-g6p" secondAttribute="leading" id="sGs-E1-17P"/>
+                                                        <constraint firstItem="clv-he-ztP" firstAttribute="top" secondItem="7dW-q7-g6p" secondAttribute="top" constant="8.1300000000000008" id="v0k-Cg-5o9"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7dW-q7-g6p" firstAttribute="top" secondItem="v0j-mo-ayr" secondAttribute="top" id="3ZR-ed-eWE"/>
+                                                <constraint firstAttribute="bottom" secondItem="7dW-q7-g6p" secondAttribute="bottom" constant="-1" id="6Gq-Uu-rtR"/>
+                                                <constraint firstAttribute="trailing" secondItem="7dW-q7-g6p" secondAttribute="trailing" constant="17" id="MCG-Cj-cav"/>
+                                                <constraint firstItem="7dW-q7-g6p" firstAttribute="leading" secondItem="v0j-mo-ayr" secondAttribute="leading" constant="17" id="kST-1A-de5"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="202" id="GjL-Zl-p71" userLabel="TimeDataCell">
+                                        <rect key="frame" x="0.0" y="213" width="375" height="202"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GjL-Zl-p71" id="P69-o1-L5x">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="202"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpR-9Y-EYM" userLabel="SyncTimePicker">
+                                                    <rect key="frame" x="17" y="0.0" width="341" height="203"/>
+                                                    <subviews>
+                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="aJT-Kx-izR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="341" height="202"/>
+                                                            <date key="date" timeIntervalSinceReferenceDate="521622832.03941202">
+                                                                <!--2017-07-13 07:13:52 +0000-->
+                                                            </date>
+                                                            <connections>
+                                                                <action selector="dpShowTimeAction:" destination="ksi-Nf-6J7" eventType="valueChanged" id="On9-TP-Pji"/>
+                                                            </connections>
+                                                        </datePicker>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="aJT-Kx-izR" secondAttribute="trailing" id="BHz-aV-JbI"/>
+                                                        <constraint firstItem="aJT-Kx-izR" firstAttribute="top" secondItem="cpR-9Y-EYM" secondAttribute="top" id="BhZ-Kl-gGh"/>
+                                                        <constraint firstAttribute="bottom" secondItem="aJT-Kx-izR" secondAttribute="bottom" constant="1" id="Cg3-5a-QVM"/>
+                                                        <constraint firstItem="aJT-Kx-izR" firstAttribute="leading" secondItem="cpR-9Y-EYM" secondAttribute="leading" id="vU1-Hu-z4q"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="cpR-9Y-EYM" secondAttribute="trailing" constant="17" id="4i4-wf-hYI"/>
+                                                <constraint firstAttribute="bottom" secondItem="cpR-9Y-EYM" secondAttribute="bottom" constant="-1" id="VYF-fy-z7a"/>
+                                                <constraint firstItem="cpR-9Y-EYM" firstAttribute="leading" secondItem="P69-o1-L5x" secondAttribute="leading" constant="17" id="l2J-Ue-P4i"/>
+                                                <constraint firstItem="cpR-9Y-EYM" firstAttribute="top" secondItem="P69-o1-L5x" secondAttribute="top" id="sih-BO-GMT"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -3402,13 +3501,18 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="TimeLbl" destination="CGe-9Z-ZZy" id="UsG-LB-nam"/>
+                        <outlet property="btnShowTime" destination="sgq-0L-emf" id="mQH-Sx-M46"/>
+                        <outlet property="dpShowDate" destination="aJT-Kx-izR" id="Fl0-pf-giD"/>
+                        <outlet property="syncDateView" destination="7dW-q7-g6p" id="Cq5-Yp-gPN"/>
                         <outlet property="syncTimeLbl" destination="qwC-tk-84C" id="rbs-mz-gyL"/>
+                        <outlet property="syncTimePickerView" destination="cpR-9Y-EYM" id="yfq-ay-WLH"/>
                         <outlet property="syncTimeView" destination="RET-Nn-Lj4" id="1fr-1h-mcH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOq-fa-xDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5397.6000000000004" y="-2431.0344827586209"/>
+            <point key="canvasLocation" x="6245.6000000000004" y="-2514.6926536731635"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="i1X-as-uP4">

@@ -896,48 +896,50 @@ SalesforceConnection.loginToSalesforce() { response in
     
         
     SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
-            
-//            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.chartapi, params: emailParams){ jsonData in
-//            
-//                                ManageCoreData.DeleteAllDataFromEntities()
-//            
-//                                Utilities.parseChartData(jsonObject: jsonData.1)
-//                                Utilities.parseEventAssignmentData(jsonObject: jsonData.1)
-//            }
-            
+        
             
             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
                 
-                SVProgressHUD.dismiss()
-                
-                ManageCoreData.DeleteAllDataFromEntities() //need to be rethink
-                
-                
-                Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData.1)
-
-                
-                Utilities.parseChartData(jsonObject: chartJsonData.1)
+              
+                 updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1)
                 
                 if(loginViewController != nil){
-                    DispatchQueue.main.async {
-                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                    
+                    let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                    
+                    let fullPath = "\(path)/NewYorkLayers.geodatabase"
+                    
+                    
+                    let filemanager = FileManager.default
+                    
+                    if !filemanager.fileExists(atPath: fullPath) {
+                        
+                        DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
+                      
+
+                        
                     }
+                        
+                    else{
+                        
+                        SVProgressHUD.dismiss()
+                        DispatchQueue.main.async {
+                            loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                        }
+
+                        
+                    }
+                   
+                    
+    
                 }
                 else{
-                
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object: nil)
-                
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
-                
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
-                
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
+                   
+                    
+                    callNotificationCenter()
+                    
+
                 }
-                
-                
-                Utilities.isRefreshBtnClick = false
                 
             }
         
@@ -948,6 +950,43 @@ SalesforceConnection.loginToSalesforce() { response in
      }
      
     }//end of class
+    
+    
+    
+    class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject]){
+        
+       
+        
+        ManageCoreData.DeleteAllDataFromEntities()
+        
+        
+        Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData)
+        
+        
+        Utilities.parseChartData(jsonObject: chartJsonData)
+        
+        
+    }
+    
+    class func callNotificationCenter(){
+        
+        SVProgressHUD.dismiss()
+        
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object: nil)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateLocationView"), object: nil)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
+        
+        
+        Utilities.isRefreshBtnClick = false
+
+    }
     
     
     class func parseUserData(jsonObject: Dictionary<String, AnyObject>){
