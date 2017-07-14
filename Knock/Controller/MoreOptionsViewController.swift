@@ -841,9 +841,11 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
          // if((tempAttempt != "" && tempAttempt != "No") && (tempContact != "" && tempContact != "No") && (tempInTake != "" && tempInTake != "No" )){
             
-        if((tempAttempt != "" && tempAttempt != "No")
+        if(((tempAttempt != "" && tempAttempt != "No")
             && (tempContact != "" && tempContact != "No")
-            && ((tempInTake != "" && tempInTake != "Yes" )&&(tempReKnock != "" && tempReKnock != "No"))){
+            && ((tempInTake != "" && tempInTake != "Yes" )&&(tempReKnock != "" && tempReKnock != "No")))||((tempAttempt != "" && tempAttempt != "No")
+            && (tempContact != "" && tempContact != "No")
+            && ((tempInTake != "" && tempInTake != "No" )))){
             
             return true
         }
@@ -1048,7 +1050,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
            // Intake = No but Re-knock = Yes
             
-            if(attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")){
+            if((attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")) || (attempt == "Yes" && contact == "Yes"  && inTake == "Yes")){
                 updateUnitAndSurvey(type:"Updating Unit..")
                 showTenantView()
             }

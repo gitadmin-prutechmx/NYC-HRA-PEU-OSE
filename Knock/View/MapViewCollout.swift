@@ -16,7 +16,9 @@ class MapViewCollout: UIView
     
     @IBOutlet weak var lblNoOfUnits: UILabel!
     
+    @IBOutlet weak var lblNoClients: UILabel!
 
+    @IBOutlet weak var lblAttemptPrecentage: UILabel!
     override init(frame: CGRect)
     {
         super.init(frame: frame)

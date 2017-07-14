@@ -365,11 +365,11 @@ var picker = UIDatePicker()
             
         if(SalesforceConnection.currentTenantId == ""){
             saveTenantInCoreData()
-            msg = "Tenant information has been created successfully."
+            msg = "Client information has been created successfully."
         }
         else{
             updateTenantInCoreData()
-            msg = "Tenant information has been updated successfully."
+            msg = "Client information has been updated successfully."
         }
         
 

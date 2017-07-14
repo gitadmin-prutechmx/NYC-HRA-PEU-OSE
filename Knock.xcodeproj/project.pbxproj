@@ -50,6 +50,10 @@
 		5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757AE61F15477800308C05 /* SelectReasonStatusViewController.swift */; };
 		5D757AEB1F16324400308C05 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757AEA1F16324400308C05 /* SettingsTableViewController.swift */; };
 		5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */; };
+		5D757B1A1F18A38100308C05 /* DownloadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B181F18A38100308C05 /* DownloadProgressView.swift */; };
+		5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D757B191F18A38100308C05 /* DownloadProgressView.xib */; };
+		5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */; };
+		5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1E1F18F4A200308C05 /* LocationDO.swift */; };
 		5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */; };
 		5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BFC1F035AFB0045A65D /* Reachability.swift */; };
 		5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */; };
@@ -165,6 +169,10 @@
 		5D757AE61F15477800308C05 /* SelectReasonStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectReasonStatusViewController.swift; sourceTree = "<group>"; };
 		5D757AEA1F16324400308C05 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadESRILayers.swift; sourceTree = "<group>"; };
+		5D757B181F18A38100308C05 /* DownloadProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressView.swift; sourceTree = "<group>"; };
+		5D757B191F18A38100308C05 /* DownloadProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadProgressView.xib; sourceTree = "<group>"; };
+		5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadBaseMap.swift; sourceTree = "<group>"; };
+		5D757B1E1F18F4A200308C05 /* LocationDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDO.swift; sourceTree = "<group>"; };
 		5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		5D8C6BFC1F035AFB0045A65D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncUtility.swift; sourceTree = "<group>"; };
@@ -393,6 +401,7 @@
 				5DE3C9741EF0241900012C47 /* AssignmentDO.swift */,
 				5D52F9491F149DC300623005 /* EditUnitDO.swift */,
 				5D52F94B1F14A3FB00623005 /* TenantDO.swift */,
+				5D757B1E1F18F4A200308C05 /* LocationDO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -419,6 +428,7 @@
 				5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */,
 				5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */,
 				5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */,
+				5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -426,6 +436,8 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5D757B181F18A38100308C05 /* DownloadProgressView.swift */,
+				5D757B191F18A38100308C05 /* DownloadProgressView.xib */,
 				5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */,
 				5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */,
 				5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */,
@@ -620,6 +632,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */,
+				5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */,
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
 				5DE3C9971EF406E200012C47 /* UnitsHeaderTableViewCell.xib in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
@@ -722,6 +735,7 @@
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
 				5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
+				5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */,
 				5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */,
 				5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */,
 				5D757AEB1F16324400308C05 /* SettingsTableViewController.swift in Sources */,
@@ -730,9 +744,11 @@
 				5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */,
 				5D5291C21F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
+				5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */,
 				5D5291BE1F0D3BCF00D5645F /* Tenant+CoreDataClass.swift in Sources */,
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
+				5D757B1A1F18A38100308C05 /* DownloadProgressView.swift in Sources */,
 				5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */,
 				5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */,
 				5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */,

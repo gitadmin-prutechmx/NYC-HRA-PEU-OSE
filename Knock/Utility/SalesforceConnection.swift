@@ -157,7 +157,82 @@ class SalesforceConnection{
         
     }//end of loginToSalesforce
 
+//    func isBaseMapDownloaded(chart: Chart) -> Bool {
+//        if let path = chart.urlInDocumentsDirectory?.path {
+//            let fileManager = NSFileManager.defaultManager()
+//            return fileManager.fileExistsAtPath(path)
+//        }
+//        return false
+//    }
+//    
     
+    static func downloadBaseMap(baseMapUrl: String,completionHandler: @escaping (Double?, NSError?) -> Void) {
+        
+//        guard isBaseMapDownloaded(chart) == false else {
+//            completionHandler(1.0, nil) // already have it
+//            return
+//        }
+        
+        //        let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
+        
+        
+        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+            
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            documentsURL.appendPathComponent("NewYorkCity.mmpk")
+            
+            return (documentsURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+        
+
+        Alamofire.download(
+            baseMapUrl,
+            method: .get,
+            to: destination).downloadProgress(closure: { (progress) in
+                
+                let progressComplete = progress.fractionCompleted
+                print(progressComplete)
+                
+                completionHandler(progressComplete, nil)
+                
+//                DispatchQueue.main.async {
+//                    let progressComplete = progress.fractionCompleted
+//                    print(progressComplete)
+//                    
+//                    completionHandler(progressComplete, nil)
+//                }
+            }).validate().response(completionHandler: { (DefaultDownloadResponse) in
+                
+                //DefaultDownloadResponse.destinationURL!.lastPathComponent
+//                if let destinationUrl = DefaultDownloadResponse.destinationURL ? {
+//                    completionHandler(destinationUrl)
+//                }
+                
+                
+                if let error = DefaultDownloadResponse.error{
+                     completionHandler(nil, error as NSError?)
+                }
+                
+                
+                
+            })
+        
+        
+        
+//        Alamofire.download(.GET, baseMapUrl, destination: destination)
+//            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+//                print(totalBytesRead)
+//                
+//                DispatchQueue.main.async {
+//                    let progress = Double(totalBytesRead) / Double(totalBytesExpectedToRead)
+//                    completionHandler(progress, nil)
+//                }
+//            }
+//            .responseString { response in
+//                print(response.result.error)
+//                completionHandler(nil, response.result.error)
+//        }
+    }
     
     static func showErrorMessage(error:NSError){
         SVProgressHUD.dismiss()

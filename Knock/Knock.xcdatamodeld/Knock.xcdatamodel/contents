@@ -65,6 +65,8 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noOfClients" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noOfUnitsAttempt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="syncDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -156,7 +158,7 @@
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="255"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
-        <element name="Location" positionX="-2" positionY="-36" width="128" height="240"/>
+        <element name="Location" positionX="-2" positionY="-36" width="128" height="270"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="105"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="105"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="135"/>

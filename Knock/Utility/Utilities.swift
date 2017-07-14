@@ -653,7 +653,7 @@ class Utilities {
     class func updateSyncDate(assignmentLocUnitId:String){
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
         
         
         var updateObjectDic:[String:String] = [:]
@@ -688,7 +688,7 @@ class Utilities {
         
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
         
         
         var updateObjectDic:[String:String] = [:]
@@ -910,16 +910,22 @@ SalesforceConnection.loginToSalesforce() { response in
                     let fullPath = "\(path)/NewYorkLayers.geodatabase"
                     
                     
-                    let filemanager = FileManager.default
-                    
-                    if !filemanager.fileExists(atPath: fullPath) {
+                    if (Utilities.isGeoDatabseExist()==false) {
                         
                         DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
                       
 
+                    }
+                    
+                    else if(Utilities.isBaseMapExist()==false){
+                        
+                        SVProgressHUD.dismiss()
+                        
+                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginViewController)
                         
                     }
                         
+                   
                     else{
                         
                         SVProgressHUD.dismiss()
@@ -951,6 +957,41 @@ SalesforceConnection.loginToSalesforce() { response in
      
     }//end of class
     
+    
+    class func isBaseMapExist()->Bool{
+        
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        
+        let fullPath = "\(path)/NewYorkCity.mmpk"
+        
+        
+        let filemanager = FileManager.default
+        
+        if filemanager.fileExists(atPath: fullPath) {
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    class func isGeoDatabseExist()->Bool{
+        
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        
+        let fullPath = "\(path)/NewYorkLayers.geodatabase"
+        
+        
+        let filemanager = FileManager.default
+        
+        if filemanager.fileExists(atPath: fullPath) {
+            return true
+        }
+        else{
+            return false
+        }
+    }
+
     
     
     class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject]){
@@ -1218,11 +1259,15 @@ SalesforceConnection.loginToSalesforce() { response in
                     locationObject.street = locationData["street"] as? String  ?? ""
                     
                     locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
-                    locationObject.totalUnits = locationData["totalUnits"] as? String  ?? ""
+                    locationObject.totalUnits = locationData["totalUnits"] as? String  ?? "0"
                     locationObject.syncDate = locationData["locationSyncDate"] as? String  ?? ""
                     
                     locationObject.assignmentId = assignmentObject.id!
                     locationObject.locStatus = locationData["status"] as? String  ?? ""
+                    
+                    locationObject.noOfClients = String(locationData["numberOfClients"] as! Int)
+                    locationObject.noOfUnitsAttempt  = String(locationData["numberOfUnitsAttempted"] as! Int)
+                    
                     
                     appDelegate.saveContext()
                     

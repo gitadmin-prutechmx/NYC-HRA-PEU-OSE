@@ -208,12 +208,31 @@ class DownloadESRILayers{
                 
                 SVProgressHUD.dismiss()
                 
-                if(loginVC != nil){
-                
-                     DispatchQueue.main.async {
-                            loginVC?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-                        }
+            if(loginVC != nil){
+                    
+                    
+                if(Utilities.isBaseMapExist()==false){
+                    
+                    DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginVC)
+                   
+    
                 }
+                    
+                else{
+                    
+                    DispatchQueue.main.async {
+                        loginVC?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                    }
+                }
+                    
+                    
+                    
+                    
+                
+                    
+            }//end of loginVC
+                
+                
                 
                 
                

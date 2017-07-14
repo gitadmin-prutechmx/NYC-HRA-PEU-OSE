@@ -24,6 +24,8 @@ struct locationDataStruct
     var totalUnits:String = ""
     var locStatus:String = ""
     var salesforceLocationName:String = ""
+    var noOfClients:String = ""
+    var noOfUnitsAttempt:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
@@ -81,6 +83,13 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     var geodatabaseFeatureTable:AGSGeodatabaseFeatureTable!
     var geodatabaseFeatureLayer:AGSFeatureLayer!
 
+    
+    var totalUnits:String = ""
+    var noOfClients:String = ""
+    var noOfUnitsAttempt:String = ""
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -139,8 +148,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.searchBar.delegate = self
         
         populateLocationData()
-        let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
-        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        
+//        let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
+//        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         self.tableView.tableFooterView = UIView()
@@ -179,8 +189,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                         
                         weakSelf.mapView.map = weakSelf.map
                         
-                        weakSelf.map?.initialViewpoint = AGSViewpoint(latitude: 40.67662801823, longitude: -73.9963965312946,scale: 2256.9943525)
-                        
+                     
+                        weakSelf.map?.initialViewpoint = AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411)
                        
                         //touch delegate
                         weakSelf.mapView.touchDelegate = weakSelf
@@ -274,9 +284,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         SVProgressHUD.dismiss()
         
-        self.geodatabaseFeatureLayer.definitionExpression = filterfeaturesExpression
+        //self.geodatabaseFeatureLayer.definitionExpression = filterfeaturesExpression
         
-        self.selectFeature(addressName: (self.firstLocationNameInArray))
+       // self.selectFeature(addressName: (self.firstLocationNameInArray))
         
     }
     
@@ -310,9 +320,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                     
                 }
                 
-
+                self?.geodatabaseFeatureLayer.definitionExpression = (self?.filterfeaturesExpression)!
 
             }
+            
             
             
             
@@ -356,7 +367,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                     
                     //zoom to the selected feature
                     
-                    self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,completion: nil)
+                    self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,scale:2000,completion: nil)
                     //,scale: 10000
                     
                     self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false)
@@ -454,14 +465,23 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         Utilities.isEditLoc = false
     }
     
+    
+   
+    
+    
+    
     var locDataArray = [locationDataStruct]()
-     var filterfeaturesExpression:String = ""
+    var filterfeaturesExpression:String = ""
+    var locDict: [String:LocationDO] = [:]
     
     func populateLocationData(){
         
        
  
        locDataArray = [locationDataStruct]()
+       locDict = [:]
+        
+        createLocationDictionary()
         
         let locationResults = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [Location]
         
@@ -479,7 +499,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let fullAdress = locationData.street! + " " + locationData.city! + ", " + locationData.state! + " " + locationData.zip!
 
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!,locStatus:locationData.locStatus!,salesforceLocationName:locationData.name!)
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!,locStatus:locationData.locStatus!,salesforceLocationName:locationData.name!,noOfClients:locationData.noOfClients!,noOfUnitsAttempt:locationData.noOfUnitsAttempt!)
                 
                 
                 locDataArray.append(objectLocStruct)
@@ -499,6 +519,31 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         //self.featureLayer.definitionExpression = "Name = '621 WATER STREET, NEW YORK, NY ,10002' OR Name = '47 MARKET STREET, NEW YORK, NY ,10002'"
         
         
+        
+    }
+
+    
+    func createLocationDictionary(){
+        
+        
+        
+        let locResults =  ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [Location]
+        
+        if(locResults.count > 0){
+            
+            for locData in locResults{
+                
+                if locDict[locData.name!] == nil{
+                    
+                    let fullAdress = locData.street! + " " + locData.city! + ", " + locData.state! + " " + locData.zip!
+                    
+                    
+                    locDict[locData.name!] = LocationDO(locId: locData.id!, assignmentLocId: locData.assignmentLocId!, fullAddress: fullAdress, totalUnits: locData.totalUnits!, noOfClients: locData.noOfClients!, noOfUnitsAttempt: locData.noOfUnitsAttempt!)
+                }
+                
+                
+            }
+        }
         
     }
 
@@ -708,6 +753,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
       
         view.lblNoOfUnits.text = "# of Units: "  + totalUnits
+        view.lblNoClients.text = "# of Clients: "  + noOfClients
+        view.lblAttemptPrecentage.text = "% Attempt: "  + noOfUnitsAttempt
         
         view.btnEditLocation.addTarget(self, action: #selector(MapLocationViewController.navigateToEditLocationView(_:)), for: .touchUpInside)
         
@@ -716,19 +763,23 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.mapView.callout.customView = view
         self.mapView.callout.show(for: graphic, tapLocation: tapLocation, animated: animated)
         
+        
+        
     }
     
     // MARK: Button EditLocation Action
     func navigateToEditLocationView(_ sender: AnyObject?)
     {
-        
+    
         self.performSegue(withIdentifier: "showEditLocationIdentifier", sender: nil)
     }
     
     // MARK: Button Unit Action
     func navigateToUnitView(_ sender: AnyObject?)
     {
+        self.mapView.callout.dismiss()
         self.performSegue(withIdentifier: "ShowUnitsIdentifier", sender: nil)
+        
     }
     
     //MARK: - AGSCalloutDelegate
@@ -830,6 +881,21 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                              
                                 let address = geoElement.attributes["Name"] as! String
                               
+                                let locObject = self?.locDict[address]
+                                
+                                
+                                SalesforceConnection.locationId = (locObject?.locId)!
+                                
+                                SalesforceConnection.assignmentLocationId = (locObject?.assignmentLocId)!
+                                
+                                SalesforceConnection.fullAddress =  (locObject?.fullAddress)!
+                                
+                                
+                                self?.totalUnits = (locObject?.totalUnits)!
+                                self?.noOfUnitsAttempt = (locObject?.noOfUnitsAttempt)!
+                                self?.noOfClients = (locObject?.noOfClients)!
+                                
+                                
                                 if(self?.locDataArray.contains {$0.salesforceLocationName == address})!{
                                 
                                     self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: geoElement.geometry! as! AGSPoint, animated: true, offset: false)
@@ -879,10 +945,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)  as!
         LocationCustomViewCell
         
-        if indexPath.row == 0
-        {
-            cell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1)
-        }
+        let selectionView = UIView()
+        selectionView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1) //gray
+        UITableViewCell.appearance().selectedBackgroundView = selectionView
+        
+//        if indexPath.row == 0
+//        {
+//            cell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1)
+//        }
        
         /*  if(searchActive){
          cell.dataFullAddress.text = filtered[indexPath.row]
@@ -953,8 +1023,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     }
     
  
-    var totalUnits:String = ""
-    
+ 
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Row selected, so set textField to relevant value, hide tableView
@@ -968,18 +1037,19 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
 
         totalUnits = locDataArray[indexPath.row].totalUnits
-        
+        noOfUnitsAttempt = locDataArray[indexPath.row].noOfUnitsAttempt
+        noOfClients = locDataArray[indexPath.row].noOfClients
 
         Utilities.currentLocationRowIndex = indexPath.row
         
       
         
-        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-        
-   
-      
-        
-            currentCell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1) //gray
+//        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
+//        
+//   
+//      
+//        
+//            currentCell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1) //gray
         
         
         
@@ -993,14 +1063,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-        
-        currentCell.contentView.backgroundColor = UIColor.clear
-        currentCell.backgroundColor = UIColor.black
-        //UIColor.init(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1) //clear
-    }
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        
+//        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
+//        
+//        currentCell.contentView.backgroundColor = UIColor.clear
+//        currentCell.backgroundColor = UIColor.black
+//        
+//    }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -1031,6 +1101,20 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         print("UnwindBackFromUnit")
         
     }
+    @IBAction func resetAction(_ sender: Any) {
+        
+        self.mapView.callout.dismiss()
+        
+        self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411), duration: 2, completion: nil)
+        
+       //self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411))
+    }
 
+//    @IBAction func resetAction(_ sender: Any) {
+//        
+//       
+//        self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411))
+//
+//    }
 
 }

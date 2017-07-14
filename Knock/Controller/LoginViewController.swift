@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     
     var noOfAttempts  = 0
     
@@ -32,6 +32,14 @@ class LoginViewController: UIViewController {
     
     var assignmentIdArray = [String]()
     
+    var downloadProgressView:DownloadProgressView!
+    
+    
+    func downloadProgressViewDidCancel(downloadProgressView: DownloadProgressView) {
+        self.downloadProgressView.dismiss()
+        print("Cancel")
+    }
+
     
     override func viewWillDisappear(_ animated: Bool)
     {
@@ -42,7 +50,15 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        //initialize download progress view
+        self.downloadProgressView = DownloadProgressView()
+        self.downloadProgressView.delegate = self
+        
+        
         saveSalesforceOrgCredentials()
+        
+        
         
         //temporaryFunc()
         
