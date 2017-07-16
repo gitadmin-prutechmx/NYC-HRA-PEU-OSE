@@ -254,7 +254,151 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xse-Xu-ATY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2540" y="-646.32683658170924"/>
+            <point key="canvasLocation" x="2543" y="-630"/>
+        </scene>
+        <!--SortingViewController-->
+        <scene sceneID="MlI-BQ-SbE">
+            <objects>
+                <tableViewController id="h3k-a7-fNQ" userLabel="SortingViewController" customClass="SortingTableViewController" customModule="Knock" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="HF6-zT-BEj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Assignments" id="XJb-TW-fVY">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="LeN-HL-V1M">
+                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LeN-HL-V1M" id="EdD-zE-cfx">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CU7-bR-Qft" userLabel="AssignmentsView">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="44"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed Assignments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOx-yv-VCR">
+                                                            <rect key="frame" x="8" y="8" width="199" height="28"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="199" id="SkZ-lr-eTc"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfy-1v-fYG" userLabel="AssignmentsRdb">
+                                                            <rect key="frame" x="302" y="7" width="51" height="31"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="49" id="iQu-Wb-bKA"/>
+                                                            </constraints>
+                                                        </switch>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="lfy-1v-fYG" secondAttribute="bottom" constant="6" id="5vi-GO-XuT"/>
+                                                        <constraint firstItem="HOx-yv-VCR" firstAttribute="leading" secondItem="CU7-bR-Qft" secondAttribute="leading" constant="8" id="Cjg-Gt-WXt"/>
+                                                        <constraint firstAttribute="trailing" secondItem="lfy-1v-fYG" secondAttribute="trailing" constant="8" id="Ehi-Ri-8la"/>
+                                                        <constraint firstAttribute="bottom" secondItem="HOx-yv-VCR" secondAttribute="bottom" constant="8" id="Wzv-yW-uMQ"/>
+                                                        <constraint firstItem="lfy-1v-fYG" firstAttribute="top" secondItem="CU7-bR-Qft" secondAttribute="top" constant="7" id="eTz-q4-DwP"/>
+                                                        <constraint firstItem="HOx-yv-VCR" firstAttribute="top" secondItem="CU7-bR-Qft" secondAttribute="top" constant="8" id="uil-EL-jYd"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="CU7-bR-Qft" firstAttribute="leading" secondItem="EdD-zE-cfx" secondAttribute="leading" constant="8" id="Bok-B5-mDV"/>
+                                                <constraint firstItem="CU7-bR-Qft" firstAttribute="top" secondItem="EdD-zE-cfx" secondAttribute="top" id="Rb2-JI-IaW"/>
+                                                <constraint firstAttribute="trailing" secondItem="CU7-bR-Qft" secondAttribute="trailing" constant="8" id="o6n-6k-OMe"/>
+                                                <constraint firstAttribute="bottom" secondItem="CU7-bR-Qft" secondAttribute="bottom" id="qiC-ph-zNd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Sorting" id="tEa-Y5-EuN">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Kb4-7J-gDP">
+                                        <rect key="frame" x="0.0" y="157" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kb4-7J-gDP" id="hBr-QR-wHc">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0R7-2F-sEb" userLabel="SortingView">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="44"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5e-Ka-02c" userLabel="EventBtn">
+                                                            <rect key="frame" x="8" y="8" width="156" height="28"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="156" id="n0U-8H-BY8"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Event">
+                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="sortingEvent:" destination="h3k-a7-fNQ" eventType="touchUpInside" id="Vx9-1K-JjM"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YgU-sm-Lch" userLabel="AssignmentsBtn">
+                                                            <rect key="frame" x="195" y="8" width="156" height="28"/>
+                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="156" id="eYD-in-Rdn"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Assignments">
+                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="sortingAssignment:" destination="h3k-a7-fNQ" eventType="touchUpInside" id="Izf-YQ-KaD"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="YgU-sm-Lch" secondAttribute="bottom" constant="8" id="UQm-um-emE"/>
+                                                        <constraint firstItem="YgU-sm-Lch" firstAttribute="top" secondItem="0R7-2F-sEb" secondAttribute="top" constant="8" id="Zbl-RQ-giz"/>
+                                                        <constraint firstItem="q5e-Ka-02c" firstAttribute="top" secondItem="0R7-2F-sEb" secondAttribute="top" constant="8" id="a1D-Jk-0dP"/>
+                                                        <constraint firstItem="q5e-Ka-02c" firstAttribute="leading" secondItem="0R7-2F-sEb" secondAttribute="leading" constant="8" id="c1k-UN-Xvk"/>
+                                                        <constraint firstItem="YgU-sm-Lch" firstAttribute="leading" secondItem="q5e-Ka-02c" secondAttribute="trailing" constant="31" id="iqg-hS-d8r"/>
+                                                        <constraint firstAttribute="bottom" secondItem="q5e-Ka-02c" secondAttribute="bottom" constant="8" id="y5h-sG-Tkn"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="0R7-2F-sEb" firstAttribute="top" secondItem="hBr-QR-wHc" secondAttribute="top" id="Ndm-gm-3hP"/>
+                                                <constraint firstAttribute="trailing" secondItem="0R7-2F-sEb" secondAttribute="trailing" constant="8" id="YiE-uF-RqV"/>
+                                                <constraint firstItem="0R7-2F-sEb" firstAttribute="leading" secondItem="hBr-QR-wHc" secondAttribute="leading" constant="8" id="fsq-3w-Qt9"/>
+                                                <constraint firstAttribute="bottom" secondItem="0R7-2F-sEb" secondAttribute="bottom" id="ht7-tO-RHY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="h3k-a7-fNQ" id="lrq-qC-rMK"/>
+                            <outlet property="delegate" destination="h3k-a7-fNQ" id="IQz-IQ-2c5"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Sorting" id="HAH-vi-zgR">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="tko-ej-KDd"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="6Pn-Ro-2mY"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="assignmentsBtn" destination="YgU-sm-Lch" id="2SI-Mo-aBx"/>
+                        <outlet property="assignmentsRdb" destination="lfy-1v-fYG" id="kdC-PG-3DF"/>
+                        <outlet property="assignmentsView" destination="CU7-bR-Qft" id="4BL-Kq-WJz"/>
+                        <outlet property="eventBtn" destination="q5e-Ka-02c" id="Pax-Fa-ogY"/>
+                        <outlet property="sortingView" destination="0R7-2F-sEb" id="nOT-y8-lSX"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ckN-RK-t0a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5271.1999999999998" y="-1308.3958020989505"/>
         </scene>
         <!--DashBoardViewController-->
         <scene sceneID="nm2-Kh-yOp">
@@ -500,7 +644,13 @@
                     <navigationItem key="navigationItem" title="Home" id="rpL-uU-Wh9">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="ecf-n0-veo"/>
                         <rightBarButtonItems>
-                            <barButtonItem image="Setting" id="jkB-n3-2zl"/>
+                            <barButtonItem image="Filter" id="jkB-n3-2zl" userLabel="SortingBtn">
+                                <connections>
+                                    <segue destination="M3x-5f-nPA" kind="popoverPresentation" identifier="sortingPopOver" popoverAnchorBarButtonItem="jkB-n3-2zl" id="5Ae-h8-XOt">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="Sync" id="JDj-sJ-8Xh" userLabel="SyncBtn">
                                 <connections>
                                     <action selector="syncData:" destination="mt4-sG-H20" id="zkJ-gF-t3U"/>
@@ -518,7 +668,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nmI-px-8de" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3394" y="-660"/>
+            <point key="canvasLocation" x="3393" y="-630"/>
         </scene>
         <!--SideMenuViewController-->
         <scene sceneID="XOP-AL-lSK">
@@ -1017,7 +1167,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cLN-VI-UI6" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="HjS-BU-ZvA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4400.8000000000002" y="-659.82008995502258"/>
+            <point key="canvasLocation" x="4385" y="-630"/>
         </scene>
         <!--EditLocationNavigationController-->
         <scene sceneID="Qh9-6i-Whc">
@@ -1035,7 +1185,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2RS-2d-KtN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5080.8000000000002" y="-1308.3958020989505"/>
+            <point key="canvasLocation" x="6959.1999999999998" y="-1308.3958020989505"/>
         </scene>
         <!--UnitsViewController-->
         <scene sceneID="7lR-Yz-mdc">
@@ -2099,7 +2249,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dtJ-bQ-VEl" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="O6V-rW-8Am" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="10693.6" y="-1930.8845577211396"/>
+            <point key="canvasLocation" x="12572" y="-1930.8845577211396"/>
         </scene>
         <!--SurveyMultiOptionsViewController-->
         <scene sceneID="LmA-2p-VJj">
@@ -2310,7 +2460,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="84c-9l-yMV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="dgb-l8-x9p" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="9736.7999999999993" y="-1930.8845577211396"/>
+            <point key="canvasLocation" x="11615.200000000001" y="-1930.8845577211396"/>
         </scene>
         <!--SurveySubmitViewController-->
         <scene sceneID="ENB-J2-yrf">
@@ -3269,7 +3419,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCb-IP-kSD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5869.6000000000004" y="-1308.3958020989505"/>
+            <point key="canvasLocation" x="7748" y="-1308.3958020989505"/>
         </scene>
         <!--SelectCanvassingStatusViewController-->
         <scene sceneID="QKD-61-h2e">
@@ -3322,7 +3472,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZG-Iv-qyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6729" y="-1308"/>
+            <point key="canvasLocation" x="8607.2000000000007" y="-1308.3958020989505"/>
         </scene>
         <!--SettingsViewController-->
         <scene sceneID="j4x-Ug-TbK">
@@ -3549,6 +3699,24 @@
             </objects>
             <point key="canvasLocation" x="4458.3999999999996" y="-2431.0344827586209"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vwr-rn-v5T">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M3x-5f-nPA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gG0-au-f1s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="h3k-a7-fNQ" kind="relationship" relationship="rootViewController" id="jmB-pA-PjG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QuK-SU-2Y4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4332" y="-1308.3958020989505"/>
+        </scene>
     </scenes>
     <resources>
         <image name="AddCase" width="512" height="512"/>
@@ -3560,6 +3728,7 @@
         <image name="CircularRightArrow" width="530" height="530"/>
         <image name="Complete" width="128" height="128"/>
         <image name="Edit" width="512" height="512"/>
+        <image name="Filter" width="25" height="25"/>
         <image name="Globe1" width="25" height="25"/>
         <image name="India" width="700" height="400"/>
         <image name="Israel2" width="700" height="400"/>

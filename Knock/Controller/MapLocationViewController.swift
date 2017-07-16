@@ -152,7 +152,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
 //        let indexPath = IndexPath(row: Utilities.currentLocationRowIndex, section: 0)
 //        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+       // self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         self.tableView.tableFooterView = UIView()
         
         //populateLocationData()

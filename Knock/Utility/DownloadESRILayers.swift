@@ -73,55 +73,7 @@ class DownloadESRILayers{
         
         
         
-//         syncTask.load { [weak self] (error) -> Void in
-//            
-//            if let error = error {
-//                
-//                print("Could not load feature service \(error)")
-//                
-//            } else {
-//                
-//                guard let weakSelf = self else {
-//                    
-//                    return
-//                    
-//                }
-//                
-//                
-//                
-//                
-//                for (index, layerInfo) in weakSelf.syncTask.featureServiceInfo!.layerInfos.enumerate().reverse() {
-//                    
-//                    
-//                    
-//                    //For each layer in the serice, add a layer to the map
-//                    
-//                    let layerURL = weakSelf.FEATURE_SERVICE_URL.URLByAppendingPathComponent(String(index))
-//                    
-//                    let featureTable = AGSServiceFeatureTable(URL:layerURL!)
-//                    
-//                    let featureLayer = AGSFeatureLayer(featureTable: featureTable)
-//                    
-//                    featureLayer.name = layerInfo.name
-//                    
-//                    // weakSelf.map?.operationalLayers.addObject(featureLayer)
-//                    //weakSelf.map.operationalLayers.addObject(featureLayer)
-//                    
-//                }
-//                
-//                
-//            }
-//            
-//            self!.generateGeodatabase()
-//            
-//            
-//            
-//        }
-//        
-//        
-        
-        
-        
+
         
         
     }

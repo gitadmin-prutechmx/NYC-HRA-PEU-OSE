@@ -732,15 +732,37 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
     
-     func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! EventAssignmentViewCell
-        
-        
-        SalesforceConnection.assignmentId =  currentCell.assignmentId.text!
-        SalesforceConnection.assignmentName = currentCell.assignmentName.text!
-        
+        if segue.identifier == "sortingPopOver" {
+            let navcontroller = segue.destination as! UINavigationController
+            let sortingVC = navcontroller.topViewController as! SortingTableViewController
+            
+            
+          //  controller.presentationController?.delegate = self
+//            controller.popoverPresentationController?.sourceView = self.view
+//            controller.popoverPresentationController?.sourceRect = self.searchBar.frame
+            sortingVC.preferredContentSize = CGSize(width: 375, height: 220)
+            
+            if let pop = sortingVC.popoverPresentationController {
+                pop.passthroughViews = nil
+            }
+            
+            //controller.delegate = self
+        }
     }
+
+    
+//    
+//     func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+//        
+//        let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! EventAssignmentViewCell
+//        
+//        
+//        SalesforceConnection.assignmentId =  currentCell.assignmentId.text!
+//        SalesforceConnection.assignmentName = currentCell.assignmentName.text!
+//        
+//    }
 
 
 }
