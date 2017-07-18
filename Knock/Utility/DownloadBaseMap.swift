@@ -21,39 +21,64 @@ class DownloadBaseMap{
         
        // https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mr6AAA&d=/a/r000000006j1/Wgvb8JJkOwGD_ye4xPlNORQIYFIv45h7NHWgTAncmyU&operationContext=DELIVERY&viewId=05Hr000000000PMEAY&dpt=
         
-        SalesforceConnection.downloadBaseMap(baseMapUrl: "https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mqwAAA&d=/a/r000000006iw/Q2NKEVxRrn_mYz7BzKd8QrYgQA9p3TxgnhdsovDZ3vU&operationContext=DELIVERY&viewId=05Hr000000000PHEAY&dpt="){ progress, error in
+        
+        //"https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mqwAAA&d=/a/r000000006iw/Q2NKEVxRrn_mYz7BzKd8QrYgQA9p3TxgnhdsovDZ3vU&operationContext=DELIVERY&viewId=05Hr000000000PHEAY&dpt="
+        
+        let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
+        
+        if(userSettingData.count > 0){
             
-            if(progress != nil){
-                if (progress! < 1.0) {
+            SalesforceConnection.downloadBaseMap(baseMapUrl: userSettingData[0].basemapUrl!){ progress, error in
                 
-                    loginViewController?.downloadProgressView?.updateProgress(progress: CGFloat(progress!), animated: true)
-                }
-            
-                if(progress! == 1.0) {
-                
-                    loginViewController?.downloadProgressView.dismiss()
-                
-                    loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                if(progress != nil){
+                    if (progress! < 1.0) {
+                        
+                        if(loginViewController != nil){
+                            loginViewController?.downloadProgressView?.updateProgress(progress: CGFloat(progress!), animated: true)
+                        }
+                    }
                     
-                //in main thread
-//                DispatchQueue.main.sync {
-//                    
-//                    //dismiss download progress view
-//                    loginViewController?.downloadProgressView.dismiss()
-//                    
-//                    DispatchQueue.main.async {
-//                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-//                    }
-//                    
-//                }
-                
+                    if(progress! == 1.0) {
+                        
+                         if(loginViewController != nil){
+                            loginViewController?.downloadProgressView.dismiss()
+                        
+                            loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                        }
+                         else{
+                            DownloadESRILayers.RefreshData()
+                            //Utilities.callNotificationCenter()
+                        }
+                        
+                        //in main thread
+                        //                DispatchQueue.main.sync {
+                        //
+                        //                    //dismiss download progress view
+                        //                    loginViewController?.downloadProgressView.dismiss()
+                        //
+                        //                    DispatchQueue.main.async {
+                        //                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                        //                    }
+                        //                    
+                        //                }
+                        
+                    }
                 }
-            }
-            else{
-                 loginViewController?.downloadProgressView.dismiss()
+                else{
+                     if(loginViewController != nil){
+                        loginViewController?.downloadProgressView.dismiss()
+                    }
+                     else{
+                        //SVProgressHUD.dismiss()
+                        DownloadESRILayers.RefreshData()
+                        //Utilities.callNotificationCenter()
+                    }
+                }
+                
             }
             
         }
+        
         
     }
 }

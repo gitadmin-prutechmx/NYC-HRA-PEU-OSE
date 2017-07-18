@@ -13,6 +13,8 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     var noOfAttempts  = 0
     
     var salesforceConfigData = [SalesforceOrgConfig]()
+    var userSettingData = [Setting]()
+    
     var userInfoData = [UserInfo]()
     
     
@@ -56,6 +58,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         self.downloadProgressView.delegate = self
         
         
+        saveUserSettings()
         saveSalesforceOrgCredentials()
         
         
@@ -132,6 +135,55 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func getUserSetting(){
+        
+        userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
+        
+        if(userSettingData.count > 0){
+            
+            SalesforceConfig.currentBaseMapUrl = userSettingData[0].basemapUrl!
+            SalesforceConfig.currentFeatureLayerUrl = userSettingData[0].featureLayerUrl!
+            
+            SalesforceConfig.currentOfflineSyncTime = Int(userSettingData[0].offlineSyncTime!)!
+
+            
+            //background sync time
+            
+        }
+        
+    }
+    
+    
+    func saveUserSettings(){
+        
+        
+        userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
+        
+        if(userSettingData.count == 0){
+           
+            let settingData = Setting(context: context)
+            
+            settingData.settingsId = "1"
+            
+            settingData.forgotPasswordUrl = "https://dev-providers.cs33.force.com/Core_Forgot_Password_Page"
+            
+            settingData.offlineSyncTime = "2"
+            
+            settingData.basemapUrl = ""
+            settingData.featureLayerUrl = ""
+            //settingData.basemapDate = Date() as NSDate?
+            
+            //background sync time
+        
+            
+            appDelegate.saveContext()
+            
+        }
+        
+        
     }
     
     
@@ -313,7 +365,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             if(password == SalesforceConfig.password){//passwordTextField.text!){
                 
                   getSalesforceOrgCredentials()
-               
+                  getUserSetting()
                 
                    SalesforceConfig.password = passwordTextField.text!
                    SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
@@ -378,9 +430,11 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
        
       //  var emailParams : [String:String] = [:]
         var userParams : [String:String] = [:]
-      
+     
         
         getSalesforceOrgCredentials()
+        
+        getUserSetting()
         
         
         SVProgressHUD.show(withStatus: "Signing..", maskType: SVProgressHUDMaskType.gradient)
@@ -398,59 +452,12 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
         SalesforceConfig.password = "peuprutech1234"
         
-        SalesforceConnection.loginToSalesforce() { response in
-            
-            let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-            
-            userParams["userId"] = encryptUserIdStr
-            
-            //get userinfo
-            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams){ userInfoJsonData in
-                
-                //Check if username exist if yes then update exp date otherwise add new record
-                
-                Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
-                
-//                
-//                let encryptEmailStr = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-//                
-//                
-//                emailParams["email"] = encryptEmailStr
-                
-                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true,controller: self)
-
-                
-                
-//                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
-//                    
-//                    
-//                    
-//                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
-//                        
-//                        
-//                        SVProgressHUD.dismiss()
-//                        
-//                        //First push data to salesforce then delete
-//                        
-//                        ManageCoreData.DeleteAllDataFromEntities()
-//                        
-//                        Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData.1)
-//                        
-//                        Utilities.parseChartData(jsonObject: chartJsonData.1)
-//                        
-//                        DispatchQueue.main.async {
-//                            self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-//                        }
-//                        
-//                        
-//                    }
-//                    
-//                }
-            
-            }
-        }
+         SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true,controller: self)
+        
+       
     }
     
+   
     
     
     func getSalesforceOrgCredentials(){

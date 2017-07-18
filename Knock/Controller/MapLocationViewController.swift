@@ -81,14 +81,18 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
 
     var timer = Timer()
     var geodatabaseFeatureTable:AGSGeodatabaseFeatureTable!
-    var geodatabaseFeatureLayer:AGSFeatureLayer!
+    
+    
+    var featureLayerExtent:AGSEnvelope?
+    
+    //var geodatabaseFeatureLayer:AGSFeatureLayer!
 
     
     var totalUnits:String = ""
     var noOfClients:String = ""
     var noOfUnitsAttempt:String = ""
     
-    
+    var isSyncDataFromLocation:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,113 +169,95 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.geocodeParameters.resultAttributeNames.append(contentsOf: ["Match_addr"])
         self.geocodeParameters.minScore = 75
         
+           NotificationCenter.default.addObserver(self, selector:#selector (MapLocationViewController.UpdateLocationView), name: NSNotification.Name(rawValue: "UpdateLocationView"), object:nil)
+        
+       
+        showMap(isSyncDataFromLoc: true)
+        
+}
+    
+    
+    func showMap(isSyncDataFromLoc:Bool?=false){
+        
         SVProgressHUD.show(withStatus: "Loading Map..", maskType: SVProgressHUDMaskType.gradient)
         
         
-    if(self.mapPackage == nil){
+        if(Utilities.basemapMap == nil){
             
-        
-        //initialize map package
-        self.mapPackage = AGSMobileMapPackage(name: "NewYorkCity")
-        
-
-        
-        //load map package
-        self.mapPackage.load { [weak self] (error: Error?) in
-            if error != nil {
-                // SVProgressHUD.showErrorWithStatus(error.localizedDescription)
-            }
-            else {
-                if let weakSelf = self {
-                    if weakSelf.mapPackage.maps.count > 0 {
-                        
-                        weakSelf.map = weakSelf.mapPackage.maps[0]
-                        
-                        weakSelf.mapView.map = weakSelf.map
-                        
+            
+            //initialize map package
+            self.mapPackage = AGSMobileMapPackage(name: "NewYorkCity")
+            
+            
+            
+            //load map package
+            self.mapPackage.load { [weak self] (error: Error?) in
+                if error != nil {
+                    // SVProgressHUD.showErrorWithStatus(error.localizedDescription)
+                }
+                else {
+                    if let weakSelf = self {
+                        if weakSelf.mapPackage.maps.count > 0 {
+                            
+                            weakSelf.map = weakSelf.mapPackage.maps[0]
+                            
+                            weakSelf.mapView.map = weakSelf.map
+                            
+                            
+                            Utilities.basemapMap = weakSelf.map
+                            
                      
-                        weakSelf.map?.initialViewpoint = AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411)
-                       
-                        //touch delegate
-                        weakSelf.mapView.touchDelegate = weakSelf
-                        
-                        //add graphic overlays
-                        weakSelf.mapView.graphicsOverlays.addObjects(from: [weakSelf.routeGraphicsOverlay, weakSelf.markerGraphicsOverlay])
-                        
-                        self?.locatorTask = self?.mapPackage.locatorTask
-                        
-                        Utilities.basemapMobileMapPackage = weakSelf.mapPackage
-                        Utilities.basemapLocator = self?.locatorTask
-                        
-                        
-                        
-                      
-                        
-                        if((self?.locDataArray.count)! > 0){
+                            //touch delegate
+                            weakSelf.mapView.touchDelegate = weakSelf
                             
-                            SalesforceConnection.fullAddress = (self?.locDataArray[0].fullAddress)!
-                            self!.locationId = (self?.locDataArray[0].locId)!
+                            //add graphic overlays
+                            weakSelf.mapView.graphicsOverlays.addObjects(from: [weakSelf.routeGraphicsOverlay, weakSelf.markerGraphicsOverlay])
                             
-                            SalesforceConnection.locationId = self!.locationId
+                            self?.locatorTask = self?.mapPackage.locatorTask
+                         
                             
-                             SalesforceConnection.assignmentLocationId = (self?.locDataArray[0].assignmentLocId)!
-                            
-                          
-                            self?.totalUnits = (self?.locDataArray[0].totalUnits)!
-                            
-                            self?.firstLocationNameInArray = (self?.locDataArray[0].salesforceLocationName)!
-                        
+ 
                             
                            
+                            
+                            self?.showLayers()
+                            
+                            self?.startSearchingFirstText()
+                        
+                            self?.isSyncDataFromLocation = false
+                            
+                            
                         }
-                        
-                         self?.showLayers()
-                        
-                         self?.startSearchingFirstText()
-                   
-                        
-//                        if(SalesforceConnection.fullAddress != ""){
-//      
-//                            
-//                             weakSelf.geocodeSearchText(text: (self?.locDataArray[0].salesforceLocationName)!)
-//                            
-//                           
-//                        }
-//                        else{
-//                            SVProgressHUD.dismiss()
-//                            
-//                        }
-                        
-                    }
-                    else {
-                        // SVProgressHUD.showErrorWithStatus("No mobile maps found in the map package")
+                        else {
+                            // SVProgressHUD.showErrorWithStatus("No mobile maps found in the map package")
+                        }
                     }
                 }
             }
-        }
-            
-    }//end of if
-    else{
-        
-        if((self.locDataArray.count) > 0){
-            
-            SalesforceConnection.fullAddress = (self.locDataArray[0].fullAddress)
-            self.locationId = (self.locDataArray[0].locId)
-            
-            SalesforceConnection.locationId = self.locationId
-            
-             SalesforceConnection.assignmentLocationId = (self.locDataArray[0].assignmentLocId)
             
         }
-        //self.geocodeSearchText(text: SalesforceConnection.fullAddress)
-     }
+        else{
+            
+            map = Utilities.basemapMap
+            
+            mapView.map = Utilities.basemapMap
+            
+            //touch delegate
+            mapView.touchDelegate = self
+            
+            //add graphic overlays
+            mapView.graphicsOverlays.addObjects(from: [self.routeGraphicsOverlay, self.markerGraphicsOverlay])
+            
+          
+            showLayers()
+            
+            startSearchingFirstText()
+            
+            isSyncDataFromLocation = false
+            
+        }
         
-        
-        
-
-    NotificationCenter.default.addObserver(self, selector:#selector (MapLocationViewController.UpdateLocationView), name: NSNotification.Name(rawValue: "UpdateLocationView"), object:nil)
-        
-}
+    }
     
   
     
@@ -284,13 +270,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         SVProgressHUD.dismiss()
         
+    mapView.setViewpoint(AGSViewpoint(targetExtent: featureLayerExtent!), completion: nil)
+        
+        
         //self.geodatabaseFeatureLayer.definitionExpression = filterfeaturesExpression
         
        // self.selectFeature(addressName: (self.firstLocationNameInArray))
         
     }
-    
-   
     
     
     func showLayers(){
@@ -298,45 +285,109 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         //instantiate geodatabase with name
         self.geodatabase = AGSGeodatabase(name: "NewYorkLayers")
         
-        //load the geodatabase for feature tables
-        self.geodatabase.load { [weak self] (error: Error?) in
+        geodatabase.load(completion: { [] (error:Error?) -> Void in
             if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription, maskType: .gradient)
+                print(error)
             }
             else {
                 
-                let tables = self!.geodatabase.geodatabaseFeatureTables
+                self.map.operationalLayers.removeAllObjects()
                 
-       
-                for featureLayerTable in tables
-                    
-                {
-                    
-                    self?.geodatabaseFeatureTable = self!.geodatabase.geodatabaseFeatureTable(withName: featureLayerTable.tableName)!
-                    
-                    self?.geodatabaseFeatureLayer = AGSFeatureLayer(featureTable: (self?.geodatabaseFeatureTable)!)
-                    
-                    self?.mapView.map?.operationalLayers.add(self?.geodatabaseFeatureLayer)
-                    
-                }
+                // self?.map.operationalLayers.removeAllObjects()
                 
-                self?.geodatabaseFeatureLayer.definitionExpression = (self?.filterfeaturesExpression)!
-
+                AGSLoadObjects(self.geodatabase.geodatabaseFeatureTables, { (success: Bool) in
+                    if success {
+                        for featureTable in self.geodatabase.geodatabaseFeatureTables.reversed() {
+                            //check if feature table has geometry
+                            if featureTable.hasGeometry{
+                                
+                              if(featureTable.layerInfo!.geometryType.hashValue == 1 ){
+                                
+                                self.geodatabaseFeatureTable = self.geodatabase.geodatabaseFeatureTable(withName: featureTable.tableName)!
+                                
+                                
+                                let featureLayer = AGSFeatureLayer(featureTable: (self.geodatabaseFeatureTable)!)
+                                
+                                featureLayer.definitionExpression = (self.filterfeaturesExpression)
+                                
+                                self.mapView.map?.operationalLayers.add(featureLayer)
+                                
+                                self.featureLayerExtent =  featureTable.layerInfo!.extent!
+                                }
+                                else{
+                                    let featureTable = self.geodatabase.geodatabaseFeatureTable(withName: featureTable.tableName)!
+                                    
+                                    
+                                    let featureLayer = AGSFeatureLayer(featureTable: featureTable)
+                                    
+                                    self.mapView.map?.operationalLayers.add(featureLayer)
+                                }
+                            }
+                        }
+                        
+                    }
+                })
             }
-            
-            
-            
-            
-             //self?.selectFeature(addressName: (self?.firstLocationNameInArray)!)
-           
-            //self?.geocodeSearchText(text: (self?.firstLocationNameInArray)!)
-                
-            
-        }
-        
+        })
+
+    
     }
+   
     
-    
+//    func showLayers(){
+//        
+//    
+//    
+//        
+//        //instantiate geodatabase with name
+//        self.geodatabase = AGSGeodatabase(name: "NewYorkLayers")
+//        
+//        //load the geodatabase for feature tables
+//        self.geodatabase.load { [weak self] (error: Error?) in
+//            if let error = error {
+//                SVProgressHUD.showError(withStatus: error.localizedDescription, maskType: .gradient)
+//            }
+//            else {
+//                
+//                let tables = self!.geodatabase.geodatabaseFeatureTables
+//                
+//                 //check geometry and feature table name
+//       
+//                for featureLayerTable in tables
+//                    
+//                {
+//                    
+//                        self?.geodatabaseFeatureTable = self!.geodatabase.geodatabaseFeatureTable(withName: featureLayerTable.tableName)!
+//                        
+//                        let featureLayer = AGSFeatureLayer(featureTable: (self?.geodatabaseFeatureTable)!)
+//                        
+//                          featureLayer.definitionExpression = (self?.filterfeaturesExpression)!
+//                        
+//                        self?.mapView.map?.operationalLayers.add(featureLayer)
+//                        
+//                        self?.featureLayerExtent =  featureLayerTable.layerInfo!.extent!
+//                        
+//                        
+//                    
+//                    
+//                   
+//                    
+//                }
+//                
+//              
+//
+//            }
+//            
+//            
+//            
+//            
+//    
+//            
+//        }
+//    
+//    }
+//    
+//    
 
     
     func selectFeature(addressName:String){
@@ -387,13 +438,15 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
     }
     
-    
+
     
     @IBAction func syncData(_ sender: Any) {
         
         if(Network.reachability?.isReachable)!{
             
             Utilities.isRefreshBtnClick = true
+            
+            isSyncDataFromLocation = true
             
             SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
             SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
@@ -414,8 +467,20 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         if(Utilities.isEditLoc){
             updateLocationStatus()
         }
-        
+       
         populateLocationData()
+        
+       
+        
+        if(SalesforceConfig.isBaseMapNeedToDownload == true){
+            showMap(isSyncDataFromLoc: isSyncDataFromLocation)
+        }
+        
+       if(SalesforceConfig.isBaseMapNeedToDownload == false && Utilities.isEditLoc == false){
+            showLayers()
+            //mapView.setViewpoint(AGSViewpoint(targetExtent: featureLayerExtent!), completion: nil)
+        
+        }
         
     }
     
@@ -477,7 +542,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     func populateLocationData(){
         
        
- 
+       filterfeaturesExpression = ""
        locDataArray = [locationDataStruct]()
        locDict = [:]
         
@@ -1113,16 +1178,12 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         self.mapView.callout.dismiss()
         
-        self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411), duration: 2, completion: nil)
+         self.mapView.setViewpoint(AGSViewpoint(targetExtent: featureLayerExtent!), completion: nil)
         
-       //self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411))
+        //self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411), duration: 2, completion: nil)
+        
+      
     }
 
-//    @IBAction func resetAction(_ sender: Any) {
-//        
-//       
-//        self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411))
-//
-//    }
 
 }

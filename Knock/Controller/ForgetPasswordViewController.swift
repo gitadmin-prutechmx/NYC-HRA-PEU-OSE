@@ -14,7 +14,6 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
     
     override func viewWillAppear(_ animated: Bool)
     {
-        //self.navigationController?.navigationBarHidden = false
             self.StyleNavBar()
         
     }
@@ -28,31 +27,32 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
     {
         super.viewDidLoad()
         
-//        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
-//        
-//        
-//        self.navigationController?.navigationBar.tintColor = UIColor.white
-//        
-//        
-//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
-//        imageView.contentMode = .scaleAspectFit
-//        
-//        
-//        let image = UIImage(named: "MTXLogoWhite")
-//        imageView.image = image
-//        self.navigationItem.titleView = imageView
-//        
-//        
-//        let leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(ForgetPasswordViewController.backBtnPressed))
-//        self.navigationItem.leftBarButtonItem  = leftBarButtonItem
-//http://apple.com
+
         webVwForget.delegate = self
         
-        if let url = URL(string:"https://dev-providers.cs33.force.com/Core_Forgot_Password_Page")
-        {
-            let request = URLRequest(url: url)
-            webVwForget.loadRequest(request)
+        showForgotPassword()
+    }
+    
+    
+    func showForgotPassword(){
+        
+        let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
+        
+        if(userSettingData.count > 0){
+   
+         if let url = URL(string:userSettingData[0].forgotPasswordUrl!)
+            {
+                SVProgressHUD.show(withStatus: "Loading..", maskType: SVProgressHUDMaskType.gradient)
+            
+                let request = URLRequest(url: url)
+                webVwForget.loadRequest(request)
+            }
         }
+
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        SVProgressHUD.dismiss()
     }
     
     func StyleNavBar()
@@ -104,15 +104,6 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

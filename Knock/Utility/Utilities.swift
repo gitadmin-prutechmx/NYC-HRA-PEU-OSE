@@ -27,13 +27,10 @@ class Utilities {
     
     
     
-    static var basemapMobileMapPackage:AGSMobileMapPackage!
-    
-    static var basemapLocator:AGSLocatorTask?
     
     static var basemapAGSMapView:AGSMapView!
     
-    static var mapLocationViewController:MapLocationViewController? = nil
+    static var basemapMap:AGSMap?
     
     static var currentSegmentedControl:String = ""
     
@@ -886,26 +883,55 @@ class Utilities {
     //for assignmentDetail api
     
     
+    class func deleteBasemap() {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        do {
+            let files = try FileManager.default.contentsOfDirectory(atPath: path)
+            for file in files {
+                let remove = file.hasSuffix(".mmpk")
+                if remove {
+                    try FileManager.default.removeItem(atPath: (path as NSString).appendingPathComponent(file))
+                    print("deleting file: \(file)")
+                }
+            }
+            print("deleted basemap")
+        }
+        catch {
+            print(error)
+        }
+    }
+
+    
     class func fetchAllDataFromSalesforce(loginViewController:LoginViewController?=nil){
         
          var emailParams : [String:String] = [:]
+         var userParams : [String:String] = [:]
+
         
-        
-        emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        
-        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+    SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         
 SalesforceConnection.loginToSalesforce() { response in
     
-        
-    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
+    let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+    
+     userParams["userId"] = encryptUserIdStr
+    
+    
+    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams){ userInfoJsonData in
+
+         Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
+    
+        emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+    
+   
+     SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
         
             
             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
                 
+                   
               
-                 updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1)
+                    updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1)
                 
                 if(loginViewController != nil){
                     
@@ -921,9 +947,12 @@ SalesforceConnection.loginToSalesforce() { response in
 
                     }
                     
-                    else if(Utilities.isBaseMapExist()==false){
+                    else if(SalesforceConfig.isBaseMapNeedToDownload == true){
                         
                         SVProgressHUD.dismiss()
+                        
+                        //Delete Basemap first and then download
+                        Utilities.deleteBasemap()
                         
                         DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginViewController)
                         
@@ -945,8 +974,23 @@ SalesforceConnection.loginToSalesforce() { response in
                 }
                 else{
                    
+                   
                     
-                    callNotificationCenter()
+                    
+                    if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                        
+                        
+                        //Delete Basemap first and then download
+                        Utilities.deleteBasemap()
+                        
+                        SVProgressHUD.show(withStatus: "Updating Basemap..", maskType: .gradient)
+                        
+                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: nil)
+                        
+                    }
+                    else{
+                        DownloadESRILayers.RefreshData()
+                    }
                     
 
                 }
@@ -955,11 +999,11 @@ SalesforceConnection.loginToSalesforce() { response in
         
         }
             
-            
-            
-     }
+    }
+    
+   }
      
-    }//end of class
+}//end of class
     
     
     class func isBaseMapExist()->Bool{
@@ -1010,6 +1054,7 @@ SalesforceConnection.loginToSalesforce() { response in
         
         Utilities.parseChartData(jsonObject: chartJsonData)
         
+       
         
     }
     
@@ -1115,7 +1160,24 @@ SalesforceConnection.loginToSalesforce() { response in
         SalesforceConfig.currentUserExternalId = jsonObject["externalId"] as? String  ?? ""
         SalesforceConfig.currentUserEmail = jsonObject["email"] as? String  ?? ""
         
+        
+        SalesforceConfig.currentBaseMapUrl = jsonObject["esriBaseMapLink"] as? String  ?? ""
+        SalesforceConfig.currentFeatureLayerUrl = jsonObject["esriLayerLink"] as? String  ?? ""
+        
+        let basemapDate = jsonObject["esriBaseMapModifiedDate"] as? String  ?? ""
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        let date = dateFormatter.date(from: basemapDate)
+        
+         SalesforceConfig.currentBaseMapDate = date as NSDate?
+        
+
+        //SalesforceConfig.isBaseMapNeedToDownload
+        
         let userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
+        
+        let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", predicateFormat:"settingsId == %@",predicateValue:"1", isPredicate:true) as! [Setting]
         
       
         if(userInfoData.count == 0){
@@ -1132,6 +1194,8 @@ SalesforceConnection.loginToSalesforce() { response in
             objUserInfo.passwordExpDate = dateAfterThreeDays
      
             appDelegate.saveContext()
+            
+
         }
         else{
             
@@ -1146,6 +1210,36 @@ SalesforceConnection.loginToSalesforce() { response in
             SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
             SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
             
+
+        }
+        
+        
+        //update usersetting
+        if(userSettingData.count > 0){
+            
+           if let basemapDate = userSettingData[0].basemapDate {
+            
+                if(SalesforceConfig.currentBaseMapDate.equalToDate(dateToCompare: basemapDate)){
+                    SalesforceConfig.isBaseMapNeedToDownload = false
+                }
+                else{
+                    SalesforceConfig.isBaseMapNeedToDownload = true
+                }
+                
+            }
+            else{
+                 SalesforceConfig.isBaseMapNeedToDownload = true
+            }
+            
+            
+            //update password expiration date
+            var updateObjectDic:[String:AnyObject] = [:]
+            
+            updateObjectDic["basemapUrl"] = SalesforceConfig.currentBaseMapUrl as AnyObject?
+            updateObjectDic["featureLayerUrl"] = SalesforceConfig.currentFeatureLayerUrl as AnyObject?
+            updateObjectDic["basemapDate"] = SalesforceConfig.currentBaseMapDate as AnyObject?
+            
+            ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
 
         }
         

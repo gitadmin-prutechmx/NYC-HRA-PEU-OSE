@@ -241,6 +241,8 @@ class SalesforceConnection{
     
     static func showLoginErrorMessage(error:NSError){
         SVProgressHUD.dismiss()
+        print(SalesforceConfig.userName)
+        print(SalesforceConfig.password)
         SVProgressHUD.showError(withStatus: "Make sure your username and password is correct")
     }
     

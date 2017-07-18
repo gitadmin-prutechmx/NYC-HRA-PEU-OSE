@@ -151,7 +151,11 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func startTwoMinSyncing(){
         // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 120, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
+        
+      
+        let syncTime:TimeInterval = TimeInterval(CGFloat(SalesforceConfig.currentOfflineSyncTime * 60))
+        
+        timer = Timer.scheduledTimer(timeInterval: syncTime, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
     }
     
     func checkConnection(){

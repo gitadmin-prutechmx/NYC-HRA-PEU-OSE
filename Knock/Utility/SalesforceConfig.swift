@@ -22,5 +22,13 @@ class SalesforceConfig{
     static var currentUserEmail:String = ""
     static var currentUserContactId:String = ""
     static var currentUserExternalId:String = ""
+    
+    static var currentBaseMapUrl:String = ""
+    static var currentFeatureLayerUrl:String = ""
+    static var currentOfflineSyncTime:Int = 2
+    static var currentBaseMapDate:NSDate!
+    static var currentBackgroundDate:Date!
+    
+    static var isBaseMapNeedToDownload:Bool!
 
 }

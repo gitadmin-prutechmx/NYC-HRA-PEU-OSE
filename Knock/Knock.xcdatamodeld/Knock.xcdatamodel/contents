@@ -83,6 +83,15 @@
         <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endPointUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
+        <attribute name="backgroundTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="basemapDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="basemapUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="featureLayerUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="forgotPasswordUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="offlineSyncTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="settingsId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="SurveyQuestion" representedClassName="SurveyQuestion" syncable="YES">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
@@ -169,5 +178,6 @@
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="135"/>
+        <element name="Setting" positionX="-126" positionY="45" width="128" height="150"/>
     </elements>
 </model>
