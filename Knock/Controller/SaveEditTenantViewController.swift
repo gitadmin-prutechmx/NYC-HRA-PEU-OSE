@@ -157,7 +157,28 @@ var picker = UIDatePicker()
     }
     
     @IBAction func cancel(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true);
+        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
+        
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+            //Do some stuff
+        }
+        alertController.addAction(cancelAction)
+        
+        let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+            
+            
+            self.navigationController?.popViewController(animated: true);
+            //Do some other stuff
+        }
+        alertController.addAction(okAction)
+        
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+
+        
+        
     }
     
     @IBAction func save(_ sender: Any) {

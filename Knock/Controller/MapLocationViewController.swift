@@ -752,9 +752,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! MapViewCollout
         
       
-        view.lblNoOfUnits.text = "# of Units: "  + totalUnits
-        view.lblNoClients.text = "# of Clients: "  + noOfClients
-        view.lblAttemptPrecentage.text = "% Attempt: "  + noOfUnitsAttempt
+        view.lblNoOfUnits.text = totalUnits
+        view.lblNoClients.text = noOfClients
+        view.lblAttemptPrecentage.text = noOfUnitsAttempt
         
         view.btnEditLocation.addTarget(self, action: #selector(MapLocationViewController.navigateToEditLocationView(_:)), for: .touchUpInside)
         
@@ -982,6 +982,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 cell.dataLocStatus.isHidden = false
                 cell.dataLocStatus.image = UIImage(named: "InProgress")
             }
+            else if(filteredStruct[indexPath.row].locStatus == "Blocked"){
+                cell.dataLocStatus.isHidden = false
+                cell.dataLocStatus.image = UIImage(named: "Blocked")
+            }
             else{
                 cell.dataLocStatus.isHidden = true
             }
@@ -1002,6 +1006,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             else if(locDataArray[indexPath.row].locStatus == "In Progress"){
                 cell.dataLocStatus.isHidden = false
                  cell.dataLocStatus.image = UIImage(named: "InProgress")
+            }
+            else if(locDataArray[indexPath.row].locStatus == "Blocked"){
+                cell.dataLocStatus.isHidden = false
+                cell.dataLocStatus.image = UIImage(named: "Blocked")
             }
             else{
                 cell.dataLocStatus.isHidden = true

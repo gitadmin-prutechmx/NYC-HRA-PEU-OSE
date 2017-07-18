@@ -56,7 +56,7 @@ class SubmitSurveyViewController: UIViewController {
     
     func exitFromSurvey()  {
         
-        let alertController = UIAlertController(title: "Message", message: "Are you sure want to exit from survey", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to exit from survey", preferredStyle: .alert)
         
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in

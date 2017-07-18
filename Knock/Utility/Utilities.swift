@@ -15,6 +15,10 @@ import Toast_Swift
 
 class Utilities {
     
+    static var currentShowHideAssignments:Bool = true
+    static var currentSortingFieldName:String = "Assignment"
+    static var currentSortingTypeAscending:Bool = true
+    
     static let encryptDecryptKey = "hdsfjksdhf548954"
     static let encryptDecryptIV = "1234567890123456"
     
@@ -1186,6 +1190,47 @@ SalesforceConnection.loginToSalesforce() { response in
                 assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
                 assignmentObject.completePercent = String(assignmentData["totalCanvassed"] as! Int)
                 assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
+                
+                
+                assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
+                
+              
+                
+                let assignedDate = assignmentData["assignedStatusDate"] as? String  ?? ""
+                
+                let completedDate = assignmentData["completeStatusDate"] as? String  ?? ""
+                
+                if(assignedDate != ""){
+                    
+                    let dateFormatter = DateFormatter()
+                    //  dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                    let date = dateFormatter.date(from: assignedDate)
+                   
+                    assignmentObject.assignedDate = date as NSDate?
+                    
+                }
+                else{
+                    assignmentObject.assignedDate = nil
+                }
+                
+                
+                if(completedDate != ""){
+                    
+                    let dateFormatter = DateFormatter()
+                    //  dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                    let date = dateFormatter.date(from: completedDate)
+                    
+                    assignmentObject.completedDate = date as NSDate?
+                    
+                   
+                }
+                else{
+                   
+                    assignmentObject.completedDate = assignmentObject.assignedDate?.addDays(daysToAdd: -3)
+                }
+                
                 //String(assignmentData["completePercent"] as! Int)
                 
                 //assignmentIdArray.append(assignmentObject.id!)
@@ -1264,6 +1309,8 @@ SalesforceConnection.loginToSalesforce() { response in
                     
                     locationObject.assignmentId = assignmentObject.id!
                     locationObject.locStatus = locationData["status"] as? String  ?? ""
+                    
+                    
                     
                     locationObject.noOfClients = String(locationData["numberOfClients"] as! Int)
                     locationObject.noOfUnitsAttempt  = String(locationData["numberOfUnitsAttempted"] as! Int)

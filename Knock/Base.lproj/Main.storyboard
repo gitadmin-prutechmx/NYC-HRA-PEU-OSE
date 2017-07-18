@@ -286,11 +286,14 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfy-1v-fYG" userLabel="AssignmentsRdb">
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lfy-1v-fYG" userLabel="AssignmentsRdb">
                                                             <rect key="frame" x="302" y="7" width="51" height="31"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="49" id="iQu-Wb-bKA"/>
                                                             </constraints>
+                                                            <connections>
+                                                                <action selector="completedAssignmentAction:" destination="h3k-a7-fNQ" eventType="valueChanged" id="ZA3-b9-9pl"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -318,51 +321,71 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Sorting" id="tEa-Y5-EuN">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Kb4-7J-gDP">
-                                        <rect key="frame" x="0.0" y="157" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="94" id="Kb4-7J-gDP">
+                                        <rect key="frame" x="0.0" y="157" width="375" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kb4-7J-gDP" id="hBr-QR-wHc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0R7-2F-sEb" userLabel="SortingView">
-                                                    <rect key="frame" x="8" y="0.0" width="359" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="94"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5e-Ka-02c" userLabel="EventBtn">
-                                                            <rect key="frame" x="8" y="8" width="156" height="28"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5e-Ka-02c" userLabel="EventBtn">
+                                                            <rect key="frame" x="8" y="8" width="156" height="34"/>
+                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="156" id="n0U-8H-BY8"/>
                                                             </constraints>
-                                                            <state key="normal" title="Event">
+                                                            <state key="normal" title="Event" image="SortingUp">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
                                                                 <action selector="sortingEvent:" destination="h3k-a7-fNQ" eventType="touchUpInside" id="Vx9-1K-JjM"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YgU-sm-Lch" userLabel="AssignmentsBtn">
-                                                            <rect key="frame" x="195" y="8" width="156" height="28"/>
+                                                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YgU-sm-Lch" userLabel="AssignmentsBtn">
+                                                            <rect key="frame" x="178" y="8" width="173" height="33"/>
                                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="156" id="eYD-in-Rdn"/>
+                                                                <constraint firstAttribute="width" constant="173" id="eYD-in-Rdn"/>
                                                             </constraints>
-                                                            <state key="normal" title="Assignments">
+                                                            <state key="normal" title="Assignments" image="SortingUp">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
                                                                 <action selector="sortingAssignment:" destination="h3k-a7-fNQ" eventType="touchUpInside" id="Izf-YQ-KaD"/>
                                                             </connections>
                                                         </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbJ-Wp-x2y" userLabel="DateBtn">
+                                                            <rect key="frame" x="8" y="52" width="156" height="34"/>
+                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="156" id="FSb-SK-eAl"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Date" image="SortingUp">
+                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="sortingDate:" destination="h3k-a7-fNQ" eventType="touchUpInside" id="9yp-y6-Pyy"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="YgU-sm-Lch" secondAttribute="bottom" constant="8" id="UQm-um-emE"/>
+                                                        <constraint firstItem="mbJ-Wp-x2y" firstAttribute="trailing" secondItem="q5e-Ka-02c" secondAttribute="trailing" id="6NQ-GE-i8X"/>
+                                                        <constraint firstItem="mbJ-Wp-x2y" firstAttribute="bottom" secondItem="0R7-2F-sEb" secondAttribute="bottomMargin" id="BcK-Ua-yUI"/>
+                                                        <constraint firstItem="mbJ-Wp-x2y" firstAttribute="top" secondItem="q5e-Ka-02c" secondAttribute="bottom" constant="10" id="FEJ-uM-NFj"/>
+                                                        <constraint firstAttribute="bottom" secondItem="mbJ-Wp-x2y" secondAttribute="bottom" constant="8" id="O7y-yy-dDc"/>
+                                                        <constraint firstAttribute="bottom" secondItem="YgU-sm-Lch" secondAttribute="bottom" constant="53" id="UQm-um-emE"/>
+                                                        <constraint firstItem="mbJ-Wp-x2y" firstAttribute="top" secondItem="q5e-Ka-02c" secondAttribute="bottom" constant="10" id="YRC-ux-uze"/>
                                                         <constraint firstItem="YgU-sm-Lch" firstAttribute="top" secondItem="0R7-2F-sEb" secondAttribute="top" constant="8" id="Zbl-RQ-giz"/>
                                                         <constraint firstItem="q5e-Ka-02c" firstAttribute="top" secondItem="0R7-2F-sEb" secondAttribute="top" constant="8" id="a1D-Jk-0dP"/>
                                                         <constraint firstItem="q5e-Ka-02c" firstAttribute="leading" secondItem="0R7-2F-sEb" secondAttribute="leading" constant="8" id="c1k-UN-Xvk"/>
-                                                        <constraint firstItem="YgU-sm-Lch" firstAttribute="leading" secondItem="q5e-Ka-02c" secondAttribute="trailing" constant="31" id="iqg-hS-d8r"/>
-                                                        <constraint firstAttribute="bottom" secondItem="q5e-Ka-02c" secondAttribute="bottom" constant="8" id="y5h-sG-Tkn"/>
+                                                        <constraint firstItem="YgU-sm-Lch" firstAttribute="leading" secondItem="q5e-Ka-02c" secondAttribute="trailing" constant="14" id="iqg-hS-d8r"/>
+                                                        <constraint firstItem="mbJ-Wp-x2y" firstAttribute="leading" secondItem="0R7-2F-sEb" secondAttribute="leading" constant="8" id="m58-uA-4gP"/>
+                                                        <constraint firstAttribute="bottom" secondItem="q5e-Ka-02c" secondAttribute="bottom" constant="52" id="y5h-sG-Tkn"/>
+                                                        <constraint firstItem="mbJ-Wp-x2y" firstAttribute="leading" secondItem="q5e-Ka-02c" secondAttribute="leading" id="zul-Ly-L9q"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -392,13 +415,14 @@
                         <outlet property="assignmentsBtn" destination="YgU-sm-Lch" id="2SI-Mo-aBx"/>
                         <outlet property="assignmentsRdb" destination="lfy-1v-fYG" id="kdC-PG-3DF"/>
                         <outlet property="assignmentsView" destination="CU7-bR-Qft" id="4BL-Kq-WJz"/>
+                        <outlet property="dateBtn" destination="mbJ-Wp-x2y" id="bwr-9h-xC6"/>
                         <outlet property="eventBtn" destination="q5e-Ka-02c" id="Pax-Fa-ogY"/>
                         <outlet property="sortingView" destination="0R7-2F-sEb" id="nOT-y8-lSX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ckN-RK-t0a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5271.1999999999998" y="-1308.3958020989505"/>
+            <point key="canvasLocation" x="4384.8000000000002" y="-1308.3958020989505"/>
         </scene>
         <!--DashBoardViewController-->
         <scene sceneID="nm2-Kh-yOp">
@@ -646,7 +670,7 @@
                         <rightBarButtonItems>
                             <barButtonItem image="Filter" id="jkB-n3-2zl" userLabel="SortingBtn">
                                 <connections>
-                                    <segue destination="M3x-5f-nPA" kind="popoverPresentation" identifier="sortingPopOver" popoverAnchorBarButtonItem="jkB-n3-2zl" id="5Ae-h8-XOt">
+                                    <segue destination="h3k-a7-fNQ" kind="popoverPresentation" identifier="sortingPopOverIdentifier" popoverAnchorBarButtonItem="jkB-n3-2zl" id="oTJ-bq-Xha">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
@@ -3699,24 +3723,6 @@
             </objects>
             <point key="canvasLocation" x="4458.3999999999996" y="-2431.0344827586209"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="vwr-rn-v5T">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M3x-5f-nPA" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gG0-au-f1s">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="h3k-a7-fNQ" kind="relationship" relationship="rootViewController" id="jmB-pA-PjG"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QuK-SU-2Y4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4332" y="-1308.3958020989505"/>
-        </scene>
     </scenes>
     <resources>
         <image name="AddCase" width="512" height="512"/>
@@ -3738,6 +3744,7 @@
         <image name="NavArrow" width="256" height="256"/>
         <image name="Russia 2" width="700" height="400"/>
         <image name="Setting" width="30" height="30"/>
+        <image name="SortingUp" width="25" height="25"/>
         <image name="Sync" width="30" height="30"/>
         <image name="USA" width="700" height="400"/>
         <image name="menu" width="25" height="25"/>

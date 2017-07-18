@@ -12,6 +12,7 @@ import Charts
 
 struct eventAssignmentDataStruct
 {
+    var eventName:String = ""
     var eventId : String = ""
     var assignmentId : String = ""
     var assignmentName : String = ""
@@ -19,25 +20,24 @@ struct eventAssignmentDataStruct
     var totalUnits : String = ""
     var completeAssignment : String = ""
     var noOfClients:String = ""
+    
+    var completedDate:NSDate?
+    var assignedDate:NSDate?
    
     
 }
 
 class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate
 {
+  
+    
     let reuseIdentifier = "cell"
     @IBOutlet weak var menuBtn: UIBarButtonItem!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var colChart: UICollectionView!
     
-    var assignmentIdArray = [String]()
-    var assignmentArray = [String]()
-    var assignmentEventIdArray = [String]()
-    var assignmentCompleteArray = [String]()
     
-    var totalLocArray = [String]()
-    var totalUnitsArray = [String]()
     
     var eventDict: [String:EventDO] = [:]
     var chartResults = [Chart]()
@@ -491,14 +491,9 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func populateEventAssignmentData()
     {
         eventAssignmentDataArray = []
-        
-        assignmentIdArray = []
-        assignmentArray = []
-        assignmentEventIdArray = []
-        totalLocArray = []
-        totalUnitsArray = []
+     
         eventDict = [:]
-        assignmentCompleteArray = []
+       
         
         
         createEventDictionary()
@@ -514,25 +509,67 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         if(assignmentResults.count > 0){
                 
             for assignmentdata in assignmentResults{
+            
                 
-                    assignmentArray.append(assignmentdata.name!)
-                    assignmentIdArray.append(assignmentdata.id!)
-                    assignmentEventIdArray.append(assignmentdata.eventId!)
-                    totalLocArray.append(assignmentdata.totalLocations!)
-                    totalUnitsArray.append(assignmentdata.totalUnits!)
-                assignmentCompleteArray.append(assignmentdata.completePercent!)
+                let assignmentStatus = assignmentdata.status!
                 
-                let objectEventAssignmentStruct:eventAssignmentDataStruct = eventAssignmentDataStruct(eventId: assignmentdata.eventId!, assignmentId: assignmentdata.id!, assignmentName: assignmentdata.name!, totalLocations: assignmentdata.totalLocations!, totalUnits: assignmentdata.totalUnits!, completeAssignment: assignmentdata.completePercent!,noOfClients:assignmentdata.noOfClients!)
+                let eventObject = eventDict[assignmentdata.eventId!]
                 
+                let objectEventAssignmentStruct:eventAssignmentDataStruct = eventAssignmentDataStruct(eventName:(eventObject?.eventName!)!,eventId: assignmentdata.eventId!, assignmentId: assignmentdata.id!, assignmentName: assignmentdata.name!, totalLocations: assignmentdata.totalLocations!, totalUnits: assignmentdata.totalUnits!, completeAssignment: assignmentdata.completePercent!,noOfClients:assignmentdata.noOfClients!,completedDate:assignmentdata.completedDate,assignedDate:assignmentdata.assignedDate)
                 
-                eventAssignmentDataArray.append(objectEventAssignmentStruct)
+               
+                //show completed assignments as well
+            if(Utilities.currentShowHideAssignments == true){
+              eventAssignmentDataArray.append(objectEventAssignmentStruct)
                 
-                
+            }
+            else{
+                if(assignmentStatus != "Completed"){
+                    eventAssignmentDataArray.append(objectEventAssignmentStruct)
                 }
+              }
+            }
+
+        }
+        
+        if(Utilities.currentSortingFieldName == "Assignment"){
+            if(Utilities.currentSortingTypeAscending){
+                eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.assignmentName < $1.assignmentName }
+            }
+            else{
+                 eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.assignmentName > $1.assignmentName }
+            }
+        }
+        else if(Utilities.currentSortingFieldName == "Event"){
+            if(Utilities.currentSortingTypeAscending){
+                eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.eventName < $1.eventName }
+            }
+            else{
+                eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.eventName > $1.eventName }
+            }
+        }
+        else{
+            if(Utilities.currentSortingTypeAscending){
+                
+                eventAssignmentDataArray.sort(by: {$0.assignedDate?.compare($1.assignedDate as! Date) == .orderedAscending})
+                
+                eventAssignmentDataArray.sort(by: {$0.completedDate?.compare($1.completedDate as! Date) == .orderedAscending})
+                
+              
+                
 
             }
-        
-        eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.assignmentName < $1.assignmentName }
+            else{
+                
+                eventAssignmentDataArray.sort(by: {$0.assignedDate?.compare($1.assignedDate as! Date) == .orderedDescending})
+                
+                eventAssignmentDataArray.sort(by: {$0.completedDate?.compare($1.completedDate as! Date) == .orderedDescending})
+                
+                
+
+            }
+
+        }
         
        // assignmentArray.sort()
 
@@ -645,7 +682,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     // MARK: UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return assignmentArray.count
+        return eventAssignmentDataArray.count//assignmentArray.count
     }
     
     // cell height
@@ -664,10 +701,10 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell.assignmentName.text = eventAssignmentDataArray[indexPath.row].assignmentName
         
         
-        let eventObject = eventDict[eventAssignmentDataArray[indexPath.row].eventId]
+        //let eventObject = eventDict[eventAssignmentDataArray[indexPath.row].eventId]
         
  
-        cell.eventName.text = eventObject?.eventName
+        cell.eventName.text = eventAssignmentDataArray[indexPath.row].eventName//eventObject?.eventName
         
         cell.locations.text = eventAssignmentDataArray[indexPath.row].totalLocations
         
@@ -734,19 +771,49 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "sortingPopOver" {
-            let navcontroller = segue.destination as! UINavigationController
-            let sortingVC = navcontroller.topViewController as! SortingTableViewController
+        if segue.identifier == "sortingPopOverIdentifier" {
+            
+            let sortingVC = segue.destination as! SortingTableViewController
+            sortingVC.preferredContentSize = CGSize(width: 375, height: 260)
+            
+           
+            
+            sortingVC.setShowHideCompletedAssignments{ [weak self] (isCompletedAssignments:Bool) -> Void in
+                
+                print(isCompletedAssignments)
+                
+                Utilities.currentShowHideAssignments = isCompletedAssignments
+                self?.populateEventAssignmentData()
+                //self?.mapView.setViewpoint(viewpoint)
+            }
+            
+            sortingVC.setSortingEventAssignments{
+                [weak self] (sortingFieldName:String,sortingType:Bool) -> Void in
+                
+                Utilities.currentSortingFieldName = sortingFieldName
+                Utilities.currentSortingTypeAscending = sortingType
+                
+                self?.populateEventAssignmentData()
+                
+                print(sortingFieldName)
+                print(sortingType)
+                
+               
+            }
+            
+//            let navcontroller = segue.destination as! UINavigationController
+//            let sortingVC = navcontroller.topViewController as! SortingTableViewController
+//            sortingVC.preferredContentSize = CGSize(width: 375, height: 220)
+//            
+//            if let pop = sortingVC.popoverPresentationController {
+//                pop.passthroughViews = nil
+//            }
             
             
           //  controller.presentationController?.delegate = self
 //            controller.popoverPresentationController?.sourceView = self.view
 //            controller.popoverPresentationController?.sourceRect = self.searchBar.frame
-            sortingVC.preferredContentSize = CGSize(width: 375, height: 220)
             
-            if let pop = sortingVC.popoverPresentationController {
-                pop.passthroughViews = nil
-            }
             
             //controller.delegate = self
         }
