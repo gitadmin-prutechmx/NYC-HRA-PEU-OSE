@@ -367,7 +367,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                   getSalesforceOrgCredentials()
                   getUserSetting()
                 
-                   SalesforceConfig.password = passwordTextField.text!
+                   //SalesforceConfig.password = passwordTextField.text!
                    SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
                    SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
                    SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!

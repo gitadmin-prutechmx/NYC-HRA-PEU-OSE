@@ -115,7 +115,7 @@ class DownloadESRILayers{
         
         var syncLayerOptions = [AGSSyncLayerOption]()
         for layerInfo in self.syncTask.featureServiceInfo!.layerInfos {
-            let layerOption = AGSSyncLayerOption(layerID: layerInfo.id, syncDirection: .bidirectional)
+            let layerOption = AGSSyncLayerOption(layerID: layerInfo.id, syncDirection: .download)
             syncLayerOptions.append(layerOption)
         }
         

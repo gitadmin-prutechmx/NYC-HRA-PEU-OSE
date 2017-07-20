@@ -58,6 +58,7 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
     func StyleNavBar()
     {
         self.navigationController?.isNavigationBarHidden = true
+        
         let newNavBar = UINavigationBar (frame: CGRect(x: 0.0, y: 0.0, width:self.view.bounds.width, height: 64.0))
         
         newNavBar.barStyle = UIBarStyle.black

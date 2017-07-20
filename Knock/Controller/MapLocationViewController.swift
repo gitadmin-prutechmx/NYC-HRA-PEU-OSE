@@ -100,14 +100,31 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
        Utilities.currentLocationRowIndex = 0
        // self.tableView.allowsSelection = false
         
-        //license the app with the supplied License key
-//        do {
-//            let result = try AGSArcGISRuntimeEnvironment.setLicenseKey("runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041")
-//            print("License Result : \(result.licenseStatus)")
-//        }
-//        catch let error as NSError {
-//            print("error: \(error)")
-//        }
+     
+        //Lite license
+        //runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006
+        
+        //Standard License
+        //runtimestandard,1000,rud000103692,07-sep-2017,D7LFD4SZ8P00JERSX234
+        
+        //Streetmap premium
+        //runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041
+        
+        
+        //  license the app with the supplied License key
+        
+        // //,extensions: ["runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041"]
+
+        
+        do {
+            let result = try AGSArcGISRuntimeEnvironment.setLicenseKey("runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006",extensions: ["runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041"])
+            
+            
+            print("License Result : \(result.licenseStatus)")
+        }
+        catch let error as NSError {
+            print("error: \(error)")
+        }
 
         if self.revealViewController() != nil {
             
@@ -179,11 +196,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     func showMap(isSyncDataFromLoc:Bool?=false){
         
-        SVProgressHUD.show(withStatus: "Loading Map..", maskType: SVProgressHUDMaskType.gradient)
-        
-        
-        if(Utilities.basemapMap == nil){
-            
+            isUpdateLocationView = false
             
             //initialize map package
             self.mapPackage = AGSMobileMapPackage(name: "NewYorkCity")
@@ -216,13 +229,12 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             self?.locatorTask = self?.mapPackage.locatorTask
                          
                             
- 
-                            
-                           
                             
                             self?.showLayers()
                             
-                            self?.startSearchingFirstText()
+                            
+                            
+                            //self?.startSearchingFirstText()
                         
                             self?.isSyncDataFromLocation = false
                             
@@ -235,27 +247,6 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 }
             }
             
-        }
-        else{
-            
-            map = Utilities.basemapMap
-            
-            mapView.map = Utilities.basemapMap
-            
-            //touch delegate
-            mapView.touchDelegate = self
-            
-            //add graphic overlays
-            mapView.graphicsOverlays.addObjects(from: [self.routeGraphicsOverlay, self.markerGraphicsOverlay])
-            
-          
-            showLayers()
-            
-            startSearchingFirstText()
-            
-            isSyncDataFromLocation = false
-            
-        }
         
     }
     
@@ -291,7 +282,15 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             }
             else {
                 
-                self.map.operationalLayers.removeAllObjects()
+                let i = 1
+                for i in 1..<self.map.operationalLayers.count
+                {
+                    print("Number \(i)")
+                    self.map.operationalLayers.removeObject(at: i)
+                }
+                
+                
+                //self.map.operationalLayers.removeAllObjects()
                 
                 // self?.map.operationalLayers.removeAllObjects()
                 
@@ -313,6 +312,12 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                                 self.mapView.map?.operationalLayers.add(featureLayer)
                                 
                                 self.featureLayerExtent =  featureTable.layerInfo!.extent!
+                                
+                                
+                                if(self.isUpdateLocationView == false){
+                                    self.mapView.setViewpoint(AGSViewpoint(targetExtent: self.featureLayerExtent!), completion: nil)
+                                }
+                                
                                 }
                                 else{
                                     let featureTable = self.geodatabase.geodatabaseFeatureTable(withName: featureTable.tableName)!
@@ -322,6 +327,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                                     
                                     self.mapView.map?.operationalLayers.add(featureLayer)
                                 }
+                                
+                                
+                                
+
                             }
                         }
                         
@@ -459,8 +468,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         }
     }
     
+    var isUpdateLocationView = false
     func UpdateLocationView(){
         
+        isUpdateLocationView = true
         
         print("UpdateLocationView")
         
@@ -819,7 +830,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
       
         view.lblNoOfUnits.text = totalUnits
         view.lblNoClients.text = noOfClients
-        view.lblAttemptPrecentage.text = noOfUnitsAttempt
+        view.lblAttemptPrecentage.text = noOfUnitsAttempt + "%"
         
         view.btnEditLocation.addTarget(self, action: #selector(MapLocationViewController.navigateToEditLocationView(_:)), for: .touchUpInside)
         

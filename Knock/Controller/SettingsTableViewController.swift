@@ -68,7 +68,7 @@ class SettingsTableViewController: UITableViewController
         newNavBar.tintColor = UIColor.white
         newNavBar.barTintColor =  UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
         let titleLabel = UILabel(frame: CGRect(x:0, y:20.0, width:self.view.frame.size.width, height:40))
-        titleLabel.text = "FORGOT PASSWORD"
+        titleLabel.text = ""
         titleLabel.textColor = UIColor.white
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textAlignment = NSTextAlignment.center
