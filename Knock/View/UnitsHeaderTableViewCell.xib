@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="height" constant="21" id="Jty-oJ-Vjj"/>
                                     <constraint firstAttribute="width" constant="48" id="Qvs-H4-5ke"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" red="0.9882352941176471" green="0.98039215686274506" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -37,7 +37,7 @@
                                     <constraint firstAttribute="width" constant="73" id="8xZ-fF-8di"/>
                                     <constraint firstAttribute="height" constant="21" id="RAC-UQ-488"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" red="0.9882352941176471" green="0.98039215686274506" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -47,7 +47,7 @@
                                     <constraint firstAttribute="width" constant="81" id="6bk-ML-UY8"/>
                                     <constraint firstAttribute="height" constant="21" id="Ywp-zB-GIN"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" red="0.9882352941176471" green="0.98039215686274506" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -57,7 +57,7 @@
                                     <constraint firstAttribute="width" constant="62" id="NaW-as-0tH"/>
                                     <constraint firstAttribute="height" constant="21" id="eCi-3b-sFA"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" red="0.98823529409999999" green="0.98039215690000003" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -67,7 +67,7 @@
                                     <constraint firstAttribute="height" constant="21" id="AhC-Gs-MXM"/>
                                     <constraint firstAttribute="width" constant="101" id="QEM-Xv-nyf"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" red="0.98823529409999999" green="0.98039215690000003" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -77,7 +77,7 @@
                                     <constraint firstAttribute="height" constant="21" id="ayq-Xg-9Fe"/>
                                     <constraint firstAttribute="width" constant="48" id="eCc-1D-bP5"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" red="0.98823529409999999" green="0.98039215690000003" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -87,7 +87,7 @@
                                     <constraint firstAttribute="width" constant="95" id="HHw-n5-GOu"/>
                                     <constraint firstAttribute="height" constant="21" id="Qcr-1f-IGa"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>

@@ -23,8 +23,29 @@ class SelectReasonStatusViewController: UIViewController,UITableViewDelegate,UIT
     {
         super.viewDidLoad()
         
-        reasonStatusArray =  ["No Issues","Refused","Not Primary Tenant","Superintendent Door","Landlords Door","Privacy Concern","Left Contact Info","Laguage Barrier"]
+        populateReason()
+        
+        //reasonStatusArray =  ["No Issues","Refused","Not Primary Tenant","Superintendent Door","Landlords Door","Privacy Concern","Left Contact Info","Laguage Barrier"]
     }
+    
+    
+    func populateReason(){
+        
+        let reasonData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location_Unit__c",predicateValue2:  "reason__c", isPredicate:true) as! [DropDown]
+        
+        
+             
+        if(reasonData.count>0){
+            
+            
+            let reasonStr =  String(reasonData[0].value!.characters.dropLast())
+            reasonStatusArray = reasonStr.components(separatedBy: ";")
+            
+            
+        }
+        
+    }
+    
     
     
     

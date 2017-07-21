@@ -250,7 +250,9 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
             totalUnitsChart.thickness = 20
         
-            totalUnitsChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+          //  totalUnitsChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            totalUnitsChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
+
             totalUnitsChart.labelColor = UIColor.black
             totalUnitsChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             totalUnitsChart.gaugeColor = chartColor
@@ -273,7 +275,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             unitsCompletedChart.thickness = 20
             
-            unitsCompletedChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+           // unitsCompletedChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+             unitsCompletedChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
             unitsCompletedChart.labelColor = UIColor.black
             unitsCompletedChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             unitsCompletedChart.gaugeColor = chartColor
@@ -296,7 +299,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             noResponseChart.thickness = 20
             
-            noResponseChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+           // noResponseChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            noResponseChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
             noResponseChart.labelColor = UIColor.black
             noResponseChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             noResponseChart.gaugeColor = chartColor

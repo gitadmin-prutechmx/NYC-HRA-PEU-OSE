@@ -929,9 +929,10 @@ SalesforceConnection.loginToSalesforce() { response in
             
             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
                 
-                   
-              
-                    updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1)
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType:"GET"){ picklistData in
+                    
+                
+                    updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1)
                 
                 if(loginViewController != nil){
                     
@@ -994,8 +995,9 @@ SalesforceConnection.loginToSalesforce() { response in
                     
 
                 }
-                
             }
+                
+          }
         
         }
             
@@ -1042,7 +1044,7 @@ SalesforceConnection.loginToSalesforce() { response in
 
     
     
-    class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject]){
+    class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject],pickListJsonData:[String:AnyObject]){
         
        
         
@@ -1054,9 +1056,11 @@ SalesforceConnection.loginToSalesforce() { response in
         
         Utilities.parseChartData(jsonObject: chartJsonData)
         
+        Utilities.parsePickListData(jsonObject: pickListJsonData)
        
         
     }
+    
     
     class func callNotificationCenter(){
         
@@ -1244,6 +1248,37 @@ SalesforceConnection.loginToSalesforce() { response in
         }
         
     }
+    
+    class func parsePickListData(jsonObject: Dictionary<String, AnyObject>){
+        
+        guard let pickListResults = jsonObject["objects"] as? [[String: AnyObject]] else{ return }
+        
+        //need to check location id and unit id
+        
+        for pickListData in pickListResults {
+            
+            guard let fieldListResults = pickListData["fieldList"] as? [[String: AnyObject]]  else { break }
+            
+          
+            
+            for fieldListData in fieldListResults{
+                
+                let dropDownObject = DropDown(context: context)
+                
+                dropDownObject.object = pickListData["objectName"] as? String ?? ""
+                
+                 dropDownObject.fieldName = fieldListData["fieldName"] as? String ?? ""
+                dropDownObject.value = fieldListData["picklistValue"] as? String ?? ""
+                
+                appDelegate.saveContext()
+            }
+            
+            
+            
+        }
+    }
+
+    
     
     class func parseEventAssignmentData(jsonObject: Dictionary<String, AnyObject>){
         
@@ -1563,6 +1598,38 @@ SalesforceConnection.loginToSalesforce() { response in
     }
     
     
+    
+    class func startBackgroundSync(){
+        
+        let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
+        
+        if(userSettingData.count > 0){
+            
+            let date = userSettingData[0].backgroundTime!
+            
+            
+            //let date = Date().addingTimeInterval(5)
+          
+            
+            
+            let timer = Timer(fireAt: date as Date, interval: 0, target: self, selector: #selector(backgroundSyncing), userInfo: nil, repeats: false)
+            
+            RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+            
+        }
+        
+        
+    }
+    
+    
+    @objc class func backgroundSyncing(){
+        
+          print("start backgroundSyncing")
+        
+//        if(Utilities.isRefreshBtnClick == false){
+//            print("start backgroundSyncing")
+//        }
+    }
 
     
     

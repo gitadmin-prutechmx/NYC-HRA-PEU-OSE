@@ -116,11 +116,16 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     }
     
     //func exitFromSurvey(_: UIBarButtonItem!)  {
-    func exitFromSurvey()  {
+    func exitFromSurvey()
+    {
         
+        let msgtitle = "Message"
+
         let alertController = UIAlertController(title: "Message", message: "Are you sure want to exit from survey?", preferredStyle: .alert)
         
+        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
+
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
         }

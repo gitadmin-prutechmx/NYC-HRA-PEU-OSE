@@ -33,7 +33,8 @@ class SideMenuViewController: UITableViewController {
         
         let titleLabel = UILabel(frame: CGRect(x:0, y:-10, width:self.view.frame.size.width, height:50))
         
-        titleLabel.text = "harshit+peu@mtxb2b.com.devharshit+peu@mtxb2b.com.dev"
+        titleLabel.text = SalesforceConfig.currentUserEmail
+        
         titleLabel.textColor = UIColor.white
         titleLabel.numberOfLines = 2
         titleLabel.backgroundColor = UIColor.clear

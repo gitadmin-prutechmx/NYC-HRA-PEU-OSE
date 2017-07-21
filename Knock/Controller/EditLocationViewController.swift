@@ -131,7 +131,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             
             
             cell.textLabel?.text = "Attempt"
-            
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             cell.selectionStyle = .none
             
             //accessory switch
@@ -162,13 +162,16 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             cell.accessoryType = .disclosureIndicator
             
             cell.textLabel?.text = "Canvassing Status"
-            //cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
-            
+           // cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             if(canvassingStatus.isEmpty){
                 cell.detailTextLabel?.text = "Select Status"
+                cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+
             }
             else{
                 cell.detailTextLabel?.text = canvassingStatus
+                cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             }
             
             cell.detailTextLabel?.textColor = UIColor.lightGray
@@ -186,7 +189,9 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             cell.selectionStyle = .none
             
             cell.textLabel?.text = "# of Units"
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             cell.detailTextLabel?.text = numberOfUnits
+            cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             cell.detailTextLabel?.textColor = UIColor.lightGray
             
             return cell
@@ -278,10 +283,14 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         
     }
     
-    @IBAction func cancelLocation(_ sender: Any) {
-        
+    @IBAction func cancelLocation(_ sender: Any)
+    {
+         let msgtitle = "Message"
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
+       
+        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
+
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff

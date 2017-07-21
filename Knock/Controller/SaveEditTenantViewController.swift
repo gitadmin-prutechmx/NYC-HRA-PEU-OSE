@@ -156,9 +156,15 @@ var picker = UIDatePicker()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cancel(_ sender: Any) {
+    @IBAction func cancel(_ sender: Any)
+    {
+        let msgtitle = "Message"
+       
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
         
+        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
+        
+
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff

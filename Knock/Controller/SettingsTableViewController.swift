@@ -10,6 +10,8 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController
 {
+    @IBOutlet weak var syncTimeSlider: UISlider!
+//    @IBOutlet weak var syncTimeSlider: UISlider!
     var dpShowDateVisible = false
     @IBOutlet weak var syncTimeView: UIView!
     @IBOutlet weak var syncTimeLbl: UILabel!
@@ -32,22 +34,79 @@ class SettingsTableViewController: UITableViewController
         
         tableView.allowsSelection = true
 
-        if self.revealViewController() != nil
-        {
-            
-            
-            revealViewController().rightViewRevealWidth = 150
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
-        }
-
+      
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        
+        
+       populateSettings()
+        
+       
     }
+    
+    func getBackGroundTime(bgDate:Date)->String{
+        //let date = Date()
+        
+        
+        let calendar = Calendar.current
+        //        let hour = calendar.component(.hour, from: date)
+        //        let minutes = calendar.component(.minute, from: date)
+        //
+        let components = calendar.dateComponents([.hour, .minute], from: bgDate)
+        
+        var updatedHour = components.hour!
+        let updatedMinute = components.minute!
+        var locale:String = "AM"
+        
+        if(updatedHour > 12){
+           updatedHour =  (components.hour! % 12)
+            locale = "PM"
+        }
+       
+     return "\(updatedHour):\(String(format: "%02d", updatedMinute)) \(locale)"
+       
+    }
+    
+    func populateSettings(){
+        
+        let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
+        
+        if(userSettingData.count > 0){
+            
+            syncTimeSlider.value = Float(userSettingData[0].offlineSyncTime!)!
+            
+            if let backgroundDate = userSettingData[0].backgroundTime{
+                dpShowDate.date = backgroundDate as Date
+                
+                 TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
+            }
+            else{
+                dpShowDate.date = Date()
+                
+                 TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
+            }
+            
+            
+//userSettingData[0].
+ 
+            syncTimeLbl.text = userSettingData[0].offlineSyncTime!
+        }
+    }
+    
+    func saveSettings(){
+        
+
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["offlineSyncTime"] = syncTimeLbl.text! as AnyObject?
+        
+        updateObjectDic["backgroundTime"] = dpShowDate.date as AnyObject?
+    
+        
+        ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
+    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool)
     {
@@ -57,49 +116,7 @@ class SettingsTableViewController: UITableViewController
     }
     
     
-    //MARK:- Navigation Bar Method
-    
-    func StyleNavBar()
-    {
-        self.navigationController?.isNavigationBarHidden = true
-        let newNavBar = UINavigationBar (frame: CGRect(x: 0.0, y: 0.0, width:self.view.bounds.width, height: 64.0))
-        
-        newNavBar.barStyle = UIBarStyle.black
-        newNavBar.tintColor = UIColor.white
-        newNavBar.barTintColor =  UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1)
-        let titleLabel = UILabel(frame: CGRect(x:0, y:20.0, width:self.view.frame.size.width, height:40))
-        titleLabel.text = ""
-        titleLabel.textColor = UIColor.white
-        titleLabel.backgroundColor = UIColor.clear
-        titleLabel.textAlignment = NSTextAlignment.center
-        titleLabel.font = UIFont.init(name: "System", size: 18.0)
-        let newBackbtn = UIButton (frame: CGRect(x:4.0, y: 28.0, width: 30, height: 20))
-        
-        newBackbtn.setImage(UIImage.init(named: "menu"), for:UIControlState.normal)
-        
-        if revealViewController() != nil
-        {
-            
-//            newBackbtn.target = self.revealViewController()
-//            newBackbtn.action = #selector(SWRevealViewController.revealToggle(_:))
-
-            newBackbtn.addTarget(revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-            
-            revealViewController().rightViewRevealWidth = 150
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
-            
-        }
-        
-       
-        
-        newNavBar.addSubview(titleLabel)
-        newNavBar .addSubview(newBackbtn)
-        
-        self.view .addSubview(newNavBar)
-        
-        
-    }
+   
 
 
     override func didReceiveMemoryWarning() {
@@ -107,37 +124,28 @@ class SettingsTableViewController: UITableViewController
         // Dispose of any resources that can be recreated.
     }
     
-    func toggleShowDateDatepicker ()
-    {
-        dpShowDateVisible = !dpShowDateVisible
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    {
-        if indexPath.section == 1
-        {
-            if  indexPath.row == 0
-            {
-                toggleShowDateDatepicker()
-                dpShowDateChanged()
-            }
-            
-        }
-        
-    
-        //tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-       
-//        if indexPath.row == 1
+//    func toggleShowDateDatepicker ()
+//    {
+//        dpShowDateVisible = !dpShowDateVisible
+//        
+//        tableView.beginUpdates()
+//        tableView.endUpdates()
+//    }
+//    
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+//    {
+//        if indexPath.section == 1
 //        {
-//            toggleShowDateDatepicker()
+//            if  indexPath.row == 0
+//            {
+//                toggleShowDateDatepicker()
+//                dpShowDateChanged()
+//            }
+//            
 //        }
 //        
-//        
-//
-    }
-    
+//    }
+//    
     func tableView(tableView:UITableView,heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if !dpShowDateVisible && indexPath.row == 1
         {
@@ -150,6 +158,7 @@ class SettingsTableViewController: UITableViewController
     
     func dpShowDateChanged ()
     {
+      
         TimeLbl.text = DateFormatter.localizedString(from: dpShowDate.date, dateStyle:.none, timeStyle: .short)
         
     }
@@ -167,8 +176,14 @@ class SettingsTableViewController: UITableViewController
     }
     
     @IBAction func cancel(_ sender: Any) {
+        
+        
+        let msgtitle = "Message"
+        
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
         
+        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
+
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
@@ -193,7 +208,19 @@ class SettingsTableViewController: UITableViewController
     }
 
     @IBAction func save(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        saveSettings()
+        
+        self.view.makeToast("Settings saved successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+            Utilities.startBackgroundSync()
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+        
+        
+        
+        
        // self.navigationController!.popViewController(animated: true)
     }
     

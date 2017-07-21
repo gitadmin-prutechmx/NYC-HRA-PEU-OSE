@@ -93,7 +93,7 @@ class SalesforceConnection{
 
     
     
-    static func SalesforceData(restApiUrl:String, params:[String:String]? = nil, completion: @escaping AccessTokenCompletion) {
+    static func SalesforceData(restApiUrl:String, params:[String:String]? = nil, methodType:String? = "POST" ,completion: @escaping AccessTokenCompletion) {
         
         
 //        let baseURLString = "https://some.domain-behind-oauth2.com"
@@ -120,13 +120,19 @@ class SalesforceConnection{
         
         let url = URL(string: SalesforceConfig.hostUrl + restApiUrl)!
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
+        
+        if(methodType == "POST"){
+            urlRequest.httpMethod = "POST"
         
         
-        do {
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
-        } catch {
+            do {
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
+            } catch {
             // No-op
+            }
+        }
+        else{
+            urlRequest.httpMethod = "GET"
         }
         
         urlRequest.setValue("OAuth \(salesforceAccessToken)", forHTTPHeaderField: "Authorization")

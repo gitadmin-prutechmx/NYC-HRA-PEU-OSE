@@ -29,11 +29,26 @@ class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSou
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        populateStatus()
 
-          statusArray = ["Blocked","Planned","In Progress","Completed"]
+     
     }
     
-    
+    func populateStatus(){
+        
+        let statusData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location__c",predicateValue2:  "Status__c", isPredicate:true) as! [DropDown]
+        
+
+        if(statusData.count>0){
+        
+            let statusStr =  String(statusData[0].value!.characters.dropLast())
+            statusArray = statusStr.components(separatedBy: ";")
+        
+            //statusArray = ["Blocked","Planned","In Progress","Completed"]
+        }
+        
+    }
     
    
     // MARK: - table view methods

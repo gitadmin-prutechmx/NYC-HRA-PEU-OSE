@@ -28,12 +28,15 @@ class SalesforceRestApiUrl{
     
     static let userDetail = "/services/apexrest/userDetail"
     
+    static let picklistValue = "/services/apexrest/picklistValue/"
+    
     //Core_Picklist_Value_API
     //urlMapping = picklistValue
     
     //these apis are not used --deprecated
      static let assignTenant = "/services/apexrest/assignTenant"
      static let getAllSurveyData = "/services/apexrest/assignmentSurvey"
+    
     
     
 }

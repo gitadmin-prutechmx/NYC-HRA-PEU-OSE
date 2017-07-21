@@ -511,7 +511,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
         
         
             cell.textLabel?.text = "Attempt?"
-        
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             cell.selectionStyle = .none
         
             //accessory switch
@@ -542,7 +542,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             
             cell.textLabel?.text = "Contact?"
-            
+             cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             cell.selectionStyle = .none
             
             //accessory switch
@@ -574,7 +574,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             
             cell.textLabel?.text = "Intake?"
-            
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             cell.selectionStyle = .none
             
             //accessory switch
@@ -609,7 +609,7 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             
             reasonCell.textLabel?.text = "Reason"
-            
+            reasonCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             if(reasonStatus.isEmpty){
                 reasonCell.detailTextLabel?.text = "Select Reason"
             }
@@ -630,7 +630,8 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
             
             
             cell.textLabel?.text = "Reknock needed?"
-            
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+
             cell.selectionStyle = .none
             
             //accessory switch
@@ -972,10 +973,16 @@ class MoreOptionsViewController: UIViewController,UICollectionViewDelegate , UIC
 
     
     
-    @IBAction func cancel(_ sender: Any) {
+    @IBAction func cancel(_ sender: Any)
+    {
         
+        let msgtitle = "Message"
+
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
+        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
+        
+
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff

@@ -59,7 +59,7 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
     {
         self.navigationController?.isNavigationBarHidden = true
         
-        let newNavBar = UINavigationBar (frame: CGRect(x: 0.0, y: 0.0, width:self.view.bounds.width, height: 64.0))
+        let newNavBar = UINavigationBar (frame: CGRect(x: 0.0, y: 0.0, width:self.view.frame.size.width, height: 64.0))
         
         newNavBar.barStyle = UIBarStyle.black
         newNavBar.tintColor = UIColor.white
@@ -75,7 +75,7 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
         titleLabel.textColor = UIColor.white
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textAlignment = NSTextAlignment.center
-        titleLabel.font = UIFont.init(name: "System", size: 18.0)
+        titleLabel.font = UIFont.init(name: "Arial", size: 18.0)
         
         
         
