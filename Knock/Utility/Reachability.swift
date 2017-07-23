@@ -40,8 +40,8 @@ class Reachability {
     }
     var status: Network.Status {
         return  !isConnectedToNetwork ? .unreachable :
-                isReachableViaWiFi    ? .wifi :
-                isRunningOnDevice     ? .wwan : .unreachable
+            isReachableViaWiFi    ? .wifi :
+            isRunningOnDevice     ? .wwan : .unreachable
     }
     var isRunningOnDevice: Bool = {
         #if (arch(i386) || arch(x86_64)) && os(iOS)
@@ -76,13 +76,13 @@ extension Reachability {
     }
     var isConnectedToNetwork: Bool {
         return isReachable &&
-               !isConnectionRequiredAndTransientConnection &&
-               !(isRunningOnDevice && isWWAN && !isReachableOnWWAN)
+            !isConnectionRequiredAndTransientConnection &&
+            !(isRunningOnDevice && isWWAN && !isReachableOnWWAN)
     }
     var isReachableViaWiFi: Bool {
         return isReachable && isRunningOnDevice && !isWWAN
     }
-
+    
     /// Flags that indicate the reachability of a network node name or address, including whether a connection is required, and whether some user intervention might be required when establishing a connection.
     var flags: SCNetworkReachabilityFlags? {
         guard let reachability = reachability else { return nil }

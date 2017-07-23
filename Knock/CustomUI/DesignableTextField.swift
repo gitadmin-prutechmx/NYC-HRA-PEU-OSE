@@ -10,7 +10,7 @@ import UIKit
 
 @IBDesignable
 class DesignableTextField: UITextField {
-
+    
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             
@@ -21,7 +21,7 @@ class DesignableTextField: UITextField {
     @IBInspectable var borderWidth: CGFloat = 0 {
         didSet {
             layer.borderWidth = borderWidth
-           
+            
         }
     }
     
@@ -51,10 +51,10 @@ class DesignableTextField: UITextField {
             
             let view = UIView(frame: CGRect(x: 0, y: 0 , width: width, height: 17))
             view.addSubview(imageView)
-                
+            
             leftView = view
             
-           
+            
             
             
         } else {
@@ -64,5 +64,5 @@ class DesignableTextField: UITextField {
         }
         
     }
-
+    
 }

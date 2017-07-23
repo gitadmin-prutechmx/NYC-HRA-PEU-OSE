@@ -25,8 +25,8 @@ class ManageCoreData{
             if(predicateValue2 == nil){
                 // fetchRequest.predicate = NSPredicate(format: predicateFormat)
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
-
-                }
+                
+            }
             else if(predicateValue3 == nil){
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
             }
@@ -42,11 +42,11 @@ class ManageCoreData{
             else if(predicateValue6 != nil){
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!,predicateValue5!,predicateValue6!)
             }
-
+            
         }
         
-      
-      
+        
+        
         do {
             results = try context.fetch(fetchRequest)
             return results
@@ -54,18 +54,18 @@ class ManageCoreData{
         } catch {
             let nserror = error as NSError
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-           
+            
         }
         
-       
+        
     }
     
     static func updateData(salesforceEntityName:String,valueToBeUpdate:String,updatekey:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         
-       
-
+        
+        
         
         
         fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
@@ -125,7 +125,7 @@ class ManageCoreData{
             
         }
         
-       // fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        // fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
         
         do
         {
@@ -159,7 +159,7 @@ class ManageCoreData{
         
         
     }
-
+    
     
     static func updateDate(salesforceEntityName:String,updateKeyValue:[String:AnyObject],predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
         
@@ -167,7 +167,7 @@ class ManageCoreData{
         
         if(isPredicate)
         {
-                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+            fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
             
         }
         
@@ -206,13 +206,13 @@ class ManageCoreData{
         
     }
     
-
+    
     
     
     
     static func DeleteAllRecords(salesforceEntityName:String){
         
-                            //delete records
+        //delete records
         //                if let result = try? context.fetch(fetchRequest) {
         //                    for object in result {
         //                        context.delete(object)
@@ -226,7 +226,7 @@ class ManageCoreData{
         do {
             
             try context.execute(request)
-
+            
             
         } catch {
             let nserror = error as NSError
@@ -246,7 +246,7 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "Unit")
         DeleteAllRecords(salesforceEntityName: "DropDown")
         
-       // DeleteAllRecords(salesforceEntityName: "SurveyUnit")
+        // DeleteAllRecords(salesforceEntityName: "SurveyUnit")
         DeleteAllRecords(salesforceEntityName: "Tenant")
         
         DeleteAllRecords(salesforceEntityName: "SurveyResponse")

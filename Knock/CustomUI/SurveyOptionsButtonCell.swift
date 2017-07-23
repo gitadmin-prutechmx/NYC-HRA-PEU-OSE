@@ -9,7 +9,7 @@
 import UIKit
 
 class SurveyOptionsButtonCell: UICollectionViewCell {
-  
+    
     @IBOutlet weak var optionText: UILabel!
     
     @IBOutlet weak var optionId: UILabel!

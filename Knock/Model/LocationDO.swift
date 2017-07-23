@@ -15,7 +15,7 @@ class LocationDO{
     var totalUnits:String
     var noOfUnitsAttempt:String
     var noOfClients:String
-  
+    
     init(locId:String,assignmentLocId:String,fullAddress:String,totalUnits:String,noOfClients:String,noOfUnitsAttempt:String) {
         
         self.locId = locId

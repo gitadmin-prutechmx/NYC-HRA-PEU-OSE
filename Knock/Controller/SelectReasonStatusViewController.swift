@@ -9,7 +9,7 @@
 import UIKit
 
 class SelectReasonStatusViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-
+    
     var reasonStatusProtocol:ReasonStatusProtocol?
     var selectedReasonStatus:String = ""
     
@@ -17,7 +17,7 @@ class SelectReasonStatusViewController: UIViewController,UITableViewDelegate,UIT
     
     var reasonStatusArray: [String]!
     
- 
+    
     
     override func viewDidLoad()
     {
@@ -34,7 +34,7 @@ class SelectReasonStatusViewController: UIViewController,UITableViewDelegate,UIT
         let reasonData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location_Unit__c",predicateValue2:  "reason__c", isPredicate:true) as! [DropDown]
         
         
-             
+        
         if(reasonData.count>0){
             
             
@@ -115,8 +115,8 @@ class SelectReasonStatusViewController: UIViewController,UITableViewDelegate,UIT
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-}
-
-
-
+    }
+    
+    
+    
 }

@@ -32,11 +32,11 @@ class SalesforceConnection{
     static var fullAddress:String = ""
     
     
-        
- 
+    
+    
     private static var salesforceAccessToken:String=""
     
-   
+    
     
     
     typealias AccessTokenCompletion = (_ succeeded: Bool, _ jsonData: Dictionary<String, AnyObject>) -> Void
@@ -64,14 +64,14 @@ class SalesforceConnection{
                     let accessToken = json["access_token"] as? String,
                     let userId = json["id"] as? String
                 {
-                 
+                    
                     //update accessToken
-//                    ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", valueToBeUpdate: accessToken,updatekey:"accessToken", predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
-//                    
-//                    
-                        salesforceAccessToken = accessToken
-
-                        salesforceUserId = userId.components(separatedBy: "/")[5]
+                    //                    ManageCoreData.updateData(salesforceEntityName: "SalesforceOrgConfig", valueToBeUpdate: accessToken,updatekey:"accessToken", predicateFormat: "companyName == %@", predicateValue: companyName, isPredicate: true)
+                    //
+                    //
+                    salesforceAccessToken = accessToken
+                    
+                    salesforceUserId = userId.components(separatedBy: "/")[5]
                     
                     completion(true)
                 } else {
@@ -90,31 +90,31 @@ class SalesforceConnection{
         
     }//end of loginToSalesforce
     
-
+    
     
     
     static func SalesforceData(restApiUrl:String, params:[String:String]? = nil, methodType:String? = "POST" ,completion: @escaping AccessTokenCompletion) {
         
         
-//        let baseURLString = "https://some.domain-behind-oauth2.com"
-//        
-//        let oauthHandler = OAuth2Handler(
-//            clientID: "12345678",
-//            baseURLString: baseURLString,
-//            accessToken: "abcd1234",
-//            refreshToken: "ef56789a"
-//        )
+        //        let baseURLString = "https://some.domain-behind-oauth2.com"
+        //
+        //        let oauthHandler = OAuth2Handler(
+        //            clientID: "12345678",
+        //            baseURLString: baseURLString,
+        //            accessToken: "abcd1234",
+        //            refreshToken: "ef56789a"
+        //        )
         
-//        let sessionManager = SessionManager()
-//        sessionManager.adapter = oauthHandler
-//        sessionManager.retrier = oauthHandler
-//        
-//        let urlString = "\(baseURLString)/some/endpoint"
-//        
-//        sessionManager.request(urlString).validate().responseJSON { response in
-//            debugPrint(response)
-//        }
-
+        //        let sessionManager = SessionManager()
+        //        sessionManager.adapter = oauthHandler
+        //        sessionManager.retrier = oauthHandler
+        //
+        //        let urlString = "\(baseURLString)/some/endpoint"
+        //
+        //        sessionManager.request(urlString).validate().responseJSON { response in
+        //            debugPrint(response)
+        //        }
+        
         
         
         
@@ -123,12 +123,12 @@ class SalesforceConnection{
         
         if(methodType == "POST"){
             urlRequest.httpMethod = "POST"
-        
-        
+            
+            
             do {
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
             } catch {
-            // No-op
+                // No-op
             }
         }
         else{
@@ -137,47 +137,47 @@ class SalesforceConnection{
         
         urlRequest.setValue("OAuth \(salesforceAccessToken)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        
         
         
         Alamofire.request(urlRequest).validate().responseString{ response in
             switch response.result {
                 
             case .success:
-                    let decryptData =  Utilities.decryptJsonData(jsonEncryptString: response.result.value!)
-                    print(decryptData)
-                    let jsonData = Utilities.convertToJSON(text: decryptData)
- 
-                    completion(true, jsonData as! Dictionary<String, AnyObject>)
+                let decryptData =  Utilities.decryptJsonData(jsonEncryptString: response.result.value!)
+                print(decryptData)
+                let jsonData = Utilities.convertToJSON(text: decryptData)
+                
+                completion(true, jsonData as! Dictionary<String, AnyObject>)
                 
             case .failure(let error):
                 
                 Utilities.isRefreshBtnClick = false
                 showErrorMessage(error: error as NSError)
                 return
-
+                
                 
             }
         }
         
         
     }//end of loginToSalesforce
-
-//    func isBaseMapDownloaded(chart: Chart) -> Bool {
-//        if let path = chart.urlInDocumentsDirectory?.path {
-//            let fileManager = NSFileManager.defaultManager()
-//            return fileManager.fileExistsAtPath(path)
-//        }
-//        return false
-//    }
-//    
+    
+    //    func isBaseMapDownloaded(chart: Chart) -> Bool {
+    //        if let path = chart.urlInDocumentsDirectory?.path {
+    //            let fileManager = NSFileManager.defaultManager()
+    //            return fileManager.fileExistsAtPath(path)
+    //        }
+    //        return false
+    //    }
+    //
     
     static func downloadBaseMap(baseMapUrl: String,completionHandler: @escaping (Double?, NSError?) -> Void) {
         
-//        guard isBaseMapDownloaded(chart) == false else {
-//            completionHandler(1.0, nil) // already have it
-//            return
-//        }
+        //        guard isBaseMapDownloaded(chart) == false else {
+        //            completionHandler(1.0, nil) // already have it
+        //            return
+        //        }
         
         //        let destination = DownloadRequest.suggestedDownloadDestination(for: .documentDirectory)
         
@@ -190,7 +190,7 @@ class SalesforceConnection{
             return (documentsURL, [.removePreviousFile, .createIntermediateDirectories])
         }
         
-
+        
         Alamofire.download(
             baseMapUrl,
             method: .get,
@@ -201,22 +201,22 @@ class SalesforceConnection{
                 
                 completionHandler(progressComplete, nil)
                 
-//                DispatchQueue.main.async {
-//                    let progressComplete = progress.fractionCompleted
-//                    print(progressComplete)
-//                    
-//                    completionHandler(progressComplete, nil)
-//                }
+                //                DispatchQueue.main.async {
+                //                    let progressComplete = progress.fractionCompleted
+                //                    print(progressComplete)
+                //
+                //                    completionHandler(progressComplete, nil)
+                //                }
             }).validate().response(completionHandler: { (DefaultDownloadResponse) in
                 
                 //DefaultDownloadResponse.destinationURL!.lastPathComponent
-//                if let destinationUrl = DefaultDownloadResponse.destinationURL ? {
-//                    completionHandler(destinationUrl)
-//                }
+                //                if let destinationUrl = DefaultDownloadResponse.destinationURL ? {
+                //                    completionHandler(destinationUrl)
+                //                }
                 
                 
                 if let error = DefaultDownloadResponse.error{
-                     completionHandler(nil, error as NSError?)
+                    completionHandler(nil, error as NSError?)
                 }
                 
                 
@@ -225,19 +225,19 @@ class SalesforceConnection{
         
         
         
-//        Alamofire.download(.GET, baseMapUrl, destination: destination)
-//            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
-//                print(totalBytesRead)
-//                
-//                DispatchQueue.main.async {
-//                    let progress = Double(totalBytesRead) / Double(totalBytesExpectedToRead)
-//                    completionHandler(progress, nil)
-//                }
-//            }
-//            .responseString { response in
-//                print(response.result.error)
-//                completionHandler(nil, response.result.error)
-//        }
+        //        Alamofire.download(.GET, baseMapUrl, destination: destination)
+        //            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+        //                print(totalBytesRead)
+        //
+        //                DispatchQueue.main.async {
+        //                    let progress = Double(totalBytesRead) / Double(totalBytesExpectedToRead)
+        //                    completionHandler(progress, nil)
+        //                }
+        //            }
+        //            .responseString { response in
+        //                print(response.result.error)
+        //                completionHandler(nil, response.result.error)
+        //        }
     }
     
     static func showErrorMessage(error:NSError){

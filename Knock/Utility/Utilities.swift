@@ -43,22 +43,22 @@ class Utilities {
     static var isEditLoc:Bool = false
     static var CanvassingStatus:String = ""
     static var isRefreshBtnClick:Bool = false
-
+    
     static var answerSurvey:String = ""
-   
+    
     static var SurveyOutput:[String:SurveyResult]=[:]
     
     static var surveyQuestionArray = [structSurveyQuestion]()
- 
+    
     static var surveyQuestionArrayIndex = -1
-
+    
     static var currentSurveyPage = 0
     
     static var totalSurveyQuestions = 0
     
     static var currentLocationRowIndex = 0
     
-
+    
     
     class func deleteSkipSurveyData(startingIndex:Int,count:Int){
         
@@ -80,7 +80,7 @@ class Utilities {
         
         
     }
-
+    
     
     class func convertToJSON(text: String) ->  [String: Any]? {
         
@@ -106,15 +106,15 @@ class Utilities {
         do {
             let data1 =  try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted) // first of all convert json to the data
             
-           
+            
             
             let convertedString = String(data: data1, encoding: String.Encoding.utf8) // the data will be converted to the string
             
-           // print(convertedString!)
+            // print(convertedString!)
             
             return convertedString!
             
-           // print(convertedString) // <-- here is ur string
+            // print(convertedString) // <-- here is ur string
             
         } catch let myJSONError {
             print(myJSONError)
@@ -128,30 +128,30 @@ class Utilities {
         
         
         
-          //  var returnjsonData:Data?
+        //  var returnjsonData:Data?
         
-            
-            //Remove first two characters
-            
-            let startIndex = jsonEncryptString.index(jsonEncryptString.startIndex, offsetBy: 1)
-            
-            let headString = jsonEncryptString.substring(from: startIndex)
-            
-            
         
-            //Remove last two characters
-            
-            let endIndex = headString.index(headString.endIndex, offsetBy: -1)
-            
-            let trailString = headString.substring(to: endIndex)
-            
-            
-            let decryptData = try! trailString.aesDecrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-            
-            
-            
-           // returnjsonData = decryptData.data(using: .utf8)
-            
+        //Remove first two characters
+        
+        let startIndex = jsonEncryptString.index(jsonEncryptString.startIndex, offsetBy: 1)
+        
+        let headString = jsonEncryptString.substring(from: startIndex)
+        
+        
+        
+        //Remove last two characters
+        
+        let endIndex = headString.index(headString.endIndex, offsetBy: -1)
+        
+        let trailString = headString.substring(to: endIndex)
+        
+        
+        let decryptData = try! trailString.aesDecrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+        
+        
+        
+        // returnjsonData = decryptData.data(using: .utf8)
+        
         
         
         
@@ -201,25 +201,25 @@ class Utilities {
         
         var editUnitDict:[String:String] = [:]
         
-           editUnitDict["assignmentLocationUnitId"] = assignmentLocationUnitId
+        editUnitDict["assignmentLocationUnitId"] = assignmentLocationUnitId
         
         
-            editUnitDict["intake"] = intake
-            editUnitDict["reason"] = reason
-            editUnitDict["notes"] = notes
-            editUnitDict["attempt"] = attempt
-            editUnitDict["contact"] = contact
-            editUnitDict["reKnockNeeded"] = reKnockNeeded
+        editUnitDict["intake"] = intake
+        editUnitDict["reason"] = reason
+        editUnitDict["notes"] = notes
+        editUnitDict["attempt"] = attempt
+        editUnitDict["contact"] = contact
+        editUnitDict["reKnockNeeded"] = reKnockNeeded
         
         
-            editUnitDict["surveyId"] = selectedSurveyId
-            editUnitDict["tenantId"] = selectedTenantId
+        editUnitDict["surveyId"] = selectedSurveyId
+        editUnitDict["tenantId"] = selectedTenantId
         
-            editUnitDict["lastCanvassedBy"] = lastCanvassedBy
+        editUnitDict["lastCanvassedBy"] = lastCanvassedBy
         
         
         
-
+        
         return editUnitDict
     }
     
@@ -231,38 +231,38 @@ class Utilities {
         editLocDict["assignmentLocationId"] = assignmentLocationId
         editLocDict["Notes"] = notes
         editLocDict["attempt"] = attempt
-    
+        
         
         return editLocDict
-
+        
     }
     
     class func createAndEditTenantData(firstName:String,lastName:String,email:String,phone:String,dob:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,type:String)->[String:String]{
-    
-    var editTenantDict:[String:String] = [:]
-    
-    if(type == "edit"){
-        editTenantDict["tenantId"] = currentTenantId
-    }
         
-       
+        var editTenantDict:[String:String] = [:]
         
-   
-    editTenantDict["iOSTenantId"] = iOSTenantId
-    
-    
-    editTenantDict["locationUnitId"] = locationUnitId
-    
-    editTenantDict["firstName"] = firstName
-    
-    editTenantDict["lastName"] = lastName
-    
-    editTenantDict["email"] = email
-    
-    editTenantDict["phone"] = phone
-    
+        if(type == "edit"){
+            editTenantDict["tenantId"] = currentTenantId
+        }
+        
+        
+        
+        
+        editTenantDict["iOSTenantId"] = iOSTenantId
+        
+        
+        editTenantDict["locationUnitId"] = locationUnitId
+        
+        editTenantDict["firstName"] = firstName
+        
+        editTenantDict["lastName"] = lastName
+        
+        editTenantDict["email"] = email
+        
+        editTenantDict["phone"] = phone
+        
         if(dob != ""){
-        
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM-dd-yyyy"
             let date = dateFormatter.date(from: dob)!
@@ -272,50 +272,50 @@ class Utilities {
             editTenantDict["birthdate"] = dateFormatter.string(from: date)
         }
         
-   
         
-    
-    
-    return editTenantDict
+        
+        
+        
+        return editTenantDict
         
     }
     
     
     
-//    class func assignTenantDicData(selectedTenantId:String,assignmentLocUnitId:String)->[String:String]{
-//        
-//        
-//        var tenantAssignDict:[String:String] = [:]
-//        
-//        tenantAssignDict["contactId"] = selectedTenantId
-//        tenantAssignDict["assignmentLocationUnitId"] = assignmentLocUnitId
-//        
-//        return tenantAssignDict
-//    }
+    //    class func assignTenantDicData(selectedTenantId:String,assignmentLocUnitId:String)->[String:String]{
+    //
+    //
+    //        var tenantAssignDict:[String:String] = [:]
+    //
+    //        tenantAssignDict["contactId"] = selectedTenantId
+    //        tenantAssignDict["assignmentLocationUnitId"] = assignmentLocUnitId
+    //
+    //        return tenantAssignDict
+    //    }
     
     
     
-//    class func parseEditUnitResponse(jsonObject: Dictionary<String, AnyObject>)->Bool {
-//        
-//        
-//        guard let isError = jsonObject["hasError"] as? Bool,
-//            
-//            let unitDataDict = jsonObject["unitData"] as? [String: AnyObject] else { return true}
-//   
-//        if(isError == false){
-//            
-//            
-//            updateUnitDetail(unitDataDict: unitDataDict)
-//            
-//          
-//        }
-//        
-//        
-//        return isError
-//        
-//        
-//        
-//    }
+    //    class func parseEditUnitResponse(jsonObject: Dictionary<String, AnyObject>)->Bool {
+    //
+    //
+    //        guard let isError = jsonObject["hasError"] as? Bool,
+    //
+    //            let unitDataDict = jsonObject["unitData"] as? [String: AnyObject] else { return true}
+    //
+    //        if(isError == false){
+    //
+    //
+    //            updateUnitDetail(unitDataDict: unitDataDict)
+    //
+    //
+    //        }
+    //
+    //
+    //        return isError
+    //
+    //
+    //
+    //    }
     
     
     
@@ -371,12 +371,12 @@ class Utilities {
             
         }
         
-         return isError
+        return isError
         
         
     }
     
-   
+    
     class func parseEditLocation(jsonObject: Dictionary<String, AnyObject>){
         
         let assignmentLocId = jsonObject["assignmentLocationId"] as? String
@@ -385,11 +385,11 @@ class Utilities {
         
         if(editLocResults.count > 0){
             
-                var updateObjectDic:[String:String] = [:]
-                
-                updateObjectDic["actionStatus"] = ""
-                
-                ManageCoreData.updateRecord(salesforceEntityName: "EditLocation", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocId == %@", predicateValue: assignmentLocId,isPredicate: true)
+            var updateObjectDic:[String:String] = [:]
+            
+            updateObjectDic["actionStatus"] = ""
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "EditLocation", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocId == %@", predicateValue: assignmentLocId,isPredicate: true)
             
             
         }
@@ -441,164 +441,164 @@ class Utilities {
         
         
     }
-
-    
-//    class func parseSurveyUnit(jsonObject: Dictionary<String, AnyObject>){
-//        
-//        let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
-//        
-//        let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "edit",predicateValue2: "create",predicateValue3: assignmentLocUnitId,isPredicate:true) as! [SurveyUnit]
-//        
-//        if(surveyUnitResults.count > 0){
-//            
-//            var updateObjectDic:[String:String] = [:]
-//            
-//            updateObjectDic["actionStatus"] = ""
-//            
-//            ManageCoreData.updateRecord(salesforceEntityName: "SurveyUnit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: assignmentLocUnitId,isPredicate: true)
-//            
-//            
-//        }
-//        
-//        
-//    }
-//    
-//    
-//    
-//    
-//    
-//    
-//    class func parseAssignTenant(jsonObject: Dictionary<String, AnyObject>){
-//        
-//        let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
-//        
-//        let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "edit",predicateValue2: "create",predicateValue3: assignmentLocUnitId,isPredicate:true) as! [TenantAssign]
-//        
-//        if(tenantAssignResults.count > 0){
-//            
-//            var updateObjectDic:[String:String] = [:]
-//            
-//            updateObjectDic["actionStatus"] = ""
-//            
-//            ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: assignmentLocUnitId,isPredicate: true)
-//            
-//            
-//        }
-//        
-//        
-//    }
-//    
     
     
-
+    //    class func parseSurveyUnit(jsonObject: Dictionary<String, AnyObject>){
+    //
+    //        let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
+    //
+    //        let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "edit",predicateValue2: "create",predicateValue3: assignmentLocUnitId,isPredicate:true) as! [SurveyUnit]
+    //
+    //        if(surveyUnitResults.count > 0){
+    //
+    //            var updateObjectDic:[String:String] = [:]
+    //
+    //            updateObjectDic["actionStatus"] = ""
+    //
+    //            ManageCoreData.updateRecord(salesforceEntityName: "SurveyUnit", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: assignmentLocUnitId,isPredicate: true)
+    //
+    //
+    //        }
+    //
+    //
+    //    }
+    //
+    //
+    //
+    //
+    //
+    //
+    //    class func parseAssignTenant(jsonObject: Dictionary<String, AnyObject>){
+    //
+    //        let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
+    //
+    //        let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "edit",predicateValue2: "create",predicateValue3: assignmentLocUnitId,isPredicate:true) as! [TenantAssign]
+    //
+    //        if(tenantAssignResults.count > 0){
+    //
+    //            var updateObjectDic:[String:String] = [:]
+    //
+    //            updateObjectDic["actionStatus"] = ""
+    //
+    //            ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: assignmentLocUnitId,isPredicate: true)
+    //
+    //
+    //        }
+    //
+    //
+    //    }
+    //
+    
+    
+    
     
     //Tested
-//    class func resetAllActionStatusFromEditLocation(){
-//        
-//       
-//            let editLocResults = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit",isPredicate:true) as! [EditLocation]
-//            
-//            if(editLocResults.count > 0){
-//                
-//                for editLocData in editLocResults{
-//                    
-//                    var updateObjectDic:[String:String] = [:]
-//                    
-//                    updateObjectDic["actionStatus"] = ""
-//                    
-//                    ManageCoreData.updateRecord(salesforceEntityName: "EditLocation", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocId == %@", predicateValue: editLocData.assignmentLocId,isPredicate: true)
-//                    
-//                    
-//                }
-//                
-//                
-//            }
-//
-//        
-//    }
-//    
-//   
-//
-//    
-//    class func resetAllActionStatusFromEditUnit(){
-//        
-//        
-//        let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
-//        
-//        if(editUnitResults.count > 0){
-//            
-//            for editUnitData in editUnitResults{
-//                
-//                var updateObjectDic:[String:String] = [:]
-//                
-//                updateObjectDic["actionStatus"] = ""
-//                
-//                ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: editUnitData.unitId!, isPredicate: true)
-//                
-//                
-//            }
-//            
-//            
-//        }
-//        
-//        
-//    }
-//    
-//    class func resetAllActionStatusFromSurveyUnit(){
-//        
-//        
-//        let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [SurveyUnit]
-//        
-//        if(surveyUnitResults.count > 0){
-//            
-//            for surveyUnitData in surveyUnitResults{
-//                
-//                var updateObjectDic:[String:String] = [:]
-//                
-//                updateObjectDic["actionStatus"] = ""
-//                
-//                ManageCoreData.updateRecord(salesforceEntityName: "SurveyUnit", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: surveyUnitData.unitId!, isPredicate: true)
-//                
-//                
-//            }
-//            
-//            
-//        }
-//        
-//        
-//    }
-//
-//    
-//    
-//    
-//    class func resetAllActionStatusFromTenantAssign(){
-//        
-//        
-//        let tenantAsignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [TenantAssign]
-//        
-//        if(tenantAsignResults.count > 0){
-//            
-//            for tenantAssignData in tenantAsignResults{
-//                
-//                var updateObjectDic:[String:String] = [:]
-//                
-//                updateObjectDic["actionStatus"] = ""
-//                
-//                ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: tenantAssignData.unitId!, isPredicate: true)
-//                
-//                
-//            }
-//            
-//            
-//        }
-//        
-//        
-//    }
+    //    class func resetAllActionStatusFromEditLocation(){
+    //
+    //
+    //            let editLocResults = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit",isPredicate:true) as! [EditLocation]
+    //
+    //            if(editLocResults.count > 0){
+    //
+    //                for editLocData in editLocResults{
+    //
+    //                    var updateObjectDic:[String:String] = [:]
+    //
+    //                    updateObjectDic["actionStatus"] = ""
+    //
+    //                    ManageCoreData.updateRecord(salesforceEntityName: "EditLocation", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocId == %@", predicateValue: editLocData.assignmentLocId,isPredicate: true)
+    //
+    //
+    //                }
+    //
+    //
+    //            }
+    //
+    //
+    //    }
+    //
+    //
+    //
+    //
+    //    class func resetAllActionStatusFromEditUnit(){
+    //
+    //
+    //        let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
+    //
+    //        if(editUnitResults.count > 0){
+    //
+    //            for editUnitData in editUnitResults{
+    //
+    //                var updateObjectDic:[String:String] = [:]
+    //
+    //                updateObjectDic["actionStatus"] = ""
+    //
+    //                ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: editUnitData.unitId!, isPredicate: true)
+    //
+    //
+    //            }
+    //
+    //
+    //        }
+    //
+    //
+    //    }
+    //
+    //    class func resetAllActionStatusFromSurveyUnit(){
+    //
+    //
+    //        let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [SurveyUnit]
+    //
+    //        if(surveyUnitResults.count > 0){
+    //
+    //            for surveyUnitData in surveyUnitResults{
+    //
+    //                var updateObjectDic:[String:String] = [:]
+    //
+    //                updateObjectDic["actionStatus"] = ""
+    //
+    //                ManageCoreData.updateRecord(salesforceEntityName: "SurveyUnit", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: surveyUnitData.unitId!, isPredicate: true)
+    //
+    //
+    //            }
+    //
+    //
+    //        }
+    //
+    //
+    //    }
+    //
+    //
+    //
+    //
+    //    class func resetAllActionStatusFromTenantAssign(){
+    //
+    //
+    //        let tenantAsignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [TenantAssign]
+    //
+    //        if(tenantAsignResults.count > 0){
+    //
+    //            for tenantAssignData in tenantAsignResults{
+    //
+    //                var updateObjectDic:[String:String] = [:]
+    //
+    //                updateObjectDic["actionStatus"] = ""
+    //
+    //                ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: tenantAssignData.unitId!, isPredicate: true)
+    //
+    //
+    //            }
+    //
+    //
+    //        }
+    //
+    //
+    //    }
     
     
     
     
-   
+    
     class func updateTenantIdInCoreData(tenantDataDict:[String:AnyObject]){
         
         let iosTenantId = tenantDataDict["iOSTenantId"] as! String?
@@ -611,8 +611,8 @@ class Utilities {
         
         let tenantCreateResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND id == %@" ,predicateValue: "create",predicateValue2: "edit", predicateValue3: iosTenantId, isPredicate:true) as! [Tenant]
         
-
-      
+        
+        
         if(tenantCreateResults.count > 0){
             
             var updateObjectDic:[String:String] = [:]
@@ -644,13 +644,13 @@ class Utilities {
             
             var updateObjectDic:[String:String] = [:]
             updateObjectDic["tenantId"] = tenantId
-           
+            
             
             ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "tenantId == %@", predicateValue: iosTenantId,isPredicate: true)
             
         }
     }
-
+    
     class func updateSyncDate(assignmentLocUnitId:String){
         
         let dateFormatter = DateFormatter()
@@ -704,7 +704,7 @@ class Utilities {
         
     }
     
-
+    
     
     class func updateTenantDetail(unitDataDict:[String:AnyObject]){
         
@@ -723,12 +723,12 @@ class Utilities {
         if(tenantResults.count > 0){
             
             for tenantData in tenantResults{
-            
+                
                 var updateObjectDic:[String:String] = [:]
                 updateObjectDic["unitId"] = locUnitId
                 updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
                 
-            
+                
                 ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@ AND id == %@", predicateValue: iosLocUnitId, predicateValue2: iosAssignmentLocUnitId,predicateValue3: tenantData.id!, isPredicate: true)
                 
                 print("tenantResults update")
@@ -736,7 +736,7 @@ class Utilities {
         }
         
     }
-
+    
     
     class func updateEditUnitDetail(unitDataDict:[String:AnyObject]){
         
@@ -746,9 +746,9 @@ class Utilities {
         let iosLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
         let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
         
-         let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate:true) as! [EditUnit]
+        let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate:true) as! [EditUnit]
         
-
+        
         
         
         
@@ -762,7 +762,7 @@ class Utilities {
             
             ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId, predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
             
-             print("EditUnit updated")
+            print("EditUnit updated")
         }
         
     }
@@ -794,75 +794,75 @@ class Utilities {
             print("surveyResResults updated")
         }
         
-         if(locAssignmentUnitId !=  nil){
+        if(locAssignmentUnitId !=  nil){
             updateSyncDate(assignmentLocUnitId: locAssignmentUnitId!)
         }
         
     }
     
-
     
     
-//    class func updateSurveyUnitDetail(unitDataDict:[String:AnyObject]){
-//        
-//        
-//        let locUnitId = unitDataDict["unitId"] as! String?
-//        let locAssignmentUnitId = unitDataDict["assignmentLocUnitId"] as! String?
-//        let iosLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
-//        let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
-//        
-//        let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate:true) as! [SurveyUnit]
-//        
-//        
-//        
-//        
-//        
-//        if(editUnitResults.count > 0){
-//            
-//            
-//            var updateObjectDic:[String:String] = [:]
-//            updateObjectDic["unitId"] = locUnitId
-//            updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
-//            //updateObjectDic["actionStatus"] = ""
-//            
-//            ManageCoreData.updateRecord(salesforceEntityName: "SurveyUnit", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId, predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
-//            
-//            print("SurveyUnitDetail updated")
-//        }
-//        
-//    }
-//    
-//    
-//    class func updateTenantAssignDetail(unitDataDict:[String:AnyObject]){
-//        
-//        
-//        let locUnitId = unitDataDict["unitId"] as! String?
-//        let locAssignmentUnitId = unitDataDict["assignmentLocUnitId"] as! String?
-//        let iosLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
-//        let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
-//        
-//        
-//        let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@",predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate:true) as! [TenantAssign]
-//        
-//        
-//        
-//        if(tenantAssignResults.count > 0){
-//            
-//           
-//                var updateObjectDic:[String:String] = [:]
-//                updateObjectDic["unitId"] = locUnitId
-//                updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
-//                //updateObjectDic["actionStatus"] = ""
-//                
-//                ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
-//           
-//            print("tenantAssignResults updated")
-//        }
-//        
-//    }
+    
+    //    class func updateSurveyUnitDetail(unitDataDict:[String:AnyObject]){
+    //
+    //
+    //        let locUnitId = unitDataDict["unitId"] as! String?
+    //        let locAssignmentUnitId = unitDataDict["assignmentLocUnitId"] as! String?
+    //        let iosLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
+    //        let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
+    //
+    //        let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyUnit",predicateFormat: "unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate:true) as! [SurveyUnit]
+    //
+    //
+    //
+    //
+    //
+    //        if(editUnitResults.count > 0){
+    //
+    //
+    //            var updateObjectDic:[String:String] = [:]
+    //            updateObjectDic["unitId"] = locUnitId
+    //            updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
+    //            //updateObjectDic["actionStatus"] = ""
+    //
+    //            ManageCoreData.updateRecord(salesforceEntityName: "SurveyUnit", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId, predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
+    //
+    //            print("SurveyUnitDetail updated")
+    //        }
+    //
+    //    }
+    //
+    //
+    //    class func updateTenantAssignDetail(unitDataDict:[String:AnyObject]){
+    //
+    //
+    //        let locUnitId = unitDataDict["unitId"] as! String?
+    //        let locAssignmentUnitId = unitDataDict["assignmentLocUnitId"] as! String?
+    //        let iosLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
+    //        let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
+    //
+    //
+    //        let tenantAssignResults = ManageCoreData.fetchData(salesforceEntityName: "TenantAssign",predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@",predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate:true) as! [TenantAssign]
+    //
+    //
+    //
+    //        if(tenantAssignResults.count > 0){
+    //
+    //
+    //                var updateObjectDic:[String:String] = [:]
+    //                updateObjectDic["unitId"] = locUnitId
+    //                updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
+    //                //updateObjectDic["actionStatus"] = ""
+    //
+    //                ManageCoreData.updateRecord(salesforceEntityName: "TenantAssign", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
+    //
+    //            print("tenantAssignResults updated")
+    //        }
+    //
+    //    }
     
     
-
+    
     
     class func updateAssignmentUnitCount(){
         
@@ -900,112 +900,112 @@ class Utilities {
             print(error)
         }
     }
-
+    
     
     class func fetchAllDataFromSalesforce(loginViewController:LoginViewController?=nil){
         
-         var emailParams : [String:String] = [:]
-         var userParams : [String:String] = [:]
-
+        var emailParams : [String:String] = [:]
+        var userParams : [String:String] = [:]
         
-    SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         
-SalesforceConnection.loginToSalesforce() { response in
-    
-    let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-    
-     userParams["userId"] = encryptUserIdStr
-    
-    
-    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams){ userInfoJsonData in
-
-         Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
-    
-        emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-    
-   
-     SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
+        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
         
+        SalesforceConnection.loginToSalesforce() { response in
             
-            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
+            let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            
+            userParams["userId"] = encryptUserIdStr
+            
+            
+            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams){ userInfoJsonData in
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType:"GET"){ picklistData in
-                    
+                Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
                 
-                    updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1)
+                emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
                 
-                if(loginViewController != nil){
-                    
-                    let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-                    
-                    let fullPath = "\(path)/NewYorkLayers.geodatabase"
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
                     
                     
-                    if (Utilities.isGeoDatabseExist()==false) {
+                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
                         
-                        DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
-                      
-
-                    }
-                    
-                    else if(SalesforceConfig.isBaseMapNeedToDownload == true){
-                        
-                        SVProgressHUD.dismiss()
-                        
-                        //Delete Basemap first and then download
-                        Utilities.deleteBasemap()
-                        
-                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginViewController)
-                        
-                    }
-                        
-                   
-                    else{
-                        
-                        SVProgressHUD.dismiss()
-                        DispatchQueue.main.async {
-                            loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                        SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType:"GET"){ picklistData in
+                            
+                            
+                            updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1)
+                            
+                            if(loginViewController != nil){
+                                
+                                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                                
+                                let fullPath = "\(path)/NewYorkLayers.geodatabase"
+                                
+                                
+                                if (Utilities.isGeoDatabseExist()==false) {
+                                    
+                                    DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
+                                    
+                                    
+                                }
+                                    
+                                else if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                                    
+                                    SVProgressHUD.dismiss()
+                                    
+                                    //Delete Basemap first and then download
+                                    Utilities.deleteBasemap()
+                                    
+                                    DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginViewController)
+                                    
+                                }
+                                    
+                                    
+                                else{
+                                    
+                                    SVProgressHUD.dismiss()
+                                    DispatchQueue.main.async {
+                                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                                    }
+                                    
+                                    
+                                }
+                                
+                                
+                                
+                            }
+                            else{
+                                
+                                
+                                
+                                
+                                if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                                    
+                                    
+                                    //Delete Basemap first and then download
+                                    Utilities.deleteBasemap()
+                                    
+                                    SVProgressHUD.show(withStatus: "Updating Basemap..", maskType: .gradient)
+                                    
+                                    DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: nil)
+                                    
+                                }
+                                else{
+                                    DownloadESRILayers.RefreshData()
+                                }
+                                
+                                
+                            }
                         }
-
                         
                     }
-                   
                     
-    
                 }
-                else{
-                   
-                   
-                    
-                    
-                    if(SalesforceConfig.isBaseMapNeedToDownload == true){
-                        
-                        
-                        //Delete Basemap first and then download
-                        Utilities.deleteBasemap()
-                        
-                        SVProgressHUD.show(withStatus: "Updating Basemap..", maskType: .gradient)
-                        
-                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: nil)
-                        
-                    }
-                    else{
-                        DownloadESRILayers.RefreshData()
-                    }
-                    
-
-                }
-            }
                 
-          }
-        
-        }
+            }
             
-    }
-    
-   }
-     
-}//end of class
+        }
+        
+    }//end of class
     
     
     class func isBaseMapExist()->Bool{
@@ -1041,12 +1041,12 @@ SalesforceConnection.loginToSalesforce() { response in
             return false
         }
     }
-
+    
     
     
     class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject],pickListJsonData:[String:AnyObject]){
         
-       
+        
         
         ManageCoreData.DeleteAllDataFromEntities()
         
@@ -1057,7 +1057,7 @@ SalesforceConnection.loginToSalesforce() { response in
         Utilities.parseChartData(jsonObject: chartJsonData)
         
         Utilities.parsePickListData(jsonObject: pickListJsonData)
-       
+        
         
     }
     
@@ -1079,7 +1079,7 @@ SalesforceConnection.loginToSalesforce() { response in
         
         
         Utilities.isRefreshBtnClick = false
-
+        
     }
     
     
@@ -1092,17 +1092,17 @@ SalesforceConnection.loginToSalesforce() { response in
     
     
     class func parseChartData(jsonObject: Dictionary<String, AnyObject>){
-    
-      //  "{\"Chart4\":{\"FollowUpNeeded\":1},\"Chart3\":{\"NoResponse\":0},\"Chart2\":{\"UnitsCompleted\":12.0},\"Chart1\":{\"TotalUnits\":945.0}}"
         
-      
+        //  "{\"Chart4\":{\"FollowUpNeeded\":1},\"Chart3\":{\"NoResponse\":0},\"Chart2\":{\"UnitsCompleted\":12.0},\"Chart1\":{\"TotalUnits\":945.0}}"
+        
+        
         let chart1 = jsonObject["Chart1"] as? [String: AnyObject]
         let chart2 = jsonObject["Chart2"] as? [String: AnyObject]
         let chart3 = jsonObject["Chart3"] as? [String: AnyObject]
         let chart4 = jsonObject["Chart4"] as? [String: AnyObject]
         
-  
-       
+        
+        
         let chart1Obj = Chart(context: context)
         chart1Obj.chartType = "Chart1"
         chart1Obj.chartField = "TotalUnits"
@@ -1145,14 +1145,14 @@ SalesforceConnection.loginToSalesforce() { response in
         print(chart4Object.chartValue!)
         
         appDelegate.saveContext()
-     
-       
-
+        
+        
+        
     }
     
     
     class func parseUserInfoData(jsonObject: Dictionary<String, AnyObject>){
-       
+        
         let today = NSDate()
         let dateAfterThreeDays = today.addDays(daysToAdd: 3)
         
@@ -1169,37 +1169,37 @@ SalesforceConnection.loginToSalesforce() { response in
         SalesforceConfig.currentFeatureLayerUrl = jsonObject["esriLayerLink"] as? String  ?? ""
         
         let basemapDate = jsonObject["esriBaseMapModifiedDate"] as? String  ?? ""
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = dateFormatter.date(from: basemapDate)
         
-         SalesforceConfig.currentBaseMapDate = date as NSDate?
+        SalesforceConfig.currentBaseMapDate = date as NSDate?
         
-
+        
         //SalesforceConfig.isBaseMapNeedToDownload
         
         let userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
         
         let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", predicateFormat:"settingsId == %@",predicateValue:"1", isPredicate:true) as! [Setting]
         
-      
+        
         if(userInfoData.count == 0){
             
-           //save userInfo
+            //save userInfo
             let objUserInfo = UserInfo(context: context)
-        
+            
             objUserInfo.contactId = SalesforceConfig.currentUserContactId
             objUserInfo.externalId = SalesforceConfig.currentUserExternalId
             objUserInfo.contactEmail = SalesforceConfig.currentUserEmail
             objUserInfo.userName = SalesforceConfig.userName
             objUserInfo.password = try! SalesforceConfig.password.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
-        
+            
             objUserInfo.passwordExpDate = dateAfterThreeDays
-     
+            
             appDelegate.saveContext()
             
-
+            
         }
         else{
             
@@ -1214,15 +1214,15 @@ SalesforceConnection.loginToSalesforce() { response in
             SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
             SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
             
-
+            
         }
         
         
         //update usersetting
         if(userSettingData.count > 0){
             
-           if let basemapDate = userSettingData[0].basemapDate {
-            
+            if let basemapDate = userSettingData[0].basemapDate {
+                
                 if(SalesforceConfig.currentBaseMapDate.equalToDate(dateToCompare: basemapDate)){
                     SalesforceConfig.isBaseMapNeedToDownload = false
                 }
@@ -1232,7 +1232,7 @@ SalesforceConnection.loginToSalesforce() { response in
                 
             }
             else{
-                 SalesforceConfig.isBaseMapNeedToDownload = true
+                SalesforceConfig.isBaseMapNeedToDownload = true
             }
             
             
@@ -1244,7 +1244,7 @@ SalesforceConnection.loginToSalesforce() { response in
             updateObjectDic["basemapDate"] = SalesforceConfig.currentBaseMapDate as AnyObject?
             
             ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
-
+            
         }
         
     }
@@ -1259,7 +1259,7 @@ SalesforceConnection.loginToSalesforce() { response in
             
             guard let fieldListResults = pickListData["fieldList"] as? [[String: AnyObject]]  else { break }
             
-          
+            
             
             for fieldListData in fieldListResults{
                 
@@ -1267,7 +1267,7 @@ SalesforceConnection.loginToSalesforce() { response in
                 
                 dropDownObject.object = pickListData["objectName"] as? String ?? ""
                 
-                 dropDownObject.fieldName = fieldListData["fieldName"] as? String ?? ""
+                dropDownObject.fieldName = fieldListData["fieldName"] as? String ?? ""
                 dropDownObject.value = fieldListData["picklistValue"] as? String ?? ""
                 
                 appDelegate.saveContext()
@@ -1277,7 +1277,7 @@ SalesforceConnection.loginToSalesforce() { response in
             
         }
     }
-
+    
     
     
     class func parseEventAssignmentData(jsonObject: Dictionary<String, AnyObject>){
@@ -1323,7 +1323,7 @@ SalesforceConnection.loginToSalesforce() { response in
                 
                 assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
                 
-              
+                
                 
                 let assignedDate = assignmentData["assignedStatusDate"] as? String  ?? ""
                 
@@ -1335,7 +1335,7 @@ SalesforceConnection.loginToSalesforce() { response in
                     //  dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                     let date = dateFormatter.date(from: assignedDate)
-                   
+                    
                     assignmentObject.assignedDate = date as NSDate?
                     
                 }
@@ -1353,10 +1353,10 @@ SalesforceConnection.loginToSalesforce() { response in
                     
                     assignmentObject.completedDate = date as NSDate?
                     
-                   
+                    
                 }
                 else{
-                   
+                    
                     assignmentObject.completedDate = assignmentObject.assignedDate?.addDays(daysToAdd: -3)
                 }
                 
@@ -1484,8 +1484,8 @@ SalesforceConnection.loginToSalesforce() { response in
                         unitObject.unitSyncDate = unitData["unitSyncDate"] as? String  ?? ""
                         
                         let surveySyncDate = unitData["surveySyncDate"] as? String  ?? ""
-
-                       
+                        
+                        
                         if(surveySyncDate != ""){
                             unitObject.surveyStatus = "Completed"
                         }
@@ -1508,11 +1508,11 @@ SalesforceConnection.loginToSalesforce() { response in
                         editUnitObject.unitId = unitObject.id!
                         editUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                         editUnitObject.attempt = unitData["attempt"] as? String  ?? ""
-                         editUnitObject.inTake = unitData["intake"] as? String  ?? ""
-                         editUnitObject.reason = unitData["reason"] as? String  ?? ""
-                       // editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
+                        editUnitObject.inTake = unitData["intake"] as? String  ?? ""
+                        editUnitObject.reason = unitData["reason"] as? String  ?? ""
+                        // editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
                         editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
-                       // editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
+                        // editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
                         editUnitObject.unitNotes = unitData["notes"] as? String  ?? ""
                         editUnitObject.isContact = unitData["isContact"] as? String  ?? ""
                         editUnitObject.actionStatus = ""
@@ -1527,36 +1527,36 @@ SalesforceConnection.loginToSalesforce() { response in
                         
                         //TenantStatus
                         
-//                        let tenantAssignObject = TenantAssign(context: context)
-//                        
-//                        
-//                        tenantAssignObject.locationId = locationObject.id!
-//                        tenantAssignObject.assignmentId = assignmentObject.id!
-//                        tenantAssignObject.assignmentLocId = locationObject.assignmentLocId!
-//                        tenantAssignObject.unitId = unitObject.id!
-//                        tenantAssignObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-//                        tenantAssignObject.tenantId = unitData["tenant"] as? String  ?? ""
-//                        tenantAssignObject.actionStatus = ""
-//                        
-//                        
-//                        appDelegate.saveContext()
-//                        
-//                        
-//                        //AssignSurvey
-//                        
-//                        
-//                        //save the record
-//                        let surveyUnitObject = SurveyUnit(context: context)
-//                        surveyUnitObject.locationId = locationObject.id!
-//                        surveyUnitObject.assignmentId = assignmentObject.id!
-//                        surveyUnitObject.assignmentLocId = locationObject.assignmentLocId!
-//                        surveyUnitObject.unitId = unitObject.id!
-//                        surveyUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-//                        surveyUnitObject.surveyId = unitData["survey"] as? String  ?? ""
-//                        surveyUnitObject.actionStatus = ""
-//                        
-//                        
-//                        appDelegate.saveContext()
+                        //                        let tenantAssignObject = TenantAssign(context: context)
+                        //
+                        //
+                        //                        tenantAssignObject.locationId = locationObject.id!
+                        //                        tenantAssignObject.assignmentId = assignmentObject.id!
+                        //                        tenantAssignObject.assignmentLocId = locationObject.assignmentLocId!
+                        //                        tenantAssignObject.unitId = unitObject.id!
+                        //                        tenantAssignObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                        //                        tenantAssignObject.tenantId = unitData["tenant"] as? String  ?? ""
+                        //                        tenantAssignObject.actionStatus = ""
+                        //
+                        //
+                        //                        appDelegate.saveContext()
+                        //
+                        //
+                        //                        //AssignSurvey
+                        //
+                        //
+                        //                        //save the record
+                        //                        let surveyUnitObject = SurveyUnit(context: context)
+                        //                        surveyUnitObject.locationId = locationObject.id!
+                        //                        surveyUnitObject.assignmentId = assignmentObject.id!
+                        //                        surveyUnitObject.assignmentLocId = locationObject.assignmentLocId!
+                        //                        surveyUnitObject.unitId = unitObject.id!
+                        //                        surveyUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                        //                        surveyUnitObject.surveyId = unitData["survey"] as? String  ?? ""
+                        //                        surveyUnitObject.actionStatus = ""
+                        //                        
+                        //                        
+                        //                        appDelegate.saveContext()
                         
                         //.....................
                         
@@ -1609,7 +1609,7 @@ SalesforceConnection.loginToSalesforce() { response in
             
             
             //let date = Date().addingTimeInterval(5)
-          
+            
             
             
             let timer = Timer(fireAt: date as Date, interval: 0, target: self, selector: #selector(backgroundSyncing), userInfo: nil, repeats: false)
@@ -1624,16 +1624,16 @@ SalesforceConnection.loginToSalesforce() { response in
     
     @objc class func backgroundSyncing(){
         
-          print("start backgroundSyncing")
+        print("start backgroundSyncing")
         
-//        if(Utilities.isRefreshBtnClick == false){
-//            print("start backgroundSyncing")
-//        }
+        //        if(Utilities.isRefreshBtnClick == false){
+        //            print("start backgroundSyncing")
+        //        }
     }
-
     
     
     
-
+    
+    
 }
 

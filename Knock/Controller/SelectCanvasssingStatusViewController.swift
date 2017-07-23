@@ -14,48 +14,48 @@ class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSou
     var canvassingStatusProtocol:CanvassingStatusProtocol?
     var selectedCanvassingStatus:String = ""
     
-   
-
+    
+    
     var statusArray: [String]!
     
-   
+    
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
         //self.navigationController?.isNavigationBarHidden = false
     }
     
-
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         populateStatus()
-
-     
+        
+        
     }
     
     func populateStatus(){
         
         let statusData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location__c",predicateValue2:  "Status__c", isPredicate:true) as! [DropDown]
         
-
-        if(statusData.count>0){
         
+        if(statusData.count>0){
+            
             let statusStr =  String(statusData[0].value!.characters.dropLast())
             statusArray = statusStr.components(separatedBy: ";")
-        
+            
             //statusArray = ["Blocked","Planned","In Progress","Completed"]
         }
         
     }
     
-   
+    
     // MARK: - table view methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-          return self.statusArray.count
+        return self.statusArray.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int
@@ -74,19 +74,19 @@ class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         
-           cell.textLabel?.text = statusArray[indexPath.row]
+        cell.textLabel?.text = statusArray[indexPath.row]
         
-            if(selectedCanvassingStatus ==  cell.textLabel?.text){
-                cell.accessoryType = UITableViewCellAccessoryType.checkmark;
-            }
-            else{
-                cell.accessoryType = UITableViewCellAccessoryType.none;
-            }
+        if(selectedCanvassingStatus ==  cell.textLabel?.text){
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark;
+        }
+        else{
+            cell.accessoryType = UITableViewCellAccessoryType.none;
+        }
         
-            return cell
+        return cell
         
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -96,29 +96,29 @@ class SelectCanvasssingStatusViewController: UIViewController,UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-       
+        
         
         canvassingStatusProtocol?.getCanvasssingStatus(strCanvassingStatus: statusArray[indexPath.row])
         
-         self.navigationController?.popViewController(animated: true);
+        self.navigationController?.popViewController(animated: true);
         
-//         let viewController = self.storyboard!.instantiateViewController(withIdentifier: "editLocationIdentifier") as? EditLocationViewController
-//        
-//        var selectedItem = indexPath
-//        viewController?.strStatus = statusArray[selectedItem.row]
-//    
-//        self.navigationController?.pushViewController(viewController!, animated: true)
- 
+        //         let viewController = self.storyboard!.instantiateViewController(withIdentifier: "editLocationIdentifier") as? EditLocationViewController
+        //
+        //        var selectedItem = indexPath
+        //        viewController?.strStatus = statusArray[selectedItem.row]
+        //
+        //        self.navigationController?.pushViewController(viewController!, animated: true)
+        
         
     }
-
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
     
-
+    
+    
 }

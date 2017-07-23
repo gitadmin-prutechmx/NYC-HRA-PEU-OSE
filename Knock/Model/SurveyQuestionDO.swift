@@ -20,8 +20,8 @@ class SurveyQuestionDO{
     
     var isSkipLogic:String!
     var getDescriptionAnswer:String!
-
-   
+    
+    
     init(questionId:String,questionText:String,questionType:String,questionNumber:String,isRequired:Bool,choices:String,
          skipLogicArray:[[String:SkipLogic]],isSkipLogic:String,getDescriptionAnswer:String) {
         self.questionId = questionId
@@ -33,7 +33,7 @@ class SurveyQuestionDO{
         self.skipLogicArray = skipLogicArray
         self.isSkipLogic = isSkipLogic
         self.getDescriptionAnswer = getDescriptionAnswer
-
+        
     }
 }
 
@@ -74,7 +74,7 @@ class SkipLogicParentChild{
 }
 
 class SurveyResult{
-
+    
     var questionId:String!
     
     var questionType:String!

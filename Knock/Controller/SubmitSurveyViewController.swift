@@ -10,36 +10,36 @@ import UIKit
 import Toast_Swift
 
 class SubmitSurveyViewController: UIViewController {
-
+    
     @IBOutlet weak var signatureView: YPDrawSignatureView!
     
     var surveyRes : [String:String] = [:]
     var isexitSurvey:Bool = false
-   
-   // @IBOutlet weak var submitBtn: UIButton!
+    
+    // @IBOutlet weak var submitBtn: UIButton!
     
     @IBOutlet weak var toolBarView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.signatureView.layer.borderWidth = 1
         self.signatureView.layer.borderColor = UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         
-       // submitBtn.layer.cornerRadius = 5
+        // submitBtn.layer.cornerRadius = 5
         
-         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-   
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -61,7 +61,7 @@ class SubmitSurveyViewController: UIViewController {
         
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
-
+        
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
@@ -84,7 +84,7 @@ class SubmitSurveyViewController: UIViewController {
         
         
     }
-
+    
     
     @IBAction func submitSurvey(_ sender: Any) {
         self.isexitSurvey = false
@@ -128,33 +128,33 @@ class SubmitSurveyViewController: UIViewController {
         
         
         
-           // Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex
-            
-            //Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+        // Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex
+        
+        //Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
     }
     
     
     
-   
+    
     var questionArray = [[String: String]]()
     
-     var surveyResponseStr:String = ""
-     var formatString:String = ""
+    var surveyResponseStr:String = ""
+    var formatString:String = ""
     var responseDict : [String:AnyObject] = [:]
-
+    
     
     func prepareSurveyData(){
         
         //"{\"surveyId\":\"a0G35000000kQID\",\"response\":[{\"answer\":\"encrypt\",\"questionId\":\"a0F35000000EqIQ\",\"description\":\"Testing desc\"}]}"
         
-
-        
-       
-        
-       // print(Utilities.SurveyOutput)
         
         
-      
+        
+        
+        // print(Utilities.SurveyOutput)
+        
+        
+        
         var questionResponseDict:[String:String] = [:]
         
         for (_, value) in Utilities.SurveyOutput {
@@ -178,20 +178,20 @@ class SubmitSurveyViewController: UIViewController {
         }
         
         
-//        responseDict["surveyId"] = SalesforceConnection.surveyId as AnyObject?
-//        responseDict["response"] = questionArray as AnyObject?
-//        
-//
-//        formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
-//        
-//        print(formatString)
-//        
-//        surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-//        
-//        
-//        
-//        print(surveyResponseStr)
-//        
+        //        responseDict["surveyId"] = SalesforceConnection.surveyId as AnyObject?
+        //        responseDict["response"] = questionArray as AnyObject?
+        //
+        //
+        //        formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
+        //
+        //        print(formatString)
+        //
+        //        surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+        //
+        //
+        //
+        //        print(surveyResponseStr)
+        //
         
         saveSurveyToCoreData()
         
@@ -200,37 +200,37 @@ class SubmitSurveyViewController: UIViewController {
         Utilities.isSubmitSurvey = true
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-
         
-       // sendSurveyToSalesforce()
+        
+        // sendSurveyToSalesforce()
         
         
         /*
- formatString = "{\"surveyId\":\"\(SalesforceConnection.surveyId)\",\"response\":["
-        
-        for (key, value) in Utilities.SurveyOutput {
-            if(value.questionType == "Single Select" || value.questionType == "Text Area"){
-                 formatString =  formatString + "{\"questionId\":\"\(value.questionId!)\",\"answer\":\"\(value.selectedAnswer!)\",\"description\":\"\(value.getDescription!)\"}" + ","
-            }
-            else if(value.questionType == "Multi Select"){
-
-                let multioption = value.multiOption.joined(separator: ";")
-                
-                formatString =  formatString + "{\"questionId\":\"\(value.questionId!)\",\"answer\":\"\(multioption)\",\"description\":\"\(value.getDescription!)\"}" + ","
-            }
-           
-        }
-        
-        
-        
-        if(formatString.isEmpty){
-            formatString = ""
-        }
-        else{
-            formatString =  formatString.substring(to: formatString.characters.index(before: formatString.endIndex)) + "]}"
-        }
- 
- */
+         formatString = "{\"surveyId\":\"\(SalesforceConnection.surveyId)\",\"response\":["
+         
+         for (key, value) in Utilities.SurveyOutput {
+         if(value.questionType == "Single Select" || value.questionType == "Text Area"){
+         formatString =  formatString + "{\"questionId\":\"\(value.questionId!)\",\"answer\":\"\(value.selectedAnswer!)\",\"description\":\"\(value.getDescription!)\"}" + ","
+         }
+         else if(value.questionType == "Multi Select"){
+         
+         let multioption = value.multiOption.joined(separator: ";")
+         
+         formatString =  formatString + "{\"questionId\":\"\(value.questionId!)\",\"answer\":\"\(multioption)\",\"description\":\"\(value.getDescription!)\"}" + ","
+         }
+         
+         }
+         
+         
+         
+         if(formatString.isEmpty){
+         formatString = ""
+         }
+         else{
+         formatString =  formatString.substring(to: formatString.characters.index(before: formatString.endIndex)) + "]}"
+         }
+         
+         */
         
         
         
@@ -250,15 +250,15 @@ class SubmitSurveyViewController: UIViewController {
         surveyResponseObject.surveyQuestionRes = questionArray as NSObject?
         
         appDelegate.saveContext()
-
+        
     }
     
     func fetchSurveyFromCoreData(){
         
-      let surveyResResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",isPredicate:false) as! [SurveyResponse]
+        let surveyResResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",isPredicate:false) as! [SurveyResponse]
         
         if(surveyResResults.count > 0){
-           
+            
             responseDict["surveyId"] = SalesforceConnection.surveyId as AnyObject?
             responseDict["response"] = surveyResResults[0].surveyQuestionRes! as AnyObject?
             
@@ -272,7 +272,7 @@ class SubmitSurveyViewController: UIViewController {
             
             
             print(surveyResponseStr)
-
+            
             
         }
         
@@ -282,7 +282,7 @@ class SubmitSurveyViewController: UIViewController {
     
     func sendSurveyToSalesforce(){
         
-       // Utilities.isSubmitSurvey = true
+        // Utilities.isSubmitSurvey = true
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
         
@@ -291,7 +291,7 @@ class SubmitSurveyViewController: UIViewController {
         
         SalesforceConnection.loginToSalesforce() { response in
             
-         if(response)
+            if(response)
             {
                 
                 self.surveyRes["surveyResponseFile"] = self.surveyResponseStr
@@ -300,18 +300,18 @@ class SubmitSurveyViewController: UIViewController {
                     
                     
                     
-                        print(jsonData)
-                        
-                        SVProgressHUD.dismiss()
+                    print(jsonData)
                     
-                       // Utilities.isSubmitSurvey = true
-
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                        
-                        
-                        // JLToast.makeText("Survey Response has been submitted successfully.", duration: 3).show()
-                        
-                        
+                    SVProgressHUD.dismiss()
+                    
+                    // Utilities.isSubmitSurvey = true
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                    
+                    
+                    // JLToast.makeText("Survey Response has been submitted successfully.", duration: 3).show()
+                    
+                    
                     
                     
                     
@@ -319,56 +319,56 @@ class SubmitSurveyViewController: UIViewController {
             }
         }
         
-     
+        
         
         
     }
     
     
-
     
     
     
-
+    
+    
     
     var base64String:String = ""
-
-     override func prepare(for segue: UIStoryboardSegue!, sender: Any!) {
-     
+    
+    override func prepare(for segue: UIStoryboardSegue!, sender: Any!) {
+        
         if(segue.identifier == "UnwindBackFromSurveyIdentifier"){
             if let signatureImage = self.signatureView.getSignature(10) {
                 // Saving signatureImage from the line above to the Photo Roll.
                 // The first time you do this, the app asks for access to your pictures.
-            
+                
                 base64String = self.convertImageToBase64(signatureImage)
-            
+                
                 //print("base64String: \(base64String)")
                 
-               // let signImage = self.convertBase64ToImage(base64String)
-            
+                // let signImage = self.convertBase64ToImage(base64String)
                 
-               // UIImageWriteToSavedPhotosAlbum(signImage, nil, nil, nil)
-            
+                
+                // UIImageWriteToSavedPhotosAlbum(signImage, nil, nil, nil)
+                
                 // Since the Signature is now saved to the Photo Roll, the View can be cleared anyway.
                 self.signatureView.clear()
- 
-        }
-        
+                
+            }
+            
             if(isexitSurvey==false){
                 prepareSurveyData()
                 
             }
-        
-        
+            
+            
             
         }
         
-     
-     }
-     
- 
+        
+    }
     
- 
+    
+    
+    
     // convert images into base64 and keep them into string
     
     func convertImageToBase64(_ image: UIImage) -> String {
@@ -396,5 +396,5 @@ class SubmitSurveyViewController: UIViewController {
     
     
     
-
+    
 }

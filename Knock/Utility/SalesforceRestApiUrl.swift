@@ -12,7 +12,7 @@ class SalesforceRestApiUrl{
     
     static let getAllEventAssignmentData = "/services/apexrest/assignmentdetail"
     
-  
+    
     
     static let submitSurveyResponse = "/services/apexrest/surveyresponse"
     
@@ -23,7 +23,7 @@ class SalesforceRestApiUrl{
     static let createTenant = "/services/apexrest/createTenant"
     
     static let createUnit = "/services/apexrest/createUnit"
-
+    
     static let assignmentdetailchart = "/services/apexrest/assignmentdetailchart"
     
     static let userDetail = "/services/apexrest/userDetail"
@@ -34,8 +34,8 @@ class SalesforceRestApiUrl{
     //urlMapping = picklistValue
     
     //these apis are not used --deprecated
-     static let assignTenant = "/services/apexrest/assignTenant"
-     static let getAllSurveyData = "/services/apexrest/assignmentSurvey"
+    static let assignTenant = "/services/apexrest/assignTenant"
+    static let getAllSurveyData = "/services/apexrest/assignmentSurvey"
     
     
     

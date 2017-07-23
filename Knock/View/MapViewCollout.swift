@@ -20,11 +20,11 @@ class MapViewCollout: UIView
     
     @IBOutlet weak var lblAttemptPrecentage: UILabel!
     
-//    @IBOutlet weak var lblNoOfUnits: UILabel!
-//    
-//    @IBOutlet weak var lblNoClients: UILabel!
-//
-//    @IBOutlet weak var lblAttemptPrecentage: UILabel!
+    //    @IBOutlet weak var lblNoOfUnits: UILabel!
+    //
+    //    @IBOutlet weak var lblNoClients: UILabel!
+    //
+    //    @IBOutlet weak var lblAttemptPrecentage: UILabel!
     
     override init(frame: CGRect)
     {
@@ -35,7 +35,7 @@ class MapViewCollout: UIView
     required init?(coder aDecoder: NSCoder) {
         print("infinite loop")
         super.init(coder: aDecoder)
-       // setup()
+        // setup()
     }
     
     
@@ -54,13 +54,13 @@ class MapViewCollout: UIView
         return view
     }
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
     
     
-
+    
 }

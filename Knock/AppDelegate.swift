@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-         Fabric.with([Crashlytics.self])
+        Fabric.with([Crashlytics.self])
         // Override point for customization after application launch.
         do {
             Network.reachability = try Reachability(hostname: "www.google.com")
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print(error)
         }
-
+        
         return true
     }
     

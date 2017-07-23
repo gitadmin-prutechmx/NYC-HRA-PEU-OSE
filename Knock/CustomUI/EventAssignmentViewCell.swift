@@ -9,7 +9,7 @@
 import UIKit
 
 class EventAssignmentViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var assignmentName: UILabel!
     
     @IBOutlet weak var eventName: UILabel!
@@ -27,11 +27,11 @@ class EventAssignmentViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
 }

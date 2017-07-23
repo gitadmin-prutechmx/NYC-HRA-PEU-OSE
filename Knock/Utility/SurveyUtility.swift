@@ -11,30 +11,30 @@ import Foundation
 class SurveyUtility {
     
     static var navigationController:UINavigationController? = nil
-
+    
     class func showSurvey(){
         
         let surveyQuestionResults =
             ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.surveyId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
-    
+        
         if(surveyQuestionResults.count == 1){
-    
-    
+            
+            
             let jsonData =  Utilities.convertToJSON(text: surveyQuestionResults[0].surveyQuestionData!) as!Dictionary<String, AnyObject>
-    
-    
+            
+            
             readSurveyJSONObject(object: jsonData)
-    
+            
             Utilities.totalSurveyQuestions =  Utilities.surveyQuestionArray.count
-    
-   
+            
+            
             if(Utilities.totalSurveyQuestions > 0){
-    
-                    showSurveyQuestions()
-                    print("ShowSurveyQuestions")
-                }
-    
+                
+                showSurveyQuestions()
+                print("ShowSurveyQuestions")
             }
+            
+        }
     }
     
     static var skipLogicArray : [[String:SkipLogic]] = []
@@ -151,7 +151,7 @@ class SurveyUtility {
             
             addSurveyObject(questionId, questionType: questionType, questionText: questionText, questionNumber: questionNumber, required: required, choices: "", isSkipLogic: skipLogic, answer: "", questionChoiceList: questionChoiceList)
             
-//            addSurveyObject(questionId, questionType: questionType, questionText: questionText, questionNumber: questionNumber, required: required, choices: "", isSkipLogic: skipLogic, answer: "", questionChoiceList: questionChoiceList)
+            //            addSurveyObject(questionId, questionType: questionType, questionText: questionText, questionNumber: questionNumber, required: required, choices: "", isSkipLogic: skipLogic, answer: "", questionChoiceList: questionChoiceList)
             
         }
         
@@ -229,7 +229,7 @@ class SurveyUtility {
     
     class func showSurveyQuestions(){
         
-
+        
         Utilities.SurveyOutput = [:]
         Utilities.answerSurvey = ""
         
@@ -249,7 +249,7 @@ class SurveyUtility {
             
             let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
             
-        
+            
             //presentDetail(surveyRadioButtonVC)
             
             navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
@@ -282,5 +282,5 @@ class SurveyUtility {
     }
     
     
-
+    
 }

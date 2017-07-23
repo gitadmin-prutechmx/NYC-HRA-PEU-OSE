@@ -14,7 +14,7 @@ import UIKit
 }
 
 class DownloadProgressView: UIView {
-
+    
     @IBOutlet private var containerView:UIView!
     @IBOutlet private var progressLabel:UILabel!
     @IBOutlet private var statusLabel:UILabel!
@@ -133,7 +133,7 @@ class DownloadProgressView: UIView {
     func updateProgress(progress: CGFloat, animated: Bool) {
         
         if progress > 1 {
-           self.progress = 1
+            self.progress = 1
         }
         else if progress < 0 {
             self.progress = 0

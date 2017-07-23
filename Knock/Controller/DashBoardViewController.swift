@@ -23,13 +23,13 @@ struct eventAssignmentDataStruct
     
     var completedDate:NSDate?
     var assignedDate:NSDate?
-   
+    
     
 }
 
 class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate
 {
-  
+    
     
     let reuseIdentifier = "cell"
     @IBOutlet weak var menuBtn: UIBarButtonItem!
@@ -50,14 +50,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     override func viewDidLoad()
     {
         super.viewDidLoad()
-//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        var width = UIScreen.main.bounds.width
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-//        width = width - 10
-//        layout.itemSize = CGSize(width: width / 2, height: width / 2)
-//        layout.minimumInteritemSpacing = 0
-//        layout.minimumLineSpacing = 0
-//        colChart!.collectionViewLayout = layout
+        //        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        //        var width = UIScreen.main.bounds.width
+        //        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        //        width = width - 10
+        //        layout.itemSize = CGSize(width: width / 2, height: width / 2)
+        //        layout.minimumInteritemSpacing = 0
+        //        layout.minimumLineSpacing = 0
+        //        colChart!.collectionViewLayout = layout
         
         if self.revealViewController() != nil {
             
@@ -71,7 +71,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
-       
+        
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
         
@@ -85,7 +85,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         //self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-
+        
         
         
         tableView.delegate = self
@@ -103,7 +103,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         NotificationCenter.default.addObserver(self, selector:#selector(DashBoardViewController.UpdateAssignmentView), name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object:nil
         )
         
-       populateChartData()
+        populateChartData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -112,14 +112,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     @IBAction func syncData(_ sender: Any) {
-     
+        
         
         if(Network.reachability?.isReachable)!{
             
-               Utilities.isRefreshBtnClick = true
+            Utilities.isRefreshBtnClick = true
             
-                SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
-                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
+            SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+            SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
             
         }
         else{
@@ -132,11 +132,11 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func UpdateAssignmentView(){
         
         print("UpdateAssignmentView")
-    
+        
         
         populateEventAssignmentData()
         populateChartData(isTwoMinuteSync: true)
-       
+        
         
         //updateTableViewData()
     }
@@ -152,7 +152,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func startTwoMinSyncing(){
         // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
         
-      
+        
         let syncTime:TimeInterval = TimeInterval(CGFloat(SalesforceConfig.currentOfflineSyncTime * 60))
         
         timer = Timer.scheduledTimer(timeInterval: syncTime, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
@@ -168,38 +168,38 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
         
     }
-      
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         
         populateEventAssignmentData()
-
+        
     }
     
-   //MARK: - chartMethods
- 
+    //MARK: - chartMethods
+    
     func barChartData(custumView:UIView)
     {
         
         let colors = getColors()
         
         let chart = BarChartView(frame: custumView.frame)
-  
+        
         //let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         //let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
         
         
         var dataEntries: [BarChartDataEntry] = []
         //String(describing: languages)z
-//        for i in 0..<chart1StatusArray.count
-//        {
-//            let dataEntry =   BarChartDataEntry(x: chart1ValueArray[i], y: Double(i))
-//            dataEntries.append(dataEntry)
-//        }
+        //        for i in 0..<chart1StatusArray.count
+        //        {
+        //            let dataEntry =   BarChartDataEntry(x: chart1ValueArray[i], y: Double(i))
+        //            dataEntries.append(dataEntry)
+        //        }
         
-      
+        
         
         //chart.isUserInteractionEnabled = true
         
@@ -218,7 +218,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         
-     //   barChartData.xAxis.labelPosition = .Bottom
+        //   barChartData.xAxis.labelPosition = .Bottom
         
         
         
@@ -235,32 +235,32 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func circleChartData(custumView:UIView,chartValue:Float,chartText:String, chartColor:UIColor,chartType:String)
     {
-       // let colors = getColors()
+        // let colors = getColors()
         
-    
+        
         if(chartType == "Total Units"){
-        
+            
             totalUnitsChart = GaugeView(frame: custumView.frame)
-        
+            
             totalUnitsChart.percentage = chartValue
-        
-        
+            
+            
             // chart.labelText = " "
             totalUnitsChart.labelText = chartText
-        
+            
             totalUnitsChart.thickness = 20
-        
-          //  totalUnitsChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            
+            //  totalUnitsChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
             totalUnitsChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
-
+            
             totalUnitsChart.labelColor = UIColor.black
             totalUnitsChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             totalUnitsChart.gaugeColor = chartColor
-       
+            
             totalUnitsChart.isUserInteractionEnabled = true
             totalUnitsChart.accessibilityLabel = "Gauge"
-
-        
+            
+            
             custumView.addSubview(totalUnitsChart)
         }
         else if(chartType == "Units Completed"){
@@ -275,8 +275,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             unitsCompletedChart.thickness = 20
             
-           // unitsCompletedChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
-             unitsCompletedChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
+            // unitsCompletedChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            unitsCompletedChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
             unitsCompletedChart.labelColor = UIColor.black
             unitsCompletedChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             unitsCompletedChart.gaugeColor = chartColor
@@ -299,7 +299,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             noResponseChart.thickness = 20
             
-           // noResponseChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            // noResponseChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
             noResponseChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
             noResponseChart.labelColor = UIColor.black
             noResponseChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
@@ -335,7 +335,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             custumView.addSubview(followUpNeededChart)
         }
     }
-
+    
     func updateChartData(custumView:UIView)
     {
         
@@ -349,7 +349,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
         // 3. chart setup
         let set = LineChartDataSet( values: entries, label: "")
-      
+        
         var colors: [UIColor] = []
         
         for _ in 0..<values.count {
@@ -390,7 +390,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         return colors
         // colors.append(BlankColor)
-
+        
     }
     
     
@@ -423,16 +423,16 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         chart4Label = ""
         chart4Value = ""
         
-      chartResults =  ManageCoreData.fetchData(salesforceEntityName: "Chart",isPredicate:false) as! [Chart]
-
+        chartResults =  ManageCoreData.fetchData(salesforceEntityName: "Chart",isPredicate:false) as! [Chart]
         
-         let chart1Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart1",isPredicate:true) as! [Chart]
+        
+        let chart1Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart1",isPredicate:true) as! [Chart]
         
         if(chart1Results.count > 0){
             
             chart1Label = chart1Results[0].chartLabel!
             chart1Value = chart1Results[0].chartValue!
- 
+            
         }
         
         let chart2Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart2",isPredicate:true) as! [Chart]
@@ -441,7 +441,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             chart2Label = chart2Results[0].chartLabel!
             chart2Value = chart2Results[0].chartValue!
-           
+            
         }
         
         let chart3Results = ManageCoreData.fetchData(salesforceEntityName: "Chart",predicateFormat: "chartType == %@",predicateValue: "Chart3",isPredicate:true) as! [Chart]
@@ -489,7 +489,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         else{
             colChart.reloadData()
         }
-       
+        
         
         
     }
@@ -499,25 +499,25 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func populateEventAssignmentData()
     {
         eventAssignmentDataArray = []
-     
+        
         eventDict = [:]
-       
+        
         
         
         createEventDictionary()
         
         //location count and unit count
-       
+        
         
         //location --> assignmentid
         //units----> locationId
         
         let assignmentResults = ManageCoreData.fetchData(salesforceEntityName: "Assignment",isPredicate:false) as! [Assignment]
-            
+        
         if(assignmentResults.count > 0){
-                
-            for assignmentdata in assignmentResults{
             
+            for assignmentdata in assignmentResults{
+                
                 
                 let assignmentStatus = assignmentdata.status!
                 
@@ -525,19 +525,19 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 
                 let objectEventAssignmentStruct:eventAssignmentDataStruct = eventAssignmentDataStruct(eventName:(eventObject?.eventName!)!,eventId: assignmentdata.eventId!, assignmentId: assignmentdata.id!, assignmentName: assignmentdata.name!, totalLocations: assignmentdata.totalLocations!, totalUnits: assignmentdata.totalUnits!, completeAssignment: assignmentdata.completePercent!,noOfClients:assignmentdata.noOfClients!,completedDate:assignmentdata.completedDate,assignedDate:assignmentdata.assignedDate)
                 
-               
-                //show completed assignments as well
-            if(Utilities.currentShowHideAssignments == true){
-              eventAssignmentDataArray.append(objectEventAssignmentStruct)
                 
-            }
-            else{
-                if(assignmentStatus != "Completed"){
+                //show completed assignments as well
+                if(Utilities.currentShowHideAssignments == true){
                     eventAssignmentDataArray.append(objectEventAssignmentStruct)
+                    
                 }
-              }
+                else{
+                    if(assignmentStatus != "Completed"){
+                        eventAssignmentDataArray.append(objectEventAssignmentStruct)
+                    }
+                }
             }
-
+            
         }
         
         if(Utilities.currentSortingFieldName == "Assignment"){
@@ -545,7 +545,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.assignmentName < $1.assignmentName }
             }
             else{
-                 eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.assignmentName > $1.assignmentName }
+                eventAssignmentDataArray = eventAssignmentDataArray.sorted { $0.assignmentName > $1.assignmentName }
             }
         }
         else if(Utilities.currentSortingFieldName == "Event"){
@@ -563,9 +563,9 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 
                 eventAssignmentDataArray.sort(by: {$0.completedDate?.compare($1.completedDate as! Date) == .orderedAscending})
                 
-              
                 
-
+                
+                
             }
             else{
                 
@@ -574,21 +574,21 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 eventAssignmentDataArray.sort(by: {$0.completedDate?.compare($1.completedDate as! Date) == .orderedDescending})
                 
                 
-
+                
             }
-
+            
         }
         
-       // assignmentArray.sort()
-
+        // assignmentArray.sort()
+        
         tableView.reloadData()
         
-       
-    
-     
+        
+        
+        
     }
     
-
+    
     
     func createEventDictionary(){
         
@@ -610,7 +610,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
     
-
+    
     
     // MARK: - Models
     
@@ -629,19 +629,19 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         //cell.lblChart.text = chart1Label
         
-      //  cell.chartView = UIView()
+        //  cell.chartView = UIView()
         
         if indexPath.row == 0
         {
-         //R165 G225 B255
+            //R165 G225 B255
             circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart1Value, chartColor: UIColor(red: CGFloat(165.0/255), green: CGFloat(225.0/255), blue: CGFloat(255.0/255), alpha: 1),chartType:chart1Label)
             
             cell.lblChart.text = chart1Label
-           
-           //barChartData(custumView: cell.chartView)
             
-           //cell.lblChart.text = chart1Label
-           
+            //barChartData(custumView: cell.chartView)
+            
+            //cell.lblChart.text = chart1Label
+            
         }
         
         if indexPath.row == 1
@@ -649,29 +649,29 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             //Green R91 G192 B74
             circleChartData(custumView: cell.chartView, chartValue: 100, chartText: chart2Value, chartColor: UIColor(red: CGFloat(91.0/255), green: CGFloat(192.0/255), blue: CGFloat(74.0/255), alpha: 1),chartType:chart2Label)
             
-             cell.lblChart.text = chart2Label
-           
+            cell.lblChart.text = chart2Label
+            
         }
         if indexPath.row == 2
         {
             //Red R206 G88 B127
-           circleChartData(custumView: cell.chartView, chartValue: Float(chart3Value)!, chartText: chart3Value + "%", chartColor: UIColor(red: CGFloat(206.0/255), green: CGFloat(88.0/255), blue: CGFloat(127.0/255), alpha: 1),chartType:chart3Label)
-           
-             cell.lblChart.text = chart3Label
+            circleChartData(custumView: cell.chartView, chartValue: Float(chart3Value)!, chartText: chart3Value + "%", chartColor: UIColor(red: CGFloat(206.0/255), green: CGFloat(88.0/255), blue: CGFloat(127.0/255), alpha: 1),chartType:chart3Label)
+            
+            cell.lblChart.text = chart3Label
             
         }
         if indexPath.row == 3
         {
             //Yellow R229 G229 B137
             circleChartData(custumView: cell.chartView, chartValue: Float(chart4Value)!, chartText: chart4Value + "%", chartColor: UIColor(red: CGFloat(229.0/255), green: CGFloat(229.0/255), blue: CGFloat(137.0/255), alpha: 1),chartType:chart4Label)
-           
-             cell.lblChart.text = chart4Label
-           // updateChartData(custumView: cell.chartView)
+            
+            cell.lblChart.text = chart4Label
+            // updateChartData(custumView: cell.chartView)
             
         }
         
         
-       
+        
         
         
         //cell.myLabel.text = self.items[indexPath.item]
@@ -686,7 +686,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         // handle tap events
         print("You selected cell #\(indexPath.item)!")
     }
-
+    
     
     // MARK: UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -711,7 +711,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         //let eventObject = eventDict[eventAssignmentDataArray[indexPath.row].eventId]
         
- 
+        
         cell.eventName.text = eventAssignmentDataArray[indexPath.row].eventName//eventObject?.eventName
         
         cell.locations.text = eventAssignmentDataArray[indexPath.row].totalLocations
@@ -720,12 +720,12 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         cell.assignmentId.text = eventAssignmentDataArray[indexPath.row].assignmentId
         
-
+        
         cell.completePercent.text = eventAssignmentDataArray[indexPath.row].completeAssignment //+ "%"
         
         cell.noOfClients.text = eventAssignmentDataArray[indexPath.row].noOfClients
         
-       
+        
         
         return cell
     }
@@ -740,7 +740,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
         
         return cell
-    
+        
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return  35.0
@@ -750,8 +750,8 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     @IBAction func UnwindBackFromMapLocation(segue:UIStoryboardSegue) {
         
-    if (self.revealViewController().frontViewPosition == FrontViewPosition.right)
-         {
+        if (self.revealViewController().frontViewPosition == FrontViewPosition.right)
+        {
             //self.revealViewController().revealToggle(animated: true)
             self.revealViewController().revealToggle(animated: true)
         }
@@ -766,12 +766,12 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         // endEditing can trigger some other action according to requirements
         
         SalesforceConnection.assignmentId =  eventAssignmentDataArray[indexPath.row].assignmentId
-//assignmentIdArray[indexPath.row]
+        //assignmentIdArray[indexPath.row]
         SalesforceConnection.assignmentName = eventAssignmentDataArray[indexPath.row].assignmentName
-//assignmentArray[indexPath.row]
+        //assignmentArray[indexPath.row]
         
         
-     
+        
         
         
         
@@ -784,7 +784,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             let sortingVC = segue.destination as! SortingTableViewController
             sortingVC.preferredContentSize = CGSize(width: 375, height: 260)
             
-           
+            
             
             sortingVC.setShowHideCompletedAssignments{ [weak self] (isCompletedAssignments:Bool) -> Void in
                 
@@ -806,38 +806,38 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
                 print(sortingFieldName)
                 print(sortingType)
                 
-               
+                
             }
             
-//            let navcontroller = segue.destination as! UINavigationController
-//            let sortingVC = navcontroller.topViewController as! SortingTableViewController
-//            sortingVC.preferredContentSize = CGSize(width: 375, height: 220)
-//            
-//            if let pop = sortingVC.popoverPresentationController {
-//                pop.passthroughViews = nil
-//            }
+            //            let navcontroller = segue.destination as! UINavigationController
+            //            let sortingVC = navcontroller.topViewController as! SortingTableViewController
+            //            sortingVC.preferredContentSize = CGSize(width: 375, height: 220)
+            //
+            //            if let pop = sortingVC.popoverPresentationController {
+            //                pop.passthroughViews = nil
+            //            }
             
             
-          //  controller.presentationController?.delegate = self
-//            controller.popoverPresentationController?.sourceView = self.view
-//            controller.popoverPresentationController?.sourceRect = self.searchBar.frame
+            //  controller.presentationController?.delegate = self
+            //            controller.popoverPresentationController?.sourceView = self.view
+            //            controller.popoverPresentationController?.sourceRect = self.searchBar.frame
             
             
             //controller.delegate = self
         }
     }
-
     
-//    
-//     func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-//        
-//        let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! EventAssignmentViewCell
-//        
-//        
-//        SalesforceConnection.assignmentId =  currentCell.assignmentId.text!
-//        SalesforceConnection.assignmentName = currentCell.assignmentName.text!
-//        
-//    }
-
-
+    
+    //    
+    //     func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    //        
+    //        let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! EventAssignmentViewCell
+    //        
+    //        
+    //        SalesforceConnection.assignmentId =  currentCell.assignmentId.text!
+    //        SalesforceConnection.assignmentName = currentCell.assignmentName.text!
+    //        
+    //    }
+    
+    
 }

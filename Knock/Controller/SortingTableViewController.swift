@@ -9,9 +9,9 @@
 import UIKit
 
 class SortingTableViewController: UITableViewController {
-
-  
-   
+    
+    
+    
     
     @IBOutlet weak var assignmentsRdb: UISwitch!
     @IBOutlet weak var assignmentsView: UIView!
@@ -30,7 +30,7 @@ class SortingTableViewController: UITableViewController {
     func setShowHideCompletedAssignments(_ action : @escaping ((Bool) -> Void)) {
         self.showHideCompletedAssignments = action
     }
-
+    
     //executed when sorting
     func setSortingEventAssignments(_ action : @escaping ((String,Bool) -> Void)) {
         self.sortingEventAssignments = action
@@ -39,11 +39,11 @@ class SortingTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-         assignmentsView.layer.cornerRadius = 5
-         sortingView.layer.cornerRadius = 5
         
-         resetButtonImage()
+        assignmentsView.layer.cornerRadius = 5
+        sortingView.layer.cornerRadius = 5
+        
+        resetButtonImage()
         
         if(Utilities.currentShowHideAssignments){
             assignmentsRdb.isOn = true
@@ -59,7 +59,7 @@ class SortingTableViewController: UITableViewController {
             resetSortingBtn(btn: dateBtn)
             
             setSortingType(btn: assignmentsBtn,type:Utilities.currentSortingTypeAscending)
-
+            
         }
         else if(Utilities.currentSortingFieldName == "Event"){
             setSelectedSortingBtn(btn: eventBtn)
@@ -83,7 +83,7 @@ class SortingTableViewController: UITableViewController {
         
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -95,11 +95,11 @@ class SortingTableViewController: UITableViewController {
         if self.showHideCompletedAssignments != nil {
             self.showHideCompletedAssignments(assignmentsRdb.isOn)
         }
-
+        
         
     }
     func setSelectedSortingBtn(btn:UIButton){
-       
+        
         btn.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1)
         btn.setTitleColor(UIColor.white, for: UIControlState.normal)
         
@@ -108,7 +108,7 @@ class SortingTableViewController: UITableViewController {
         
         
         
-
+        
     }
     
     func resetSortingBtn(btn:UIButton){
@@ -125,10 +125,10 @@ class SortingTableViewController: UITableViewController {
         eventBtn.setImage(nil, for: .normal)
         assignmentsBtn.setImage(nil, for: .normal)
         dateBtn.setImage(nil, for: .normal)
-
+        
     }
     
-   
+    
     
     func getSortingType(btn:UIButton)->Bool{
         
@@ -136,10 +136,10 @@ class SortingTableViewController: UITableViewController {
             
             if(currentBtnImg == UIImage(named: "SortingUp.png")){
                 
-               return true
+                return true
             }
             else{
-               return false
+                return false
             }
         }
         else{
@@ -148,7 +148,7 @@ class SortingTableViewController: UITableViewController {
         
     }
     
-   
+    
     
     //assignments arrow set
     //selected radio button and assignments when show popup show
@@ -170,7 +170,7 @@ class SortingTableViewController: UITableViewController {
             else{
                 if let image = UIImage(named: "SortingUp.png") {
                     btn.setImage(image, for: .normal)
-                     btn.tintColor = UIColor.white
+                    btn.tintColor = UIColor.white
                 }
             }
         }
@@ -190,10 +190,10 @@ class SortingTableViewController: UITableViewController {
         }
         
         
-       
-    
+        
+        
     }
-
+    
     @IBAction func sortingEvent(_ sender: Any) {
         
         setSelectedSortingBtn(btn: eventBtn)
@@ -207,8 +207,8 @@ class SortingTableViewController: UITableViewController {
         if self.sortingEventAssignments != nil {
             self.sortingEventAssignments("Event",getSortingType(btn: eventBtn))
         }
-
-  
+        
+        
     }
     @IBAction func sortingDate(_ sender: Any) {
         setSelectedSortingBtn(btn: dateBtn)
@@ -223,7 +223,7 @@ class SortingTableViewController: UITableViewController {
             self.sortingEventAssignments("Date",getSortingType(btn: dateBtn))
         }
     }
-   
+    
     @IBAction func sortingAssignment(_ sender: Any) {
         setSelectedSortingBtn(btn: assignmentsBtn)
         

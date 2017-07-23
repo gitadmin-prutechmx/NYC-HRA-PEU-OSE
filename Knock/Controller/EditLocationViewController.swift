@@ -18,7 +18,7 @@ protocol CanvassingStatusProtocol {
 class EditLocationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,CanvassingStatusProtocol
 {
     
-   // @IBOutlet weak var tblEditLocation : UITableView?
+    // @IBOutlet weak var tblEditLocation : UITableView?
     
     
     
@@ -28,56 +28,56 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
     var notes:String = ""
     
     
-     var arrStatusOption = NSMutableArray()
-     var editLocDict : [String:String] = [:]
+    var arrStatusOption = NSMutableArray()
+    var editLocDict : [String:String] = [:]
     
     @IBOutlet weak var fullAddressLbl: UILabel!
     @IBOutlet weak var tblEditLocation: UITableView!
-
+    
     @IBOutlet weak var NotesTextArea: UITextView!
     
-   // @IBOutlet weak var NotesTextArea: UITextView!
+    // @IBOutlet weak var NotesTextArea: UITextView!
     
     func getCanvasssingStatus(strCanvassingStatus:String){
         
         canvassingStatus = strCanvassingStatus
         tblEditLocation?.reloadData()
-       
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-       //setupStatusDropDown()
+        //setupStatusDropDown()
         
         fullAddressLbl.text = SalesforceConnection.fullAddress
-         //self.txtStatusList.inputView = pickerView
+        //self.txtStatusList.inputView = pickerView
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
-       // self.tblEditLocation?.separatorStyle = UITableViewCellSeparatorStyle.none
-       
+        // self.tblEditLocation?.separatorStyle = UITableViewCellSeparatorStyle.none
+        
         self.tblEditLocation?.tableFooterView = UIView()
         //self.tblEditLocation?.dataSource = self
         //self.tblEditLocation?.delegate = self
         self.navigationController?.navigationBar.tintColor = UIColor.white
-
+        
         NotesTextArea.layer.cornerRadius = 5
         NotesTextArea.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         NotesTextArea.layer.borderWidth = 0.5
         NotesTextArea.clipsToBounds = true
         
-       
+        
         NotesTextArea.textColor = UIColor.black
         
-      
+        
         populateEditLocation()
         
-    
-       // self.tblEditLocation?.tableFooterView = UIView()
         
-      
-
+        // self.tblEditLocation?.tableFooterView = UIView()
+        
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -85,7 +85,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
     
     
     //Mark: tableview delegets
-   
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -117,7 +117,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             
             self.navigationController?.pushViewController(canvassingStatusVC!, animated: true)
             
-
+            
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -141,15 +141,15 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
                 attemptSwitch.isOn = true
             }
             else if (attempt == "No"){
-               attemptSwitch.isOn = false
+                attemptSwitch.isOn = false
                 // attemptRdb.isOn = false
             }
             else{
                 attemptSwitch.isOn = false
             }
-
             
-           
+            
+            
             attemptSwitch.addTarget(self, action: #selector(EditLocationViewController.attemptChanged(_:)), for: UIControlEvents.valueChanged)
             
             cell.accessoryView = attemptSwitch
@@ -162,12 +162,12 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             cell.accessoryType = .disclosureIndicator
             
             cell.textLabel?.text = "Canvassing Status"
-           // cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+            // cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
             cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             if(canvassingStatus.isEmpty){
                 cell.detailTextLabel?.text = "Select Status"
                 cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
-
+                
             }
             else{
                 cell.detailTextLabel?.text = canvassingStatus
@@ -181,7 +181,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             return cell
             
         }
-
+            
         else
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "noOfUnitsCell", for: indexPath)
@@ -200,22 +200,22 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         
         
         
-       
+        
         
     }
     
     
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 0.1
-//    }
+    //    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    //        return 0.1
+    //    }
     
-   
-
-
-
-
-     func attemptChanged(_ sender: UISwitch)
-     {
+    
+    
+    
+    
+    
+    func attemptChanged(_ sender: UISwitch)
+    {
         
         //let index = sender.tag
         if(sender.isOn){
@@ -226,9 +226,9 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         }
         
         //let indexRow = (sender as AnyObject).tag
+        
+    }
     
-     }
- 
     
     func populateEditLocation(){
         
@@ -236,61 +236,61 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         
         if(editLocationResults.count > 0){
             
-
+            
             
             canvassingStatus = editLocationResults[0].canvassingStatus!
-
+            
             
             numberOfUnits = editLocationResults[0].noOfUnits!
-        
+            
             notes = editLocationResults[0].notes!
             NotesTextArea.text = notes
             
-           
+            
             attempt = editLocationResults[0].attempt!
             
         }
-
+        
     }
     
- 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-  
     
     
-
+    
+    
     func updateEditLocationInDatabase(){
-            
-            var updateObjectDic:[String:String] = [:]
-            
-            //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
-            
-            updateObjectDic["attempt"] = attempt
-            updateObjectDic["canvassingStatus"] = canvassingStatus
-            updateObjectDic["noOfUnits"] = numberOfUnits
-            updateObjectDic["notes"] = notes
-            updateObjectDic["actionStatus"] = "edit"
         
-            
-            
-            ManageCoreData.updateRecord(salesforceEntityName: "EditLocation", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ ", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,isPredicate: true)
-            
+        var updateObjectDic:[String:String] = [:]
+        
+        //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
+        
+        updateObjectDic["attempt"] = attempt
+        updateObjectDic["canvassingStatus"] = canvassingStatus
+        updateObjectDic["noOfUnits"] = numberOfUnits
+        updateObjectDic["notes"] = notes
+        updateObjectDic["actionStatus"] = "edit"
+        
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "EditLocation", updateKeyValue: updateObjectDic, predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ ", predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,isPredicate: true)
+        
         
         
     }
     
     @IBAction func cancelLocation(_ sender: Any)
     {
-         let msgtitle = "Message"
+        let msgtitle = "Message"
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
-       
+        
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
-
+        
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
@@ -300,7 +300,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
             
             
-             self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             //Do some other stuff
         }
         alertController.addAction(okAction)
@@ -309,13 +309,13 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
         self.present(alertController, animated: true, completion: nil)
         
         
-       
+        
         
     }
     
     
     @IBAction func saveLocation(_ sender: Any) {
-       
+        
         if let notesTemp = NotesTextArea.text{
             notes = notesTemp
         }
@@ -334,11 +334,11 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
             
         }
         
-
         
-
+        
+        
     }
     
-   
-   
+    
+    
 }

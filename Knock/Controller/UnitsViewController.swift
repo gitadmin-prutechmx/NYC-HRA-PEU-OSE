@@ -22,11 +22,11 @@ struct UnitsDataStruct
 
 class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
-   
-
+    
+    
     @IBOutlet weak var menuBtn: UIBarButtonItem!
     
-   
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
@@ -57,7 +57,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     var UnitDataArray = [UnitsDataStruct]()
-   
+    
     
     @IBOutlet weak var unitView: UIStackView!
     @IBOutlet weak var cellContentView: UIView!
@@ -72,7 +72,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             print("RevealViewController")
             menuBtn.target = self.revealViewController()
             menuBtn.action = #selector(SWRevealViewController.revealToggle(_:))
-           // self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            // self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             
         }
         
@@ -82,9 +82,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         let newUnitTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewUnitLblTapped:")))
         
         // add it to the image view;
-      //  newUnitLbl.addGestureRecognizer(newUnitTapGesture)
+        //  newUnitLbl.addGestureRecognizer(newUnitTapGesture)
         // make sure imageView can be interacted with by user
-      //  newUnitLbl.isUserInteractionEnabled = true
+        //  newUnitLbl.isUserInteractionEnabled = true
         
         let newCaseTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewCaseLblTapped:")))
         
@@ -92,17 +92,17 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         newCaseLbl.addGestureRecognizer(newCaseTapGesture)
         // make sure imageView can be interacted with by user
         newCaseLbl.isUserInteractionEnabled = true
-      
-         NotificationCenter.default.addObserver(self, selector:#selector(UnitsViewController.UpdateUnitView), name: NSNotification.Name(rawValue: "UpdateUnitView"), object:nil
+        
+        NotificationCenter.default.addObserver(self, selector:#selector(UnitsViewController.UpdateUnitView), name: NSNotification.Name(rawValue: "UpdateUnitView"), object:nil
         )
         
-    
+        
         
         
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
-
+        
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
@@ -126,17 +126,17 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         dataAssignment.text = "Assignment: " + SalesforceConnection.assignmentName
         
         //SalesforceRestApi.currentFullAddress = locName
-      
+        
         
         
     }
     
     @IBAction func moreAction(_ sender: Any) {
         
-    /*    let buttonPosition = (sender as AnyObject).convert(CGPoint(), to: tableView)
-        let index = tableView.indexPathForRow(at: buttonPosition)
-    */
-         let indexRow = (sender as AnyObject).tag
+        /*    let buttonPosition = (sender as AnyObject).convert(CGPoint(), to: tableView)
+         let index = tableView.indexPathForRow(at: buttonPosition)
+         */
+        let indexRow = (sender as AnyObject).tag
         
         SalesforceConnection.unitId =  UnitDataArray[indexRow!].unitId
         SalesforceConnection.unitName = UnitDataArray[indexRow!].unitName
@@ -148,12 +148,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
         
         
-       //  showActionSheet()
-       
+        //  showActionSheet()
+        
         
     }
     
-   
+    
     @IBAction func backBtn(sender: AnyObject) {
         
         
@@ -163,7 +163,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-   
+    
     
     func NewUnitLblTapped(gesture: UIGestureRecognizer) {
         // if the tapped view is a UIImageView then set it to imageview
@@ -175,16 +175,16 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         //self.performSegue(withIdentifier: "showAddNewCaseIdentifier", sender: nil)
     }
     
-   
+    
     
     
     func UpdateUnitView(){
         print("UpdateUnitView")
         
         if(Utilities.isSubmitSurvey){
-             updateSurveyStatus()
+            updateSurveyStatus()
         }
-       
+        
         updateTableViewData()
     }
     
@@ -224,10 +224,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         formatter.dateFormat = "MM/dd/yyyy"
         
         
-       
+        
         
         updateObjectDic["surveyStatus"] = "Completed"
-       // updateObjectDic["syncDate"] = "Pending.."
+        // updateObjectDic["syncDate"] = "Pending.."
         //updateObjectDic["syncDate"] = formatter.string(from: date)
         
         
@@ -238,12 +238,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         Utilities.isSubmitSurvey = false
         
         
-
+        
     }
     
-     var editUnitDict: [String:EditUnitDO] = [:]
-     var tenantDict: [String:String] = [:]
-     var countTenants:Int  = 1
+    var editUnitDict: [String:EditUnitDO] = [:]
+    var tenantDict: [String:String] = [:]
+    var countTenants:Int  = 1
     
     func createEditUnitDictionary(){
         
@@ -265,7 +265,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
-   
+    
     
     func createTenantDictionary(){
         
@@ -292,27 +292,27 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
     }
-
+    
     
     
     func updateTableViewData(){
         
-       UnitDataArray = [UnitsDataStruct]()
-       floorArray = []
+        UnitDataArray = [UnitsDataStruct]()
+        floorArray = []
         
         editUnitDict = [:]
         tenantDict = [:]
-
+        
         createEditUnitDictionary()
         createTenantDictionary()
         
         let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@ AND assignmentLocId == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,predicateValue3: SalesforceConnection.assignmentLocationId, isPredicate:true) as! [Unit]
- 
+        
         
         if(unitResults.count > 0){
             
             for unitData in unitResults{
- 
+                
                 let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.unitSyncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
                 
                 UnitDataArray.append(objectUnitStruct)
@@ -320,33 +320,33 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
         }
         
-         UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
+        UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
         
         
-
-       // self.floorTextField.text = "All"
-       // self.tableView.reloadData()
         
-         DispatchQueue.main.async {
-           
+        // self.floorTextField.text = "All"
+        // self.tableView.reloadData()
+        
+        DispatchQueue.main.async {
+            
             self.tableView.reloadData()
             self.viewDidLayoutSubviews()
         }
         
         
-       /*
+        /*
          DispatchQueue.global(qos: .background).async {
-            print("This is run on the background queue")
-            
-            DispatchQueue.main.async {
-                print("This is run on the main queue, after the previous code in outer block")
-            }
-        }
+         print("This is run on the background queue")
+         
+         DispatchQueue.main.async {
+         print("This is run on the main queue, after the previous code in outer block")
+         }
+         }
+         
+         */
         
-        */
- 
         
-    
+        
         
         
     }
@@ -379,77 +379,77 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     /*func readJSONObject(object: Dictionary<String, AnyObject>) {
-        
-        var unitNameArray1 = [String]()
-        var unitIdArray1 = [String]()
-        var floorArray1 = [String]()
-        var surveyStatusArray1 = [String]()
-        var syncDateArray1 = [String]()
-        
-        var UnitDataArray1 = [UnitsDataStruct]()
-        
-        guard let _ = object["errorMessage"] as? String
-            , let results = object["data"] as? [[String: AnyObject]] else { return }
-        
-        for data in results {
-            guard let dataLocId = data["locId"] as? String else { break }
-            
-            /* print("dataLocId \(dataLocId)")
-             print("locId \(locId)")*/
-            
-            if(dataLocId == locId){
-                
-                guard let units = data["units"] as? [[String: AnyObject]] else { return }
-                
-                print("Units \(units)")
-                
-                
-                
-                for unit in units{
-                    
-                    let unitId = unit["unitId"] as? String ?? ""
-                    let unitName = unit["name"] as? String ?? ""
-                    let floor = unit["floor"] as? String ?? ""
-                    let surveyStatus = unit["surveyStatus"] as? String ?? ""
-                    let syncDate = unit["surveyTakenDate"] as? String ?? ""
-                    
-                    
-                    let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitId, unitName: unitName, floor: floor, surveyStatus: surveyStatus, syncDate: syncDate)
-                    
-                    
-                    UnitDataArray1.append(objectUnitStruct)
-                    
-                    
-                    
-                    unitNameArray1.append(unitName)
-                    unitIdArray1.append(unitId)
-                    floorArray1.append(floor)
-                    surveyStatusArray1.append(surveyStatus)
-                    syncDateArray1.append(syncDate)
-                    
-                    print("unitName \(unitName)")
-                    
-                    
-                }
-            }
-            
-        }
-        
-        unitIdArray = unitIdArray1
-        floorArray = floorArray1
-        unitNameArray = unitNameArray1
-        surveyStatusArray = surveyStatusArray1
-        syncDateArray = syncDateArray1
-        
-        UnitDataArray = UnitDataArray1
-        OriginalUnitDataArray = UnitDataArray1
-        
-        print("readJsonData done")
-        
-        
-    }
-    
-    */
+     
+     var unitNameArray1 = [String]()
+     var unitIdArray1 = [String]()
+     var floorArray1 = [String]()
+     var surveyStatusArray1 = [String]()
+     var syncDateArray1 = [String]()
+     
+     var UnitDataArray1 = [UnitsDataStruct]()
+     
+     guard let _ = object["errorMessage"] as? String
+     , let results = object["data"] as? [[String: AnyObject]] else { return }
+     
+     for data in results {
+     guard let dataLocId = data["locId"] as? String else { break }
+     
+     /* print("dataLocId \(dataLocId)")
+     print("locId \(locId)")*/
+     
+     if(dataLocId == locId){
+     
+     guard let units = data["units"] as? [[String: AnyObject]] else { return }
+     
+     print("Units \(units)")
+     
+     
+     
+     for unit in units{
+     
+     let unitId = unit["unitId"] as? String ?? ""
+     let unitName = unit["name"] as? String ?? ""
+     let floor = unit["floor"] as? String ?? ""
+     let surveyStatus = unit["surveyStatus"] as? String ?? ""
+     let syncDate = unit["surveyTakenDate"] as? String ?? ""
+     
+     
+     let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitId, unitName: unitName, floor: floor, surveyStatus: surveyStatus, syncDate: syncDate)
+     
+     
+     UnitDataArray1.append(objectUnitStruct)
+     
+     
+     
+     unitNameArray1.append(unitName)
+     unitIdArray1.append(unitId)
+     floorArray1.append(floor)
+     surveyStatusArray1.append(surveyStatus)
+     syncDateArray1.append(syncDate)
+     
+     print("unitName \(unitName)")
+     
+     
+     }
+     }
+     
+     }
+     
+     unitIdArray = unitIdArray1
+     floorArray = floorArray1
+     unitNameArray = unitNameArray1
+     surveyStatusArray = surveyStatusArray1
+     syncDateArray = syncDateArray1
+     
+     UnitDataArray = UnitDataArray1
+     OriginalUnitDataArray = UnitDataArray1
+     
+     print("readJsonData done")
+     
+     
+     }
+     
+     */
     
     
     override func viewDidLayoutSubviews() {
@@ -487,53 +487,53 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         cell.unit.text = UnitDataArray[indexPath.row].unitName
         
         
-       // cell.moreBtn.tag = indexPath.row
-       
-        
-   /*
-        if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
-            
- 
-            cell.dataSyncDate.text =  UnitDataArray[indexPath.row].syncDate
-            //formatter.string(from: date)
-            
-            cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
-            //"Completed"
-            
-            
-          /*  if(Reachability.isConnectedToNetwork()){
-                cell.pendingIcon.isHidden = true
-                cell.dataSyncDate.text = "Pending"
-                cell.dataSyncDate.isHidden = false
-                
-            }
-            else{
-                cell.pendingIcon.isHidden = false
-                cell.dataSyncDate.text = ""
-                cell.dataSyncDate.isHidden = true
-            }
-            
-            cell.dataSyncStatus.text = "Completed"
- */
-            
-        }
-            
-        else{
-            
-            //cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
-            
-            cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
-            
-            cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
-            
-            cell.pendingIcon.isHidden = true
-            cell.dataSyncDate.isHidden = false
-            
-        }
+        // cell.moreBtn.tag = indexPath.row
         
         
-        
-        */
+        /*
+         if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
+         
+         
+         cell.dataSyncDate.text =  UnitDataArray[indexPath.row].syncDate
+         //formatter.string(from: date)
+         
+         cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
+         //"Completed"
+         
+         
+         /*  if(Reachability.isConnectedToNetwork()){
+         cell.pendingIcon.isHidden = true
+         cell.dataSyncDate.text = "Pending"
+         cell.dataSyncDate.isHidden = false
+         
+         }
+         else{
+         cell.pendingIcon.isHidden = false
+         cell.dataSyncDate.text = ""
+         cell.dataSyncDate.isHidden = true
+         }
+         
+         cell.dataSyncStatus.text = "Completed"
+         */
+         
+         }
+         
+         else{
+         
+         //cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
+         
+         cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
+         
+         cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
+         
+         cell.pendingIcon.isHidden = true
+         cell.dataSyncDate.isHidden = false
+         
+         }
+         
+         
+         
+         */
         
         
         cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
@@ -543,7 +543,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             cell.sync.image = UIImage(named: "Complete")
         }
         else{
-             cell.sync.isHidden = true
+            cell.sync.isHidden = true
         }
         
         if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
@@ -563,12 +563,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         cell.noOfTenants.text = noOfTenants
         
         if(editUnitObject?.attempt == "Yes"){
-             cell.attempt.isHidden = false
-             cell.attempt.image = UIImage(named: "Complete")
+            cell.attempt.isHidden = false
+            cell.attempt.image = UIImage(named: "Complete")
         }
         else if(editUnitObject?.attempt == "No"){
-             cell.attempt.isHidden = false
-             cell.attempt.image = UIImage(named: "No")
+            cell.attempt.isHidden = false
+            cell.attempt.image = UIImage(named: "No")
         }
         else{
             cell.attempt.isHidden = true
@@ -587,10 +587,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         else{
             cell.contact.isHidden = true
         }
-
         
         
-      //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
+        
+        //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
         
         
         
@@ -604,12 +604,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func getSurveyUnitResults()->Bool{
         
-      // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
+        // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
         
-         let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
+        let surveyUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@ ",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
         
         if(surveyUnitResults.count == 0){
-        
+            
             return false
             
         }
@@ -617,10 +617,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             return false
         }
-       
+        
         SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
         
-         return true
+        return true
         
     }
     
@@ -634,86 +634,86 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
         
-         SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
+        SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
         
         
-    if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
-        
-        let isSurveyAssigned = getSurveyUnitResults()
-        
-        //update or delete particular surveyunit
-        //add multiple conditions in predicateformat
-        
-        if(isSurveyAssigned == false){
-        
+        if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
             
-          
+            let isSurveyAssigned = getSurveyUnitResults()
             
-            Utilities.currentSegmentedControl = "Unit"
+            //update or delete particular surveyunit
+            //add multiple conditions in predicateformat
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            
-            let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
-            
-            SurveyUtility.navigationController = self.navigationController!
-           
-            let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
-            
-                self.showSurveyWizard()
-                print("completed for \(moreOptionVC)")
+            if(isSurveyAssigned == false){
+                
+                
+                
+                
+                Utilities.currentSegmentedControl = "Unit"
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
+                
+                SurveyUtility.navigationController = self.navigationController!
+                
+                let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
+                    
+                    self.showSurveyWizard()
+                    print("completed for \(moreOptionVC)")
+                }
+                moreOptionVC.completionHandler=completionHandler
+                
+                
+                
+                
+                //            moreOptionVC.dismissVCCompletion(){ () in
+                //                 print("kamal")
+                //                 //self.showSurveyWizard()
+                //            }
+                
+                let navigationController = UINavigationController(rootViewController: moreOptionVC)
+                navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+                
+                
+                self.present(navigationController, animated: true, completion: nil)
+                
+                
+                //            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+                
+                
             }
-            moreOptionVC.completionHandler=completionHandler
-            
-      
-            
-            
-//            moreOptionVC.dismissVCCompletion(){ () in
-//                 print("kamal")
-//                 //self.showSurveyWizard()
-//            }
-
-            let navigationController = UINavigationController(rootViewController: moreOptionVC)
-            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
-            
-           
-            self.present(navigationController, animated: true, completion: nil)
-            
-            
-//            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
-            
-            
+                
+            else{
+                
+                //SurveyUtility.showSurvey()
+                
+                // SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
+                
+                
+                showSurveyWizard()
+                
+            }
         }
-           
+            
         else{
             
-                //SurveyUtility.showSurvey()
+            let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! UnitsCustomViewCell
             
-               // SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
+            currentCell.shake(duration: 0.3, pathLength: 15)
             
             
-           showSurveyWizard()
-            
-        }
-    }
-        
-    else{
-        
-        let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! UnitsCustomViewCell
-        
-        currentCell.shake(duration: 0.3, pathLength: 15)
-     
-        
-        self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-            if didTap {
-                print("completion from tap")
-            } else {
-                print("completion without tap")
+            self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                if didTap {
+                    print("completion from tap")
+                } else {
+                    print("completion without tap")
+                }
             }
+            
         }
         
-        }
-
-
+        
     }
     
     func showSurveyWizard(){
@@ -974,7 +974,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let surveyMultiButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyMultiOptionVCIdentifier") as! SurveyMultiOptionViewController
             
-             //presentDetail(surveyMultiButtonVC)
+            //presentDetail(surveyMultiButtonVC)
             
             self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
             
@@ -1000,7 +1000,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
-  
+    
     
     
     
@@ -1018,15 +1018,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let more = UITableViewRowAction(style: .normal, title: "More") { action, index in
             
-        
+            
             //self.isEditing = false
             self.showActionSheet()
         }
         
-      
+        
         
         more.backgroundColor = UIColor(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1.0) // UIColor.blue
-      
+        
         
         return [more]
     }
@@ -1050,8 +1050,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             (alert: UIAlertAction!) -> Void in
             print("Tenant Information")
             
-             Utilities.currentSegmentedControl = "Tenant"
-             self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
+            Utilities.currentSegmentedControl = "Tenant"
+            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
         })
         
         //
@@ -1063,18 +1063,18 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
             
             /*
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let moreOptionsVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
-            
-            self.navigationController?.modalPresentationStyle = UIModalPresentationStyle.formSheet
-            
-            
-            //self.present(moreOptionsVC, animated: true, completion: nil)
-            
-        
-            
+             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+             let moreOptionsVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
+             
+             self.navigationController?.modalPresentationStyle = UIModalPresentationStyle.formSheet
+             
+             
+             //self.present(moreOptionsVC, animated: true, completion: nil)
+             
+             
+             
              self.navigationController?.pushViewController(moreOptionsVC, animated: true)
- */
+             */
             
         })
         
@@ -1119,7 +1119,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         return  41.0
     }
     
-     func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         
         
         
@@ -1129,7 +1129,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         else if(segue.identifier == "showAddNewUnitIdentifier"){
             
-         
+            
             
         }
             
@@ -1141,7 +1141,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
-   
+    
     @IBAction func NewUnit(_ sender: Any) {
         
         self.performSegue(withIdentifier: "showAddUnitIdentifier", sender: sender)
@@ -1160,7 +1160,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     //MARK: - Delegates and data sources
     
-  
+    
     
     @IBAction func UnwindBackFromSurvey(segue:UIStoryboardSegue) {
         

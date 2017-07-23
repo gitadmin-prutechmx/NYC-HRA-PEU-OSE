@@ -26,9 +26,9 @@ class DownloadESRILayers{
     
     static private var loginVC:LoginViewController!
     
-   // static private let FEATURE_SERVICE_URL = URL(string: "https://services7.arcgis.com/JRY73mi2cJ1KeR7T/arcgis/rest/services/MainPEULocationData/FeatureServer")!
+    // static private let FEATURE_SERVICE_URL = URL(string: "https://services7.arcgis.com/JRY73mi2cJ1KeR7T/arcgis/rest/services/MainPEULocationData/FeatureServer")!
     
-  
+    
     
     
     
@@ -54,9 +54,9 @@ class DownloadESRILayers{
         //syncTask = AGSGeodatabaseSyncTask(url: NSURL(string: featureServiceUrl)! as URL)
         
         
-
+        
         loadSyncTask(isGeodatabaseGenerate: true)
-
+        
         
         
     }
@@ -69,7 +69,7 @@ class DownloadESRILayers{
         if(userSettingData.count > 0){
             
             let FEATURE_SERVICE_URL = URL(string: userSettingData[0].featureLayerUrl!)!
-
+            
             
             syncTask = AGSGeodatabaseSyncTask(url: FEATURE_SERVICE_URL)
             
@@ -105,9 +105,9 @@ class DownloadESRILayers{
             
         }
         
-       
         
-       
+        
+        
         
     }
     
@@ -169,7 +169,7 @@ class DownloadESRILayers{
             
         }
         
-       
+        
         
         let params = AGSGenerateGeodatabaseParameters()
         
@@ -187,13 +187,13 @@ class DownloadESRILayers{
         
         
         
-//        if filemanager.fileExists(atPath: fullPath) {
-//            
-//            self.deleteAllGeodatabases()
-//            
-//            
-//            
-//        }
+        //        if filemanager.fileExists(atPath: fullPath) {
+        //
+        //            self.deleteAllGeodatabases()
+        //
+        //
+        //
+        //        }
         
         DownloadLayersData(path: generateGeodatabasePath,geodatabaseParams:params)
         
@@ -211,7 +211,7 @@ class DownloadESRILayers{
         generateJob = DownloadESRILayers.syncTask.generateJob(with: geodatabaseParams, downloadFileURL: NSURL(string: path)! as URL)
         
         
-       
+        
         
         //kick off the job
         generateJob.start(statusHandler: { (status: AGSJobStatus) -> Void in
@@ -228,46 +228,46 @@ class DownloadESRILayers{
                 
                 SVProgressHUD.dismiss()
                 
-            if(loginVC != nil){
-                    
-                
-                // && Utilities.isBaseMapExist()==false
-                if(SalesforceConfig.isBaseMapNeedToDownload == true){
-                    
-                    //Delete Basemap first and then download
-                    Utilities.deleteBasemap()
+                if(loginVC != nil){
                     
                     
-                    DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginVC)
-                   
-    
-                }
-                    
-                else{
-                    
-                    DispatchQueue.main.async {
-                        loginVC?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                    // && Utilities.isBaseMapExist()==false
+                    if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                        
+                        //Delete Basemap first and then download
+                        Utilities.deleteBasemap()
+                        
+                        
+                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginVC)
+                        
+                        
                     }
-                }
+                        
+                    else{
+                        
+                        DispatchQueue.main.async {
+                            loginVC?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                        }
+                    }
                     
                     
                     
                     
-                
                     
-            }//end of loginVC
+                    
+                }//end of loginVC
                 
                 
                 
                 
-               
+                
             }
         }
-
         
-       
+        
+        
         
     }
     
-        
+    
 }

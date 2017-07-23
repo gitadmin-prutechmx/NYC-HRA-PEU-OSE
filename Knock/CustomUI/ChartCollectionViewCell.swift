@@ -13,7 +13,7 @@ class ChartCollectionViewCell: UICollectionViewCell
     
     @IBOutlet weak var chartView: UIView!
     @IBOutlet weak var lblChart: UILabel!
-
-  
-
+    
+    
+    
 }

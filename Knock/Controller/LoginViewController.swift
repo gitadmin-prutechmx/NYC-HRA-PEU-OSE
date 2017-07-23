@@ -27,7 +27,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     @IBOutlet var loginView: UIView!
     @IBOutlet weak var emailTextField: DesignableTextField!
     @IBOutlet weak var passwordTextField: DesignableTextField!
-   
+    
     
     @IBOutlet weak var vwPassword: UIView!
     @IBOutlet weak var loginBtn: UIButton!
@@ -41,14 +41,14 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         self.downloadProgressView.dismiss()
         print("Cancel")
     }
-
+    
     
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
         //self.navigationController?.isNavigationBarHidden = false
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -148,7 +148,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             SalesforceConfig.currentFeatureLayerUrl = userSettingData[0].featureLayerUrl!
             
             SalesforceConfig.currentOfflineSyncTime = Int(userSettingData[0].offlineSyncTime!)!
-
+            
             
             //background sync time
             
@@ -163,7 +163,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
         
         if(userSettingData.count == 0){
-           
+            
             let settingData = Setting(context: context)
             
             settingData.settingsId = "1"
@@ -177,7 +177,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             //settingData.basemapDate = Date() as NSDate?
             
             //background sync time
-        
+            
             
             appDelegate.saveContext()
             
@@ -189,7 +189,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     
     func saveSalesforceOrgCredentials(){
         
-
+        
         salesforceConfigData = ManageCoreData.fetchData(salesforceEntityName: "SalesforceOrgConfig", isPredicate:false) as! [SalesforceOrgConfig]
         
         if(salesforceConfigData.count == 0){
@@ -198,74 +198,74 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             let endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
             let clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
             let clientSecret = "5050630969965231251"
-        
-        
-        
+            
+            
+            
             let configData = SalesforceOrgConfig(context: context)
-        
+            
             configData.companyName = try! companyName.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
             configData.endPointUrl = try! endPointUrl.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
             configData.clientId = try! clientId.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
             configData.clientSecret = try! clientSecret.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
-        
-        
+            
+            
             appDelegate.saveContext()
-
+            
         }
         
         
         
-      
         
-
+        
+        
     }
     
     
-
+    
     
     @IBAction func tapAtLoginBtn(_ sender: AnyObject) {
         
-
+        
         
         DispatchQueue.main.async {
-              self.loginView.endEditing(true)
+            self.loginView.endEditing(true)
         }
         
-    
-//        if validation()
-//        {
-            if(Network.reachability?.isReachable)!{
+        
+        //        if validation()
+        //        {
+        if(Network.reachability?.isReachable)!{
+            
+            onlineEnterToDashBoard()
+        }
+        else{
+            
+            
+            
+            let users =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", isPredicate:false) as! [UserInfo]
+            
+            if(users.count == 0){
                 
-                onlineEnterToDashBoard()
+                self.view.makeToast("No internet connection", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    
+                }
+                
+            }
+            else if(noOfAttempts <= 4){
+                offlineEnterToDashBoard()
             }
             else{
                 
-               
-                
-                let users =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", isPredicate:false) as! [UserInfo]
-                
-                if(users.count == 0){
+                self.view.makeToast("No internet connection. Please relogin when newtwork gain access.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
-                    self.view.makeToast("No internet connection", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        
-                        
-                    }
-
-                }
-                else if(noOfAttempts <= 4){
-                    offlineEnterToDashBoard()
-                }
-                else{
                     
-                    self.view.makeToast("No internet connection. Please relogin when newtwork gain access.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        
-                        
-                    }
-
                 }
+                
             }
-            
-            
+        }
+        
+        
         //}
         
         
@@ -277,7 +277,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         self.performSegue(withIdentifier: "ForgetPasswordIdentifer", sender: nil)
     }
     
-        
+    
     
     func validation() -> Bool
     {
@@ -292,7 +292,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                 {
                     
                 }
-
+                
             }
             return false
         }
@@ -351,60 +351,60 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
         SalesforceConfig.password = "peuprutech1234"
         
-  // SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        // SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
-    userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
+        userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
         
-    if(userInfoData.count > 0){
-        
-        if(userInfoData[0].passwordExpDate?.isGreaterThanDate(dateToCompare: NSDate()))!
-        {
+        if(userInfoData.count > 0){
             
-            let password = try! userInfoData[0].password!.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
-            
-            if(password == SalesforceConfig.password){//passwordTextField.text!){
+            if(userInfoData[0].passwordExpDate?.isGreaterThanDate(dateToCompare: NSDate()))!
+            {
                 
-                  getSalesforceOrgCredentials()
-                  getUserSetting()
+                let password = try! userInfoData[0].password!.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
                 
-                   //SalesforceConfig.password = passwordTextField.text!
-                   SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
-                   SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
-                   SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
-                
-                
-                   self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-            }
-            else{
-                
-                noOfAttempts = noOfAttempts + 1
-                
-                if(noOfAttempts > 3){
+                if(password == SalesforceConfig.password){//passwordTextField.text!){
                     
-                    //Delete cache? and userInfo table ? and show error message
+                    getSalesforceOrgCredentials()
+                    getUserSetting()
+                    
+                    //SalesforceConfig.password = passwordTextField.text!
+                    SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
+                    SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
+                    SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
+                    
+                    
+                    self.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                 }
                 else{
                     
-                     //Show error with number of attempts
-                    self.view.makeToast("Please enter valid passsword. Only \(5-noOfAttempts) has been left.After that you have to relogin again when you gain network connectivity.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    noOfAttempts = noOfAttempts + 1
+                    
+                    if(noOfAttempts > 3){
+                        
+                        //Delete cache? and userInfo table ? and show error message
+                    }
+                    else{
+                        
+                        //Show error with number of attempts
+                        self.view.makeToast("Please enter valid passsword. Only \(5-noOfAttempts) has been left.After that you have to relogin again when you gain network connectivity.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                            
+                            
+                        }
+                        
+                        
                         
                         
                     }
-
                     
-                   
-                   
+                    
                 }
-               
                 
-            }
+            }//password expiration date condition
+            else{
                 
-          }//password expiration date condition
-         else{
-            
                 self.view.makeToast("Your password has been expired. Please relogin when you gain network connectivity.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                
+                    
+                    
                 }
             }
             
@@ -415,22 +415,22 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                 
                 
             }
-
+            
         }
-
-       
-
         
-       
+        
+        
+        
+        
     }
     
-
+    
     
     func onlineEnterToDashBoard(){
-       
-      //  var emailParams : [String:String] = [:]
+        
+        //  var emailParams : [String:String] = [:]
         var userParams : [String:String] = [:]
-     
+        
         
         getSalesforceOrgCredentials()
         
@@ -452,12 +452,12 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
         SalesforceConfig.password = "peuprutech1234"
         
-         SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true,controller: self)
+        SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true,controller: self)
         
-       
+        
     }
     
-   
+    
     
     
     func getSalesforceOrgCredentials(){
@@ -485,17 +485,17 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     
     @IBAction func UnwindBackFromLogout(segue:UIStoryboardSegue) {
         
-       // ManageCoreData.DeleteAllDataFromEntities()
+        // ManageCoreData.DeleteAllDataFromEntities()
         print("UnwindBackFromLogout")
         
     }
-
+    
     @IBAction func UnwindBackFromForgotPassword(segue:UIStoryboardSegue) {
         
         print("UnwindBackFromForgotPassword")
         
     }
-
+    
     
     
     

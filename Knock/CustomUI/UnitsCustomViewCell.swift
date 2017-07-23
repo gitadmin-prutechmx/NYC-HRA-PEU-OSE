@@ -9,11 +9,11 @@
 import UIKit
 
 class UnitsCustomViewCell: UITableViewCell {
-
+    
     /*@IBOutlet weak var dataUnit: UILabel!
-    @IBOutlet weak var dataSyncStatus: UILabel!
-    @IBOutlet weak var dataSyncDate: UILabel!
-    @IBOutlet weak var dataUnitId: UILabel!*/
+     @IBOutlet weak var dataSyncStatus: UILabel!
+     @IBOutlet weak var dataSyncDate: UILabel!
+     @IBOutlet weak var dataUnitId: UILabel!*/
     
     
     
@@ -42,7 +42,7 @@ extension UITableViewCell {
         
         let path: UIBezierPath = UIBezierPath()
         
-      
+        
         path.move(to:  CGPoint(x: position.x, y: position.y))
         path.addLine(to: CGPoint(x:position.x-pathLength, y:position.y))
         path.addLine(to: CGPoint(x:position.x+pathLength, y:position.y))
@@ -60,5 +60,5 @@ extension UITableViewCell {
         self.layer.add(positionAnimation, forKey: nil)
         CATransaction.commit()
     }
- 
+    
 }

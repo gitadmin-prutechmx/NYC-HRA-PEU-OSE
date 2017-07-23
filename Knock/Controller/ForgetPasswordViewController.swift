@@ -9,12 +9,12 @@
 import UIKit
 
 class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
-
+    
     @IBOutlet weak var webVwForget: UIWebView!
     
     override func viewWillAppear(_ animated: Bool)
     {
-            self.StyleNavBar()
+        self.StyleNavBar()
         
     }
     override func viewWillDisappear(_ animated: Bool)
@@ -27,7 +27,7 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
     {
         super.viewDidLoad()
         
-
+        
         webVwForget.delegate = self
         
         showForgotPassword()
@@ -39,16 +39,16 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
         let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
         
         if(userSettingData.count > 0){
-   
-         if let url = URL(string:userSettingData[0].forgotPasswordUrl!)
+            
+            if let url = URL(string:userSettingData[0].forgotPasswordUrl!)
             {
                 SVProgressHUD.show(withStatus: "Loading..", maskType: SVProgressHUDMaskType.gradient)
-            
+                
                 let request = URLRequest(url: url)
                 webVwForget.loadRequest(request)
             }
         }
-
+        
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
@@ -68,7 +68,7 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
         
         //newBackbtn.setImage(UIImage.init(named: "ForwardIcon"), for:UIControlState.normal)
         newBackbtn.setTitle("Back", for: .normal)
-       newBackbtn.addTarget(self, action: #selector(ForgetPasswordViewController.navigateToLoginView(_:)), for: .touchUpInside)
+        newBackbtn.addTarget(self, action: #selector(ForgetPasswordViewController.navigateToLoginView(_:)), for: .touchUpInside)
         
         let titleLabel = UILabel(frame: CGRect(x:0, y:20.0, width:self.view.frame.size.width, height:40))
         titleLabel.text = "FORGOT PASSWORD"
@@ -93,18 +93,18 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
     
     func navigateToLoginView(_ sender: AnyObject?)
     {
-//        let viewController = self.storyboard!.instantiateViewController(withIdentifier: "loginIdentfier") as? LoginViewController
-//        self.navigationController?.pushViewController(viewController!, animated: true)
+        //        let viewController = self.storyboard!.instantiateViewController(withIdentifier: "loginIdentfier") as? LoginViewController
+        //        self.navigationController?.pushViewController(viewController!, animated: true)
         self.navigationController!.popViewController(animated: true)
-      
+        
     }
-
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     
-
+    
 }

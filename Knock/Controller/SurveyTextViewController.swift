@@ -10,7 +10,7 @@ import UIKit
 
 class SurveyTextViewController: UIViewController {
     @IBOutlet weak var questionView: UIView!
-
+    
     @IBOutlet weak var surveyName: UILabel!
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var questionTextField: UITextField!
@@ -22,12 +22,12 @@ class SurveyTextViewController: UIViewController {
     @IBOutlet weak var prevBtnOutlet: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-     
+        
+        
         
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-          let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyTextViewController.exitFromSurvey))
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyTextViewController.exitFromSurvey))
         
         
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
@@ -37,7 +37,7 @@ class SurveyTextViewController: UIViewController {
         
         
         
-
+        
         
         
         //  self.title = String(Utilities.currentSurveyPage) + " /  " + String(Utilities.totalSurveyQuestions)
@@ -49,7 +49,7 @@ class SurveyTextViewController: UIViewController {
         questionTextField.layer.borderColor = UIColor.gray.cgColor
         
         questionTextField.layer.borderWidth = 1.0
-  
+        
         questionTextField.layer.cornerRadius = 10.0
         
         if let object = Utilities.SurveyOutput[surveyObject.questionNumber] {
@@ -61,7 +61,7 @@ class SurveyTextViewController: UIViewController {
         
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.black
-
+        
         
         // Do any additional setup after loading the view.
     }
@@ -73,7 +73,7 @@ class SurveyTextViewController: UIViewController {
         
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
-
+        
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
@@ -90,7 +90,7 @@ class SurveyTextViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
         
         
-      
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,25 +111,25 @@ class SurveyTextViewController: UIViewController {
         
         pageControl.currentPage = Utilities.surveyQuestionArrayIndex
         
-       // self.navigationItem.title = String(Utilities.currentSurveyPage) + " / " + String(Utilities.totalSurveyQuestions)
+        // self.navigationItem.title = String(Utilities.currentSurveyPage) + " / " + String(Utilities.totalSurveyQuestions)
         
         //self.surveyName.text = "Survey: 59 Booster St, New York, NY ,12201"
         
         self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
         
-       flagView.isHidden = true
+        flagView.isHidden = true
     }
     
     
- /*   func exitFromSurvey(_ sender: UIBarButtonItem) {
-        
-        
-        self.performSegue(withIdentifier: "unwindToUnit", sender: self)
-        
-        
-    }
-    
-    */
+    /*   func exitFromSurvey(_ sender: UIBarButtonItem) {
+     
+     
+     self.performSegue(withIdentifier: "unwindToUnit", sender: self)
+     
+     
+     }
+     
+     */
     
     
     var isNextButtonPressed:Bool = false
@@ -141,15 +141,15 @@ class SurveyTextViewController: UIViewController {
         {
             //Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex
             
-           // Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+            // Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
         }
         else{
             isNextButtonPressed = false
         }
     }
     
-
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -162,7 +162,7 @@ class SurveyTextViewController: UIViewController {
         isSkipLogic = false
         isNextButtonPressed = true
         
-       
+        
         
         if ((questionTextField.text?.isEmpty) != nil){
             Utilities.answerSurvey = questionTextField.text!
@@ -170,7 +170,7 @@ class SurveyTextViewController: UIViewController {
         else{
             Utilities.answerSurvey = ""
         }
-       
+        
         
         if(surveyObject.isRequired == false && Utilities.answerSurvey.isEmpty){
             Utilities.answerSurvey = ""
@@ -178,10 +178,10 @@ class SurveyTextViewController: UIViewController {
         }
         else if(surveyObject.isRequired == true && Utilities.answerSurvey.isEmpty){
             
-           self.questionView.shake()
+            self.questionView.shake()
             
             //self.questionsView.shake()
-           // JLToast.makeText("This is required field.", duration: 1).show()
+            // JLToast.makeText("This is required field.", duration: 1).show()
             return
         }
         
@@ -191,13 +191,13 @@ class SurveyTextViewController: UIViewController {
         Utilities.SurveyOutput[surveyObject.questionNumber] = objSurveyResult
         
         
-      //  Utilities.SurveyOutput[surveyObject.questionId] = Utilities.answerSurvey
+        //  Utilities.SurveyOutput[surveyObject.questionId] = Utilities.answerSurvey
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         if(Utilities.surveyQuestionArrayIndex == Utilities.totalSurveyQuestions - 1){
             
-           // self.navigationItem.title = "Previous"
+            // self.navigationItem.title = "Previous"
             
             let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
             
@@ -215,7 +215,7 @@ class SurveyTextViewController: UIViewController {
             
             
             let currentIndex = Utilities.surveyQuestionArrayIndex
-           
+            
             //handle SkipLogic
             var objSurveyQues =  Utilities.surveyQuestionArray[currentIndex].objectSurveyQuestion
             
@@ -264,7 +264,7 @@ class SurveyTextViewController: UIViewController {
                                 if(startingIndex < count){
                                     Utilities.deleteSkipSurveyData(startingIndex: startingIndex, count: count)
                                 }
-
+                                
                                 
                                 
                                 
@@ -279,7 +279,7 @@ class SurveyTextViewController: UIViewController {
                                 break;
                                 
                             }
-
+                            
                             
                         }
                     }
@@ -299,17 +299,17 @@ class SurveyTextViewController: UIViewController {
             }
             
             
- 
+            
             if(objSurveyQues?.questionType == "Single Select"){
                 
-               // self.navigationItem.title = "Previous"
+                // self.navigationItem.title = "Previous"
                 
                 let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
                 
                 self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
                 
                 
-               
+                
             }
                 
             else if(objSurveyQues?.questionType == "Multi Select"){
@@ -323,22 +323,22 @@ class SurveyTextViewController: UIViewController {
                 
             else if(objSurveyQues?.questionType == "Text Area"){
                 
-               // self.navigationItem.title = "Previous"
+                // self.navigationItem.title = "Previous"
                 
                 let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
                 
                 self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
-
+                
                 
                 
             }
             
             
             
-  }
-}
+        }
+    }
     
-     var isPrevSkip:Bool = false
+    var isPrevSkip:Bool = false
     
     @IBAction func prevQuestion(_ sender: UIButton) {
         
@@ -401,74 +401,74 @@ class SurveyTextViewController: UIViewController {
         }
         
         
-
+        
         
         self.navigationController?.popViewController(animated: true);
         
-       /* Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+        /* Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+         
+         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+         
+         if(Utilities.surveyQuestionArrayIndex == -1){
+         
+         let startSurveyVC = storyboard.instantiateViewControllerWithIdentifier("startSurveyVCIdentifier") as! StartSurveyViewController
+         
+         
+         let navigationController = UINavigationController(rootViewController: startSurveyVC)
+         
+         self.presentViewController(navigationController, animated: true, completion: nil)
+         
+         }
+         
+         else{
+         
+         let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
+         
+         if(objSurveyQues.questionType == "renderSelectRadio"){
+         
+         
+         
+         //  self.navigationItem.title = "Previous"
+         
+         let pecoSurveyRadioButtonVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyRadioButtonVCIdentifier") as! PecoSurveyRadioOptionViewController
+         
+         //self.presentViewController(pecoSurveyRadioButtonVC, animated: true ,completion: nil)
+         
+         self.navigationController?.pushViewController(pecoSurveyRadioButtonVC, animated: true)
+         
+         
+         
+         
+         
+         }
+         else if(objSurveyQues.questionType == "renderFreeText"){
+         
+         //    self.navigationItem.title = "Previous"
+         
+         let pecoSurveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyTextFiedVCIdentifier") as! PecoSurveyTextViewController
+         
+         self.navigationController?.pushViewController(pecoSurveyTextFieldVC, animated: true)
+         
+         
+         }
+         
+         }
+         
+         */
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if(Utilities.surveyQuestionArrayIndex == -1){
-            
-            let startSurveyVC = storyboard.instantiateViewControllerWithIdentifier("startSurveyVCIdentifier") as! StartSurveyViewController
-            
-            
-            let navigationController = UINavigationController(rootViewController: startSurveyVC)
-            
-            self.presentViewController(navigationController, animated: true, completion: nil)
-            
-        }
-            
-        else{
-            
-            let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
-            
-            if(objSurveyQues.questionType == "renderSelectRadio"){
-                
-                
-                
-                //  self.navigationItem.title = "Previous"
-                
-                let pecoSurveyRadioButtonVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyRadioButtonVCIdentifier") as! PecoSurveyRadioOptionViewController
-                
-                //self.presentViewController(pecoSurveyRadioButtonVC, animated: true ,completion: nil)
-                
-                self.navigationController?.pushViewController(pecoSurveyRadioButtonVC, animated: true)
-                
-                
-                
-                
-                
-            }
-            else if(objSurveyQues.questionType == "renderFreeText"){
-                
-                //    self.navigationItem.title = "Previous"
-                
-                let pecoSurveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyTextFiedVCIdentifier") as! PecoSurveyTextViewController
-                
-                self.navigationController?.pushViewController(pecoSurveyTextFieldVC, animated: true)
-                
-                
-            }
-            
-        }
- 
- */
-    
     }
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 

@@ -30,5 +30,5 @@ class SalesforceConfig{
     static var currentBackgroundDate:Date!
     
     static var isBaseMapNeedToDownload:Bool!
-
+    
 }

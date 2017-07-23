@@ -17,9 +17,9 @@ class DownloadBaseMap{
         
         
         
-      //  https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mqwAAA&d=/a/r000000006iw/Q2NKEVxRrn_mYz7BzKd8QrYgQA9p3TxgnhdsovDZ3vU&operationContext=DELIVERY&viewId=05Hr000000000PHEAY&dpt=
+        //  https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mqwAAA&d=/a/r000000006iw/Q2NKEVxRrn_mYz7BzKd8QrYgQA9p3TxgnhdsovDZ3vU&operationContext=DELIVERY&viewId=05Hr000000000PHEAY&dpt=
         
-       // https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mr6AAA&d=/a/r000000006j1/Wgvb8JJkOwGD_ye4xPlNORQIYFIv45h7NHWgTAncmyU&operationContext=DELIVERY&viewId=05Hr000000000PMEAY&dpt=
+        // https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mr6AAA&d=/a/r000000006j1/Wgvb8JJkOwGD_ye4xPlNORQIYFIv45h7NHWgTAncmyU&operationContext=DELIVERY&viewId=05Hr000000000PMEAY&dpt=
         
         
         //"https://nyc-mayorpeu--qa.cs32.my.salesforce.com/sfc/dist/version/download/?oid=00Dr00000000rkJ&ids=068r00000002mqwAAA&d=/a/r000000006iw/Q2NKEVxRrn_mYz7BzKd8QrYgQA9p3TxgnhdsovDZ3vU&operationContext=DELIVERY&viewId=05Hr000000000PHEAY&dpt="
@@ -40,12 +40,12 @@ class DownloadBaseMap{
                     
                     if(progress! == 1.0) {
                         
-                         if(loginViewController != nil){
+                        if(loginViewController != nil){
                             loginViewController?.downloadProgressView.dismiss()
-                        
+                            
                             loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                         }
-                         else{
+                        else{
                             DownloadESRILayers.RefreshData()
                             //Utilities.callNotificationCenter()
                         }
@@ -59,16 +59,16 @@ class DownloadBaseMap{
                         //                    DispatchQueue.main.async {
                         //                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                         //                    }
-                        //                    
+                        //
                         //                }
                         
                     }
                 }
                 else{
-                     if(loginViewController != nil){
+                    if(loginViewController != nil){
                         loginViewController?.downloadProgressView.dismiss()
                     }
-                     else{
+                    else{
                         //SVProgressHUD.dismiss()
                         DownloadESRILayers.RefreshData()
                         //Utilities.callNotificationCenter()

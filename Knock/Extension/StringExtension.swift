@@ -24,7 +24,7 @@ extension String{
         let decryptedData = Data(decrypted)
         return String(bytes: decryptedData.bytes, encoding: .utf8) ?? "Could not decrypt"
         
-        }
+    }
     
     func replace(_ target: String, withString: String) -> String
     {

@@ -31,19 +31,19 @@ class SyncUtility{
         
         SalesforceConnection.loginToSalesforce() {_ in
             
-             editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
+            editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
             
-             unitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [Unit]
+            unitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [Unit]
             
-             tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
+            tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
             
-             surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [SurveyResponse]
+            surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [SurveyResponse]
             
             
-             editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
+            editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
             
-          
-         
+            
+            
             
             if( editLocationResultsArr.count > 0){
                 updateEditLocData()
@@ -128,16 +128,16 @@ class SyncUtility{
             //Utilities.resetAllActionStatusFromEditLocation()
             
             if( unitResultsArr.count>0){
-                 updateUnitData()
+                updateUnitData()
             }
             else if( tenantResultsArr.count > 0){
-                 updateTenantData()
+                updateTenantData()
             }
             else if( surveyResResultsArr.count > 0){
-                 updateSurveyResponseData()
+                updateSurveyResponseData()
             }
             else if( editUnitResultsArr.count > 0){
-                 updateEditUnitData()
+                updateEditUnitData()
             }
             else{
                 if(isPullData){
@@ -199,16 +199,16 @@ class SyncUtility{
         
         unitGroup.notify(queue: .main) {
             
-              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             if( tenantResultsArr.count > 0){
-                 updateTenantData()
+                updateTenantData()
             }
             else if( surveyResResultsArr.count > 0){
-                 updateSurveyResponseData()
+                updateSurveyResponseData()
             }
             else if( editUnitResultsArr.count > 0){
-                 updateEditUnitData()
+                updateEditUnitData()
             }
             else{
                 if(isPullData){
@@ -271,15 +271,15 @@ class SyncUtility{
         
         tenantGroup.notify(queue: .main) {
             
-              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
-              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
             
             if( surveyResResultsArr.count > 0){
-                 updateSurveyResponseData()
+                updateSurveyResponseData()
             }
             else if( editUnitResultsArr.count > 0){
-                 updateEditUnitData()
+                updateEditUnitData()
             }
             else{
                 if(isPullData){
@@ -319,11 +319,11 @@ class SyncUtility{
                 
                 formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
                 
-              
+                
                 
                 surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
                 
-              
+                
                 surveyResponseParam["surveyResponseFile"] = surveyResponseStr
                 
                 
@@ -347,10 +347,10 @@ class SyncUtility{
         
         surveyResponseGroup.notify(queue: .main) {
             
-             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             if( editUnitResultsArr.count > 0){
-                 updateEditUnitData()
+                updateEditUnitData()
             }
             else{
                 if(isPullData){
@@ -418,7 +418,7 @@ class SyncUtility{
         
         editUnitGroup.notify(queue: .main) {
             
-             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             if(isPullData){
                 Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
@@ -430,5 +430,5 @@ class SyncUtility{
     
     
     
-
+    
 }

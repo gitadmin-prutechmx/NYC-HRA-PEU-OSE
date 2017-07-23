@@ -28,7 +28,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     @IBOutlet weak var dobTextField: UITextField!
     
-var picker = UIDatePicker()
+    var picker = UIDatePicker()
     
     
     @IBOutlet weak var txtDob: UITextField!
@@ -48,7 +48,7 @@ var picker = UIDatePicker()
     
     var age:String = ""
     
-     var editTenantDict : [String:String] = [:]
+    var editTenantDict : [String:String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +93,7 @@ var picker = UIDatePicker()
         }
         
         phoneTextField.delegate = self
-
+        
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -119,7 +119,7 @@ var picker = UIDatePicker()
     func fillTenantInfo(){
         
         
-         let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@ AND id == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,predicateValue4: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
+        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@ AND id == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,predicateValue4: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
         
         if(tenantResults.count > 0){
             
@@ -139,7 +139,7 @@ var picker = UIDatePicker()
                 }
             }
             
-
+            
             
             firstNameTxtField.text = tenantResults[0].firstName
             lastNameTxtField.text = tenantResults[0].lastName
@@ -150,7 +150,7 @@ var picker = UIDatePicker()
         }
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -159,12 +159,12 @@ var picker = UIDatePicker()
     @IBAction func cancel(_ sender: Any)
     {
         let msgtitle = "Message"
-       
+        
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
         
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
-
+        
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
@@ -182,7 +182,7 @@ var picker = UIDatePicker()
         
         self.present(alertController, animated: true, completion: nil)
         
-
+        
         
         
     }
@@ -191,7 +191,7 @@ var picker = UIDatePicker()
         
         
         self.saveTenantInfo()
-      
+        
     }
     
     
@@ -232,7 +232,7 @@ var picker = UIDatePicker()
             return
             
         }
-
+        
         
         
         
@@ -358,38 +358,38 @@ var picker = UIDatePicker()
             return
             
         }
-
-
         
         
+        
+        
+        
+        
+        
+        if let dobTemp = txtDob.text{
             
-        
+            dob = dobTemp
             
-            if let dobTemp = txtDob.text{
+            if(dob != ""){
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MM-dd-yyyy"
                 
-                dob = dobTemp
+                let birthdate = dateFormatter.date(from: dob)
                 
-                if(dob != ""){
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MM-dd-yyyy"
+                let now = Date()
+                let calendar = Calendar.current
                 
-                    let birthdate = dateFormatter.date(from: dob)
                 
-                    let now = Date()
-                    let calendar = Calendar.current
-              
-              
-                    let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
-                    age = String(ageComponents.year!)
-                }
-  
-                
+                let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
+                age = String(ageComponents.year!)
             }
+            
+            
+        }
         
         
         var msg:String = ""
         
-            
+        
         if(SalesforceConnection.currentTenantId == ""){
             saveTenantInCoreData()
             msg = "Client information has been created successfully."
@@ -399,12 +399,12 @@ var picker = UIDatePicker()
             msg = "Client information has been updated successfully."
         }
         
-
         
-//        editTenantDict = Utilities.createAndEditTenantData(firstName: firstName, lastName: lastName, email: email, phone: phone, dob: dob, locationUnitId: SalesforceConnection.unitId, currentTenantId: SalesforceConnection.currentTenantId,iOSTenantId: UUID().uuidString)
-//        
-//        
-//        
+        
+        //        editTenantDict = Utilities.createAndEditTenantData(firstName: firstName, lastName: lastName, email: email, phone: phone, dob: dob, locationUnitId: SalesforceConnection.unitId, currentTenantId: SalesforceConnection.currentTenantId,iOSTenantId: UUID().uuidString)
+        //
+        //
+        //
         self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
@@ -417,33 +417,33 @@ var picker = UIDatePicker()
         }
         
         
-//        if(Network.reachability?.isReachable)!{
-//            
-//            pushCreateEditTenantDataToSalesforce(message:msg)
-//        }
-//            
-//        else{
-//            self.view.makeToast(msg, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
-//                
-//                
-//                
-//                self.navigationController?.popViewController(animated: true);
-//
-//                
-//            }
-//        }
-//        
+        //        if(Network.reachability?.isReachable)!{
+        //
+        //            pushCreateEditTenantDataToSalesforce(message:msg)
+        //        }
+        //
+        //        else{
+        //            self.view.makeToast(msg, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        //
+        //                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+        //
+        //
+        //
+        //                self.navigationController?.popViewController(animated: true);
+        //
+        //
+        //            }
+        //        }
+        //
         
         
-            
+        
     }
     
     
     func pushCreateEditTenantDataToSalesforce(message:String){
         
-       
+        
         
         var updateTenant : [String:String] = [:]
         
@@ -454,7 +454,7 @@ var picker = UIDatePicker()
         
         
         
-       SVProgressHUD.show(withStatus: "Saving tenant...", maskType: SVProgressHUDMaskType.gradient)
+        SVProgressHUD.show(withStatus: "Saving tenant...", maskType: SVProgressHUDMaskType.gradient)
         
         SalesforceConnection.loginToSalesforce() { response in
             
@@ -478,7 +478,7 @@ var picker = UIDatePicker()
                         
                         
                         self.navigationController?.popViewController(animated: true);
-
+                        
                         
                     }
                     
@@ -488,12 +488,12 @@ var picker = UIDatePicker()
             }
             
         }
-
+        
     }
     
     
     
-   
+    
     
     
     func saveTenantInCoreData(){
@@ -534,7 +534,7 @@ var picker = UIDatePicker()
         
         
         
-
+        
     }
     
     
@@ -566,7 +566,7 @@ var picker = UIDatePicker()
         if(tenantResults.count > 0){
             
             if(tenantResults[0].actionStatus! == ""){
-                 updateObjectDic["actionStatus"] = "edit"
+                updateObjectDic["actionStatus"] = "edit"
             }
         }
         
@@ -580,11 +580,11 @@ var picker = UIDatePicker()
     
     
     
-   
-   
+    
+    
     @IBAction func editingDidBegain(_ sender: UITextField)
     {
-       // let datePickerView: UIDatePicker = UIDatePicker()
+        // let datePickerView: UIDatePicker = UIDatePicker()
         
         picker.datePickerMode = .date
         picker.maximumDate =  Date()
@@ -597,9 +597,9 @@ var picker = UIDatePicker()
         
         sender.inputView = picker
         
-       // txtDob.inputView = picker
+        // txtDob.inputView = picker
         
-       // picker.addTarget(self, action: #selector(SaveEditTenantViewController.datePickerValueChanged), for: UIControlEvents.valueChanged)
+        // picker.addTarget(self, action: #selector(SaveEditTenantViewController.datePickerValueChanged), for: UIControlEvents.valueChanged)
         
         
         
@@ -607,7 +607,7 @@ var picker = UIDatePicker()
     
     func datePickerValueChanged(sender: UIDatePicker) {
         
-       // yyyy-MM-dd
+        // yyyy-MM-dd
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy"
@@ -616,13 +616,13 @@ var picker = UIDatePicker()
         
     }
     
-  
+    
     func cancelPressed(sender: UIBarButtonItem)
     {
         
         txtDob.resignFirstResponder()
     }
-
+    
     func donePressed(sender: UIBarButtonItem) {
         
         let dateFormatter = DateFormatter()
@@ -634,17 +634,17 @@ var picker = UIDatePicker()
     }
     
     
-
-       /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 

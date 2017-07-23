@@ -11,7 +11,7 @@ import UIKit
 class SettingsTableViewController: UITableViewController
 {
     @IBOutlet weak var syncTimeSlider: UISlider!
-//    @IBOutlet weak var syncTimeSlider: UISlider!
+    //    @IBOutlet weak var syncTimeSlider: UISlider!
     var dpShowDateVisible = false
     @IBOutlet weak var syncTimeView: UIView!
     @IBOutlet weak var syncTimeLbl: UILabel!
@@ -19,13 +19,13 @@ class SettingsTableViewController: UITableViewController
     @IBOutlet weak var TimeLbl: UILabel!
     
     @IBOutlet weak var btnShowTime: UIButton!
- 
+    
     @IBOutlet weak var syncTimePickerView: UIView!
     @IBOutlet weak var syncDateView: UIView!
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
+        
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
@@ -33,15 +33,15 @@ class SettingsTableViewController: UITableViewController
         syncTimeView.layer.cornerRadius = 5
         
         tableView.allowsSelection = true
-
-      
         
         
         
         
-       populateSettings()
         
-       
+        
+        populateSettings()
+        
+        
     }
     
     func getBackGroundTime(bgDate:Date)->String{
@@ -59,12 +59,12 @@ class SettingsTableViewController: UITableViewController
         var locale:String = "AM"
         
         if(updatedHour > 12){
-           updatedHour =  (components.hour! % 12)
+            updatedHour =  (components.hour! % 12)
             locale = "PM"
         }
-       
-     return "\(updatedHour):\(String(format: "%02d", updatedMinute)) \(locale)"
-       
+        
+        return "\(updatedHour):\(String(format: "%02d", updatedMinute)) \(locale)"
+        
     }
     
     func populateSettings(){
@@ -78,30 +78,30 @@ class SettingsTableViewController: UITableViewController
             if let backgroundDate = userSettingData[0].backgroundTime{
                 dpShowDate.date = backgroundDate as Date
                 
-                 TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
+                TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
             }
             else{
                 dpShowDate.date = Date()
                 
-                 TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
+                TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
             }
             
             
-//userSettingData[0].
- 
+            //userSettingData[0].
+            
             syncTimeLbl.text = userSettingData[0].offlineSyncTime!
         }
     }
     
     func saveSettings(){
         
-
+        
         var updateObjectDic:[String:AnyObject] = [:]
         
         updateObjectDic["offlineSyncTime"] = syncTimeLbl.text! as AnyObject?
         
         updateObjectDic["backgroundTime"] = dpShowDate.date as AnyObject?
-    
+        
         
         ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
     }
@@ -111,41 +111,41 @@ class SettingsTableViewController: UITableViewController
     override func viewWillAppear(_ animated: Bool)
     {
         //self.navigationController?.navigationBarHidden = false
-      //  self.StyleNavBar()
+        //  self.StyleNavBar()
         
     }
     
     
-   
-
-
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-//    func toggleShowDateDatepicker ()
-//    {
-//        dpShowDateVisible = !dpShowDateVisible
-//        
-//        tableView.beginUpdates()
-//        tableView.endUpdates()
-//    }
-//    
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-//    {
-//        if indexPath.section == 1
-//        {
-//            if  indexPath.row == 0
-//            {
-//                toggleShowDateDatepicker()
-//                dpShowDateChanged()
-//            }
-//            
-//        }
-//        
-//    }
-//    
+    //    func toggleShowDateDatepicker ()
+    //    {
+    //        dpShowDateVisible = !dpShowDateVisible
+    //
+    //        tableView.beginUpdates()
+    //        tableView.endUpdates()
+    //    }
+    //
+    //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    //    {
+    //        if indexPath.section == 1
+    //        {
+    //            if  indexPath.row == 0
+    //            {
+    //                toggleShowDateDatepicker()
+    //                dpShowDateChanged()
+    //            }
+    //
+    //        }
+    //
+    //    }
+    //
     func tableView(tableView:UITableView,heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if !dpShowDateVisible && indexPath.row == 1
         {
@@ -158,21 +158,21 @@ class SettingsTableViewController: UITableViewController
     
     func dpShowDateChanged ()
     {
-      
+        
         TimeLbl.text = DateFormatter.localizedString(from: dpShowDate.date, dateStyle:.none, timeStyle: .short)
         
     }
-
-
+    
+    
     @IBAction func syncTimeSlider(_ sender: UISlider) {
         
         let currentValue = Int(sender.value)
         syncTimeLbl.text = "\(currentValue)"
     }
-  
+    
     @IBAction func dpShowTimeAction(_ sender: Any)
     {
-         dpShowDateChanged()
+        dpShowDateChanged()
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -183,7 +183,7 @@ class SettingsTableViewController: UITableViewController
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
         
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
-
+        
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
@@ -203,10 +203,10 @@ class SettingsTableViewController: UITableViewController
         
         
         
-      
-       // self.navigationController!.popViewController(animated: true)
+        
+        // self.navigationController!.popViewController(animated: true)
     }
-
+    
     @IBAction func save(_ sender: Any) {
         saveSettings()
         
@@ -221,7 +221,7 @@ class SettingsTableViewController: UITableViewController
         
         
         
-       // self.navigationController!.popViewController(animated: true)
+        // self.navigationController!.popViewController(animated: true)
     }
     
     @IBAction func btnShowTimeAction(_ sender: UIButton)
@@ -238,5 +238,5 @@ class SettingsTableViewController: UITableViewController
         
     }
     
-
+    
 }

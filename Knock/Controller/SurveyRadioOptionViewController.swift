@@ -10,11 +10,11 @@ import UIKit
 import AudioToolbox
 
 class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     @IBOutlet weak var getDescriptionTextField: UITextField!
     
     //@IBOutlet weak var showTextLbl: UILabel!
-   
+    
     @IBOutlet weak var showTextLbl: UITextView!
     
     @IBOutlet weak var surveyName: UILabel!
@@ -27,7 +27,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     @IBOutlet weak var optionsCollectionView: UICollectionView!
     
     @IBOutlet weak var radioOptionsView: UIView!
-  
+    
     
     var objSurveyQues:SurveyQuestionDO!
     var optionsIdArray = [String]()
@@ -36,7 +36,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     var optionsDic : [String:String] = [:]
     
     var radiobuttonCurrentValue:String = ""
-
+    
     @IBOutlet weak var flagView: UIStackView!
     @IBOutlet weak var prevBtnOutlet: UIButton!
     
@@ -44,7 +44,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         getDescriptionTextField.layer.borderColor = UIColor.gray.cgColor
@@ -53,19 +53,19 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         getDescriptionTextField.layer.cornerRadius = 10.0
         
-       
-       
         
-       /* let btnName = UIButton()
-        btnName.setImage(UIImage(named: "ExitSurvey"), forState: .Normal)
-        btnName.frame = CGRectMake(0, 0, 30, 30)
-        btnName.addTarget(self, action: Selector("action"), forControlEvents: .TouchUpInside)
         
-        //.... Set Right/Left Bar Button item
-        let rightBarButton = UIBarButtonItem()
-        rightBarButton.customView = btnName
-        self.navigationItem.rightBarButtonItem = rightBarButton
-        */
+        
+        /* let btnName = UIButton()
+         btnName.setImage(UIImage(named: "ExitSurvey"), forState: .Normal)
+         btnName.frame = CGRectMake(0, 0, 30, 30)
+         btnName.addTarget(self, action: Selector("action"), forControlEvents: .TouchUpInside)
+         
+         //.... Set Right/Left Bar Button item
+         let rightBarButton = UIBarButtonItem()
+         rightBarButton.customView = btnName
+         self.navigationItem.rightBarButtonItem = rightBarButton
+         */
         
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
         //#selector(self.exitFromSurvey(_:))
@@ -86,37 +86,37 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             getDescriptionTextField.text = objSurveyOutput.getDescription
         }
         
-       
         
-       // let options = objSurveyQues.choices!.replace("\r\n", withString:";")
+        
+        // let options = objSurveyQues.choices!.replace("\r\n", withString:";")
         let options = objSurveyQues.choices!
         
         print(options)
         
-    
+        
         optionsTextArray = options.components(separatedBy: ";")
         
         
         
         
         
-      /*  for optionData in objSurveyQues.singleOptionsString!
-        {
-            optionsIdArray.append(optionData.componentsSeparatedByString(";")[1])
-            optionsTextArray.append(optionData.componentsSeparatedByString(";")[0])
-            
-            optionsDic[optionData.componentsSeparatedByString(";")[1]] = optionData.componentsSeparatedByString(";")[0]
-        }
-        */
+        /*  for optionData in objSurveyQues.singleOptionsString!
+         {
+         optionsIdArray.append(optionData.componentsSeparatedByString(";")[1])
+         optionsTextArray.append(optionData.componentsSeparatedByString(";")[0])
+         
+         optionsDic[optionData.componentsSeparatedByString(";")[1]] = optionData.componentsSeparatedByString(";")[0]
+         }
+         */
         
         pageControl.numberOfPages = Utilities.surveyQuestionArray.count
-
+        
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.black
         
         
-       // optionsCollectionView.delegate = self
-       // optionsCollectionView.dataSource = self
+        // optionsCollectionView.delegate = self
+        // optionsCollectionView.dataSource = self
         
         //view.frame.width
         
@@ -127,57 +127,57 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     func exitFromSurvey()
     {
         let msgtitle = "Message"
-
+        
         
         let alertController = UIAlertController(title: "Message", message: "Are you sure want to exit from survey?", preferredStyle: .alert)
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
-
-       
+        
+        
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
             //Do some stuff
         }
         alertController.addAction(cancelAction)
-       
+        
         let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
-             self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
+            self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
             //Do some other stuff
         }
         alertController.addAction(okAction)
         
         
-       /* alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-            switch action.style{
-            case .Default:
-                
-                self.performSegueWithIdentifier("unwindToUnit", sender: self)
-                
-            case .Cancel:
-                print("cancel")
-                
-            case .Destructive:
-                print("destructive")
-                }
-
-            
-            }
-        ))
- */
+        /* alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+         switch action.style{
+         case .Default:
+         
+         self.performSegueWithIdentifier("unwindToUnit", sender: self)
+         
+         case .Cancel:
+         print("cancel")
+         
+         case .Destructive:
+         print("destructive")
+         }
+         
+         
+         }
+         ))
+         */
         
         self.present(alertController, animated: true, completion: nil)
         
-
         
         
-      
+        
+        
     }
-   
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-       
+        
         
         if(Utilities.surveyQuestionArrayIndex == 0){
             
@@ -201,24 +201,24 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         //self.optionsCollectionView.reloadData()
         
-       self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
+        self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
         
-       // flagView.isHidden = true
+        // flagView.isHidden = true
         
         
         /*if(Utilities.surveyQuestionArrayIndex != 0){
-                flagView.isHidden = true
-        }
-        else{
-                flagView.isHidden = false
-        }
-        */
+         flagView.isHidden = true
+         }
+         else{
+         flagView.isHidden = false
+         }
+         */
         
     }
     
     
     
-      var isSkipLogic:Bool = false
+    var isSkipLogic:Bool = false
     
     @IBAction func nextQuestion(_ sender: UIButton) {
         
@@ -231,7 +231,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             
         }
         else if(objSurveyQues.isRequired == true && radiobuttonCurrentValue.isEmpty){
-           // JLToast.makeText("This is required field.", duration: 1).show()
+            // JLToast.makeText("This is required field.", duration: 1).show()
             
             self.questionsView.shake()
             
@@ -239,7 +239,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         }
         
         var getDescription:String = ""
- 
+        
         if(getDescriptionTextField.isHidden == false){
             getDescription = getDescriptionTextField.text ?? "";
         }
@@ -258,7 +258,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         Utilities.SurveyOutput[objSurveyQues.questionNumber] = objSurveyResult
         
         
-       // Utilities.SurveyOutput[objSurveyQues.questionId] = radiobuttonCurrentValue
+        // Utilities.SurveyOutput[objSurveyQues.questionId] = radiobuttonCurrentValue
         
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -282,7 +282,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                         let count = Utilities.totalSurveyQuestions - 1
                         
                         Utilities.deleteSkipSurveyData(startingIndex: startingIndex, count: count)
-
+                        
                         
                         
                         let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
@@ -291,7 +291,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                         
                         self.navigationController?.pushViewController(surveySubmitVC, animated: true)
                         
-            
+                        
                         return
                         
                     }
@@ -303,7 +303,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         if(Utilities.surveyQuestionArrayIndex == Utilities.totalSurveyQuestions - 1){
             
-           // self.navigationItem.title = "Previous"
+            // self.navigationItem.title = "Previous"
             
             let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
             
@@ -313,7 +313,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             
             
             
-          
+            
         }
             
         else{
@@ -323,112 +323,112 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             //handle SkipLogic
             var objSurveyQues =  Utilities.surveyQuestionArray[currentIndex].objectSurveyQuestion
             
-        if(Utilities.skipLogicParentChildDict[(objSurveyQues?.questionNumber)!] != nil){
+            if(Utilities.skipLogicParentChildDict[(objSurveyQues?.questionNumber)!] != nil){
                 
-            let arrayValue:[SkipLogic]  = Utilities.skipLogicParentChildDict[objSurveyQues!.questionNumber]!
-            
-            for object in arrayValue{
+                let arrayValue:[SkipLogic]  = Utilities.skipLogicParentChildDict[objSurveyQues!.questionNumber]!
                 
-                if(Utilities.SurveyOutput[objSurveyQues!.questionNumber] != nil){
-                    let objectSurveyResult:SurveyResult =  Utilities.SurveyOutput[objSurveyQues!.questionNumber]!
+                for object in arrayValue{
                     
-                    
-                    if(objectSurveyResult.selectedAnswer == object.selectedAnswer){
+                    if(Utilities.SurveyOutput[objSurveyQues!.questionNumber] != nil){
+                        let objectSurveyResult:SurveyResult =  Utilities.SurveyOutput[objSurveyQues!.questionNumber]!
                         
-                        //skip question
                         
-                        if(currentIndex == Utilities.totalSurveyQuestions - 1){
+                        if(objectSurveyResult.selectedAnswer == object.selectedAnswer){
                             
-                            //objSurveyQues = nil
+                            //skip question
                             
-                            let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
-                            
-                            
-                            
-                            self.navigationController?.pushViewController(surveySubmitVC, animated: true)
-                            
-                            return
-                            
-                        }
-                        
-                        else{
-                            
-                            
-                            //Here we have to delete key value
-                            
-                           /* let count  = Utilities.surveyQuestionArrayIndex
-                            
-                            let startingIndex = Utilities.surveyQuestionArrayIndex
-                            
-                             Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex + 1
-                             
-                             Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex + 1
-                             */
-                            
-                            
-                  //2 ----(4-1)---> 6  =  1+3 =  2 and 4
-                  //3 ----1---> 5  =
-                  //3 ----0---> 4  =
-                            
-                            
-                            
-                            
-                            let numberofQuestionsSkip = (Int(object.questionNumber)! - Int(objSurveyQues!.questionNumber)!)-1 //childquestionnumber - parentquestionumber
-
-                            
-                            let count  = currentIndex + numberofQuestionsSkip
-                            
-                           
-                            let startingIndex = currentIndex + 1
-                            
-                            if(startingIndex < count){
-                                Utilities.deleteSkipSurveyData(startingIndex: startingIndex, count: count)
+                            if(currentIndex == Utilities.totalSurveyQuestions - 1){
+                                
+                                //objSurveyQues = nil
+                                
+                                let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
+                                
+                                
+                                
+                                self.navigationController?.pushViewController(surveySubmitVC, animated: true)
+                                
+                                return
+                                
                             }
-                           
-
-                            
-                            
-                          
-                            Utilities.surveyQuestionArrayIndex = Int(object.questionNumber)! - 1
-                            
-                            Utilities.currentSurveyPage = Int(object.questionNumber)! - 1
-                            
-                            objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
-                            
-                            isSkipLogic = true
-                            
-                            break;
+                                
+                            else{
+                                
+                                
+                                //Here we have to delete key value
+                                
+                                /* let count  = Utilities.surveyQuestionArrayIndex
+                                 
+                                 let startingIndex = Utilities.surveyQuestionArrayIndex
+                                 
+                                 Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex + 1
+                                 
+                                 Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex + 1
+                                 */
+                                
+                                
+                                //2 ----(4-1)---> 6  =  1+3 =  2 and 4
+                                //3 ----1---> 5  =
+                                //3 ----0---> 4  =
+                                
+                                
+                                
+                                
+                                let numberofQuestionsSkip = (Int(object.questionNumber)! - Int(objSurveyQues!.questionNumber)!)-1 //childquestionnumber - parentquestionumber
+                                
+                                
+                                let count  = currentIndex + numberofQuestionsSkip
+                                
+                                
+                                let startingIndex = currentIndex + 1
+                                
+                                if(startingIndex < count){
+                                    Utilities.deleteSkipSurveyData(startingIndex: startingIndex, count: count)
+                                }
+                                
+                                
+                                
+                                
+                                
+                                Utilities.surveyQuestionArrayIndex = Int(object.questionNumber)! - 1
+                                
+                                Utilities.currentSurveyPage = Int(object.questionNumber)! - 1
+                                
+                                objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
+                                
+                                isSkipLogic = true
+                                
+                                break;
+                                
+                            }
                             
                         }
-                        
                     }
+                    
                 }
                 
-            }
-                
-        }//end of if skiplogic
+            }//end of if skiplogic
             
-          
-       
+            
+            
             if(isSkipLogic == false){
                 
                 Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex + 1
                 
                 Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex + 1
                 
-                 objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
-
+                objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
+                
             }
             
-       
+            
             if(objSurveyQues?.questionType == "Single Select"){
                 
-             
                 
-              //  self.navigationItem.title = "Previous"
+                
+                //  self.navigationItem.title = "Previous"
                 
                 let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
-          
+                
                 
                 self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
                 
@@ -447,29 +447,29 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                 
             else if(objSurveyQues?.questionType == "Text Area"){
                 
-            //    self.navigationItem.title = "Previous"
+                //    self.navigationItem.title = "Previous"
                 
                 let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
                 
                 self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
                 
-
+                
                 
                 
             }
-        
             
-    }
+            
+        }
         
-
-}
+        
+    }
     
     var isPrevSkip:Bool = false
     @IBAction func prevQuestion(_ sender: UIButton) {
         
         isPrevSkip = false
         //1 2 (3) 4 5 [6]
-       //      <------>
+        //      <------>
         //3-->6 and 3-->5
         //surveyQuestionArrayIndex(6)
         
@@ -479,7 +479,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         //handle SkipLogic
         let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
         
-       // let parentIndex = Int((objSurveyQues?.questionNumber)!)! - 1
+        // let parentIndex = Int((objSurveyQues?.questionNumber)!)! - 1
         
         
         //6
@@ -496,19 +496,19 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                     let objectSurveyResult:SurveyResult =  Utilities.SurveyOutput[object.questionNumber]! //child object result
                     
                     if(objectSurveyResult.questionType == "Multi Select"){
-                         if(objectSurveyResult.multiOption.contains(object.selectedAnswer)){
+                        if(objectSurveyResult.multiOption.contains(object.selectedAnswer)){
                             //skip question
                             
                             Utilities.surveyQuestionArrayIndex = Int(object.questionNumber)! - 1
- 
+                            
                             isPrevSkip = true
                             //Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
                             break;
-
+                            
                         }
                     }
-                    
-                   
+                        
+                        
                     else if(objectSurveyResult.selectedAnswer == object.selectedAnswer){
                         
                         //skip question
@@ -526,7 +526,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             }
             
         }
-            
+        
         if(isPrevSkip == false){
             
             Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
@@ -537,58 +537,58 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         self.navigationController?.popViewController(animated: true);
         
-       /* Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
+        /* Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+         
+         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+         
          if(Utilities.surveyQuestionArrayIndex == -1){
          
-           let startSurveyVC = storyboard.instantiateViewControllerWithIdentifier("startSurveyVCIdentifier") as! StartSurveyViewController
+         let startSurveyVC = storyboard.instantiateViewControllerWithIdentifier("startSurveyVCIdentifier") as! StartSurveyViewController
          
          
-           let navigationController = UINavigationController(rootViewController: startSurveyVC)
+         let navigationController = UINavigationController(rootViewController: startSurveyVC)
          
-           self.presentViewController(navigationController, animated: true, completion: nil)
+         self.presentViewController(navigationController, animated: true, completion: nil)
          
          }
          
          else{
-            
-            let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
          
-            if(objSurveyQues.questionType == "renderSelectRadio"){
-                
-                
-                
-                //  self.navigationItem.title = "Previous"
-                
-                let pecoSurveyRadioButtonVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyRadioButtonVCIdentifier") as! PecoSurveyRadioOptionViewController
-                
-                // self.presentViewController(pecoSurveyRadioButtonVC, animated: true ,completion: nil)
-                
-                self.navigationController?.pushViewController(pecoSurveyRadioButtonVC, animated: true)
-                
-                
-                
-                
-                
-            }
-            else if(objSurveyQues.questionType == "renderFreeText"){
-                
-                //    self.navigationItem.title = "Previous"
-                
-                let pecoSurveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyTextFiedVCIdentifier") as! PecoSurveyTextViewController
-                
-                self.navigationController?.pushViewController(pecoSurveyTextFieldVC, animated: true)
-  
-                
-            }
+         let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
          
-      }
- 
- */
+         if(objSurveyQues.questionType == "renderSelectRadio"){
+         
+         
+         
+         //  self.navigationItem.title = "Previous"
+         
+         let pecoSurveyRadioButtonVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyRadioButtonVCIdentifier") as! PecoSurveyRadioOptionViewController
+         
+         // self.presentViewController(pecoSurveyRadioButtonVC, animated: true ,completion: nil)
+         
+         self.navigationController?.pushViewController(pecoSurveyRadioButtonVC, animated: true)
+         
+         
+         
+         
+         
+         }
+         else if(objSurveyQues.questionType == "renderFreeText"){
+         
+         //    self.navigationItem.title = "Previous"
+         
+         let pecoSurveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("pecoSurveyTextFiedVCIdentifier") as! PecoSurveyTextViewController
+         
+         self.navigationController?.pushViewController(pecoSurveyTextFieldVC, animated: true)
+         
+         
+         }
+         
+         }
+         
+         */
         
- }
+    }
     
     
     
@@ -608,7 +608,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         //self.optionsCollectionView?
         
     }
- 
+    
     var isNextButtonPressed:Bool = false
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -618,7 +618,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         {
             //Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex
             
-           // Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+            // Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
             
         }
         else{
@@ -626,32 +626,32 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         }
         
     }
-
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         /*let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        
-        collectionViewLayout?.sectionInset = UIEdgeInsetsMake(25, 45, 5, 5)
-        
-        collectionViewLayout?.invalidateLayout()*/
+         
+         collectionViewLayout?.sectionInset = UIEdgeInsetsMake(25, 45, 5, 5)
+         
+         collectionViewLayout?.invalidateLayout()*/
         
         if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) {
             print("Landscape")
             //here you can do the logic for the cell size if phone is in landscape
         } else {
-           print("Portrait") //logic if not landscape
+            print("Portrait") //logic if not landscape
         }
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return optionsTextArray.count
         //return 4
@@ -719,48 +719,47 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                     
                     
                 }
-
                 
                 
                 
-               /*
-                if(getDescriptionTextField.hidden == false){
-                    
-                    if let object = Utilities.SurveyOutput[objSurveyQues.questionNumber] {
-                        getDescriptionTextField.text = object.getDescription
-                    }
-                    
-                    
-                }
                 
-                */
+                /*
+                 if(getDescriptionTextField.hidden == false){
+                 
+                 if let object = Utilities.SurveyOutput[objSurveyQues.questionNumber] {
+                 getDescriptionTextField.text = object.getDescription
+                 }
+                 
+                 
+                 }
+                 
+                 */
                 
-               
+                
             }
                 
-       // }
-        
-     
- 
-        else{
+                // }
+                
+                
+                
+            else{
                 cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
-
+                
+                
+            }
+        }
+            
+            
+        else{
+            
+            cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
             
         }
-    }
-    
- 
-    else{
-    
-    cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
-    
-    }
-    
-    
- 
+        
+        
+        
         cell.optionText.text = optionsTextArray[indexPath.row]
         cell.optionId.text = optionsTextArray[indexPath.row]
-       
         
         
         
@@ -769,22 +768,23 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         
         
-       // cell.layer.cornerRadius = 5
-       // cell.layer.masksToBounds = true
         
-       // cell.backgroundColor = UIColor.redColor()
+        // cell.layer.cornerRadius = 5
+        // cell.layer.masksToBounds = true
         
-       /* let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        // cell.backgroundColor = UIColor.redColor()
         
-        collectionViewLayout?.sectionInset = UIEdgeInsetsMake(25, 45, 5, 5)
-            
-        collectionViewLayout?.invalidateLayout()
-*/
+        /* let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+         
+         collectionViewLayout?.sectionInset = UIEdgeInsetsMake(25, 45, 5, 5)
+         
+         collectionViewLayout?.invalidateLayout()
+         */
         
         return cell
     }
     
-   
+    
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -792,7 +792,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         currentCell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) // green
         
-       
+        
         
         radiobuttonCurrentValue = currentCell.optionId.text!
         
@@ -826,14 +826,14 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                     }
                 }
                 else{
-                     showTextLbl.isHidden = true
+                    showTextLbl.isHidden = true
                     getDescriptionTextField.isHidden = true
                 }
             }
             
             
         }
-       
+        
         
     }
     
@@ -843,8 +843,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         currentCell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
         
     }
-  
- 
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         //
@@ -853,7 +853,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
         
-       // let width = collectionView.bounds.width - collectionViewLayout!.sectionInset.left - collectionViewLayout!.sectionInset.right
+        // let width = collectionView.bounds.width - collectionViewLayout!.sectionInset.left - collectionViewLayout!.sectionInset.right
         
         var collectionViewWidth = collectionView.bounds.width
         
@@ -872,24 +872,24 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     }
     
     /*func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        
-       
-        return UIEdgeInsetsMake(5, 15, 5, 15)
-    }*/
+     
+     
+     return UIEdgeInsetsMake(5, 15, 5, 15)
+     }*/
     
     
-   
+    
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 
