@@ -41,7 +41,7 @@
                                 <color key="textColor" red="0.9882352941176471" green="0.98039215686274506" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SB1-yX-yBk">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SB1-yX-yBk">
                                 <rect key="frame" x="237" y="11" width="81" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="81" id="6bk-ML-UY8"/>
@@ -71,20 +71,20 @@
                                 <color key="textColor" red="0.98823529409999999" green="0.98039215690000003" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-X7-loH">
-                                <rect key="frame" x="240" y="11" width="48" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# of Clients" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-X7-loH" userLabel="# of Clients">
+                                <rect key="frame" x="230" y="11" width="90" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="ayq-Xg-9Fe"/>
-                                    <constraint firstAttribute="width" constant="48" id="eCc-1D-bP5"/>
+                                    <constraint firstAttribute="width" constant="90" id="eCc-1D-bP5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                 <color key="textColor" red="0.98823529409999999" green="0.98039215690000003" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# of Clients" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8L-k0-PHK">
-                                <rect key="frame" x="217" y="11" width="95" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8L-k0-PHK" userLabel="SyncDate">
+                                <rect key="frame" x="229" y="11" width="91" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="95" id="HHw-n5-GOu"/>
+                                    <constraint firstAttribute="width" constant="91" id="HHw-n5-GOu"/>
                                     <constraint firstAttribute="height" constant="21" id="Qcr-1f-IGa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
@@ -95,8 +95,8 @@
                         <color key="backgroundColor" red="0.10980392156862745" green="0.3411764705882353" blue="0.58431372549019611" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wrb-X7-loH" firstAttribute="leading" secondItem="KwA-p7-IeV" secondAttribute="trailing" constant="-10" id="5i9-K9-AEo">
-                                <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                            <constraint firstItem="wrb-X7-loH" firstAttribute="leading" secondItem="KwA-p7-IeV" secondAttribute="trailing" constant="-20" id="5i9-K9-AEo">
+                                <variation key="heightClass=regular-widthClass=regular" constant="40"/>
                             </constraint>
                             <constraint firstAttribute="height" constant="41" id="ImR-bN-sxL"/>
                             <constraint firstItem="d0G-h6-reh" firstAttribute="leading" secondItem="RD3-SG-Mdx" secondAttribute="trailing" constant="-35" id="Ixp-uS-SLs">
@@ -112,14 +112,14 @@
                             <constraint firstItem="RD3-SG-Mdx" firstAttribute="leading" secondItem="NGn-gL-llJ" secondAttribute="trailing" constant="23" id="ixl-mw-9mr">
                                 <variation key="heightClass=regular-widthClass=regular" constant="30"/>
                             </constraint>
-                            <constraint firstItem="S8L-k0-PHK" firstAttribute="leading" secondItem="SB1-yX-yBk" secondAttribute="leading" constant="-20" id="lSQ-7a-eYU">
-                                <variation key="heightClass=regular-widthClass=regular" constant="118"/>
+                            <constraint firstItem="S8L-k0-PHK" firstAttribute="leading" secondItem="SB1-yX-yBk" secondAttribute="leading" constant="-8" id="lSQ-7a-eYU">
+                                <variation key="heightClass=regular-widthClass=regular" constant="63"/>
                             </constraint>
                             <constraint firstItem="KwA-p7-IeV" firstAttribute="leading" secondItem="d0G-h6-reh" secondAttribute="trailing" constant="-30" id="mwd-Uk-FZt">
                                 <variation key="heightClass=regular-widthClass=regular" constant="41"/>
                             </constraint>
                             <constraint firstItem="NGn-gL-llJ" firstAttribute="leading" secondItem="Vqk-cw-4nG" secondAttribute="leading" constant="8" id="obV-5M-Mlj"/>
-                            <constraint firstItem="SB1-yX-yBk" firstAttribute="leading" secondItem="wrb-X7-loH" secondAttribute="trailing" constant="-51" id="qqd-RA-mJx">
+                            <constraint firstItem="SB1-yX-yBk" firstAttribute="leading" secondItem="wrb-X7-loH" secondAttribute="trailing" constant="-83" id="qqd-RA-mJx">
                                 <variation key="heightClass=regular-widthClass=regular" constant="21"/>
                             </constraint>
                         </constraints>
