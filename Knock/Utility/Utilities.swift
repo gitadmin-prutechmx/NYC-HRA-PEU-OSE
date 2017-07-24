@@ -1579,6 +1579,7 @@ class Utilities {
                             tenantObject.locationId = locationObject.id!
                             tenantObject.unitId = unitObject.id!
                             tenantObject.actionStatus = ""
+                            tenantObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                             
                             
                             appDelegate.saveContext()

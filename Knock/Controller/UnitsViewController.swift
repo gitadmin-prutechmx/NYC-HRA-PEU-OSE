@@ -31,6 +31,7 @@ struct ClientDataStruct
     var age : String = ""
     var dob:String = ""
     var unitId:String = ""
+    var assignmentLocUnitId:String = ""
 }
 
 
@@ -352,7 +353,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             for tenantData in clientResults{
                 
-                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!)
+                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!)
                 
                 clientDataArray.append(objectTenantStruct)
                 
@@ -742,12 +743,44 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
+    func showEditUnit(){
+        
+        Utilities.currentSegmentedControl = "Unit"
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
+        
+        SurveyUtility.navigationController = self.navigationController!
+        
+        let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
+            
+            self.showSurveyWizard()
+            print("completed for \(moreOptionVC)")
+        }
+        moreOptionVC.completionHandler=completionHandler
+        
+        
+        
+        
+        //            moreOptionVC.dismissVCCompletion(){ () in
+        //                 print("kamal")
+        //                 //self.showSurveyWizard()
+        //            }
+        
+        let navigationController = UINavigationController(rootViewController: moreOptionVC)
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        
+        
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
     
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
   if(tableView == tblUnits){
-        
+    
         SalesforceConnection.unitId =  UnitDataArray[indexPath.row].unitId
         
         SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
@@ -765,40 +798,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             if(isSurveyAssigned == false){
                 
                 
-                
-                
-                Utilities.currentSegmentedControl = "Unit"
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                
-                let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
-                
-                SurveyUtility.navigationController = self.navigationController!
-                
-                let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
-                    
-                    self.showSurveyWizard()
-                    print("completed for \(moreOptionVC)")
-                }
-                moreOptionVC.completionHandler=completionHandler
-                
-                
-                
-                
-                //            moreOptionVC.dismissVCCompletion(){ () in
-                //                 print("kamal")
-                //                 //self.showSurveyWizard()
-                //            }
-                
-                let navigationController = UINavigationController(rootViewController: moreOptionVC)
-                navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
-                
-                
-                self.present(navigationController, animated: true, completion: nil)
-                
-                
-                //            self.performSegue(withIdentifier: "moreOptionsModalIdentifier", sender: nil)
-                
+                showEditUnit()
                 
             }
                 
@@ -834,8 +834,18 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
     else{
-            
+    
+    SalesforceConnection.unitId =  clientDataArray[indexPath.row].unitId
+    
+    SalesforceConnection.unitName =  (unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
+    
+    SalesforceConnection.assignmentLocationUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
+    
+     showEditUnit()
+    
         }
+        
+        
     }
     
     
