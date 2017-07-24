@@ -20,14 +20,33 @@ struct UnitsDataStruct
 }
 
 
+struct ClientDataStruct
+{
+    var tenantId : String = ""
+    var name:String = ""
+    var firstName : String = ""
+    var lastName : String = ""
+    var email : String = ""
+    var phone : String = ""
+    var age : String = ""
+    var dob:String = ""
+    var unitId:String = ""
+}
+
+
+
 class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
     
     
     @IBOutlet weak var menuBtn: UIBarButtonItem!
     
+    @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var viewClient: UIView!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tblClient: UITableView!
+    @IBOutlet weak var viewUnit: UIView!
+    @IBOutlet weak var tblUnits: UITableView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     
@@ -53,19 +72,18 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     @IBOutlet weak var newUnitLbl: UILabel!
     @IBOutlet weak var newCaseLbl: UILabel!
     
-    
-    
-    
     var UnitDataArray = [UnitsDataStruct]()
+    var clientDataArray = [ClientDataStruct]()
+    
+     var unitClientDict: [String:UnitDO] = [:]
     
     
     @IBOutlet weak var unitView: UIStackView!
     @IBOutlet weak var cellContentView: UIView!
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        
-        
         
         if self.revealViewController() != nil {
             
@@ -78,7 +96,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
-        
+        //segmentControl.selectedSegmentIndex = 0
         let newUnitTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewUnitLblTapped:")))
         
         // add it to the image view;
@@ -113,15 +131,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         self.navigationItem.titleView = imageView
         
         
-        tableView.dataSource = self
-        tableView.delegate = self
         
-        self.tableView.tableFooterView = UIView()
+        self.tblClient.tableFooterView = UIView()
         
+        self.tblUnits.tableFooterView = UIView()
+        self.tblClient.separatorStyle = UITableViewCellSeparatorStyle.none
         
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        
-        
+        self.tblUnits.separatorStyle = UITableViewCellSeparatorStyle.none
+
         dataFullAddress.text = SalesforceConnection.fullAddress
         dataAssignment.text = "Assignment: " + SalesforceConnection.assignmentName
         
@@ -294,6 +311,57 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
+   
+    
+    func createUnitDictionary(){
+        
+        
+        
+        let unitClientResults =  ManageCoreData.fetchData(salesforceEntityName: "Unit", isPredicate:false) as! [Unit]
+        
+        if(unitClientResults.count > 0){
+            
+            for unitClientData in unitClientResults{
+                
+                if unitClientDict[unitClientData.id!] == nil{
+                    unitClientDict[unitClientData.id!] = UnitDO(unitId: unitClientData.id!, unitName: unitClientData.name!)
+                }
+                
+                
+            }
+        }
+        
+    }
+    
+
+    
+    
+    func populateClientData(){
+        
+        clientDataArray = [ClientDataStruct]()
+        
+        
+        unitClientDict = [:]
+        
+        createUnitDictionary()
+        
+        let clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Tenant]
+        
+        
+        if(clientResults.count > 0){
+            
+            for tenantData in clientResults{
+                
+                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!)
+                
+                clientDataArray.append(objectTenantStruct)
+                
+            }
+        }
+        
+        
+    }
+
     
     func updateTableViewData(){
         
@@ -329,7 +397,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         DispatchQueue.main.async {
             
-            self.tableView.reloadData()
+            self.tblUnits.reloadData()
             self.viewDidLayoutSubviews()
         }
         
@@ -375,6 +443,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         super.viewWillAppear(animated)
         
         updateTableViewData()
+        
+        populateClientData()
     }
     
     
@@ -465,14 +535,34 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     // MARK: UITableViewDataSource
-    private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    private func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
         return 1
+        
+        /*if(tableView == tblUnits)
+        {
+            return 1
+        }
+        else
+        {
+           return 1
+            
+        }
+ */
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
-        return UnitDataArray.count
+        if(tableView == tblUnits)
+        {
+            return UnitDataArray.count
+
+        }
+        else
+        {
+            return clientDataArray.count
+        }
         
         
     }
@@ -480,128 +570,155 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)  as! UnitsCustomViewCell
         
-        
-        
-        cell.unit.text = UnitDataArray[indexPath.row].unitName
-        
-        
-        // cell.moreBtn.tag = indexPath.row
-        
-        
-        /*
-         if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
-         
-         
-         cell.dataSyncDate.text =  UnitDataArray[indexPath.row].syncDate
-         //formatter.string(from: date)
-         
-         cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
-         //"Completed"
-         
-         
-         /*  if(Reachability.isConnectedToNetwork()){
-         cell.pendingIcon.isHidden = true
-         cell.dataSyncDate.text = "Pending"
-         cell.dataSyncDate.isHidden = false
-         
-         }
-         else{
-         cell.pendingIcon.isHidden = false
-         cell.dataSyncDate.text = ""
-         cell.dataSyncDate.isHidden = true
-         }
-         
-         cell.dataSyncStatus.text = "Completed"
-         */
-         
-         }
-         
-         else{
-         
-         //cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
-         
-         cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
-         
-         cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
-         
-         cell.pendingIcon.isHidden = true
-         cell.dataSyncDate.isHidden = false
-         
-         }
-         
-         
-         
-         */
-        
-        
-        cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
-        
-        if(UnitDataArray[indexPath.row].syncDate != ""){
-            cell.sync.isHidden = false
-            cell.sync.image = UIImage(named: "Complete")
-        }
-        else{
-            cell.sync.isHidden = true
-        }
-        
-        if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
-            cell.surveyStatus.isHidden = false
-            cell.surveyStatus.image = UIImage(named: "Complete")
-        }
-        else{
-            cell.surveyStatus.isHidden = true
+        if(tableView == tblUnits)
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)  as! UnitsCustomViewCell
             
+            
+            
+            cell.unit.text = UnitDataArray[indexPath.row].unitName
+            
+            
+            // cell.moreBtn.tag = indexPath.row
+            
+            
+            /*
+             if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
+             
+             
+             cell.dataSyncDate.text =  UnitDataArray[indexPath.row].syncDate
+             //formatter.string(from: date)
+             
+             cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
+             //"Completed"
+             
+             
+             /*  if(Reachability.isConnectedToNetwork()){
+             cell.pendingIcon.isHidden = true
+             cell.dataSyncDate.text = "Pending"
+             cell.dataSyncDate.isHidden = false
+             
+             }
+             else{
+             cell.pendingIcon.isHidden = false
+             cell.dataSyncDate.text = ""
+             cell.dataSyncDate.isHidden = true
+             }
+             
+             cell.dataSyncStatus.text = "Completed"
+             */
+             
+             }
+             
+             else{
+             
+             //cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
+             
+             cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
+             
+             cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
+             
+             cell.pendingIcon.isHidden = true
+             cell.dataSyncDate.isHidden = false
+             
+             }
+             
+             
+             
+             */
+            
+            
+            cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
+            
+            if(UnitDataArray[indexPath.row].syncDate != ""){
+                cell.sync.isHidden = false
+                cell.sync.image = UIImage(named: "Complete")
+            }
+            else{
+                cell.sync.isHidden = true
+            }
+            
+            if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
+                cell.surveyStatus.isHidden = false
+                cell.surveyStatus.image = UIImage(named: "Complete")
+            }
+            else{
+                cell.surveyStatus.isHidden = true
+                
+            }
+            
+            cell.unitId.text = UnitDataArray[indexPath.row].unitId
+            
+            let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
+            let noOfTenants = tenantDict[UnitDataArray[indexPath.row].unitId]
+            
+            cell.noOfTenants.text = noOfTenants
+            
+            if(editUnitObject?.attempt == "Yes"){
+                cell.attempt.isHidden = false
+                cell.attempt.image = UIImage(named: "Complete")
+            }
+            else if(editUnitObject?.attempt == "No"){
+                cell.attempt.isHidden = false
+                cell.attempt.image = UIImage(named: "No")
+            }
+            else{
+                cell.attempt.isHidden = true
+            }
+            
+            
+            
+            if(editUnitObject?.contact == "Yes"){
+                cell.contact.isHidden = false
+                cell.contact.image = UIImage(named: "Complete")
+            }
+            else if(editUnitObject?.contact == "No"){
+                cell.contact.isHidden = false
+                cell.contact.image = UIImage(named: "No")
+            }
+            else{
+                cell.contact.isHidden = true
+            }
+            
+            
+            
+            //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
+            
+            
+            
+            
+            
+            return cell
         }
-        
-        cell.unitId.text = UnitDataArray[indexPath.row].unitId
-        
-        let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
-        let noOfTenants = tenantDict[UnitDataArray[indexPath.row].unitId]
-        
-        cell.noOfTenants.text = noOfTenants
-        
-        if(editUnitObject?.attempt == "Yes"){
-            cell.attempt.isHidden = false
-            cell.attempt.image = UIImage(named: "Complete")
-        }
-        else if(editUnitObject?.attempt == "No"){
-            cell.attempt.isHidden = false
-            cell.attempt.image = UIImage(named: "No")
-        }
-        else{
-            cell.attempt.isHidden = true
-        }
-        
-        
-        
-        if(editUnitObject?.contact == "Yes"){
-            cell.contact.isHidden = false
-            cell.contact.image = UIImage(named: "Complete")
-        }
-        else if(editUnitObject?.contact == "No"){
-            cell.contact.isHidden = false
-            cell.contact.image = UIImage(named: "No")
-        }
-        else{
-            cell.contact.isHidden = true
-        }
-        
-        
-        
-        //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
-        
-        
-        
-        
-        
+
+   
+        else
+        {
+    
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellClient", for: indexPath) as! ClientCustomTableViewCell
+    
+        cell.backgroundColor = UIColor.clear
+    
+        cell.lblFirst.text = clientDataArray[indexPath.row].firstName
+        cell.lblLast.text = clientDataArray[indexPath.row].lastName
+        cell.lblPhone.text = clientDataArray[indexPath.row].phone
+        cell.lblNoCase.text = "0"
+          
+        let unitObject = unitClientDict[clientDataArray[indexPath.row].unitId]
+            
+        cell.unit.text = unitObject?.unitName
+        cell.unitId.text = unitObject?.unitId
+            
+            
+            
+            
         return cell
-        
-        
     }
     
-    
+  }
+
+
     func getSurveyUnitResults()->Bool{
         
         // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
@@ -629,6 +746,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+  if(tableView == tblUnits){
         
         SalesforceConnection.unitId =  UnitDataArray[indexPath.row].unitId
         
@@ -698,7 +816,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
         else{
             
-            let currentCell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! UnitsCustomViewCell
+            let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitsCustomViewCell
             
             currentCell.shake(duration: 0.3, pathLength: 15)
             
@@ -711,10 +829,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 }
             }
             
+         }
+        
         }
         
-        
+    else{
+            
+        }
     }
+    
     
     func showSurveyWizard(){
         
@@ -1104,18 +1227,37 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        
-        let identifier = "unitCellId"
-        var cell: UnitsHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
-        if cell == nil {
-            tableView.register(UINib(nibName: "UnitsHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
+        if tableView == tblUnits
+        {
+            let identifier = "unitCellId"
+            var cell: UnitsHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
+            if cell == nil {
+                tableView.register(UINib(nibName: "UnitsHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+                cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
+            }
+            
+            return cell
+
         }
-        
-        return cell
+        else
+        {
+            
+            let identifier = "clientHeaderIdentifier"
+            var cell: ClientsTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? ClientsTableViewCell
+            if cell == nil {
+                tableView.register(UINib(nibName: "ClientsTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+                cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ClientsTableViewCell
+            }
+            
+            return cell
+
+        }
+
         
     }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        
         return  41.0
     }
     
@@ -1156,6 +1298,20 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     
+    @IBAction func indexChangedAction(_ sender: UISegmentedControl)
+    {
+        switch segmentControl.selectedSegmentIndex
+        {
+        case 0:
+            viewClient.isHidden = true
+            viewUnit.isHidden = false
+        case 1:
+            viewClient.isHidden = false
+            viewUnit.isHidden = true
+        default:
+            break;
+        }
+    }
     
     
     //MARK: - Delegates and data sources
