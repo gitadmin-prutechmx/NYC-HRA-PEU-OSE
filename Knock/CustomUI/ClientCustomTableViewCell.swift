@@ -18,6 +18,7 @@ class ClientCustomTableViewCell: UITableViewCell
     @IBOutlet weak var lblNoCase: UILabel!
     @IBOutlet weak var unitId: UILabel!
    
+    @IBOutlet weak var syncDate: UILabel!
     
 
 

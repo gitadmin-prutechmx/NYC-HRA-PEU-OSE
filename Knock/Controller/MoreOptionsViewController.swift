@@ -556,12 +556,39 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
+    func getDefaultSurvey()->String{
+      
+        
+        let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
+        
+        
+        if(surveyQuestionResults.count > 0){
+            
+                selectedSurveyId = surveyQuestionResults[0].surveyId!
+            
+                return selectedSurveyId
+
+        }
+        
+        return ""
+    }
+    
     @IBAction func save(_ sender: Any) {
         
         
             if((attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")) || (attempt == "Yes" && contact == "Yes"  && inTake == "Yes")){
                 
                 updateUnit()
+                
+                self.dismiss(animated: true) {
+                    
+                    SalesforceConnection.surveyId = self.getDefaultSurvey()
+                    
+                    self.completionHandler?(self)
+                    
+                    print("Completion");
+                    
+                }
                 
             }
                

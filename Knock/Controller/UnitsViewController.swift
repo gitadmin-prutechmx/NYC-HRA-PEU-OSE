@@ -705,12 +705,13 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         cell.lblLast.text = clientDataArray[indexPath.row].lastName
         cell.lblPhone.text = clientDataArray[indexPath.row].phone
         cell.lblNoCase.text = "0"
+    
           
         let unitObject = unitClientDict[clientDataArray[indexPath.row].unitId]
             
         cell.unit.text = unitObject?.unitName
         cell.unitId.text = unitObject?.unitId
-            
+        cell.syncDate.text = ""
             
             
             
@@ -789,12 +790,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
             
+             showEditUnit()
+            
+        /*
             let isSurveyAssigned = getSurveyUnitResults()
             
-            //update or delete particular surveyunit
-            //add multiple conditions in predicateformat
-            
-            if(isSurveyAssigned == false){
+           
+ 
+           if(isSurveyAssigned == false){
                 
                 
                 showEditUnit()
@@ -811,6 +814,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 showSurveyWizard()
                 
             }
+ 
+ */
         }
             
         else{
