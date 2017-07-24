@@ -745,8 +745,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func showEditUnit(){
         
-        Utilities.currentSegmentedControl = "Unit"
-        
+       
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
