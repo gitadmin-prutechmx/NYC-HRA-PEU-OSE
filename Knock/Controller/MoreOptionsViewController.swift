@@ -74,7 +74,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     @IBOutlet weak var fullAddressText: UILabel!
     
-    var selectedSurveyId:String = ""
+    //var selectedSurveyId:String = ""
     
     
     
@@ -87,7 +87,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
        
         
         
-        fullAddressText.text =  SalesforceConnection.fullAddress
+        fullAddressText.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
@@ -95,7 +95,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
-        self.navigationItem.title = SalesforceConnection.unitName
+        //self.navigationItem.title = SalesforceConnection.unitName
         
         notesTextArea.layer.cornerRadius = 5
         notesTextArea.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
@@ -527,7 +527,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let msgtitle = "Message"
         
-        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
         
@@ -556,7 +556,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    func getDefaultSurvey()->String{
+    func getDefaultSurvey(){
       
         
         let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
@@ -564,13 +564,16 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(surveyQuestionResults.count > 0){
             
-                selectedSurveyId = surveyQuestionResults[0].surveyId!
+                SalesforceConnection.surveyId = surveyQuestionResults[0].surveyId!
             
-                return selectedSurveyId
+                SalesforceConnection.surveyName = surveyQuestionResults[0].surveyName!
+
+            
+               // return selectedSurveyId
 
         }
         
-        return ""
+       // return ""
     }
     
     @IBAction func save(_ sender: Any) {
@@ -582,7 +585,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 self.dismiss(animated: true) {
                     
-                    SalesforceConnection.surveyId = self.getDefaultSurvey()
+                    self.getDefaultSurvey()
                     
                     self.completionHandler?(self)
                     

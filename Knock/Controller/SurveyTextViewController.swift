@@ -27,10 +27,26 @@ class SurveyTextViewController: UIViewController {
         
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyTextViewController.exitFromSurvey))
+        let rightExitSurveyBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
         
         
-        self.navigationItem.rightBarButtonItem  = rightBarButtonItem
+        
+        if(Utilities.surveyQuestionArrayIndex == 0){
+            
+            let rightChooseSurveyBarButtonItem:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "SurveyTaken.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.showChooseSurvey))
+            
+            self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem,rightChooseSurveyBarButtonItem], animated: true)
+            
+            
+        }
+            
+        else{
+            self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem], animated: true)
+        }
+        
+        self.navigationItem.title =  SalesforceConnection.surveyName
+        
+
         
         let leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
@@ -115,7 +131,7 @@ class SurveyTextViewController: UIViewController {
         
         //self.surveyName.text = "Survey: 59 Booster St, New York, NY ,12201"
         
-        self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
+        self.surveyName.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         flagView.isHidden = true
     }

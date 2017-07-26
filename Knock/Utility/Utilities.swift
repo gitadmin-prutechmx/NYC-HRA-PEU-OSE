@@ -19,6 +19,17 @@ class Utilities {
     static var currentSortingFieldName:String = "Assignment"
     static var currentSortingTypeAscending:Bool = true
     
+    
+    static var currentUnitSortingFieldName:String = "UnitName"
+    static var currentUnitSortingTypeAscending:Bool = true
+    
+    static var currentClientSortingFieldName:String = "UnitName"
+    static var currentClientSortingTypeAscending:Bool = true
+
+    
+    
+    static var currentUnitClientPage:String = "Unit"
+    
     static let encryptDecryptKey = "hdsfjksdhf548954"
     static let encryptDecryptIV = "1234567890123456"
     

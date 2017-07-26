@@ -32,6 +32,7 @@ struct ClientDataStruct
     var dob:String = ""
     var unitId:String = ""
     var assignmentLocUnitId:String = ""
+    var unitName:String = ""
 }
 
 
@@ -76,7 +77,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     var UnitDataArray = [UnitsDataStruct]()
     var clientDataArray = [ClientDataStruct]()
     
-     var unitClientDict: [String:UnitDO] = [:]
+    var unitClientDict: [String:UnitDO] = [:]
     
     
     @IBOutlet weak var unitView: UIStackView!
@@ -85,6 +86,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+         Utilities.currentUnitClientPage = "Unit"
         
         if self.revealViewController() != nil {
             
@@ -139,7 +142,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         self.tblClient.separatorStyle = UITableViewCellSeparatorStyle.none
         
         self.tblUnits.separatorStyle = UITableViewCellSeparatorStyle.none
-
+        
         dataFullAddress.text = SalesforceConnection.fullAddress
         dataAssignment.text = "Assignment: " + SalesforceConnection.assignmentName
         
@@ -312,7 +315,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-   
+    
     
     func createUnitDictionary(){
         
@@ -334,7 +337,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
-
+    
     
     
     func populateClientData(){
@@ -353,16 +356,52 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             for tenantData in clientResults{
                 
-                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!)
+                let unitObject = unitClientDict[tenantData.unitId!]
+                
+                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!)
                 
                 clientDataArray.append(objectTenantStruct)
                 
             }
         }
         
+        if(Utilities.currentClientSortingFieldName == "FirstName"){
+            if(Utilities.currentClientSortingTypeAscending){
+                clientDataArray = clientDataArray.sorted { $0.firstName < $1.firstName }
+            }
+            else{
+                clientDataArray = clientDataArray.sorted { $0.firstName > $1.firstName }
+            }
+        }
+        else if(Utilities.currentClientSortingFieldName == "LastName"){
+            if(Utilities.currentClientSortingTypeAscending){
+                clientDataArray = clientDataArray.sorted { $0.lastName < $1.lastName }
+            }
+            else{
+                clientDataArray = clientDataArray.sorted { $0.lastName > $1.lastName }
+            }
+        }
+        else{
+                if(Utilities.currentClientSortingTypeAscending){
+                    clientDataArray = clientDataArray.sorted { $0.unitName < $1.unitName }
+                }
+                else{
+                    clientDataArray = clientDataArray.sorted { $0.unitName > $1.unitName }
+                }
+        }
+       
+        
+        DispatchQueue.main.async {
+            
+            self.tblClient.reloadData()
+            //self.viewDidLayoutSubviews()
+        }
+        
+
+        
         
     }
-
+    
     
     func updateTableViewData(){
         
@@ -389,7 +428,18 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
         }
         
-        UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
+        if(Utilities.currentUnitSortingFieldName == "UnitName"){
+            if(Utilities.currentUnitSortingTypeAscending){
+                UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
+            }
+            else{
+                UnitDataArray = UnitDataArray.sorted { $0.unitName > $1.unitName }
+            }
+        }
+
+        
+        
+      //  UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
         
         
         
@@ -399,7 +449,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         DispatchQueue.main.async {
             
             self.tblUnits.reloadData()
-            self.viewDidLayoutSubviews()
+            //self.viewDidLayoutSubviews()
         }
         
         
@@ -541,15 +591,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         return 1
         
         /*if(tableView == tblUnits)
-        {
-            return 1
-        }
-        else
-        {
-           return 1
-            
-        }
- */
+         {
+         return 1
+         }
+         else
+         {
+         return 1
+         
+         }
+         */
         
     }
     
@@ -558,7 +608,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         if(tableView == tblUnits)
         {
             return UnitDataArray.count
-
+            
         }
         else
         {
@@ -692,35 +742,35 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             return cell
         }
-
-   
+            
+            
         else
         {
-    
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellClient", for: indexPath) as! ClientCustomTableViewCell
-    
-        cell.backgroundColor = UIColor.clear
-    
-        cell.lblFirst.text = clientDataArray[indexPath.row].firstName
-        cell.lblLast.text = clientDataArray[indexPath.row].lastName
-        cell.lblPhone.text = clientDataArray[indexPath.row].phone
-        cell.lblNoCase.text = "0"
-    
-          
-        let unitObject = unitClientDict[clientDataArray[indexPath.row].unitId]
             
-        cell.unit.text = unitObject?.unitName
-        cell.unitId.text = unitObject?.unitId
-        cell.syncDate.text = ""
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cellClient", for: indexPath) as! ClientCustomTableViewCell
+            
+            cell.backgroundColor = UIColor.clear
+            
+            cell.lblFirst.text = clientDataArray[indexPath.row].firstName
+            cell.lblLast.text = clientDataArray[indexPath.row].lastName
+            cell.lblPhone.text = clientDataArray[indexPath.row].phone
+            cell.lblNoCase.text = "0"
             
             
+           // let unitObject = unitClientDict[clientDataArray[indexPath.row].unitId]
             
-        return cell
+            cell.unit.text = clientDataArray[indexPath.row].unitName
+            cell.unitId.text = clientDataArray[indexPath.row].unitId
+            cell.syncDate.text = ""
+            
+            
+            
+            return cell
+        }
+        
     }
     
-  }
-
-
+    
     func getSurveyUnitResults()->Bool{
         
         // request.predicate = NSPredicate(format: "username = %@ AND password = %@", txtUserName.text!, txtPassword.text!)
@@ -746,7 +796,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func showEditUnit(){
         
-       
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
@@ -755,7 +805,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
             
-            self.showSurveyWizard()
+            //self.showSurveyWizard()
+            SurveyUtility.showSurvey()
             print("completed for \(moreOptionVC)")
         }
         moreOptionVC.completionHandler=completionHandler
@@ -779,74 +830,74 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-  if(tableView == tblUnits){
-    
-        SalesforceConnection.unitId =  UnitDataArray[indexPath.row].unitId
-        
-        SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
-        
-        SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
-        
-        
-        if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
+        if(tableView == tblUnits){
             
-             showEditUnit()
+            SalesforceConnection.unitId =  UnitDataArray[indexPath.row].unitId
             
-        /*
-            let isSurveyAssigned = getSurveyUnitResults()
+            SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
             
-           
- 
-           if(isSurveyAssigned == false){
-                
+            SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
+            
+            
+            if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
                 
                 showEditUnit()
                 
+                /*
+                 let isSurveyAssigned = getSurveyUnitResults()
+                 
+                 
+                 
+                 if(isSurveyAssigned == false){
+                 
+                 
+                 showEditUnit()
+                 
+                 }
+                 
+                 else{
+                 
+                 //SurveyUtility.showSurvey()
+                 
+                 // SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
+                 
+                 
+                 showSurveyWizard()
+                 
+                 }
+                 
+                 */
             }
                 
             else{
                 
-                //SurveyUtility.showSurvey()
+                let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitsCustomViewCell
                 
-                // SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
+                currentCell.shake(duration: 0.3, pathLength: 15)
                 
                 
-                showSurveyWizard()
+                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        print("completion from tap")
+                    } else {
+                        print("completion without tap")
+                    }
+                }
                 
             }
- 
- */
+            
         }
             
         else{
             
-            let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitsCustomViewCell
+            SalesforceConnection.unitId =  clientDataArray[indexPath.row].unitId
             
-            currentCell.shake(duration: 0.3, pathLength: 15)
+            SalesforceConnection.unitName =  (unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
             
+            SalesforceConnection.assignmentLocationUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
             
-            self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                if didTap {
-                    print("completion from tap")
-                } else {
-                    print("completion without tap")
-                }
-            }
+            showEditUnit()
             
-         }
-        
-        }
-        
-    else{
-    
-    SalesforceConnection.unitId =  clientDataArray[indexPath.row].unitId
-    
-    SalesforceConnection.unitName =  (unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
-    
-    SalesforceConnection.assignmentLocationUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
-    
-     showEditUnit()
-    
         }
         
         
@@ -1251,7 +1302,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             
             return cell
-
+            
         }
         else
         {
@@ -1264,9 +1315,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             
             return cell
-
+            
         }
-
+        
         
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
@@ -1275,27 +1326,54 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         return  41.0
     }
     
-    func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        
-        
-        
-        if(segue.identifier == "showSurveyIdentifier"){
+        if segue.identifier == "unitSortingPopOverIdentifier" {
+            
+            let unitClientSortingVC = segue.destination as! UnitSortingViewController
+            unitClientSortingVC.preferredContentSize = CGSize(width: 375, height: 160)
+            
+            
+            
+            
+            unitClientSortingVC.setSortingUnitClient{
+                [weak self] (sortingFieldName:String,sortingType:Bool) -> Void in
+                
+               
+                
+                if(Utilities.currentUnitClientPage == "Unit"){
+                    
+                    Utilities.currentUnitSortingFieldName = sortingFieldName
+                    Utilities.currentUnitSortingTypeAscending = sortingType
+                    
+
+                    
+                    self?.updateTableViewData()
+                }
+                else{
+
+                    Utilities.currentClientSortingFieldName = sortingFieldName
+                    Utilities.currentClientSortingTypeAscending = sortingType
+                    
+
+                    
+                    self?.populateClientData()
+                }
+                                //self?.populateClientData()
+                
+                print(sortingFieldName)
+                print(sortingType)
+                
+                
+            }
             
         }
-        else if(segue.identifier == "showAddNewUnitIdentifier"){
-            
-            
-            
-        }
-            
-        else if(segue.identifier == "UnwindBackFromUnit"){
-            
-        }
-        
-        
-        
     }
+    
+    
+    
     
     
     @IBAction func NewUnit(_ sender: Any) {
@@ -1317,9 +1395,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         switch segmentControl.selectedSegmentIndex
         {
         case 0:
+            Utilities.currentUnitClientPage = "Unit"
             viewClient.isHidden = true
             viewUnit.isHidden = false
         case 1:
+            Utilities.currentUnitClientPage = "Client"
             viewClient.isHidden = false
             viewUnit.isHidden = true
         default:

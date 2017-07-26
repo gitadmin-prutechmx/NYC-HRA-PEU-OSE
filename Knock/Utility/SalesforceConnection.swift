@@ -29,6 +29,8 @@ class SalesforceConnection{
     
     static var unitName:String = ""
     static var surveyId:String = ""
+    static var surveyName:String = ""
+    
     static var fullAddress:String = ""
     
     

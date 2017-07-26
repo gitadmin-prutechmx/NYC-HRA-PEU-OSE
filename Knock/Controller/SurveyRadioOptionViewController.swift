@@ -67,9 +67,43 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
          self.navigationItem.rightBarButtonItem = rightBarButton
          */
         
-        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
-        //#selector(self.exitFromSurvey(_:))
-        self.navigationItem.rightBarButtonItem  = rightBarButtonItem
+        /*
+        var rightAddBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewController.addTapped))
+      
+        var rightSearchBarButtonItem:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(ViewController.searchTapped))
+        
+        self.navigationItem.setRightBarButtonItems([rightAddBarButtonItem,rightSearchBarButtonItem], animated: true)
+        */
+        
+        
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        let rightExitSurveyBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
+        
+      
+        
+      if(Utilities.surveyQuestionArrayIndex == 0){
+        
+            let rightChooseSurveyBarButtonItem:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "SurveyTaken.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.showChooseSurvey))
+        
+            self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem,rightChooseSurveyBarButtonItem], animated: true)
+        
+        
+        }
+        
+        else{
+             self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem], animated: true)
+        }
+        
+        
+       self.navigationItem.title =  SalesforceConnection.surveyName
+        
+        
+        
+        
+        
+
+        //self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         
         let leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action:  nil)
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
@@ -172,6 +206,36 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
     }
     
+    func showChooseSurvey(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let chooseSurveyVC = storyboard.instantiateViewController(withIdentifier: "chooseSurveyIdentifier") as! ChooseSurveyViewController
+        
+        
+         SurveyUtility.navigationController = self.navigationController!
+        
+        let completionHandler:(ChooseSurveyViewController)->Void = { chooseSurveyVC in
+            
+            //self.showSurveyWizard()
+            SurveyUtility.showSurvey()
+            print("completed for \(chooseSurveyVC)")
+        }
+ 
+        
+        chooseSurveyVC.completionHandler = completionHandler
+ 
+        
+        
+        
+      
+        
+        let navigationController = UINavigationController(rootViewController: chooseSurveyVC)
+        
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        
+        
+        self.present(navigationController, animated: true, completion: nil)
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,7 +265,9 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         //self.optionsCollectionView.reloadData()
         
-        self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
+        self.surveyName.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
+        
+   
         
         // flagView.isHidden = true
         

@@ -59,9 +59,27 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
          self.navigationItem.rightBarButtonItem = rightBarButton
          */
         
-        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyMultiOptionViewController.exitFromSurvey))
-        //#selector(self.exitFromSurvey(_:))
-        self.navigationItem.rightBarButtonItem  = rightBarButtonItem
+        let rightExitSurveyBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
+        
+        
+        
+        if(Utilities.surveyQuestionArrayIndex == 0){
+            
+            let rightChooseSurveyBarButtonItem:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "SurveyTaken.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.showChooseSurvey))
+            
+            self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem,rightChooseSurveyBarButtonItem], animated: true)
+            
+            
+        }
+            
+        else{
+            self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem], animated: true)
+        }
+        
+        self.navigationItem.title =  SalesforceConnection.surveyName
+        
+
+        
         
         let leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action:  nil)
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
@@ -200,7 +218,7 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
         //self.optionsCollectionView.reloadData()
         
-        self.surveyName.text = "Survey: " + SalesforceConnection.unitName + " |  " + SalesforceConnection.fullAddress
+        self.surveyName.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         // flagView.isHidden = true
         

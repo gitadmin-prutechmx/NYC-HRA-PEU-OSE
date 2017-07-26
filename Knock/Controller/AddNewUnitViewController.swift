@@ -73,10 +73,10 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     @IBAction func cancel(_ sender: Any)
     {
         let msgtitle = "Message"
-        let message = "Are you sure you want to cancel without saving"
+        let message = "Are you sure you want to cancel without saving?"
         let buttonText = "Cancel"
         
-        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
         
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         

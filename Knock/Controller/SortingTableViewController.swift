@@ -43,7 +43,11 @@ class SortingTableViewController: UITableViewController {
         assignmentsView.layer.cornerRadius = 5
         sortingView.layer.cornerRadius = 5
         
-        resetButtonImage()
+        SortingButton.resetButtonImage(btn: eventBtn)
+        SortingButton.resetButtonImage(btn: assignmentsBtn)
+        SortingButton.resetButtonImage(btn: dateBtn)
+
+        
         
         if(Utilities.currentShowHideAssignments){
             assignmentsRdb.isOn = true
@@ -53,30 +57,30 @@ class SortingTableViewController: UITableViewController {
         }
         
         if(Utilities.currentSortingFieldName == "Assignment"){
-            setSelectedSortingBtn(btn: assignmentsBtn)
+            SortingButton.setSelectedSortingBtn(btn: assignmentsBtn)
             
-            resetSortingBtn(btn: eventBtn)
-            resetSortingBtn(btn: dateBtn)
+            SortingButton.resetSortingBtn(btn: eventBtn)
+            SortingButton.resetSortingBtn(btn: dateBtn)
             
-            setSortingType(btn: assignmentsBtn,type:Utilities.currentSortingTypeAscending)
+            SortingButton.setSortingType(btn: assignmentsBtn,type:Utilities.currentSortingTypeAscending)
             
         }
         else if(Utilities.currentSortingFieldName == "Event"){
-            setSelectedSortingBtn(btn: eventBtn)
+            SortingButton.setSelectedSortingBtn(btn: eventBtn)
             
-            resetSortingBtn(btn: assignmentsBtn)
-            resetSortingBtn(btn: dateBtn)
+            SortingButton.resetSortingBtn(btn: assignmentsBtn)
+            SortingButton.resetSortingBtn(btn: dateBtn)
             
-            setSortingType(btn: eventBtn,type:Utilities.currentSortingTypeAscending)
+            SortingButton.setSortingType(btn: eventBtn,type:Utilities.currentSortingTypeAscending)
             
         }
         else {
-            setSelectedSortingBtn(btn: dateBtn)
+            SortingButton.setSelectedSortingBtn(btn: dateBtn)
             
-            resetSortingBtn(btn: assignmentsBtn)
-            resetSortingBtn(btn: eventBtn)
+            SortingButton.resetSortingBtn(btn: assignmentsBtn)
+            SortingButton.resetSortingBtn(btn: eventBtn)
             
-            setSortingType(btn: dateBtn,type:Utilities.currentSortingTypeAscending)
+            SortingButton.setSortingType(btn: dateBtn,type:Utilities.currentSortingTypeAscending)
             
         }
         
@@ -98,143 +102,48 @@ class SortingTableViewController: UITableViewController {
         
         
     }
-    func setSelectedSortingBtn(btn:UIButton){
-        
-        btn.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1)
-        btn.setTitleColor(UIColor.white, for: UIControlState.normal)
-        
-        btn.layer.borderColor = UIColor.clear.withAlphaComponent(0.5).cgColor
-        btn.layer.borderWidth = 0
-        
-        
-        
-        
-    }
-    
-    func resetSortingBtn(btn:UIButton){
-        btn.backgroundColor = UIColor.white
-        btn.setTitleColor(UIColor.black, for: UIControlState.normal)
-        
-        btn.layer.borderColor = UIColor.clear.withAlphaComponent(0.5).cgColor
-        btn.layer.borderWidth = 0.5
-        
-        btn.setImage(nil, for: .normal)
-    }
-    
-    func resetButtonImage(){
-        eventBtn.setImage(nil, for: .normal)
-        assignmentsBtn.setImage(nil, for: .normal)
-        dateBtn.setImage(nil, for: .normal)
-        
-    }
-    
-    
-    
-    func getSortingType(btn:UIButton)->Bool{
-        
-        if let currentBtnImg =  btn.currentImage{
-            
-            if(currentBtnImg == UIImage(named: "SortingUp.png")){
-                
-                return true
-            }
-            else{
-                return false
-            }
-        }
-        else{
-            return false
-        }
-        
-    }
-    
-    
-    
-    //assignments arrow set
-    //selected radio button and assignments when show popup show
-    // sorting baseed on assignments
-    //insets set reset of title and image
-    
-    func setSortingType(btn:UIButton,type:Bool? = true){
-        
-        if let currentBtnImg =  btn.currentImage{
-            
-            if(currentBtnImg == UIImage(named: "SortingUp.png")){
-                
-                if let image = UIImage(named: "SortingDown.png") {
-                    btn.setImage(image, for: .normal)
-                    btn.tintColor = UIColor.white
-                    
-                }
-            }
-            else{
-                if let image = UIImage(named: "SortingUp.png") {
-                    btn.setImage(image, for: .normal)
-                    btn.tintColor = UIColor.white
-                }
-            }
-        }
-        else{
-            if(type == true){
-                if let image = UIImage(named: "SortingUp.png") {
-                    btn.setImage(image, for: .normal)
-                    btn.tintColor = UIColor.white
-                }
-            }
-            else{
-                if let image = UIImage(named: "SortingDown.png") {
-                    btn.setImage(image, for: .normal)
-                    btn.tintColor = UIColor.white
-                }
-            }
-        }
-        
-        
-        
-        
-    }
     
     @IBAction func sortingEvent(_ sender: Any) {
         
-        setSelectedSortingBtn(btn: eventBtn)
+        SortingButton.setSelectedSortingBtn(btn: eventBtn)
         
-        resetSortingBtn(btn: assignmentsBtn)
-        resetSortingBtn(btn: dateBtn)
+        SortingButton.resetSortingBtn(btn: assignmentsBtn)
+        SortingButton.resetSortingBtn(btn: dateBtn)
         
-        setSortingType(btn:eventBtn)
+        SortingButton.setSortingType(btn:eventBtn)
         
         //execute the closure if it exists
         if self.sortingEventAssignments != nil {
-            self.sortingEventAssignments("Event",getSortingType(btn: eventBtn))
+            self.sortingEventAssignments("Event",SortingButton.getSortingType(btn: eventBtn))
         }
         
         
     }
     @IBAction func sortingDate(_ sender: Any) {
-        setSelectedSortingBtn(btn: dateBtn)
+        SortingButton.setSelectedSortingBtn(btn: dateBtn)
         
-        resetSortingBtn(btn: eventBtn)
-        resetSortingBtn(btn: assignmentsBtn)
+        SortingButton.resetSortingBtn(btn: eventBtn)
+        SortingButton.resetSortingBtn(btn: assignmentsBtn)
         
-        setSortingType(btn:dateBtn)
+        SortingButton.setSortingType(btn:dateBtn)
         
         //execute the closure if it exists
         if self.sortingEventAssignments != nil {
-            self.sortingEventAssignments("Date",getSortingType(btn: dateBtn))
+            self.sortingEventAssignments("Date",SortingButton.getSortingType(btn: dateBtn))
         }
     }
     
     @IBAction func sortingAssignment(_ sender: Any) {
-        setSelectedSortingBtn(btn: assignmentsBtn)
+        SortingButton.setSelectedSortingBtn(btn: assignmentsBtn)
         
-        resetSortingBtn(btn: eventBtn)
-        resetSortingBtn(btn: dateBtn)
+        SortingButton.resetSortingBtn(btn: eventBtn)
+        SortingButton.resetSortingBtn(btn: dateBtn)
         
-        setSortingType(btn:assignmentsBtn)
+        SortingButton.setSortingType(btn:assignmentsBtn)
         
         //execute the closure if it exists
         if self.sortingEventAssignments != nil {
-            self.sortingEventAssignments("Assignment",getSortingType(btn: assignmentsBtn))
+            self.sortingEventAssignments("Assignment",SortingButton.getSortingType(btn: assignmentsBtn))
         }
     }
 }

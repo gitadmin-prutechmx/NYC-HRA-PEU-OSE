@@ -11,8 +11,7 @@ import UIKit
 class SurveyCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var surveyName: UILabel!
-    
-    
+
     @IBOutlet weak var surveyId: UILabel!
     
 }

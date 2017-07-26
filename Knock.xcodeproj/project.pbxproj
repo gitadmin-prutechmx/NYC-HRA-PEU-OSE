@@ -63,6 +63,9 @@
 		5DC8C72B1F25D2F900B57044 /* ClientsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */; };
 		5DC8C72C1F25D2F900B57044 /* ClientsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DC8C72A1F25D2F900B57044 /* ClientsTableViewCell.xib */; };
 		5DC8C72E1F25E16E00B57044 /* UnitDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C72D1F25E16E00B57044 /* UnitDO.swift */; };
+		5DC8C7301F286E6F00B57044 /* ChooseSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C72F1F286E6F00B57044 /* ChooseSurveyViewController.swift */; };
+		5DC8C7321F2892D400B57044 /* UnitSortingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7311F2892D400B57044 /* UnitSortingViewController.swift */; };
+		5DC8C7341F28948700B57044 /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7331F28948700B57044 /* SortingButton.swift */; };
 		5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */; };
 		5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E31EEA7DF9009A6396 /* SVProgressHUD.bundle */; };
 		5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9E51EEA7DF9009A6396 /* SVProgressHUD.m */; };
@@ -187,6 +190,9 @@
 		5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientsTableViewCell.swift; sourceTree = "<group>"; };
 		5DC8C72A1F25D2F900B57044 /* ClientsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientsTableViewCell.xib; sourceTree = "<group>"; };
 		5DC8C72D1F25E16E00B57044 /* UnitDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitDO.swift; sourceTree = "<group>"; };
+		5DC8C72F1F286E6F00B57044 /* ChooseSurveyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSurveyViewController.swift; sourceTree = "<group>"; };
+		5DC8C7311F2892D400B57044 /* UnitSortingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitSortingViewController.swift; sourceTree = "<group>"; };
+		5DC8C7331F28948700B57044 /* SortingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
 		5DC9E9E01EEA7DF9009A6396 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		5DC9E9E11EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		5DC9E9E21EEA7DF9009A6396 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
@@ -389,6 +395,8 @@
 				5D757AE61F15477800308C05 /* SelectReasonStatusViewController.swift */,
 				5D757AEA1F16324400308C05 /* SettingsTableViewController.swift */,
 				5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */,
+				5DC8C72F1F286E6F00B57044 /* ChooseSurveyViewController.swift */,
+				5DC8C7311F2892D400B57044 /* UnitSortingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -441,6 +449,7 @@
 				5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */,
 				5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */,
 				5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */,
+				5DC8C7331F28948700B57044 /* SortingButton.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -772,6 +781,7 @@
 				5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */,
 				5DE3C9911EF3B10000012C47 /* UnitsCustomViewCell.swift in Sources */,
 				5DC8C72E1F25E16E00B57044 /* UnitDO.swift in Sources */,
+				5DC8C7301F286E6F00B57044 /* ChooseSurveyViewController.swift in Sources */,
 				5D5291C11F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift in Sources */,
 				5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
@@ -806,6 +816,7 @@
 				62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */,
 				5DE3C9991EF6B66000012C47 /* YPDrawSignatureView.swift in Sources */,
 				5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */,
+				5DC8C7321F2892D400B57044 /* UnitSortingViewController.swift in Sources */,
 				5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */,
 				5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */,
 				5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */,
@@ -814,6 +825,7 @@
 				5D5291C91F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift in Sources */,
 				5D1BD4F71F067FB100C8FAF5 /* GaugeView.swift in Sources */,
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,
+				5DC8C7341F28948700B57044 /* SortingButton.swift in Sources */,
 				5DE3C9A51EF7CBF300012C47 /* SurveyRadioOptionViewController.swift in Sources */,
 				5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */,
 				5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */,
