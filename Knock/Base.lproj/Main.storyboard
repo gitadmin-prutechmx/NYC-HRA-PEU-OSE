@@ -1307,7 +1307,7 @@
                                                                         <constraint firstAttribute="width" constant="30" id="lhi-Xq-gU9"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07/12/2007 9:000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvL-9P-hbZ" userLabel="syncDate">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07/12/2007 9:000" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvL-9P-hbZ" userLabel="syncDate">
                                                                     <rect key="frame" x="253" y="24" width="81" height="38"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="26" id="DiF-hH-kSw"/>
@@ -1357,7 +1357,7 @@
                                                                 </constraint>
                                                                 <constraint firstItem="BWr-hy-OgZ" firstAttribute="leading" secondItem="trX-0S-DQJ" secondAttribute="leading" constant="18" id="Xz1-5m-9Vo"/>
                                                                 <constraint firstItem="lvL-9P-hbZ" firstAttribute="leading" secondItem="lWe-kW-eJ2" secondAttribute="leading" constant="-50" id="ZfX-kn-3h6">
-                                                                    <variation key="heightClass=regular-widthClass=regular" constant="70"/>
+                                                                    <variation key="heightClass=regular-widthClass=regular" constant="76"/>
                                                                 </constraint>
                                                                 <constraint firstItem="gLS-eS-jD2" firstAttribute="leading" secondItem="7Vq-Kc-388" secondAttribute="trailing" constant="9" id="Zy1-vh-LTB">
                                                                     <variation key="heightClass=regular-widthClass=regular" constant="30"/>
@@ -1371,7 +1371,7 @@
                                                                 <constraint firstItem="gLS-eS-jD2" firstAttribute="leading" secondItem="BWr-hy-OgZ" secondAttribute="trailing" constant="41" id="gai-jg-6e9"/>
                                                                 <constraint firstItem="BWr-hy-OgZ" firstAttribute="top" secondItem="trX-0S-DQJ" secondAttribute="top" constant="8" id="lkU-0f-Vk7"/>
                                                                 <constraint firstItem="lWe-kW-eJ2" firstAttribute="leading" secondItem="FBP-2M-eQn" secondAttribute="trailing" constant="-30" id="mbZ-ff-HQr">
-                                                                    <variation key="heightClass=regular-widthClass=regular" constant="60"/>
+                                                                    <variation key="heightClass=regular-widthClass=regular" constant="67"/>
                                                                 </constraint>
                                                                 <constraint firstAttribute="bottom" secondItem="BWr-hy-OgZ" secondAttribute="bottom" constant="34" id="pmN-kc-Iq8"/>
                                                                 <constraint firstItem="FBP-2M-eQn" firstAttribute="leading" secondItem="lff-XJ-3rm" secondAttribute="trailing" constant="70" id="u1v-9p-aUh">
@@ -1542,7 +1542,7 @@
                                                                 <constraint firstItem="qs0-np-sJM" firstAttribute="top" secondItem="cUQ-Fh-usD" secondAttribute="top" constant="24.52" id="dbB-Gg-IBi"/>
                                                                 <constraint firstItem="PvI-xK-FP0" firstAttribute="top" secondItem="cUQ-Fh-usD" secondAttribute="top" constant="18" id="dlR-Qa-Acg"/>
                                                                 <constraint firstItem="PR4-YT-j7a" firstAttribute="leading" secondItem="Rs7-Nm-sjJ" secondAttribute="trailing" constant="-27" id="hgA-c7-Vd4">
-                                                                    <variation key="heightClass=regular-widthClass=regular" constant="49"/>
+                                                                    <variation key="heightClass=regular-widthClass=regular" constant="66"/>
                                                                 </constraint>
                                                                 <constraint firstItem="17N-qs-CYu" firstAttribute="top" secondItem="cUQ-Fh-usD" secondAttribute="top" constant="11" id="klu-ae-JQk"/>
                                                                 <constraint firstItem="gBi-Yv-i0L" firstAttribute="top" secondItem="cUQ-Fh-usD" secondAttribute="top" constant="11" id="sID-0v-8ZQ"/>
