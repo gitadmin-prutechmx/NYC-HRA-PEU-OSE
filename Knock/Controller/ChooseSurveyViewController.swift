@@ -13,13 +13,13 @@ struct ChooseSurveyDataStruct
 
 
 class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     typealias typeCompletionHandler = () -> ()
     var completion : typeCompletionHandler = {}
     
     var completionHandler : ((_ childVC:ChooseSurveyViewController) -> Void)?
     
-
+    
     
     @IBOutlet weak var fullAddressLbl: UILabel!
     @IBOutlet weak var surveyCollectionView: UICollectionView!
@@ -32,7 +32,7 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         fullAddressLbl.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         //fullAddressLbl.text =  SalesforceConnection.fullAddress
@@ -45,12 +45,14 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
         
         //self.navigationItem.title = SalesforceConnection.unitName
         
+        selectedSurveyId =  SalesforceConnection.surveyId
+        
         populateSurveyData()
-
+        
         
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -108,7 +110,7 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
         
         
         selectedSurveyId = currentCell.surveyId.text!
-    
+        
         selectedSurveyName = currentCell.surveyName.text!
         
     }
@@ -144,9 +146,9 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
     
     @IBAction func cancel(_ sender: Any) {
         
-        let msgtitle = "Message"
+        let msgtitle = "Warning"
         
-        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Warning", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
         alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
         
         
@@ -173,23 +175,69 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
     
     @IBAction func next(_ sender: Any) {
         
-        self.dismiss(animated: true) {
+        if(Utilities.SurveyOutput.count > 0 ){
             
-            SalesforceConnection.surveyId = self.selectedSurveyId
+            let msgtitle = "Message"
             
-            SalesforceConnection.surveyName = self.selectedSurveyName
+            let alertController = UIAlertController(title: "Warning", message: "Are you sure you want to switch survey? Switch to new survey will result to loss of your existing survey data.", preferredStyle: .alert)
+            alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
             
-            self.completionHandler?(self)
             
-            print("Completion");
             
+            
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+                //Do some stuff
+            }
+            alertController.addAction(cancelAction)
+            
+            let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+                
+                self.dismiss(animated: true) {
+                    
+                    SalesforceConnection.surveyId = self.selectedSurveyId
+                    
+                    SalesforceConnection.surveyName = self.selectedSurveyName
+                    
+                    self.completionHandler?(self)
+                    
+                    print("Completion");
+                    
+                }
+            
+            }
+            alertController.addAction(okAction)
+            
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+
+            
+        }
+            
+        else if(SalesforceConnection.surveyId == selectedSurveyId){
+            
+             self.dismiss(animated: true, completion: nil)
+        }
+            
+        else{
+            self.dismiss(animated: true) {
+                
+                SalesforceConnection.surveyId = self.selectedSurveyId
+                
+                SalesforceConnection.surveyName = self.selectedSurveyName
+                
+                self.completionHandler?(self)
+                
+                print("Completion");
+                
+            }
         }
     }
     
     func populateSurveyData(){
         
         surveyDataArray = [ChooseSurveyDataStruct]()
-     
+        
         let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
         
         

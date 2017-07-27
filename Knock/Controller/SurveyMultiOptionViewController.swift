@@ -4,6 +4,9 @@ import AudioToolbox
 
 class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var toolBarView: UIView!
+    
+    
     @IBOutlet weak var getDescriptionTextField: UITextField!
     
     //@IBOutlet weak var showTextLbl: UILabel!
@@ -37,6 +40,9 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         super.viewDidLoad()
         
         
+        self.toolBarView.layer.borderWidth = 2
+        self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
+        
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         getDescriptionTextField.layer.borderColor = UIColor.gray.cgColor
@@ -61,21 +67,10 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
         let rightExitSurveyBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
         
+        self.navigationItem.rightBarButtonItem  = rightExitSurveyBarButtonItem
+
         
-        
-        if(Utilities.surveyQuestionArrayIndex == 0){
-            
-            let rightChooseSurveyBarButtonItem:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "SurveyTaken.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.showChooseSurvey))
-            
-            self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem,rightChooseSurveyBarButtonItem], animated: true)
-            
-            
-        }
-            
-        else{
-            self.navigationItem.setRightBarButtonItems([rightExitSurveyBarButtonItem], animated: true)
-        }
-        
+     
         self.navigationItem.title =  SalesforceConnection.surveyName
         
 
@@ -182,6 +177,56 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
     }
     
+    @IBAction func switchSurvey(_ sender: Any) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let chooseSurveyVC = storyboard.instantiateViewController(withIdentifier: "chooseSurveyIdentifier") as! ChooseSurveyViewController
+        
+        
+        SurveyUtility.navigationController = self.navigationController!
+        
+        let completionHandler:(ChooseSurveyViewController)->Void = { chooseSurveyVC in
+            
+            //self.showSurveyWizard()
+            SurveyUtility.showSurvey()
+            print("completed for \(chooseSurveyVC)")
+        }
+        
+        
+        chooseSurveyVC.completionHandler = completionHandler
+        
+        
+        
+        
+        
+        
+        let navigationController = UINavigationController(rootViewController: chooseSurveyVC)
+        
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        
+        
+        self.present(navigationController, animated: true, completion: nil)
+        
+    }
+    
+    
+    @IBAction func inTake(_ sender: Any) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let inTakeVC = storyboard.instantiateViewController(withIdentifier: "inTakeIdentifier") as! InTakeViewController
+        
+        
+        
+        
+        let navigationController = UINavigationController(rootViewController: inTakeVC)
+        
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        
+        
+        self.present(navigationController, animated: true, completion: nil)
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {

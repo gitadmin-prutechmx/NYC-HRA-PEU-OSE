@@ -58,6 +58,7 @@
 		5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BFC1F035AFB0045A65D /* Reachability.swift */; };
 		5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */; };
 		5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */; };
+		5DA15B3F1F29D01600EB90DC /* InTakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B3E1F29D01600EB90DC /* InTakeViewController.swift */; };
 		5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */; };
 		5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */; };
 		5DC8C72B1F25D2F900B57044 /* ClientsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */; };
@@ -185,6 +186,7 @@
 		5D8C6BFC1F035AFB0045A65D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingTableViewController.swift; sourceTree = "<group>"; };
 		5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncUtility.swift; sourceTree = "<group>"; };
+		5DA15B3E1F29D01600EB90DC /* InTakeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InTakeViewController.swift; sourceTree = "<group>"; };
 		5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyUtility.swift; sourceTree = "<group>"; };
 		5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientCustomTableViewCell.swift; sourceTree = "<group>"; };
 		5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientsTableViewCell.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */,
 				5DC8C72F1F286E6F00B57044 /* ChooseSurveyViewController.swift */,
 				5DC8C7311F2892D400B57044 /* UnitSortingViewController.swift */,
+				5DA15B3E1F29D01600EB90DC /* InTakeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -822,6 +825,7 @@
 				5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */,
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
 				5D5291C31F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift in Sources */,
+				5DA15B3F1F29D01600EB90DC /* InTakeViewController.swift in Sources */,
 				5D5291C91F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift in Sources */,
 				5D1BD4F71F067FB100C8FAF5 /* GaugeView.swift in Sources */,
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,

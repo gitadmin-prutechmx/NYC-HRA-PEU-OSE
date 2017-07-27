@@ -311,7 +311,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.backgroundColor = UIColor.clear
                 
                 
-                cell.textLabel?.text = "Intake?"
+                cell.textLabel?.text = "Survey?"
                 cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
                 cell.selectionStyle = .none
                 
