@@ -62,6 +62,10 @@
 		5DA15B421F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B401F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift */; };
 		5DA15B431F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA15B411F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib */; };
 		5DA15B451F2B32BF00EB90DC /* CaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B441F2B32BF00EB90DC /* CaseTableViewCell.swift */; };
+		5DA15B481F2B572500EB90DC /* ClientDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B461F2B572500EB90DC /* ClientDataTableViewCell.swift */; };
+		5DA15B491F2B572500EB90DC /* ClientDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA15B471F2B572500EB90DC /* ClientDataTableViewCell.xib */; };
+		5DA15B4C1F2B59BD00EB90DC /* UnitDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA15B4A1F2B59BD00EB90DC /* UnitDataTableViewCell.xib */; };
+		5DA15B4D1F2B59BD00EB90DC /* UnitDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B4B1F2B59BD00EB90DC /* UnitDataTableViewCell.swift */; };
 		5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */; };
 		5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */; };
 		5DC8C72B1F25D2F900B57044 /* ClientsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */; };
@@ -193,6 +197,10 @@
 		5DA15B401F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InCaseHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		5DA15B411F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InCaseHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		5DA15B441F2B32BF00EB90DC /* CaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseTableViewCell.swift; sourceTree = "<group>"; };
+		5DA15B461F2B572500EB90DC /* ClientDataTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDataTableViewCell.swift; sourceTree = "<group>"; };
+		5DA15B471F2B572500EB90DC /* ClientDataTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientDataTableViewCell.xib; sourceTree = "<group>"; };
+		5DA15B4A1F2B59BD00EB90DC /* UnitDataTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnitDataTableViewCell.xib; sourceTree = "<group>"; };
+		5DA15B4B1F2B59BD00EB90DC /* UnitDataTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitDataTableViewCell.swift; sourceTree = "<group>"; };
 		5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyUtility.swift; sourceTree = "<group>"; };
 		5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientCustomTableViewCell.swift; sourceTree = "<group>"; };
 		5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientsTableViewCell.swift; sourceTree = "<group>"; };
@@ -466,6 +474,10 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5DA15B4A1F2B59BD00EB90DC /* UnitDataTableViewCell.xib */,
+				5DA15B4B1F2B59BD00EB90DC /* UnitDataTableViewCell.swift */,
+				5DA15B461F2B572500EB90DC /* ClientDataTableViewCell.swift */,
+				5DA15B471F2B572500EB90DC /* ClientDataTableViewCell.xib */,
 				5DA15B401F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift */,
 				5DA15B411F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib */,
 				5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */,
@@ -670,10 +682,12 @@
 				5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */,
 				5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */,
 				5DC8C72C1F25D2F900B57044 /* ClientsTableViewCell.xib in Resources */,
+				5DA15B4C1F2B59BD00EB90DC /* UnitDataTableViewCell.xib in Resources */,
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
 				5DE3C9971EF406E200012C47 /* UnitsHeaderTableViewCell.xib in Resources */,
 				5DA15B431F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
+				5DA15B491F2B572500EB90DC /* ClientDataTableViewCell.xib in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
 				5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */,
@@ -774,10 +788,12 @@
 				5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
 				5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */,
+				5DA15B481F2B572500EB90DC /* ClientDataTableViewCell.swift in Sources */,
 				5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */,
 				5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */,
 				5D757AEB1F16324400308C05 /* SettingsTableViewController.swift in Sources */,
 				5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */,
+				5DA15B4D1F2B59BD00EB90DC /* UnitDataTableViewCell.swift in Sources */,
 				5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */,
 				5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */,
 				5D5291C21F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift in Sources */,

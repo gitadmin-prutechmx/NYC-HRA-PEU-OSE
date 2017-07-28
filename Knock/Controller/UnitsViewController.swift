@@ -89,6 +89,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
          Utilities.currentUnitClientPage = "Unit"
         
+        tblClient.register(UINib(nibName: "ClientDataTableViewCell", bundle: nil), forCellReuseIdentifier: "clientCellDataId")
+        
         if self.revealViewController() != nil {
             
             print("RevealViewController")
@@ -624,61 +626,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         if(tableView == tblUnits)
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)  as! UnitsCustomViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "unitCellIdentifier", for: indexPath as IndexPath) as! UnitDataTableViewCell
+            
+           
             
             
             
             cell.unit.text = UnitDataArray[indexPath.row].unitName
             
-            
-            // cell.moreBtn.tag = indexPath.row
-            
-            
-            /*
-             if(SalesforceConnection.unitId != "" && UnitDataArray[indexPath.row].unitId == SalesforceConnection.unitId && Utilities.isSubmitSurvey == true){
-             
-             
-             cell.dataSyncDate.text =  UnitDataArray[indexPath.row].syncDate
-             //formatter.string(from: date)
-             
-             cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
-             //"Completed"
-             
-             
-             /*  if(Reachability.isConnectedToNetwork()){
-             cell.pendingIcon.isHidden = true
-             cell.dataSyncDate.text = "Pending"
-             cell.dataSyncDate.isHidden = false
-             
-             }
-             else{
-             cell.pendingIcon.isHidden = false
-             cell.dataSyncDate.text = ""
-             cell.dataSyncDate.isHidden = true
-             }
-             
-             cell.dataSyncStatus.text = "Completed"
-             */
-             
-             }
-             
-             else{
-             
-             //cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
-             
-             cell.dataSyncDate.text = UnitDataArray[indexPath.row].syncDate
-             
-             cell.dataSyncStatus.text = UnitDataArray[indexPath.row].surveyStatus
-             
-             cell.pendingIcon.isHidden = true
-             cell.dataSyncDate.isHidden = false
-             
-             }
-             
-             
-             
-             */
-            
+
             
             cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
             
@@ -747,21 +703,21 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         else
         {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cellClient", for: indexPath) as! ClientCustomTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "clientCellDataId", for: indexPath) as! ClientDataTableViewCell
             
             cell.backgroundColor = UIColor.clear
             
-            cell.lblFirst.text = clientDataArray[indexPath.row].firstName
-            cell.lblLast.text = clientDataArray[indexPath.row].lastName
+            cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
+            cell.lblLastName.text = clientDataArray[indexPath.row].lastName
             cell.lblPhone.text = clientDataArray[indexPath.row].phone
-            cell.lblNoCase.text = "0"
+            cell.lblCase.text = "0"
             
-            
-           // let unitObject = unitClientDict[clientDataArray[indexPath.row].unitId]
-            
-            cell.unit.text = clientDataArray[indexPath.row].unitName
-            cell.unitId.text = clientDataArray[indexPath.row].unitId
-            cell.syncDate.text = ""
+            cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
+            cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
+            cell.lblSyncDate.text = ""
+
+           // cell.unitId.text = clientDataArray[indexPath.row].unitId
+       
             
             
             
