@@ -18,6 +18,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="475" height="66"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="unitId" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2d7-Ml-eXX">
+                        <rect key="frame" x="216" y="22" width="42" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" distribution="equalCentering" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="dL1-oQ-nV5">
                         <rect key="frame" x="10" y="-0.5" width="455" height="67"/>
                         <subviews>
@@ -72,6 +79,16 @@
                     <constraint firstAttribute="trailing" secondItem="dL1-oQ-nV5" secondAttribute="trailing" constant="10" id="wJs-EG-6mn"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="attempt" destination="7Ux-WN-nf0" id="27O-e3-7zP"/>
+                <outlet property="contact" destination="GUU-zN-N79" id="mbK-dH-QRS"/>
+                <outlet property="noOfTenants" destination="EgA-Mf-EqL" id="k2z-MQ-CsK"/>
+                <outlet property="surveyStatus" destination="Uac-Oh-NDt" id="9Mb-Pk-oaf"/>
+                <outlet property="sync" destination="mWW-LP-UNY" id="1mM-7V-3Xx"/>
+                <outlet property="syncDate" destination="dkO-AS-J7R" id="HWn-iL-Ac5"/>
+                <outlet property="unit" destination="klH-4k-bqD" id="E7V-FR-yih"/>
+                <outlet property="unitId" destination="2d7-Ml-eXX" id="M7U-b1-cI0"/>
+            </connections>
         </tableViewCell>
     </objects>
     <resources>

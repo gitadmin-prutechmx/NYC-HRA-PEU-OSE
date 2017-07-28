@@ -106,6 +106,6 @@
     </objects>
     <resources>
         <image name="Complete" width="30" height="30"/>
-        <image name="NavArrow" width="256" height="256"/>
+        <image name="NavArrow" width="30" height="30"/>
     </resources>
 </document>

@@ -91,6 +91,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         tblClient.register(UINib(nibName: "ClientDataTableViewCell", bundle: nil), forCellReuseIdentifier: "clientCellDataId")
         
+         tblUnits.register(UINib(nibName: "UnitDataTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCellIdentifier")
+        
         if self.revealViewController() != nil {
             
             print("RevealViewController")
@@ -827,7 +829,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
             else{
                 
-                let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitsCustomViewCell
+                let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitDataTableViewCell
                 
                 currentCell.shake(duration: 0.3, pathLength: 15)
                 
