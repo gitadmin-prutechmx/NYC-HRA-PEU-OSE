@@ -59,6 +59,9 @@
 		5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */; };
 		5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */; };
 		5DA15B3F1F29D01600EB90DC /* InTakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B3E1F29D01600EB90DC /* InTakeViewController.swift */; };
+		5DA15B421F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B401F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift */; };
+		5DA15B431F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA15B411F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib */; };
+		5DA15B451F2B32BF00EB90DC /* CaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B441F2B32BF00EB90DC /* CaseTableViewCell.swift */; };
 		5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */; };
 		5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */; };
 		5DC8C72B1F25D2F900B57044 /* ClientsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */; };
@@ -187,6 +190,9 @@
 		5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingTableViewController.swift; sourceTree = "<group>"; };
 		5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncUtility.swift; sourceTree = "<group>"; };
 		5DA15B3E1F29D01600EB90DC /* InTakeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InTakeViewController.swift; sourceTree = "<group>"; };
+		5DA15B401F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InCaseHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		5DA15B411F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InCaseHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		5DA15B441F2B32BF00EB90DC /* CaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseTableViewCell.swift; sourceTree = "<group>"; };
 		5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyUtility.swift; sourceTree = "<group>"; };
 		5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientCustomTableViewCell.swift; sourceTree = "<group>"; };
 		5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientsTableViewCell.swift; sourceTree = "<group>"; };
@@ -460,6 +466,8 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5DA15B401F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift */,
+				5DA15B411F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib */,
 				5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */,
 				5DC8C72A1F25D2F900B57044 /* ClientsTableViewCell.xib */,
 				5D757B181F18A38100308C05 /* DownloadProgressView.swift */,
@@ -513,6 +521,7 @@
 				5DE3C9721EF012C400012C47 /* EventAssignmentViewCell.swift */,
 				5DE3C99C1EF7A90500012C47 /* SurveyCollectionViewCell.swift */,
 				5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */,
+				5DA15B441F2B32BF00EB90DC /* CaseTableViewCell.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -663,6 +672,7 @@
 				5DC8C72C1F25D2F900B57044 /* ClientsTableViewCell.xib in Resources */,
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
 				5DE3C9971EF406E200012C47 /* UnitsHeaderTableViewCell.xib in Resources */,
+				5DA15B431F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
@@ -771,6 +781,7 @@
 				5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */,
 				5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */,
 				5D5291C21F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift in Sources */,
+				5DA15B421F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift in Sources */,
 				5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
 				5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */,
@@ -791,6 +802,7 @@
 				5DE3C9851EF2656C00012C47 /* LocationCustomViewCell.swift in Sources */,
 				5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */,
 				5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */,
+				5DA15B451F2B32BF00EB90DC /* CaseTableViewCell.swift in Sources */,
 				5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5D5291BF1F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift in Sources */,

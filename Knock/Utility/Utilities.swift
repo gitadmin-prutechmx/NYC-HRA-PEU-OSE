@@ -15,6 +15,9 @@ import Toast_Swift
 
 class Utilities {
     
+    
+    static var currentSurveyInTake:String = "Client"
+    
     static var currentShowHideAssignments:Bool = true
     static var currentSortingFieldName:String = "Assignment"
     static var currentSortingTypeAscending:Bool = true
@@ -1596,6 +1599,23 @@ class Utilities {
                             appDelegate.saveContext()
                             
                         }
+                        
+                        guard let casesInfoResults = unitData["caseInfo"] as? [[String: AnyObject]]  else { break }
+                        
+                        for casesInfo in casesInfoResults {
+                            
+                            let caseObject = Cases(context: context)
+                            caseObject.caseId = casesInfo["caseId"] as? String  ?? ""
+                             caseObject.contactId = casesInfo["contactId"] as? String  ?? ""
+                             caseObject.contactName = casesInfo["contactName"] as? String  ?? ""
+                            caseObject.caseNo = casesInfo["caseNumber"] as? String  ?? ""
+                            caseObject.unitId = unitObject.id!
+                            caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                            caseObject.assignmentId = assignmentObject.id!
+
+                            appDelegate.saveContext()
+                        }
+                        
                     }
                     
                 }

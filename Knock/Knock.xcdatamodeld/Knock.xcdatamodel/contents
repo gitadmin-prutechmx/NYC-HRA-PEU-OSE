@@ -21,6 +21,15 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Cases" representedClassName="Cases" syncable="YES" codeGenerationType="class">
+        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="caseNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Chart" representedClassName="Chart" syncable="YES">
         <attribute name="chartField" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chartLabel" optional="YES" attributeType="String" syncable="YES"/>
@@ -171,6 +180,7 @@
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="255"/>
         <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
+        <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="255"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
@@ -184,6 +194,6 @@
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="135"/>
-        <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
+        <element name="Cases" positionX="-126" positionY="45" width="128" height="150"/>
     </elements>
 </model>
