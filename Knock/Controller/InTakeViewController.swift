@@ -57,6 +57,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Utilities.currentSurveyInTake = "Client"
+        
         addTenantOutlet.layer.cornerRadius = 5
         
         fullAddressTxt.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress

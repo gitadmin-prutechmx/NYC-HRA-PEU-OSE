@@ -347,6 +347,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             let grayColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
             
+            
+            
             //            tf.layer.borderColor = blackColor.cgColor
             //
             //            tf.layer.borderWidth = 2.0
@@ -474,7 +476,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             //UITextField
             let textfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-            //tf.placeholder = "Enter text here"
+            //textfield.placeholder = "Enter text here"
             
             textfield.tag = indexPath.row
             textfield.delegate = self
@@ -677,16 +679,54 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     //
     //
     
-    func textViewDidEndEditing(_ textView: UITextView) -> Bool {
-        selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
-        textView.resignFirstResponder()
+//    func textViewDidEndEditing(_ textView: UITextView) -> Bool {
+//        selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
+//        textView.resignFirstResponder()
+//        return true
+//    }
+//    
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
+    {
+         selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text! + text
         return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text!
-        textField.resignFirstResponder()
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+    selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text! + string
+        return true
     }
+   
+    
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text!
+//        textField.resignFirstResponder()
+//    }
+    
+    
+//    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        
+//    
+//        let aSet =  NSCharacterSet(charactersIn:"0123456789").inverted
+//        let compSepByCharInSet = string.components(separatedBy: aSet)
+//        let numberFiltered = compSepByCharInSet.joined(separator: "")
+//        
+//        let currentCharacterCount = phoneTextField.text?.characters.count ?? 0
+//        if (range.length + range.location > currentCharacterCount){
+//            return false
+//        }
+//        let newLength = currentCharacterCount + string.characters.count - range.length
+//        if(newLength > 10){
+//            return false
+//        }
+//        
+//        
+//        return string == numberFiltered
+//    }
+//    
+    
     @IBAction func save(_ sender: Any) {
         
         self.navigationController?.popViewController(animated: true);
