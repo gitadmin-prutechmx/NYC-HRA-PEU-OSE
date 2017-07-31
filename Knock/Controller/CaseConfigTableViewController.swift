@@ -256,19 +256,19 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         return caseConfigArray[section].sectionName
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 25))
-        returnedView.backgroundColor = UIColor.darkGray
-        
-        let label = UILabel(frame: CGRect(x: 5, y: 0, width: view.frame.size.width, height: 25))
-        label.text = caseConfigArray[section].sectionName
-        label.textColor = UIColor.white
-        returnedView.addSubview(label)
-        
-        return returnedView
-    }
-    
+//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        
+//        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 25))
+//        returnedView.backgroundColor = UIColor.darkGray
+//        
+//        let label = UILabel(frame: CGRect(x: 5, y: 0, width: view.frame.size.width, height: 25))
+//        label.text = caseConfigArray[section].sectionName
+//        label.textColor = UIColor.white
+//        returnedView.addSubview(label)
+//        
+//        return returnedView
+//    }
+//    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return caseConfigArray[section].sectionObjects.count
@@ -288,9 +288,9 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             
             switchCell.textLabel?.text = caseObject.fieldName
-            switchCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            switchCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
-            switchCell.backgroundColor = UIColor.clear
+            switchCell.backgroundColor = UIColor.white
             
             
             switchCell.selectionStyle = .none
@@ -302,6 +302,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             let uiSwitch = UISwitch(frame: CGRect.zero)
             
             uiSwitch.tag = indexPath.row
+            
+            uiSwitch.backgroundColor = UIColor.white
             
             if(selectedSwitchDict[caseObject.apiName] == "" || selectedSwitchDict[caseObject.apiName] == "No" ){
                 uiSwitch.isOn = false
@@ -315,6 +317,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             switchCell.accessoryView = uiSwitch
             
+            
+            
             return switchCell
             
             
@@ -324,9 +328,9 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             let textAreaCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
             
             textAreaCell.textLabel?.text = caseObject.fieldName
-            textAreaCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            textAreaCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
-            textAreaCell.backgroundColor = UIColor.clear
+            // textAreaCell.backgroundColor = UIColor.clear
             
             
             textAreaCell.selectionStyle = .none
@@ -334,14 +338,14 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             textAreaDict[indexPath.row] = caseObject.apiName
             
             //UITextView
-            let textArea = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 96))
+            let textArea = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 99))
             
             textArea.tag = indexPath.row
             textArea.delegate = self
             
             textArea.text = selectedTextAreaDict[caseObject.apiName]
             
-            let grayColor = UIColor(red: 243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
+            let grayColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
             
             //            tf.layer.borderColor = blackColor.cgColor
             //
@@ -362,9 +366,9 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             
             pickListCell.textLabel?.text = caseObject.fieldName
-            pickListCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            pickListCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
-            pickListCell.backgroundColor = UIColor.clear
+            // pickListCell.backgroundColor = UIColor.clear
             
             
             pickListCell.accessoryType = .disclosureIndicator
@@ -378,8 +382,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                 pickListCell.detailTextLabel?.text = pickListValue
             }
             
-            pickListCell.detailTextLabel?.textColor = UIColor.lightGray
-            pickListCell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            pickListCell.detailTextLabel?.textColor = UIColor.gray
+            pickListCell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
             return pickListCell
             
@@ -391,9 +395,9 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             
             multiPickListCell.textLabel?.text = caseObject.fieldName
-            multiPickListCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            multiPickListCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
-            multiPickListCell.backgroundColor = UIColor.clear
+            //  multiPickListCell.backgroundColor = UIColor.clear
             
             
             multiPickListCell.accessoryType = .disclosureIndicator
@@ -407,8 +411,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                 multiPickListCell.detailTextLabel?.text = multiPickListValue
             }
             
-            multiPickListCell.detailTextLabel?.textColor = UIColor.lightGray
-            multiPickListCell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            multiPickListCell.detailTextLabel?.textColor = UIColor.gray
+            multiPickListCell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
             return multiPickListCell
             
@@ -420,34 +424,34 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             dateTimeCell.title.text = caseObject.fieldName
             
-            dateTimeCell.title.font = UIFont.init(name: "Arial", size: 18.0)
+            dateTimeCell.title.font = UIFont.init(name: "Arial", size: 16.0)
             
-            dateTimeCell.backgroundColor = UIColor.clear
+            //dateTimeCell.backgroundColor = UIColor.clear
             dateTimeCell.selectionStyle = .none
             
-           
+            
             
             let dateLabelValue = Utilities.selectedDateTimeDict[caseObject.apiName]
             
             if(dateLabelValue?.isEmpty)!{
-                 dateTimeCell.detail.text = "Select Date"
+                dateTimeCell.detail.text = "Select Date"
             }
             else{
-                  dateTimeCell.detail.text = dateLabelValue
+                dateTimeCell.detail.text = dateLabelValue
             }
             
             let dateValue = Utilities.selectedDatePicker[caseObject.apiName]
             
-       
+            
             dateTimeCell.datePicker.date = dateValue!
             
             
             
             
             // dateTimeCell.accessoryType = .disclosureIndicator
-          
-            dateTimeCell.detail.textColor = UIColor.lightGray
-            dateTimeCell.detail.font = UIFont.init(name: "Arial", size: 18.0)
+            
+            dateTimeCell.detail.textColor = UIColor.gray
+            dateTimeCell.detail.font = UIFont.init(name: "Arial", size: 16.0)
             
             return dateTimeCell
         }
@@ -456,9 +460,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             let textCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
             
             textCell.textLabel?.text = caseObject.fieldName
-            textCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            textCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
-            textCell.backgroundColor = UIColor.clear
+            //textCell.backgroundColor = UIColor.clear
+            //            textCell.layer.borderWidth = 1
+            //            textCell.layer.cornerRadius = 8
+            //            textCell.clipsToBounds = true
             
             
             textCell.selectionStyle = .none
@@ -473,10 +480,10 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             textfield.delegate = self
             
             textfield.text = selectedTextFieldDict[caseObject.apiName]
-
             
             
-            let grayColor = UIColor(red: 243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
+            
+            let grayColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
             
             //            tf.layer.borderColor = blackColor.cgColor
             //
@@ -494,7 +501,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let caseObject:CaseDO = caseConfigArray[indexPath.section].sectionObjects[indexPath.row]
