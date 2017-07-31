@@ -240,7 +240,9 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         
        Utilities.currentSurveyInTake = "Case"
      
-       showAddNewClient()
+       self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
+        
+       //showAddNewClient()
     }
     
     func showAddNewClient(){

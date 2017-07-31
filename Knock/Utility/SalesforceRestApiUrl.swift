@@ -30,6 +30,8 @@ class SalesforceRestApiUrl{
     
     static let picklistValue = "/services/apexrest/picklistValue/"
     
+    static let caseConfiguration = "/services/apexrest/caseconfiguration"
+    
     //Core_Picklist_Value_API
     //urlMapping = picklistValue
     

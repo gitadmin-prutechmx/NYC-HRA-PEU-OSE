@@ -163,7 +163,56 @@ class SalesforceConnection{
         }
         
         
-    }//end of loginToSalesforce
+    }
+    
+    
+    static func SalesforceCaseData(restApiUrl:String, params:[String:String]? = nil, methodType:String? = "POST" ,completion: @escaping AccessTokenCompletion) {
+
+        
+        let url = URL(string: SalesforceConfig.hostUrl + restApiUrl)!
+        var urlRequest = URLRequest(url: url)
+        
+        if(methodType == "POST"){
+            urlRequest.httpMethod = "POST"
+            
+            
+            do {
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
+            } catch {
+                // No-op
+            }
+        }
+        else{
+            urlRequest.httpMethod = "GET"
+        }
+        
+        urlRequest.setValue("OAuth \(salesforceAccessToken)", forHTTPHeaderField: "Authorization")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        Alamofire.request(urlRequest).validate().responseJSON{ response in
+            switch response.result {
+                
+            case .success:
+             if response.result.value != nil {
+              
+                 completion(true, response.result.value as! Dictionary<String, AnyObject>)
+              }
+                
+            case .failure(let error):
+                
+                Utilities.isRefreshBtnClick = false
+                showErrorMessage(error: error as NSError)
+                return
+                
+                
+            }
+        }
+        
+        
+    }
+    
     
     //    func isBaseMapDownloaded(chart: Chart) -> Bool {
     //        if let path = chart.urlInDocumentsDirectory?.path {

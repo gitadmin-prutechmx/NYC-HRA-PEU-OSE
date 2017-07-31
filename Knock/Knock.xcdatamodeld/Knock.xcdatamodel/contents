@@ -21,6 +21,9 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="CaseConfig" representedClassName="CaseConfig" syncable="YES" codeGenerationType="class">
+        <attribute name="caseConfigData" optional="YES" attributeType="Transformable" syncable="YES"/>
+    </entity>
     <entity name="Cases" representedClassName="Cases" syncable="YES" codeGenerationType="class">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
@@ -195,5 +198,6 @@
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="135"/>
         <element name="Cases" positionX="-126" positionY="45" width="128" height="150"/>
+        <element name="CaseConfig" positionX="-117" positionY="54" width="128" height="60"/>
     </elements>
 </model>

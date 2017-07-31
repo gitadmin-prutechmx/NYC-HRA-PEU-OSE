@@ -270,6 +270,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     var tenantDict: [String:String] = [:]
     var countTenants:Int  = 1
     
+    var caseDict: [String:String] = [:]
+    var countCases:Int  = 1
+    
     func createEditUnitDictionary(){
         
         
@@ -294,6 +297,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     func createTenantDictionary(){
         
+        countTenants = 1
+        
         let tenantResults =  ManageCoreData.fetchData(salesforceEntityName: "Tenant", isPredicate:false) as! [Tenant]
         
         if(tenantResults.count > 0){
@@ -317,6 +322,37 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
     }
+    
+    
+    
+    func createCaseDictionary(){
+        
+        countCases = 1
+        
+        let caseResults =  ManageCoreData.fetchData(salesforceEntityName: "Cases", isPredicate:false) as! [Cases]
+        
+        if(caseResults.count > 0){
+            
+            for caseData in caseResults{
+                
+                if caseDict[caseData.contactId!] == nil{
+                    
+                    countCases = 1
+                    caseDict[caseData.contactId!] = String(countCases)
+                }
+                else{
+                    
+                    let count = caseDict[caseData.contactId!]
+                    countCases = Int(count!)! + 1
+                    caseDict[caseData.contactId!] = String(countCases)
+                }
+                
+                
+            }
+        }
+        
+    }
+
     
     
     
@@ -350,8 +386,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         unitClientDict = [:]
+        caseDict = [:]
         
         createUnitDictionary()
+        createCaseDictionary()
         
         let clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Tenant]
         
@@ -630,10 +668,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "unitCellIdentifier", for: indexPath as IndexPath) as! UnitDataTableViewCell
             
-           
-            
-            
-            
+                       
             cell.unit.text = UnitDataArray[indexPath.row].unitName
             
 
@@ -644,17 +679,22 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.sync.isHidden = false
                 cell.sync.image = UIImage(named: "Complete")
             }
-            else{
-                cell.sync.isHidden = true
+            else
+            {
+                cell.sync.isHidden = false
+               // cell.sync.image = UIImage(named: "transperntImg")
+
+                
             }
             
             if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
                 cell.surveyStatus.isHidden = false
                 cell.surveyStatus.image = UIImage(named: "Complete")
             }
-            else{
-                cell.surveyStatus.isHidden = true
-                
+            else
+            {
+                cell.surveyStatus.isHidden = false
+                //cell.surveyStatus.image = UIImage(named: "transperntImg")
             }
             
             cell.unitId.text = UnitDataArray[indexPath.row].unitId
@@ -662,7 +702,16 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
             let noOfTenants = tenantDict[UnitDataArray[indexPath.row].unitId]
             
-            cell.noOfTenants.text = noOfTenants
+            if let tenantCount = noOfTenants{
+                cell.noOfTenants.text = tenantCount
+            }
+            else{
+                cell.noOfTenants.text = "0"
+            }
+            
+
+            
+
             
             if(editUnitObject?.attempt == "Yes"){
                 cell.attempt.isHidden = false
@@ -672,8 +721,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.attempt.isHidden = false
                 cell.attempt.image = UIImage(named: "No")
             }
-            else{
-                cell.attempt.isHidden = true
+            else
+            {   cell.attempt.isHidden = false
+                //cell.attempt.image = UIImage(named: "transperntImg")
             }
             
             
@@ -682,12 +732,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.contact.isHidden = false
                 cell.contact.image = UIImage(named: "Complete")
             }
-            else if(editUnitObject?.contact == "No"){
+            else if(editUnitObject?.contact == "No")
+            {
                 cell.contact.isHidden = false
                 cell.contact.image = UIImage(named: "No")
             }
-            else{
-                cell.contact.isHidden = true
+            else
+            {
+                cell.attempt.isHidden = false
+                //cell.contact.image = UIImage(named: "transperntImg")
             }
             
             
@@ -707,12 +760,23 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "clientCellDataId", for: indexPath) as! ClientDataTableViewCell
             
-            cell.backgroundColor = UIColor.clear
+           // cell.backgroundColor = UIColor.clear
             
             cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
             cell.lblLastName.text = clientDataArray[indexPath.row].lastName
             cell.lblPhone.text = clientDataArray[indexPath.row].phone
-            cell.lblCase.text = "0"
+            
+            let noOfCases = caseDict[clientDataArray[indexPath.row].tenantId]
+            
+            if let caseCount = noOfCases{
+                cell.lblCase.text = caseCount
+            }
+            else{
+                cell.lblCase.text = "0"
+            }
+            
+            
+           
             
             cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
             cell.lblUnitId.text = clientDataArray[indexPath.row].unitId

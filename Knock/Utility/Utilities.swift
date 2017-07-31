@@ -15,6 +15,10 @@ import Toast_Swift
 
 class Utilities {
     
+    static var currentApiName:String = ""
+    static var selectedDateTimeDict:[String:String] = [:]
+    
+    static var selectedDatePicker:[String:Date] = [:]
     
     static var currentSurveyInTake:String = "Client"
     
@@ -28,7 +32,7 @@ class Utilities {
     
     static var currentClientSortingFieldName:String = "UnitName"
     static var currentClientSortingTypeAscending:Bool = true
-
+    
     
     
     static var currentUnitClientPage:String = "Unit"
@@ -946,73 +950,77 @@ class Utilities {
                         SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType:"GET"){ picklistData in
                             
                             
-                            updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1)
-                            
-                            if(loginViewController != nil){
-                                
-                                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-                                
-                                let fullPath = "\(path)/NewYorkLayers.geodatabase"
+                            SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.caseConfiguration, methodType:"GET"){ caseData in
                                 
                                 
-                                if (Utilities.isGeoDatabseExist()==false) {
+                                
+                                updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1,caseJsonData:caseData.1)
+                                
+                                if(loginViewController != nil){
                                     
-                                    DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
+                                    let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                                    
+                                    let fullPath = "\(path)/NewYorkLayers.geodatabase"
+                                    
+                                    
+                                    if (Utilities.isGeoDatabseExist()==false) {
+                                        
+                                        DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
+                                        
+                                        
+                                    }
+                                        
+                                    else if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                                        
+                                        SVProgressHUD.dismiss()
+                                        
+                                        //Delete Basemap first and then download
+                                        Utilities.deleteBasemap()
+                                        
+                                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginViewController)
+                                        
+                                    }
+                                        
+                                        
+                                    else{
+                                        
+                                        SVProgressHUD.dismiss()
+                                        DispatchQueue.main.async {
+                                            loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                                        }
+                                        
+                                        
+                                    }
+                                    
                                     
                                     
                                 }
-                                    
-                                else if(SalesforceConfig.isBaseMapNeedToDownload == true){
-                                    
-                                    SVProgressHUD.dismiss()
-                                    
-                                    //Delete Basemap first and then download
-                                    Utilities.deleteBasemap()
-                                    
-                                    DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginViewController)
-                                    
-                                }
-                                    
-                                    
                                 else{
                                     
-                                    SVProgressHUD.dismiss()
-                                    DispatchQueue.main.async {
-                                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                                    
+                                    
+                                    
+                                    if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                                        
+                                        
+                                        //Delete Basemap first and then download
+                                        Utilities.deleteBasemap()
+                                        
+                                        SVProgressHUD.show(withStatus: "Updating Basemap..", maskType: .gradient)
+                                        
+                                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: nil)
+                                        
+                                    }
+                                    else{
+                                        DownloadESRILayers.RefreshData()
                                     }
                                     
                                     
                                 }
-                                
-                                
-                                
                             }
-                            else{
-                                
-                                
-                                
-                                
-                                if(SalesforceConfig.isBaseMapNeedToDownload == true){
-                                    
-                                    
-                                    //Delete Basemap first and then download
-                                    Utilities.deleteBasemap()
-                                    
-                                    SVProgressHUD.show(withStatus: "Updating Basemap..", maskType: .gradient)
-                                    
-                                    DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: nil)
-                                    
-                                }
-                                else{
-                                    DownloadESRILayers.RefreshData()
-                                }
-                                
-                                
-                            }
+                            
                         }
-                        
                     }
-                    
                 }
                 
             }
@@ -1058,7 +1066,7 @@ class Utilities {
     
     
     
-    class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject],pickListJsonData:[String:AnyObject]){
+    class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject],pickListJsonData:[String:AnyObject],caseJsonData:[String:AnyObject]){
         
         
         
@@ -1067,12 +1075,25 @@ class Utilities {
         
         Utilities.parseEventAssignmentData(jsonObject: assignmentJsonData)
         
-        
         Utilities.parseChartData(jsonObject: chartJsonData)
         
         Utilities.parsePickListData(jsonObject: pickListJsonData)
         
+        Utilities.parseCaseConfigData(jsonObject: caseJsonData)
         
+        
+    }
+    
+    
+    class func parseCaseConfigData(jsonObject: Dictionary<String, AnyObject>){
+        //save case config
+        let caseConfig = CaseConfig(context: context)
+        
+        caseConfig.caseConfigData = jsonObject as NSObject?
+        
+        appDelegate.saveContext()
+        
+        //end
     }
     
     
@@ -1568,8 +1589,8 @@ class Utilities {
                         //                        surveyUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                         //                        surveyUnitObject.surveyId = unitData["survey"] as? String  ?? ""
                         //                        surveyUnitObject.actionStatus = ""
-                        //                        
-                        //                        
+                        //
+                        //
                         //                        appDelegate.saveContext()
                         
                         //.....................
@@ -1606,13 +1627,13 @@ class Utilities {
                             
                             let caseObject = Cases(context: context)
                             caseObject.caseId = casesInfo["caseId"] as? String  ?? ""
-                             caseObject.contactId = casesInfo["contactId"] as? String  ?? ""
-                             caseObject.contactName = casesInfo["contactName"] as? String  ?? ""
+                            caseObject.contactId = casesInfo["contactId"] as? String  ?? ""
+                            caseObject.contactName = casesInfo["contactName"] as? String  ?? ""
                             caseObject.caseNo = casesInfo["caseNumber"] as? String  ?? ""
                             caseObject.unitId = unitObject.id!
                             caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                             caseObject.assignmentId = assignmentObject.id!
-
+                            
                             appDelegate.saveContext()
                         }
                         
