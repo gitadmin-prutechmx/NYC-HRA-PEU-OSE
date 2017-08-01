@@ -138,8 +138,8 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    
     @IBAction func cancel(_ sender: Any) {
+        
         let msgtitle = "Message"
         
         let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
@@ -164,6 +164,9 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    
+   
     
     @IBAction func save(_ sender: Any) {
         self.navigationController?.popViewController(animated: true);

@@ -25,6 +25,7 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var tblIssueList: UITableView!
     
     @IBOutlet weak var fullAddressLbl: UILabel!
+//    @IBOutlet weak var fullAddressLbl: UILabel!
 
     var issueDataArray = [IssueDataStruct]()
 

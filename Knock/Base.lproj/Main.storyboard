@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iWB-xI-dhM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iWB-xI-dhM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -2246,7 +2246,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5B1-fj-dUe" userLabel="InTakeView">
                                                 <rect key="frame" x="117" y="0.0" width="116" height="62"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InTake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-Ab-jfG">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-Ab-jfG">
                                                         <rect key="frame" x="8" y="39" width="100" height="15"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="PKc-te-6cs"/>
@@ -2476,7 +2476,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouZ-gQ-Ien" userLabel="InTakeView">
                                                 <rect key="frame" x="117" y="0.0" width="116" height="62"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InTake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hdH-CB-KP7">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hdH-CB-KP7">
                                                         <rect key="frame" x="8" y="39" width="100" height="15"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="bty-Gz-7Pk"/>
@@ -2788,7 +2788,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="txb-id-jeb" userLabel="InTakeView">
                                                 <rect key="frame" x="117" y="0.0" width="116" height="62"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InTake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8G-wq-Yhq">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8G-wq-Yhq">
                                                         <rect key="frame" x="8" y="39" width="100" height="15"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="YGS-89-tZi"/>
@@ -4641,15 +4641,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="fullAddressLbl" destination="R2N-L0-oh8" id="xSn-LE-JYS"/>
                         <outlet property="tblIssueList" destination="o6B-aK-LuN" id="HO0-kE-yWp"/>
-                        <segue destination="gFa-Kd-fvv" kind="show" identifier="showAddIsueIdentifire" id="OKj-0B-V56"/>
+                        <segue destination="gFa-Kd-fvv" kind="show" identifier="showAddIssueIdentifier" id="OKj-0B-V56"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f0f-Dh-3qG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="9300" y="-2773"/>
         </scene>
-        <!--Add New Issue View Controller-->
+        <!--Save Issue Info-->
         <scene sceneID="FsI-ny-Er6">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="gFa-Kd-fvv" customClass="AddNewIssueViewController" customModule="Knock" customModuleProvider="target" sceneMemberID="viewController">
@@ -4705,7 +4706,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="text Area" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kaQ-HX-4Kr" userLabel="NotesTextArea">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kaQ-HX-4Kr" userLabel="NotesTextArea">
                                 <rect key="frame" x="16" y="264" width="343" height="226"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -4729,6 +4730,18 @@
                             <constraint firstAttribute="trailing" secondItem="kaQ-HX-4Kr" secondAttribute="trailing" constant="16" id="yWF-Lb-8vd"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Save Issue Info" id="Fvb-tn-aZT">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="0aC-hX-AH3">
+                            <connections>
+                                <action selector="cancel:" destination="gFa-Kd-fvv" id="yIG-TN-3Ay"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="pvt-VI-nGK">
+                            <connections>
+                                <action selector="save:" destination="gFa-Kd-fvv" id="tra-Fn-Xf5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tblAddIssueList" destination="aQZ-gr-v50" id="cGD-if-UaP"/>
                         <outlet property="txtIssueNotes" destination="kaQ-HX-4Kr" id="IKI-eE-cBT"/>
