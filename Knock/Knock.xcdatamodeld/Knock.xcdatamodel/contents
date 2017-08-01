@@ -25,7 +25,6 @@
         <attribute name="caseConfigData" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="Cases" representedClassName="Cases" syncable="YES" codeGenerationType="class">
-        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseNo" optional="YES" attributeType="String" syncable="YES"/>
@@ -76,6 +75,13 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="eventAssignementR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentEventR" inverseEntity="Assignment" syncable="YES"/>
+    </entity>
+    <entity name="Issues" representedClassName="Issues" syncable="YES" codeGenerationType="class">
+        <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="caseNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="issueId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="issueNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="issueType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
@@ -182,11 +188,14 @@
     <elements>
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="255"/>
         <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
+        <element name="CaseConfig" positionX="-117" positionY="54" width="128" height="60"/>
+        <element name="Cases" positionX="-126" positionY="45" width="128" height="135"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="255"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
+        <element name="Issues" positionX="-126" positionY="45" width="128" height="120"/>
         <element name="Location" positionX="-2" positionY="-36" width="128" height="270"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="105"/>
         <element name="Setting" positionX="-126" positionY="45" width="128" height="150"/>
@@ -197,7 +206,5 @@
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="135"/>
-        <element name="Cases" positionX="-126" positionY="45" width="128" height="150"/>
-        <element name="CaseConfig" positionX="-117" positionY="54" width="128" height="60"/>
     </elements>
 </model>

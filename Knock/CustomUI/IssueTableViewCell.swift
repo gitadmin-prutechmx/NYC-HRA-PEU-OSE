@@ -1,23 +1,19 @@
 //
-//  CaseTableViewCell.swift
+//  IssueTableViewCell.swift
 //  Knock
 //
-//  Created by Kamal on 28/07/17.
+//  Created by Cloudzeg Laptop on 7/31/17.
 //  Copyright © 2017 mtxb2b. All rights reserved.
 //
 
 import UIKit
 
-class CaseTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var contactName: UILabel!
-    @IBOutlet weak var caseNo: UILabel!
-    @IBOutlet weak var caseId: UILabel!
+class IssueTableViewCell: UITableViewCell
+{
+    @IBOutlet weak var lblIssueNo:UILabel!
+    @IBOutlet weak var lblIssueType:UILabel!
     
-    @IBOutlet weak var issueBtn: UIButton!
-    
-    @IBOutlet weak var caseView: UIView!
-    
+    @IBOutlet weak var lblIssueId: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -1625,16 +1625,31 @@ class Utilities {
                         
                         for casesInfo in casesInfoResults {
                             
+                        
                             let caseObject = Cases(context: context)
                             caseObject.caseId = casesInfo["caseId"] as? String  ?? ""
                             caseObject.contactId = casesInfo["contactId"] as? String  ?? ""
                             caseObject.contactName = casesInfo["contactName"] as? String  ?? ""
                             caseObject.caseNo = casesInfo["caseNumber"] as? String  ?? ""
-                            caseObject.unitId = unitObject.id!
-                            caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                            caseObject.assignmentId = assignmentObject.id!
+                            caseObject.unitId = unitObject.id
+                            caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId
                             
                             appDelegate.saveContext()
+                            
+                             guard let issueResults = casesInfo["issueList"] as? [[String: AnyObject]]  else { break }
+                            
+                            for issueInfo in issueResults {
+                                
+                                let issueObject = Issues(context: context)
+                                issueObject.caseId = caseObject.caseId
+                                issueObject.caseNo = caseObject.caseNo
+                                issueObject.issueNo = issueInfo["issueNumber"] as? String  ?? ""
+                                issueObject.issueId = issueInfo["issueId"] as? String  ?? ""
+                                 issueObject.issueType = issueInfo["issueType"] as? String  ?? ""
+                                appDelegate.saveContext()
+                                
+                            }
+                            
                         }
                         
                     }

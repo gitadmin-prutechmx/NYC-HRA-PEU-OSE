@@ -33,6 +33,9 @@ class SalesforceConnection{
     
     static var fullAddress:String = ""
     
+    static var caseId:String = ""
+    
+    
     
     
     

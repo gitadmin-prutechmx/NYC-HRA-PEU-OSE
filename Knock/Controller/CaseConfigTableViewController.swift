@@ -44,12 +44,14 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     var selectedSwitchDict:[String:String] = [:]
     var selectedTextAreaDict:[String:String] = [:]
     var selectedTextFieldDict:[String:String] = [:]
+    var selectedPhoneTextFieldDict:[String:Int64] = [:]
    // var selectedDateTimeDict:[String:String] = [:]
     
     
     var switchDict:[Int:String] = [:]
     var textAreaDict:[Int:String] = [:]
     var textFieldDict:[Int:String] = [:]
+    var phoneTextFieldDict:[Int:String] = [:]
     
     
     var tempArray = [CaseDO]()
@@ -457,6 +459,40 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             return dateTimeCell
         }
+        else if(caseObject.dataType == "PHONE"){
+            
+            let phoneCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
+            
+            phoneCell.textLabel?.text = caseObject.fieldName
+            phoneCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
+   
+            
+            phoneCell.selectionStyle = .none
+            
+            phoneTextFieldDict[indexPath.row] = caseObject.apiName
+            
+            //UIPhoneTextField
+            let phoneTextfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+            //textfield.placeholder = "Enter text here"
+            
+            phoneTextfield.tag = indexPath.row
+            phoneTextfield.delegate = self
+            
+         //   phoneTextfield.text = String(describing: selectedPhoneTextFieldDict[caseObject.apiName])
+            
+            
+            
+            let whiteColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
+            
+            
+            phoneTextfield.layer.backgroundColor = whiteColor.cgColor
+            
+            phoneCell.accessoryView = phoneTextfield
+            
+            
+            
+            return phoneCell
+        }
         else{
             
             let textCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
@@ -693,7 +729,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
+
     selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text! + string
         return true
     }

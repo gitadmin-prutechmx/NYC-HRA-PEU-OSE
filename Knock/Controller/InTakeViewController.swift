@@ -101,8 +101,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         caseDataArray = [CaseDataStruct]()
         
         
-        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "assignmentId == %@ AND unitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.unitId,isPredicate:true) as! [Cases]
-        
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId,isPredicate:true) as! [Cases]
         
         if(caseResults.count > 0){
             
@@ -189,6 +188,17 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
         
     }
+    
+    @IBAction func btnIssueAction(_ sender: Any) {
+        
+        let indexRow = (sender as AnyObject).tag
+        
+        SalesforceConnection.caseId =  caseDataArray[indexRow!].caseId
+        
+        self.performSegue(withIdentifier: "showIssueIdentifier", sender: nil)
+    }
+    
+
     
     @IBAction func cancel(_ sender: Any) {
         
@@ -382,7 +392,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.caseNo.text = caseDataArray[indexPath.row].caseNo
             cell.contactName.text = caseDataArray[indexPath.row].contacName
             cell.caseId.text = caseDataArray[indexPath.row].caseId
-            cell.editBtn.tag = indexPath.row
+            cell.issueBtn.tag = indexPath.row
             
             return cell
         }

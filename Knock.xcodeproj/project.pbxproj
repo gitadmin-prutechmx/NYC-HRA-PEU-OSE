@@ -52,6 +52,10 @@
 		5D65D4D91F2E45A900302CE8 /* PickListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D65D4D61F2E45A900302CE8 /* PickListViewController.swift */; };
 		5D65D4DA1F2E45A900302CE8 /* CaseConfigTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D65D4D71F2E45A900302CE8 /* CaseConfigTableViewController.swift */; };
 		5D65D4DC1F2E45BD00302CE8 /* CaseDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D65D4DB1F2E45BD00302CE8 /* CaseDO.swift */; };
+		5D65D4DE1F3015EE00302CE8 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D65D4DD1F3015EE00302CE8 /* IssueViewController.swift */; };
+		5D65D4E21F3015FC00302CE8 /* IssueHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D65D4DF1F3015FC00302CE8 /* IssueHeaderTableViewCell.swift */; };
+		5D65D4E31F3015FC00302CE8 /* IssueHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D65D4E01F3015FC00302CE8 /* IssueHeaderTableViewCell.xib */; };
+		5D65D4E61F30165A00302CE8 /* IssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D65D4E51F30165A00302CE8 /* IssueTableViewCell.swift */; };
 		5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757AE61F15477800308C05 /* SelectReasonStatusViewController.swift */; };
 		5D757AEB1F16324400308C05 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757AEA1F16324400308C05 /* SettingsTableViewController.swift */; };
 		5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */; };
@@ -192,6 +196,10 @@
 		5D65D4D61F2E45A900302CE8 /* PickListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickListViewController.swift; sourceTree = "<group>"; };
 		5D65D4D71F2E45A900302CE8 /* CaseConfigTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseConfigTableViewController.swift; sourceTree = "<group>"; };
 		5D65D4DB1F2E45BD00302CE8 /* CaseDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseDO.swift; sourceTree = "<group>"; };
+		5D65D4DD1F3015EE00302CE8 /* IssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
+		5D65D4DF1F3015FC00302CE8 /* IssueHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		5D65D4E01F3015FC00302CE8 /* IssueHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IssueHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		5D65D4E51F30165A00302CE8 /* IssueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTableViewCell.swift; sourceTree = "<group>"; };
 		5D757AE61F15477800308C05 /* SelectReasonStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectReasonStatusViewController.swift; sourceTree = "<group>"; };
 		5D757AEA1F16324400308C05 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadESRILayers.swift; sourceTree = "<group>"; };
@@ -403,6 +411,7 @@
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5D65D4DD1F3015EE00302CE8 /* IssueViewController.swift */,
 				5D65D4D51F2E45A900302CE8 /* MultiPickListViewController.swift */,
 				5D65D4D61F2E45A900302CE8 /* PickListViewController.swift */,
 				5D65D4D71F2E45A900302CE8 /* CaseConfigTableViewController.swift */,
@@ -488,6 +497,8 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5D65D4DF1F3015FC00302CE8 /* IssueHeaderTableViewCell.swift */,
+				5D65D4E01F3015FC00302CE8 /* IssueHeaderTableViewCell.xib */,
 				5DA15B4A1F2B59BD00EB90DC /* UnitDataTableViewCell.xib */,
 				5DA15B4B1F2B59BD00EB90DC /* UnitDataTableViewCell.swift */,
 				5DA15B461F2B572500EB90DC /* ClientDataTableViewCell.swift */,
@@ -537,6 +548,7 @@
 		5DE3C9651EEFE71700012C47 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				5D65D4E51F30165A00302CE8 /* IssueTableViewCell.swift */,
 				5D65D4D31F2E45A000302CE8 /* DateTimeTableViewCell.swift */,
 				5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */,
 				5D1BD4F11F067B9000C8FAF5 /* ChartCollectionViewCell.swift */,
@@ -694,6 +706,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D65D4E31F3015FC00302CE8 /* IssueHeaderTableViewCell.xib in Resources */,
 				5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */,
 				5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */,
 				5DC8C72C1F25D2F900B57044 /* ClientsTableViewCell.xib in Resources */,
@@ -831,12 +844,14 @@
 				5D5291C11F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift in Sources */,
 				5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
+				5D65D4E21F3015FC00302CE8 /* IssueHeaderTableViewCell.swift in Sources */,
 				5DE3C9851EF2656C00012C47 /* LocationCustomViewCell.swift in Sources */,
 				5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */,
 				5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */,
 				5DA15B451F2B32BF00EB90DC /* CaseTableViewCell.swift in Sources */,
 				5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
+				5D65D4E61F30165A00302CE8 /* IssueTableViewCell.swift in Sources */,
 				5D5291BF1F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
@@ -844,6 +859,7 @@
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
 				5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */,
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
+				5D65D4DE1F3015EE00302CE8 /* IssueViewController.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
 				5D5291C81F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift in Sources */,
 				5D52F94E1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift in Sources */,
