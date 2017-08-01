@@ -153,7 +153,9 @@ class SubmitSurveyViewController: UIViewController {
         
         // print(Utilities.SurveyOutput)
         
+        //"contactId" + ":" + "" + caseresponse
         
+        // "key" + ":" + "value" + ","
         
         var questionResponseDict:[String:String] = [:]
         

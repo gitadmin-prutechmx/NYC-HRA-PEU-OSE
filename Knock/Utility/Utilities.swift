@@ -1646,6 +1646,7 @@ class Utilities {
                                 issueObject.issueNo = issueInfo["issueNumber"] as? String  ?? ""
                                 issueObject.issueId = issueInfo["issueId"] as? String  ?? ""
                                  issueObject.issueType = issueInfo["issueType"] as? String  ?? ""
+                                issueObject.notes = issueInfo["issueNotes"] as? String  ?? ""
                                 appDelegate.saveContext()
                                 
                             }

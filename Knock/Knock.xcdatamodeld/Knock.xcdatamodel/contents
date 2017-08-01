@@ -82,6 +82,7 @@
         <attribute name="issueId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issueNo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issueType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
@@ -195,7 +196,7 @@
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="255"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
-        <element name="Issues" positionX="-126" positionY="45" width="128" height="120"/>
+        <element name="Issues" positionX="-126" positionY="45" width="128" height="135"/>
         <element name="Location" positionX="-2" positionY="-36" width="128" height="270"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="105"/>
         <element name="Setting" positionX="-126" positionY="45" width="128" height="150"/>

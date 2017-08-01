@@ -11,9 +11,7 @@ import Foundation
 class SalesforceRestApiUrl{
     
     static let getAllEventAssignmentData = "/services/apexrest/assignmentdetail"
-    
-    
-    
+
     static let submitSurveyResponse = "/services/apexrest/surveyresponse"
     
     static let updateLocation = "/services/apexrest/updateLocation"
@@ -31,6 +29,8 @@ class SalesforceRestApiUrl{
     static let picklistValue = "/services/apexrest/picklistValue/"
     
     static let caseConfiguration = "/services/apexrest/caseconfiguration"
+    
+    static let createcase = "/services/apexrest/createcase"
     
     //Core_Picklist_Value_API
     //urlMapping = picklistValue

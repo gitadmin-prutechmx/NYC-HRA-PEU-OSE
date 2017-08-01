@@ -1,6 +1,5 @@
 //
-//  TableViewController.swift
-//  TestApplication
+//  CaseCaseConfigTableViewController.swift
 //
 //  Created by Kamal on 29/07/17.
 //  Copyright © 2017 mtxb2b. All rights reserved.
@@ -43,15 +42,18 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     var multiPickListDict:[String:String] = [:]
     var selectedSwitchDict:[String:String] = [:]
     var selectedTextAreaDict:[String:String] = [:]
+    
     var selectedTextFieldDict:[String:String] = [:]
-    var selectedPhoneTextFieldDict:[String:Int64] = [:]
-   // var selectedDateTimeDict:[String:String] = [:]
+    
+    var selectedStringPhoneTextFieldDict:[String:String] = [:]  //handle apiname + phonenumber
+    var selectedPhoneTextFieldDict:[String:Int64] = [:]  //handle apiname + phonenumber
+    // var selectedDateTimeDict:[String:String] = [:]
     
     
     var switchDict:[Int:String] = [:]
     var textAreaDict:[Int:String] = [:]
     var textFieldDict:[Int:String] = [:]
-    var phoneTextFieldDict:[Int:String] = [:]
+    var phoneTextFieldDict:[Int:String] = [:]      //handle tag + apiname
     
     
     var tempArray = [CaseDO]()
@@ -69,35 +71,38 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         pickListDict[currentPickListApiName] = pickListValue
         
-        caseTblView?.reloadData()
-        
+        reloadTableView()
     }
     
     func getMultiPickListValue(multiPickListValue:String){
         
         multiPickListDict[currentMultiPickListApiName] = multiPickListValue
         
+        reloadTableView()
+        
+        
+    }
+    
+    func reloadTableView(){
+        
+        phoneTextFieldDict = [:]
+        switchDict = [:]
+        textAreaDict = [:]
+        textFieldDict = [:]
+        
         caseTblView?.reloadData()
-        
-        
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        Utilities.currentApiName = ""
-        Utilities.selectedDateTimeDict = [:]
-        Utilities.selectedDatePicker = [:]
-
-        
         readJson()
         
     }
     
     
     
-  
+    
     
     
     private func parseJson(jsonObject: Dictionary<String, AnyObject>){
@@ -142,9 +147,13 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                         selectedTextAreaDict[apiName] = ""
                     }
                     else if(dataType == "DATE"){
-                       Utilities.selectedDateTimeDict[apiName] = ""
-                       Utilities.selectedDatePicker[apiName] = Date()
+                        Utilities.selectedDateTimeDict[apiName] = ""
+                        Utilities.selectedDatePicker[apiName] = Date()
                         
+                    }
+                    else if(dataType == "PHONE"){
+                        selectedPhoneTextFieldDict[apiName] = nil
+                        selectedStringPhoneTextFieldDict[apiName] = ""
                     }
                     else{
                         selectedTextFieldDict[apiName] = ""
@@ -172,8 +181,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                         selectedTextAreaDict[apiName] = ""
                     }
                     else if(dataType == "DATE"){
-                         Utilities.selectedDateTimeDict[apiName] = ""
-                         Utilities.selectedDatePicker[apiName] = Date()
+                        Utilities.selectedDateTimeDict[apiName] = ""
+                        Utilities.selectedDatePicker[apiName] = Date()
+                    }
+                    else if(dataType == "PHONE"){
+                        selectedPhoneTextFieldDict[apiName] = nil
+                        selectedStringPhoneTextFieldDict[apiName] = ""
                     }
                     else{
                         selectedTextFieldDict[apiName] = ""
@@ -213,9 +226,6 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             parseJson(jsonObject: caseConfigResults[0].caseConfigData as! Dictionary<String, AnyObject>)
             
         }
-        
-     
-        
         
         
 //        do {
@@ -258,19 +268,19 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         return caseConfigArray[section].sectionName
     }
     
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        
-//        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 25))
-//        returnedView.backgroundColor = UIColor.darkGray
-//        
-//        let label = UILabel(frame: CGRect(x: 5, y: 0, width: view.frame.size.width, height: 25))
-//        label.text = caseConfigArray[section].sectionName
-//        label.textColor = UIColor.white
-//        returnedView.addSubview(label)
-//        
-//        return returnedView
-//    }
-//    
+    //    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //
+    //        let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 25))
+    //        returnedView.backgroundColor = UIColor.darkGray
+    //
+    //        let label = UILabel(frame: CGRect(x: 5, y: 0, width: view.frame.size.width, height: 25))
+    //        label.text = caseConfigArray[section].sectionName
+    //        label.textColor = UIColor.white
+    //        returnedView.addSubview(label)
+    //
+    //        return returnedView
+    //    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return caseConfigArray[section].sectionObjects.count
@@ -332,6 +342,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             textAreaCell.textLabel?.text = caseObject.fieldName
             textAreaCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
+            textAreaCell.textLabel?.numberOfLines = 2
+          
             // textAreaCell.backgroundColor = UIColor.clear
             
             
@@ -342,14 +354,17 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             //UITextView
             let textArea = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 99))
             
+  
+           // UITextView(frame: CGRect(x: 0, y: 0, width: 160, height: 99))
+            
+            textArea.textAlignment = .right
+            
             textArea.tag = indexPath.row
             textArea.delegate = self
             
             textArea.text = selectedTextAreaDict[caseObject.apiName]
             
             let grayColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
-            
-            
             
             //            tf.layer.borderColor = blackColor.cgColor
             //
@@ -465,7 +480,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             phoneCell.textLabel?.text = caseObject.fieldName
             phoneCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
-   
+            
             
             phoneCell.selectionStyle = .none
             
@@ -475,10 +490,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             let phoneTextfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
             //textfield.placeholder = "Enter text here"
             
+            phoneTextfield.textAlignment = .right
             phoneTextfield.tag = indexPath.row
             phoneTextfield.delegate = self
             
-         //   phoneTextfield.text = String(describing: selectedPhoneTextFieldDict[caseObject.apiName])
+            
+            phoneTextfield.text = selectedStringPhoneTextFieldDict[caseObject.apiName]
             
             
             
@@ -512,8 +529,9 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             //UITextField
             let textfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-            //textfield.placeholder = "Enter text here"
+            //tf.placeholder = "Enter text here"
             
+            textfield.textAlignment = .right
             textfield.tag = indexPath.row
             textfield.delegate = self
             
@@ -539,7 +557,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let caseObject:CaseDO = caseConfigArray[indexPath.section].sectionObjects[indexPath.row]
@@ -613,14 +631,61 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         let caseObject:CaseDO = caseConfigArray[indexPath.section].sectionObjects[indexPath.row]
         
         if(caseObject.dataType == "DATE"){
-          (cell as! DateTimeTableViewCell).watchFrameChanges()
+            (cell as! DateTimeTableViewCell).watchFrameChanges()
             
         }
+        
+        
+        
+        
+        //        let cornerRadius: CGFloat = 5
+        //        cell.backgroundColor = .clear
+        //
+        //        let layer = CAShapeLayer()
+        //        let pathRef = CGMutablePath()
+        //        let bounds = cell.bounds.insetBy(dx: 20, dy: 0)
+        //        var addLine = false
+        //
+        //        if indexPath.row == 0 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+        //            pathRef.__addRoundedRect(transform: nil, rect: bounds, cornerWidth: cornerRadius, cornerHeight: cornerRadius)
+        //        } else if indexPath.row == 0 {
+        //            pathRef.move(to: .init(x: bounds.minX, y: bounds.maxY))
+        //            pathRef.addArc(tangent1End: .init(x: bounds.minX, y: bounds.minY), tangent2End: .init(x: bounds.midX, y: bounds.minY), radius: cornerRadius)
+        //            pathRef.addArc(tangent1End: .init(x: bounds.maxX, y: bounds.minY), tangent2End: .init(x: bounds.maxX, y: bounds.midY), radius: cornerRadius)
+        //            pathRef.addLine(to: .init(x: bounds.maxX, y: bounds.maxY))
+        //            addLine = true
+        //        } else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+        //            pathRef.move(to: .init(x: bounds.minX, y: bounds.minY))
+        //            pathRef.addArc(tangent1End: .init(x: bounds.minX, y: bounds.maxY), tangent2End: .init(x: bounds.midX, y: bounds.maxY), radius: cornerRadius)
+        //            pathRef.addArc(tangent1End: .init(x: bounds.maxX, y: bounds.maxY), tangent2End: .init(x: bounds.maxX, y: bounds.midY), radius: cornerRadius)
+        //            pathRef.addLine(to: .init(x: bounds.maxX, y: bounds.minY))
+        //        } else {
+        //            pathRef.addRect(bounds)
+        //            addLine = true
+        //        }
+        //
+        //        layer.path = pathRef
+        //        layer.fillColor = UIColor(white: 1, alpha: 0.8).cgColor
+        //
+        //        if (addLine == true) {
+        //            let lineLayer = CALayer()
+        //            let lineHeight = 1.0 / UIScreen.main.scale
+        //            lineLayer.frame = CGRect(x: bounds.minX + 10, y: bounds.size.height - lineHeight, width: bounds.size.width - 10, height: lineHeight)
+        //            lineLayer.backgroundColor = tableView.separatorColor?.cgColor
+        //            layer.addSublayer(lineLayer)
+        //        }
+        //
+        //        let testView = UIView(frame: bounds)
+        //        testView.layer.insertSublayer(layer, at: 0)
+        //        testView.backgroundColor = .clear
+        //        cell.backgroundView = testView
     }
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -715,53 +780,43 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     //
     //
     
-//    func textViewDidEndEditing(_ textView: UITextView) -> Bool {
-//        selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
-//        textView.resignFirstResponder()
-//        return true
-//    }
-//    
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
-    {
-         selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text! + text
+    func textViewDidEndEditing(_ textView: UITextView) -> Bool {
+        selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
+        textView.resignFirstResponder()
         return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
-    selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text! + string
-        return true
+        
+        if(phoneTextFieldDict[textField.tag] != nil){
+            let aSet =  NSCharacterSet(charactersIn:"0123456789").inverted
+            let compSepByCharInSet = string.components(separatedBy: aSet)
+            let numberFiltered = compSepByCharInSet.joined(separator: "")
+            
+            let currentCharacterCount = textField.text?.characters.count ?? 0
+            if (range.length + range.location > currentCharacterCount){
+                return false
+            }
+            let newLength = currentCharacterCount + string.characters.count - range.length
+            if(newLength > 10){
+                return false
+            }
+            
+            
+            selectedStringPhoneTextFieldDict[phoneTextFieldDict[textField.tag]!] = textField.text! + string
+            
+            selectedPhoneTextFieldDict[phoneTextFieldDict[textField.tag]!] = Int64(textField.text! + string)
+            
+            return string == numberFiltered
+        }
+        else{
+            selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text! + string
+            return true
+        }
+        
     }
-   
-    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text!
-//        textField.resignFirstResponder()
-//    }
     
     
-//    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        
-//    
-//        let aSet =  NSCharacterSet(charactersIn:"0123456789").inverted
-//        let compSepByCharInSet = string.components(separatedBy: aSet)
-//        let numberFiltered = compSepByCharInSet.joined(separator: "")
-//        
-//        let currentCharacterCount = phoneTextField.text?.characters.count ?? 0
-//        if (range.length + range.location > currentCharacterCount){
-//            return false
-//        }
-//        let newLength = currentCharacterCount + string.characters.count - range.length
-//        if(newLength > 10){
-//            return false
-//        }
-//        
-//        
-//        return string == numberFiltered
-//    }
-//    
     
     @IBAction func save(_ sender: Any) {
         
@@ -772,7 +827,30 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         print(selectedSwitchDict)
         
         print(selectedTextAreaDict)
+        print(selectedPhoneTextFieldDict)
         
+        var caseResponse:String = ""
+        
+        for (key, value) in selectedSwitchDict {
+            caseResponse =  caseResponse + key + ":" + value + ","
+        }
+        for (key, value) in selectedPhoneTextFieldDict {
+            caseResponse =  caseResponse + key + ": + \(value),"
+        }
+        for (key, value) in selectedTextFieldDict {
+            caseResponse =  caseResponse + key + ":" + value + ","
+        }
+        for (key, value) in selectedTextAreaDict {
+            caseResponse =  caseResponse + key + ":" + value + ","
+        }
+        for (key, value) in pickListDict {
+            caseResponse =  caseResponse + key + ":" + value + ","
+        }
+        for (key, value) in multiPickListDict {
+            caseResponse =  caseResponse + key + ":" + value.replacingOccurrences(of: ",", with: ";") + ","
+        }
+        
+        print(caseResponse.characters.dropLast())
     }
     
     @IBAction func cancel(_ sender: Any) {

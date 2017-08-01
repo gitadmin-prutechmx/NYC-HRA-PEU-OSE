@@ -24,6 +24,7 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBOutlet weak var tblIssueList: UITableView!
     
+    @IBOutlet weak var fullAddressLbl: UILabel!
 
     var issueDataArray = [IssueDataStruct]()
 
@@ -34,6 +35,9 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         tblIssueList.delegate = self
         tblIssueList.dataSource = self
         self.tblIssueList.tableFooterView = UIView()
+        
+        self.fullAddressLbl.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
+
         
         // Do any additional setup after loading the view.
     }
@@ -144,6 +148,10 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     
+    @IBAction func addIssueAction(_ sender: Any)
+    {
+        self.performSegue(withIdentifier: "showAddIssueIdentifier", sender: nil)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
