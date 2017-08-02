@@ -829,29 +829,84 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         print(selectedTextAreaDict)
         print(selectedPhoneTextFieldDict)
         
-        var caseResponse:String = ""
         
-        for (key, value) in selectedSwitchDict {
-            caseResponse =  caseResponse + key + ":" + value + ","
-        }
-        for (key, value) in selectedPhoneTextFieldDict {
-            caseResponse =  caseResponse + key + ": + \(value),"
-        }
-        for (key, value) in selectedTextFieldDict {
-            caseResponse =  caseResponse + key + ":" + value + ","
-        }
-        for (key, value) in selectedTextAreaDict {
-            caseResponse =  caseResponse + key + ":" + value + ","
-        }
-        for (key, value) in pickListDict {
-            caseResponse =  caseResponse + key + ":" + value + ","
-        }
-        for (key, value) in multiPickListDict {
-            caseResponse =  caseResponse + key + ":" + value.replacingOccurrences(of: ",", with: ";") + ","
-        }
+//        var msg:String = ""
+//
+//            saveCaseResponseInCoreData()
+//            saveCaseInCoreData()
+//            //createJsonData()
+//            msg = "Case has been created successfully."
+//        
+//        self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//            
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCaseView"), object: nil)
+//            
+//            
+//            
+//            self.navigationController?.popViewController(animated: true);
+//            
+//            
+//        }
+//
         
-        print(caseResponse.characters.dropLast())
+//        var caseResponse:String = ""
+//        
+//        for (key, value) in selectedSwitchDict {
+//            caseResponse =  caseResponse + key + ":" + value + ","
+//        }
+//        for (key, value) in selectedPhoneTextFieldDict {
+//            caseResponse =  caseResponse + key + ": + \(value),"
+//        }
+//        for (key, value) in selectedTextFieldDict {
+//            caseResponse =  caseResponse + key + ":" + value + ","
+//        }
+//        for (key, value) in selectedTextAreaDict {
+//            caseResponse =  caseResponse + key + ":" + value + ","
+//        }
+//        for (key, value) in pickListDict {
+//            caseResponse =  caseResponse + key + ":" + value + ","
+//        }
+//        for (key, value) in multiPickListDict {
+//            caseResponse =  caseResponse + key + ":" + value.replacingOccurrences(of: ",", with: ";") + ","
+//        }
+//        
+//        print(caseResponse.characters.dropLast())
     }
+    
+    func prepareCaseResponse(){
+        
+    }
+    
+    
+    func saveCaseResponseInCoreData(){
+        let addCaseObject = AddCase(context: context)
+        
+        
+        addCaseObject.clientId = SalesforceConnection.currentTenantId
+        
+      //  caseObject.caseResponse =
+        
+        addCaseObject.actionStatus = "create"
+        
+        
+        appDelegate.saveContext()
+    }
+    
+    func saveCaseInCoreData(){
+        let caseObject = Cases(context: context)
+        
+        caseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
+        caseObject.unitId = SalesforceConnection.unitId
+        caseObject.caseId =  UUID().uuidString
+        caseObject.caseNo = ""
+        caseObject.contactId = SalesforceConnection.currentTenantId
+        caseObject.contactName = SalesforceConnection.currentTenantName
+
+        
+        appDelegate.saveContext()
+    }
+    
+    
     
     @IBAction func cancel(_ sender: Any) {
         

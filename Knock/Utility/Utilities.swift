@@ -266,13 +266,13 @@ class Utilities {
         }
         
     
-        editIssueDict["iOSTenantId"] = iOSIssueId as AnyObject?
+        editIssueDict["iOSIssueId"] = iOSIssueId as AnyObject?
         
-        editIssueDict["Case__c"] = caseId as AnyObject?
+        editIssueDict["caseId"] = caseId as AnyObject?
         
-        editIssueDict["Issuetype__c"] = issueType as AnyObject?
+        editIssueDict["issueType"] = issueType as AnyObject?
         
-        editIssueDict["Issue_Notes__c"] = issueNotes as AnyObject?
+        editIssueDict["issueNotes"] = issueNotes as AnyObject?
         
        
         
@@ -515,6 +515,7 @@ class Utilities {
         
         let iOSIssueId = issueDataDict["iOSIssueId"] as! String?
         let issueId = issueDataDict["issueId"] as! String?
+        let issueNo = issueDataDict["issueNumber"] as! String?
         
         if(SalesforceConnection.currentIssueId == iOSIssueId){
             SalesforceConnection.currentIssueId =  issueId!
@@ -529,6 +530,7 @@ class Utilities {
             
             var updateObjectDic:[String:String] = [:]
             updateObjectDic["issueId"] = issueId
+            updateObjectDic["issueNo"] = issueNo
             updateObjectDic["actionStatus"] = ""
             
             ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@", predicateValue: iOSIssueId,isPredicate: true)
@@ -975,6 +977,10 @@ class Utilities {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateSurveyView"), object: nil)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCaseView"), object: nil)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateIssueView"), object: nil)
         
         
         Utilities.isRefreshBtnClick = false

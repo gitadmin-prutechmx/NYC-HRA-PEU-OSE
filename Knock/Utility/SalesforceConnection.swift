@@ -26,6 +26,7 @@ class SalesforceConnection{
     static var assignmentLocationUnitId:String = ""
     
     static var currentTenantId:String =  ""
+    static var currentTenantName:String = ""
     
     static var unitName:String = ""
     static var surveyId:String = ""

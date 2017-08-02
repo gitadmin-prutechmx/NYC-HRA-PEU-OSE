@@ -205,8 +205,8 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
          var msg:String = ""
         
         if(SalesforceConnection.currentIssueId == ""){
-            //saveIssueInCoreData()
-            createJsonData()
+            saveIssueInCoreData()
+            //createJsonData()
             msg = "Issue information has been created successfully."
         }
         else{
@@ -270,7 +270,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
 
         issueObject.notes = notes
         
-        
+        issueObject.actionStatus = "create"
        
         
         appDelegate.saveContext()

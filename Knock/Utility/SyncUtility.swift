@@ -475,7 +475,7 @@ class SyncUtility{
                 
                 
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createIssue, params: editIssue){ jsonData in
+                SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.createIssue, params: editIssue){ jsonData in
                     
                     
                     _ = Utilities.parseIssueResponse(jsonObject: jsonData.1)
