@@ -4567,7 +4567,7 @@
                                                                 <constraint firstAttribute="height" constant="46" id="o99-0J-ZHh"/>
                                                             </constraints>
                                                             <connections>
-                                                                <action selector="btnIssueAction:" destination="hAe-vE-Wgl" eventType="touchUpInside" id="0yo-uT-Qkq"/>
+                                                                <action selector="btnEditIssue:" destination="m44-0X-WZC" eventType="touchUpInside" id="tha-5W-Uth"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -4597,6 +4597,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="issueBtn" destination="CBP-IQ-CDs" id="539-zM-ZDi"/>
                                             <outlet property="lblIssueId" destination="n2F-7s-URb" id="8Bu-3P-qCn"/>
                                             <outlet property="lblIssueNo" destination="SQD-Cd-jec" id="LNx-83-Pe1"/>
                                             <outlet property="lblIssueType" destination="iry-1u-8n7" id="SVi-q2-eOc"/>

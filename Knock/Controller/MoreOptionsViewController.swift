@@ -174,12 +174,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    // Cleanup notifications added in viewDidLoad
-    deinit {
-       
-        NotificationCenter.default.removeObserver("UpdateSurveyView")
-    }
-    
+   
     
     
     

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AddCase" representedClassName="AddCase" syncable="YES" codeGenerationType="class">
+        <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="caseResponse" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="clientId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Assignment" representedClassName="Assignment" syncable="YES" codeGenerationType="class">
         <attribute name="assignedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="completedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -77,8 +82,8 @@
         <relationship name="eventAssignementR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentEventR" inverseEntity="Assignment" syncable="YES"/>
     </entity>
     <entity name="Issues" representedClassName="Issues" syncable="YES" codeGenerationType="class">
+        <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="caseNo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issueId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issueNo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issueType" optional="YES" attributeType="String" syncable="YES"/>
@@ -207,5 +212,6 @@
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="135"/>
+        <element name="AddCase" positionX="-126" positionY="45" width="128" height="90"/>
     </elements>
 </model>

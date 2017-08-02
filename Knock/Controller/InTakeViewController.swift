@@ -70,10 +70,38 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
 
+        NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateClientView), name: NSNotification.Name(rawValue: "UpdateClientView"), object:nil
+        )
         
+        NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateCaseView), name: NSNotification.Name(rawValue: "UpdateCaseView"), object:nil
+        )
+
+        
+
 
         // Do any additional setup after loading the view.
     }
+    
+    func UpdateClientView(){
+        print("UpdateClientView")
+      
+        populateClientData()
+    }
+    
+    func UpdateCaseView(){
+        print("UpdateCaseView")
+        
+        populateCaseData()
+    }
+    
+    // Cleanup notifications added in viewDidLoad
+    deinit {
+        NotificationCenter.default.removeObserver("UpdateClientView")
+        NotificationCenter.default.removeObserver("UpdateCaseView")
+    }
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

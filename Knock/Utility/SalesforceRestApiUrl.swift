@@ -32,6 +32,8 @@ class SalesforceRestApiUrl{
     
     static let createcase = "/services/apexrest/createcase"
     
+    static let createIssue = "/services/apexrest/createissue"
+    
     //Core_Picklist_Value_API
     //urlMapping = picklistValue
     

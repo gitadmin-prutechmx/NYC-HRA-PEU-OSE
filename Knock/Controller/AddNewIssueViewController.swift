@@ -34,9 +34,36 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         
         
+        if(SalesforceConnection.currentIssueId != ""){
+            fillIssueInfo()
+        }
+        
+    }
+    
+    func fillIssueInfo(){
+        
+        
+        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "issueId == %@" ,predicateValue: SalesforceConnection.currentIssueId,isPredicate:true) as! [Issues]
+        
+        if(issueResults.count > 0){
+            
+            txtIssueNotes.text = issueResults[0].notes!
+            issueType = issueResults[0].issueType!
+        }
+        
+    }
+    
+    
+  
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         populateIssueTypes()
         
     }
+    
+    
+    
     
     func getPickListValue(pickListValue:String){
         
@@ -166,21 +193,121 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     }
     
     
-   
+    var notes:String = ""
     
     @IBAction func save(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true);
+        
+        if let issueNotes = txtIssueNotes.text{
+            
+            notes = issueNotes
+        }
+        
+         var msg:String = ""
+        
+        if(SalesforceConnection.currentIssueId == ""){
+            //saveIssueInCoreData()
+            createJsonData()
+            msg = "Issue information has been created successfully."
+        }
+        else{
+            updateIssueInCoreData()
+            msg = "Issue information has been updated successfully."
+        }
+        
+        
+
+        self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateIssueView"), object: nil)
+            
+            
+            
+            self.navigationController?.popViewController(animated: true);
+            
+            
+        }
+        
         
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func createJsonData(){
+        var issueDict:[String:AnyObject] = [:]
+        var editIssue : [String:String] = [:]
+        
+        
+       
+                
+                
+                issueDict = Utilities.createAndEditIssueData(issueType: issueType, issueNotes: notes,caseId:SalesforceConnection.caseId, currentIssueId: UUID().uuidString, iOSIssueId: UUID().uuidString,type:"create")
+                
+                
+                
+                editIssue["jsonIssue"] = Utilities.jsonToString(json: issueDict as AnyObject)
+                
+        
+               // print(editIssue["jsonIssue"])
+        
+              //  print(editIssue)
+        
+            
+       
+
+    }
+    
+    func saveIssueInCoreData(){
+        
+        let issueObject = Issues(context: context)
+        
+        
+        issueObject.issueId = UUID().uuidString
+        
+        issueObject.caseId = SalesforceConnection.caseId
+        
+        issueObject.issueNo = ""
+        
+        issueObject.issueType = issueType
+        
+
+        issueObject.notes = notes
+        
+        
+       
+        
+        appDelegate.saveContext()
+        
+
+        
+    }
+    
+    
+    func updateIssueInCoreData(){
+        
+        var updateObjectDic:[String:String] = [:]
+        
+        //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
+        
+        updateObjectDic["issueType"] = issueType
+        
+        updateObjectDic["notes"] = notes
+        
+        
+        
+        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "issueId == %@" ,predicateValue: SalesforceConnection.currentIssueId,isPredicate:true) as! [Issues]
+        
+        if(issueResults.count > 0){
+            
+            if(issueResults[0].actionStatus! == ""){
+                updateObjectDic["actionStatus"] = "edit"
+            }
+        }
+        
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@", predicateValue: SalesforceConnection.currentIssueId,isPredicate: true)
+        
+        
+    }
+    
+    
     
 }

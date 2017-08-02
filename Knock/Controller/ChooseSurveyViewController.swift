@@ -35,23 +35,41 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
         
         fullAddressLbl.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
-        //fullAddressLbl.text =  SalesforceConnection.fullAddress
-        
+       
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
         
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
-        //self.navigationItem.title = SalesforceConnection.unitName
-        
-        selectedSurveyId =  SalesforceConnection.surveyId
-        
-        populateSurveyData()
-        
+      
+        NotificationCenter.default.addObserver(self, selector:#selector(ChooseSurveyViewController.UpdateSurveyView), name: NSNotification.Name(rawValue: "UpdateSurveyView"), object:nil
+        )
         
         // Do any additional setup after loading the view.
     }
+    
+  
+    
+    func UpdateSurveyView(){
+        print("UpdateSurveyView")
+        
+        populateSurveyData()
+    }
+    
+    // Cleanup notifications added in viewDidLoad
+    deinit {
+        NotificationCenter.default.removeObserver("UpdateClientView")
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+        populateSurveyData()
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -252,6 +270,8 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
                 
             }
         }
+        
+        selectedSurveyId =  SalesforceConnection.surveyId
         
         
         self.surveyCollectionView.reloadData()

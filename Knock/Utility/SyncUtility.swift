@@ -20,6 +20,8 @@ class SyncUtility{
     static var tenantAssignResultsArr = [TenantAssign]()
     static var surveyResResultsArr = [SurveyResponse]()
     
+    static var issueResultsArr = [Issues]()
+    
     static var isPullData:Bool = false
     static var loginViewController:LoginViewController? = nil
     
@@ -42,6 +44,8 @@ class SyncUtility{
             
             editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
             
+             issueResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Issues]
+            
             
             
             
@@ -59,6 +63,9 @@ class SyncUtility{
             }
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
+            }
+            else if( issueResultsArr.count > 0){
+                updateIssueData()
             }
             else{
                 if(isPullData){
@@ -139,6 +146,9 @@ class SyncUtility{
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
             }
+            else if( issueResultsArr.count > 0){
+                updateIssueData()
+            }
             else{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
@@ -210,6 +220,9 @@ class SyncUtility{
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
             }
+            else if( issueResultsArr.count > 0){
+                updateIssueData()
+            }
             else{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
@@ -273,13 +286,16 @@ class SyncUtility{
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
             
             if( surveyResResultsArr.count > 0){
                 updateSurveyResponseData()
             }
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
+            }
+            else if( issueResultsArr.count > 0){
+                updateIssueData()
             }
             else{
                 if(isPullData){
@@ -352,6 +368,9 @@ class SyncUtility{
             if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
             }
+            else if( issueResultsArr.count > 0){
+                updateIssueData()
+            }
             else{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
@@ -420,12 +439,73 @@ class SyncUtility{
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
-            if(isPullData){
+            if( issueResultsArr.count > 0){
+                updateIssueData()
+            }
+            else if(isPullData){
                 Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
             }
             
         }
         
+    }
+    
+    class func updateIssueData(){
+        let issueGroup = DispatchGroup()
+        
+        var issueDict:[String:AnyObject] = [:]
+        var editIssue : [String:String] = [:]
+        
+        
+        
+        if(issueResultsArr.count > 0){
+            
+            
+            
+            for issueData in issueResultsArr{
+                
+                issueGroup.enter()
+                
+                issueDict = Utilities.createAndEditIssueData(issueType: issueData.issueType!, issueNotes: issueData.notes!,caseId:issueData.caseId!, currentIssueId: issueData.issueId!, iOSIssueId: issueData.issueId!,type:issueData.actionStatus!)
+                
+                
+                
+                editIssue["jsonIssue"] = Utilities.jsonToString(json: issueDict as AnyObject)!
+                
+                
+                
+                
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createIssue, params: editIssue){ jsonData in
+                    
+                    
+                    _ = Utilities.parseIssueResponse(jsonObject: jsonData.1)
+                    issueGroup.leave()
+                    print("issueGroup: \(issueData.issueType!)")
+                    
+                    
+                }//login to unit rest api
+            }//end for loop
+            
+        }
+        else{
+            issueGroup.enter()
+            issueGroup.leave()
+        }
+        
+        
+        
+        issueGroup.notify(queue: .main) {
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateIssueView"), object: nil)
+            
+            
+                if(isPullData){
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                }
+            
+        }
+        
+
     }
     
     

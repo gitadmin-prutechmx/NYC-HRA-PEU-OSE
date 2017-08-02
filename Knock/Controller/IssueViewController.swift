@@ -11,7 +11,7 @@ import UIKit
 struct IssueDataStruct
 {
     var caseId : String = ""
-    var caseNo : String = ""
+    //var caseNo : String = ""
     var issueId:String = ""
     var issueNo : String = ""
     var issueType : String = ""
@@ -38,14 +38,38 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.tblIssueList.tableFooterView = UIView()
         
         self.fullAddressLbl.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
-
+        
+        
+        NotificationCenter.default.addObserver(self, selector:#selector(IssueViewController.UpdateIssueView), name: NSNotification.Name(rawValue: "UpdateIssueView"), object:nil
+        )
         
         // Do any additional setup after loading the view.
+    }
+    
+    
+    
+    func UpdateIssueView(){
+        print("UpdateIssueView")
+        
+        populateIssues()
+    }
+    
+    // Cleanup notifications added in viewDidLoad
+    deinit {
+        NotificationCenter.default.removeObserver("UpdateIssueView")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         populateIssues()
+    }
+    @IBAction func btnEditIssue(_ sender: Any) {
+        
+        let indexRow = (sender as AnyObject).tag
+        
+        SalesforceConnection.currentIssueId =  issueDataArray[indexRow!].issueId
+        
+        self.performSegue(withIdentifier: "showAddIssueIdentifier", sender: nil)
     }
    
     func populateIssues(){
@@ -62,7 +86,7 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 
                 
                 
-                let objectIssueStruct:IssueDataStruct = IssueDataStruct(caseId: issueData.caseId!, caseNo: issueData.caseNo!, issueId: issueData.issueId!, issueNo: issueData.issueNo!, issueType: issueData.issueType!)
+                let objectIssueStruct:IssueDataStruct = IssueDataStruct(caseId: issueData.caseId!, issueId: issueData.issueId!, issueNo: issueData.issueNo!, issueType: issueData.issueType!)
                 
                 issueDataArray.append(objectIssueStruct)
                 
@@ -111,7 +135,8 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.lblIssueNo.text = issueDataArray[indexPath.row].issueNo
             cell.lblIssueType.text = issueDataArray[indexPath.row].issueType
             cell.lblIssueId.text = issueDataArray[indexPath.row].issueId
-            
+            cell.issueBtn.tag = indexPath.row
+        
             return cell
         
         
@@ -151,6 +176,8 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func addIssueAction(_ sender: Any)
     {
+         SalesforceConnection.currentIssueId =  ""
+        
         self.performSegue(withIdentifier: "showAddIssueIdentifier", sender: nil)
     }
 

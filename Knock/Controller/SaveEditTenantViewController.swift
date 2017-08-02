@@ -407,7 +407,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         //
         self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
             
             
             
@@ -473,7 +473,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
                     
                     self.view.makeToast(message, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                         
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
                         
                         
                         
