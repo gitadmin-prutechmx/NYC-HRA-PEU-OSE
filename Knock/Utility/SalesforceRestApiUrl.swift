@@ -30,7 +30,7 @@ class SalesforceRestApiUrl{
     
     static let caseConfiguration = "/services/apexrest/caseconfiguration"
     
-    static let createcase = "/services/apexrest/createcase"
+    static let createCase = "/services/apexrest/createcase"
     
     static let createIssue = "/services/apexrest/createissue"
     

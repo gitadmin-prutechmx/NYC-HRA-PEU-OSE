@@ -21,6 +21,7 @@ class SyncUtility{
     static var surveyResResultsArr = [SurveyResponse]()
     
     static var issueResultsArr = [Issues]()
+    static var caseResultsArr = [AddCase]()
     
     static var isPullData:Bool = false
     static var loginViewController:LoginViewController? = nil
@@ -44,9 +45,10 @@ class SyncUtility{
             
             editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
             
-             issueResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Issues]
             
+            caseResultsArr = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [AddCase]
             
+            issueResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Issues]
             
             
             if( editLocationResultsArr.count > 0){
@@ -63,6 +65,9 @@ class SyncUtility{
             }
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
+            }
+            else if( caseResultsArr.count > 0){
+                updateCaseData()
             }
             else if( issueResultsArr.count > 0){
                 updateIssueData()
@@ -146,6 +151,9 @@ class SyncUtility{
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
             }
+            else if( caseResultsArr.count > 0){
+                updateCaseData()
+            }
             else if( issueResultsArr.count > 0){
                 updateIssueData()
             }
@@ -219,6 +227,9 @@ class SyncUtility{
             }
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
+            }
+            else if( caseResultsArr.count > 0){
+                updateCaseData()
             }
             else if( issueResultsArr.count > 0){
                 updateIssueData()
@@ -294,6 +305,9 @@ class SyncUtility{
             else if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
             }
+            else if( caseResultsArr.count > 0){
+                updateCaseData()
+            }
             else if( issueResultsArr.count > 0){
                 updateIssueData()
             }
@@ -368,6 +382,9 @@ class SyncUtility{
             if( editUnitResultsArr.count > 0){
                 updateEditUnitData()
             }
+            else if( caseResultsArr.count > 0){
+                updateCaseData()
+            }
             else if( issueResultsArr.count > 0){
                 updateIssueData()
             }
@@ -439,15 +456,85 @@ class SyncUtility{
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
-            if( issueResultsArr.count > 0){
+            if( caseResultsArr.count > 0){
+                updateCaseData()
+            }
+            
+            else if( issueResultsArr.count > 0){
                 updateIssueData()
             }
-            else if(isPullData){
+            else
+                if(isPullData){
                 Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
             }
             
         }
         
+    }
+    
+    class func updateCaseData(){
+        
+        let caseGroup = DispatchGroup()
+        
+      
+        var caseJsonDict:[String:AnyObject] = [:]
+        var caseResponseParam : [String:String] = [:]
+        
+        if( caseResultsArr.count > 0){
+            
+            
+            for caseData in  caseResultsArr{
+                
+                caseGroup.enter()
+                
+               var caseResponseDict = caseData.caseResponse as! Dictionary<String,AnyObject>
+                
+                caseResponseDict["ContactId"] = caseData.clientId! as AnyObject?
+                
+                
+                
+                caseJsonDict["iOSCaseId"] = caseData.caseId! as AnyObject?
+                
+                caseJsonDict["caseResponse"] = Utilities.jsonToString(json: caseResponseDict as AnyObject) as AnyObject
+                
+                caseResponseParam["jsonCase"] = Utilities.jsonToString(json: caseJsonDict as AnyObject)!
+
+                
+                SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.createCase, params: caseResponseParam){ jsonData in
+                    
+                    Utilities.parseCaseResponse(jsonObject: jsonData.1)
+                    caseGroup.leave()
+                    //  print("editUnitGroup: \(editUnitData.tenantStatus!)")
+                    
+                }//login to unit rest api
+                
+                
+                
+            }
+        }
+            
+        else{
+            caseGroup.enter()
+            caseGroup.leave()
+        }
+        
+        
+        
+        
+        
+        caseGroup.notify(queue: .main) {
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCaseView"), object: nil)
+            
+             if( issueResultsArr.count > 0){
+                updateIssueData()
+            }
+            else
+                if(isPullData){
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+            }
+            
+        }
     }
     
     class func updateIssueData(){

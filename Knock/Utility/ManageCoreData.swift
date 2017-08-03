@@ -252,6 +252,9 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "CaseConfig")
         DeleteAllRecords(salesforceEntityName: "Issues")
         
+        
+        DeleteAllRecords(salesforceEntityName: "AddCase")
+        
         DeleteAllRecords(salesforceEntityName: "SurveyResponse")
         
         //DeleteAllRecords(salesforceEntityName: "TenantAssign")

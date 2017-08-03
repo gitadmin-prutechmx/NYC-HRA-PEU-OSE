@@ -22,10 +22,18 @@ class DateTimeTableViewCell: UITableViewCell {
     
     @IBAction func dateTimeChanged(_ sender: Any) {
         
-    
-        detail.text =  DateFormatter.localizedString(from: datePicker.date, dateStyle:.long, timeStyle: .none)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        Utilities.selectedDateTimeDictYYYYMMDD[Utilities.currentApiName] = dateFormatter.string(from: datePicker.date)
         
-        Utilities.selectedDateTimeDict[Utilities.currentApiName] = detail.text
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateFormat = "MM-dd-yyyy"
+        detail.text = dateFormatter1.string(from: datePicker.date)
+
+
+//        detail.text =  DateFormatter.localizedString(from: datePicker.date, dateStyle:.short, timeStyle: .none)
+        
+        Utilities.selectedDateTimeDictInMMDDYYYY[Utilities.currentApiName] = detail.text
         Utilities.selectedDatePicker[Utilities.currentApiName] = datePicker.date
         
         print(datePicker.date)

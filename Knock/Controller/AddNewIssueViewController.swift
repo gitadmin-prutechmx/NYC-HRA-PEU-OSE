@@ -230,29 +230,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
     }
     
-    func createJsonData(){
-        var issueDict:[String:AnyObject] = [:]
-        var editIssue : [String:String] = [:]
-        
-        
-       
-                
-                
-                issueDict = Utilities.createAndEditIssueData(issueType: issueType, issueNotes: notes,caseId:SalesforceConnection.caseId, currentIssueId: UUID().uuidString, iOSIssueId: UUID().uuidString,type:"create")
-                
-                
-                
-                editIssue["jsonIssue"] = Utilities.jsonToString(json: issueDict as AnyObject)
-                
-        
-               // print(editIssue["jsonIssue"])
-        
-              //  print(editIssue)
-        
-            
-       
-
-    }
+    
     
     func saveIssueInCoreData(){
         

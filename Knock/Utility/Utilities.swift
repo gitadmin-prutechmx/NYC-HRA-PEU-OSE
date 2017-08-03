@@ -16,7 +16,8 @@ import Toast_Swift
 class Utilities {
     
     static var currentApiName:String = ""
-    static var selectedDateTimeDict:[String:String] = [:]
+    static var selectedDateTimeDictYYYYMMDD:[String:String?] = [:]
+    static var selectedDateTimeDictInMMDDYYYY:[String:String?] = [:]
     
     static var selectedDatePicker:[String:Date] = [:]
     
@@ -381,6 +382,7 @@ class Utilities {
             updateEditUnitDetail(unitDataDict: unitDataDict)
             updateTenantDetail(unitDataDict: unitDataDict)
             updateSurveyResponseDetail(unitDataDict: unitDataDict)
+            updateCases(unitDataDict: unitDataDict)
             
             // updateSurveyUnitDetail(unitDataDict: unitDataDict)
             // updateTenantAssignDetail(unitDataDict: unitDataDict)
@@ -414,6 +416,9 @@ class Utilities {
             
             updateTenantIdInTenantAssign(tenantDataDict: tenantDataDictonary)
             
+            updateTenantIdInCase(tenantDataDict: tenantDataDictonary)
+            updateTenantIdInAddCase(tenantDataDict: tenantDataDictonary)
+            
         }
         
         return isError
@@ -435,6 +440,29 @@ class Utilities {
        
             updateIssueIdInCoreData(issueDataDict: issueDataDictonary)
 
+        }
+        
+        return isError
+        
+        
+    }
+    
+    class func parseCaseResponse(jsonObject: Dictionary<String, AnyObject>)->Bool{
+        
+        guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let caseDataDictonary = jsonObject["caseData"] as? [String: AnyObject] else { return true }
+        
+        
+        
+        
+        if(isError == false){
+            
+            updateCaseIdInAddCase(caseDataDict: caseDataDictonary)
+            
+            updateCaseIdInCoreData(caseDataDict: caseDataDictonary)
+            updateCaseIdInIssue(caseDataDict: caseDataDictonary)
+            
         }
         
         return isError
@@ -509,6 +537,8 @@ class Utilities {
         
     }
     
+    
+   
  
     
     class func updateIssueIdInCoreData(issueDataDict:[String:AnyObject]){
@@ -541,6 +571,88 @@ class Utilities {
         
         
     }
+
+    
+    
+    class func updateCaseIdInAddCase(caseDataDict: [String:AnyObject]){
+        
+        let iOSCaseId = caseDataDict["iOSCaseId"] as! String?
+
+        
+        if(SalesforceConnection.caseId == iOSCaseId){
+            SalesforceConnection.caseId =  iOSCaseId!
+            print("caseId updated")
+        }
+        
+          let caseResults = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "caseId == %@" ,predicateValue: iOSCaseId, isPredicate:true) as! [AddCase]
+        
+        if(caseResults.count > 0){
+            
+            var updateObjectDic:[String:String] = [:]
+            
+            updateObjectDic["actionStatus"] = ""
+            
+             ManageCoreData.updateRecord(salesforceEntityName: "AddCase", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: iOSCaseId,isPredicate: true)
+            
+            print("updateCaseIdInAddCase: \(iOSCaseId)")
+        }
+        
+    }
+    
+    
+    class func updateCaseIdInCoreData(caseDataDict:[String:AnyObject]){
+        
+        let iOSCaseId = caseDataDict["iOSCaseId"] as! String?
+        let caseId = caseDataDict["caseId"] as! String?
+        let caseNumber = caseDataDict["caseNo"] as! String?
+        
+    
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "caseId == %@" ,predicateValue: iOSCaseId, isPredicate:true) as! [Cases]
+        
+        
+        
+        if(caseResults.count > 0){
+            
+            var updateObjectDic:[String:String] = [:]
+            updateObjectDic["caseId"] = caseId
+            updateObjectDic["caseNo"] = caseNumber
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: iOSCaseId,isPredicate: true)
+            
+            print("updateCaseIdInCoreData")
+            
+        }
+        
+        
+    }
+    
+    class func updateCaseIdInIssue(caseDataDict:[String:AnyObject]){
+        
+        let iOSCaseId = caseDataDict["iOSCaseId"] as! String?
+        let caseId = caseDataDict["caseId"] as! String?
+        
+      
+        
+        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "caseId == %@" ,predicateValue: iOSCaseId, isPredicate:true) as! [Issues]
+        
+        
+        
+        if(issueResults.count > 0){
+            
+            var updateObjectDic:[String:String] = [:]
+            updateObjectDic["caseId"] = caseId
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: iOSCaseId,isPredicate: true)
+            
+             print("updateCaseIdInIssue")
+            
+            
+        }
+
+        
+        
+    }
+   
     
     
     class func updateTenantIdInCoreData(tenantDataDict:[String:AnyObject]){
@@ -574,6 +686,8 @@ class Utilities {
         
     }
     
+    
+    
     class func updateTenantIdInTenantAssign(tenantDataDict:[String:AnyObject]){
         
         let iosTenantId = tenantDataDict["iOSTenantId"] as! String?
@@ -594,6 +708,52 @@ class Utilities {
             
         }
     }
+    
+    class func updateTenantIdInCase(tenantDataDict:[String:AnyObject]){
+        
+        let iosTenantId = tenantDataDict["iOSTenantId"] as! String?
+        let tenantId = tenantDataDict["tenantId"] as! String?
+        
+        
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "contactId == %@" ,predicateValue: iosTenantId, isPredicate:true) as! [Cases]
+        
+        
+        
+        if(caseResults.count > 0){
+            
+            var updateObjectDic:[String:String] = [:]
+            updateObjectDic["contactId"] = tenantId
+            
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@", predicateValue: iosTenantId,isPredicate: true)
+            
+        }
+    }
+    
+    
+    class func updateTenantIdInAddCase(tenantDataDict:[String:AnyObject]){
+        
+        let iosTenantId = tenantDataDict["iOSTenantId"] as! String?
+        let tenantId = tenantDataDict["tenantId"] as! String?
+        
+        
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "clientId == %@" ,predicateValue: iosTenantId, isPredicate:true) as! [AddCase]
+        
+        
+        
+        if(caseResults.count > 0){
+            
+            var updateObjectDic:[String:String] = [:]
+            updateObjectDic["clientId"] = tenantId
+            
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "AddCase", updateKeyValue: updateObjectDic, predicateFormat: "clientId == %@", predicateValue: iosTenantId,isPredicate: true)
+            
+        }
+    }
+
+    
+    
     
     class func updateSyncDate(assignmentLocUnitId:String){
         
@@ -744,6 +904,32 @@ class Utilities {
         
     }
     
+    class func updateCases(unitDataDict:[String:AnyObject]){
+        
+        let locUnitId = unitDataDict["unitId"] as! String?
+        let locAssignmentUnitId = unitDataDict["assignmentLocUnitId"] as! String?
+        let iosLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
+        let iosAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
+        
+        
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@",predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate:true) as! [Cases]
+        
+        
+        
+        if(caseResults.count > 0){
+            
+            
+            var updateObjectDic:[String:String] = [:]
+            updateObjectDic["unitId"] = locUnitId
+            updateObjectDic["assignmentLocUnitId"] = locAssignmentUnitId
+            
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@ AND assignmentLocUnitId ==%@", predicateValue: iosLocUnitId,predicateValue2: iosAssignmentLocUnitId,isPredicate: true)
+            
+            print("Cases updated")
+        }
+        
+    }
     
     
     
@@ -878,7 +1064,8 @@ class Utilities {
                                         
                                     }
                                     else{
-                                        DownloadESRILayers.RefreshData()
+                                         SVProgressHUD.dismiss()
+                                        //DownloadESRILayers.RefreshData()
                                     }
                                     
                                     

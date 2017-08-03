@@ -682,6 +682,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             else
             {
                 cell.sync.isHidden = false
+                cell.sync.image = nil
                // cell.sync.image = UIImage(named: "transperntImg")
 
                 
@@ -694,6 +695,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             else
             {
                 cell.surveyStatus.isHidden = false
+                cell.surveyStatus.image = nil
                 //cell.surveyStatus.image = UIImage(named: "transperntImg")
             }
             
@@ -723,6 +725,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             else
             {   cell.attempt.isHidden = false
+                cell.attempt.image = nil
                 //cell.attempt.image = UIImage(named: "transperntImg")
             }
             
@@ -739,7 +742,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             else
             {
-                cell.attempt.isHidden = false
+                cell.contact.isHidden = false
+                cell.contact.image = nil
                 //cell.contact.image = UIImage(named: "transperntImg")
             }
             

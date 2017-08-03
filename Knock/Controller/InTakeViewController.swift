@@ -52,6 +52,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     var caseDataArray = [CaseDataStruct]()
     
      var selectedClientId:String = ""
+    var selectedClientName:String = ""
      var selectedCaseId:String = ""
     
     override func viewDidLoad() {
@@ -212,7 +213,6 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         let indexRow = (sender as AnyObject).tag
         
         SalesforceConnection.currentTenantId =  clientDataArray[indexRow!].clientId
-         SalesforceConnection.currentTenantName =  clientDataArray[indexRow!].name
         
         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
         
@@ -293,6 +293,10 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
 
         }
         else{
+            SalesforceConnection.currentTenantId = selectedClientId
+            
+            SalesforceConnection.currentTenantName =  selectedClientName
+            
             self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
         }
         
@@ -432,6 +436,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
             
             selectedClientId = clientDataArray[indexPath.row].clientId
+            selectedClientName = clientDataArray[indexPath.row].name
             
             // tableView.deselectRow(at: indexPath, animated: true)
         }
