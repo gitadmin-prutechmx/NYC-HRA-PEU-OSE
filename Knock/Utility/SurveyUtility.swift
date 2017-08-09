@@ -12,6 +12,8 @@ class SurveyUtility {
     
     static var navigationController:UINavigationController? = nil
     
+    static var sourceViewController:UIViewController? = nil
+    
     class func showSurvey(){
         
         let surveyQuestionResults =
@@ -230,18 +232,100 @@ class SurveyUtility {
     class func showSurveyQuestions(){
         
         
-        Utilities.SurveyOutput = [:]
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        
+        if let surveyResponse = getSurveyFromCoreData(){
+            
+            Utilities.SurveyOutput = (surveyResponse.surveyQuestionRes! as NSObject) as! [String : SurveyResult]
+            
+            
+            
+            Utilities.surveyQuestionArrayIndex = Int(surveyResponse.surveyQuestionIndex)
+            
+        }
+        else{
+            
+            Utilities.SurveyOutput = [:]
+            
+            Utilities.surveyQuestionArrayIndex = 0
+            
+        }
+        
         Utilities.answerSurvey = ""
+        
+        if(Utilities.surveyQuestionArrayIndex == Utilities.totalSurveyQuestions){
+            
+            Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+            
+            let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
+            
+            
+            SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: sourceViewController, destinationVC: surveySubmitVC)
+            
+        }
+            
+        else{
+            
+            
+            
+            
+            Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex + 1 //Not use this time
+            
+            let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
+            
+            if(objSurveyQues?.questionType == "Single Select"){
+                
+                let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
+                
+                
+                
+                
+                
+                TransitionVC(subType: kCATransitionFromRight, sourceVC: sourceViewController, destinationVC: surveyRadioButtonVC)
+                
+                
+                //  navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
+                
+                
+            }
+            else if(objSurveyQues?.questionType == "Multi Select"){
+                
+                let surveyMultiButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyMultiOptionVCIdentifier") as! SurveyMultiOptionViewController
+                
+                TransitionVC(subType: kCATransitionFromRight, sourceVC: sourceViewController, destinationVC: surveyMultiButtonVC)
+                
+                // navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
+                
+                
+            }
+            else if(objSurveyQues?.questionType == "Text Area"){
+                
+                let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
+                
+                TransitionVC(subType: kCATransitionFromRight, sourceVC: sourceViewController, destinationVC: surveyTextFieldVC)
+                
+                //navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+                
+                
+                /*  let surveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("surveyTextFiedVCIdentifier") as! SurveyTextFieldViewController
+                 
+                 self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+                 
+                 */
+            }
+        }
+        
+        
+    }
+    
+    
+    class func goToPreviousQuestion(sourceVC:UIViewController?){
         
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        Utilities.surveyQuestionArrayIndex = 0
-        
-        
-        //SalesforceRestApi.surveyQuestionArrayIndex = SalesforceRestApi.surveyQuestionArrayIndex + 1
-        
-        Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex + 1
         
         let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
         
@@ -250,9 +334,9 @@ class SurveyUtility {
             let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
             
             
-            //presentDetail(surveyRadioButtonVC)
+            //   navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
             
-            navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
+            TransitionVC(subType: kCATransitionFromLeft, sourceVC: sourceVC, destinationVC: surveyRadioButtonVC)
             
             
         }
@@ -260,7 +344,11 @@ class SurveyUtility {
             
             let surveyMultiButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyMultiOptionVCIdentifier") as! SurveyMultiOptionViewController
             
-            navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
+            
+            // navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
+            
+            TransitionVC(subType: kCATransitionFromLeft, sourceVC: sourceVC, destinationVC: surveyMultiButtonVC)
+            
             
             
         }
@@ -268,19 +356,154 @@ class SurveyUtility {
             
             let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
             
-            navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+            // navigationController?.pushViewController(surveyTextFieldVC, animated: true)
             
+            TransitionVC(subType: kCATransitionFromLeft, sourceVC: sourceVC, destinationVC: surveyTextFieldVC)
             
-            /*  let surveyTextFieldVC = storyboard.instantiateViewControllerWithIdentifier("surveyTextFiedVCIdentifier") as! SurveyTextFieldViewController
-             
-             self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
-             
-             */
         }
+        
+        
+        
         
         
     }
     
+    
+    class func TransitionVC(subType:String,sourceVC:UIViewController?,destinationVC:UIViewController?){
+        
+        let transition = CATransition()
+        transition.duration = 0.4
+        transition.type = kCATransitionPush
+        
+        
+        transition.subtype = subType//kCATransitionFromLeft
+        
+        let destinationNavVC = UINavigationController(rootViewController: destinationVC!)
+        
+        sourceVC?.view.window!.layer.add(transition, forKey: kCATransition)
+        
+        sourceVC?.present(destinationNavVC, animated: false, completion: nil)
+        
+    }
+    
+    
+    class func getSurveyFromCoreData() -> SurveyResponse?{
+        
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: "InProgress", isPredicate:true) as! [SurveyResponse]
+        
+        if(surveyResResultsArr.count > 0){
+            return surveyResResultsArr[0]
+        }
+        
+        return nil
+    }
+    
+    
+    class func saveInProgressSurveyToCoreData(){
+        
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: "InProgress", isPredicate:true) as! [SurveyResponse]
+        
+        if(surveyResResultsArr.count > 0){
+            updateSurveyRes()
+        }
+        else{
+            saveSurveyRes()
+        }
+        
+    }
+    
+    class func saveSurveyRes(){
+        
+        let surveyResponseObject = SurveyResponse(context: context)
+        
+        surveyResponseObject.surveyId = SalesforceConnection.surveyId
+        
+        surveyResponseObject.unitId = SalesforceConnection.unitId
+        surveyResponseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
+        
+        surveyResponseObject.actionStatus = "InProgress"
+        
+        surveyResponseObject.surveyQuestionIndex = Int64(Utilities.surveyQuestionArrayIndex)
+        
+        surveyResponseObject.surveyQuestionRes = Utilities.SurveyOutput as NSObject?
+        
+        // Serialized data
+        //let data = NSKeyedArchiver.ar
+        
+        appDelegate.saveContext()
+        
+    }
+    
+    class func updateSurveyRes(){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["surveyId"] = SalesforceConnection.surveyId as AnyObject?
+        
+        updateObjectDic["surveyQuestionIndex"] = Int64(Utilities.surveyQuestionArrayIndex) as AnyObject?
+        
+        
+        updateObjectDic["surveyQuestionRes"] = Utilities.SurveyOutput as NSObject?
+        
+        //  updateObjectDic["surveySignature "] =
+        
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId,isPredicate: true)
+        
+        
+        
+    }
+    
+    class func SwitchNewSurvey(vc:UIViewController){
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let chooseSurveyVC = storyboard.instantiateViewController(withIdentifier: "chooseSurveyIdentifier") as! ChooseSurveyViewController
+        
+        
+        // SurveyUtility.navigationController = self.navigationController!
+        
+        SurveyUtility.sourceViewController = vc
+        
+        
+        let completionHandler:(ChooseSurveyViewController)->Void = { chooseSurveyVC in
+            
+            ManageCoreData.deleteSurveyResponseRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
+            
+            SurveyUtility.showSurvey()
+            
+        }
+        
+        
+        chooseSurveyVC.completionHandler = completionHandler
+        
+        
+        let navigationController = UINavigationController(rootViewController: chooseSurveyVC)
+        
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        
+        
+        vc.present(navigationController, animated: true, completion: nil)
+        
+        
+        
+    }
+    
+    class func InTake(vc:UIViewController){
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let inTakeVC = storyboard.instantiateViewController(withIdentifier: "inTakeIdentifier") as! InTakeViewController
+        
+        
+        
+        
+        let navigationController = UINavigationController(rootViewController: inTakeVC)
+        
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        
+        
+        vc.present(navigationController, animated: true, completion: nil)
+    }
     
     
 }

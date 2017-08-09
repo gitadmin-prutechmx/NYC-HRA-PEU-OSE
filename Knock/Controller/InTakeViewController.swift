@@ -29,6 +29,8 @@ struct CaseDataStruct
     var caseNo : String = ""
     var contactId:String = ""
     var contacName : String = ""
+    var caseStatus:String = ""
+    var caseOwnerId:String = ""
     
 }
 
@@ -51,9 +53,10 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     var clientDataArray = [ClientUnitDataStruct]()
     var caseDataArray = [CaseDataStruct]()
     
-     var selectedClientId:String = ""
+    var selectedClientId:String = ""
     var selectedClientName:String = ""
-     var selectedCaseId:String = ""
+    var selectedCaseId:String = ""
+    var selectedCaseNo:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,6 +110,13 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        
+        selectedClientId = ""
+        selectedClientName = ""
+        selectedCaseId = ""
+        selectedCaseNo = ""
+ 
+        
         if(Utilities.currentSurveyInTake == "Case"){
             segmentedOutlet.selectedSegmentIndex = 1
             showCaseView()
@@ -117,11 +127,6 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             showClientView()
         }
         
-        
-        //populateClientData()
-        
-        //populateCaseData()
-
 
     }
     
@@ -136,9 +141,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             for caseData in caseResults{
                 
-                
-                
-                let objectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: caseData.caseId!, caseNo: caseData.caseNo!, contactId: caseData.contactId!, contacName: caseData.contactName!)
+                let objectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: caseData.caseId!, caseNo: caseData.caseNo!, contactId: caseData.contactId!, contacName: caseData.contactName!,caseStatus:caseData.caseStatus!,caseOwnerId:caseData.caseOwnerId!)
                 
                 caseDataArray.append(objectCaseStruct)
                 
@@ -217,15 +220,36 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
         
     }
+    @IBAction func btnEditAction(_ sender: Any) {
+        let indexRow = (sender as AnyObject).tag
+        
+        SalesforceConnection.caseId =  caseDataArray[indexRow!].caseId
+        SalesforceConnection.caseNumber = caseDataArray[indexRow!].caseNo
+        
+         SalesforceConnection.currentTenantId =  caseDataArray[indexRow!].contactId
+        
+        Utilities.caseActionStatus = "Edit"
+        
+        self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
+        
+      
+    }
     
-    @IBAction func btnIssueAction(_ sender: Any) {
+    @IBAction func btnViewAction(_ sender: Any) {
         
         let indexRow = (sender as AnyObject).tag
         
         SalesforceConnection.caseId =  caseDataArray[indexRow!].caseId
+        SalesforceConnection.caseNumber = caseDataArray[indexRow!].caseNo
         
-        self.performSegue(withIdentifier: "showIssueIdentifier", sender: nil)
+        
+        Utilities.caseActionStatus = "View"
+        
+        self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
+        
+       
     }
+   
     
 
     
@@ -257,7 +281,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     
-    func addRightBarButton(){
+    func addRightBarButtonOnClient(){
         
         self.navigationItem.rightBarButtonItem =  nil
         
@@ -266,9 +290,18 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
     }
     
+    func addRightBarButtonOnCase(){
+        
+        self.navigationItem.rightBarButtonItem =  nil
+        
+        let rightBarButtonItem = UIBarButtonItem(title: "Go to issue", style: .plain, target: self, action: #selector(InTakeViewController.issueAction))
+        
+        self.navigationItem.rightBarButtonItem  = rightBarButtonItem
+    }
+    
     func showClientView(){
 
-        addRightBarButton()
+        addRightBarButtonOnClient()
         populateClientData()
         self.viewTenent.isHidden = false
         self.viewCase.isHidden = true
@@ -276,10 +309,33 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func showCaseView(){
-        self.navigationItem.rightBarButtonItem =  nil
+        addRightBarButtonOnCase()
         populateCaseData()
         self.viewTenent.isHidden = true
         self.viewCase.isHidden = false
+    }
+    
+    func issueAction(){
+        
+        if(selectedCaseId == ""){
+            viewCase.shake()
+            self.view.makeToast("Please select case. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                
+            }
+            
+        }
+        else{
+            
+            SalesforceConnection.caseId = selectedCaseId
+            SalesforceConnection.caseNumber = selectedCaseNo
+            
+         
+            SalesforceConnection.currentTenantName =  selectedClientName
+            
+            
+            self.performSegue(withIdentifier: "showIssueIdentifier", sender: nil)
+        }
     }
     
     func nextAction(){
@@ -296,6 +352,12 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             SalesforceConnection.currentTenantId = selectedClientId
             
             SalesforceConnection.currentTenantName =  selectedClientName
+            
+            SalesforceConnection.caseId =  ""
+            
+            SalesforceConnection.caseNumber = ""
+            
+            Utilities.caseActionStatus = "New"
             
             self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
         }
@@ -397,11 +459,23 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         else{
              let cell = tableView.dequeueReusableCell(withIdentifier: "caseCell", for: indexPath) as! CaseTableViewCell
             
+            cell.caseView.backgroundColor = UIColor.white
+            cell.contentView.backgroundColor = UIColor.clear
             
             cell.caseNo.text = caseDataArray[indexPath.row].caseNo
             cell.contactName.text = caseDataArray[indexPath.row].contacName
             cell.caseId.text = caseDataArray[indexPath.row].caseId
-            cell.issueBtn.tag = indexPath.row
+            cell.btnEdit.tag = indexPath.row
+            cell.btnView.tag = indexPath.row
+            
+            if(caseDataArray[indexPath.row].caseStatus == "Closed" || SalesforceConnection.salesforceUserId != caseDataArray[indexPath.row].caseOwnerId){
+                cell.editImg.isHidden = true
+                cell.btnEdit.isEnabled = false
+            }
+            else{
+                cell.editImg.isHidden = false
+                cell.btnEdit.isEnabled = true
+            }
             
             return cell
         }
@@ -413,13 +487,13 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if(tableView == tblTenantView){
-            let indexPathArray = tableView.indexPathsForVisibleRows
+            let indexPathArray = tblTenantView.indexPathsForVisibleRows
             
             for indexPath in indexPathArray!{
                 
-                let cell = tableView.cellForRow(at: indexPath) as! TenantViewCell
+                let cell = tblTenantView.cellForRow(at: indexPath) as! TenantViewCell
                 
-                if tableView.indexPathForSelectedRow != indexPath {
+                if tblTenantView.indexPathForSelectedRow != indexPath {
                     
                     cell.tenantView.backgroundColor = UIColor.white
                     cell.contentView.backgroundColor = UIColor.clear
@@ -442,30 +516,32 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         else{
             
-//            let indexPathArray = tableView.indexPathsForVisibleRows
-//            
-//            for indexPath in indexPathArray!{
-//                
-//                let cell = tableView.cellForRow(at: indexPath) as! CaseTableViewCell
-//                
-//                if tableView.indexPathForSelectedRow != indexPath {
-//                    
-//                    cell.caseView.backgroundColor = UIColor.white
-//                    cell.contentView.backgroundColor = UIColor.clear
-//                    
-//                }
-//                else{
-//                    
-//                    cell.caseView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-//                    
-//                    cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-//                    
-//                    
-//                }
-//            }
-//            
-//            selectedCaseId = caseDataArray[indexPath.row].caseId
+            let indexPathArray = tblCaseview.indexPathsForVisibleRows
             
+            for indexPath in indexPathArray!{
+                
+                let cell = tblCaseview.cellForRow(at: indexPath) as! CaseTableViewCell
+                
+                if tblCaseview.indexPathForSelectedRow != indexPath {
+                    
+                    cell.caseView.backgroundColor = UIColor.white
+                    cell.contentView.backgroundColor = UIColor.clear
+                    
+                }
+                else{
+                    
+                    cell.caseView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+                    
+                    cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+                    
+                    
+                }
+            }
+            
+            selectedCaseId = caseDataArray[indexPath.row].caseId
+            selectedCaseNo = caseDataArray[indexPath.row].caseNo
+            
+            selectedClientName = caseDataArray[indexPath.row].contacName
         }
         
     }

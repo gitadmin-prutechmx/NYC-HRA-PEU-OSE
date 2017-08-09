@@ -35,48 +35,48 @@
                     <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" distribution="equalCentering" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="dL1-oQ-nV5">
                         <rect key="frame" x="10" y="4.5" width="455" height="57"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Apt 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klH-4k-bqD" userLabel="unit">
-                                <rect key="frame" x="0.0" y="19" width="40" height="19"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" text="Apt 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klH-4k-bqD" userLabel="unit">
+                                <rect key="frame" x="0.0" y="19" width="54.5" height="19"/>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7Ux-WN-nf0" userLabel="attempt">
-                                <rect key="frame" x="65" y="13.5" width="30" height="30"/>
+                                <rect key="frame" x="71" y="13.5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="LkS-D7-c8s"/>
                                     <constraint firstAttribute="height" constant="30" id="duY-z7-Zyv"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" translatesAutoresizingMaskIntoConstraints="NO" id="GUU-zN-N79" userLabel="contact">
-                                <rect key="frame" x="125" y="13.5" width="30" height="30"/>
+                                <rect key="frame" x="130" y="13.5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="0Sb-vm-Ozy"/>
                                     <constraint firstAttribute="height" constant="30" id="blD-xB-UkS"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uac-Oh-NDt" userLabel="surveyStatus">
-                                <rect key="frame" x="185" y="13.5" width="30" height="30"/>
+                                <rect key="frame" x="189" y="13.5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="icz-EC-T8J"/>
                                     <constraint firstAttribute="height" constant="30" id="pHg-5a-QMf"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="123" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgA-Mf-EqL" userLabel="noOfTenants">
-                                <rect key="frame" x="246" y="19" width="28.5" height="19"/>
+                                <rect key="frame" x="249" y="19" width="28.5" height="19"/>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mWW-LP-UNY" userLabel="sync">
-                                <rect key="frame" x="305" y="13.5" width="30" height="30"/>
+                                <rect key="frame" x="307" y="13.5" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="6eI-dW-Op9"/>
                                     <constraint firstAttribute="height" constant="30" id="Elv-FV-Rsd"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07/12/2007 9:000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkO-AS-J7R" userLabel="syncDate">
-                                <rect key="frame" x="353" y="9.5" width="54" height="38"/>
+                                <rect key="frame" x="354" y="9.5" width="54" height="38"/>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

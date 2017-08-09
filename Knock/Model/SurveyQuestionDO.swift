@@ -73,7 +73,7 @@ class SkipLogicParentChild{
     }
 }
 
-class SurveyResult{
+class SurveyResult:NSObject,NSCoding{
     
     var questionId:String!
     
@@ -92,6 +92,27 @@ class SurveyResult{
         self.multiOption = multiOption
         
     }
+    
+    func encode(with aCoder: NSCoder) {
+        // super.encodeWithCoder(aCoder) is optional, see notes below
+        aCoder.encode(self.questionId, forKey: "questionId")
+        aCoder.encode(self.questionType, forKey: "questionType")
+        aCoder.encode(self.getDescription, forKey: "getDescription")
+        aCoder.encode(self.selectedAnswer, forKey: "selectedAnswer")
+        aCoder.encode(self.multiOption, forKey: "multiOption")
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        // super.init(coder:) is optional, see notes below
+        self.questionId = aDecoder.decodeObject(forKey: "questionId") as! String
+        self.questionType = aDecoder.decodeObject(forKey: "questionType") as! String
+        self.getDescription = aDecoder.decodeObject(forKey: "getDescription") as! String
+        self.selectedAnswer = aDecoder.decodeObject(forKey: "selectedAnswer") as! String
+        self.multiOption = aDecoder.decodeObject(forKey: "multiOption") as! [String]
+    }
+    
+   
 }
 
 

@@ -15,6 +15,7 @@ struct IssueDataStruct
     var issueId:String = ""
     var issueNo : String = ""
     var issueType : String = ""
+    var contactName:String = ""
     
 }
 
@@ -38,6 +39,8 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.tblIssueList.tableFooterView = UIView()
         
         self.fullAddressLbl.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
+        
+        self.navigationItem.title =  SalesforceConnection.caseNumber
         
         
         NotificationCenter.default.addObserver(self, selector:#selector(IssueViewController.UpdateIssueView), name: NSNotification.Name(rawValue: "UpdateIssueView"), object:nil
@@ -86,7 +89,7 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 
                 
                 
-                let objectIssueStruct:IssueDataStruct = IssueDataStruct(caseId: issueData.caseId!, issueId: issueData.issueId!, issueNo: issueData.issueNo!, issueType: issueData.issueType!)
+                let objectIssueStruct:IssueDataStruct = IssueDataStruct(caseId: issueData.caseId!, issueId: issueData.issueId!, issueNo: issueData.issueNo!, issueType: issueData.issueType!,contactName:issueData.contactName!)
                 
                 issueDataArray.append(objectIssueStruct)
                 
@@ -136,6 +139,7 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.lblIssueType.text = issueDataArray[indexPath.row].issueType
             cell.lblIssueId.text = issueDataArray[indexPath.row].issueId
             cell.issueBtn.tag = indexPath.row
+            cell.lblContactName.text = issueDataArray[indexPath.row].contactName
         
             return cell
         

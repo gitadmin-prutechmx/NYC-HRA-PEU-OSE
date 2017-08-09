@@ -15,11 +15,19 @@ import Toast_Swift
 
 class Utilities {
     
-    static var currentApiName:String = ""
-    static var selectedDateTimeDictYYYYMMDD:[String:String?] = [:]
-    static var selectedDateTimeDictInMMDDYYYY:[String:String?] = [:]
+    static var caseActionStatus:String = ""
     
-    static var selectedDatePicker:[String:Date] = [:]
+    static var caseConfigDict:[String:AnyObject] = [:]
+    
+   // static var selectedDateTimeDictYYYYMMDD:[String:String?] = [:]
+   // static var selectedDateTimeDictInMMDDYYYY:[String:String?] = [:]
+    
+   // static var selectedDatePicker:[String:Date] = [:]
+
+    
+    
+    static var currentApiName:String = ""
+    
     
     static var currentSurveyInTake:String = "Client"
     
@@ -59,6 +67,8 @@ class Utilities {
     static var prevSkipLogicParentChildDict : [String:[SkipLogic]] = [:]
     
     static var isSubmitSurvey:Bool = false
+    static var isExitFromSurvey:Bool = false
+    
     static var isEditLoc:Bool = false
     static var CanvassingStatus:String = ""
     static var isRefreshBtnClick:Bool = false
@@ -527,7 +537,7 @@ class Utilities {
             
             var updateObjectDic:[String:String] = [:]
             
-            updateObjectDic["actionStatus"] = ""
+            updateObjectDic["actionStatus"] = "Done"
             
             ManageCoreData.updateRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: assignmentLocUnitId,isPredicate: true)
             
@@ -1682,28 +1692,46 @@ class Utilities {
                         
                         for casesInfo in casesInfoResults {
                             
+                             guard let caseResults = casesInfo["caseList"] as? [[String: AnyObject]]  else { break }
                         
-                            let caseObject = Cases(context: context)
-                            caseObject.caseId = casesInfo["caseId"] as? String  ?? ""
-                            caseObject.contactId = casesInfo["contactId"] as? String  ?? ""
-                            caseObject.contactName = casesInfo["contactName"] as? String  ?? ""
-                            caseObject.caseNo = casesInfo["caseNumber"] as? String  ?? ""
-                            caseObject.unitId = unitObject.id
-                            caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId
+                            for caseData in caseResults{
+                                
+                                let caseObject = Cases(context: context)
+                                
+                                caseObject.caseId = caseData["Id"] as? String  ?? ""
+                               
+                                caseObject.caseNo = caseData["CaseNumber"] as? String  ?? ""
+                                caseObject.caseStatus = caseData["Status"] as? String  ?? ""
+                                caseObject.caseOwnerId = caseData["OwnerId"] as? String  ?? ""
+                                caseObject.unitId = unitObject.id
+                                caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId
+                                
+
+                                
+                                let contactResult = caseData["Contact"] as? [String: AnyObject]
+                                
+                                caseObject.contactId = contactResult?["Id"] as? String  ?? ""
+                                caseObject.contactName = contactResult?["Name"] as? String  ?? ""
+                                
+                                caseObject.caseDynamic = caseData as NSObject
+                               
+                                appDelegate.saveContext()
+                            }
                             
-                            appDelegate.saveContext()
                             
-                             guard let issueResults = casesInfo["issueList"] as? [[String: AnyObject]]  else { break }
+                            guard let issueResults = casesInfo["issueList"] as? [[String: AnyObject]]  else { break }
                             
                             for issueInfo in issueResults {
                                 
                                 let issueObject = Issues(context: context)
-                                issueObject.caseId = caseObject.caseId
+                                issueObject.caseId = issueInfo["caseId"] as? String  ?? ""
                                 issueObject.actionStatus = ""
                                 issueObject.issueNo = issueInfo["issueNumber"] as? String  ?? ""
                                 issueObject.issueId = issueInfo["issueId"] as? String  ?? ""
-                                 issueObject.issueType = issueInfo["issueType"] as? String  ?? ""
+                                issueObject.issueType = issueInfo["issueType"] as? String  ?? ""
                                 issueObject.notes = issueInfo["issueNotes"] as? String  ?? ""
+                                issueObject.contactName = issueInfo["contactName"] as? String  ?? ""
+                                
                                 appDelegate.saveContext()
                                 
                             }

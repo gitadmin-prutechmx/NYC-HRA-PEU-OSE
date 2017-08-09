@@ -161,6 +161,70 @@ class ManageCoreData{
     }
     
     
+    static func updateAnyObjectRecord(salesforceEntityName:String,updateKeyValue:[String:AnyObject],predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,predicateValue4:String?=nil,predicateValue5:String?=nil,predicateValue6:String?=nil,isPredicate:Bool){
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
+        
+        if(isPredicate)
+        {
+            if(predicateValue2 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+                
+            }
+            else if(predicateValue3 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
+            }
+            else if(predicateValue4 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!)
+            }
+            else if(predicateValue5 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!)
+            }
+            else if(predicateValue6 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!,predicateValue5!)
+            }
+            else if(predicateValue6 != nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!,predicateValue4!,predicateValue5!,predicateValue6!)
+            }
+            
+        }
+        
+        // fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        
+        do
+        {
+            let salesforceConfigData = try context.fetch(fetchRequest)
+            if salesforceConfigData.count == 1
+            {
+                let objectUpdate = salesforceConfigData[0] as! NSManagedObject
+                
+                for (key,value) in updateKeyValue{
+                    
+                    objectUpdate.setValue(value, forKey: key)
+                }
+                
+                
+                
+                do{
+                    
+                    try context.save()
+                }
+                catch
+                {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        catch
+        {
+            print(error.localizedDescription)
+        }
+        
+        
+        
+    }
+    
+    
     static func updateDate(salesforceEntityName:String,updateKeyValue:[String:AnyObject],predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
@@ -205,6 +269,39 @@ class ManageCoreData{
         
         
     }
+    
+    
+    static func deleteSurveyResponseRecord(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SurveyResponse")
+        
+        if(isPredicate){
+            fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        }
+       
+        //
+        
+        let result = try? context.fetch(fetchRequest)
+        
+        let resultData = result as! [SurveyResponse]
+        
+        for object in resultData {
+            context.delete(object)
+        }
+        
+        
+        do{
+            
+            try context.save()
+        }
+        catch
+        {
+            print(error.localizedDescription)
+        }
+        
+        
+    }
+    
     
     
     
@@ -255,7 +352,10 @@ class ManageCoreData{
         
         DeleteAllRecords(salesforceEntityName: "AddCase")
         
-        DeleteAllRecords(salesforceEntityName: "SurveyResponse")
+        
+        deleteSurveyResponseRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "actionStatus == %@", predicateValue: "Done", isPredicate: true)
+        
+        //DeleteAllRecords(salesforceEntityName: "SurveyResponse")
         
         //DeleteAllRecords(salesforceEntityName: "TenantAssign")
         DeleteAllRecords(salesforceEntityName: "EditUnit")

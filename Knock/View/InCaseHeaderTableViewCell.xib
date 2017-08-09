@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9V-af-ZYu">
-                        <rect key="frame" x="168" y="8" width="138" height="27"/>
+                        <rect key="frame" x="87" y="8" width="138" height="27"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="27" id="noY-Lt-2kn"/>
                         </constraints>
@@ -41,8 +41,8 @@
                 <constraints>
                     <constraint firstItem="BNH-PO-kgw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="G2V-Kr-84N"/>
                     <constraint firstItem="BNH-PO-kgw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Ohb-9i-0Gq"/>
-                    <constraint firstAttribute="trailing" secondItem="N9V-af-ZYu" secondAttribute="trailing" constant="14" id="Sw8-Mp-1ni"/>
-                    <constraint firstItem="N9V-af-ZYu" firstAttribute="leading" secondItem="BNH-PO-kgw" secondAttribute="trailing" constant="20" id="avc-Vk-7fu"/>
+                    <constraint firstAttribute="trailing" secondItem="N9V-af-ZYu" secondAttribute="trailing" constant="95" id="Sw8-Mp-1ni"/>
+                    <constraint firstItem="N9V-af-ZYu" firstAttribute="leading" secondItem="BNH-PO-kgw" secondAttribute="trailing" constant="-61" id="avc-Vk-7fu"/>
                     <constraint firstItem="N9V-af-ZYu" firstAttribute="width" secondItem="BNH-PO-kgw" secondAttribute="width" id="bg0-Um-bCu"/>
                     <constraint firstItem="N9V-af-ZYu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="cGG-cj-wEK"/>
                 </constraints>

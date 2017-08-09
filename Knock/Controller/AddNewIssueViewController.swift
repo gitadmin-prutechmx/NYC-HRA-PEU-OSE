@@ -249,6 +249,10 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         issueObject.notes = notes
         
         issueObject.actionStatus = "create"
+        
+        issueObject.contactName = SalesforceConnection.currentTenantName
+        
+    
        
         
         appDelegate.saveContext()

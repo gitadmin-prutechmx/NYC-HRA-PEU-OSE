@@ -43,7 +43,11 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+       self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         getDescriptionTextField.layer.borderColor = UIColor.gray.cgColor
         
@@ -145,6 +149,14 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         alertController.addAction(cancelAction)
         
         let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+            
+            Utilities.isExitFromSurvey = true
+            Utilities.isSubmitSurvey = false
+
+            
+            SurveyUtility.saveInProgressSurveyToCoreData()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+          
             self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
             //Do some other stuff
         }
@@ -179,53 +191,14 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     
     @IBAction func switchSurvey(_ sender: Any) {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let chooseSurveyVC = storyboard.instantiateViewController(withIdentifier: "chooseSurveyIdentifier") as! ChooseSurveyViewController
-        
-        
-        SurveyUtility.navigationController = self.navigationController!
-        
-        let completionHandler:(ChooseSurveyViewController)->Void = { chooseSurveyVC in
-            
-            //self.showSurveyWizard()
-            SurveyUtility.showSurvey()
-            print("completed for \(chooseSurveyVC)")
-        }
-        
-        
-        chooseSurveyVC.completionHandler = completionHandler
-        
-        
-        
-        
-        
-        
-        let navigationController = UINavigationController(rootViewController: chooseSurveyVC)
-        
-        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
-        
-        
-        self.present(navigationController, animated: true, completion: nil)
+       SurveyUtility.SwitchNewSurvey(vc: self)
         
     }
     
     
     @IBAction func inTake(_ sender: Any) {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let inTakeVC = storyboard.instantiateViewController(withIdentifier: "inTakeIdentifier") as! InTakeViewController
-        
-        
-        
-        
-        let navigationController = UINavigationController(rootViewController: inTakeVC)
-        
-        navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
-        
-        
-        self.present(navigationController, animated: true, completion: nil)
+        SurveyUtility.InTake(vc: self)
     }
     
     
@@ -348,8 +321,10 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                         let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
                         
                         
+                         SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
                         
-                        self.navigationController?.pushViewController(surveySubmitVC, animated: true)
+                        
+                        //self.navigationController?.pushViewController(surveySubmitVC, animated: true)
                         
                         
                         return
@@ -367,8 +342,11 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
             let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
             
             
+            SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
             
-            self.navigationController?.pushViewController(surveySubmitVC, animated: true)
+            
+            
+           // self.navigationController?.pushViewController(surveySubmitVC, animated: true)
             
             
             
@@ -402,8 +380,11 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                                 let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
                                 
                                 
+                                SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
+                        
                                 
-                                self.navigationController?.pushViewController(surveySubmitVC, animated: true)
+                                
+                               // self.navigationController?.pushViewController(surveySubmitVC, animated: true)
                                 
                                 return
                                 
@@ -476,8 +457,11 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                 
                 let surveyRadioButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyRadioButtonVCIdentifier") as! SurveyRadioOptionViewController
                 
+                SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveyRadioButtonVC)
                 
-                self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
+                
+                
+                //self.navigationController?.pushViewController(surveyRadioButtonVC, animated: true)
                 
                 
                 
@@ -487,7 +471,10 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                 
                 let surveyMultiButtonVC = storyboard.instantiateViewController(withIdentifier: "surveyMultiOptionVCIdentifier") as! SurveyMultiOptionViewController
                 
-                self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
+                SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveyMultiButtonVC)
+                
+                
+                //self.navigationController?.pushViewController(surveyMultiButtonVC, animated: true)
                 
                 
             }
@@ -498,7 +485,10 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                 
                 let surveyTextFieldVC = storyboard.instantiateViewController(withIdentifier: "surveyTextFiedVCIdentifier") as! SurveyTextViewController
                 
-                self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
+                
+                SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveyTextFieldVC)
+                
+               // self.navigationController?.pushViewController(surveyTextFieldVC, animated: true)
                 
                 
                 
@@ -574,9 +564,10 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
         
         
+        SurveyUtility.goToPreviousQuestion(sourceVC:self)
+
         
-        
-        self.navigationController?.popViewController(animated: true);
+        //self.navigationController?.popViewController(animated: true);
         
         
         

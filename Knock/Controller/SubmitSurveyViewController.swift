@@ -30,7 +30,14 @@ class SubmitSurveyViewController: UIViewController {
         
         // submitBtn.layer.cornerRadius = 5
         
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+
+        
+       // self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         // Do any additional setup after loading the view.
     }
@@ -47,6 +54,13 @@ class SubmitSurveyViewController: UIViewController {
         
         self.navigationItem.title = "Ready to Submit?"
         
+        let leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(SubmitSurveyViewController.backFromSubmitSurvey))
+        
+       //  let leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SubmitSurveyViewController.backFromSubmitSurvey))
+        
+        self.navigationItem.leftBarButtonItem  = leftBarButtonItem
+
+        
         let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SubmitSurveyViewController.exitFromSurvey))
         //#selector(self.exitFromSurvey(_:))
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
@@ -54,47 +68,7 @@ class SubmitSurveyViewController: UIViewController {
         
     }
     
-    func exitFromSurvey()
-    {
-        let msgtitle = "Message"
-        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to exit from survey", preferredStyle: .alert)
-        
-        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
-        
-        
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
-            //Do some stuff
-        }
-        alertController.addAction(cancelAction)
-        
-        let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
-            self.isexitSurvey = true
-            Utilities.isSubmitSurvey = false
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-            self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
-            //Do some other stuff
-        }
-        alertController.addAction(okAction)
-        
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-        
-        
-    }
-    
-    
-    @IBAction func submitSurvey(_ sender: Any) {
-        self.isexitSurvey = false
-        self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        
+    func backFromSubmitSurvey(){
         
         //handle SkipLogic
         let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
@@ -125,13 +99,93 @@ class SubmitSurveyViewController: UIViewController {
             
         }
         
+         SurveyUtility.goToPreviousQuestion(sourceVC:self)
         
-        
-        
-        // Utilities.currentSurveyPage = Utilities.surveyQuestionArrayIndex
-        
-        //Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
     }
+    
+    func exitFromSurvey()
+    {
+        let msgtitle = "Message"
+        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to exit from survey", preferredStyle: .alert)
+        
+        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
+        
+        
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+            //Do some stuff
+        }
+        alertController.addAction(cancelAction)
+        
+        let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+            
+            //self.isexitSurvey = true
+            
+            Utilities.isExitFromSurvey = true
+            Utilities.isSubmitSurvey = false
+            
+            Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex + 1
+            
+           // SurveyUtility.saveInProgressSurveyToCoreData()
+            
+           
+            self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
+            
+           // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
+            //Do some other stuff
+        }
+        alertController.addAction(okAction)
+        
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        
+        
+    }
+    
+    
+    @IBAction func submitSurvey(_ sender: Any) {
+        //self.isexitSurvey = false
+        Utilities.isExitFromSurvey = false
+        self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
+    }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        
+//        
+//        
+//        //handle SkipLogic
+//        let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
+//        
+//        
+//        if(Utilities.skipLogicParentChildDict[(objSurveyQues?.questionNumber)!] != nil){
+//            
+//            let arrayValue:[SkipLogic]  = Utilities.skipLogicParentChildDict[objSurveyQues!.questionNumber]!
+//            
+//            for object in arrayValue{
+//                
+//                if(Utilities.SurveyOutput[object.questionNumber] != nil){
+//                    let objectSurveyResult:SurveyResult =  Utilities.SurveyOutput[object.questionNumber]!
+//                    
+//                    //right now not handle multi select
+//                    if(objectSurveyResult.selectedAnswer == object.selectedAnswer){
+//                        
+//                        //skip question
+//                        
+//                        Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex - 1
+//                        
+//                        
+//                        
+//                    }
+//                }
+//                
+//            }
+//            
+//        }
+//        
+//    }
     
     
     
@@ -195,7 +249,16 @@ class SubmitSurveyViewController: UIViewController {
         //        print(surveyResponseStr)
         //
         
-        saveSurveyToCoreData()
+         let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: "InProgress", isPredicate:true) as! [SurveyResponse]
+        
+        if(surveyResResultsArr.count>0){
+            updateSurveyToCoreData()
+        }
+        else{
+             saveSurveyToCoreData()
+        }
+        
+       
         
         //fetchSurveyFromCoreData()
         
@@ -246,12 +309,33 @@ class SubmitSurveyViewController: UIViewController {
         surveyResponseObject.unitId = SalesforceConnection.unitId
         surveyResponseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
         
-        surveyResponseObject.actionStatus = "edit"
+        surveyResponseObject.actionStatus = "Complete"
         surveyResponseObject.surveySignature = base64String
         
         surveyResponseObject.surveyQuestionRes = questionArray as NSObject?
         
         appDelegate.saveContext()
+        
+    }
+    
+    func updateSurveyToCoreData(){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+         updateObjectDic["surveyId"] = SalesforceConnection.surveyId as AnyObject?
+        
+        updateObjectDic["surveyQuestionIndex"] = Int64(Utilities.surveyQuestionArrayIndex) as AnyObject?
+        
+        
+        updateObjectDic["surveyQuestionRes"] = questionArray as NSObject?
+        
+        updateObjectDic["actionStatus"] = "Complete" as AnyObject?
+        updateObjectDic["surveySignature"] = base64String as AnyObject?
+
+        
+        
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId,isPredicate: true)
+        
         
     }
     
@@ -337,6 +421,8 @@ class SubmitSurveyViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue!, sender: Any!) {
         
+        
+        
         if(segue.identifier == "UnwindBackFromSurveyIdentifier"){
             if let signatureImage = self.signatureView.getSignature(10) {
                 // Saving signatureImage from the line above to the Photo Roll.
@@ -356,9 +442,16 @@ class SubmitSurveyViewController: UIViewController {
                 
             }
             
-            if(isexitSurvey==false){
+            if(Utilities.isExitFromSurvey == false){
                 prepareSurveyData()
                 
+            }
+            else{
+                
+                SurveyUtility.saveInProgressSurveyToCoreData()
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+
             }
             
             

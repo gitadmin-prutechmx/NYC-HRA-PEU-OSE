@@ -207,7 +207,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         print("UpdateUnitView")
         
         if(Utilities.isSubmitSurvey){
-            updateSurveyStatus()
+            updateSurveyStatus(status:"Completed")
+        }
+        else{
+            updateSurveyStatus(status:"InProgress")
         }
         
         updateTableViewData()
@@ -240,18 +243,19 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     // var unitDataArray = [UnitsDataStruct]()
     
     
-    func updateSurveyStatus(){
+    func updateSurveyStatus(status:String?){
         var updateObjectDic:[String:String] = [:]
         
-        _ = Date()
-        let formatter = DateFormatter()
+//        _ = Date()
+//        let formatter = DateFormatter()
+//        
+//        formatter.dateFormat = "MM/dd/yyyy"
+//        
+//        
         
-        formatter.dateFormat = "MM/dd/yyyy"
         
+        updateObjectDic["surveyStatus"] = status
         
-        
-        
-        updateObjectDic["surveyStatus"] = "Completed"
         // updateObjectDic["syncDate"] = "Pending.."
         //updateObjectDic["syncDate"] = formatter.string(from: date)
         
@@ -261,7 +265,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         Utilities.isSubmitSurvey = false
-        
+        Utilities.isExitFromSurvey = false
         
         
     }
@@ -676,12 +680,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
             
             if(UnitDataArray[indexPath.row].syncDate != ""){
-                cell.sync.isHidden = false
                 cell.sync.image = UIImage(named: "Complete")
             }
             else
             {
-                cell.sync.isHidden = false
                 cell.sync.image = nil
                // cell.sync.image = UIImage(named: "transperntImg")
 
@@ -689,14 +691,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             
             if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
-                cell.surveyStatus.isHidden = false
                 cell.surveyStatus.image = UIImage(named: "Complete")
+            }
+            else if(UnitDataArray[indexPath.row].surveyStatus == "InProgress"){
+                cell.surveyStatus.image = UIImage(named: "InProgress")
             }
             else
             {
-                cell.surveyStatus.isHidden = false
                 cell.surveyStatus.image = nil
-                //cell.surveyStatus.image = UIImage(named: "transperntImg")
             }
             
             cell.unitId.text = UnitDataArray[indexPath.row].unitId
@@ -716,15 +718,13 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
 
             
             if(editUnitObject?.attempt == "Yes"){
-                cell.attempt.isHidden = false
                 cell.attempt.image = UIImage(named: "Complete")
             }
             else if(editUnitObject?.attempt == "No"){
-                cell.attempt.isHidden = false
                 cell.attempt.image = UIImage(named: "No")
             }
             else
-            {   cell.attempt.isHidden = false
+            {
                 cell.attempt.image = nil
                 //cell.attempt.image = UIImage(named: "transperntImg")
             }
@@ -732,17 +732,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             
             if(editUnitObject?.contact == "Yes"){
-                cell.contact.isHidden = false
                 cell.contact.image = UIImage(named: "Complete")
             }
             else if(editUnitObject?.contact == "No")
             {
-                cell.contact.isHidden = false
                 cell.contact.image = UIImage(named: "No")
             }
             else
             {
-                cell.contact.isHidden = false
                 cell.contact.image = nil
                 //cell.contact.image = UIImage(named: "transperntImg")
             }
@@ -828,6 +825,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         let moreOptionVC = storyboard.instantiateViewController(withIdentifier: "moreOptionsIdentifier") as! MoreOptionsViewController
         
         SurveyUtility.navigationController = self.navigationController!
+        
+        SurveyUtility.sourceViewController = self
         
         let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
             

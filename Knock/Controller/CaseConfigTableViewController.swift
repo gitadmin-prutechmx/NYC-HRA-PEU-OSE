@@ -26,6 +26,8 @@ protocol MultiPickListProtocol {
 class CaseConfigTableViewController: UITableViewController,PickListProtocol,MultiPickListProtocol,UITextViewDelegate,UITextFieldDelegate {
     
     
+    var caseDynamicDict:[String:AnyObject] = [:]
+    
     
     var selectedIndexPath:IndexPath?
     private var dateTimePickerCellExpanded: Bool = false
@@ -37,17 +39,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     var sectionFieldDict : [String:[CaseDO]] = [:]
     
+    var orderedSectionFieldDict: [Int: [String:[CaseDO]]] = [:]
     
-    var pickListDict:[String:String] = [:]
-    var multiPickListDict:[String:String] = [:]
-    var selectedSwitchDict:[String:Bool] = [:]
-    var selectedTextAreaDict:[String:String] = [:]
-    
-    var selectedTextFieldDict:[String:String] = [:]
-    
-    var selectedStringPhoneTextFieldDict:[String:String] = [:]  //handle apiname + phonenumber
-    var selectedPhoneTextFieldDict:[String:Int64] = [:]  //handle apiname + phonenumber
-    // var selectedDateTimeDict:[String:String] = [:]
     
     
     var switchDict:[Int:String] = [:]
@@ -69,14 +62,17 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     func getPickListValue(pickListValue:String){
         
-        pickListDict[currentPickListApiName] = pickListValue
+        Utilities.caseConfigDict[currentPickListApiName] = pickListValue as AnyObject?
+        //pickListDict[currentPickListApiName] = pickListValue
         
         reloadTableView()
     }
     
     func getMultiPickListValue(multiPickListValue:String){
         
-        multiPickListDict[currentMultiPickListApiName] = multiPickListValue
+        Utilities.caseConfigDict[currentMultiPickListApiName] = multiPickListValue as AnyObject?
+        
+        // multiPickListDict[currentMultiPickListApiName] = multiPickListValue
         
         reloadTableView()
         
@@ -96,8 +92,38 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if(SalesforceConnection.caseNumber.isEmpty){
+            self.navigationItem.title = "Case Info"
+        }
+        else{
+            self.navigationItem.title = SalesforceConnection.caseNumber
+        }
+        
+        Utilities.caseConfigDict = [:]
+        caseDynamicDict = [:]
+        
+        if(Utilities.caseActionStatus == "View"){
+            self.navigationItem.rightBarButtonItem = nil
+        }
+        
+        
+        if(SalesforceConnection.caseId != ""){
+            readCaseData()
+        }
+        
         readJson()
         
+        
+    }
+    
+    private func readCaseData(){
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "caseId == %@" ,predicateValue: SalesforceConnection.caseId,isPredicate:true) as! [Cases]
+        
+        if(caseResults.count > 0){
+            caseDynamicDict = caseResults[0].caseDynamic as! [String : AnyObject]
+        }
     }
     
     
@@ -111,11 +137,17 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         guard
             let sectionResults = jsonObject["Section"] as? [[String: AnyObject]] else { return }
         
+        var sequence = 0
+        
         for sectionData in sectionResults {
             
             guard let fieldListResults = sectionData["fieldList"] as? [[String: AnyObject]]  else { break }
             
             let sectionName = sectionData["sectionName"] as? String  ?? ""
+            
+            sequence = sequence + 1
+            
+            sectionFieldDict = [:]
             
             tempArray = []
             
@@ -134,31 +166,30 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                     
                     sectionFieldDict[sectionName] = arrayValue
                     
-                    if(dataType == "PICKLIST"){
-                        pickListDict[apiName] = ""
-                    }
-                    else if(dataType == "MULTIPICKLIST"){
-                        multiPickListDict[apiName] = ""
-                    }
-                    else if(dataType == "BOOLEAN"){
-                        selectedSwitchDict[apiName] = false
-                    }
-                    else if(dataType == "TEXTAREA"){
-                        selectedTextAreaDict[apiName] = ""
-                    }
-                    else if(dataType == "DATE"){
-                        Utilities.selectedDateTimeDictYYYYMMDD[apiName] = nil
-                        Utilities.selectedDateTimeDictInMMDDYYYY[apiName] = nil
-                        Utilities.selectedDatePicker[apiName] = Date()
+                    
+                    orderedSectionFieldDict[sequence] = sectionFieldDict
+                    
+                    if(dataType == "DATE"){
+                        
+                        if let dateVal = caseDynamicDict[apiName]{
+                            
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            let date = dateFormatter.date(from: dateVal as! String)!
+                            Utilities.caseConfigDict[apiName] = date as AnyObject?
+                            
+                        }
+                        else{
+                            Utilities.caseConfigDict[apiName] = nil
+                        }
+                        
                         
                     }
-                    else if(dataType == "PHONE"){
-                        selectedPhoneTextFieldDict[apiName] = nil
-                        selectedStringPhoneTextFieldDict[apiName] = ""
-                    }
+                        
                     else{
-                        selectedTextFieldDict[apiName] = ""
+                        Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
                     }
+                    
                 }
                     
                 else{
@@ -169,30 +200,30 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                     
                     sectionFieldDict[sectionName] = tempArray
                     
-                    if(dataType == "PICKLIST"){
-                        pickListDict[apiName] = ""
+                    orderedSectionFieldDict[sequence] = sectionFieldDict
+                    
+                    if(dataType == "DATE"){
+                        
+                        if let dateVal = caseDynamicDict[apiName]{
+                            
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            let date = dateFormatter.date(from: dateVal as! String)!
+                            Utilities.caseConfigDict[apiName] = date as AnyObject?
+                            
+                        }
+                        else{
+                            Utilities.caseConfigDict[apiName] = nil
+                        }
+                        
+                        
                     }
-                    else if(dataType == "MULTIPICKLIST"){
-                        multiPickListDict[apiName] = ""
-                    }
-                    else if(dataType == "BOOLEAN"){
-                        selectedSwitchDict[apiName] = false
-                    }
-                    else if(dataType == "TEXTAREA"){
-                        selectedTextAreaDict[apiName] = ""
-                    }
-                    else if(dataType == "DATE"){
-                        Utilities.selectedDateTimeDictYYYYMMDD[apiName] = nil
-                        Utilities.selectedDateTimeDictInMMDDYYYY[apiName] = nil
-                        Utilities.selectedDatePicker[apiName] = Date()
-                    }
-                    else if(dataType == "PHONE"){
-                        selectedPhoneTextFieldDict[apiName] = nil
-                        selectedStringPhoneTextFieldDict[apiName] = ""
-                    }
+                        
                     else{
-                        selectedTextFieldDict[apiName] = ""
+                        Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
                     }
+                    
+                    
                 }
                 
             }
@@ -210,11 +241,30 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     private func convertToArray(){
         
-        // caseConfigArray.append(sectionFieldDict)
-        for (key, value) in sectionFieldDict {
-            print("\(key) -> \(value)")
-            caseConfigArray.append(caseConfigObjects(sectionName: key, sectionObjects: value))
+        
+//        for (key, value) in sectionFieldDict {
+//            print("\(key) -> \(value)")
+//            caseConfigArray.append(caseConfigObjects(sectionName: key, sectionObjects: value))
+//        }
+//        
+        
+        
+        let orderedKeys = orderedSectionFieldDict.keys.sorted()
+        print(orderedKeys.description)
+        
+        for orderedKey in orderedKeys {
+            
+             print("Key = \(orderedKey) Value = \(orderedSectionFieldDict[orderedKey]!)" )
+            
+            for (key, value) in orderedSectionFieldDict[orderedKey]! {
+                print("\(key) -> \(value)")
+                caseConfigArray.append(caseConfigObjects(sectionName: key, sectionObjects: value))
+            }
+            
+           
         }
+        
+
     }
     
     
@@ -319,15 +369,24 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             uiSwitch.backgroundColor = UIColor.white
             
-            if(selectedSwitchDict[caseObject.apiName] == false){
-                uiSwitch.isOn = false
+            
+            if let switchValue = Utilities.caseConfigDict[caseObject.apiName]{
+                uiSwitch.isOn = switchValue as! Bool
             }
             else{
-                uiSwitch.isOn = true
+                uiSwitch.isOn = false
             }
             
             
-            uiSwitch.addTarget(self, action: #selector(CaseConfigTableViewController.switchChanged(_:)), for: UIControlEvents.valueChanged)
+            if(Utilities.caseActionStatus != "View"){
+                
+                uiSwitch.addTarget(self, action: #selector(CaseConfigTableViewController.switchChanged(_:)), for: UIControlEvents.valueChanged)
+                
+            }
+            else{
+                uiSwitch.isEnabled = false
+            }
+            
             
             switchCell.accessoryView = uiSwitch
             
@@ -364,7 +423,14 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             textArea.tag = indexPath.row
             textArea.delegate = self
             
-            textArea.text = selectedTextAreaDict[caseObject.apiName]
+            if let textAreaValue = Utilities.caseConfigDict[caseObject.apiName] as! String! {
+                textArea.text  = textAreaValue
+            }
+            else{
+                textArea.text  = ""
+            }
+            
+            
             
             let grayColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
             
@@ -373,6 +439,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             //            tf.layer.borderWidth = 2.0
             //
             textArea.layer.backgroundColor = grayColor.cgColor
+            
+            if(Utilities.caseActionStatus == "View"){
+                textArea.isEditable = false
+            }
+            
+            textArea.textColor = UIColor.gray
             
             textAreaCell.accessoryView = textArea
             
@@ -391,17 +463,24 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             // pickListCell.backgroundColor = UIColor.clear
             
-            
-            pickListCell.accessoryType = .disclosureIndicator
-            
-            let pickListValue = pickListDict[caseObject.apiName]
-            
-            if(pickListValue?.isEmpty)!{
-                pickListCell.detailTextLabel?.text = "Select Picklist"
+            if(Utilities.caseActionStatus == "View"){
+                pickListCell.accessoryType = .none
+                pickListCell.selectionStyle = .none
+                
             }
             else{
+                pickListCell.accessoryType = .disclosureIndicator
+                 pickListCell.selectionStyle = .default
+            }
+            
+            
+            
+            if let pickListValue = Utilities.caseConfigDict[caseObject.apiName] as! String! {
                 pickListCell.detailTextLabel?.text = pickListValue
             }
+                        else{
+                            pickListCell.detailTextLabel?.text = ""
+                        }
             
             pickListCell.detailTextLabel?.textColor = UIColor.gray
             pickListCell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 16.0)
@@ -418,26 +497,33 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             multiPickListCell.textLabel?.text = caseObject.fieldName
             multiPickListCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
-            
-            
-            //  multiPickListCell.backgroundColor = UIColor.clear
-            
-            
-            multiPickListCell.accessoryType = .disclosureIndicator
-            
-            let multiPickListValue = multiPickListDict[caseObject.apiName]
-            
-            if(multiPickListValue?.isEmpty)!{
-                multiPickListCell.detailTextLabel?.text = "Select Multi Picklist"
+            if(Utilities.caseActionStatus == "View"){
+                multiPickListCell.accessoryType = .none
+                
             }
             else{
+                multiPickListCell.accessoryType = .disclosureIndicator
+            }
+            
+            
+            
+            
+            
+            if let multiPickListValue = Utilities.caseConfigDict[caseObject.apiName] as! String! {
                 multiPickListCell.detailTextLabel?.text = multiPickListValue
             }
+                        else{
+                            multiPickListCell.detailTextLabel?.text = ""
+                        }
+            
+            
             
             multiPickListCell.detailTextLabel?.numberOfLines = 2
             
             multiPickListCell.detailTextLabel?.textColor = UIColor.gray
             multiPickListCell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 16.0)
+            
+            
             
             return multiPickListCell
             
@@ -456,36 +542,35 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             
             
-            //            let dateLabelValue = Utilities.selectedDateTimeDict[caseObject.apiName]
-            //
-            //            if(dateLabelValue?.isEmpty)!{
-            //                dateTimeCell.detail.text = "Select Date"
-            //            }
-            //            else{
-            //                dateTimeCell.detail.text = dateLabelValue
-            //            }
             
-            if let dataLabelValue  = Utilities.selectedDateTimeDictInMMDDYYYY[caseObject.apiName]{
-                dateTimeCell.detail.text = dataLabelValue!
-            }
-            else{
-                dateTimeCell.detail.text = "Select Date"
+            
+            if let val = Utilities.caseConfigDict[caseObject.apiName]{
+                let dateVal = val as! Date
+                dateTimeCell.datePicker.date = dateVal
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MM-dd-yyyy"
+                dateTimeCell.detail.text = dateFormatter.string(from: dateVal)
                 
             }
+            else{
+                dateTimeCell.datePicker.date = Date()
+                dateTimeCell.detail.text = ""
+            }
             
             
-            let dateValue = Utilities.selectedDatePicker[caseObject.apiName]
+            if(Utilities.caseActionStatus == "View"){
+               dateTimeCell.accessoryType = .none
+            }
+            else{
+                 dateTimeCell.accessoryType = .disclosureIndicator
+            }
             
-            
-            dateTimeCell.datePicker.date = dateValue!
-            
-            
-            
-            
-            // dateTimeCell.accessoryType = .disclosureIndicator
+           
             
             dateTimeCell.detail.textColor = UIColor.gray
             dateTimeCell.detail.font = UIFont.init(name: "Arial", size: 16.0)
+            
             
             return dateTimeCell
         }
@@ -509,8 +594,13 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             phoneTextfield.tag = indexPath.row
             phoneTextfield.delegate = self
             
+            if let phoneVal = Utilities.caseConfigDict[caseObject.apiName]{
+                phoneTextfield.text = String(describing: phoneVal)
+            }
+            else{
+                phoneTextfield.text = ""
+            }
             
-            phoneTextfield.text = selectedStringPhoneTextFieldDict[caseObject.apiName]
             
             
             
@@ -519,9 +609,13 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             phoneTextfield.layer.backgroundColor = whiteColor.cgColor
             
+            if(Utilities.caseActionStatus == "View"){
+                phoneTextfield.isEnabled = false
+            }
+            
             phoneCell.accessoryView = phoneTextfield
             
-            
+            phoneTextfield.textColor = UIColor.gray
             
             return phoneCell
         }
@@ -550,7 +644,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             textfield.tag = indexPath.row
             textfield.delegate = self
             
-            textfield.text = selectedTextFieldDict[caseObject.apiName]
+            if let textFieldValue = Utilities.caseConfigDict[caseObject.apiName] as! String! {
+                textfield.text  = textFieldValue
+            }
+            else{
+                textfield.text  = ""
+            }
             
             
             
@@ -561,6 +660,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             //            tf.layer.borderWidth = 2.0
             //
             textfield.layer.backgroundColor = grayColor.cgColor
+            
+            if(Utilities.caseActionStatus == "View"){
+                textfield.isEnabled = false
+            }
+            
+            textfield.textColor = UIColor.gray
             
             textCell.accessoryView = textfield
             
@@ -577,7 +682,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         let caseObject:CaseDO = caseConfigArray[indexPath.section].sectionObjects[indexPath.row]
         
-        if(caseObject.dataType == "PICKLIST"){
+        if(caseObject.dataType == "PICKLIST" && Utilities.caseActionStatus != "View"){
             
             currentPickListApiName = caseObject.apiName
             
@@ -587,12 +692,18 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             
             pickListVC?.pickListProtocol = self
-            pickListVC?.selectedPickListValue = pickListDict[currentPickListApiName]!
+            
+            if let selectedVal = Utilities.caseConfigDict[currentPickListApiName]{
+                pickListVC?.selectedPickListValue = selectedVal as! String
+            }
+            else{
+                pickListVC?.selectedPickListValue = ""
+            }
             
             self.navigationController?.pushViewController(pickListVC!, animated: true)
         }
             
-        else if(caseObject.dataType == "MULTIPICKLIST"){
+        else if(caseObject.dataType == "MULTIPICKLIST" && Utilities.caseActionStatus != "View"){
             
             currentMultiPickListApiName = caseObject.apiName
             
@@ -601,11 +712,19 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             multiPickListVC?.multiPicklistStr = caseObject.pickListValue
             
             multiPickListVC?.multiPickListProtocol = self
-            multiPickListVC?.selectedMultiPickListValue = multiPickListDict[currentMultiPickListApiName]!
+            
+            if let selectedVal = Utilities.caseConfigDict[currentMultiPickListApiName]{
+                multiPickListVC?.selectedMultiPickListValue = selectedVal as! String
+            }
+            else{
+                multiPickListVC?.selectedMultiPickListValue = ""
+            }
+            
+            
             
             self.navigationController?.pushViewController(multiPickListVC!, animated: true)
         }
-        else if(caseObject.dataType == "DATE"){
+        else if(caseObject.dataType == "DATE" && Utilities.caseActionStatus != "View"){
             
             Utilities.currentApiName = caseObject.apiName
             
@@ -747,56 +866,22 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     {
         
         let index = sender.tag
+    
+        Utilities.caseConfigDict[switchDict[index]!] = sender.isOn as AnyObject?
         
-//        var selectedValue:String = "No"
-//        
-//        if(sender.isOn){
-//            selectedValue = "Yes"
-//        }
-//        
-        selectedSwitchDict[switchDict[index]!] =  sender.isOn
-        
-        print(selectedSwitchDict)
+       
     }
     
-    // textViewDidEndEditing
-    
-    //    func textViewDidEndEditing(_ textView: UITextView) {
-    //        selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
-    //        textView.resignFirstResponder()
-    //    }
-    //
-    //    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    //         selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
-    //         return true
-    //    }
+  
     
     
-    
-    //    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    //
-    //
-    //        let aSet =  NSCharacterSet(charactersIn:"0123456789").inverted
-    //        let compSepByCharInSet = string.components(separatedBy: aSet)
-    //        let numberFiltered = compSepByCharInSet.joined(separator: "")
-    //
-    //        let currentCharacterCount = phoneTextField.text?.characters.count ?? 0
-    //        if (range.length + range.location > currentCharacterCount){
-    //            return false
-    //        }
-    //        let newLength = currentCharacterCount + string.characters.count - range.length
-    //        if(newLength > 10){
-    //            return false
-    //        }
-    //
-    //
-    //        return string == numberFiltered
-    //    }
-    //
-    //
+ 
     
     func textViewDidEndEditing(_ textView: UITextView) -> Bool {
-        selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
+        
+        Utilities.caseConfigDict[textAreaDict[textView.tag]!] =  textView.text! as AnyObject?
+        
+        // selectedTextAreaDict[textAreaDict[textView.tag]!] =  textView.text!
         textView.resignFirstResponder()
         return true
     }
@@ -816,16 +901,15 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             if(newLength > 10){
                 return false
             }
+      
             
-            
-            selectedStringPhoneTextFieldDict[phoneTextFieldDict[textField.tag]!] = textField.text! + string
-            
-            selectedPhoneTextFieldDict[phoneTextFieldDict[textField.tag]!] = Int64(textField.text! + string)
+            Utilities.caseConfigDict[phoneTextFieldDict[textField.tag]!] = Int64(textField.text! + string)
+                as AnyObject
             
             return string == numberFiltered
         }
         else{
-            selectedTextFieldDict[textFieldDict[textField.tag]!] =  textField.text! + string
+            Utilities.caseConfigDict[textFieldDict[textField.tag]!] =  (textField.text! + string) as AnyObject?
             return true
         }
         
@@ -835,27 +919,46 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     @IBAction func save(_ sender: Any) {
         
-        //  self.navigationController?.popViewController(animated: true);
-        
-//        print(multiPickListDict)
-//        print(pickListDict)
-//        print(selectedSwitchDict)
-//        
-//        print(selectedTextAreaDict)
-//        print(selectedPhoneTextFieldDict)
-        
         
         var msg:String = ""
         
-        iosCaseId = UUID().uuidString
-        
         prepareCaseResponse()
         
-        saveCaseResponseInCoreData()
-        saveCaseInCoreData()
+        //New Case --> Edit Case (Not handled)
+        //Edit Case
         
-        msg = "Case has been created successfully."
+        if(SalesforceConnection.caseId != ""){
+            
+            iosCaseId = SalesforceConnection.caseId
+            
+            if(SalesforceConnection.caseNumber != ""){
+                caseResponseDict["Id"] = SalesforceConnection.caseId as AnyObject?
+            }
+            
+            let caseResults = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "caseId == %@" ,predicateValue: SalesforceConnection.caseId,isPredicate:true) as! [AddCase]
+
+            if(caseResults.count > 0){
+                updateCaseResponseInCoreData()
+            }
+            else{
+                saveCaseResponseInCoreData()
+            }
+            
+            updateCaseInCoreData()
+            
+            msg = "Case has been updated successfully."
+        }
+        else{
+            iosCaseId = UUID().uuidString
+            
+            saveCaseResponseInCoreData()
+            saveCaseInCoreData()
+            msg = "Case has been created successfully."
+        }
         
+      
+        
+       
         self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCaseView"), object: nil)
@@ -867,72 +970,39 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
         }
         
-        
-        //        var caseResponse:String = ""
-        //
-        //        for (key, value) in selectedSwitchDict {
-        //            caseResponse =  caseResponse + key + ":" + value + ","
-        //        }
-        //        for (key, value) in selectedPhoneTextFieldDict {
-        //            caseResponse =  caseResponse + key + ": + \(value),"
-        //        }
-        //        for (key, value) in selectedTextFieldDict {
-        //            caseResponse =  caseResponse + key + ":" + value + ","
-        //        }
-        //        for (key, value) in selectedTextAreaDict {
-        //            caseResponse =  caseResponse + key + ":" + value + ","
-        //        }
-        //        for (key, value) in pickListDict {
-        //            caseResponse =  caseResponse + key + ":" + value + ","
-        //        }
-        //        for (key, value) in multiPickListDict {
-        //            caseResponse =  caseResponse + key + ":" + value.replacingOccurrences(of: ",", with: ";") + ","
-        //        }
-        //
-        //        print(caseResponse.characters.dropLast())
     }
     
     var caseResponseDict:[String:AnyObject] = [:]
     
     func prepareCaseResponse(){
         
-        // caseResponseDict["ContactId"] = SalesforceConnection.currentTenantId as AnyObject?
         
-        for (key, value) in selectedSwitchDict {
-            caseResponseDict[key] = value as AnyObject?
-        }
-        
-        for (key, value) in selectedPhoneTextFieldDict {
-            caseResponseDict[key] = value as AnyObject?
-        }
-        for (key, value) in selectedTextFieldDict {
-            caseResponseDict[key] = value as AnyObject?
-        }
-        for (key, value) in selectedTextAreaDict {
-            caseResponseDict[key] = value as AnyObject?
-        }
-        for (key, value) in pickListDict {
-            caseResponseDict[key] = value as AnyObject?
-        }
-        for (key, value) in multiPickListDict {
-            caseResponseDict[key] = value.replacingOccurrences(of: ",", with: ";") as AnyObject?
+        for (key, value) in Utilities.caseConfigDict {
+            
+            if let str = value as? String {
+                caseResponseDict[key] = str.replacingOccurrences(of: ",", with: ";") as AnyObject?
+            }
+            else{
+                
+                if let dateVal = value as? Date {
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    caseResponseDict[key] = dateFormatter.string(from: dateVal) as AnyObject?
+                    
+                }
+                else{
+                    caseResponseDict[key] = value
+                }
+            }
             
         }
-        for (key, _) in Utilities.selectedDateTimeDictYYYYMMDD {
-            if let dateValue = Utilities.selectedDateTimeDictYYYYMMDD[key]{
-                caseResponseDict[key] = dateValue as AnyObject?
-            }
-        }
+        
+      
+        
+        print(caseResponseDict)
         
         
-        
-        
-        //        var caseJsonDict:[String:AnyObject] = [:]
-        //
-        //        caseJsonDict["iOSCaseId"] = UUID().uuidString as AnyObject?
-        //        caseJsonDict["caseResponse"] = caseResponseDict as AnyObject
-        //
-        //        print(Utilities.jsonToString(json: caseJsonDict as AnyObject)!)
         
     }
     
@@ -949,9 +1019,28 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         addCaseObject.actionStatus = "create"
         
+       
         
+
         appDelegate.saveContext()
     }
+    
+    
+    func updateCaseResponseInCoreData(){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+
+        
+        updateObjectDic["caseResponse"] = caseResponseDict as NSObject?
+     
+       
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "AddCase", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: SalesforceConnection.caseId,isPredicate: true)
+        
+        
+    }
+    
+    
+    
     
     func saveCaseInCoreData(){
         let caseObject = Cases(context: context)
@@ -959,43 +1048,63 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         caseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
         caseObject.unitId = SalesforceConnection.unitId
         caseObject.caseId =  iosCaseId
-        caseObject.caseNo = ""
+        caseObject.caseNo =  ""
         caseObject.contactId = SalesforceConnection.currentTenantId
         caseObject.contactName = SalesforceConnection.currentTenantName
+        caseObject.caseStatus = "Open"
+        caseObject.caseOwnerId = SalesforceConnection.salesforceUserId
+        
+        caseObject.caseDynamic = caseResponseDict as NSObject?
         
         
         appDelegate.saveContext()
+    }
+    
+    func updateCaseInCoreData(){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        
+        updateObjectDic["caseDynamic"] = caseResponseDict as NSObject?
+        
+        
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: SalesforceConnection.caseId,isPredicate: true)
     }
     
     
     
     @IBAction func cancel(_ sender: Any) {
         
-        let msgtitle = "Message"
-        
-        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
-        
-        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
-        
-        
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
-            //Do some stuff
-        }
-        alertController.addAction(cancelAction)
-        
-        let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
-            
-            
+        if(Utilities.caseActionStatus == "View"){
             self.navigationController?.popViewController(animated: true);
-            //Do some other stuff
+            
         }
-        alertController.addAction(okAction)
-        
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-        
+        else{
+            let msgtitle = "Message"
+            
+            let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
+            
+            alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
+            
+            
+            
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+                //Do some stuff
+            }
+            alertController.addAction(cancelAction)
+            
+            let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+                
+                
+                self.navigationController?.popViewController(animated: true);
+                //Do some other stuff
+            }
+            alertController.addAction(okAction)
+            
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+        }
         
         
         // self.navigationController?.popViewController(animated: true);
