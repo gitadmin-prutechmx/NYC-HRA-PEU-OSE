@@ -23,32 +23,20 @@ struct ClientUnitDataStruct
     
 }
 
-struct CaseDataStruct
-{
-    var caseId : String = ""
-    var caseNo : String = ""
-    var contactId:String = ""
-    var contacName : String = ""
-    var caseStatus:String = ""
-    var caseOwnerId:String = ""
-    
-}
+
 
 class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    @IBOutlet weak var nextOutlet: UIBarButtonItem!
+    
     @IBOutlet weak var viewTenent: UIView!
-    @IBOutlet weak var viewCase: UIView!
     
     @IBOutlet weak var fullAddressTxt: UILabel!
-    @IBOutlet weak var tblCaseview: UITableView!
-    @IBOutlet weak var btnAddCase: UIButton!
+   
     
     @IBOutlet weak var tblTenantView: UITableView!
     
     @IBOutlet weak var addTenantOutlet: UIButton!
     
-    @IBOutlet weak var segmentedOutlet: UISegmentedControl!
     
     var clientDataArray = [ClientUnitDataStruct]()
     var caseDataArray = [CaseDataStruct]()
@@ -60,8 +48,6 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        Utilities.currentSurveyInTake = "Client"
         
         addTenantOutlet.layer.cornerRadius = 5
         
@@ -77,9 +63,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateClientView), name: NSNotification.Name(rawValue: "UpdateClientView"), object:nil
         )
         
-        NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateCaseView), name: NSNotification.Name(rawValue: "UpdateCaseView"), object:nil
-        )
-
+        
         
 
 
@@ -92,16 +76,10 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         populateClientData()
     }
     
-    func UpdateCaseView(){
-        print("UpdateCaseView")
-        
-        populateCaseData()
-    }
-    
+
     // Cleanup notifications added in viewDidLoad
     deinit {
         NotificationCenter.default.removeObserver("UpdateClientView")
-        NotificationCenter.default.removeObserver("UpdateCaseView")
     }
     
     
@@ -117,50 +95,14 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         selectedCaseNo = ""
  
         
-        if(Utilities.currentSurveyInTake == "Case"){
-            segmentedOutlet.selectedSegmentIndex = 1
-            showCaseView()
-        
-        }
-        else{
-            segmentedOutlet.selectedSegmentIndex = 0
+       
             showClientView()
-        }
+        
         
 
     }
     
-    func populateCaseData(){
-        
-        caseDataArray = [CaseDataStruct]()
-        
-        
-        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId,isPredicate:true) as! [Cases]
-        
-        if(caseResults.count > 0){
-            
-            for caseData in caseResults{
-                
-                let objectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: caseData.caseId!, caseNo: caseData.caseNo!, contactId: caseData.contactId!, contacName: caseData.contactName!,caseStatus:caseData.caseStatus!,caseOwnerId:caseData.caseOwnerId!)
-                
-                caseDataArray.append(objectCaseStruct)
-                
-            }
-        }
-        
-        
-        
-        
-        // selectedTenantId = setSelectedTenant()
-        
-        self.tblCaseview.reloadData()
-        
-        
-        
-        
-        
-    }
-    
+       
     var clientResults = [Tenant]()
     
     
@@ -199,16 +141,20 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
 
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+   
     
     @IBAction func addTenant(_ sender: Any) {
         
         //Utilities.currentSurveyInTake = "Client"
         
         showAddNewClient()
+    }
+    
+    func showAddNewClient(){
+        
+        SalesforceConnection.currentTenantId =  ""
+        
+        self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
     }
 
     @IBAction func editTenant(_ sender: Any) {
@@ -220,39 +166,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
         
     }
-    @IBAction func btnEditAction(_ sender: Any) {
-        let indexRow = (sender as AnyObject).tag
         
-        SalesforceConnection.caseId =  caseDataArray[indexRow!].caseId
-        SalesforceConnection.caseNumber = caseDataArray[indexRow!].caseNo
-        
-         SalesforceConnection.currentTenantId =  caseDataArray[indexRow!].contactId
-        
-        Utilities.caseActionStatus = "Edit"
-        
-        self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
-        
-      
-    }
-    
-    @IBAction func btnViewAction(_ sender: Any) {
-        
-        let indexRow = (sender as AnyObject).tag
-        
-        SalesforceConnection.caseId =  caseDataArray[indexRow!].caseId
-        SalesforceConnection.caseNumber = caseDataArray[indexRow!].caseNo
-        
-        
-        Utilities.caseActionStatus = "View"
-        
-        self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
-        
-       
-    }
-   
-    
-
-    
     @IBAction func cancel(_ sender: Any) {
         
           self.dismiss(animated: true, completion: nil)
@@ -260,26 +174,6 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     
    
-    @IBAction func segmentedChange(_ sender: Any) {
-        
-      switch segmentedOutlet.selectedSegmentIndex
-        {
-        //table clients
-        case 0:
-           Utilities.currentSurveyInTake = "Client"
-           showClientView()
-        
-        //table case
-        case 1:
-            Utilities.currentSurveyInTake = "Case"
-            showCaseView()
-        
-        default:
-            break;
-        }
-        
-    }
-    
     
     func addRightBarButtonOnClient(){
         
@@ -290,54 +184,15 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
     }
     
-    func addRightBarButtonOnCase(){
-        
-        self.navigationItem.rightBarButtonItem =  nil
-        
-        let rightBarButtonItem = UIBarButtonItem(title: "Go to issue", style: .plain, target: self, action: #selector(InTakeViewController.issueAction))
-        
-        self.navigationItem.rightBarButtonItem  = rightBarButtonItem
-    }
     
     func showClientView(){
 
         addRightBarButtonOnClient()
         populateClientData()
-        self.viewTenent.isHidden = false
-        self.viewCase.isHidden = true
-
-    }
-    
-    func showCaseView(){
-        addRightBarButtonOnCase()
-        populateCaseData()
-        self.viewTenent.isHidden = true
-        self.viewCase.isHidden = false
-    }
-    
-    func issueAction(){
         
-        if(selectedCaseId == ""){
-            viewCase.shake()
-            self.view.makeToast("Please select case. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                
-            }
-            
-        }
-        else{
-            
-            SalesforceConnection.caseId = selectedCaseId
-            SalesforceConnection.caseNumber = selectedCaseNo
-            
-         
-            SalesforceConnection.currentTenantName =  selectedClientName
-            
-            
-            self.performSegue(withIdentifier: "showIssueIdentifier", sender: nil)
-        }
     }
     
+       
     func nextAction(){
         
         if(selectedClientId == ""){
@@ -353,66 +208,29 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             SalesforceConnection.currentTenantName =  selectedClientName
             
-            SalesforceConnection.caseId =  ""
+            self.performSegue(withIdentifier: "showCaseIdentifier", sender: nil)
             
-            SalesforceConnection.caseNumber = ""
-            
-            Utilities.caseActionStatus = "New"
-            
-            self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
+
+           
         }
         
-//        if(Utilities.currentSurveyInTake == "Case"){
-//            //get contactname here by selecting id
-//             self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
-//        }
+
     }
     
     
-    @IBAction func btnAddCaseAction(_ sender: Any) {
-        
-      segmentedOutlet.selectedSegmentIndex = 0
-        
-       Utilities.currentSurveyInTake = "Case"
-     
-        if(clientResults.count > 0){
-            showClientView()
-        }
-        else{
-            showAddNewClient()
-        }
-        
-       //self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
-        
-       
-    }
-    
-    func showAddNewClient(){
-        
-        SalesforceConnection.currentTenantId =  ""
-        
-        self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
-    }
+  
     
     // MARK: UITenantTableView and UIEditTableView
     
     func numberOfSections(in tableView: UITableView) -> Int
     {
-        if(tableView == tblTenantView){
-            return 1
-        }
-        else{
-            return 1
-        }
+        
+        return 1
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(tableView == tblTenantView){
             return clientDataArray.count
-        }
-        else{
-            return caseDataArray.count
-        }
     }
     
     // cell height
@@ -426,23 +244,12 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     {
         
         
-        if(tableView == tblTenantView){
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TenantViewCell
             
             cell.tenantView.backgroundColor = UIColor.white
             cell.contentView.backgroundColor = UIColor.clear
             
-//            if(clientDataArray[indexPath.row].clientId == selectedClientId){
-//                
-//                
-//                cell.tenantView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-//                cell.contentView.backgroundColor =  UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-//                cell.isSelected = true
-//                cell.setSelected(true, animated: true)
-//                
-//                
-//            }
+
             
             cell.email.text = clientDataArray[indexPath.row].email
             cell.phone.text = clientDataArray[indexPath.row].phone
@@ -454,39 +261,16 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             
             return cell
-        }
-            
-        else{
-             let cell = tableView.dequeueReusableCell(withIdentifier: "caseCell", for: indexPath) as! CaseTableViewCell
-            
-            cell.caseView.backgroundColor = UIColor.white
-            cell.contentView.backgroundColor = UIColor.clear
-            
-            cell.caseNo.text = caseDataArray[indexPath.row].caseNo
-            cell.contactName.text = caseDataArray[indexPath.row].contacName
-            cell.caseId.text = caseDataArray[indexPath.row].caseId
-            cell.btnEdit.tag = indexPath.row
-            cell.btnView.tag = indexPath.row
-            
-            if(caseDataArray[indexPath.row].caseStatus == "Closed" || SalesforceConnection.salesforceUserId != caseDataArray[indexPath.row].caseOwnerId){
-                cell.editImg.isHidden = true
-                cell.btnEdit.isEnabled = false
-            }
-            else{
-                cell.editImg.isHidden = false
-                cell.btnEdit.isEnabled = true
-            }
-            
-            return cell
-        }
         
+            
+                
     }
     
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(tableView == tblTenantView){
+        
             let indexPathArray = tblTenantView.indexPathsForVisibleRows
             
             for indexPath in indexPathArray!{
@@ -511,46 +295,15 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             selectedClientId = clientDataArray[indexPath.row].clientId
             selectedClientName = clientDataArray[indexPath.row].name
-            
-            // tableView.deselectRow(at: indexPath, animated: true)
-        }
-        else{
-            
-            let indexPathArray = tblCaseview.indexPathsForVisibleRows
-            
-            for indexPath in indexPathArray!{
-                
-                let cell = tblCaseview.cellForRow(at: indexPath) as! CaseTableViewCell
-                
-                if tblCaseview.indexPathForSelectedRow != indexPath {
-                    
-                    cell.caseView.backgroundColor = UIColor.white
-                    cell.contentView.backgroundColor = UIColor.clear
-                    
-                }
-                else{
-                    
-                    cell.caseView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-                    
-                    cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-                    
-                    
-                }
-            }
-            
-            selectedCaseId = caseDataArray[indexPath.row].caseId
-            selectedCaseNo = caseDataArray[indexPath.row].caseNo
-            
-            selectedClientName = caseDataArray[indexPath.row].contacName
-        }
+
         
     }
     
   
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         // Dequeue with the reuse identifier
-        if tableView == tblTenantView
-        {
+        
             let identifier = "tenantHeader"
             var cell: TenantHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
             
@@ -560,48 +313,17 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
             
             return cell
-        }
-        else
-        {
-            let identifier = "caseHeaderCell"
-            var cell: InCaseHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? InCaseHeaderTableViewCell
-            
-            if cell == nil {
-                tableView.register(UINib(nibName: "InCaseHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-                cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? InCaseHeaderTableViewCell
-            }
-            
-            return cell
-
-           
-        }
-        
         
         
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if tableView == tblTenantView
-        {
+       
             return 44.0
-        }
-        else{
-            return  44.0
-        }
     }
-    
-    
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+    
+    
+
+
