@@ -4339,8 +4339,6 @@
                         <outlet property="tblTenantView" destination="N3E-cP-2YB" id="nst-jI-A9k"/>
                         <outlet property="viewTenent" destination="tvD-T0-OUR" id="bah-mJ-CWz"/>
                         <segue destination="LaU-vP-gOE" kind="show" identifier="showSaveEditTenantIdentifier" id="WCf-v5-TjD"/>
-                        <segue destination="uDA-8N-B5L" kind="show" identifier="caseConfigIdentifier" id="487-1C-sPi"/>
-                        <segue destination="m44-0X-WZC" kind="show" identifier="showIssueIdentifier" id="QEK-eK-O4i"/>
                         <segue destination="2o8-Y6-eGp" kind="show" identifier="showCaseIdentifier" id="yQY-Ol-isA"/>
                     </connections>
                 </viewController>
@@ -4536,7 +4534,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="53" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aQZ-gr-v50">
-                                <rect key="frame" x="16" y="110" width="343" height="78"/>
+                                <rect key="frame" x="16" y="66" width="343" height="122"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddIssueCell" textLabel="aWL-lX-9sw" detailTextLabel="EdT-sg-Cd3" rowHeight="50" style="IBUITableViewCellStyleValue1" id="HZo-jl-V3R">
@@ -4918,7 +4916,7 @@
                                     <constraint firstItem="OH8-fJ-gVw" firstAttribute="centerX" secondItem="3RO-Fb-Wc8" secondAttribute="centerX" id="TWL-2C-280"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eiM-Vc-0xz" userLabel="CaseView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eiM-Vc-0xz" userLabel="CaseView">
                                 <rect key="frame" x="16" y="133" width="343" height="514"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vjD-wE-27r" userLabel="CaseTblView">
@@ -5042,6 +5040,7 @@
                         <outlet property="addCaseOutlet" destination="sqP-xg-tys" id="Ffp-Tg-f03"/>
                         <outlet property="fullAddressTxt" destination="OH8-fJ-gVw" id="XI9-vU-z9h"/>
                         <outlet property="tblCaseView" destination="vjD-wE-27r" id="Qdl-rQ-pbB"/>
+                        <segue destination="uDA-8N-B5L" kind="show" identifier="caseConfigIdentifier" id="S80-KM-jww"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x8E-NU-4Q9" userLabel="First Responder" sceneMemberID="firstResponder"/>
