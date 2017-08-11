@@ -36,6 +36,7 @@ class SalesforceConnection{
     
     static var caseId:String = ""
     static var caseNumber:String = ""
+    static var dateOfIntake:String = ""
     
     static var currentIssueId:String = ""
     

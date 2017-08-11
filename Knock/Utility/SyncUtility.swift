@@ -492,8 +492,8 @@ class SyncUtility{
                 caseResponseDict["ContactId"] = caseData.clientId! as AnyObject?
                 
                 caseResponseDict["OwnerId"] =  SalesforceConnection.salesforceUserId as AnyObject?
-               
                 
+                               
                 caseJsonDict["iOSCaseId"] = caseData.caseId! as AnyObject?
                 
                 caseJsonDict["caseResponse"] = Utilities.jsonToString(json: caseResponseDict as AnyObject) as AnyObject

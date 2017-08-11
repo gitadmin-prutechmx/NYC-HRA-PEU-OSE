@@ -16,6 +16,8 @@ struct CaseDataStruct
     var contacName : String = ""
     var caseStatus:String = ""
     var caseOwnerId:String = ""
+    var caseOwner:String = ""
+    var dateOfIntake:String = ""
     
 }
 
@@ -80,6 +82,7 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         
         
+        
         self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
         
         
@@ -109,7 +112,7 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
             
             for caseData in caseResults{
                 
-                let objectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: caseData.caseId!, caseNo: caseData.caseNo!, contactId: caseData.contactId!, contacName: caseData.contactName!,caseStatus:caseData.caseStatus!,caseOwnerId:caseData.caseOwnerId!)
+                let objectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: caseData.caseId!, caseNo: caseData.caseNo!, contactId: caseData.contactId!, contacName: caseData.contactName!,caseStatus:caseData.caseStatus!,caseOwnerId:caseData.caseOwnerId!,caseOwner:caseData.caseOwner!,dateOfIntake:caseData.createdDate!)
                 
                 caseDataArray.append(objectCaseStruct)
                 
@@ -151,10 +154,11 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         cell.contentView.backgroundColor = UIColor.clear
         
         cell.caseNo.text = caseDataArray[indexPath.row].caseNo
-        cell.contactName.text = caseDataArray[indexPath.row].contacName
+        cell.ownerName.text = caseDataArray[indexPath.row].caseOwner
         cell.caseId.text = caseDataArray[indexPath.row].caseId
+        cell.dateOfIntake.text = caseDataArray[indexPath.row].dateOfIntake
         
-        
+        cell.caseStatus.text = caseDataArray[indexPath.row].caseStatus
         
         return cell
         
@@ -190,6 +194,7 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         SalesforceConnection.caseId =  caseDataArray[indexPath.row].caseId
         SalesforceConnection.caseNumber = caseDataArray[indexPath.row].caseNo
+        SalesforceConnection.dateOfIntake = caseDataArray[indexPath.row].dateOfIntake
         
         
         if(caseDataArray[indexPath.row].caseStatus == "Closed" || SalesforceConnection.salesforceUserId != caseDataArray[indexPath.row].caseOwnerId){

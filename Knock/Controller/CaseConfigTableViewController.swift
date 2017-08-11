@@ -26,14 +26,17 @@ protocol MultiPickListProtocol {
 class CaseConfigTableViewController: UITableViewController,PickListProtocol,MultiPickListProtocol,UITextViewDelegate,UITextFieldDelegate {
     
     
+    @IBOutlet weak var issueView: UIView!
     var caseDynamicDict:[String:AnyObject] = [:]
     
     
     var selectedIndexPath:IndexPath?
     private var dateTimePickerCellExpanded: Bool = false
     
+    @IBOutlet weak var btnGotoissue: UIButton!
     
     
+    @IBOutlet weak var lblDescrption: UILabel!
     @IBOutlet var caseTblView: UITableView!
     var caseConfigArray = [caseConfigObjects]()
     
@@ -93,12 +96,24 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        lblDescrption.text = SalesforceConnection.dateOfIntake
+        
+        btnGotoissue.layer.cornerRadius = 5
+        btnGotoissue.layer.borderColor = UIColor.black.cgColor
+        btnGotoissue.layer.borderWidth = 1
+        btnGotoissue.clipsToBounds = true
+        
         
         if(SalesforceConnection.caseNumber.isEmpty){
             self.navigationItem.title = "Case Info"
+            issueView.isHidden = true
+            issueView.frame.size.height = 0.0
+            
         }
         else{
             self.navigationItem.title = SalesforceConnection.caseNumber
+            issueView.isHidden = false
+            issueView.frame.size.height = 78.0
         }
         
         Utilities.caseConfigDict = [:]
@@ -303,6 +318,9 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         //        }
     }
     
+    @IBAction func btnGotoIssueAction(_ sender: Any) {
+        //self.performSegue(withIdentifier: "showIssueIdentifier", sender: nil)
+    }
     
     
     override func didReceiveMemoryWarning() {
@@ -414,10 +432,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             //UITextView
             let textArea = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 99))
-            
-            
-            // UITextView(frame: CGRect(x: 0, y: 0, width: 160, height: 99))
-            
+            textArea.font = UIFont.init(name: "Arial", size: 16.0)
             textArea.textAlignment = .right
             
             textArea.tag = indexPath.row
@@ -540,22 +555,29 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             //dateTimeCell.backgroundColor = UIColor.clear
             dateTimeCell.selectionStyle = .none
             
-            
-            
-            
+            dateTimeCell.datePicker.datePickerMode = UIDatePickerMode.date
             
             if let val = Utilities.caseConfigDict[caseObject.apiName]{
                 let dateVal = val as! Date
                 dateTimeCell.datePicker.date = dateVal
-                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MM-dd-yyyy"
                 dateTimeCell.detail.text = dateFormatter.string(from: dateVal)
                 
             }
-            else{
+                
+            else
+            {
+                //dateTimeCell.datePicker.setDate(Date(), animated: false)
                 dateTimeCell.datePicker.date = Date()
                 dateTimeCell.detail.text = ""
+                
+//                let isToday = NSDate()
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "MM-dd-yyyy"
+//                dateTimeCell.detail.text = dateFormatter.string(from: isToday as Date)
+//               
+              
             }
             
             
@@ -977,6 +999,11 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     func prepareCaseResponse(){
         
         
+        let dateOfIntakeFormat = DateFormatter()
+        dateOfIntakeFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        caseResponseDict["Date_of_Intake__c"] = dateOfIntakeFormat.string(from: Date()) as AnyObject?
+        
+       
         for (key, value) in Utilities.caseConfigDict {
             
             if let str = value as? String {
@@ -1052,8 +1079,16 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         caseObject.contactId = SalesforceConnection.currentTenantId
         caseObject.contactName = SalesforceConnection.currentTenantName
         caseObject.caseStatus = "Open"
-        caseObject.caseOwnerId = SalesforceConnection.salesforceUserId
         
+        caseObject.caseOwnerId = SalesforceConnection.salesforceUserId
+        caseObject.caseOwner = "Nik Samajdwar"//SalesforceConfig.currentU
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+        let dateString = dateFormatter.string(from: Date())
+        
+        caseObject.createdDate = dateString
+
         caseObject.caseDynamic = caseResponseDict as NSObject?
         
         

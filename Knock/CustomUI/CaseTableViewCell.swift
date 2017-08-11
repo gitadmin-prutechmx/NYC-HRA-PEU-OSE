@@ -10,18 +10,16 @@ import UIKit
 
 class CaseTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var contactName: UILabel!
+    
     @IBOutlet weak var caseNo: UILabel!
     @IBOutlet weak var caseId: UILabel!
     
+    @IBOutlet weak var ownerName: UILabel!
   
-    @IBOutlet weak var viewImg: UIImageView!
-    @IBOutlet weak var btnView: UIButton!
-    
-    @IBOutlet weak var editImg: UIImageView!
-    @IBOutlet weak var btnEdit: UIButton!
+    @IBOutlet weak var dateOfIntake: UILabel!
     
     @IBOutlet weak var caseView: UIView!
+    @IBOutlet weak var caseStatus: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

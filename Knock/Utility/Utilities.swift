@@ -1702,7 +1702,7 @@ class Utilities {
                                
                                 caseObject.caseNo = caseData["CaseNumber"] as? String  ?? ""
                                 caseObject.caseStatus = caseData["Status"] as? String  ?? ""
-                                caseObject.caseOwnerId = caseData["OwnerId"] as? String  ?? ""
+                           
                                 caseObject.unitId = unitObject.id
                                 caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId
                                 
@@ -1712,6 +1712,25 @@ class Utilities {
                                 
                                 caseObject.contactId = contactResult?["Id"] as? String  ?? ""
                                 caseObject.contactName = contactResult?["Name"] as? String  ?? ""
+                                
+                                let ownerResult = caseData["Owner"] as? [String: AnyObject]
+                                
+                                caseObject.caseOwnerId = ownerResult?["Id"] as? String  ?? ""
+                                caseObject.caseOwner = ownerResult?["Name"] as? String  ?? ""
+                                
+                                let createdDate = caseData["CreatedDate"] as? String  ?? ""
+                                
+                                
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                                let formattedDate = dateFormatter.date(from: createdDate)
+                                
+                                
+                                let dateFormatter1 = DateFormatter()
+                                dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
+                                let dateString = dateFormatter1.string(from: formattedDate!)
+
+                                caseObject.createdDate = dateString
                                 
                                 caseObject.caseDynamic = caseData as NSObject
                                
