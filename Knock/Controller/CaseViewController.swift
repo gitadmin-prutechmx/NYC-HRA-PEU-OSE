@@ -81,6 +81,7 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         SalesforceConnection.caseNumber = ""
         
         
+        Utilities.caseActionStatus = "New"
         
         
         self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
@@ -195,6 +196,9 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         SalesforceConnection.caseId =  caseDataArray[indexPath.row].caseId
         SalesforceConnection.caseNumber = caseDataArray[indexPath.row].caseNo
         SalesforceConnection.dateOfIntake = caseDataArray[indexPath.row].dateOfIntake
+        
+        SalesforceConnection.caseStatus = caseDataArray[indexPath.row].caseStatus
+        SalesforceConnection.caseOwnerId = caseDataArray[indexPath.row].caseOwnerId
         
         
         if(caseDataArray[indexPath.row].caseStatus == "Closed" || SalesforceConnection.salesforceUserId != caseDataArray[indexPath.row].caseOwnerId){

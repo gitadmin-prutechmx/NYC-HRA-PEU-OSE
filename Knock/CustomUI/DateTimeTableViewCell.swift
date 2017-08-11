@@ -12,12 +12,13 @@ class DateTimeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var detail: UILabel!
-
+    @IBOutlet weak var btnToday:UIButton!
+    
     @IBOutlet weak var datePicker: UIDatePicker!
     
     var frameAdded = false
     
-    class var expandHeight:CGFloat{ get {return 250 } }
+    class var expandHeight:CGFloat{ get {return 316 } }
     class var defaultHeight:CGFloat{ get {return 44 } }
     
     @IBAction func dateTimeChanged(_ sender: Any) {
@@ -41,8 +42,23 @@ class DateTimeTableViewCell: UITableViewCell {
         print(datePicker.date)
     }
     
+    @IBAction func btnTodayAction(_ sender: UIButton)
+    {
+       // datePicker.setDate(Date(), animated: false)
+         datePicker.date = Date()
+        let todaysDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        let dateString = dateFormatter.string(from: todaysDate)
+        detail.text = dateString
+        
+        Utilities.caseConfigDict[Utilities.currentApiName] = datePicker.date as AnyObject?
+        
+    }
+    
     func checkHeight(){
         datePicker.isHidden = (frame.size.height < DateTimeTableViewCell.expandHeight)
+         btnToday.isHidden = (frame.size.height < DateTimeTableViewCell.expandHeight)
     }
     
     func watchFrameChanges() {

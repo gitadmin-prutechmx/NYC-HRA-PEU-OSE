@@ -33,10 +33,19 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         txtIssueNotes.textColor = UIColor.black
         
         
+        if(Utilities.issueActionStatus == "View"){
+            self.navigationItem.rightBarButtonItem = nil
+            txtIssueNotes.isEditable = false
+        }
+        
+        
         
         if(SalesforceConnection.currentIssueId != ""){
             fillIssueInfo()
         }
+        
+        
+        
         
     }
     
@@ -54,7 +63,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     }
     
     
-  
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -100,7 +109,14 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddIssueCell")!
         cell.backgroundColor = UIColor.clear
         
-        cell.accessoryType = .disclosureIndicator
+        if(Utilities.issueActionStatus == "View"){
+            cell.accessoryType = .none
+        }
+        else{
+            cell.accessoryType = .disclosureIndicator
+        }
+        
+        
         
         cell.textLabel?.text = "Issue"
         cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
@@ -145,17 +161,19 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
-        let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
-        
-        pickListVC?.picklistStr = issueTypeStr
-        
-        pickListVC?.pickListProtocol = self
-        pickListVC?.selectedPickListValue = issueType
-        
-        self.navigationController?.pushViewController(pickListVC!, animated: true)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
+        if(Utilities.issueActionStatus != "View"){
+            
+            let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
+            
+            pickListVC?.picklistStr = issueTypeStr
+            
+            pickListVC?.pickListProtocol = self
+            pickListVC?.selectedPickListValue = issueType
+            
+            self.navigationController?.pushViewController(pickListVC!, animated: true)
+            
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     
@@ -202,7 +220,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
             notes = issueNotes
         }
         
-         var msg:String = ""
+        var msg:String = ""
         
         if(SalesforceConnection.currentIssueId == ""){
             saveIssueInCoreData()
@@ -215,7 +233,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         }
         
         
-
+        
         self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateIssueView"), object: nil)
@@ -245,19 +263,19 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         issueObject.issueType = issueType
         
-
+        
         issueObject.notes = notes
         
         issueObject.actionStatus = "create"
         
         issueObject.contactName = SalesforceConnection.currentTenantName
         
-    
-       
+        
+        
         
         appDelegate.saveContext()
         
-
+        
         
     }
     

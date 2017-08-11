@@ -104,7 +104,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         btnGotoissue.clipsToBounds = true
         
         
-        if(SalesforceConnection.caseNumber.isEmpty){
+        if(Utilities.caseActionStatus == "New"){
             self.navigationItem.title = "Case Info"
             issueView.isHidden = true
             issueView.frame.size.height = 0.0
@@ -127,6 +127,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         if(SalesforceConnection.caseId != ""){
             readCaseData()
         }
+        
         
         readJson()
         
@@ -1102,6 +1103,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         updateObjectDic["caseDynamic"] = caseResponseDict as NSObject?
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+        let dateString = dateFormatter.string(from: Date())
+        
+        updateObjectDic["createdDate"] = dateString as AnyObject
+
         
         ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: SalesforceConnection.caseId,isPredicate: true)
     }

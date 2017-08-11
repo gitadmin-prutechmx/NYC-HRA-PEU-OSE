@@ -46,7 +46,8 @@ class DownloadBaseMap{
                             loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                         }
                         else{
-                            DownloadESRILayers.RefreshData()
+                            //DownloadESRILayers.RefreshData()
+                            
                             //Utilities.callNotificationCenter()
                         }
                         
@@ -69,8 +70,10 @@ class DownloadBaseMap{
                         loginViewController?.downloadProgressView.dismiss()
                     }
                     else{
+                        
+                        //DownloadESRILayers.RefreshData()
+                        
                         //SVProgressHUD.dismiss()
-                        DownloadESRILayers.RefreshData()
                         //Utilities.callNotificationCenter()
                     }
                 }

@@ -16,6 +16,8 @@ import Toast_Swift
 class Utilities {
     
     static var caseActionStatus:String = ""
+    static var issueActionStatus:String = ""
+    
     
     static var caseConfigDict:[String:AnyObject] = [:]
     
@@ -1075,6 +1077,7 @@ class Utilities {
                                     }
                                     else{
                                          SVProgressHUD.dismiss()
+                                         callNotificationCenter()
                                         //DownloadESRILayers.RefreshData()
                                     }
                                     
@@ -1718,19 +1721,39 @@ class Utilities {
                                 caseObject.caseOwnerId = ownerResult?["Id"] as? String  ?? ""
                                 caseObject.caseOwner = ownerResult?["Name"] as? String  ?? ""
                                 
-                                let createdDate = caseData["CreatedDate"] as? String  ?? ""
                                 
+                                let dateOfIntake = caseData["Date_of_Intake__c"] as? String ?? ""
                                 
-                                let dateFormatter = DateFormatter()
-                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                                let formattedDate = dateFormatter.date(from: createdDate)
+                                if(dateOfIntake.isEmpty){
+                                    caseObject.createdDate = ""
+                                }
+                                else{
+                                    
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                                    let formattedDate = dateFormatter.date(from: dateOfIntake)
+                                    
+                                    
+                                    let dateFormatter1 = DateFormatter()
+                                    dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
+                                    let dateString = dateFormatter1.string(from: formattedDate!)
+                                    
+                                    caseObject.createdDate = dateString
+                                }
                                 
-                                
-                                let dateFormatter1 = DateFormatter()
-                                dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
-                                let dateString = dateFormatter1.string(from: formattedDate!)
-
-                                caseObject.createdDate = dateString
+//                                let createdDate = caseData["CreatedDate"] as? String  ?? ""
+//                                
+//                                
+//                                let dateFormatter = DateFormatter()
+//                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+//                                let formattedDate = dateFormatter.date(from: createdDate)
+//                                
+//                                
+//                                let dateFormatter1 = DateFormatter()
+//                                dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
+//                                let dateString = dateFormatter1.string(from: formattedDate!)
+//
+//                                caseObject.createdDate = dateString
                                 
                                 caseObject.caseDynamic = caseData as NSObject
                                

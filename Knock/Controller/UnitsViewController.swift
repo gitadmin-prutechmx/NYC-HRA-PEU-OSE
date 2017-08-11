@@ -214,6 +214,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
         updateTableViewData()
+        populateClientData()
     }
     
     // Cleanup notifications added in viewDidLoad
