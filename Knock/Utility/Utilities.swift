@@ -589,10 +589,10 @@ class Utilities {
     class func updateCaseIdInAddCase(caseDataDict: [String:AnyObject]){
         
         let iOSCaseId = caseDataDict["iOSCaseId"] as! String?
-
+        let caseId = caseDataDict["caseId"] as! String?
         
         if(SalesforceConnection.caseId == iOSCaseId){
-            SalesforceConnection.caseId =  iOSCaseId!
+            SalesforceConnection.caseId =  caseId!
             print("caseId updated")
         }
         
@@ -1478,6 +1478,7 @@ class Utilities {
                     let assignmentId = assignmentObject.id!
                     let surveyId = surveyData["surveyId"] as? String  ?? ""
                     let surveyName = surveyData["surveyName"] as? String  ?? ""
+                    let isDefault = surveyData["isDefault"] as? Bool  ?? false
                     
                     let convertedJsonString = Utilities.jsonToString(json: surveyData as AnyObject)
                     
@@ -1489,7 +1490,12 @@ class Utilities {
                     surveyObject.surveyName = surveyName
                     surveyObject.surveyQuestionData = convertedJsonString
                     
+                    surveyObject.isDefault = "true"
                     
+                    //surveyObject.defaultSurvey = String(isDefault)
+                  
+                    
+                    //"isDefault":false
                     
                     appDelegate.saveContext()
                 }

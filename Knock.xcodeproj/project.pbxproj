@@ -30,8 +30,6 @@
 		5D5291C31F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */; };
 		5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */; };
 		5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */; };
-		5D5291C81F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AC1F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift */; };
-		5D5291C91F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291AD1F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift */; };
 		5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */; };
 		5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */; };
 		5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */; };
@@ -170,8 +168,6 @@
 		5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291AC1F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyQuestion+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291AD1F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyQuestion+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -400,8 +396,6 @@
 				5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */,
 				5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */,
 				5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */,
-				5D5291AC1F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift */,
-				5D5291AD1F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift */,
 				5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */,
 				5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */,
 				5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */,
@@ -868,7 +862,6 @@
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
 				5D65D4DE1F3015EE00302CE8 /* IssueViewController.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
-				5D5291C81F0D3BCF00D5645F /* SurveyQuestion+CoreDataClass.swift in Sources */,
 				5D52F94E1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift in Sources */,
 				5DE3C99D1EF7A90500012C47 /* SurveyCollectionViewCell.swift in Sources */,
 				5DE3C9751EF0241900012C47 /* AssignmentDO.swift in Sources */,
@@ -895,7 +888,6 @@
 				5D65D4DA1F2E45A900302CE8 /* CaseConfigTableViewController.swift in Sources */,
 				5D5291C31F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift in Sources */,
 				5DA15B3F1F29D01600EB90DC /* InTakeViewController.swift in Sources */,
-				5D5291C91F0D3BCF00D5645F /* SurveyQuestion+CoreDataProperties.swift in Sources */,
 				5D1BD4F71F067FB100C8FAF5 /* GaugeView.swift in Sources */,
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,
 				5D4C4E661F3C454500284725 /* CaseViewController.swift in Sources */,

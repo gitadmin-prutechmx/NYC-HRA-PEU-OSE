@@ -554,7 +554,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     func getDefaultSurvey(){
       
         
-        let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
+        let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "assignmentId == %@ && isDefault == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: "true",isPredicate:true) as! [SurveyQuestion]
         
         
         if(surveyQuestionResults.count > 0){
@@ -566,6 +566,11 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
                // return selectedSurveyId
 
+        }
+        else{
+            SalesforceConnection.surveyId = ""
+            
+            SalesforceConnection.surveyName = ""
         }
         
        // return ""

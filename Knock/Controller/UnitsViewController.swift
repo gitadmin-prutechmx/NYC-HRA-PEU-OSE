@@ -831,8 +831,20 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         let completionHandler:(MoreOptionsViewController)->Void = { moreOptionVC in
             
-            //self.showSurveyWizard()
-            SurveyUtility.showSurvey()
+            if(SalesforceConnection.surveyId.isEmpty){
+                
+                self.view.makeToast("There is no default survey.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        print("completion from tap")
+                    } else {
+                        print("completion without tap")
+                    }
+                }
+                
+            }
+            else{
+                SurveyUtility.showSurvey()
+            }
             print("completed for \(moreOptionVC)")
         }
         moreOptionVC.completionHandler=completionHandler
