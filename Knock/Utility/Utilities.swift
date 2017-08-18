@@ -15,6 +15,12 @@ import Toast_Swift
 
 class Utilities {
     
+    static let inProgressSurvey:String = "InProgress"
+    static let completeSurvey:String = "Complete"
+    
+    static var inProgressSurveyIds = [String]()
+    static var completeSurveyIds = [String]()
+    
     static var caseActionStatus:String = ""
     static var issueActionStatus:String = ""
     
@@ -533,7 +539,7 @@ class Utilities {
         
         let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
         
-        let surveyResResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "edit",predicateValue2: assignmentLocUnitId,isPredicate:true) as! [SurveyResponse]
+        let surveyResResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "Complete",predicateValue2: assignmentLocUnitId,isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResults.count > 0){
             
@@ -983,6 +989,30 @@ class Utilities {
         }
     }
     
+    class func setInProgressCompleteSurveyIds(){
+        
+        
+        let surveyResponseResults =
+            ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse" , isPredicate:false) as! [SurveyResponse]
+        
+        if(surveyResponseResults.count > 0){
+            for surveyResponseResult in surveyResponseResults{
+                if let status = surveyResponseResult.actionStatus
+                {
+                    if status == Utilities.inProgressSurvey{
+                        Utilities.inProgressSurveyIds.append(surveyResponseResult.surveyId!)
+                    }
+                    else{
+                        Utilities.completeSurveyIds.append(surveyResponseResult.surveyId!)
+                    }
+                }
+                
+            }
+        }
+
+        
+    }
+    
     
     class func fetchAllDataFromSalesforce(loginViewController:LoginViewController?=nil){
         
@@ -1016,7 +1046,7 @@ class Utilities {
                             
                             SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.caseConfiguration, methodType:"GET"){ caseData in
                                 
-                                
+                               
                                 
                                 updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1,caseJsonData:caseData.1)
                                 
@@ -1134,7 +1164,15 @@ class Utilities {
     
     class func updateDashBoard(assignmentJsonData:[String:AnyObject],chartJsonData:[String:AnyObject],pickListJsonData:[String:AnyObject],caseJsonData:[String:AnyObject]){
         
+        //first take surveyIds which is inprogress and complete state
+        //delete only those surveyIds(surveyquestion) which is complete
+        //now add only those whose surveyId does not contain inprogress surveyids
         
+        //Reset and fetch inprogres survey ids
+//        Utilities.inProgressSurveyIds = []
+//        Utilities.completeSurveyIds = []
+//        setInProgressCompleteSurveyIds()
+//        
         
         ManageCoreData.DeleteAllDataFromEntities()
         
@@ -1269,6 +1307,8 @@ class Utilities {
         SalesforceConfig.currentUserExternalId = jsonObject["externalId"] as? String  ?? ""
         SalesforceConfig.currentUserEmail = jsonObject["email"] as? String  ?? ""
         
+        SalesforceConfig.currentContactName = jsonObject["contactName"] as? String  ?? ""
+        
         
         SalesforceConfig.currentBaseMapUrl = jsonObject["esriBaseMapLink"] as? String  ?? ""
         SalesforceConfig.currentFeatureLayerUrl = jsonObject["esriLayerLink"] as? String  ?? ""
@@ -1299,6 +1339,7 @@ class Utilities {
             objUserInfo.contactEmail = SalesforceConfig.currentUserEmail
             objUserInfo.userName = SalesforceConfig.userName
             objUserInfo.password = try! SalesforceConfig.password.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
+            objUserInfo.contactName = SalesforceConfig.currentContactName
             
             objUserInfo.passwordExpDate = dateAfterThreeDays
             
@@ -1318,6 +1359,12 @@ class Utilities {
             SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
             SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
             SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
+            
+            if let contactName = userInfoData[0].contactName{
+                
+                SalesforceConfig.currentContactName = contactName
+            }
+            
             
             
         }
@@ -1495,10 +1542,12 @@ class Utilities {
                     //surveyObject.defaultSurvey = String(isDefault)
                   
                     
-                    //"isDefault":false
+                     appDelegate.saveContext()
+//                    if(!Utilities.inProgressSurveyIds.contains(surveyId)){
+//                        appDelegate.saveContext()
+//                    }
                     
-                    appDelegate.saveContext()
-                }
+            }
                 
                 
                 

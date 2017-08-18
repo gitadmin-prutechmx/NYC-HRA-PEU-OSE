@@ -75,19 +75,18 @@ class SettingsTableViewController: UITableViewController
             
             syncTimeSlider.value = Float(userSettingData[0].offlineSyncTime!)!
             
-            if let backgroundDate = userSettingData[0].backgroundTime{
-                dpShowDate.date = backgroundDate as Date
-                
-                TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
-            }
-            else{
-                dpShowDate.date = Date()
-                
-                TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
-            }
-            
-            
-            //userSettingData[0].
+//            if let backgroundDate = userSettingData[0].backgroundTime{
+//                dpShowDate.date = backgroundDate as Date
+//                
+//                TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
+//            }
+//            else{
+//                dpShowDate.date = Date()
+//                
+//                TimeLbl.text = getBackGroundTime(bgDate: dpShowDate.date)
+//            }
+//            
+           
             
             syncTimeLbl.text = userSettingData[0].offlineSyncTime!
         }
@@ -100,7 +99,7 @@ class SettingsTableViewController: UITableViewController
         
         updateObjectDic["offlineSyncTime"] = syncTimeLbl.text! as AnyObject?
         
-        updateObjectDic["backgroundTime"] = dpShowDate.date as AnyObject?
+       // updateObjectDic["backgroundTime"] = dpShowDate.date as AnyObject?
         
         
         ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
@@ -108,12 +107,7 @@ class SettingsTableViewController: UITableViewController
     
     
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-        //self.navigationController?.navigationBarHidden = false
-        //  self.StyleNavBar()
-        
-    }
+    
     
     
     
@@ -212,7 +206,7 @@ class SettingsTableViewController: UITableViewController
         
         self.view.makeToast("Settings saved successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
-            Utilities.startBackgroundSync()
+           // Utilities.startBackgroundSync()
             
             self.dismiss(animated: true, completion: nil)
             

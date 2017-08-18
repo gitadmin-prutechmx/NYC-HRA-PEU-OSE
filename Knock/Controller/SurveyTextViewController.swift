@@ -98,7 +98,8 @@ class SurveyTextViewController: UIViewController {
             Utilities.isExitFromSurvey = true
             Utilities.isSubmitSurvey = false
             
-            SurveyUtility.saveInProgressSurveyToCoreData()
+            SurveyUtility.saveInProgressSurveyToCoreData(surveyStatus: Utilities.inProgressSurvey)
+
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
 
             self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)

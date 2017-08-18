@@ -88,14 +88,11 @@ class SyncUtility{
         
         let locGroup = DispatchGroup()
         
-        
-        
+
         var locDict:[String:String] = [:]
         var editLoc : [String:String] = [:]
         
-        
-        
-        
+
         
         if( editLocationResultsArr.count>0){
             
@@ -109,8 +106,7 @@ class SyncUtility{
                 
                 editLoc["location"] = Utilities.encryptedParams(dictParameters: locDict as AnyObject)
                 
-                
-                
+             
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: editLoc){ jsonData in
                     

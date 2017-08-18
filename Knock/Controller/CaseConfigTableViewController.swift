@@ -1082,7 +1082,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         caseObject.caseStatus = "Open"
         
         caseObject.caseOwnerId = SalesforceConnection.salesforceUserId
-        caseObject.caseOwner = "Nik Samajdwar"//SalesforceConfig.currentU
+        caseObject.caseOwner = SalesforceConfig.currentContactName
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"

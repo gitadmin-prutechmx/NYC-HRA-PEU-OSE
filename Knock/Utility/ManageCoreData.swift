@@ -271,24 +271,37 @@ class ManageCoreData{
     }
     
     
-    static func deleteSurveyResponseRecord(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
+    static func deleteRecord(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SurveyResponse")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         
         if(isPredicate){
             fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
         }
        
-        //
+      
         
         let result = try? context.fetch(fetchRequest)
         
-        let resultData = result as! [SurveyResponse]
+     
         
-        for object in resultData {
-            context.delete(object)
+        if(salesforceEntityName == "SurveyResponse"){
+            let resultData = result as! [SurveyResponse]
+            
+            for object in resultData {
+                context.delete(object)
+            }
+            
         }
-        
+        else if(salesforceEntityName == "SurveyQuestion"){
+            let resultData = result as! [SurveyQuestion]
+            
+            for object in resultData {
+                context.delete(object)
+            }
+            
+        }
+       
         
         do{
             
@@ -337,7 +350,14 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "Event")
         DeleteAllRecords(salesforceEntityName: "Assignment")
         DeleteAllRecords(salesforceEntityName: "Location")
+        
+//        for surveyId in Utilities.completeSurveyIds{
+//            deleteRecord(salesforceEntityName: "SurveyQuestion", predicateFormat: "surveyId == %@", predicateValue: surveyId, isPredicate: true)
+//        }
+//      
+        
         DeleteAllRecords(salesforceEntityName: "SurveyQuestion")
+        
         DeleteAllRecords(salesforceEntityName: "Chart")
         
         DeleteAllRecords(salesforceEntityName: "Unit")
@@ -353,9 +373,9 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "AddCase")
         
         
-        deleteSurveyResponseRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "actionStatus == %@", predicateValue: "Done", isPredicate: true)
+        deleteRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "actionStatus == %@", predicateValue: "Done", isPredicate: true)
         
-        //DeleteAllRecords(salesforceEntityName: "SurveyResponse")
+       // DeleteAllRecords(salesforceEntityName: "SurveyResponse")
         
         //DeleteAllRecords(salesforceEntityName: "TenantAssign")
         DeleteAllRecords(salesforceEntityName: "EditUnit")

@@ -17,8 +17,9 @@ class SurveyUtility {
     class func showSurvey(){
         
         let surveyQuestionResults =
-            ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@ AND assignmentId = %@" ,predicateValue: SalesforceConnection.surveyId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
+            ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@ AND assignmentId == %@" ,predicateValue: SalesforceConnection.surveyId,predicateValue2:SalesforceConnection.assignmentId,isPredicate:true) as! [SurveyQuestion]
         
+      
         if(surveyQuestionResults.count == 1){
             
             
@@ -389,7 +390,7 @@ class SurveyUtility {
     
     class func getSurveyFromCoreData() -> SurveyResponse?{
         
-        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: "InProgress", isPredicate:true) as! [SurveyResponse]
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count > 0){
             return surveyResResultsArr[0]
@@ -399,15 +400,20 @@ class SurveyUtility {
     }
     
     
-    class func saveInProgressSurveyToCoreData(){
+    class func saveInProgressSurveyToCoreData(surveyStatus:String?=nil){
         
-        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: "InProgress", isPredicate:true) as! [SurveyResponse]
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count > 0){
-            updateSurveyRes()
+            updateSurveyRes(surveyStatus:surveyStatus)
         }
         else{
-            saveSurveyRes()
+            if(surveyStatus == Utilities.completeSurvey){
+                updateSurveyRes(surveyStatus:surveyStatus)
+                }
+                else{
+                    saveSurveyRes()
+            }
         }
         
     }
@@ -421,7 +427,7 @@ class SurveyUtility {
         surveyResponseObject.unitId = SalesforceConnection.unitId
         surveyResponseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
         
-        surveyResponseObject.actionStatus = "InProgress"
+        surveyResponseObject.actionStatus = Utilities.inProgressSurvey
         
         surveyResponseObject.surveyQuestionIndex = Int64(Utilities.surveyQuestionArrayIndex)
         
@@ -434,7 +440,7 @@ class SurveyUtility {
         
     }
     
-    class func updateSurveyRes(){
+    class func updateSurveyRes(surveyStatus:String?=nil){
         
         var updateObjectDic:[String:AnyObject] = [:]
         
@@ -444,6 +450,8 @@ class SurveyUtility {
         
         
         updateObjectDic["surveyQuestionRes"] = Utilities.SurveyOutput as NSObject?
+        
+        updateObjectDic["actionStatus"] = surveyStatus as NSObject?
         
         //  updateObjectDic["surveySignature "] =
         
@@ -467,7 +475,7 @@ class SurveyUtility {
         
         let completionHandler:(ChooseSurveyViewController)->Void = { chooseSurveyVC in
             
-            ManageCoreData.deleteSurveyResponseRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
+            ManageCoreData.deleteRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
             
             SurveyUtility.showSurvey()
             

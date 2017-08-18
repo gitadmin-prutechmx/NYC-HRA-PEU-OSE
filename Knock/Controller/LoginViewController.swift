@@ -371,6 +371,9 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                     SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
                     SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
                     SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
+                    if let contactName = userInfoData[0].contactName{
+                        SalesforceConfig.currentContactName = contactName
+                    }
                     
                     
                     self.performSegue(withIdentifier: "loginIdentifier", sender: nil)

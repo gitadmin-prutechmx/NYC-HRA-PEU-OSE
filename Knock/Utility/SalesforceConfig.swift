@@ -22,6 +22,7 @@ class SalesforceConfig{
     static var currentUserEmail:String = ""
     static var currentUserContactId:String = ""
     static var currentUserExternalId:String = ""
+    static var currentContactName:String = ""
     
     static var currentBaseMapUrl:String = ""
     static var currentFeatureLayerUrl:String = ""

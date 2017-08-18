@@ -98,12 +98,34 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         tableView.headerView(forSection: 0)
         
-        startTwoMinSyncing()
         
         NotificationCenter.default.addObserver(self, selector:#selector(DashBoardViewController.UpdateAssignmentView), name: NSNotification.Name(rawValue: "UpdateAssignmentView"), object:nil
         )
         
         populateChartData()
+        
+        startBackgroundSyncing()
+        
+    }
+    
+    func startBackgroundSyncing(){
+        // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
+        
+        
+        let syncTime:TimeInterval = TimeInterval(CGFloat(SalesforceConfig.currentOfflineSyncTime * 60))
+        
+        timer = Timer.scheduledTimer(timeInterval: syncTime, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
+    }
+    
+    func checkConnection(){
+        
+        if(Network.reachability?.isReachable)!{
+            
+            if(Utilities.isRefreshBtnClick == false){
+                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: false)
+            }
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -149,25 +171,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     
     
-    func startTwoMinSyncing(){
-        // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
-        
-        
-        let syncTime:TimeInterval = TimeInterval(CGFloat(SalesforceConfig.currentOfflineSyncTime * 60))
-        
-        timer = Timer.scheduledTimer(timeInterval: syncTime, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
-    }
-    
-    func checkConnection(){
-        
-        if(Network.reachability?.isReachable)!{
-            
-            if(Utilities.isRefreshBtnClick == false){
-                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: false)
-            }
-        }
-        
-    }
+
     
     
     override func viewWillAppear(_ animated: Bool) {

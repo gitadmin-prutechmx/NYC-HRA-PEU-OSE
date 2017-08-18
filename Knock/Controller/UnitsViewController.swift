@@ -209,9 +209,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         if(Utilities.isSubmitSurvey){
             updateSurveyStatus(status:"Completed")
         }
-        else{
-            updateSurveyStatus(status:"InProgress")
+        else if(Utilities.isExitFromSurvey){
+            updateSurveyStatus(status:Utilities.inProgressSurvey)
         }
+       
         
         updateTableViewData()
         populateClientData()
@@ -271,6 +272,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
+    var surveyResDict:[String:String] = [:]
+    
     var editUnitDict: [String:EditUnitDO] = [:]
     var tenantDict: [String:String] = [:]
     var countTenants:Int  = 1
@@ -327,6 +330,26 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
     }
+    
+    func createInProgressSurveyResponseDictionary(){
+        
+        
+        let surveyResponseResults =  ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@ ",predicateValue: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
+        
+        if(surveyResponseResults.count > 0){
+            
+            for surveyResponseData in surveyResponseResults{
+                
+                if surveyResDict[surveyResponseData.unitId!] == nil{
+                    surveyResDict[surveyResponseData.unitId!] = surveyResponseData.actionStatus!
+                }
+                
+                
+            }
+        }
+        
+    }
+
     
     
     
@@ -457,9 +480,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         editUnitDict = [:]
         tenantDict = [:]
+        surveyResDict = [:]
         
         createEditUnitDictionary()
         createTenantDictionary()
+        createInProgressSurveyResponseDictionary()
         
         let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@ AND assignmentLocId == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,predicateValue3: SalesforceConnection.assignmentLocationId, isPredicate:true) as! [Unit]
         
@@ -691,15 +716,24 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
             }
             
+            
             if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
                 cell.surveyStatus.image = UIImage(named: "Complete")
             }
-            else if(UnitDataArray[indexPath.row].surveyStatus == "InProgress"){
+            else if(UnitDataArray[indexPath.row].surveyStatus == Utilities.inProgressSurvey){
                 cell.surveyStatus.image = UIImage(named: "InProgress")
             }
             else
             {
                 cell.surveyStatus.image = nil
+            }
+            
+            
+            let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
+           
+            
+            if(survetResObject == Utilities.inProgressSurvey){
+                cell.surveyStatus.image = UIImage(named: "InProgress")
             }
             
             cell.unitId.text = UnitDataArray[indexPath.row].unitId
@@ -879,8 +913,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
                 
+            
                 showEditUnit()
-                
+            
                 /*
                  let isSurveyAssigned = getSurveyUnitResults()
                  

@@ -126,8 +126,7 @@ class SubmitSurveyViewController: UIViewController {
             
             Utilities.surveyQuestionArrayIndex = Utilities.surveyQuestionArrayIndex + 1
             
-           // SurveyUtility.saveInProgressSurveyToCoreData()
-            
+           
            
             self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
             
@@ -249,7 +248,7 @@ class SubmitSurveyViewController: UIViewController {
         //        print(surveyResponseStr)
         //
         
-         let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: "InProgress", isPredicate:true) as! [SurveyResponse]
+         let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count>0){
             updateSurveyToCoreData()
@@ -309,7 +308,7 @@ class SubmitSurveyViewController: UIViewController {
         surveyResponseObject.unitId = SalesforceConnection.unitId
         surveyResponseObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
         
-        surveyResponseObject.actionStatus = "Complete"
+        surveyResponseObject.actionStatus = Utilities.completeSurvey
         surveyResponseObject.surveySignature = base64String
         
         surveyResponseObject.surveyQuestionRes = questionArray as NSObject?
@@ -329,7 +328,7 @@ class SubmitSurveyViewController: UIViewController {
         
         updateObjectDic["surveyQuestionRes"] = questionArray as NSObject?
         
-        updateObjectDic["actionStatus"] = "Complete" as AnyObject?
+        updateObjectDic["actionStatus"] = Utilities.completeSurvey as AnyObject?
         updateObjectDic["surveySignature"] = base64String as AnyObject?
 
         
@@ -448,7 +447,7 @@ class SubmitSurveyViewController: UIViewController {
             }
             else{
                 
-                SurveyUtility.saveInProgressSurveyToCoreData()
+                SurveyUtility.saveInProgressSurveyToCoreData(surveyStatus: Utilities.inProgressSurvey)
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
 
