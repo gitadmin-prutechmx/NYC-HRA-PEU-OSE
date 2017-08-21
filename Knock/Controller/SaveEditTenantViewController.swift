@@ -441,57 +441,6 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     }
     
     
-    func pushCreateEditTenantDataToSalesforce(message:String){
-        
-        
-        
-        var updateTenant : [String:String] = [:]
-        
-        
-        
-        updateTenant["tenant"] = Utilities.encryptedParams(dictParameters: editTenantDict as AnyObject)
-        
-        
-        
-        
-        SVProgressHUD.show(withStatus: "Saving tenant...", maskType: SVProgressHUDMaskType.gradient)
-        
-        SalesforceConnection.loginToSalesforce() { response in
-            
-            if(response)
-            {
-                
-                
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createTenant, params: updateTenant){ jsonData in
-                    
-                    SVProgressHUD.dismiss()
-                    
-                    //Utilities.parseTenantResponse(jsonObject: jsonData.1)
-                    
-                    
-                    // .parseResponse(jsonObject: jsonData.1)
-                    
-                    self.view.makeToast(message, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
-                        
-                        
-                        
-                        self.navigationController?.popViewController(animated: true);
-                        
-                        
-                    }
-                    
-                    
-                    
-                }
-            }
-            
-        }
-        
-    }
-    
-    
     
     
     

@@ -141,7 +141,7 @@ class SalesforceConnection{
             do {
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
             } catch {
-                // No-op
+                
             }
         }
         else{
@@ -153,15 +153,19 @@ class SalesforceConnection{
         
         
         
-        Alamofire.request(urlRequest).validate().responseString{ response in
+        Alamofire.request(urlRequest).validate().responseJSON{ response in
             switch response.result {
                 
             case .success:
-                let decryptData =  Utilities.decryptJsonData(jsonEncryptString: response.result.value!)
-                print(decryptData)
-                let jsonData = Utilities.convertToJSON(text: decryptData)
-                
-                completion(true, jsonData as! Dictionary<String, AnyObject>)
+                if response.result.value != nil {
+                    
+                    completion(true, response.result.value as! Dictionary<String, AnyObject>)
+                }
+//                let decryptData =  Utilities.decryptJsonData(jsonEncryptString: response.result.value!)
+//                print(decryptData)
+//                let jsonData = Utilities.convertToJSON(text: decryptData)
+//                
+//                completion(true, jsonData as! Dictionary<String, AnyObject>)
                 
             case .failure(let error):
                 
@@ -190,7 +194,7 @@ class SalesforceConnection{
             do {
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
             } catch {
-                // No-op
+                
             }
         }
         else{

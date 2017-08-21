@@ -725,17 +725,19 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             else
             {
-                cell.surveyStatus.image = nil
+                let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
+                
+                
+                if(survetResObject == Utilities.inProgressSurvey){
+                    cell.surveyStatus.image = UIImage(named: "InProgress")
+                }
+                else{
+                    cell.surveyStatus.image = nil
+                }
             }
             
             
-            let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
-           
-            
-            if(survetResObject == Utilities.inProgressSurvey){
-                cell.surveyStatus.image = UIImage(named: "InProgress")
-            }
-            
+         
             cell.unitId.text = UnitDataArray[indexPath.row].unitId
             
             let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
@@ -911,10 +913,21 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
             
             
-            if("Completed" != UnitDataArray[indexPath.row].surveyStatus){
+            if("Completed" == UnitDataArray[indexPath.row].surveyStatus){
                 
-            
-                showEditUnit()
+                let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitDataTableViewCell
+                
+                currentCell.shake(duration: 0.3, pathLength: 15)
+                
+                
+                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        print("completion from tap")
+                    } else {
+                        print("completion without tap")
+                    }
+                }
+                
             
                 /*
                  let isSurveyAssigned = getSurveyUnitResults()
@@ -944,18 +957,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
             else{
                 
-                let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitDataTableViewCell
+                showEditUnit()
                 
-                currentCell.shake(duration: 0.3, pathLength: 15)
-                
-                
-                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        print("completion from tap")
-                    } else {
-                        print("completion without tap")
-                    }
-                }
+            
                 
             }
             

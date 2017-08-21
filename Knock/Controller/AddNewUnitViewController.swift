@@ -206,62 +206,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         
     }
     
-    func pushAddNewUnitDataToSalesforce(){
-        var saveUnit : [String:String] = [:]
         
-        saveUnit["unit"] = Utilities.encryptedParams(dictParameters: saveUnitDict as AnyObject)
-        
-        
-        
-        SVProgressHUD.show(withStatus: "Saving Unit...", maskType: SVProgressHUDMaskType.gradient)
-        
-        
-        SalesforceConnection.loginToSalesforce() { response in
-            
-            if(response)
-                
-            {
-                
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createUnit, params: saveUnit){ jsonData in
-                    
-                    
-                    
-                    SVProgressHUD.dismiss()
-                    
-                    let isError = Utilities.parseAddNewUnitResponse(jsonObject: jsonData.1)
-                    
-                    if(isError==false){
-                        self.view.makeToast("Unit information has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                            
-                            // Utilities.isSubmitSurvey = false
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                            
-                            self.dismiss(animated: true, completion: nil)
-                            
-                        }
-                        
-                        
-                    }
-                    else{
-                        
-                        Utilities.showErrorMessage(toastView: self.view, message: "Error while updating Tenant info", delay: 1.0, toastPosition: .center)
-                        
-                        
-                    }
-                    
-                    
-                    
-                }
-                
-            }
-            
-            
-        }
-    }
-    
-    
-    
-    
     
     func saveNewlyCreatedUnitData(){
         let unitObject = Unit(context: context)

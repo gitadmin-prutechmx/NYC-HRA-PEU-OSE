@@ -104,8 +104,12 @@ class SyncUtility{
                 
                 
                 
-                editLoc["location"] = Utilities.encryptedParams(dictParameters: locDict as AnyObject)
+                editLoc["location"] = Utilities.jsonToString(json: locDict as AnyObject)!
+                //Utilities.encryptedParams(dictParameters: locDict as AnyObject)
                 
+                
+                
+
              
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: editLoc){ jsonData in
@@ -186,7 +190,8 @@ class SyncUtility{
                 
                 
                 
-                saveUnit["unit"] = Utilities.encryptedParams(dictParameters: unitDict as AnyObject)
+                saveUnit["unit"] = Utilities.jsonToString(json: unitDict as AnyObject)!
+                //Utilities.encryptedParams(dictParameters: unitDict as AnyObject)
                 
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createUnit, params: saveUnit){ jsonData in
@@ -264,7 +269,8 @@ class SyncUtility{
                 
                 
                 
-                editTenant["tenant"] = Utilities.encryptedParams(dictParameters: tenantDict as AnyObject)
+                editTenant["tenant"] = Utilities.jsonToString(json: tenantDict as AnyObject)!
+                //Utilities.encryptedParams(dictParameters: tenantDict as AnyObject)
                 
                 
                 
@@ -347,10 +353,11 @@ class SyncUtility{
                 
                 
                 
-                surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+               // surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
                 
                 
-                surveyResponseParam["surveyResponseFile"] = surveyResponseStr
+                surveyResponseParam["surveyResponseFile"] = formatString
+                //surveyResponseStr
                 
                 
                 
@@ -424,7 +431,8 @@ class SyncUtility{
                 
                 
                 
-                updateUnit["unit"] = Utilities.encryptedParams(dictParameters: editUnitDict as AnyObject)
+                updateUnit["unit"] = Utilities.jsonToString(json: editUnitDict as AnyObject)!
+                //Utilities.encryptedParams(dictParameters: editUnitDict as AnyObject)
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
                     

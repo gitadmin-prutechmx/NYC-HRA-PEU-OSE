@@ -87,6 +87,10 @@
         <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="eventAssignementR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentEventR" inverseEntity="Assignment" syncable="YES"/>
     </entity>
+    <entity name="IssueNotes" representedClassName="IssueNotes" syncable="YES" codeGenerationType="class">
+        <attribute name="issueId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Issues" representedClassName="Issues" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
@@ -223,5 +227,6 @@
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="150"/>
+        <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="75"/>
     </elements>
 </model>

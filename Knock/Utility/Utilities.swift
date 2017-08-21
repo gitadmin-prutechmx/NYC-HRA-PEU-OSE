@@ -196,15 +196,15 @@ class Utilities {
         
     }
     
-    class func encryptedParams(dictParameters:AnyObject)-> String{
-        let convertedString = Utilities.jsonToString(json: dictParameters as AnyObject)
-        
-        
-        
-        let encryptSaveUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        return encryptSaveUnitStr!
-    }
+//    class func encryptedParams(dictParameters:AnyObject)-> String{
+//        let convertedString = Utilities.jsonToString(json: dictParameters as AnyObject)
+//        
+//        
+//        
+//        let encryptSaveUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+//        
+//        return encryptSaveUnitStr!
+//    }
     
     class func showErrorMessage(toastView:UIView,message:String,delay:TimeInterval,toastPosition:ToastPosition){
         
@@ -1024,16 +1024,20 @@ class Utilities {
         
         SalesforceConnection.loginToSalesforce() { response in
             
-            let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+          //  let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
             
-            userParams["userId"] = encryptUserIdStr
+         //   userParams["userId"] = encryptUserIdStr
+            
+            userParams["userId"] = SalesforceConnection.salesforceUserId
             
             
             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams){ userInfoJsonData in
                 
                 Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
                 
-                emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+               // emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+                
+                 emailParams["email"] =  SalesforceConfig.currentUserEmail
                 
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
@@ -1044,7 +1048,7 @@ class Utilities {
                         SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType:"GET"){ picklistData in
                             
                             
-                            SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.caseConfiguration, methodType:"GET"){ caseData in
+                            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.caseConfiguration, methodType:"GET"){ caseData in
                                 
                                
                                 
@@ -1829,7 +1833,18 @@ class Utilities {
                                 issueObject.notes = issueInfo["issueNotes"] as? String  ?? ""
                                 issueObject.contactName = issueInfo["contactName"] as? String  ?? ""
                                 
+                                
                                 appDelegate.saveContext()
+                                
+                                guard let issueNotesResult = issueInfo["issueNotesList"] as? [[String: AnyObject]]  else { break }
+                               
+                                for issueNotesInfo in issueNotesResult{
+                                    
+                                  let issueNoteObject = IssueNotes(context: context)
+                                    issueNoteObject.issueId = issueObject.issueId
+                                    issueNoteObject.notes = issueNotesInfo["description"] as? String  ?? ""
+                                    appDelegate.saveContext()
+                                }
                                 
                             }
                             
