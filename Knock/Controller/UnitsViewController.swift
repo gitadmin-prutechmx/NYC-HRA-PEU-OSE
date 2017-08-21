@@ -33,6 +33,7 @@ struct ClientDataStruct
     var unitId:String = ""
     var assignmentLocUnitId:String = ""
     var unitName:String = ""
+    var surveyStatus:String = ""
 }
 
 
@@ -87,11 +88,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     {
         super.viewDidLoad()
         
-         Utilities.currentUnitClientPage = "Unit"
+        Utilities.currentUnitClientPage = "Unit"
         
         tblClient.register(UINib(nibName: "ClientDataTableViewCell", bundle: nil), forCellReuseIdentifier: "clientCellDataId")
         
-         tblUnits.register(UINib(nibName: "UnitDataTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCellIdentifier")
+        tblUnits.register(UINib(nibName: "UnitDataTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCellIdentifier")
         
         if self.revealViewController() != nil {
             
@@ -212,7 +213,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         else if(Utilities.isExitFromSurvey){
             updateSurveyStatus(status:Utilities.inProgressSurvey)
         }
-       
+        
         
         updateTableViewData()
         populateClientData()
@@ -248,12 +249,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     func updateSurveyStatus(status:String?){
         var updateObjectDic:[String:String] = [:]
         
-//        _ = Date()
-//        let formatter = DateFormatter()
-//        
-//        formatter.dateFormat = "MM/dd/yyyy"
-//        
-//        
+        //        _ = Date()
+        //        let formatter = DateFormatter()
+        //
+        //        formatter.dateFormat = "MM/dd/yyyy"
+        //
+        //
         
         
         updateObjectDic["surveyStatus"] = status
@@ -349,7 +350,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
     }
-
+    
     
     
     
@@ -380,7 +381,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         
     }
-
+    
     
     
     
@@ -396,7 +397,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             for unitClientData in unitClientResults{
                 
                 if unitClientDict[unitClientData.id!] == nil{
-                    unitClientDict[unitClientData.id!] = UnitDO(unitId: unitClientData.id!, unitName: unitClientData.name!)
+                    var unitSurveyStatus:String = ""
+                    if let surStatus = unitClientData.surveyStatus{
+                        unitSurveyStatus = surStatus
+                    }
+                    
+                    unitClientDict[unitClientData.id!] = UnitDO(unitId: unitClientData.id!, unitName: unitClientData.name!,surveyStatus: unitSurveyStatus)
                 }
                 
                 
@@ -428,7 +434,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 let unitObject = unitClientDict[tenantData.unitId!]
                 
-                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!)
+                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!)
                 
                 clientDataArray.append(objectTenantStruct)
                 
@@ -452,14 +458,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
         }
         else{
-                if(Utilities.currentClientSortingTypeAscending){
-                    clientDataArray = clientDataArray.sorted { $0.unitName < $1.unitName }
-                }
-                else{
-                    clientDataArray = clientDataArray.sorted { $0.unitName > $1.unitName }
-                }
+            if(Utilities.currentClientSortingTypeAscending){
+                clientDataArray = clientDataArray.sorted { $0.unitName < $1.unitName }
+            }
+            else{
+                clientDataArray = clientDataArray.sorted { $0.unitName > $1.unitName }
+            }
         }
-       
+        
         
         DispatchQueue.main.async {
             
@@ -467,7 +473,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             //self.viewDidLayoutSubviews()
         }
         
-
+        
         
         
     }
@@ -508,10 +514,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 UnitDataArray = UnitDataArray.sorted { $0.unitName > $1.unitName }
             }
         }
-
         
         
-      //  UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
+        
+        //  UnitDataArray = UnitDataArray.sorted { $0.unitName < $1.unitName }
         
         
         
@@ -698,10 +704,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "unitCellIdentifier", for: indexPath as IndexPath) as! UnitDataTableViewCell
             
-                       
+            
             cell.unit.text = UnitDataArray[indexPath.row].unitName
             
-
+            
             
             cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
             
@@ -711,8 +717,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             else
             {
                 cell.sync.image = nil
-               // cell.sync.image = UIImage(named: "transperntImg")
-
+                // cell.sync.image = UIImage(named: "transperntImg")
+                
                 
             }
             
@@ -737,7 +743,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             
             
-         
+            
             cell.unitId.text = UnitDataArray[indexPath.row].unitId
             
             let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
@@ -750,9 +756,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.noOfTenants.text = "0"
             }
             
-
             
-
+            
+            
             
             if(editUnitObject?.attempt == "Yes"){
                 cell.attempt.image = UIImage(named: "Complete")
@@ -798,7 +804,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "clientCellDataId", for: indexPath) as! ClientDataTableViewCell
             
-           // cell.backgroundColor = UIColor.clear
+            // cell.backgroundColor = UIColor.clear
             
             cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
             cell.lblLastName.text = clientDataArray[indexPath.row].lastName
@@ -814,14 +820,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             
             
-           
+            
             
             cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
             cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
             cell.lblSyncDate.text = ""
-
-           // cell.unitId.text = clientDataArray[indexPath.row].unitId
-       
+            
+            // cell.unitId.text = clientDataArray[indexPath.row].unitId
+            
             
             
             
@@ -928,7 +934,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     }
                 }
                 
-            
+                
                 /*
                  let isSurveyAssigned = getSurveyUnitResults()
                  
@@ -959,7 +965,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 showEditUnit()
                 
-            
+                
                 
             }
             
@@ -967,13 +973,33 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
         else{
             
-            SalesforceConnection.unitId =  clientDataArray[indexPath.row].unitId
-            
-            SalesforceConnection.unitName =  (unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
-            
-            SalesforceConnection.assignmentLocationUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
-            
-            showEditUnit()
+            if("Completed" == clientDataArray[indexPath.row].surveyStatus){
+                
+                 let currentCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) as! ClientDataTableViewCell
+                
+                
+                currentCell.shake(duration: 0.3, pathLength: 15)
+                
+                
+                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        print("completion from tap")
+                    } else {
+                        print("completion without tap")
+                    }
+                }
+                
+            }
+            else{
+                
+                SalesforceConnection.unitId =  clientDataArray[indexPath.row].unitId
+                
+                SalesforceConnection.unitName =  (unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
+                
+                SalesforceConnection.assignmentLocationUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
+                
+                showEditUnit()
+            }
             
         }
         
@@ -1418,27 +1444,27 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             unitClientSortingVC.setSortingUnitClient{
                 [weak self] (sortingFieldName:String,sortingType:Bool) -> Void in
                 
-               
+                
                 
                 if(Utilities.currentUnitClientPage == "Unit"){
                     
                     Utilities.currentUnitSortingFieldName = sortingFieldName
                     Utilities.currentUnitSortingTypeAscending = sortingType
                     
-
+                    
                     
                     self?.updateTableViewData()
                 }
                 else{
-
+                    
                     Utilities.currentClientSortingFieldName = sortingFieldName
                     Utilities.currentClientSortingTypeAscending = sortingType
                     
-
+                    
                     
                     self?.populateClientData()
                 }
-                                //self?.populateClientData()
+                //self?.populateClientData()
                 
                 print(sortingFieldName)
                 print(sortingType)

@@ -11,10 +11,12 @@ import Foundation
 class UnitDO{
     var unitId:String!
     var unitName:String!
+    var surveyStatus:String!
     
-    init(unitId:String,unitName:String) {
+    init(unitId:String,unitName:String,surveyStatus:String) {
         self.unitId = unitId
-        self.unitName = unitName 
+        self.unitName = unitName
+        self.surveyStatus = surveyStatus
     }
     
 }

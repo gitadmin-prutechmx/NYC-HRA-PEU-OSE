@@ -16,6 +16,13 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     var issueType:String = ""
     
+    @IBOutlet weak var tblViewIssueNotes: UITableView!
+    
+    
+    var issueNotesArray = [String]()
+    
+    @IBOutlet var issueView: UIView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -43,7 +50,9 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         if(SalesforceConnection.currentIssueId != ""){
             fillIssueInfo()
         }
-        
+        else{
+            tblViewIssueNotes.isHidden = true
+        }
         
         
         
@@ -56,12 +65,29 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         if(issueResults.count > 0){
             
-            txtIssueNotes.text = issueResults[0].notes!
+            //txtIssueNotes.text = issueResults[0].notes!
             issueType = issueResults[0].issueType!
         }
         
+        populateIssueNotes()
+        
     }
     
+    
+    func populateIssueNotes(){
+        
+        let issueNotesResults = ManageCoreData.fetchData(salesforceEntityName: "IssueNotes",predicateFormat: "issueId == %@" ,predicateValue: SalesforceConnection.currentIssueId,isPredicate:true) as! [IssueNotes]
+        
+        if(issueNotesResults.count > 0){
+            for issueNote in issueNotesResults{
+                if let note = issueNote.notes{
+                    issueNotesArray.append(note)
+                }
+                
+            }
+            
+        }
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,12 +110,17 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     //Mark: tableview delegets
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if(tableView == tblViewIssueNotes){
+            return issueNotesArray.count
+        }
+        else{
+            return 1
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int
     {
-        return 1
+      return 1
     }
     
     // cell height
@@ -105,39 +136,50 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AddIssueCell")!
-        cell.backgroundColor = UIColor.clear
-        
-        if(Utilities.issueActionStatus == "View"){
-            cell.accessoryType = .none
-        }
-        else{
-            cell.accessoryType = .disclosureIndicator
-        }
-        
-        
-        
-        cell.textLabel?.text = "Issue"
-        cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
-        
-        
-        if(issueType.isEmpty){
-            cell.detailTextLabel?.text = "Select Issue"
-            cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+        if(tableView ==  tblViewIssueNotes){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "notesCell")!
+            cell.textLabel?.text = issueNotesArray[indexPath.row]
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             
+            cell.selectionStyle = .none
+            
+            return cell
         }
+            
         else{
-            cell.detailTextLabel?.text = issueType
-            cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AddIssueCell")!
+            cell.backgroundColor = UIColor.clear
+            
+            if(Utilities.issueActionStatus == "View"){
+                cell.accessoryType = .none
+            }
+            else{
+                cell.accessoryType = .disclosureIndicator
+            }
+            
+            
+            
+            cell.textLabel?.text = "Issue"
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            
+            
+            if(issueType.isEmpty){
+                cell.detailTextLabel?.text = "Select Issue"
+                cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+                
+            }
+            else{
+                cell.detailTextLabel?.text = issueType
+                cell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            }
+            
+            cell.detailTextLabel?.textColor = UIColor.lightGray
+            
+            //let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 21))
+            
+            return cell
         }
-        
-        cell.detailTextLabel?.textColor = UIColor.lightGray
-        
-        //let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 21))
-        
-        return cell
-        
         
         
     }
@@ -161,19 +203,25 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(Utilities.issueActionStatus != "View"){
-            
-            let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
-            
-            pickListVC?.picklistStr = issueTypeStr
-            
-            pickListVC?.pickListProtocol = self
-            pickListVC?.selectedPickListValue = issueType
-            
-            self.navigationController?.pushViewController(pickListVC!, animated: true)
-            
-            tableView.deselectRow(at: indexPath, animated: true)
+        if(tableView !=  tblViewIssueNotes){
+            if(Utilities.issueActionStatus != "View"){
+                
+                let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
+                
+                pickListVC?.picklistStr = issueTypeStr
+                
+                pickListVC?.pickListProtocol = self
+                pickListVC?.selectedPickListValue = issueType
+                
+                self.navigationController?.pushViewController(pickListVC!, animated: true)
+                
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.1
     }
     
     
@@ -219,6 +267,49 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
             
             notes = issueNotes
         }
+        
+        if(issueType == "Select Issue" || issueType.isEmpty){
+            
+            issueView.shake()
+            
+            self.view.makeToast("Please select issue.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+        }
+        
+        if(notes.isEmpty){
+            
+            issueView.shake()
+            
+            self.view.makeToast("Please enter issue notes.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        
         
         var msg:String = ""
         
@@ -279,6 +370,9 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
     }
     
+    // create new issue and then edit that issue
+    
+    //edit issue which is already exist
     
     func updateIssueInCoreData(){
         
@@ -287,17 +381,17 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         //updateObjectDic["id"] = tenantDataDict["tenantId"] as! String?
         
         updateObjectDic["issueType"] = issueType
-        
         updateObjectDic["notes"] = notes
         
         
-        
         let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "issueId == %@" ,predicateValue: SalesforceConnection.currentIssueId,isPredicate:true) as! [Issues]
+        
         
         if(issueResults.count > 0){
             
             if(issueResults[0].actionStatus! == ""){
                 updateObjectDic["actionStatus"] = "edit"
+                
             }
         }
         
