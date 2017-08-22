@@ -39,6 +39,8 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         txtIssueNotes.textColor = UIColor.black
         
+        tblViewIssueNotes.tableFooterView = UIView()
+        
         
         if(Utilities.issueActionStatus == "View"){
             self.navigationItem.rightBarButtonItem = nil
@@ -71,6 +73,9 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         populateIssueNotes()
         
+        if(issueNotesArray.count == 0){
+             tblViewIssueNotes.isHidden = true
+        }
     }
     
     
@@ -220,9 +225,9 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.1
-    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 0.1
+//    }
     
     
     
