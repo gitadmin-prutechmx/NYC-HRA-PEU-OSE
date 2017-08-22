@@ -3866,7 +3866,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edp-JL-FH7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11263" y="-2787"/>
+            <point key="canvasLocation" x="11953" y="-2971"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WgP-JZ-jk7">
@@ -3884,7 +3884,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9kN-u8-Rph" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10809" y="-2812"/>
+            <point key="canvasLocation" x="11244" y="-2874"/>
         </scene>
         <!--UnitSortingViewController-->
         <scene sceneID="as2-OR-Vbx">
@@ -4476,7 +4476,7 @@
                             </textView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PZg-Xr-cF4" userLabel="tblViewIssueNotes">
                                 <rect key="frame" x="16" y="519" width="343" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="notesCell" textLabel="eqQ-sg-bYw" style="IBUITableViewCellStyleDefault" id="3NM-7x-VG5">
                                         <rect key="frame" x="0.0" y="28" width="343" height="44"/>
@@ -4493,6 +4493,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -4540,7 +4541,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ftq-M5-X9Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10144.799999999999" y="-2849.3253373313346"/>
+            <point key="canvasLocation" x="10519" y="-2922"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5tN-VT-FQ4">

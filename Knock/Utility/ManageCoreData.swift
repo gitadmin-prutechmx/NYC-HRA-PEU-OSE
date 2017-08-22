@@ -351,12 +351,12 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "Assignment")
         DeleteAllRecords(salesforceEntityName: "Location")
         
-//        for surveyId in Utilities.completeSurveyIds{
-//            deleteRecord(salesforceEntityName: "SurveyQuestion", predicateFormat: "surveyId == %@", predicateValue: surveyId, isPredicate: true)
-//        }
-//      
+        for surveyId in Utilities.completeSurveyIds{
+            deleteRecord(salesforceEntityName: "SurveyQuestion", predicateFormat: "surveyId == %@", predicateValue: surveyId, isPredicate: true)
+        }
+      
         
-        DeleteAllRecords(salesforceEntityName: "SurveyQuestion")
+        //DeleteAllRecords(salesforceEntityName: "SurveyQuestion")
         
         DeleteAllRecords(salesforceEntityName: "Chart")
         
