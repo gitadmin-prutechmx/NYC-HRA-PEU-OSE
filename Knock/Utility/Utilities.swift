@@ -1016,7 +1016,8 @@ class Utilities {
     
     class func fetchAllDataFromSalesforce(loginViewController:LoginViewController?=nil){
         
-        var emailParams : [String:String] = [:]
+        //var emailParams : [String:String] = [:]
+        var externalIdParams : [String:String] = [:]
         var userParams : [String:String] = [:]
         
         
@@ -1037,13 +1038,14 @@ class Utilities {
                 
                // emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
                 
-                 emailParams["email"] =  SalesforceConfig.currentUserEmail
+                 //emailParams["email"] =  SalesforceConfig.currentUserEmail
                 
+                 externalIdParams["externalId"] = SalesforceConfig.currentUserExternalId
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: emailParams){ assignmentJsonData in
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: externalIdParams){ assignmentJsonData in
                     
                     
-                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: emailParams){ chartJsonData in
+                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: externalIdParams){ chartJsonData in
                         
                         SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType:"GET"){ picklistData in
                             
@@ -1541,9 +1543,9 @@ class Utilities {
                     surveyObject.surveyName = surveyName
                     surveyObject.surveyQuestionData = convertedJsonString
                     
-                    surveyObject.isDefault = "true"
+                    //surveyObject.isDefault = "true"
                     
-                    //surveyObject.defaultSurvey = String(isDefault)
+                    surveyObject.isDefault = String(isDefault)
                   
                     
                      appDelegate.saveContext()
