@@ -189,24 +189,16 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     
     
     
-    
-    //func exitFromSurvey(_: UIBarButtonItem!)  {
     func exitFromSurvey()
     {
-        let msgtitle = "Message"
-        
-        
-        let alertController = UIAlertController(title: "Message", message: "Are you sure want to exit from survey?", preferredStyle: .alert)
-        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
-        
-        
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
-            //Do some stuff
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to exit from survey?", vc: self)
+ 
+        let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
+         
         }
-        alertController.addAction(cancelAction)
+        alertCtrl.addAction(cancelAction)
         
-        let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+        let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             Utilities.isExitFromSurvey = true
             Utilities.isSubmitSurvey = false
@@ -217,35 +209,9 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
 
             self.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
-            
-            //Do some other stuff
+       
         }
-        alertController.addAction(okAction)
-        
-        
-        /* alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-         switch action.style{
-         case .Default:
-         
-         self.performSegueWithIdentifier("unwindToUnit", sender: self)
-         
-         case .Cancel:
-         print("cancel")
-         
-         case .Destructive:
-         print("destructive")
-         }
-         
-         
-         }
-         ))
-         */
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-        
-        
-        
+        alertCtrl.addAction(okAction)
         
     }
     

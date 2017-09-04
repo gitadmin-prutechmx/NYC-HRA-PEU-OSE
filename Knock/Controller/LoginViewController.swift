@@ -237,8 +237,8 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         }
         
         
-        if validation()
-        {
+       // if validation()
+       // {
             if(Network.reachability?.isReachable)!{
                 
                 onlineEnterToDashBoard()
@@ -271,7 +271,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             }
             
             
-        }
+        //}
         
         
     }
@@ -352,11 +352,11 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     
     func offlineEnterToDashBoard(){
         
-        // SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+         SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
-        // SalesforceConfig.password = "peuprutech1234"
+         SalesforceConfig.password = "peuprutech1234"
         
-        SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+       // SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
         userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
         
@@ -367,8 +367,8 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                 
                 let password = try! userInfoData[0].password!.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
                 
-                //if(password == SalesforceConfig.password){
-                if(password == passwordTextField.text!){
+                if(password == SalesforceConfig.password){
+                //if(password == passwordTextField.text!){
                     
                     getSalesforceOrgCredentials()
                     getUserSetting()
@@ -452,14 +452,14 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
         //Need to be handle refresh token as well
         
-        SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+       // SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
-        SalesforceConfig.password = passwordTextField.text!
+       // SalesforceConfig.password = passwordTextField.text!
         
         
-        //SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
-        //SalesforceConfig.password = "peuprutech1234"
+        SalesforceConfig.password = "peuprutech1234"
         
         SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true,controller: self)
         

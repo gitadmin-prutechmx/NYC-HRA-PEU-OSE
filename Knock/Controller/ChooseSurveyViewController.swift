@@ -164,28 +164,20 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
     
     @IBAction func cancel(_ sender: Any) {
         
-        let msgtitle = "Warning"
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure want to exit from survey?", vc: self)
         
-        let alertController = UIAlertController(title: "Warning", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
-        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
-        
-        
-        
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+        let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
             //Do some stuff
         }
-        alertController.addAction(cancelAction)
+        alertCtrl.addAction(cancelAction)
         
-        let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+        let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             self.dismiss(animated: true, completion: nil)
             //Do some other stuff
         }
-        alertController.addAction(okAction)
+        alertCtrl.addAction(okAction)
         
-        
-        self.present(alertController, animated: true, completion: nil)
         
         
         
@@ -195,20 +187,16 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
         
         if(Utilities.SurveyOutput.count > 0 ){
             
-            let msgtitle = "Message"
+            let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to switch survey? Switch to new survey will result to loss of your existing survey data.", vc: self)
             
-            let alertController = UIAlertController(title: "Warning", message: "Are you sure you want to switch survey? Switch to new survey will result to loss of your existing survey data.", preferredStyle: .alert)
-            alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
+
             
-            
-            
-            
-            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+            let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
                 //Do some stuff
             }
-            alertController.addAction(cancelAction)
+            alertCtrl.addAction(cancelAction)
             
-            let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+            let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
                 
                 self.dismiss(animated: true) {
                     
@@ -223,10 +211,8 @@ class ChooseSurveyViewController: UIViewController,UICollectionViewDelegate , UI
                 }
             
             }
-            alertController.addAction(okAction)
+            alertCtrl.addAction(okAction)
             
-            
-            self.present(alertController, animated: true, completion: nil)
             
 
             

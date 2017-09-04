@@ -37,7 +37,7 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     {
         super.viewDidLoad()
         
-        if(SalesforceConnection.caseStatus == "Closed"){
+        if(SalesforceConnection.caseStatus == "Closed" || SalesforceConnection.salesforceUserId != SalesforceConnection.caseOwnerId){
             addIssueBtn.isHidden = true
         }
         

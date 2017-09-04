@@ -346,12 +346,16 @@ class SyncUtility{
                 
                 surveyResponseGroup.enter()
                 
+                responseDict["byContactId"] = surveyResData.contactId! as AnyObject?
+                responseDict["byUserId"] = surveyResData.userId! as AnyObject?
+                
                 responseDict["surveyId"] = surveyResData.surveyId! as AnyObject?
                 responseDict["assignmentLocUnitId"] = surveyResData.assignmentLocUnitId! as AnyObject?
                 //unitid
                 responseDict["QuestionList"] = surveyResData.surveyQuestionRes! as AnyObject?
                 responseDict["signature"] = surveyResData.surveySignature! as AnyObject?
                 
+              
                 formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
                 
                 
@@ -498,7 +502,7 @@ class SyncUtility{
                 
                 caseResponseDict["ContactId"] = caseData.clientId! as AnyObject?
                 
-                caseResponseDict["OwnerId"] =  SalesforceConnection.salesforceUserId as AnyObject?
+                caseResponseDict["OwnerId"] =  caseData.ownerId! as AnyObject?
                 
                 
                 caseJsonDict["iOSCaseId"] = caseData.caseId! as AnyObject?

@@ -63,6 +63,7 @@
 		5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1E1F18F4A200308C05 /* LocationDO.swift */; };
 		5D7603D31F570EEF00ED157E /* EditUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */; };
 		5D7603D41F570EEF00ED157E /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */; };
+		5D7603D61F5D392300ED157E /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D51F5D391900ED157E /* Alert.swift */; };
 		5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */; };
 		5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BFC1F035AFB0045A65D /* Reachability.swift */; };
 		5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */; };
@@ -207,6 +208,7 @@
 		5D757B1E1F18F4A200308C05 /* LocationDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDO.swift; sourceTree = "<group>"; };
 		5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5D7603D51F5D391900ED157E /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		5D8C6BFC1F035AFB0045A65D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingTableViewController.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */,
 				5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */,
 				5DC8C7331F28948700B57044 /* SortingButton.swift */,
+				5D7603D51F5D391900ED157E /* Alert.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -884,6 +887,7 @@
 				5DC8C7321F2892D400B57044 /* UnitSortingViewController.swift in Sources */,
 				5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */,
 				5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */,
+				5D7603D61F5D392300ED157E /* Alert.swift in Sources */,
 				5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */,
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
 				5D65D4DA1F2E45A900302CE8 /* CaseConfigTableViewController.swift in Sources */,

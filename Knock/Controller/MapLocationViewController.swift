@@ -438,7 +438,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                     
                 }
                 else {
-                    SVProgressHUD.showError(withStatus: "No state by that name", maskType: .gradient)
+                    SVProgressHUD.showError(withStatus: "Address does not exist.", maskType: .gradient)
                 }
                 
             }

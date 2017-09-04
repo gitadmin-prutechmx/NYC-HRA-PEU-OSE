@@ -158,31 +158,23 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     @IBAction func cancel(_ sender: Any)
     {
-        let msgtitle = "Message"
+     
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
         
-        let alertController = UIAlertController(title: "Message", message: "Are you sure you want to cancel without saving?", preferredStyle: .alert)
-        
-        alertController.setValue(NSAttributedString(string: msgtitle, attributes: [NSFontAttributeName :  UIFont(name: "Arial", size: 17.0)!, NSForegroundColorAttributeName : UIColor.black]), forKey: "attributedTitle")
-        
-        
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+        let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
             //Do some stuff
         }
-        alertController.addAction(cancelAction)
+        alertCtrl.addAction(cancelAction)
         
-        let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+        let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             
             self.navigationController?.popViewController(animated: true);
             //Do some other stuff
         }
-        alertController.addAction(okAction)
+        alertCtrl.addAction(okAction)
         
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-        
+     
         
         
     }
