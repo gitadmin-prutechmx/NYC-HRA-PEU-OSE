@@ -45,7 +45,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     let status = ["Completed", "In Progress", "Pending"]
     let values = [4.0, 3.0, 3.0]
     
-    var timer = Timer()
+   
     
     override func viewDidLoad()
     {
@@ -104,29 +104,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         populateChartData()
         
-        startBackgroundSyncing()
+        //startBackgroundSyncing()
+        
+        Utilities.startBackgroundSyncing()
         
     }
     
-    func startBackgroundSyncing(){
-        // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
-        
-        
-        let syncTime:TimeInterval = TimeInterval(CGFloat(SalesforceConfig.currentOfflineSyncTime * 60))
-        
-        timer = Timer.scheduledTimer(timeInterval: syncTime, target: self, selector: #selector(DashBoardViewController.checkConnection), userInfo: nil, repeats: true)
-    }
+   
     
-    func checkConnection(){
-        
-        if(Network.reachability?.isReachable)!{
-            
-            if(Utilities.isRefreshBtnClick == false){
-                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: false)
-            }
-        }
-        
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -255,7 +240,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             totalUnitsChart.thickness = 20
             
             //  totalUnitsChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
-            totalUnitsChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
+            totalUnitsChart.labelFont = UIFont.init(name: "Arial", size: 17.0)
             
             totalUnitsChart.labelColor = UIColor.black
             totalUnitsChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
@@ -280,7 +265,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             unitsCompletedChart.thickness = 20
             
             // unitsCompletedChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
-            unitsCompletedChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
+            unitsCompletedChart.labelFont = UIFont.init(name: "Arial", size: 17.0)
             unitsCompletedChart.labelColor = UIColor.black
             unitsCompletedChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             unitsCompletedChart.gaugeColor = chartColor
@@ -304,7 +289,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             noResponseChart.thickness = 20
             
             // noResponseChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
-            noResponseChart.labelFont = UIFont.init(name: "Arial", size: 15.0)
+            noResponseChart.labelFont = UIFont.init(name: "Arial", size: 17.0)
             noResponseChart.labelColor = UIColor.black
             noResponseChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             noResponseChart.gaugeColor = chartColor
@@ -327,7 +312,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             followUpNeededChart.thickness = 20
             
-            followUpNeededChart.labelFont = UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
+            followUpNeededChart.labelFont = UIFont.init(name: "Arial", size: 17.0)//UIFont.systemFont(ofSize: 28, weight: UIFontWeightThin)
             followUpNeededChart.labelColor = UIColor.black
             followUpNeededChart.gaugeBackgroundColor = UIColor(red: CGFloat(204.0/255), green: CGFloat(204.0/255), blue: CGFloat(204.0/255), alpha: 1)
             followUpNeededChart.gaugeColor = chartColor

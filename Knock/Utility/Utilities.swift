@@ -15,6 +15,8 @@ import Toast_Swift
 
 class Utilities {
     
+    static var timer:Timer?
+    
     static let inProgressSurvey:String = "InProgress"
     static let completeSurvey:String = "Complete"
     
@@ -95,6 +97,44 @@ class Utilities {
     
     static var currentLocationRowIndex = 0
     
+    static var offlineSyncTime = 0
+    
+    class func startBackgroundSyncing(){
+        // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
+        
+        
+        let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", isPredicate:false) as! [Setting]
+        
+        if(userSettingData.count > 0){
+            
+       
+            offlineSyncTime = Int(userSettingData[0].offlineSyncTime!)!
+            
+            
+            let syncTime:TimeInterval = TimeInterval(CGFloat(offlineSyncTime * 60))
+            
+            Utilities.timer = Timer.scheduledTimer(timeInterval: syncTime, target: self, selector: #selector(Utilities.checkConnection), userInfo: nil, repeats: true)
+            
+            print("offlineSyncTime")
+            print("Timer initialize")
+        }
+        
+        
+   
+    }
+    
+    @objc class func checkConnection(){
+        
+        if(Network.reachability?.isReachable)!{
+            
+            if(Utilities.isRefreshBtnClick == false){
+               
+                print("\(Utilities.offlineSyncTime) minutes")
+                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: false)
+            }
+        }
+        
+    }
     
     
     class func deleteSkipSurveyData(startingIndex:Int,count:Int){
@@ -513,6 +553,7 @@ class Utilities {
     
     class func parseEditUnit(jsonObject: Dictionary<String, AnyObject>){
         
+    
         let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
         
         let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "edit",predicateValue2: "create",predicateValue3: assignmentLocUnitId,isPredicate:true) as! [EditUnit]
@@ -1232,12 +1273,6 @@ class Utilities {
     }
     
     
-    class func parseUserData(jsonObject: Dictionary<String, AnyObject>){
-        
-        SalesforceConfig.currentUserContactId  = (jsonObject["contactId"] as? String)!
-        SalesforceConfig.currentUserEmail = (jsonObject["Email"] as? String)!
-        SalesforceConfig.currentUserExternalId = (jsonObject["ExternalId"] as? String)!
-    }
     
     
     class func parseChartData(jsonObject: Dictionary<String, AnyObject>){
@@ -1443,25 +1478,25 @@ class Utilities {
         
         
         guard let _ = jsonObject["errorMessage"] as? String,
-            let eventResults = jsonObject["Event"] as? [[String: AnyObject]] else { return }
+            let assignmentObjectResults = jsonObject["AssignmentData"] as? [[String: AnyObject]] else { return }
         
         //need to check location id and unit id
         
-        for eventData in eventResults {
+        for assignmentData in assignmentObjectResults {
             
             let eventObject = Event(context: context)
-            eventObject.id = eventData["eventId"] as? String  ?? ""
-            eventObject.name = eventData["Name"] as? String  ?? ""
-            eventObject.startDate = eventData["startDate"] as? String  ?? ""
-            eventObject.endDate = eventData["endDate"] as? String  ?? ""
+            eventObject.id = assignmentData["eventId"] as? String  ?? ""
+            eventObject.name = assignmentData["eventName"] as? String  ?? ""
+            eventObject.startDate = assignmentData["eventStartDate"] as? String  ?? ""
+            eventObject.endDate = assignmentData["eventEndDate"] as? String  ?? ""
             
             
             
             appDelegate.saveContext()
-            
-            guard let assignmentResults = eventData["Assignment"] as? [[String: AnyObject]]  else { break }
-            
-            for assignmentData in assignmentResults {
+//            
+//            guard let assignmentResults = eventData["Assignment"] as? [[String: AnyObject]]  else { break }
+//            
+//            for assignmentData in assignmentResults {
                 let assignmentObject = Assignment(context: context)
                 assignmentObject.id = assignmentData["assignmentId"] as? String  ?? ""
                 assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""
@@ -1855,7 +1890,7 @@ class Utilities {
                     }
                     
                 }
-            }
+           // }
             
             
             

@@ -26,8 +26,6 @@
 		5D5291BF1F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A31F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift */; };
 		5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */; };
 		5D5291C11F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */; };
-		5D5291C21F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A61F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift */; };
-		5D5291C31F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */; };
 		5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */; };
 		5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */; };
 		5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */; };
@@ -63,6 +61,8 @@
 		5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D757B191F18A38100308C05 /* DownloadProgressView.xib */; };
 		5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */; };
 		5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1E1F18F4A200308C05 /* LocationDO.swift */; };
+		5D7603D31F570EEF00ED157E /* EditUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */; };
+		5D7603D41F570EEF00ED157E /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */; };
 		5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */; };
 		5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BFC1F035AFB0045A65D /* Reachability.swift */; };
 		5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */; };
@@ -164,8 +164,6 @@
 		5D5291A31F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291A61F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -207,6 +205,8 @@
 		5D757B191F18A38100308C05 /* DownloadProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadProgressView.xib; sourceTree = "<group>"; };
 		5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadBaseMap.swift; sourceTree = "<group>"; };
 		5D757B1E1F18F4A200308C05 /* LocationDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDO.swift; sourceTree = "<group>"; };
+		5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		5D8C6BFC1F035AFB0045A65D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		5D97186F1F1B45A800F6A5ED /* SortingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingTableViewController.swift; sourceTree = "<group>"; };
@@ -386,14 +386,14 @@
 		5DADD8791F074F72009CD89E /* GeneratedEntityClass */ = {
 			isa = PBXGroup;
 			children = (
+				5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */,
+				5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */,
 				5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */,
 				5D5291A11F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift */,
 				5D5291A21F0D3BCF00D5645F /* Tenant+CoreDataClass.swift */,
 				5D5291A31F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift */,
 				5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */,
 				5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */,
-				5D5291A61F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift */,
-				5D5291A71F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift */,
 				5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */,
 				5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */,
 				5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */,
@@ -826,7 +826,6 @@
 				5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */,
 				5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */,
 				5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */,
-				5D5291C21F0D3BCF00D5645F /* EditUnit+CoreDataClass.swift in Sources */,
 				5DA15B421F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift in Sources */,
 				5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
@@ -838,6 +837,7 @@
 				5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */,
 				5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */,
 				5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */,
+				5D7603D31F570EEF00ED157E /* EditUnit+CoreDataClass.swift in Sources */,
 				5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */,
 				5DE3C9911EF3B10000012C47 /* UnitsCustomViewCell.swift in Sources */,
 				5DC8C72E1F25E16E00B57044 /* UnitDO.swift in Sources */,
@@ -875,6 +875,7 @@
 				5D65D4D41F2E45A000302CE8 /* DateTimeTableViewCell.swift in Sources */,
 				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
 				5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */,
+				5D7603D41F570EEF00ED157E /* EditUnit+CoreDataProperties.swift in Sources */,
 				5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */,
 				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
 				62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */,
@@ -886,7 +887,6 @@
 				5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */,
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
 				5D65D4DA1F2E45A900302CE8 /* CaseConfigTableViewController.swift in Sources */,
-				5D5291C31F0D3BCF00D5645F /* EditUnit+CoreDataProperties.swift in Sources */,
 				5DA15B3F1F29D01600EB90DC /* InTakeViewController.swift in Sources */,
 				5D1BD4F71F067FB100C8FAF5 /* GaugeView.swift in Sources */,
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,

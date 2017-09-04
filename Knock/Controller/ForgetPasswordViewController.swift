@@ -42,10 +42,13 @@ class ForgetPasswordViewController: UIViewController,UIWebViewDelegate {
             
             if let url = URL(string:userSettingData[0].forgotPasswordUrl!)
             {
-                SVProgressHUD.show(withStatus: "Loading..", maskType: SVProgressHUDMaskType.gradient)
-                
-                let request = URLRequest(url: url)
-                webVwForget.loadRequest(request)
+                if(Network.reachability?.isReachable)!{
+                    
+                    SVProgressHUD.show(withStatus: "Loading..", maskType: SVProgressHUDMaskType.gradient)
+                    
+                    let request = URLRequest(url: url)
+                    webVwForget.loadRequest(request)
+                }
             }
         }
         

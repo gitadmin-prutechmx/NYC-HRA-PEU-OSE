@@ -103,6 +103,12 @@ class SettingsTableViewController: UITableViewController
         
         
         ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
+        
+        
+        
+        Utilities.timer?.invalidate()
+        Utilities.startBackgroundSyncing()
+        
     }
     
     

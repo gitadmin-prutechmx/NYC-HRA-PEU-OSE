@@ -32,50 +32,53 @@ class SyncUtility{
         isPullData = isPullDataFromSFDC
         loginViewController = controller
         
-        SalesforceConnection.loginToSalesforce() {_ in
+        SalesforceConnection.loginToSalesforce() {isLoginTrue in
             
-            editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
-            
-            unitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [Unit]
-            
-            tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
-            
-            surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "Complete", isPredicate:true) as! [SurveyResponse]
-            
-            
-            editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
-            
-            
-            caseResultsArr = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [AddCase]
-            
-            issueResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Issues]
-            
-            
-            if( editLocationResultsArr.count > 0){
-                updateEditLocData()
-            }
-            else if( unitResultsArr.count > 0){
-                updateUnitData()
-            }
-            else if( tenantResultsArr.count > 0){
-                updateTenantData()
-            }
-            else if( surveyResResultsArr.count > 0){
-                updateSurveyResponseData()
-            }
-            else if( editUnitResultsArr.count > 0){
-                updateEditUnitData()
-            }
-            else if( caseResultsArr.count > 0){
-                updateCaseData()
-            }
-            else if( issueResultsArr.count > 0){
-                updateIssueData()
-            }
-            else{
-                if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+            if(isLoginTrue){
+                editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
+                
+                unitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [Unit]
+                
+                tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
+                
+                surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "Complete", isPredicate:true) as! [SurveyResponse]
+                
+                
+                editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
+                
+                
+                caseResultsArr = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [AddCase]
+                
+                issueResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Issues]
+                
+                
+                if( editLocationResultsArr.count > 0){
+                    updateEditLocData()
                 }
+                else if( unitResultsArr.count > 0){
+                    updateUnitData()
+                }
+                else if( tenantResultsArr.count > 0){
+                    updateTenantData()
+                }
+                else if( surveyResResultsArr.count > 0){
+                    updateSurveyResponseData()
+                }
+                else if( editUnitResultsArr.count > 0){
+                    updateEditUnitData()
+                }
+                else if( caseResultsArr.count > 0){
+                    updateCaseData()
+                }
+                else if( issueResultsArr.count > 0){
+                    updateIssueData()
+                }
+                else{
+                    if(isPullData){
+                        Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                    }
+                }
+                
             }
             
             
@@ -88,11 +91,11 @@ class SyncUtility{
         
         let locGroup = DispatchGroup()
         
-
+        
         var locDict:[String:String] = [:]
         var editLoc : [String:String] = [:]
         
-
+        
         
         if( editLocationResultsArr.count>0){
             
@@ -109,8 +112,8 @@ class SyncUtility{
                 
                 
                 
-
-             
+                
+                
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: editLoc){ jsonData in
                     
@@ -353,7 +356,7 @@ class SyncUtility{
                 
                 
                 
-               // surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+                // surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
                 
                 
                 surveyResponseParam["surveyResponseFile"] = formatString
@@ -463,13 +466,13 @@ class SyncUtility{
             if( caseResultsArr.count > 0){
                 updateCaseData()
             }
-            
+                
             else if( issueResultsArr.count > 0){
                 updateIssueData()
             }
             else
                 if(isPullData){
-                Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
             }
             
         }
@@ -480,7 +483,7 @@ class SyncUtility{
         
         let caseGroup = DispatchGroup()
         
-      
+        
         var caseJsonDict:[String:AnyObject] = [:]
         var caseResponseParam : [String:String] = [:]
         
@@ -491,19 +494,19 @@ class SyncUtility{
                 
                 caseGroup.enter()
                 
-               var caseResponseDict = caseData.caseResponse as! Dictionary<String,AnyObject>
+                var caseResponseDict = caseData.caseResponse as! Dictionary<String,AnyObject>
                 
                 caseResponseDict["ContactId"] = caseData.clientId! as AnyObject?
                 
                 caseResponseDict["OwnerId"] =  SalesforceConnection.salesforceUserId as AnyObject?
                 
-                               
+                
                 caseJsonDict["iOSCaseId"] = caseData.caseId! as AnyObject?
                 
                 caseJsonDict["caseResponse"] = Utilities.jsonToString(json: caseResponseDict as AnyObject) as AnyObject
                 
                 caseResponseParam["jsonCase"] = Utilities.jsonToString(json: caseJsonDict as AnyObject)!
-
+                
                 
                 SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.createCase, params: caseResponseParam){ jsonData in
                     
@@ -531,7 +534,7 @@ class SyncUtility{
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCaseView"), object: nil)
             
-             if( issueResultsArr.count > 0){
+            if( issueResultsArr.count > 0){
                 updateIssueData()
             }
             else
@@ -591,13 +594,13 @@ class SyncUtility{
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateIssueView"), object: nil)
             
             
-                if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
-                }
+            if(isPullData){
+                Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+            }
             
         }
         
-
+        
     }
     
     

@@ -687,6 +687,8 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         editUnitObject.surveyId = currentSurveyId
         
+        editUnitObject.lastCanvassedBy = SalesforceConfig.currentUserContactId
+        
         
         appDelegate.saveContext()
         
