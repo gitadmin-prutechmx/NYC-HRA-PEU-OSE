@@ -263,26 +263,26 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
         }
         
-        if(phone.isEmpty){
-            
-            phoneView.shake()
-            
-            self.view.makeToast("Please enter Phone number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    print("Completion with tap")
-                    
-                } else {
-                    print("Completion without tap")
-                }
-                
-                
-            }
-            
-            
-            return
-            
-        }
+//        if(phone.isEmpty){
+//            
+//            phoneView.shake()
+//            
+//            self.view.makeToast("Please enter Phone number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                if didTap {
+//                    print("Completion with tap")
+//                    
+//                } else {
+//                    print("Completion without tap")
+//                }
+//                
+//                
+//            }
+//            
+//            
+//            return
+//            
+//        }
         
         
         
@@ -311,26 +311,26 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
         }
         
-        if(email.isEmpty){
-            
-            emailView.shake()
-            
-            self.view.makeToast("Please enter email.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    print("Completion with tap")
-                    
-                } else {
-                    print("Completion without tap")
-                }
-                
-                
-            }
-            
-            
-            return
-            
-        }
+//        if(email.isEmpty){
+//            
+//            emailView.shake()
+//            
+//            self.view.makeToast("Please enter email.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                if didTap {
+//                    print("Completion with tap")
+//                    
+//                } else {
+//                    print("Completion without tap")
+//                }
+//                
+//                
+//            }
+//            
+//            
+//            return
+//            
+//        }
         
         if(!email.isEmpty && !isValidEmail(testStr: email)){
             

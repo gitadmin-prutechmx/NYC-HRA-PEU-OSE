@@ -322,7 +322,10 @@ class SubmitSurveyViewController: UIViewController {
         
         updateObjectDic["actionStatus"] = Utilities.completeSurvey as AnyObject?
         updateObjectDic["surveySignature"] = base64String as AnyObject?
-
+        
+        updateObjectDic["contactId"] = SalesforceConfig.currentUserContactId as AnyObject?
+        updateObjectDic["userId"] = SalesforceConnection.salesforceUserId as AnyObject?
+        
         
         
         ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId,isPredicate: true)

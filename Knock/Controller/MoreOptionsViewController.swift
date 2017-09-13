@@ -243,7 +243,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.backgroundColor = UIColor.clear
                 
                 
-                cell.textLabel?.text = "Attempt?"
+                cell.textLabel?.text = "Attempted?"
                 cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
                 cell.selectionStyle = .none
                 
@@ -274,7 +274,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.backgroundColor = UIColor.clear
                 
                 
-                cell.textLabel?.text = "Contact?"
+                cell.textLabel?.text = "Contacted?"
                 cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
                 cell.selectionStyle = .none
                 
@@ -306,7 +306,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.backgroundColor = UIColor.clear
                 
                 
-                cell.textLabel?.text = "Survey?"
+                cell.textLabel?.text = "Conduct Survey?"
                 cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
                 cell.selectionStyle = .none
                 
@@ -341,7 +341,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 reasonCell.backgroundColor = UIColor.clear
                 
                 
-                reasonCell.textLabel?.text = "Reason"
+                reasonCell.textLabel?.text = "If No Survey, Reason?"
                 reasonCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
                 if(reasonStatus.isEmpty){
                     reasonCell.detailTextLabel?.text = "Select Reason"
@@ -362,7 +362,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.backgroundColor = UIColor.clear
                 
                 
-                cell.textLabel?.text = "Reknock needed?"
+                cell.textLabel?.text = "Reknock Required?"
                 cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
                 
                 cell.selectionStyle = .none

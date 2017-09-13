@@ -138,7 +138,6 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     }
     
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         if(tableView ==  tblViewIssueNotes){

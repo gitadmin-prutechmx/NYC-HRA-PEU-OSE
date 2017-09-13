@@ -349,6 +349,7 @@ class SyncUtility{
                 responseDict["byContactId"] = surveyResData.contactId! as AnyObject?
                 responseDict["byUserId"] = surveyResData.userId! as AnyObject?
                 
+                
                 responseDict["surveyId"] = surveyResData.surveyId! as AnyObject?
                 responseDict["assignmentLocUnitId"] = surveyResData.assignmentLocUnitId! as AnyObject?
                 //unitid
