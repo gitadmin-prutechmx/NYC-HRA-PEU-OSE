@@ -274,7 +274,7 @@ class Utilities {
         return newUnitDic
     }
     
-    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
+    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,contactOutcome:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
         
         var editUnitDict:[String:String] = [:]
         
@@ -287,6 +287,8 @@ class Utilities {
         editUnitDict["attempt"] = attempt
         editUnitDict["contact"] = contact
         editUnitDict["reKnockNeeded"] = reKnockNeeded
+        
+        editUnitDict["contactOutcome"] = contactOutcome
         
         
         editUnitDict["surveyId"] = selectedSurveyId
@@ -341,7 +343,7 @@ class Utilities {
     
 
     
-    class func createAndEditTenantData(firstName:String,lastName:String,email:String,phone:String,dob:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,type:String)->[String:String]{
+    class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,type:String)->[String:String]{
         
         var editTenantDict:[String:String] = [:]
         
@@ -365,10 +367,14 @@ class Utilities {
         
         editTenantDict["phone"] = phone
         
+        editTenantDict["middleName"] = middleName
+        
+        editTenantDict["suffix"] = suffix
+        
         if(dob != ""){
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM-dd-yyyy"
+            dateFormatter.dateFormat = "MM/dd/yyyy"
             let date = dateFormatter.date(from: dob)!
             
             dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -1106,11 +1112,15 @@ class Utilities {
                                     
                                     if (Utilities.isGeoDatabseExist()==false) {
                                         
+                                        //This will call when first then user install app
+                                        //download first layers data then basemap
                                         DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
                                         
                                         
                                     }
-                                        
+                                    
+                                    //This will happen when logout then login
+                                    //when only basemap change
                                     else if(SalesforceConfig.isBaseMapNeedToDownload == true){
                                         
                                         SVProgressHUD.dismiss()
@@ -1140,7 +1150,8 @@ class Utilities {
                                     
                                     
                                     
-                                    
+                                    //This will happen when refresh icon press
+                                    //when only basemap change
                                     if(SalesforceConfig.isBaseMapNeedToDownload == true){
                                         
                                         
@@ -1153,9 +1164,11 @@ class Utilities {
                                         
                                     }
                                     else{
-                                         SVProgressHUD.dismiss()
-                                         callNotificationCenter()
-                                        //DownloadESRILayers.RefreshData()
+                                        
+//                                         SVProgressHUD.dismiss()
+//                                         callNotificationCenter()
+                                        
+                                        DownloadESRILayers.RefreshData()
                                     }
                                     
                                     
@@ -1631,8 +1644,10 @@ class Utilities {
                     locationObject.state = locationData["state"] as? String  ?? ""
                     locationObject.city = locationData["city"] as? String  ?? ""
                     locationObject.zip = locationData["zip"] as? String  ?? ""
-                    locationObject.street = locationData["street"] as? String  ?? ""
-                    
+                    let streetNumber = locationData["streetNumber"] as? String  ?? ""
+                    let streetName = locationData["street"] as? String  ?? ""
+
+                    locationObject.street = streetNumber + " " + streetName
                     locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
                     locationObject.totalUnits = locationData["totalUnits"] as? String  ?? "0"
                     locationObject.syncDate = locationData["locationSyncDate"] as? String  ?? ""
@@ -1711,6 +1726,7 @@ class Utilities {
                         editUnitObject.attempt = unitData["attempt"] as? String  ?? ""
                         editUnitObject.inTake = unitData["intake"] as? String  ?? ""
                         editUnitObject.reason = unitData["reason"] as? String  ?? ""
+                        editUnitObject.contactOutcome = unitData["contactOutcome"] as? String  ?? ""
                         // editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
                         editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
                         // editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
@@ -1775,6 +1791,13 @@ class Utilities {
                             tenantObject.email = tenantData["email"] as? String  ?? ""
                             tenantObject.age = tenantData["age"] as? String  ?? ""
                             tenantObject.dob = tenantData["dob"] as? String  ?? ""
+                            
+                            tenantObject.middleName = tenantData["middleName"] as? String  ?? ""
+                            tenantObject.suffix = tenantData["suffix"] as? String  ?? ""
+                            
+                            
+                            
+                            
                             
                             tenantObject.assignmentId = assignmentObject.id!
                             tenantObject.locationId = locationObject.id!

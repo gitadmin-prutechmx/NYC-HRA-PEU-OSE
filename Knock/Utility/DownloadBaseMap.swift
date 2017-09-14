@@ -13,7 +13,7 @@ class DownloadBaseMap{
     class func downloadNewYorkCityBaseMap(loginViewController:LoginViewController?=nil){
         
         //show download progress view
-        loginViewController?.downloadProgressView.show(withStatus: "Just a moment while we download map...", progress: 0)
+        loginViewController?.downloadProgressView.show(withStatus: "Downloading Map Data...", progress: 0)
         
         
         
@@ -46,7 +46,7 @@ class DownloadBaseMap{
                             loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                         }
                         else{
-                            //DownloadESRILayers.RefreshData()
+                            DownloadESRILayers.RefreshData()
                             
                             //Utilities.callNotificationCenter()
                         }
@@ -71,10 +71,12 @@ class DownloadBaseMap{
                     }
                     else{
                         
-                        //DownloadESRILayers.RefreshData()
+                        DownloadESRILayers.RefreshData()
+                        
+                        //Utilities.callNotificationCenter()
+                        
                         
                         //SVProgressHUD.dismiss()
-                        //Utilities.callNotificationCenter()
                     }
                 }
                 

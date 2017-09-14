@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0FC9D91F6A65B8000F9994 /* EditUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC9D71F6A65B8000F9994 /* EditUnit+CoreDataClass.swift */; };
+		5D0FC9DA1F6A65B8000F9994 /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC9D81F6A65B8000F9994 /* EditUnit+CoreDataProperties.swift */; };
+		5D0FC9DD1F6A7D03000F9994 /* Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC9DB1F6A7D03000F9994 /* Knock.xcdatamodeld */; };
+		5D0FC9E01F6A7D32000F9994 /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC9DE1F6A7D32000F9994 /* Tenant+CoreDataClass.swift */; };
+		5D0FC9E11F6A7D32000F9994 /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC9DF1F6A7D32000F9994 /* Tenant+CoreDataProperties.swift */; };
 		5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */; };
 		5D1BD4F01F067B7500C8FAF5 /* MapViewCollout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */; };
 		5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BD4F11F067B9000C8FAF5 /* ChartCollectionViewCell.swift */; };
@@ -22,8 +27,6 @@
 		5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */; };
 		5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */; };
 		5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A11F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift */; };
-		5D5291BE1F0D3BCF00D5645F /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A21F0D3BCF00D5645F /* Tenant+CoreDataClass.swift */; };
-		5D5291BF1F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A31F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift */; };
 		5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */; };
 		5D5291C11F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */; };
 		5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */; };
@@ -40,7 +43,6 @@
 		5D52F94E1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F94D1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift */; };
 		5D56CF091EE007060019882F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF081EE007060019882F /* AppDelegate.swift */; };
 		5D56CF0E1EE007060019882F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF0C1EE007060019882F /* Main.storyboard */; };
-		5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */; };
 		5D56CF131EE007060019882F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF121EE007060019882F /* Assets.xcassets */; };
 		5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CF141EE007060019882F /* LaunchScreen.storyboard */; };
 		5D56CF211EE007060019882F /* KnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56CF201EE007060019882F /* KnockTests.swift */; };
@@ -61,8 +63,6 @@
 		5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D757B191F18A38100308C05 /* DownloadProgressView.xib */; };
 		5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */; };
 		5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1E1F18F4A200308C05 /* LocationDO.swift */; };
-		5D7603D31F570EEF00ED157E /* EditUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */; };
-		5D7603D41F570EEF00ED157E /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */; };
 		5D7603D61F5D392300ED157E /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D51F5D391900ED157E /* Alert.swift */; };
 		5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */; };
 		5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BFC1F035AFB0045A65D /* Reachability.swift */; };
@@ -146,6 +146,11 @@
 
 /* Begin PBXFileReference section */
 		032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Knock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D0FC9D71F6A65B8000F9994 /* EditUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5D0FC9D81F6A65B8000F9994 /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5D0FC9DC1F6A7D03000F9994 /* Knock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Knock.xcdatamodel; sourceTree = "<group>"; };
+		5D0FC9DE1F6A7D32000F9994 /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5D0FC9DF1F6A7D32000F9994 /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewCollout.swift; sourceTree = "<group>"; };
 		5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewCollout.xib; sourceTree = "<group>"; };
 		5D1BD4F11F067B9000C8FAF5 /* ChartCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -161,8 +166,6 @@
 		5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291A11F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291A21F0D3BCF00D5645F /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291A31F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -180,7 +183,6 @@
 		5D56CF051EE007060019882F /* Knock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D56CF081EE007060019882F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D56CF0D1EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5D56CF101EE007060019882F /* Knock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Knock.xcdatamodel; sourceTree = "<group>"; };
 		5D56CF121EE007060019882F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D56CF151EE007060019882F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D56CF171EE007060019882F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -206,8 +208,6 @@
 		5D757B191F18A38100308C05 /* DownloadProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadProgressView.xib; sourceTree = "<group>"; };
 		5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadBaseMap.swift; sourceTree = "<group>"; };
 		5D757B1E1F18F4A200308C05 /* LocationDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDO.swift; sourceTree = "<group>"; };
-		5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D7603D51F5D391900ED157E /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		5D8C6BFC1F035AFB0045A65D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -361,8 +361,8 @@
 				5D56CF121EE007060019882F /* Assets.xcassets */,
 				5D56CF141EE007060019882F /* LaunchScreen.storyboard */,
 				5D56CF171EE007060019882F /* Info.plist */,
-				5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */,
 				5DC9E9E91EEA7E59009A6396 /* Knock-Bridging-Header.h */,
+				5D0FC9DB1F6A7D03000F9994 /* Knock.xcdatamodeld */,
 			);
 			path = Knock;
 			sourceTree = "<group>";
@@ -388,12 +388,12 @@
 		5DADD8791F074F72009CD89E /* GeneratedEntityClass */ = {
 			isa = PBXGroup;
 			children = (
-				5D7603D11F570EEF00ED157E /* EditUnit+CoreDataClass.swift */,
-				5D7603D21F570EEF00ED157E /* EditUnit+CoreDataProperties.swift */,
+				5D0FC9DE1F6A7D32000F9994 /* Tenant+CoreDataClass.swift */,
+				5D0FC9DF1F6A7D32000F9994 /* Tenant+CoreDataProperties.swift */,
+				5D0FC9D71F6A65B8000F9994 /* EditUnit+CoreDataClass.swift */,
+				5D0FC9D81F6A65B8000F9994 /* EditUnit+CoreDataProperties.swift */,
 				5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */,
 				5D5291A11F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift */,
-				5D5291A21F0D3BCF00D5645F /* Tenant+CoreDataClass.swift */,
-				5D5291A31F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift */,
 				5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */,
 				5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */,
 				5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */,
@@ -819,6 +819,7 @@
 				5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
 				5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */,
+				5D0FC9DD1F6A7D03000F9994 /* Knock.xcdatamodeld in Sources */,
 				5DA15B481F2B572500EB90DC /* ClientDataTableViewCell.swift in Sources */,
 				5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */,
 				5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */,
@@ -833,19 +834,19 @@
 				5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
 				5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */,
-				5D5291BE1F0D3BCF00D5645F /* Tenant+CoreDataClass.swift in Sources */,
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
 				5D757B1A1F18A38100308C05 /* DownloadProgressView.swift in Sources */,
 				5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */,
 				5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */,
 				5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */,
-				5D7603D31F570EEF00ED157E /* EditUnit+CoreDataClass.swift in Sources */,
 				5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */,
 				5DE3C9911EF3B10000012C47 /* UnitsCustomViewCell.swift in Sources */,
 				5DC8C72E1F25E16E00B57044 /* UnitDO.swift in Sources */,
 				5DC8C7301F286E6F00B57044 /* ChooseSurveyViewController.swift in Sources */,
 				5D5291C11F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift in Sources */,
+				5D0FC9E01F6A7D32000F9994 /* Tenant+CoreDataClass.swift in Sources */,
+				5D0FC9D91F6A65B8000F9994 /* EditUnit+CoreDataClass.swift in Sources */,
 				5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
 				5D65D4E21F3015FC00302CE8 /* IssueHeaderTableViewCell.swift in Sources */,
@@ -856,7 +857,6 @@
 				5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5D65D4E61F30165A00302CE8 /* IssueTableViewCell.swift in Sources */,
-				5D5291BF1F0D3BCF00D5645F /* Tenant+CoreDataProperties.swift in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
 				5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */,
@@ -871,20 +871,19 @@
 				5DE3C9A71EF7CBF300012C47 /* SubmitSurveyViewController.swift in Sources */,
 				5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */,
 				5D5291D51F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift in Sources */,
-				5D56CF111EE007060019882F /* Knock.xcdatamodeld in Sources */,
 				5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */,
 				5DE3C99B1EF76C6E00012C47 /* MoreOptionsViewController.swift in Sources */,
 				5DE3C98D1EF36E1900012C47 /* SideMenuViewController.swift in Sources */,
 				5D65D4D41F2E45A000302CE8 /* DateTimeTableViewCell.swift in Sources */,
 				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
 				5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */,
-				5D7603D41F570EEF00ED157E /* EditUnit+CoreDataProperties.swift in Sources */,
 				5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */,
 				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
 				62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */,
 				5DE3C9991EF6B66000012C47 /* YPDrawSignatureView.swift in Sources */,
 				5D2AFB081EFA3788003AC7DD /* DropDownButton.swift in Sources */,
 				5DC8C7321F2892D400B57044 /* UnitSortingViewController.swift in Sources */,
+				5D0FC9DA1F6A65B8000F9994 /* EditUnit+CoreDataProperties.swift in Sources */,
 				5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */,
 				5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */,
 				5D7603D61F5D392300ED157E /* Alert.swift in Sources */,
@@ -901,6 +900,7 @@
 				5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */,
 				5D65D4DC1F2E45BD00302CE8 /* CaseDO.swift in Sources */,
 				5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */,
+				5D0FC9E11F6A7D32000F9994 /* Tenant+CoreDataProperties.swift in Sources */,
 				5D1BD4F61F067FB100C8FAF5 /* GaugeLayer.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 				70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */,
@@ -1246,12 +1246,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		5D56CF0F1EE007060019882F /* Knock.xcdatamodeld */ = {
+		5D0FC9DB1F6A7D03000F9994 /* Knock.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				5D56CF101EE007060019882F /* Knock.xcdatamodel */,
+				5D0FC9DC1F6A7D03000F9994 /* Knock.xcdatamodel */,
 			);
-			currentVersion = 5D56CF101EE007060019882F /* Knock.xcdatamodel */;
+			currentVersion = 5D0FC9DC1F6A7D03000F9994 /* Knock.xcdatamodel */;
 			path = Knock.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

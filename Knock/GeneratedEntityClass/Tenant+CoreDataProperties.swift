@@ -2,7 +2,7 @@
 //  Tenant+CoreDataProperties.swift
 //  
 //
-//  Created by Kamal on 05/07/17.
+//  Created by Kamal on 14/09/17.
 //
 //
 
@@ -26,8 +26,10 @@ extension Tenant {
     @NSManaged public var id: String?
     @NSManaged public var lastName: String?
     @NSManaged public var locationId: String?
+    @NSManaged public var middleName: String?
     @NSManaged public var name: String?
     @NSManaged public var phone: String?
+    @NSManaged public var suffix: String?
     @NSManaged public var unitId: String?
 
 }

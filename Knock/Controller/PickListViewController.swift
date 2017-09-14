@@ -35,7 +35,7 @@ class PickListViewController: UIViewController,UITableViewDataSource,UITableView
     func populatePickList(){
    
         if(picklistStr != ""){
-            pickListArray = String(picklistStr.characters.dropLast()).components(separatedBy: ";")
+            pickListArray = String(picklistStr).components(separatedBy: ";")
         }
         
         self.pickListTblView.reloadData()

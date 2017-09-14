@@ -360,6 +360,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         
         
+        
         appDelegate.saveContext()
         
         

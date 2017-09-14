@@ -286,7 +286,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         
-        let editUnitResults =  ManageCoreData.fetchData(salesforceEntityName: "EditUnit", isPredicate:false) as! [EditUnit]
+        let editUnitResults =  ManageCoreData.fetchData(salesforceEntityName: "EditUnit", predicateFormat: "assignmentId == %@",predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [EditUnit]
         
         if(editUnitResults.count > 0){
             
@@ -308,7 +308,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         countTenants = 1
         
-        let tenantResults =  ManageCoreData.fetchData(salesforceEntityName: "Tenant", isPredicate:false) as! [Tenant]
+        //let tenantResults =  ManageCoreData.fetchData(salesforceEntityName: "Tenant", isPredicate:false) as! [Tenant]
+        
+        let tenantResults =  ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@",predicateValue: SalesforceConnection.assignmentId, isPredicate:true) as! [Tenant]
         
         if(tenantResults.count > 0){
             
@@ -808,7 +810,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
             cell.lblLastName.text = clientDataArray[indexPath.row].lastName
-            cell.lblPhone.text = clientDataArray[indexPath.row].phone
+            cell.lblPhone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
             
             let noOfCases = caseDict[clientDataArray[indexPath.row].tenantId]
             

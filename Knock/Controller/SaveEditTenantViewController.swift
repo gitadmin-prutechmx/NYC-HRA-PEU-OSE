@@ -15,9 +15,12 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     @IBOutlet weak var emailView: UIView!
     @IBOutlet weak var phoneView: UIView!
     @IBOutlet weak var dobView: UIView!
+    @IBOutlet weak var suffixView: UIView!
     
+    @IBOutlet weak var middleNameView: UIView!
     @IBOutlet weak var firstNameTxtField: UITextField!
     
+    @IBOutlet weak var txtSuffix: UITextField!
     @IBOutlet weak var lastNameTxtField: UITextField!
     
     @IBOutlet weak var emailTxtField: UITextField!
@@ -26,6 +29,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     @IBOutlet weak var phoneTextField: UITextField!
     
     
+    @IBOutlet weak var txtMiddleName: UITextField!
     @IBOutlet weak var dobTextField: UITextField!
     
     var picker = UIDatePicker()
@@ -48,13 +52,14 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     var age:String = ""
     
+    var middleName:String = ""
+    
+    var suffix:String = ""
+    
     var editTenantDict : [String:String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
@@ -96,28 +101,132 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField)
+    {
+        let phoneNum = phoneTextField.text
+        phoneTextField.text = phoneNum!
+        
+    }
+    
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+       let phoneNum = phoneTextField.text
+        let phone = phoneNum?.toPhoneNumber()
+        phoneTextField.text = phone!
+        print(phone!)
+ 
+    }
+    
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         
-        let aSet =  NSCharacterSet(charactersIn:"0123456789").inverted
-        let compSepByCharInSet = string.components(separatedBy: aSet)
-        let numberFiltered = compSepByCharInSet.joined(separator: "")
         
-        let currentCharacterCount = phoneTextField.text?.characters.count ?? 0
-        if (range.length + range.location > currentCharacterCount){
+        let str = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        
+        
+        
+        if textField == phoneTextField
+        {
+            
+            let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
+            
+            let compSepByCharInSet = string.components(separatedBy: aSet)
+            
+            let numberFiltered = compSepByCharInSet.joined(separator: "")
+            
+            
+            if string == numberFiltered
+            {
+                
+                return checkEnglishPhoneNumberFormat(string: string, str: str)
+                
+            }
+            
             return false
-        }
-        let newLength = currentCharacterCount + string.characters.count - range.length
-        if(newLength > 10){
-            return false
+            
+        }else
+        {
+            return true
+            
         }
         
-        
-        return string == numberFiltered
     }
     
-    func fillTenantInfo(){
+    
+    func getStringFormPhoneString(phoneStr:String) -> String
+    {
+        var result = phoneStr.replace("(", withString: "")
+        result = result.replace(")", withString: "")
+        result = result.replace("-", withString: "")
+        result = result.replace(" ", withString: "")
+
+        return result
         
+    }
+
+    
+    func checkEnglishPhoneNumberFormat(string: String?, str: String?) -> Bool{
+        
+        
+        
+        if string == ""{
+            
+            
+            
+            return true
+            
+            
+            
+        }else if str!.characters.count < 3{
+            
+            
+            
+            if str!.characters.count == 1{
+                
+                
+                
+                phoneTextField.text = "("
+                
+            }
+            
+            
+            
+        }else if str!.characters.count == 5{
+            
+            
+            
+            phoneTextField.text = phoneTextField.text! + ") "
+            
+            
+            
+        }else if str!.characters.count == 10{
+            
+            
+            
+            phoneTextField.text = phoneTextField.text! + "-"
+            
+            
+            
+        }else if str!.characters.count > 14{
+            
+            
+            
+            return false
+            
+        }
+        
+        
+        
+        return true
+        
+    }
+    
+    
+    
+    func fillTenantInfo(){
         
         let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@ AND id == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,predicateValue4: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
         
@@ -131,7 +240,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
                 
                 if(date != nil){
                     
-                    dateFormatter.dateFormat = "MM-dd-yyyy"
+                    dateFormatter.dateFormat = "MM/dd/yyyy"
                     txtDob.text = dateFormatter.string(from: date!)
                 }
                 else{
@@ -144,7 +253,15 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             firstNameTxtField.text = tenantResults[0].firstName
             lastNameTxtField.text = tenantResults[0].lastName
             emailTxtField.text = tenantResults[0].email
-            phoneTextField.text = tenantResults[0].phone
+            txtMiddleName.text = tenantResults[0].middleName
+            txtSuffix.text = tenantResults[0].suffix
+            
+            //phoneTextField.text = tenantResults[0].phone
+            
+            let phoneNum = tenantResults[0].phone
+            phone = (phoneNum?.toPhoneNumber())!
+            phoneTextField.text = phone
+            
             
             
         }
@@ -153,7 +270,6 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func cancel(_ sender: Any)
@@ -195,6 +311,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         return emailTest.evaluate(with: testStr)
     }
     
+    
     func saveTenantInfo(){
         
         
@@ -202,6 +319,16 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             firstName = firstNameTemp
             
+        }
+        
+        if let middleNameTemp = txtMiddleName.text{
+            
+            middleName = middleNameTemp
+        }
+        
+        if let suffixTemp = txtSuffix.text{
+            
+            suffix = suffixTemp
         }
         
         if(firstName.isEmpty){
@@ -257,11 +384,14 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
         }
         
-        if let phoneTemp = phoneTextField.text{
+        if let phoneTemp = phoneTextField.text
+        {
             
             phone = phoneTemp
             
         }
+        
+        
         
 //        if(phone.isEmpty){
 //            
@@ -363,7 +493,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             if(dob != ""){
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM-dd-yyyy"
+                dateFormatter.dateFormat = "MM/dd/yyyy"
                 
                 let birthdate = dateFormatter.date(from: dob)
                 
@@ -432,11 +562,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
     }
     
-    
-    
-    
-    
-    
+
     func saveTenantInCoreData(){
         
         let tenantObject = Tenant(context: context)
@@ -457,6 +583,10 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.age = age
         
         tenantObject.dob =  dob
+        
+        tenantObject.middleName = middleName
+        
+        tenantObject.suffix = suffix
         
         tenantObject.actionStatus = "create"
         
@@ -498,6 +628,10 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         updateObjectDic["dob"] = dob
         
         updateObjectDic["age"] = age
+        
+        updateObjectDic["middleName"] = middleName
+        
+        updateObjectDic["suffix"] = suffix
         
         updateObjectDic["assignmentLocUnitId"] = SalesforceConnection.assignmentLocationUnitId
         
@@ -551,7 +685,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         // yyyy-MM-dd
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         txtDob.text = dateFormatter.string(from: picker.date)
         //txtDob.text = dateFormatter.string(from: sender.date)
         
@@ -567,7 +701,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     func donePressed(sender: UIBarButtonItem) {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         txtDob.text = dateFormatter.string(from: picker.date)
         
         txtDob.resignFirstResponder()
@@ -584,6 +718,28 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
      }
+     
+     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+     
+     
+     let aSet =  NSCharacterSet(charactersIn:"0123456789").inverted
+     let compSepByCharInSet = string.components(separatedBy: aSet)
+     let numberFiltered = compSepByCharInSet.joined(separator: "")
+     
+     let currentCharacterCount = phoneTextField.text?.characters.count ?? 0
+     if (range.length + range.location > currentCharacterCount){
+     return false
+     }
+     let newLength = currentCharacterCount + string.characters.count - range.length
+     if(newLength > 13)
+     {
+     return false
+     }
+     
+     
+     return string == numberFiltered
+     }
+
      */
     
 }

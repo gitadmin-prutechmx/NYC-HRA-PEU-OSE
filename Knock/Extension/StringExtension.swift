@@ -31,5 +31,9 @@ extension String{
         return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
     }
     
+    func toPhoneNumber() -> String {
+        return self.replacingOccurrences(of: "(\\d{3})(\\d{3})(\\d+)", with: "($1) $2-$3", options: .regularExpression, range: nil)
+    }
+    
     
 }

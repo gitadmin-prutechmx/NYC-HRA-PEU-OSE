@@ -252,7 +252,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
 
             
             cell.email.text = clientDataArray[indexPath.row].email
-            cell.phone.text = clientDataArray[indexPath.row].phone
+            cell.phone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
             cell.name.text = clientDataArray[indexPath.row].name
             cell.age.text = clientDataArray[indexPath.row].age
             cell.tenantId.text = clientDataArray[indexPath.row].clientId

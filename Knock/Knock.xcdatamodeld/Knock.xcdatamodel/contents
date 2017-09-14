@@ -71,6 +71,7 @@
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attempt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactOutcome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="inTake" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isContact" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastCanvassedBy" optional="YES" attributeType="String" syncable="YES"/>
@@ -172,8 +173,10 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="middleName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="TenantAssign" representedClassName="TenantAssign" syncable="YES">
@@ -218,7 +221,7 @@
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
-        <element name="EditUnit" positionX="-108" positionY="63" width="128" height="270"/>
+        <element name="EditUnit" positionX="-108" positionY="63" width="128" height="285"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
         <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="75"/>
         <element name="Issues" positionX="-126" positionY="45" width="128" height="150"/>
@@ -228,7 +231,7 @@
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="180"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
-        <element name="Tenant" positionX="-126" positionY="45" width="128" height="240"/>
+        <element name="Tenant" positionX="-126" positionY="45" width="128" height="270"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="150"/>

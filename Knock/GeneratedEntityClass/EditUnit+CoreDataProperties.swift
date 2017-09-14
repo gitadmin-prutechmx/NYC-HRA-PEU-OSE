@@ -2,7 +2,7 @@
 //  EditUnit+CoreDataProperties.swift
 //  
 //
-//  Created by Kamal on 30/08/17.
+//  Created by Kamal on 14/09/17.
 //
 //
 
@@ -31,5 +31,6 @@ extension EditUnit {
     @NSManaged public var tenantId: String?
     @NSManaged public var unitId: String?
     @NSManaged public var unitNotes: String?
+    @NSManaged public var contactOutcome: String?
 
 }

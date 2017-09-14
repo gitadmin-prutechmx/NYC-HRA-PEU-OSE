@@ -268,7 +268,7 @@ class SyncUtility{
                 let tenantId = tenantData.id!
                 let locUnitId = tenantData.unitId!
                 
-                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,type:tenantData.actionStatus!)
+                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,type:tenantData.actionStatus!)
                 
                 
                 
@@ -435,7 +435,7 @@ class SyncUtility{
                 editUnitGroup.enter()
                 
                 
-                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: SalesforceConfig.currentUserContactId)
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: SalesforceConfig.currentUserContactId)
                 
                 
                 
