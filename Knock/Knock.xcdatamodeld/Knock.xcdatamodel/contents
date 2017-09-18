@@ -178,6 +178,7 @@
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="virtualUnit" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="TenantAssign" representedClassName="TenantAssign" syncable="YES">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
@@ -201,6 +202,7 @@
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitSyncDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="virtualUnit" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="unitLocR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locUnitR" inverseEntity="Location" syncable="YES"/>
     </entity>
     <entity name="UserInfo" representedClassName="UserInfo" syncable="YES" codeGenerationType="class">
@@ -231,9 +233,9 @@
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="180"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
-        <element name="Tenant" positionX="-126" positionY="45" width="128" height="270"/>
+        <element name="Tenant" positionX="-126" positionY="45" width="128" height="285"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
-        <element name="Unit" positionX="-162" positionY="-108" width="128" height="240"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="255"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="150"/>
     </elements>
 </model>

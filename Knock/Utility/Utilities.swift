@@ -15,6 +15,14 @@ import Toast_Swift
 
 class Utilities {
     
+    static var unitClientDict: [String:UnitDO] = [:]
+    static var caseDict: [String:String] = [:]
+    static var countCases:Int  = 1
+    
+    
+    
+
+    
     static var timer:Timer?
     
     static let inProgressSurvey:String = "InProgress"
@@ -1696,6 +1704,11 @@ class Utilities {
                         
                         unitObject.actionStatus = ""
                         
+                        let virtualUnit = unitData["virtualUnit"] as? Bool  ?? false
+
+                        unitObject.virtualUnit = String(virtualUnit)
+                        
+                        
                         
                         unitObject.unitSyncDate = unitData["unitSyncDate"] as? String  ?? ""
                         
@@ -1740,43 +1753,6 @@ class Utilities {
                         
                         
                         
-                        //...........Remove below codes
-                        
-                        //TenantStatus
-                        
-                        //                        let tenantAssignObject = TenantAssign(context: context)
-                        //
-                        //
-                        //                        tenantAssignObject.locationId = locationObject.id!
-                        //                        tenantAssignObject.assignmentId = assignmentObject.id!
-                        //                        tenantAssignObject.assignmentLocId = locationObject.assignmentLocId!
-                        //                        tenantAssignObject.unitId = unitObject.id!
-                        //                        tenantAssignObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                        //                        tenantAssignObject.tenantId = unitData["tenant"] as? String  ?? ""
-                        //                        tenantAssignObject.actionStatus = ""
-                        //
-                        //
-                        //                        appDelegate.saveContext()
-                        //
-                        //
-                        //                        //AssignSurvey
-                        //
-                        //
-                        //                        //save the record
-                        //                        let surveyUnitObject = SurveyUnit(context: context)
-                        //                        surveyUnitObject.locationId = locationObject.id!
-                        //                        surveyUnitObject.assignmentId = assignmentObject.id!
-                        //                        surveyUnitObject.assignmentLocId = locationObject.assignmentLocId!
-                        //                        surveyUnitObject.unitId = unitObject.id!
-                        //                        surveyUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                        //                        surveyUnitObject.surveyId = unitData["survey"] as? String  ?? ""
-                        //                        surveyUnitObject.actionStatus = ""
-                        //
-                        //
-                        //                        appDelegate.saveContext()
-                        
-                        //.....................
-                        
                         guard let tenantInfoResults = unitData["TenantInfo"] as? [[String: AnyObject]]  else { break }
                         
                         for tenantData in tenantInfoResults {
@@ -1804,6 +1780,8 @@ class Utilities {
                             tenantObject.unitId = unitObject.id!
                             tenantObject.actionStatus = ""
                             tenantObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                            
+                            tenantObject.virtualUnit = unitObject.virtualUnit!
                             
                             
                             appDelegate.saveContext()
@@ -1957,6 +1935,64 @@ class Utilities {
         //        }
     }
     
+    
+    
+    class func createCaseDictionary(){
+        
+        countCases = 1
+        
+        let caseResults =  ManageCoreData.fetchData(salesforceEntityName: "Cases", isPredicate:false) as! [Cases]
+        
+        if(caseResults.count > 0){
+            
+            for caseData in caseResults{
+                
+                if caseDict[caseData.contactId!] == nil{
+                    
+                    countCases = 1
+                    caseDict[caseData.contactId!] = String(countCases)
+                }
+                else{
+                    
+                    let count = caseDict[caseData.contactId!]
+                    countCases = Int(count!)! + 1
+                    caseDict[caseData.contactId!] = String(countCases)
+                }
+                
+                
+            }
+        }
+        
+    }
+    
+    
+    
+    
+    
+    class func createUnitDictionary(){
+        
+        
+        
+        let unitClientResults =  ManageCoreData.fetchData(salesforceEntityName: "Unit", isPredicate:false) as! [Unit]
+        
+        if(unitClientResults.count > 0){
+            
+            for unitClientData in unitClientResults{
+                
+                if unitClientDict[unitClientData.id!] == nil{
+                    var unitSurveyStatus:String = ""
+                    if let surStatus = unitClientData.surveyStatus{
+                        unitSurveyStatus = surStatus
+                    }
+                    
+                    unitClientDict[unitClientData.id!] = UnitDO(unitId: unitClientData.id!, unitName: unitClientData.name!,surveyStatus: unitSurveyStatus)
+                }
+                
+                
+            }
+        }
+        
+    }
     
     
     

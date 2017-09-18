@@ -34,6 +34,7 @@ struct ClientDataStruct
     var assignmentLocUnitId:String = ""
     var unitName:String = ""
     var surveyStatus:String = ""
+    var isVirtualUnit:String = ""
 }
 
 
@@ -77,8 +78,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     var UnitDataArray = [UnitsDataStruct]()
     var clientDataArray = [ClientDataStruct]()
-    
-    var unitClientDict: [String:UnitDO] = [:]
     
     
     @IBOutlet weak var unitView: UIStackView!
@@ -279,9 +278,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     var tenantDict: [String:String] = [:]
     var countTenants:Int  = 1
     
-    var caseDict: [String:String] = [:]
-    var countCases:Int  = 1
-    
     func createEditUnitDictionary(){
         
         
@@ -356,62 +352,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     
-    func createCaseDictionary(){
-        
-        countCases = 1
-        
-        let caseResults =  ManageCoreData.fetchData(salesforceEntityName: "Cases", isPredicate:false) as! [Cases]
-        
-        if(caseResults.count > 0){
-            
-            for caseData in caseResults{
-                
-                if caseDict[caseData.contactId!] == nil{
-                    
-                    countCases = 1
-                    caseDict[caseData.contactId!] = String(countCases)
-                }
-                else{
-                    
-                    let count = caseDict[caseData.contactId!]
-                    countCases = Int(count!)! + 1
-                    caseDict[caseData.contactId!] = String(countCases)
-                }
-                
-                
-            }
-        }
-        
-    }
-    
-    
-    
-    
-    
-    func createUnitDictionary(){
-        
-        
-        
-        let unitClientResults =  ManageCoreData.fetchData(salesforceEntityName: "Unit", isPredicate:false) as! [Unit]
-        
-        if(unitClientResults.count > 0){
-            
-            for unitClientData in unitClientResults{
-                
-                if unitClientDict[unitClientData.id!] == nil{
-                    var unitSurveyStatus:String = ""
-                    if let surStatus = unitClientData.surveyStatus{
-                        unitSurveyStatus = surStatus
-                    }
-                    
-                    unitClientDict[unitClientData.id!] = UnitDO(unitId: unitClientData.id!, unitName: unitClientData.name!,surveyStatus: unitSurveyStatus)
-                }
-                
-                
-            }
-        }
-        
-    }
+   
     
     
     
@@ -421,11 +362,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         clientDataArray = [ClientDataStruct]()
         
         
-        unitClientDict = [:]
-        caseDict = [:]
+        Utilities.unitClientDict = [:]
+        Utilities.caseDict = [:]
         
-        createUnitDictionary()
-        createCaseDictionary()
+        Utilities.createUnitDictionary()
+        Utilities.createCaseDictionary()
         
         let clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Tenant]
         
@@ -434,9 +375,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             for tenantData in clientResults{
                 
-                let unitObject = unitClientDict[tenantData.unitId!]
+                let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                 
-                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!)
+                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!)
                 
                 clientDataArray.append(objectTenantStruct)
                 
@@ -494,7 +435,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         createTenantDictionary()
         createInProgressSurveyResponseDictionary()
         
-        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@ AND assignmentLocId == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,predicateValue3: SalesforceConnection.assignmentLocationId, isPredicate:true) as! [Unit]
+        let unitResults = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "locationId == %@ AND assignmentId == %@ AND assignmentLocId == %@ AND virtualUnit == %@" ,predicateValue: SalesforceConnection.locationId,predicateValue2:SalesforceConnection.assignmentId,predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4: "false", isPredicate:true) as! [Unit]
         
         
         if(unitResults.count > 0){
@@ -812,7 +753,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             cell.lblLastName.text = clientDataArray[indexPath.row].lastName
             cell.lblPhone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
             
-            let noOfCases = caseDict[clientDataArray[indexPath.row].tenantId]
+            let noOfCases = Utilities.caseDict[clientDataArray[indexPath.row].tenantId]
             
             if let caseCount = noOfCases{
                 cell.lblCase.text = caseCount
@@ -975,9 +916,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
         else{
             
+            let currentCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) as! ClientDataTableViewCell
+            
+            
+            
             if("Completed" == clientDataArray[indexPath.row].surveyStatus){
-                
-                 let currentCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) as! ClientDataTableViewCell
                 
                 
                 currentCell.shake(duration: 0.3, pathLength: 15)
@@ -996,11 +939,26 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 SalesforceConnection.unitId =  clientDataArray[indexPath.row].unitId
                 
-                SalesforceConnection.unitName =  (unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
+                SalesforceConnection.unitName =  (Utilities.unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
                 
                 SalesforceConnection.assignmentLocationUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
                 
-                showEditUnit()
+                if(clientDataArray[indexPath.row].isVirtualUnit == "true"){
+                    
+                    currentCell.shake(duration: 0.3, pathLength: 15)
+                    
+                    
+                    self.view.makeToast("Please create new unit and .", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        if didTap {
+                            print("completion from tap")
+                        } else {
+                            print("completion without tap")
+                        }
+                    }
+                }
+                else{
+                    showEditUnit()
+                }
             }
             
         }

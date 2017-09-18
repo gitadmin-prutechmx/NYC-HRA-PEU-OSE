@@ -28,7 +28,9 @@ struct ClientUnitDataStruct
 class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     
+    @IBOutlet weak var btnExistingClients: UIButton!
     @IBOutlet weak var viewTenent: UIView!
+    @IBOutlet weak var btnGotoCase: UIButton!
     
     @IBOutlet weak var fullAddressTxt: UILabel!
    
@@ -50,6 +52,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         super.viewDidLoad()
         
         addTenantOutlet.layer.cornerRadius = 5
+        btnExistingClients.layer.cornerRadius = 5
+        btnGotoCase.layer.cornerRadius = 5
         
         fullAddressTxt.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
@@ -63,11 +67,6 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateClientView), name: NSNotification.Name(rawValue: "UpdateClientView"), object:nil
         )
         
-        
-        
-
-
-        // Do any additional setup after loading the view.
     }
     
     func UpdateClientView(){
@@ -174,12 +173,39 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     
    
+    @IBAction func btnExistingClientsViewAction(_ sender: Any)
+    {
+        self.performSegue(withIdentifier: "ExistingViewIdentifier", sender: nil)
+    }
     
-    func addRightBarButtonOnClient(){
+    @IBAction func btnGotoCaseAction(_ sender: Any) {
+        
+        if(selectedClientId == ""){
+            viewTenent.shake()
+            self.view.makeToast("Please select client. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                
+            }
+            
+        }
+        else{
+            SalesforceConnection.currentTenantId = selectedClientId
+            
+            SalesforceConnection.currentTenantName =  selectedClientName
+            
+            self.performSegue(withIdentifier: "showCaseIdentifier", sender: nil)
+            
+            
+            
+        }
+    }
+    
+    func addRightBarButtonOnClient()
+    {
         
         self.navigationItem.rightBarButtonItem =  nil
         
-        let rightBarButtonItem = UIBarButtonItem(title: "Go to case", style: .plain, target: self, action: #selector(InTakeViewController.nextAction))
+        let rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(InTakeViewController.saveAction))
         
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
     }
@@ -193,26 +219,10 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
        
-    func nextAction(){
+    func saveAction()
+    {
         
-        if(selectedClientId == ""){
-            viewTenent.shake()
-            self.view.makeToast("Please select client. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-               
-                
-            }
-
-        }
-        else{
-            SalesforceConnection.currentTenantId = selectedClientId
-            
-            SalesforceConnection.currentTenantName =  selectedClientName
-            
-            self.performSegue(withIdentifier: "showCaseIdentifier", sender: nil)
-            
-
-           
-        }
+       
         
 
     }
@@ -273,7 +283,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         
             let indexPathArray = tblTenantView.indexPathsForVisibleRows
             
-            for indexPath in indexPathArray!{
+            for indexPath in indexPathArray!
+            {
                 
                 let cell = tblTenantView.cellForRow(at: indexPath) as! TenantViewCell
                 

@@ -38,8 +38,6 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     @IBOutlet weak var txtDob: UITextField!
     
     
-    
-    
     var firstName:String = ""
     
     var lastName:String = ""
