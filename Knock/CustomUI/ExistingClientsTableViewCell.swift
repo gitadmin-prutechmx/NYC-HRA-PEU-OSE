@@ -16,7 +16,7 @@ class ExistingClientsTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var clientId: UILabel!
     @IBOutlet weak var age: UILabel!
-    
+    @IBOutlet weak var unit: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

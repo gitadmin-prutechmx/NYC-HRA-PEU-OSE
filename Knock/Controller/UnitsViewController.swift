@@ -166,7 +166,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         SalesforceConnection.unitId =  UnitDataArray[indexRow!].unitId
         SalesforceConnection.unitName = UnitDataArray[indexRow!].unitName
         
-        SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexRow!].assignmentLocUnitId
+      //  SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexRow!].assignmentLocUnitId
         
         
         Utilities.currentSegmentedControl = "Unit"
@@ -948,7 +948,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     currentCell.shake(duration: 0.3, pathLength: 15)
                     
                     
-                    self.view.makeToast("Please create new unit and .", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    self.view.makeToast("Please create new unit first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                         if didTap {
                             print("completion from tap")
                         } else {

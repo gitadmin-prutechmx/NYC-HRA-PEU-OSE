@@ -145,6 +145,7 @@
     <entity name="SurveyResponse" representedClassName="SurveyResponse" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyQuestionIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -231,7 +232,7 @@
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="105"/>
         <element name="Setting" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
-        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="180"/>
+        <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="195"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="Tenant" positionX="-126" positionY="45" width="128" height="285"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>

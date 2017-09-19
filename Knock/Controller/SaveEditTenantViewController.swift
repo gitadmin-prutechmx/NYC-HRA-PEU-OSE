@@ -633,6 +633,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         updateObjectDic["assignmentLocUnitId"] = SalesforceConnection.assignmentLocationUnitId
         
+        updateObjectDic["unitId"] = SalesforceConnection.unitId
+        
         
         let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
         
