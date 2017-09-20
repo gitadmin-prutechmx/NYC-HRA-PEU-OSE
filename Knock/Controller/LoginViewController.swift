@@ -377,6 +377,9 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                     SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
                     SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
                     SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
+                    SalesforceConnection.salesforceUserId = userInfoData[0].userId!
+                    
+                    
                     if let contactName = userInfoData[0].contactName{
                         SalesforceConfig.currentContactName = contactName
                     }

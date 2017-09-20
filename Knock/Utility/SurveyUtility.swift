@@ -513,5 +513,14 @@ class SurveyUtility {
         vc.present(navigationController, animated: true, completion: nil)
     }
     
+    class func goToSubmitSurveyPage(vc:UIViewController){
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
+        
+        SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: vc, destinationVC: surveySubmitVC)
+        
+    }
     
 }

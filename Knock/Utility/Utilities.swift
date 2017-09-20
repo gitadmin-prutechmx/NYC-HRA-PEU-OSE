@@ -1403,6 +1403,8 @@ class Utilities {
             objUserInfo.password = try! SalesforceConfig.password.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
             objUserInfo.contactName = SalesforceConfig.currentContactName
             
+            objUserInfo.userId =  SalesforceConnection.salesforceUserId
+            
             objUserInfo.passwordExpDate = dateAfterThreeDays
             
             appDelegate.saveContext()
@@ -1421,6 +1423,8 @@ class Utilities {
             SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
             SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
             SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
+            
+             SalesforceConnection.salesforceUserId = userInfoData[0].userId!
             
             if let contactName = userInfoData[0].contactName{
                 

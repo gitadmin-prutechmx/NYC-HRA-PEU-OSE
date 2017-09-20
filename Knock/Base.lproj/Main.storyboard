@@ -2149,13 +2149,13 @@
                                 </connections>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FF1-ym-RfN">
-                                <rect key="frame" x="0.0" y="175" width="375" height="472"/>
+                                <rect key="frame" x="0.0" y="175" width="375" height="492"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YXv-8w-ewD" userLabel="ExistingClientTblView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="472"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="406"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="472" id="dLy-UG-zG5"/>
+                                            <constraint firstAttribute="height" constant="406" id="dLy-UG-zG5"/>
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="existingClientCell" rowHeight="74" id="b24-Pm-bOk" customClass="ExistingClientsTableViewCell" customModule="Knock" customModuleProvider="target">
@@ -2221,10 +2221,10 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vv-OQ-7BB">
-                                                                    <rect key="frame" x="8" y="17" width="52" height="38"/>
+                                                                    <rect key="frame" x="8" y="17" width="69" height="38"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="38" id="OQ0-xD-dqE"/>
-                                                                        <constraint firstAttribute="width" constant="52" id="r6J-zc-f0X"/>
+                                                                        <constraint firstAttribute="width" constant="69" id="r6J-zc-f0X"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -2236,7 +2236,7 @@
                                                                 <constraint firstAttribute="height" constant="64" id="3yo-ZM-TBu"/>
                                                                 <constraint firstItem="50l-kR-Ker" firstAttribute="top" secondItem="Gxb-6a-aHf" secondAttribute="top" id="5XA-f1-U5G"/>
                                                                 <constraint firstItem="50l-kR-Ker" firstAttribute="leading" secondItem="Gxb-6a-aHf" secondAttribute="trailing" constant="20" id="6EG-ip-ZuU"/>
-                                                                <constraint firstItem="Gxb-6a-aHf" firstAttribute="leading" secondItem="3Vv-OQ-7BB" secondAttribute="trailing" constant="25" id="6bv-jE-gDs"/>
+                                                                <constraint firstItem="Gxb-6a-aHf" firstAttribute="leading" secondItem="3Vv-OQ-7BB" secondAttribute="trailing" constant="8" id="6bv-jE-gDs"/>
                                                                 <constraint firstItem="QdM-tW-0OC" firstAttribute="top" secondItem="pkm-lG-YN6" secondAttribute="top" id="D7J-Bj-4B2"/>
                                                                 <constraint firstItem="Gxb-6a-aHf" firstAttribute="top" secondItem="pkm-lG-YN6" secondAttribute="top" constant="17" id="FKE-sa-8Ul"/>
                                                                 <constraint firstItem="QdM-tW-0OC" firstAttribute="leading" secondItem="Gxb-6a-aHf" secondAttribute="trailing" constant="-27" id="K9c-Th-ksp"/>
@@ -2274,14 +2274,30 @@
                                             <outlet property="delegate" destination="g2k-3J-KBY" id="4FX-0K-N4W"/>
                                         </connections>
                                     </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wvb-Td-so2" userLabel="showMoreBtn">
+                                        <rect key="frame" x="116" y="420" width="142" height="44"/>
+                                        <color key="backgroundColor" red="0.17300331960000001" green="0.59518459079999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="142" id="hQb-yY-2uV"/>
+                                            <constraint firstAttribute="height" constant="44" id="ucX-ZN-Ii8"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Show More">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="showMoreAction:" destination="g2k-3J-KBY" eventType="touchUpInside" id="YZS-qt-Ggz"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="YXv-8w-ewD" secondAttribute="bottom" id="Avx-4g-LxO"/>
                                     <constraint firstAttribute="trailing" secondItem="YXv-8w-ewD" secondAttribute="trailing" id="AwD-gJ-FJr"/>
+                                    <constraint firstItem="Wvb-Td-so2" firstAttribute="top" secondItem="YXv-8w-ewD" secondAttribute="bottom" constant="14" id="DPu-W9-79l"/>
                                     <constraint firstItem="YXv-8w-ewD" firstAttribute="leading" secondItem="FF1-ym-RfN" secondAttribute="leading" id="REx-tA-gc9"/>
+                                    <constraint firstItem="Wvb-Td-so2" firstAttribute="centerX" secondItem="FF1-ym-RfN" secondAttribute="centerX" id="bdR-cX-HLE"/>
                                     <constraint firstAttribute="trailing" secondItem="YXv-8w-ewD" secondAttribute="trailing" id="fBk-GO-4YF"/>
-                                    <constraint firstAttribute="bottom" secondItem="YXv-8w-ewD" secondAttribute="bottom" id="lUy-53-0q3"/>
+                                    <constraint firstAttribute="bottom" secondItem="Wvb-Td-so2" secondAttribute="bottom" constant="28" id="j85-cm-ccZ"/>
                                     <constraint firstItem="YXv-8w-ewD" firstAttribute="leading" secondItem="FF1-ym-RfN" secondAttribute="leading" id="maY-k9-cQZ"/>
                                     <constraint firstItem="YXv-8w-ewD" firstAttribute="top" secondItem="FF1-ym-RfN" secondAttribute="top" id="xBI-U2-dYM"/>
                                     <constraint firstItem="YXv-8w-ewD" firstAttribute="leading" secondItem="FF1-ym-RfN" secondAttribute="leading" id="xyy-IZ-5I1"/>
@@ -2295,7 +2311,7 @@
                             <constraint firstAttribute="trailing" secondItem="pcx-o0-gE2" secondAttribute="trailing" id="5Zp-a0-zqZ"/>
                             <constraint firstItem="QVF-bV-g5t" firstAttribute="top" secondItem="O8b-ax-kM0" secondAttribute="bottom" id="7X4-bp-rdZ"/>
                             <constraint firstItem="FF1-ym-RfN" firstAttribute="leading" secondItem="lG1-eP-iM8" secondAttribute="leading" id="ALn-Vs-5gB"/>
-                            <constraint firstItem="FF1-ym-RfN" firstAttribute="bottom" secondItem="sZO-Mo-mli" secondAttribute="top" constant="-20" id="Ach-ul-qLK"/>
+                            <constraint firstItem="FF1-ym-RfN" firstAttribute="bottom" secondItem="sZO-Mo-mli" secondAttribute="top" id="Ach-ul-qLK"/>
                             <constraint firstAttribute="trailing" secondItem="QVF-bV-g5t" secondAttribute="trailing" id="XG8-ZL-iUN"/>
                             <constraint firstItem="QVF-bV-g5t" firstAttribute="leading" secondItem="lG1-eP-iM8" secondAttribute="leading" id="clr-VT-ADV"/>
                             <constraint firstItem="FF1-ym-RfN" firstAttribute="top" secondItem="pcx-o0-gE2" secondAttribute="bottom" id="iNT-na-ksV"/>
@@ -2304,6 +2320,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnShowMore" destination="Wvb-Td-so2" id="UbT-gc-U5K"/>
                         <outlet property="fullAddressTxt" destination="2A5-Ix-DZK" id="Set-5n-Bbl"/>
                         <outlet property="tblExistingClientsView" destination="YXv-8w-ewD" id="dUW-qP-K0r"/>
                     </connections>

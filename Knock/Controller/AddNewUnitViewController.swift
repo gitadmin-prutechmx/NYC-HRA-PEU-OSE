@@ -45,8 +45,11 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let aSet = NSCharacterSet.alphanumerics.inverted
-        //let aSet =  NSCharacterSet(charactersIn:"0123456789abc").inverted
+        //let aSet = NSCharacterSet.alphanumerics.inverted
+        
+        //let aSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ")
+        
+        let aSet =  NSCharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ").inverted
         let compSepByCharInSet = string.components(separatedBy: aSet)
         let numberFiltered = compSepByCharInSet.joined(separator: "")
         

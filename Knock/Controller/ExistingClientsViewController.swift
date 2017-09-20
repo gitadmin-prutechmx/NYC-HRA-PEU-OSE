@@ -11,19 +11,23 @@ import UIKit
 class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate
 {
     @IBOutlet weak var tblExistingClientsView: UITableView!
-    var arrSelectedIndex: NSMutableArray = []
-    var existingClientsDataArray = [ClientDataStruct]()
-    
+    @IBOutlet weak var btnShowMore:UIButton!
     @IBOutlet weak var fullAddressTxt: UILabel!
     
     
     var filteredTableData = NSMutableArray()
+    var arrSelectedIndex: NSMutableArray = []
     var isFiltered: Bool = false
+    var existingClientsDataArray = [ClientDataStruct]()
+    var selectedExistingClientsArray = [ClientDataStruct]()
+    
+    
+    
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+        btnShowMore.layer.cornerRadius = 5
         fullAddressTxt.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
@@ -42,12 +46,61 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        populateExistingClientData()
+        //populateExistingClientData()
+        populateVirtualUnitClientData()
+    }
+    
+    func populateVirtualUnitClientData(){
+        
+        arrSelectedIndex = []
+        
+        existingClientsDataArray = [ClientDataStruct]()
+        
+        
+        Utilities.unitClientDict = [:]
+        Utilities.caseDict = [:]
+        
+        Utilities.createUnitDictionary()
+        Utilities.createCaseDictionary()
+        
+        let clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Tenant]
+        
+        
+        if(clientResults.count > 0){
+            
+            for tenantData in clientResults{
+                
+                if(tenantData.virtualUnit! == "true"){
+                    
+                    let unitObject = Utilities.unitClientDict[tenantData.unitId!]
+                    
+                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!)
+                    
+                    
+                    existingClientsDataArray.append(objectTenantStruct)
+                }
+                
+            }
+        }
+        
+        
+        
+        
+        DispatchQueue.main.async {
+            
+            self.tblExistingClientsView.reloadData()
+            //self.viewDidLayoutSubviews()
+        }
+        
+        
+        
+        
     }
     
     
     func populateExistingClientData(){
         
+        arrSelectedIndex = []
         existingClientsDataArray = [ClientDataStruct]()
         
         
@@ -141,8 +194,9 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     
     
     
-    var selectedExistingClientsArray = [ClientDataStruct]()
-    
+    @IBAction func showMoreAction(_ sender: Any) {
+        populateExistingClientData()
+    }
     
     func saveAction()
     {
@@ -208,7 +262,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     func navigateToIntakeForm(){
         
         for selectedExistingClient  in self.selectedExistingClientsArray{
-            self.saveSelectedClients(tenantId: selectedExistingClient.tenantId)
+            self.saveSelectedClients(tenantId: selectedExistingClient.tenantId,dob:selectedExistingClient.dob)
         }
         
         // self.dismiss(animated: true, completion: nil)
@@ -217,7 +271,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     
     
     
-    func saveSelectedClients(tenantId:String){
+    func saveSelectedClients(tenantId:String,dob:String){
         
         
         var updateObjectDic:[String:String] = [:]
@@ -229,6 +283,21 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
         updateObjectDic["actionStatus"] = "edit"
         
+        if(dob != ""){
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let date = dateFormatter.date(from: dob)
+            
+            if(date != nil){
+                
+                dateFormatter.dateFormat = "MM/dd/yyyy"
+                updateObjectDic["dob"] = dateFormatter.string(from: date!)
+            }
+            else{
+                updateObjectDic["dob"] = dob
+            }
+        }
         
         //also check only that assignmentId ?
         ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@", predicateValue: tenantId,predicateValue2: SalesforceConnection.assignmentId,isPredicate: true)
@@ -311,8 +380,14 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
         if isFiltered
         {
+            
             cell.name.text = (filteredTableData[indexPath.row] as! ClientDataStruct).name
+            if((filteredTableData[indexPath.row] as! ClientDataStruct).phone.isEmpty){
+                cell.phone.text = "                        "
+            }
+            else{
             cell.phone.text = (filteredTableData[indexPath.row] as! ClientDataStruct).phone.toPhoneNumber()
+            }
             cell.age.text = (filteredTableData[indexPath.row] as! ClientDataStruct).age
             cell.email.text = (filteredTableData[indexPath.row] as! ClientDataStruct).email
             cell.clientId.text = (filteredTableData[indexPath.row] as! ClientDataStruct).tenantId
@@ -322,7 +397,12 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         else
         {
             cell.name.text = existingClientsDataArray[indexPath.row].name
+            if(existingClientsDataArray[indexPath.row].phone.isEmpty){
+                cell.phone.text = "                        "
+            }
+            else{
             cell.phone.text = existingClientsDataArray[indexPath.row].phone.toPhoneNumber()
+            }
             cell.age.text = existingClientsDataArray[indexPath.row].age
             cell.email.text = existingClientsDataArray[indexPath.row].email
             cell.clientId.text = existingClientsDataArray[indexPath.row].tenantId

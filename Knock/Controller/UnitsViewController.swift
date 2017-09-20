@@ -751,8 +751,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
             cell.lblLastName.text = clientDataArray[indexPath.row].lastName
-            cell.lblPhone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
-            
+            if(clientDataArray[indexPath.row].phone.isEmpty){
+                cell.lblPhone.text = "                        "
+            }
+            else{
+                cell.lblPhone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
+            }
             let noOfCases = Utilities.caseDict[clientDataArray[indexPath.row].tenantId]
             
             if let caseCount = noOfCases{
@@ -906,6 +910,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
             else{
                 
+                SalesforceConnection.selectedTenantForSurvey = ""
+                
                 showEditUnit()
                 
                 
@@ -957,6 +963,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     }
                 }
                 else{
+                    
+                    SalesforceConnection.selectedTenantForSurvey = clientDataArray[indexPath.row].tenantId
+
                     showEditUnit()
                 }
             }

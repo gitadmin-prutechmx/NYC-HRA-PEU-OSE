@@ -218,22 +218,31 @@ class SurveyTextViewController: UIViewController {
         
         if(Utilities.surveyQuestionArrayIndex == Utilities.totalSurveyQuestions - 1){
             
-            // self.navigationItem.title = "Previous"
+            if(SalesforceConnection.selectedTenantForSurvey == ""){
+                
+                
+                toolBarView.shake()
+                
+                self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        print("completion from tap")
+                    } else {
+                        print("completion without tap")
+                    }
+                }
+                
+                return
+                
+            }
+                
+            else{
+                
+                SurveyUtility.goToSubmitSurveyPage(vc: self)
+                return
+            }
             
-            let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
             
-            
-            
-           SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
-            
-            
-          //  self.navigationController?.pushViewController(surveySubmitVC, animated: true)
-            
-            /*   let navigationController = UINavigationController(rootViewController: surveySubmitVC)
-             
-             self.presentViewController(navigationController, animated: true, completion: nil)
-             
-             */
+
         }
             
         else{
@@ -264,15 +273,33 @@ class SurveyTextViewController: UIViewController {
                                 
                                 
                                 
-                                let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
+                                if(SalesforceConnection.selectedTenantForSurvey == ""){
+                                    
+                                    
+                                    toolBarView.shake()
+                                    
+                                    self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                                        if didTap {
+                                            print("completion from tap")
+                                        } else {
+                                            print("completion without tap")
+                                        }
+                                    }
+                                    
+                                    return
+                                    
+                                }
+                                    
+                                else{
+                                    
+                                    SurveyUtility.goToSubmitSurveyPage(vc: self)
+                                    return
+                                }
                                 
                                 
-                                SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
+
                                 
                                 
-                               // self.navigationController?.pushViewController(surveySubmitVC, animated: true)
-                                
-                                return
                                 
                             }
                                 

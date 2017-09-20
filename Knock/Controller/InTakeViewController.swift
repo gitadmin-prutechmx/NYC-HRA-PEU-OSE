@@ -222,7 +222,22 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     func saveAction()
     {
         
-       
+        if(selectedClientId == ""){
+            viewTenent.shake()
+            self.view.makeToast("Please select client. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                
+            }
+            
+        }
+        else{
+            
+            SalesforceConnection.selectedTenantForSurvey = selectedClientId
+            
+            self.dismiss(animated: true, completion: nil)
+            
+            
+        }
         
 
     }
@@ -262,7 +277,12 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
 
             
             cell.email.text = clientDataArray[indexPath.row].email
-            cell.phone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
+            if(clientDataArray[indexPath.row].phone.isEmpty){
+                cell.phone.text = "             "
+            }
+            else{
+                cell.phone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
+            }
             cell.name.text = clientDataArray[indexPath.row].name
             cell.age.text = clientDataArray[indexPath.row].age
             cell.tenantId.text = clientDataArray[indexPath.row].clientId

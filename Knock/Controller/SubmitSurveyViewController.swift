@@ -302,6 +302,7 @@ class SubmitSurveyViewController: UIViewController {
         surveyResponseObject.contactId = SalesforceConfig.currentUserContactId
         surveyResponseObject.userId = SalesforceConnection.salesforceUserId
         
+        surveyResponseObject.clientId = SalesforceConnection.selectedTenantForSurvey
         
         surveyResponseObject.surveyQuestionRes = questionArray as NSObject?
         
@@ -325,6 +326,7 @@ class SubmitSurveyViewController: UIViewController {
         
         updateObjectDic["contactId"] = SalesforceConfig.currentUserContactId as AnyObject?
         updateObjectDic["userId"] = SalesforceConnection.salesforceUserId as AnyObject?
+        updateObjectDic["clientId"] = SalesforceConnection.selectedTenantForSurvey as AnyObject?
         
         
         

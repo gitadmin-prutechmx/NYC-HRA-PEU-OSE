@@ -316,10 +316,29 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             
             for objectSkipLogic in skipLogicArr{
                 if(objectSkipLogic[radiobuttonCurrentValue] != nil){
+                    
                     let tempObject:SkipLogic = objectSkipLogic[radiobuttonCurrentValue]!
                     
                     if(tempObject.skipLogicType == "End of Survey"){
                         
+                        if(SalesforceConnection.selectedTenantForSurvey == ""){
+                          
+                            
+                            toolBarView.shake()
+                            
+                            self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                                if didTap {
+                                    print("completion from tap")
+                                } else {
+                                    print("completion without tap")
+                                }
+                            }
+                            
+                            return
+                            
+                        }
+                        
+                        else{
                         
                         //Here we have to delete key value
                         
@@ -329,18 +348,14 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                         
                         Utilities.deleteSkipSurveyData(startingIndex: startingIndex, count: count)
                         
+                      
                         
+                        SurveyUtility.goToSubmitSurveyPage(vc: self)
                         
-                        let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
-                        
-                         SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
-                        
-                        
-                        
-                       // self.navigationController?.pushViewController(surveySubmitVC, animated: true)
-                        
-                        
+                     
                         return
+                            
+                        }
                         
                     }
                 }
@@ -351,17 +366,29 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         if(Utilities.surveyQuestionArrayIndex == Utilities.totalSurveyQuestions - 1){
             
-            // self.navigationItem.title = "Previous"
-            
-            let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
-            
-            
-             SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
-            
-            //self.navigationController?.pushViewController(surveySubmitVC, animated: true)
-            
-            
-            
+            if(SalesforceConnection.selectedTenantForSurvey == ""){
+                
+                
+                toolBarView.shake()
+                
+                self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    if didTap {
+                        print("completion from tap")
+                    } else {
+                        print("completion without tap")
+                    }
+                }
+                
+                return
+                
+            }
+                
+            else{
+                
+                SurveyUtility.goToSubmitSurveyPage(vc: self)
+                return
+            }
+
             
         }
             
@@ -388,17 +415,28 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                             
                             if(currentIndex == Utilities.totalSurveyQuestions - 1){
                                 
-                                //objSurveyQues = nil
-                                
-                                let surveySubmitVC = storyboard.instantiateViewController(withIdentifier: "submitSurveyIdentifier") as! SubmitSurveyViewController
-                                
-                                 SurveyUtility.TransitionVC(subType: kCATransitionFromRight, sourceVC: self, destinationVC: surveySubmitVC)
-                                
-                                
-                                
-                               // self.navigationController?.pushViewController(surveySubmitVC, animated: true)
-                                
-                                return
+                                if(SalesforceConnection.selectedTenantForSurvey == ""){
+                                    
+                                    
+                                    toolBarView.shake()
+                                    
+                                    self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                                        if didTap {
+                                            print("completion from tap")
+                                        } else {
+                                            print("completion without tap")
+                                        }
+                                    }
+                                    
+                                    return
+                                    
+                                }
+                                    
+                                else{
+                                    
+                                    SurveyUtility.goToSubmitSurveyPage(vc: self)
+                                    return
+                                }
                                 
                             }
                                 

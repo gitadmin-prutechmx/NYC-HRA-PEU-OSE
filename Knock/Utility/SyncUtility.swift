@@ -41,7 +41,7 @@ class SyncUtility{
                 
                 tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
                 
-                surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "Complete", isPredicate:true) as! [SurveyResponse]
+                surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "Complete1", isPredicate:true) as! [SurveyResponse]
                 
                 
                 editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
@@ -349,6 +349,8 @@ class SyncUtility{
                 responseDict["byContactId"] = surveyResData.contactId! as AnyObject?
                 responseDict["byUserId"] = surveyResData.userId! as AnyObject?
                 
+                responseDict["forClient"] = surveyResData.clientId! as AnyObject?
+                
                 
                 responseDict["surveyId"] = surveyResData.surveyId! as AnyObject?
                 responseDict["assignmentLocUnitId"] = surveyResData.assignmentLocUnitId! as AnyObject?
@@ -435,9 +437,10 @@ class SyncUtility{
                 editUnitGroup.enter()
                 
                 
-                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: SalesforceConfig.currentUserContactId)
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
                 
                 
+                //lastCanvassedBy: SalesforceConfig.currentUserContactId
                 
                 updateUnit["unit"] = Utilities.jsonToString(json: editUnitDict as AnyObject)!
                 //Utilities.encryptedParams(dictParameters: editUnitDict as AnyObject)

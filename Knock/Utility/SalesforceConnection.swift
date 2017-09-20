@@ -28,6 +28,8 @@ class SalesforceConnection{
     static var currentTenantId:String =  ""
     static var currentTenantName:String = ""
     
+    static var selectedTenantForSurvey:String = ""
+    
     static var unitName:String = ""
     static var surveyId:String = ""
     static var surveyName:String = ""
