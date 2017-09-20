@@ -22,6 +22,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     var selectedExistingClientsArray = [ClientDataStruct]()
     
     
+    var existingClientDict: [String:ClientDataStruct] = [:]
     
     
     override func viewDidLoad()
@@ -78,6 +79,8 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     
                     existingClientsDataArray.append(objectTenantStruct)
+                    
+                    existingClientDict[tenantData.id!] = objectTenantStruct
                 }
                 
             }
@@ -107,6 +110,8 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         Utilities.unitClientDict = [:]
         Utilities.caseDict = [:]
         
+        existingClientDict = [:]
+        
         Utilities.createUnitDictionary()
         Utilities.createCaseDictionary()
         
@@ -125,6 +130,8 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     
                     existingClientsDataArray.append(objectTenantStruct)
+                    
+                    existingClientDict[tenantData.id!] = objectTenantStruct
                 }
                 
             }
@@ -159,13 +166,15 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
         //1 or multiple
         
-        for indexPath in arrSelectedIndex
+        for clientIdKey in arrSelectedIndex
         {
-            let selectedExistingClient = existingClientsDataArray[(indexPath as AnyObject).row]
+            //let selectedExistingClient = existingClientsDataArray[(indexPath as AnyObject).row]
             
-            selectedExistingClientsArray.append(selectedExistingClient)
+            let selectedExistingClient = existingClientDict[(clientIdKey as AnyObject) as! String]
             
-            if(selectedExistingClient.isVirtualUnit == "false"){
+            selectedExistingClientsArray.append(selectedExistingClient!)
+            
+            if(selectedExistingClient?.isVirtualUnit == "false"){
                 nonVirtualUnitCount = nonVirtualUnitCount + 1
             }
             
@@ -176,11 +185,11 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         }
         
         if(nonVirtualUnitCount == 1){
-            clientMsg = "client is "
+            clientMsg = "Client is "
         }
         else if(nonVirtualUnitCount > 1){
             
-            clientMsg = "some clients are "
+            clientMsg = "Some clients are "
         }
         
         
@@ -302,20 +311,14 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
-        
-        
-        
+
     {
         
         
         
         if searchText.isEmpty
             
-            
-            
         {
-            
-            
             
             isFiltered = false
             
@@ -347,11 +350,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             for searchitem in existingClientsDataArray
                 
-                
-                
             {
-                
-                
                 
                 if searchitem.name.lowercased().contains(searchText.lowercased())
                     
@@ -362,12 +361,6 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     
                     filteredTableData.add(searchitem)
-                    
-                    
-                    
-                    
-                    
-                    
                     
                     for searchClientId in arrSelectedIndex
                         

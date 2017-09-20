@@ -71,6 +71,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     @IBOutlet weak var tblEditUnit: UITableView!
     
+    @IBOutlet weak var btnNext:UIButton!
     
     @IBOutlet weak var chooseUnitInfoView: UIView!
     
@@ -86,12 +87,10 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var isReasonSelect:Bool = false
     var isContactOutcomeSelect:Bool = false
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        
-        
-        
-        
+        btnNext.layer.cornerRadius = 5.0
         fullAddressText.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
@@ -246,6 +245,43 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     
+    @IBAction func btnNextAction(_ sender: Any)
+    {
+        if((attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")) || (attempt == "Yes" && contact == "Yes"  && inTake == "Yes")){
+            
+            updateUnit()
+            
+            self.dismiss(animated: true) {
+                
+                self.getDefaultSurvey()
+                
+                self.completionHandler?(self)
+                
+                print("Completion");
+                
+            }
+            
+        }
+            
+        else{
+            
+            
+            chooseUnitInfoView.shake()
+            //updateUnit()
+            
+            self.view.makeToast("You can only proceed to next step if Attempt , Contact and Reknock selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+                
+                //self.dismiss(animated: true, completion: nil)
+                
+            }
+        }
+        
+        
+        
+
+    }
     
     
     
@@ -654,7 +690,6 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
-            //Do some stuff
         }
         alertCtrl.addAction(cancelAction)
         
@@ -664,12 +699,13 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
            // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             self.dismiss(animated: true, completion: nil)
-            //Do some other stuff
         }
         alertCtrl.addAction(okAction)
         
         
     }
+    
+   
     
     func getDefaultSurvey(){
         
@@ -699,42 +735,17 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBAction func save(_ sender: Any) {
         
         
-        if((attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")) || (attempt == "Yes" && contact == "Yes"  && inTake == "Yes")){
+         updateUnit()
+        
+         self.view.makeToast("Unit has been updated successfully. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
-            updateUnit()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
-            self.dismiss(animated: true) {
-                
-                self.getDefaultSurvey()
-                
-                self.completionHandler?(self)
-                
-                print("Completion");
-                
-            }
+            self.dismiss(animated: true, completion: nil)
             
         }
-            
-        else{
-            
-            
-            chooseUnitInfoView.shake()
-            updateUnit()
-            
-            self.view.makeToast("You can only proceed to next step if Attempt , Contact and Reknock selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            }
-        }
         
-        
-        
-        
-        
-        
+    
     }
     
     
