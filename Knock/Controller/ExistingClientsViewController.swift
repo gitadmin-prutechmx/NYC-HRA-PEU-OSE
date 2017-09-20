@@ -144,55 +144,6 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
     }
     
-    // MARK: SearchBar Delegate
-    
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
-    {
-        if searchText.isEmpty
-        {
-            isFiltered = false
-        }
-        else
-        {
-            isFiltered = true;
-            filteredTableData.removeAllObjects()
-            
-            for searchitem in existingClientsDataArray
-            {
-                if searchitem.name.lowercased().contains(searchText.lowercased())
-                {
-                    filteredTableData.add(searchitem)
-                }
-            }
-            
-            
-        }
-        
-        
-        
-        
-        self.tblExistingClientsView.reloadData()
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar)
-    {
-        view.endEditing(true)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
-    {
-        if !isFiltered
-        {
-            isFiltered = true
-            tblExistingClientsView.reloadData()
-        }
-        
-        //searchbarExistingClients.resignFirstResponder()
-        view.endEditing(true)
-    }
-    
-    
     
     @IBAction func showMoreAction(_ sender: Any) {
         populateExistingClientData()
@@ -338,39 +289,315 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
     }
     
+    // MARK: SearchBar Delegate
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
+        
+        
+        
+    {
+        
+        
+        
+        if searchText.isEmpty
+            
+            
+            
+        {
+            
+            
+            
+            isFiltered = false
+            
+            
+            
+        }
+            
+            
+            
+        else
+            
+            
+            
+        {
+            
+            
+            
+            isFiltered = true;
+            
+            
+            
+            filteredTableData.removeAllObjects()
+            
+            
+            
+            var index = 0
+            
+            
+            
+            for searchitem in existingClientsDataArray
+                
+                
+                
+            {
+                
+                
+                
+                if searchitem.name.lowercased().contains(searchText.lowercased())
+                    
+                    
+                    
+                {
+                    
+                    
+                    
+                    filteredTableData.add(searchitem)
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    for searchClientId in arrSelectedIndex
+                        
+                        
+                        
+                    {
+                        
+                        
+                        
+                        if searchitem.tenantId.contains(searchClientId as! String)
+                            
+                            
+                            
+                        {
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            tblExistingClientsView.selectRow(at: IndexPath.init(row: index, section: 0), animated: false, scrollPosition: UITableViewScrollPosition.none)
+                            
+                            
+                            
+                            break
+                            
+                            
+                            
+                        }
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    index = index + 1
+                    
+                    
+                    
+                }
+                
+                
+                
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+        self.tblExistingClientsView.reloadData()
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar)
+        
+        
+        
+    {
+        
+        
+        
+        view.endEditing(true)
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+        
+        
+        
+    {
+        
+        
+        
+        if !isFiltered
+            
+            
+            
+        {
+            
+            
+            
+            isFiltered = true
+            
+            
+            
+            tblExistingClientsView.reloadData()
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        // searchbarExistingClients.resignFirstResponder()
+        
+        
+        
+        view.endEditing(true)
+        
+        
+        
+    }
+    
+    
+    
+    
+    
     
     
     // MARK: UITenantTableView and UIEditTableView
     
+    
+    
+    
+    
+    
+    
     func numberOfSections(in tableView: UITableView) -> Int
+        
+        
+        
     {
         
         return 1
         
     }
     
+    
+    
+    
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+        
+        
+        
     {
+        
         if isFiltered
+            
         {
+            
+            
+            
             return filteredTableData.count
             
+            
+            
         } else
+            
+            
+            
         {
+            
+            
+            
             return existingClientsDataArray.count
+            
+            
+            
         }
+        
+        
         
         
     }
     
+    
+    
+    
+    
+    
+    
     // cell height
+    
+    
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        
+        
         return UITableViewAutomaticDimension
+        
+        
+        
     }
+    
     
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+        
+        
+        
     {
         
         
@@ -378,150 +605,449 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
         
         
+        var clientData: ClientDataStruct
+        
+        
+        
         if isFiltered
+            
+            
+            
         {
+            
+            
             
             cell.name.text = (filteredTableData[indexPath.row] as! ClientDataStruct).name
+            
+            
+            
             if((filteredTableData[indexPath.row] as! ClientDataStruct).phone.isEmpty){
+                
+                
+                
                 cell.phone.text = "                        "
+                
+                
+                
             }
+                
+                
+                
             else{
-            cell.phone.text = (filteredTableData[indexPath.row] as! ClientDataStruct).phone.toPhoneNumber()
+                
+                
+                
+                cell.phone.text = (filteredTableData[indexPath.row] as! ClientDataStruct).phone.toPhoneNumber()
+                
+                
+                
             }
+            
+            
+            
             cell.age.text = (filteredTableData[indexPath.row] as! ClientDataStruct).age
+            
+            
+            
             cell.email.text = (filteredTableData[indexPath.row] as! ClientDataStruct).email
+            
+            
+            
             cell.clientId.text = (filteredTableData[indexPath.row] as! ClientDataStruct).tenantId
-            cell.unit.text = (filteredTableData[indexPath.row] as! ClientDataStruct).unitName
+            
+            
+            
+            clientData = (filteredTableData[indexPath.row] as! ClientDataStruct)
+            
+            
             
         }
+            
+            
+            
+            
+            
+            
+            
         else
+            
+            
+            
         {
+            
+            
+            
             cell.name.text = existingClientsDataArray[indexPath.row].name
+            
+            
+            
             if(existingClientsDataArray[indexPath.row].phone.isEmpty){
+                
+                
+                
                 cell.phone.text = "                        "
+                
+                
+                
             }
+                
+                
+                
             else{
-            cell.phone.text = existingClientsDataArray[indexPath.row].phone.toPhoneNumber()
+                
+                
+                
+                cell.phone.text = existingClientsDataArray[indexPath.row].phone.toPhoneNumber()
+                
+                
+                
             }
+            
+            
+            
             cell.age.text = existingClientsDataArray[indexPath.row].age
+            
+            
+            
             cell.email.text = existingClientsDataArray[indexPath.row].email
+            
+            
+            
             cell.clientId.text = existingClientsDataArray[indexPath.row].tenantId
-            cell.unit.text = existingClientsDataArray[indexPath.row].unitName
+            
+            
+            
+            clientData = existingClientsDataArray[indexPath.row]
+            
+            
+            
         }
         
         
-        cell.existingClientView.backgroundColor = UIColor.white
-        cell.contentView.backgroundColor = UIColor.clear
+        
+        
+        
+        
+        
+        for searchClientId in arrSelectedIndex
+            
+            
+            
+        {
+            
+            
+            
+            if clientData.tenantId.contains(searchClientId as! String)
+                
+                
+                
+            {
+                
+                
+                
+                
+                
+                
+                
+                cell.backgroundColor = UIColor.clear//UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1)
+                
+                
+                
+                
+                
+                
+                
+                cell.existingClientView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1)
+                
+                
+                
+                cell.contentView.backgroundColor = UIColor.clear
+                
+                
+                
+                cell.isSelected = true
+                
+                
+                
+                break
+                
+                
+                
+            }
+                
+                
+                
+                
+                
+                
+                
+            else
+                
+                
+                
+            {
+                
+                
+                
+                
+                
+                
+                
+                cell.existingClientView.backgroundColor = UIColor.white
+                
+                
+                
+                cell.backgroundColor = UIColor.clear
+                
+                
+                
+                cell.contentView.backgroundColor = UIColor.clear
+                
+                
+                
+                cell.isSelected = false
+                
+                
+                
+                
+                
+                
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+        if (cell.isSelected)
+            
+            
+            
+        {
+            
+            
+            
+            tblExistingClientsView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            
+            
+            
+        }
+        
+        
+        
         let selectionView = UIView()
+        
+        
+        
         selectionView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1)
+        
+        
+        
         cell.selectedBackgroundView = selectionView
         
         
-        
-        // cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
-        
-        
-        //unit id ,unit name and cases
-        
-        /*let noOfCases = Utilities.caseDict[clientDataArray[indexPath.row].tenantId]
-         
-         if let caseCount = noOfCases{
-         cell.lblCase.text = caseCount
-         }
-         else{
-         cell.lblCase.text = "0"
-         }
-         
-         
-         
-         
-         cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
-         cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
-         
-         */
-        
         return cell
         
         
-        
     }
+    
+    
+    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+        
+        
+        
     {
-        arrSelectedIndex.add(indexPath)
+        
+        
+        
+        let currentCell = tableView.cellForRow(at: indexPath) as! ExistingClientsTableViewCell
+        
+        
+        
+        if isFiltered
+            
+            
+            
+        {
+            
+            
+            
+            arrSelectedIndex.add((filteredTableData.object(at: indexPath.row) as! ClientDataStruct).tenantId)
+            
+            
+        }
+            
+            
+            
+        else
+            
+            
+            
+        {
+            
+            
+            
+            arrSelectedIndex.add(existingClientsDataArray[indexPath.row].tenantId)
+            
+            
+            
+        }
+        
+        
+        
         
     }
     
+    
+    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath)
+        
+        
+        
     {
-        arrSelectedIndex.remove(at: indexPath)
+        
+        
+        let currentCell = tableView.cellForRow(at: indexPath) as! ExistingClientsTableViewCell
+        
+        
+        
+        var clientID = ""
+        
+        
+        
+        if isFiltered
+            
+        {
+            
+            
+            
+            clientID = ((filteredTableData.object(at: indexPath.row) as! ClientDataStruct).tenantId)
+            
+            
+            
+        }
+            
+            
+            
+        else
+            
+        {
+            
+            clientID =  existingClientsDataArray[indexPath.row].tenantId
+            
+        }
+        
+        
+        for searchClientId in arrSelectedIndex
+            
+            
+        {
+            
+            
+            
+            if (searchClientId as! String) == (clientID)
+                
+                
+            {
+                
+                
+                
+                arrSelectedIndex.remove(searchClientId)
+                
+                
+                
+                currentCell.existingClientView.backgroundColor = UIColor.white
+                
+                
+                
+                currentCell.backgroundColor = UIColor.clear
+                
+                
+                
+                //if arrSelectedIndex.count != 0 {
+                
+                
+                
+                break
+                
+                
+                
+                //}
+                
+                
+                
+            }
+            
+            
+            
+        }
+        
+        
     }
     
-    /*
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-     {
-     
-     let cell = tblExistingClientsView.cellForRow(at: indexPath) as! ExistingClientsTableViewCell
-     
-     cell.existinClientsView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-     
-     cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-     
-     }
-     
-     
-     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath)
-     {
-     let cell = tblExistingClientsView.cellForRow(at: indexPath) as! ExistingClientsTableViewCell
-     
-     
-     cell.existinClientsView.backgroundColor = UIColor.white
-     
-     cell.contentView.backgroundColor = UIColor.clear
-     
-     }
-     
-     */
+    
+    
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         
         // Dequeue with the reuse identifier
         
+        
+        
         let identifier = "existingClientsHeader"
+        
+        
+        
         var cell: ExistingClientsHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? ExistingClientsHeaderTableViewCell
         
+        
+        
+        
         if cell == nil {
+            
+            
+            
             tableView.register(UINib(nibName: "ExistingClientsHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+            
+            
+            
             cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ExistingClientsHeaderTableViewCell
+            
+            
+            
         }
+        
         
         return cell
         
         
     }
+    
+    
+    
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return 44.0
+        
     }
     
     
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
+        
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
