@@ -58,7 +58,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
             return false
         }
         let newLength = currentCharacterCount + string.characters.count - range.length
-        if(newLength > 5){
+        if(newLength > 10){
             return false
         }
         
