@@ -185,9 +185,21 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
 
     }
     
-   
-    
-    
+    @IBAction func access(_ sender: Any)
+    {
+        if UIApplication.shared.canOpenURL(URL(string: "https://access.nyc.gov")!)
+        {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string: "https://access.nyc.gov")!, options: [UIApplicationOpenURLOptionUniversalLinksOnly:""], completionHandler: { (completed) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                })
+            } else {
+                // Fallback on earlier versions
+                UIApplication.shared.openURL(URL(string : "https://access.nyc.gov")!)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
+    }
     
     func exitFromSurvey()
     {

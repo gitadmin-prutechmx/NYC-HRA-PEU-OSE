@@ -10,6 +10,7 @@ import UIKit
 
 class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate
 {
+    @IBOutlet weak var searchTextField: UISearchBar!
     @IBOutlet weak var tblExistingClientsView: UITableView!
     @IBOutlet weak var btnShowMore:UIButton!
     @IBOutlet weak var fullAddressTxt: UILabel!
@@ -102,6 +103,11 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     
     
     func populateExistingClientData(){
+        
+        searchTextField.text = ""
+        
+        filteredTableData = []
+        isFiltered = false
         
         arrSelectedIndex = []
         existingClientsDataArray = [ClientDataStruct]()
@@ -439,11 +445,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar)
         
-        
-        
     {
-        
-        
         
         view.endEditing(true)
         
@@ -649,6 +651,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             cell.clientId.text = (filteredTableData[indexPath.row] as! ClientDataStruct).tenantId
             
             
+            cell.unit.text = (filteredTableData[indexPath.row] as! ClientDataStruct).unitName
             
             clientData = (filteredTableData[indexPath.row] as! ClientDataStruct)
             
@@ -708,6 +711,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             cell.clientId.text = existingClientsDataArray[indexPath.row].tenantId
             
+             cell.unit.text = existingClientsDataArray[indexPath.row].unitName
             
             
             clientData = existingClientsDataArray[indexPath.row]

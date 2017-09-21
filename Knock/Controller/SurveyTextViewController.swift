@@ -166,29 +166,51 @@ class SurveyTextViewController: UIViewController {
         SurveyUtility.SwitchNewSurvey(vc: self)
     }
     
-    @IBAction func inTake(_ sender: Any) {
+    @IBAction func inTake(_ sender: Any)
+    {
         
         SurveyUtility.InTake(vc: self)
     }
     
-    override func didReceiveMemoryWarning() {
+    
+    @IBAction func access(_ sender: Any)
+    {
+        if UIApplication.shared.canOpenURL(URL(string: "https://access.nyc.gov")!)
+        {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string: "https://access.nyc.gov")!, options: [UIApplicationOpenURLOptionUniversalLinksOnly:""], completionHandler: { (completed) in
+                    self.navigationController?.popToRootViewController(animated: true)
+            })
+                
+            }
+            else
+            {
+                // Fallback on earlier versions
+                UIApplication.shared.openURL(URL(string : "https://access.nyc.gov")!)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
+    }
+    
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+      
     }
     
     var isSkipLogic:Bool = false
     
-    @IBAction func nextQuestion(_ sender: UIButton) {
+    @IBAction func nextQuestion(_ sender: UIButton)
+    {
         
         isSkipLogic = false
         isNextButtonPressed = true
         
-        
-        
         if ((questionTextField.text?.isEmpty) != nil){
             Utilities.answerSurvey = questionTextField.text!
         }
-        else{
+        else
+        {
             Utilities.answerSurvey = ""
         }
         
@@ -246,8 +268,6 @@ class SurveyTextViewController: UIViewController {
         }
             
         else{
-            
-            
             
             let currentIndex = Utilities.surveyQuestionArrayIndex
             

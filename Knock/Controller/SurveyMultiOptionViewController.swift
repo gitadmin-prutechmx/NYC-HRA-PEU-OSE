@@ -102,11 +102,7 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
         print(options)
         
-        
         optionsTextArray = options.components(separatedBy: ";")
-        
-        
-        
         
         
         /*  for optionData in objSurveyQues.singleOptionsString!
@@ -173,6 +169,23 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     }
     
     
+    @IBAction func access(_ sender: Any)
+    {
+        if UIApplication.shared.canOpenURL(URL(string: "https://access.nyc.gov")!)
+        {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string: "https://access.nyc.gov")!, options: [UIApplicationOpenURLOptionUniversalLinksOnly:""], completionHandler: { (completed) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                })
+            } else
+            {
+                // Fallback on earlier versions
+                UIApplication.shared.openURL(URL(string : "https://access.nyc.gov")!)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -185,7 +198,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
         
         
-        if(Utilities.surveyQuestionArrayIndex == 0){
+        if(Utilities.surveyQuestionArrayIndex == 0)
+        {
             
             prevBtnOutlet.isHidden = true
             // self.navigationItem.leftBarButtonItem = nil
@@ -242,7 +256,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         else if (showTextLbl.isHidden == false){
             getDescription = showTextLbl.text ?? "";
         }
-        else{
+        else
+        {
             getDescription = ""
         }
         

@@ -1117,31 +1117,46 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         // Row selected, so set textField to relevant value, hide tableView
         // endEditing can trigger some other action according to requirements
         
-        SalesforceConnection.locationId = locDataArray[indexPath.row].locId
         
-        SalesforceConnection.assignmentLocationId = locDataArray[indexPath.row].assignmentLocId
+        if(searchActive && filteredStruct.count > 0){
+            SalesforceConnection.locationId = filteredStruct[indexPath.row].locId
+            
+            SalesforceConnection.assignmentLocationId = filteredStruct[indexPath.row].assignmentLocId
+            
+            SalesforceConnection.fullAddress =  filteredStruct[indexPath.row].fullAddress
+            
+            
+            totalUnits = filteredStruct[indexPath.row].totalUnits
+            noOfUnitsAttempt = filteredStruct[indexPath.row].noOfUnitsAttempt
+            noOfClients = filteredStruct[indexPath.row].noOfClients
+            
+            Utilities.currentLocationRowIndex = indexPath.row
+            
+            
+            
+            
+            self.selectFeature(addressName: filteredStruct[indexPath.row].salesforceLocationName)
+        }
+        else{
+            SalesforceConnection.locationId = locDataArray[indexPath.row].locId
+            
+            SalesforceConnection.assignmentLocationId = locDataArray[indexPath.row].assignmentLocId
+            
+            SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
+            
+            
+            totalUnits = locDataArray[indexPath.row].totalUnits
+            noOfUnitsAttempt = locDataArray[indexPath.row].noOfUnitsAttempt
+            noOfClients = locDataArray[indexPath.row].noOfClients
+            
+            Utilities.currentLocationRowIndex = indexPath.row
+            
+            
+            
+            
+            self.selectFeature(addressName: locDataArray[indexPath.row].salesforceLocationName)
+        }
         
-        SalesforceConnection.fullAddress =  locDataArray[indexPath.row].fullAddress
-        
-        
-        totalUnits = locDataArray[indexPath.row].totalUnits
-        noOfUnitsAttempt = locDataArray[indexPath.row].noOfUnitsAttempt
-        noOfClients = locDataArray[indexPath.row].noOfClients
-        
-        Utilities.currentLocationRowIndex = indexPath.row
-        
-        
-        
-        //        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-        //
-        //
-        //
-        //
-        //            currentCell.contentView.backgroundColor = UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1) //gray
-        
-        
-        
-        self.selectFeature(addressName: locDataArray[indexPath.row].salesforceLocationName)
         
         // self.geocodeSearchText(text: locDataArray[indexPath.row].salesforceLocationName)
         
@@ -1151,32 +1166,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
     }
     
-    //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    //
-    //        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-    //
-    //        currentCell.contentView.backgroundColor = UIColor.clear
-    //        currentCell.backgroundColor = UIColor.black
-    //
-    //    }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    //     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-    //        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-    //        currentCell.contentView.backgroundColor = UIColor.clear
-    //        currentCell.backgroundColor = UIColor.clear
-    //
-    //    }
-    
-    //     func tableView(_ tableView: UITableView,  didUnhighlightRowAt indexPath: IndexPath) {
-    //        let currentCell = tableView.cellForRow(at: indexPath) as! LocationCustomViewCell
-    //        // Set unhighlighted color
-    //        currentCell.contentView.backgroundColor = UIColor.black
-    //        currentCell.backgroundColor = UIColor.black
-    //    }
     
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
