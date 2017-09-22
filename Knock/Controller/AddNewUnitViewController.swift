@@ -15,6 +15,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     @IBOutlet weak var apartmentView: UIView!
     @IBOutlet weak var apartmentName: UITextField!
     
+    @IBOutlet weak var homeSwiitchView: UISwitch!
     @IBOutlet weak var notesTextArea: UITextView!
     //    @IBOutlet weak var apartmentName: UITextField!
     //
@@ -72,6 +73,8 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     }
     
     
+    @IBAction func homeSwitchViewAction(_ sender: Any) {
+    }
     
     @IBAction func cancel(_ sender: Any)
     {

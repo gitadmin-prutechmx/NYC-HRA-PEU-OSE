@@ -58,6 +58,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var toolBarView: UIView!
     
+    @IBOutlet weak var unitclientSearchbar: UISearchBar!
     @IBOutlet weak var dataAssignment: UILabel!
     
     
@@ -357,7 +358,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     
-    func populateClientData(){
+    func populateClientData()
+    {
         
         clientDataArray = [ClientDataStruct]()
         
@@ -639,9 +641,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         
         if(tableView == tblUnits)
         {
@@ -1444,13 +1445,19 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
     }
     
+       
     
-    
-    
-    
-    @IBAction func NewUnit(_ sender: Any) {
+    @IBAction func NewUnit(_ sender: Any)
+    {
         
         self.performSegue(withIdentifier: "showAddUnitIdentifier", sender: sender)
+    }
+    
+  
+    @IBAction func NewClientAction(_ sender: Any)
+    {
+        self.performSegue(withIdentifier: "showAddClientIdentifier", sender: nil)
+
     }
     
     @IBAction func NewCaseBtn(sender: AnyObject) {
