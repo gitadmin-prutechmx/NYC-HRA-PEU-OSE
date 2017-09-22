@@ -1222,6 +1222,9 @@
                                     <constraint firstAttribute="height" constant="44" id="ZjD-ol-xZE"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="X4x-mi-Qob" id="9BA-Zb-EZF"/>
+                                </connections>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vpF-Qy-0Bh" userLabel="ViewUnit">
                                 <rect key="frame" x="16" y="241" width="333" height="351"/>
@@ -2087,11 +2090,6 @@
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="GYD-xP-jpa">
                             <connections>
                                 <action selector="cancel:" destination="LaU-vP-gOE" id="gp7-Ei-fzS"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="0RK-Hl-JwF">
-                            <connections>
-                                <action selector="save:" destination="LaU-vP-gOE" id="kWf-tf-PGf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3519,6 +3517,14 @@
                                                                 <rect key="frame" x="0.0" y="248" width="327" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GmL-sR-33h" id="AbY-cO-ckL">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="43"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                </tableViewCellContentView>
+                                                            </tableViewCell>
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="privateHomeCell" id="bxd-QI-aiE">
+                                                                <rect key="frame" x="0.0" y="292" width="327" height="44"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bxd-QI-aiE" id="VCc-A6-3X6">
                                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="43"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </tableViewCellContentView>

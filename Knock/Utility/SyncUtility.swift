@@ -437,7 +437,7 @@ class SyncUtility{
                 editUnitGroup.enter()
                 
                 
-                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,privateHome:editUnitData.privateHome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
                 
                 
                 //lastCanvassedBy: SalesforceConfig.currentUserContactId

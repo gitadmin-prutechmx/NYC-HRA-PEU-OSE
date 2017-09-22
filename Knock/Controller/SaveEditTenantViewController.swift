@@ -60,6 +60,24 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         super.viewDidLoad()
         
         
+        if(SalesforceConnection.isNewContactWithAddress){
+            
+            self.navigationItem.rightBarButtonItem =  nil
+            
+            let rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(SaveEditTenantViewController.nextAction))
+            
+            self.navigationItem.rightBarButtonItem  = rightBarButtonItem
+        }
+        else{
+            self.navigationItem.rightBarButtonItem =  nil
+            
+            let rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(SaveEditTenantViewController.saveAction))
+            
+            self.navigationItem.rightBarButtonItem  = rightBarButtonItem
+            
+        }
+        
+        
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         
         
@@ -287,8 +305,14 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
+            if(SalesforceConnection.isNewContactWithAddress){
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+            else{
             
-            self.navigationController?.popViewController(animated: true);
+              self.navigationController?.popViewController(animated: true);
+            }
             //Do some other stuff
         }
         alertCtrl.addAction(okAction)
@@ -298,13 +322,23 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
     }
     
+    func nextAction(){
+         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func saveAction(){
+        
+        self.saveTenantInfo()
+    }
+    
+    /*
     @IBAction func save(_ sender: Any) {
         
         
         self.saveTenantInfo()
         
     }
-    
+    */
     
     func isValidEmail(testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")

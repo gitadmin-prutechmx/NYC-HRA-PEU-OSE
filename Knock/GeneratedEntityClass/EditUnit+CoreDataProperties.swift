@@ -2,7 +2,7 @@
 //  EditUnit+CoreDataProperties.swift
 //  
 //
-//  Created by Kamal on 14/09/17.
+//  Created by Kamal on 22/09/17.
 //
 //
 
@@ -21,6 +21,7 @@ extension EditUnit {
     @NSManaged public var assignmentLocId: String?
     @NSManaged public var assignmentLocUnitId: String?
     @NSManaged public var attempt: String?
+    @NSManaged public var contactOutcome: String?
     @NSManaged public var inTake: String?
     @NSManaged public var isContact: String?
     @NSManaged public var lastCanvassedBy: String?
@@ -31,6 +32,6 @@ extension EditUnit {
     @NSManaged public var tenantId: String?
     @NSManaged public var unitId: String?
     @NSManaged public var unitNotes: String?
-    @NSManaged public var contactOutcome: String?
+    @NSManaged public var privateHome: String?
 
 }

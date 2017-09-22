@@ -76,6 +76,7 @@
         <attribute name="isContact" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastCanvassedBy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="privateHome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="reason" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="reKnockNeeded" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
@@ -201,6 +202,7 @@
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="privateHome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitSyncDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="virtualUnit" optional="YES" attributeType="String" syncable="YES"/>
@@ -225,7 +227,7 @@
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
-        <element name="EditUnit" positionX="-108" positionY="63" width="128" height="285"/>
+        <element name="EditUnit" positionX="-108" positionY="63" width="128" height="300"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
         <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="75"/>
         <element name="Issues" positionX="-126" positionY="45" width="128" height="150"/>
@@ -237,7 +239,7 @@
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="Tenant" positionX="-126" positionY="45" width="128" height="285"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
-        <element name="Unit" positionX="-162" positionY="-108" width="128" height="255"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="270"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="165"/>
     </elements>
 </model>

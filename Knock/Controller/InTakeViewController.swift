@@ -153,6 +153,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         SalesforceConnection.currentTenantId =  ""
         
+        SalesforceConnection.isNewContactWithAddress = false
+        
         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
     }
 
@@ -161,6 +163,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         let indexRow = (sender as AnyObject).tag
         
         SalesforceConnection.currentTenantId =  clientDataArray[indexRow!].clientId
+        
+        SalesforceConnection.isNewContactWithAddress = false
         
         self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
         

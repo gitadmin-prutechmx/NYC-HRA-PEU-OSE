@@ -17,6 +17,7 @@ struct UnitsDataStruct
     var surveyStatus: String = ""
     var syncDate: String = ""
     var assignmentLocUnitId:String = ""
+    var isPrivateHome:String = ""
 }
 
 
@@ -39,7 +40,8 @@ struct ClientDataStruct
 
 
 
-class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
+class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate
+{
     
     
     
@@ -79,6 +81,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     var UnitDataArray = [UnitsDataStruct]()
     var clientDataArray = [ClientDataStruct]()
+    var arrfilteredTableData: NSMutableArray = []
+    var arrClientfilteredTableData: NSMutableArray = []
+    var isFiltered: Bool = false
+
     
     
     @IBOutlet weak var unitView: UIStackView!
@@ -351,13 +357,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-    
-    
-   
-    
-    
-    
-    
     func populateClientData()
     {
         
@@ -444,7 +443,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
             for unitData in unitResults{
                 
-                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.unitSyncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!)
+                let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitData.id!, unitName: unitData.name!, apartment: unitData.apartment!, surveyStatus: unitData.surveyStatus!, syncDate: unitData.unitSyncDate!,assignmentLocUnitId:unitData.assignmentLocUnitId!,isPrivateHome:unitData.privateHome!)
                 
                 UnitDataArray.append(objectUnitStruct)
                 
@@ -626,21 +625,170 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    // MARK: SearchBar Delegate
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
         
-        if(tableView == tblUnits)
+    {
+        
+        if searchText.isEmpty
+            
         {
-            return UnitDataArray.count
+            
+            isFiltered = false
             
         }
         else
+            
         {
-            return clientDataArray.count
+            
+            isFiltered = true;
+            
+            arrfilteredTableData.removeAllObjects()
+            arrClientfilteredTableData.removeAllObjects()
+            switch segmentControl.selectedSegmentIndex
+            {
+            case 0:
+             //   Utilities.currentUnitClientPage = "Unit"
+                for searchitem in UnitDataArray
+                    
+                {
+                    
+                    if searchitem.unitName.lowercased().contains(searchText.lowercased())
+                        
+                    {
+                        
+                        arrfilteredTableData.add(searchitem)
+                        
+                        
+                    }
+                    
+                    
+                    
+                }
+                
+                
+            case 1:
+               // Utilities.currentUnitClientPage = "Client"
+                for searchitem in clientDataArray
+                    
+                {
+                    
+                    if searchitem.name.lowercased().contains(searchText.lowercased())
+                        
+                    {
+                        
+                        arrClientfilteredTableData.add(searchitem)
+                        
+                        
+                    }
+                    
+                    
+                }
+               
+            default:
+                break;
+            }
+
+            
+            
         }
+        
+        
+        self.tblClient.reloadData()
+        self.tblUnits.reloadData()
+        
         
         
     }
     
+    
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar)
+        
+    {
+        
+        view.endEditing(true)
+        
+        
+        
+    }
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+
+        
+    {
+        if !isFiltered
+        
+            
+        {
+            
+            isFiltered = true
+            
+            
+            
+            tblClient.reloadData()
+            
+            
+            
+        }
+        
+        // searchbarExistingClients.resignFirstResponder()
+    
+        view.endEditing(true)
+        
+        
+        
+    }
+    
+
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        
+        if(tableView == tblUnits)
+        {
+            if isFiltered
+            {
+                return arrfilteredTableData.count
+                
+            } else
+                
+            {
+                return UnitDataArray.count
+                
+            }
+            
+        }
+        else
+        {
+            if isFiltered
+            {
+                return arrClientfilteredTableData.count
+                
+            } else
+                
+            {
+                return clientDataArray.count
+                
+            }
+        }
+        
+        
+    }
+    //
+   // if isFiltered {
+   // return arrFilterd.count
+    //} else {
+   // if segment == 0 {
+   // return unitArray.count
+    //} else {
+   // return clientArray.count
+   // }
+  //  }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
@@ -648,95 +796,168 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "unitCellIdentifier", for: indexPath as IndexPath) as! UnitDataTableViewCell
             
+            var unitData: UnitsDataStruct
             
-            cell.unit.text = UnitDataArray[indexPath.row].unitName
-            
-            
-            
-            cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
-            
-            if(UnitDataArray[indexPath.row].syncDate != ""){
-                cell.sync.image = UIImage(named: "Complete")
-            }
-            else
+            if isFiltered
             {
-                cell.sync.image = nil
-                // cell.sync.image = UIImage(named: "transperntImg")
+                cell.unit.text = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).unitName
+                cell.syncDate.text = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).syncDate
                 
+                if((arrfilteredTableData[indexPath.row] as! UnitsDataStruct).syncDate != "")
+                {
+                    cell.sync.image = UIImage(named: "Complete")
+                }
+                else
+                {
+                    cell.sync.image = nil
+                    // cell.sync.image = UIImage(named: "transperntImg")
+                }
                 
-            }
-            
-            
-            if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
-                cell.surveyStatus.image = UIImage(named: "Complete")
-            }
-            else if(UnitDataArray[indexPath.row].surveyStatus == Utilities.inProgressSurvey){
-                cell.surveyStatus.image = UIImage(named: "InProgress")
-            }
-            else
-            {
-                let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
+                if((arrfilteredTableData[indexPath.row] as! UnitsDataStruct).surveyStatus == "Completed")
                 
+                {
+                    cell.surveyStatus.image = UIImage(named: "Complete")
+                }
                 
-                if(survetResObject == Utilities.inProgressSurvey){
+                else if((arrfilteredTableData[indexPath.row] as! UnitsDataStruct).surveyStatus == Utilities.inProgressSurvey)
+                {
                     cell.surveyStatus.image = UIImage(named: "InProgress")
                 }
-                else{
-                    cell.surveyStatus.image = nil
+                else
+                {
+                    let survetResObject = surveyResDict[(arrfilteredTableData[indexPath.row] as! UnitsDataStruct).unitId]
+                    
+                    if(survetResObject == Utilities.inProgressSurvey){
+                        cell.surveyStatus.image = UIImage(named: "InProgress")
+                    }
+                    else{
+                        cell.surveyStatus.image = nil
+                    }
                 }
+                cell.unitId.text = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).unitId
+                
+                let editUnitObject = editUnitDict[(arrfilteredTableData[indexPath.row] as! UnitsDataStruct).unitId]
+                let noOfTenants = tenantDict[(arrfilteredTableData[indexPath.row] as! UnitsDataStruct).unitId]
+                
+                if let tenantCount = noOfTenants
+                {
+                    cell.noOfTenants.text = tenantCount
+                }
+                else
+                {
+                    cell.noOfTenants.text = "0"
+                }
+                
+                if(editUnitObject?.attempt == "Yes"){
+                    cell.attempt.image = UIImage(named: "Complete")
+                }
+                else if(editUnitObject?.attempt == "No"){
+                    cell.attempt.image = UIImage(named: "No")
+                }
+                else
+                {
+                    cell.attempt.image = nil
+                    //cell.attempt.image = UIImage(named: "transperntImg")
+                }
+                if(editUnitObject?.contact == "Yes")
+                {
+                    cell.contact.image = UIImage(named: "Complete")
+                }
+                else if(editUnitObject?.contact == "No")
+                {
+                    cell.contact.image = UIImage(named: "No")
+                }
+                else
+                {
+                    cell.contact.image = nil
+                    //cell.contact.image = UIImage(named: "transperntImg")
+                }
+
+                
+                unitData = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct)
+                
             }
-            
-            
-            
-            cell.unitId.text = UnitDataArray[indexPath.row].unitId
-            
-            let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
-            let noOfTenants = tenantDict[UnitDataArray[indexPath.row].unitId]
-            
-            if let tenantCount = noOfTenants{
-                cell.noOfTenants.text = tenantCount
-            }
-            else{
+                
+            else
+            {
+                cell.unit.text = UnitDataArray[indexPath.row].unitName
+                
+                cell.syncDate.text = UnitDataArray[indexPath.row].syncDate
+                
+                if(UnitDataArray[indexPath.row].syncDate != ""){
+                    cell.sync.image = UIImage(named: "Complete")
+                }
+                else
+                {
+                    cell.sync.image = nil
+                    // cell.sync.image = UIImage(named: "transperntImg")
+                    
+                    
+                }
+                
+                
+                if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
+                    cell.surveyStatus.image = UIImage(named: "Complete")
+                }
+                else if(UnitDataArray[indexPath.row].surveyStatus == Utilities.inProgressSurvey){
+                    cell.surveyStatus.image = UIImage(named: "InProgress")
+                }
+                else
+                {
+                    let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
+                    
+                    
+                    if(survetResObject == Utilities.inProgressSurvey){
+                        cell.surveyStatus.image = UIImage(named: "InProgress")
+                    }
+                    else{
+                        cell.surveyStatus.image = nil
+                    }
+                }
+                
+                
+                
+                cell.unitId.text = UnitDataArray[indexPath.row].unitId
+                
+                let editUnitObject = editUnitDict[UnitDataArray[indexPath.row].unitId]
+                let noOfTenants = tenantDict[UnitDataArray[indexPath.row].unitId]
+                
+                if let tenantCount = noOfTenants{
+                    cell.noOfTenants.text = tenantCount
+                }
+                else
+                {
                 cell.noOfTenants.text = "0"
+                }
+                
+                if(editUnitObject?.attempt == "Yes"){
+                    cell.attempt.image = UIImage(named: "Complete")
+                }
+                else if(editUnitObject?.attempt == "No"){
+                    cell.attempt.image = UIImage(named: "No")
+                }
+                else
+                {
+                    cell.attempt.image = nil
+                    //cell.attempt.image = UIImage(named: "transperntImg")
+                }
+                
+                
+                
+                if(editUnitObject?.contact == "Yes"){
+                    cell.contact.image = UIImage(named: "Complete")
+                }
+                else if(editUnitObject?.contact == "No")
+                {
+                    cell.contact.image = UIImage(named: "No")
+                }
+                else
+                {
+                    cell.contact.image = nil
+                    //cell.contact.image = UIImage(named: "transperntImg")
+                }
+                unitData = UnitDataArray[indexPath.row]
             }
-            
-            
-            
-            
-            
-            if(editUnitObject?.attempt == "Yes"){
-                cell.attempt.image = UIImage(named: "Complete")
-            }
-            else if(editUnitObject?.attempt == "No"){
-                cell.attempt.image = UIImage(named: "No")
-            }
-            else
-            {
-                cell.attempt.image = nil
-                //cell.attempt.image = UIImage(named: "transperntImg")
-            }
-            
-            
-            
-            if(editUnitObject?.contact == "Yes"){
-                cell.contact.image = UIImage(named: "Complete")
-            }
-            else if(editUnitObject?.contact == "No")
-            {
-                cell.contact.image = UIImage(named: "No")
-            }
-            else
-            {
-                cell.contact.image = nil
-                //cell.contact.image = UIImage(named: "transperntImg")
-            }
-            
-            
-            
-            //  cell.dataFloor.text = UnitDataArray[indexPath.row].apartment
-            
-            
-            
             
             
             return cell
@@ -747,37 +968,68 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "clientCellDataId", for: indexPath) as! ClientDataTableViewCell
+            var clientData: ClientDataStruct
+
+            if isFiltered
+            {
+                cell.lblFirstName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).firstName
+                cell.lblLastName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).lastName
+                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).phone.isEmpty)
+                {
+                    cell.lblPhone.text = "                        "
+                }
+                else
+                {
+                    cell.lblPhone.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).phone.toPhoneNumber()
+                }
+                let noOfCases = Utilities.caseDict[(arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).tenantId]
+                
+                if let caseCount = noOfCases{
+                    cell.lblCase.text = caseCount
+                }
+                else
+                {
+                    cell.lblCase.text = "0"
+                }
+    
+                
+                cell.lblUnitName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitName
+                cell.lblUnitId.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
+                cell.lblSyncDate.text = ""
+                
+                 clientData = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct)
+            }
             
+            else
+            {
+                cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
+                cell.lblLastName.text = clientDataArray[indexPath.row].lastName
+                if(clientDataArray[indexPath.row].phone.isEmpty){
+                    cell.lblPhone.text = "                        "
+                }
+                else{
+                    cell.lblPhone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
+                }
+                let noOfCases = Utilities.caseDict[clientDataArray[indexPath.row].tenantId]
+                
+                if let caseCount = noOfCases
+                {
+                    cell.lblCase.text = caseCount
+                }
+                else
+                {
+                    cell.lblCase.text = "0"
+                }
+                
+                cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
+                cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
+                cell.lblSyncDate.text = ""
+                
+                clientData = clientDataArray[indexPath.row]
+            }
             // cell.backgroundColor = UIColor.clear
             
-            cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
-            cell.lblLastName.text = clientDataArray[indexPath.row].lastName
-            if(clientDataArray[indexPath.row].phone.isEmpty){
-                cell.lblPhone.text = "                        "
-            }
-            else{
-                cell.lblPhone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
-            }
-            let noOfCases = Utilities.caseDict[clientDataArray[indexPath.row].tenantId]
-            
-            if let caseCount = noOfCases{
-                cell.lblCase.text = caseCount
-            }
-            else{
-                cell.lblCase.text = "0"
-            }
-            
-            
-            
-            
-            cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
-            cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
-            cell.lblSyncDate.text = ""
-            
             // cell.unitId.text = clientDataArray[indexPath.row].unitId
-            
-            
-            
             
             return cell
         }
@@ -858,16 +1110,18 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(tableView == tblUnits){
-            
+        if(tableView == tblUnits)
+        {
             SalesforceConnection.unitId =  UnitDataArray[indexPath.row].unitId
             
             SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
             
             SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
             
+            SalesforceConnection.isPrivateHome = UnitDataArray[indexPath.row].isPrivateHome
             
-            if("Completed" == UnitDataArray[indexPath.row].surveyStatus){
+            if("Completed" == UnitDataArray[indexPath.row].surveyStatus)
+            {
                 
                 let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitDataTableViewCell
                 
@@ -921,7 +1175,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             
         }
             
-        else{
+        else
+        {
             
             let currentCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) as! ClientDataTableViewCell
             
@@ -1456,6 +1711,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
   
     @IBAction func NewClientAction(_ sender: Any)
     {
+        SalesforceConnection.isNewContactWithAddress = true
         self.performSegue(withIdentifier: "showAddClientIdentifier", sender: nil)
 
     }
@@ -1479,6 +1735,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             viewUnit.isHidden = false
         case 1:
             Utilities.currentUnitClientPage = "Client"
+             //unitclientSearchbar.text = ""
             viewClient.isHidden = false
             viewUnit.isHidden = true
         default:

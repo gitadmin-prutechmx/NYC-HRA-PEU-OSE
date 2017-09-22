@@ -51,6 +51,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var contact:String = ""
     var reknockNeeded:String = ""
     var inTake:String = ""
+    var privateHome:String = ""
     
     var reasonStatus:String = ""
     var contactOutcome:String = ""
@@ -197,6 +198,15 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
+    func privateHomeChanged(_ sender:UISwitch){
+        
+        if(sender.isOn){
+            privateHome = "Yes"
+        }
+        else{
+            privateHome = "No"
+        }
+    }
     
     func getPickListValue(pickListValue:String){
         
@@ -290,7 +300,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     func numberOfSections(in tableView: UITableView) -> Int
     {
         
-        return 5
+        return 7
         
     }
     
@@ -452,7 +462,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return reasonCell
             
         }
-        else {
+        else if(indexPath.section == 5){
             let cell = tableView.dequeueReusableCell(withIdentifier: "reKnockCell", for: indexPath)
             
             cell.backgroundColor = UIColor.clear
@@ -485,6 +495,40 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
             
         }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "privateHomeCell", for: indexPath)
+            
+            cell.backgroundColor = UIColor.clear
+            
+            
+            cell.textLabel?.text = "Private Home/Main Entrance?"
+            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            
+            cell.selectionStyle = .none
+            
+            //accessory switch
+            let privateHomeSwitch = UISwitch(frame: CGRect.zero)
+            
+            if(privateHome == "Yes"){
+                privateHomeSwitch.isOn = true
+            }
+            else if (privateHome == "No"){
+                privateHomeSwitch.isOn = false
+                
+            }
+            else{
+                privateHomeSwitch.isOn = false
+            }
+            
+            
+            
+            privateHomeSwitch.addTarget(self, action: #selector(MoreOptionsViewController.privateHomeChanged(_:)), for: UIControlEvents.valueChanged)
+            
+            cell.accessoryView = privateHomeSwitch
+            return cell
+            
+        }
+        //privateHome
         
         
         
@@ -655,6 +699,16 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             
+            if(editUnitResults[0].privateHome == ""){
+                editUnitResults[0].privateHome = "No"
+            }
+            
+            
+            privateHome = editUnitResults[0].privateHome!
+            
+            
+            
+            
             
             if(editUnitResults[0].inTake == ""){
                 editUnitResults[0].inTake = "No"
@@ -679,6 +733,9 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             notesTextArea.text = editUnitResults[0].unitNotes
             
             
+        }
+        else{
+            privateHome = SalesforceConnection.isPrivateHome
         }
     }
     
@@ -775,7 +832,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             updateEditUnitInDatabase()
         }
         else{
-            saveEditUnitInDatabase(currentAttempt: attempt, currentInTake: inTake, currentReknockNeeded: reknockNeeded, currentReason: reasonStatus, currentNotes: notes, currentIsContact: contact,currentContactOutcome:contactOutcome, currentTenantId: "", currentSurveyId: "")
+            saveEditUnitInDatabase(currentAttempt: attempt, currentInTake: inTake, currentReknockNeeded: reknockNeeded, currentReason: reasonStatus, currentNotes: notes, currentIsContact: contact,currentContactOutcome:contactOutcome, currentPrivateHome:privateHome,currentTenantId: "", currentSurveyId: "")
             
         }
         
@@ -793,7 +850,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     
-    func saveEditUnitInDatabase(currentAttempt:String,currentInTake:String,currentReknockNeeded:String,currentReason:String,currentNotes:String,currentIsContact:String,currentContactOutcome:String,currentTenantId:String,currentSurveyId:String){
+    func saveEditUnitInDatabase(currentAttempt:String,currentInTake:String,currentReknockNeeded:String,currentReason:String,currentNotes:String,currentIsContact:String,currentContactOutcome:String,currentPrivateHome:String,currentTenantId:String,currentSurveyId:String){
         
         
         let editUnitObject = EditUnit(context: context)
@@ -817,6 +874,8 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         editUnitObject.isContact = currentIsContact
         
         editUnitObject.contactOutcome = contactOutcome
+        
+        editUnitObject.privateHome = privateHome
         
         
         editUnitObject.tenantId = currentTenantId
@@ -849,6 +908,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         updateObjectDic["isContact"] = contact
         updateObjectDic["contactOutcome"] = contactOutcome
         updateObjectDic["reKnockNeeded"] = reknockNeeded
+        updateObjectDic["privateHome"] = privateHome
         updateObjectDic["actionStatus"] = "edit"
         
         

@@ -23,10 +23,13 @@ class SalesforceConnection{
     static var assignmentLocationId:String = ""
     
     static var unitId:String = ""
+    static var isPrivateHome:String = ""
     static var assignmentLocationUnitId:String = ""
     
     static var currentTenantId:String =  ""
     static var currentTenantName:String = ""
+    
+    static var isNewContactWithAddress:Bool = false
     
     static var selectedTenantForSurvey:String = ""
     

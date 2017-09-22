@@ -282,7 +282,7 @@ class Utilities {
         return newUnitDic
     }
     
-    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,contactOutcome:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
+    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,contactOutcome:String?=nil,privateHome:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
         
         var editUnitDict:[String:String] = [:]
         
@@ -297,6 +297,8 @@ class Utilities {
         editUnitDict["reKnockNeeded"] = reKnockNeeded
         
         editUnitDict["contactOutcome"] = contactOutcome
+        
+        editUnitDict["privateHome"] = privateHome
         
         
         editUnitDict["surveyId"] = selectedSurveyId
@@ -1726,6 +1728,7 @@ class Utilities {
                             unitObject.surveyStatus = ""
                         }
                         
+                        unitObject.privateHome = ""
                         
                         
                         unitObject.assignmentLocUnitId = unitData["assignmentLocUnitId"] as? String  ?? ""
@@ -1746,6 +1749,8 @@ class Utilities {
                         editUnitObject.contactOutcome = unitData["contactOutcome"] as? String  ?? ""
                         // editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
                         editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
+                         editUnitObject.privateHome = unitData["privateHome"] as? String  ?? ""
+                        
                         // editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
                         editUnitObject.unitNotes = unitData["notes"] as? String  ?? ""
                         editUnitObject.isContact = unitData["isContact"] as? String  ?? ""
