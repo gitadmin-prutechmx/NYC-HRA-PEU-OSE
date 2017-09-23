@@ -170,6 +170,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         
     }
         
+    @IBAction func discloseSwitch(_ sender: Any) {
+    }
     @IBAction func cancel(_ sender: Any) {
         
           self.dismiss(animated: true, completion: nil)
