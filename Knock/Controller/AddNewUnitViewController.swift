@@ -10,12 +10,15 @@ import UIKit
 
 class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     
+    
+    var privateHome:String = "No"
+    
     var saveUnitDict : [String:String] = [:]
     
     @IBOutlet weak var apartmentView: UIView!
     @IBOutlet weak var apartmentName: UITextField!
     
-    @IBOutlet weak var homeSwiitchView: UISwitch!
+    
     @IBOutlet weak var notesTextArea: UITextView!
     //    @IBOutlet weak var apartmentName: UITextField!
     //
@@ -73,8 +76,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     }
     
     
-    @IBAction func homeSwitchViewAction(_ sender: Any) {
-    }
+ 
     
     @IBAction func cancel(_ sender: Any)
     {
@@ -97,6 +99,15 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         
         
         
+    }
+    @IBAction func privateHomeAction(_ sender: Any) {
+        
+        if((sender as AnyObject).isOn == true){
+            privateHome = "Yes"
+        }
+        else{
+            privateHome = "No"
+        }
     }
     
     @IBAction func save(_ sender: Any) {
@@ -144,7 +155,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         
         
         
-        saveUnitDict = Utilities.createUnitDicData(unitName:  apartmentNumberVal, apartmentNumber: apartmentNumberVal, locationId: SalesforceConnection.locationId, assignmentLocId: SalesforceConnection.assignmentLocationId, notes: notesVal, iosLocUnitId: UUID().uuidString, iosAssignLocUnitId: UUID().uuidString)
+        saveUnitDict = Utilities.createUnitDicData(unitName:  apartmentNumberVal, apartmentNumber: apartmentNumberVal,privateHome: privateHome, locationId: SalesforceConnection.locationId, assignmentLocId: SalesforceConnection.assignmentLocationId, notes: notesVal, iosLocUnitId: UUID().uuidString, iosAssignLocUnitId: UUID().uuidString)
         
         
         saveNewlyCreatedUnitData()
@@ -219,7 +230,9 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         unitObject.assignmentId = SalesforceConnection.assignmentId
         
         
+        unitObject.privateHome =  saveUnitDict["privateHome"]
         
+        unitObject.virtualUnit = "false"
         
         
         unitObject.actionStatus = "create"

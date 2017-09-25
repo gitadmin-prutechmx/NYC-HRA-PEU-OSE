@@ -26,7 +26,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var streetNameView: UIView!
     @IBOutlet weak var streetNameLbl: UILabel!
     @IBOutlet weak var streetNameTxtField: UITextField!
-     var arrAgeList = NSMutableArray()
+     var arrNameList = NSMutableArray()
      let pickerView = UIPickerView()
     var selectedRow = 0
     
@@ -35,24 +35,36 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         super.viewDidLoad()
         pickerView.delegate = self
          self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
-        arrAgeList = [ "First", "Second", "Third", "Fourth", "Fith","None"]
+        arrNameList = [ "First", "Second", "Third", "Fourth", "Fifth","None"]
         pickerView.backgroundColor = .white
         pickerView.showsSelectionIndicator = true
         
-        let toolBar = UIToolbar()
+        let rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(AddressViewController.saveAction))
+        
+        self.navigationItem.rightBarButtonItem  = rightBarButtonItem
+        
+        let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(AddressViewController.cancelAction))
+        
+        self.navigationItem.leftBarButtonItem  = leftBarButtonItem
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.isTranslucent = false
+        toolBar.tintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        toolBar.barTintColor = UIColor.white
+              
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.bordered, target: self, action: #selector(AddressViewController.donePicker))
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddressViewController.donePicker))
        
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.bordered, target: self, action: #selector(AddressViewController.canclePicker))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style:UIBarButtonItemStyle.plain, target: self, action: #selector(AddressViewController.canclePicker))
         
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         self.boroughTxtField.inputView = pickerView
+        boroughTxtField.inputAssistantItem.leadingBarButtonGroups.removeAll()
+        boroughTxtField.inputAssistantItem.trailingBarButtonGroups.removeAll()
         boroughTxtField.inputAccessoryView = toolBar
         
     }
@@ -60,7 +72,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func donePicker()
     {
-            self.boroughTxtField.text = arrAgeList[selectedRow]as? String
+            self.boroughTxtField.text = arrNameList[selectedRow]as? String
             boroughTxtField.resignFirstResponder()
         
     }
@@ -69,6 +81,11 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         boroughTxtField.resignFirstResponder()
        
     }
+    
+    func saveAction()
+    {
+    
+    }
 
     override func didReceiveMemoryWarning()
     {
@@ -76,7 +93,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func btnCancelAction(_ sender: Any)
+    func cancelAction ()
     {
         let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
         
@@ -90,12 +107,35 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             
-            self.dismiss(animated: true, completion: nil)
+            // self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
         }
         alertCtrl.addAction(okAction)
-
     }
     
+    
+    func validate(phoneNumber: String) -> Bool
+    {
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = phoneNumber.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        return  phoneNumber == filtered
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+        
+        let str = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        if textField == streetNameTxtField
+        {
+            return (streetNameTxtField.text != nil)
+            
+        }
+        else
+        {
+            return validate(phoneNumber: str)
+        }
+    }
     //Mark Pickerview delegate methods
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int
@@ -107,7 +147,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
         
-        return self.arrAgeList.count
+        return self.arrNameList.count
         
     }
     
@@ -115,7 +155,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     {
         
         
-            return arrAgeList.object(at: row)as? String
+            return arrNameList.object(at: row)as? String
 
         
     }
@@ -127,10 +167,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
 
-    @IBAction func btnSaveAction(_ sender: Any)
-    {
-        
-    }
+    
 }
     /*
     // MARK: - Navigation

@@ -56,7 +56,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     var editTenantDict : [String:String] = [:]
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         
@@ -77,22 +78,24 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
         }
         
+         picker.backgroundColor = .white
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
-        
-        
-        
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
-        
-        
-        
         self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        toolBar.tintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        toolBar.barTintColor = UIColor.white
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = false
+        txtDob.inputAssistantItem.leadingBarButtonGroups.removeAll()
+        txtDob.inputAssistantItem.trailingBarButtonGroups.removeAll()
 
         let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.cancelPressed))
         
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SaveEditTenantViewController.donePressed))
+        let doneBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.donePressed))
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         
@@ -322,9 +325,12 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
     }
     
-    func nextAction(){
-         self.performSegue(withIdentifier: "addressViewIdentifire", sender: nil)
+    func nextAction()
+    {
+        // self.performSegue(withIdentifier: "addressViewIdentifire", sender: nil)
+        let viewController = self.storyboard!.instantiateViewController(withIdentifier: "addressViewIdentifier") as? AddressViewController
         
+        self.navigationController!.pushViewController(viewController!, animated: true)
          //self.dismiss(animated: true, completion: nil)
     }
     

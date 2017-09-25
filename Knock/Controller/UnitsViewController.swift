@@ -521,80 +521,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-    /*func readJSONObject(object: Dictionary<String, AnyObject>) {
-     
-     var unitNameArray1 = [String]()
-     var unitIdArray1 = [String]()
-     var floorArray1 = [String]()
-     var surveyStatusArray1 = [String]()
-     var syncDateArray1 = [String]()
-     
-     var UnitDataArray1 = [UnitsDataStruct]()
-     
-     guard let _ = object["errorMessage"] as? String
-     , let results = object["data"] as? [[String: AnyObject]] else { return }
-     
-     for data in results {
-     guard let dataLocId = data["locId"] as? String else { break }
-     
-     /* print("dataLocId \(dataLocId)")
-     print("locId \(locId)")*/
-     
-     if(dataLocId == locId){
-     
-     guard let units = data["units"] as? [[String: AnyObject]] else { return }
-     
-     print("Units \(units)")
-     
-     
-     
-     for unit in units{
-     
-     let unitId = unit["unitId"] as? String ?? ""
-     let unitName = unit["name"] as? String ?? ""
-     let floor = unit["floor"] as? String ?? ""
-     let surveyStatus = unit["surveyStatus"] as? String ?? ""
-     let syncDate = unit["surveyTakenDate"] as? String ?? ""
-     
-     
-     let objectUnitStruct:UnitsDataStruct = UnitsDataStruct(unitId: unitId, unitName: unitName, floor: floor, surveyStatus: surveyStatus, syncDate: syncDate)
-     
-     
-     UnitDataArray1.append(objectUnitStruct)
-     
-     
-     
-     unitNameArray1.append(unitName)
-     unitIdArray1.append(unitId)
-     floorArray1.append(floor)
-     surveyStatusArray1.append(surveyStatus)
-     syncDateArray1.append(syncDate)
-     
-     print("unitName \(unitName)")
-     
-     
-     }
-     }
-     
-     }
-     
-     unitIdArray = unitIdArray1
-     floorArray = floorArray1
-     unitNameArray = unitNameArray1
-     surveyStatusArray = surveyStatusArray1
-     syncDateArray = syncDateArray1
-     
-     UnitDataArray = UnitDataArray1
-     OriginalUnitDataArray = UnitDataArray1
-     
-     print("readJsonData done")
-     
-     
-     }
-     
-     */
-    
-    
     override func viewDidLayoutSubviews() {
         
         //self.heightConstraint.constant = tableView.contentSize.height
@@ -612,16 +538,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     {
         return 1
         
-        /*if(tableView == tblUnits)
-         {
-         return 1
-         }
-         else
-         {
-         return 1
-         
-         }
-         */
+      
         
     }
     
@@ -779,16 +696,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
     }
-    //
-   // if isFiltered {
-   // return arrFilterd.count
-    //} else {
-   // if segment == 0 {
-   // return unitArray.count
-    //} else {
-   // return clientArray.count
-   // }
-  //  }
+ 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
@@ -1110,17 +1018,24 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+       // var arrfilteredTableData: NSMutableArray = []
+       // var arrClientfilteredTableData: NSMutableArray = []
+
+        
+        //Units
         if(tableView == tblUnits)
         {
-            SalesforceConnection.unitId =  UnitDataArray[indexPath.row].unitId
+            var surveyStatus:String = ""
             
-            SalesforceConnection.unitName =  UnitDataArray[indexPath.row].unitName
+            if(isFiltered && arrfilteredTableData.count > 0){
+                surveyStatus = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).surveyStatus
+            }
+            else{
+                surveyStatus = UnitDataArray[indexPath.row].surveyStatus
+            }
+           
             
-            SalesforceConnection.assignmentLocationUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
-            
-            SalesforceConnection.isPrivateHome = UnitDataArray[indexPath.row].isPrivateHome
-            
-            if("Completed" == UnitDataArray[indexPath.row].surveyStatus)
+            if("Completed" == surveyStatus)
             {
                 
                 let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitDataTableViewCell
@@ -1136,53 +1051,63 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     }
                 }
                 
-                
-                /*
-                 let isSurveyAssigned = getSurveyUnitResults()
-                 
-                 
-                 
-                 if(isSurveyAssigned == false){
-                 
-                 
-                 showEditUnit()
-                 
-                 }
-                 
-                 else{
-                 
-                 //SurveyUtility.showSurvey()
-                 
-                 // SalesforceConnection.surveyId = surveyUnitResults[0].surveyId!
-                 
-                 
-                 showSurveyWizard()
-                 
-                 }
-                 
-                 */
             }
                 
             else{
                 
+                var unitId:String = ""
+                var unitName:String = ""
+                var assignmentLocUnitId:String = ""
+                var isPrivateHome:String = ""
+                
+                if(isFiltered && arrfilteredTableData.count > 0){
+                    unitId = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).unitId
+                    unitName = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).unitName
+                    assignmentLocUnitId = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).assignmentLocUnitId
+                    isPrivateHome = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).isPrivateHome
+                }
+                else{
+                     unitId = UnitDataArray[indexPath.row].unitId
+                     unitName = UnitDataArray[indexPath.row].unitName
+                     assignmentLocUnitId = UnitDataArray[indexPath.row].assignmentLocUnitId
+                     isPrivateHome = UnitDataArray[indexPath.row].isPrivateHome
+                }
+                
+                
+                SalesforceConnection.unitId = unitId
+                
+                SalesforceConnection.unitName =  unitName
+                
+                SalesforceConnection.assignmentLocationUnitId = assignmentLocUnitId
+                
+                SalesforceConnection.isPrivateHome = isPrivateHome
+                
                 SalesforceConnection.selectedTenantForSurvey = ""
                 
                 showEditUnit()
-                
-                
-                
+
             }
             
         }
-            
+           
+        //Clients
         else
         {
             
             let currentCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) as! ClientDataTableViewCell
             
+            var surveyStatus:String = ""
+            
+            if(isFiltered && arrClientfilteredTableData.count > 0){
+                surveyStatus = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).surveyStatus
+            }
+            else{
+                surveyStatus = clientDataArray[indexPath.row].surveyStatus
+            }
             
             
-            if("Completed" == clientDataArray[indexPath.row].surveyStatus){
+            
+            if("Completed" == surveyStatus){
                 
                 
                 currentCell.shake(duration: 0.3, pathLength: 15)
@@ -1199,13 +1124,38 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
             }
             else{
                 
-                SalesforceConnection.unitId =  clientDataArray[indexPath.row].unitId
+                var unitId:String = ""
+                var unitName:String = ""
+                var assignmentLocUnitId:String = ""
+                var isVirtualUnit:String = ""
+                var tenantId:String = ""
                 
-                SalesforceConnection.unitName =  (Utilities.unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
+                if(isFiltered && arrClientfilteredTableData.count > 0){
+                    
+                    unitId = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
+                    unitName = (Utilities.unitClientDict[unitId]?.unitName)!
+                    assignmentLocUnitId = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).assignmentLocUnitId
+                    isVirtualUnit = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).isVirtualUnit
+                    tenantId = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).tenantId
+                }
+                else{
+                    unitId = clientDataArray[indexPath.row].unitId
+                    unitName =  (Utilities.unitClientDict[clientDataArray[indexPath.row].unitId]?.unitName)!
+                    assignmentLocUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
+
+                    isVirtualUnit = clientDataArray[indexPath.row].isVirtualUnit
+                    tenantId = clientDataArray[indexPath.row].tenantId
+
+                }
                 
-                SalesforceConnection.assignmentLocationUnitId = clientDataArray[indexPath.row].assignmentLocUnitId
                 
-                if(clientDataArray[indexPath.row].isVirtualUnit == "true"){
+                SalesforceConnection.unitId =  unitId
+                
+                SalesforceConnection.unitName =  unitName
+                
+                SalesforceConnection.assignmentLocationUnitId = assignmentLocUnitId
+                
+                if(isVirtualUnit == "true"){
                     
                     currentCell.shake(duration: 0.3, pathLength: 15)
                     

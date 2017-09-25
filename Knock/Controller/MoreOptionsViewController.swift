@@ -47,11 +47,11 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     var completionHandler : ((_ childVC:MoreOptionsViewController) -> Void)?
     
-    var attempt:String = ""
-    var contact:String = ""
-    var reknockNeeded:String = ""
-    var inTake:String = ""
-    var privateHome:String = ""
+    var attempt:String = "No"
+    var contact:String = "No"
+    var reknockNeeded:String = "No"
+    var inTake:String = "No"
+    var privateHome:String = "No"
     
     var reasonStatus:String = ""
     var contactOutcome:String = ""

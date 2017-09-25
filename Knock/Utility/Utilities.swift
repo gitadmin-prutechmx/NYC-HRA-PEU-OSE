@@ -260,13 +260,15 @@ class Utilities {
     }
     
     
-    class func createUnitDicData(unitName:String,apartmentNumber:String,locationId:String,assignmentLocId:String,notes:String,iosLocUnitId:String,iosAssignLocUnitId:String)->[String:String]{
+    class func createUnitDicData(unitName:String,apartmentNumber:String,privateHome:String,locationId:String,assignmentLocId:String,notes:String,iosLocUnitId:String,iosAssignLocUnitId:String)->[String:String]{
         
         var newUnitDic:[String:String] = [:]
         
         newUnitDic["unitName"] =  unitName//"Apt " + apartmentNumberVal
         
         newUnitDic["apartmentNumber"] = apartmentNumber
+        
+        newUnitDic["privateHome"] = privateHome
         
         newUnitDic["locationId"] = locationId//SalesforceConnection.locationId
         

@@ -40,6 +40,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     @IBOutlet weak var addTenantOutlet: UIButton!
     
     
+    @IBOutlet weak var clientDiscloseSwitch: UISwitch!
+    
     var clientDataArray = [ClientUnitDataStruct]()
     var caseDataArray = [CaseDataStruct]()
     
@@ -171,6 +173,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
         
     @IBAction func discloseSwitch(_ sender: Any) {
+        
     }
     @IBAction func cancel(_ sender: Any) {
         
@@ -227,8 +230,9 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
        
     func saveAction()
     {
+      
         
-        if(selectedClientId == ""){
+        if(selectedClientId == "" && clientDiscloseSwitch.isOn == false){
             viewTenent.shake()
             self.view.makeToast("Please select client. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
@@ -236,6 +240,13 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
             
         }
+        else if(selectedClientId == "" && clientDiscloseSwitch.isOn == true){
+            
+            SalesforceConnection.selectedTenantForSurvey = "empty"
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+       
         else{
             
             SalesforceConnection.selectedTenantForSurvey = selectedClientId
