@@ -323,7 +323,9 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     }
     
     func nextAction(){
-         self.dismiss(animated: true, completion: nil)
+         self.performSegue(withIdentifier: "addressViewIdentifire", sender: nil)
+        
+         //self.dismiss(animated: true, completion: nil)
     }
     
     func saveAction(){

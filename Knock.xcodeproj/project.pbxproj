@@ -99,6 +99,7 @@
 		5DC9E9F61EEEF1B6009A6396 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */; };
 		5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */; };
 		5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9E9F91EEF8958009A6396 /* OAuth2Handler.swift */; };
+		5DCEA6161F78CA1B0053FFF3 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCEA6151F78CA1B0053FFF3 /* AddressViewController.swift */; };
 		5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */; };
 		5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9681EEFE74500012C47 /* LoginViewController.swift */; };
 		5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C96C1EF007BF00012C47 /* DashBoardViewController.swift */; };
@@ -252,6 +253,7 @@
 		5DC9E9F51EEEF1B6009A6396 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		5DC9E9F71EEF7D0F009A6396 /* EventDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDO.swift; sourceTree = "<group>"; };
 		5DC9E9F91EEF8958009A6396 /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
+		5DCEA6151F78CA1B0053FFF3 /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
 		5DE3C9661EEFE71700012C47 /* DesignableTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
 		5DE3C9681EEFE74500012C47 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5DE3C96C1EF007BF00012C47 /* DashBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardViewController.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5DCEA6151F78CA1B0053FFF3 /* AddressViewController.swift */,
 				5D00F0D51F6ED5EE00FF7523 /* ExistingClientsViewController.swift */,
 				5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */,
 				5D65D4DD1F3015EE00302CE8 /* IssueViewController.swift */,
@@ -873,6 +876,7 @@
 				5D65D4E61F30165A00302CE8 /* IssueTableViewCell.swift in Sources */,
 				5DC9E9F01EEE8391009A6396 /* StringExtension.swift in Sources */,
 				5D00F0D91F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.swift in Sources */,
+				5DCEA6161F78CA1B0053FFF3 /* AddressViewController.swift in Sources */,
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
 				5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */,
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
