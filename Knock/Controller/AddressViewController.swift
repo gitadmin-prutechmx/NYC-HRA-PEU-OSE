@@ -106,11 +106,12 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
-            
+            self.boroughTxtField.resignFirstResponder()
             // self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)
         }
         alertCtrl.addAction(okAction)
+        
     }
     
     
