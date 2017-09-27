@@ -14,7 +14,7 @@ class ClientDataTableViewCell: UITableViewCell
     @IBOutlet weak var lblUnitId: UILabel!
     @IBOutlet weak var lblUnitName: UILabel!
     @IBOutlet weak var lblFirstName: UILabel!
-
+    @IBOutlet weak var lblUnverifiedunit:UILabel!
     @IBOutlet weak var lblSyncDate: UILabel!
     @IBOutlet weak var btnSyncimg: UIButton!
     @IBOutlet weak var lblCase: UILabel!

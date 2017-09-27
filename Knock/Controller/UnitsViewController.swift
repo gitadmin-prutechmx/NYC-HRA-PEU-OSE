@@ -36,6 +36,7 @@ struct ClientDataStruct
     var unitName:String = ""
     var surveyStatus:String = ""
     var isVirtualUnit:String = ""
+    var apartment:String = ""
 }
 
 
@@ -378,7 +379,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                 
-                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!)
+                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!)
                 
                 clientDataArray.append(objectTenantStruct)
                 
@@ -892,7 +893,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 }
                 let noOfCases = Utilities.caseDict[(arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).tenantId]
                 
-                if let caseCount = noOfCases{
+                if let caseCount = noOfCases
+                {
                     cell.lblCase.text = caseCount
                 }
                 else
@@ -904,6 +906,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.lblUnitName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitName
                 cell.lblUnitId.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
                 cell.lblSyncDate.text = ""
+                
+                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment.isEmpty){
+                    cell.lblUnverifiedunit.text = "             "
+                }
+                else{
+                     cell.lblUnverifiedunit.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment
+                }
+                
+               
                 
                  clientData = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct)
             }
@@ -932,7 +943,16 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
                 cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
                 cell.lblSyncDate.text = ""
+                if(clientDataArray[indexPath.row].apartment.isEmpty){
+                    cell.lblUnverifiedunit.text = "             "
+                }
+                else{
+                    cell.lblUnverifiedunit.text = clientDataArray[indexPath.row].apartment
+                }
                 
+               
+                
+
                 clientData = clientDataArray[indexPath.row]
             }
             // cell.backgroundColor = UIColor.clear
@@ -1155,23 +1175,36 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 SalesforceConnection.assignmentLocationUnitId = assignmentLocUnitId
                 
+                SalesforceConnection.selectedTenantForSurvey = tenantId
+                
                 if(isVirtualUnit == "true"){
                     
-                    currentCell.shake(duration: 0.3, pathLength: 15)
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    
+                    let virtualUnitClientVC = storyboard.instantiateViewController(withIdentifier: "virtualUnitClientIdentifier") as! VirtualUnitClientViewController
+                    
+                    let navigationController = UINavigationController(rootViewController: virtualUnitClientVC)
+                    navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
                     
                     
-                    self.view.makeToast("Please create new unit first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        if didTap {
-                            print("completion from tap")
-                        } else {
-                            print("completion without tap")
-                        }
-                    }
+                    self.present(navigationController, animated: true, completion: nil)
+                    
+                    
+                    
+//                    currentCell.shake(duration: 0.3, pathLength: 15)
+//                    
+//                    
+//                    self.view.makeToast("Please create new unit first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                        if didTap {
+//                            print("completion from tap")
+//                        } else {
+//                            print("completion without tap")
+//                        }
+//                    }
                 }
                 else{
                     
-                    SalesforceConnection.selectedTenantForSurvey = clientDataArray[indexPath.row].tenantId
-
+                    
                     showEditUnit()
                 }
             }

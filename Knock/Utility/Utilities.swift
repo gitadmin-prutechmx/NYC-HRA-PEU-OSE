@@ -15,6 +15,10 @@ import Toast_Swift
 
 class Utilities {
     
+    
+    static var clientAddressDict: [String:String] = [:]
+    
+    
     static var unitClientDict: [String:UnitDO] = [:]
     static var caseDict: [String:String] = [:]
     static var countCases:Int  = 1
@@ -355,7 +359,7 @@ class Utilities {
     
 
     
-    class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,type:String)->[String:String]{
+    class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,attempt:String,contact:String,contactOutcome:String,notes:String,streetNum:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,type:String)->[String:String]{
         
         var editTenantDict:[String:String] = [:]
         
@@ -382,6 +386,30 @@ class Utilities {
         editTenantDict["middleName"] = middleName
         
         editTenantDict["suffix"] = suffix
+        
+        editTenantDict["attempt"] = attempt
+        
+        editTenantDict["contact"] = contact
+        
+        editTenantDict["contactOutcome"] = contactOutcome
+        
+        editTenantDict["notes"] = notes
+        
+        //...........address info
+        
+        editTenantDict["streetNum"] = streetNum
+        
+        editTenantDict["streetName"] = streetName
+        
+        editTenantDict["borough"] = borough
+        
+        editTenantDict["zip"] = zip
+        
+        editTenantDict["aptNo"] = aptNo
+        
+        editTenantDict["aptFloor"] = aptFloor
+        
+        
         
         if(dob != ""){
             
@@ -1793,7 +1821,23 @@ class Utilities {
                             tenantObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                             
                             tenantObject.virtualUnit = unitObject.virtualUnit!
+                            tenantObject.middleName = tenantData["middleName"] as? String  ?? ""
                             
+                            tenantObject.contact = tenantData["contact"] as? String  ?? ""
+                            
+                            tenantObject.attempt = tenantData["attempt"] as? String  ?? ""
+                            
+                            tenantObject.contactOutcome = tenantData["contactOutcome"] as? String  ?? ""
+                            
+                            tenantObject.notes = tenantData["notes"] as? String  ?? ""
+                            
+                            
+                            tenantObject.aptNo = tenantData["aptNo"] as? String  ?? ""
+                            tenantObject.aptFloor = tenantData["aptFloor"] as? String  ?? ""
+                            tenantObject.streetNum = tenantData["streetNum"] as? String  ?? ""
+                            tenantObject.streetName = tenantData["streetName"] as? String  ?? ""
+                            tenantObject.borough = tenantData["borough"] as? String  ?? ""
+                            tenantObject.zip = tenantData["zip"] as? String  ?? ""
                             
                             appDelegate.saveContext()
                             

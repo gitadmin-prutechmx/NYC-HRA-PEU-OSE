@@ -544,7 +544,8 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(contactOutcomeData.count>0){
             
-            contactOutcomeStr =  String(contactOutcomeData[0].value!.characters.dropLast())
+            contactOutcomeStr =  contactOutcomeData[0].value!
+            //String(contactOutcomeData[0].value!.characters.dropLast())
             
         }
         
@@ -557,7 +558,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(reasonData.count>0){
             
-            reasonStr =  String(reasonData[0].value!.characters.dropLast())
+            reasonStr =  reasonData[0].value!//String(reasonData[0].value!.characters.dropLast())
             
         }
         

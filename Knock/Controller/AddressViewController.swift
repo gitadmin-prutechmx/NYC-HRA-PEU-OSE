@@ -26,16 +26,20 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var streetNameView: UIView!
     @IBOutlet weak var streetNameLbl: UILabel!
     @IBOutlet weak var streetNameTxtField: UITextField!
+    
+    
      var arrNameList = NSMutableArray()
      let pickerView = UIPickerView()
     var selectedRow = 0
+    
+    var clientObj:ClientDO!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         pickerView.delegate = self
          self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
-        arrNameList = [ "First", "Second", "Third", "Fourth", "Fifth","None"]
+        arrNameList = [ "Bronx", "Broonklyn", "Manhattan", "Queens", "Staten Island"]
         pickerView.backgroundColor = .white
         pickerView.showsSelectionIndicator = true
         
@@ -84,7 +88,223 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func saveAction()
     {
+
+        
+        var streetNum:String = ""
+        var streetName:String = ""
+        var borough:String = ""
+        var zip:String = ""
+        var aptNo:String = ""
+        var aptFloor:String = ""
+        
+        if let tempStreetNum = streetNumTxtField.text{
+            streetNum = tempStreetNum
+        }
+        
+        if let tempStreetName = streetNameTxtField.text{
+            streetName = tempStreetName
+        }
+        
+        if let tempBorough = boroughTxtField.text{
+            borough = tempBorough
+        }
+        
+        if let tempZip = zipTxtField.text{
+            zip = tempZip
+        }
+        if let tempAptNo = aptTextField.text{
+            aptNo = tempAptNo
+        }
+        if let tempAptFloor = aptFloorTxtField.text{
+            aptFloor = tempAptFloor
+        }
+        
+        
+        
+       
+        
+        if(streetNum.isEmpty){
+            
+            streetNumView.shake()
+            
+            self.view.makeToast("Please enter Street Number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if(streetName.isEmpty){
+            
+            streetNameView.shake()
+            
+            self.view.makeToast("Please enter Street Name", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if(borough.isEmpty){
+            
+            boroughView.shake()
+            
+            self.view.makeToast("Please select borough", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if(zip.isEmpty){
+            
+            zipView.shake()
+            
+            self.view.makeToast("Please enter zip", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if(aptNo.isEmpty){
+            
+            aptNoView.shake()
+            
+            self.view.makeToast("Please enter apartment number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if(aptFloor.isEmpty){
+            
+            aptNoView.shake()
+            
+            self.view.makeToast("Please enter apartment floor", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        saveClientAddress(streetNo: streetNum, streetName: streetName, borough: borough, zip: zip, aptNo: aptNo, aptFloor: aptFloor)
+        
+        self.view.makeToast("Contact has been saved successfully.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+             self.dismiss(animated: true, completion: nil)
+            
+            
+        }
+        
+
+
+        
+       // Utilities.clientAddressDict["StreetNum"] =
+    }
     
+    func saveClientAddress(streetNo:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String){
+        
+                let clientObject = Tenant(context: context)
+        
+        
+                clientObject.id = UUID().uuidString
+        
+                clientObject.firstName = clientObj.firstName
+                clientObject.lastName = clientObj.lastName
+                clientObject.middleName = clientObj.middleName
+                clientObject.suffix = clientObj.suffix
+                clientObject.phone = clientObj.phone
+                clientObject.email = clientObj.email
+                clientObject.dob = clientObj.dob
+        
+                clientObject.streetNum = streetNo
+                clientObject.streetName = streetName
+                clientObject.borough = borough
+                clientObject.aptNo = aptNo
+                clientObject.aptFloor = aptFloor
+                clientObject.zip = zip
+        
+                clientObject.attempt = ""
+                clientObject.contact = ""
+                clientObject.contactOutcome = ""
+                clientObject.notes = ""
+        
+                clientObject.actionStatus = "create"
+        
+                clientObject.assignmentId = ""
+        
+                clientObject.locationId = ""
+        
+                clientObject.unitId = ""
+        
+                clientObject.assignmentLocUnitId = ""
+                
+                appDelegate.saveContext()
+        
+
+        
     }
 
     override func didReceiveMemoryWarning()

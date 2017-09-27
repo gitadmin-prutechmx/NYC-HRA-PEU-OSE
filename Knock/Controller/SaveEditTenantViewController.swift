@@ -78,7 +78,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
         }
         
-         picker.backgroundColor = .white
+        picker.backgroundColor = .white
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
@@ -92,7 +92,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         toolBar.isTranslucent = false
         txtDob.inputAssistantItem.leadingBarButtonGroups.removeAll()
         txtDob.inputAssistantItem.trailingBarButtonGroups.removeAll()
-
+        
         let cancelBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.cancelPressed))
         
         let doneBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SaveEditTenantViewController.donePressed))
@@ -117,8 +117,10 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         txtDob.inputAccessoryView = toolBar
         
-        if(SalesforceConnection.currentTenantId != ""){
-            fillTenantInfo()
+        if(SalesforceConnection.isNewContactWithAddress == false){
+            if(SalesforceConnection.currentTenantId != ""){
+                fillTenantInfo()
+            }
         }
         
         phoneTextField.delegate = self
@@ -136,11 +138,11 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField)
     {
-       let phoneNum = phoneTextField.text
+        let phoneNum = phoneTextField.text
         let phone = phoneNum?.toPhoneNumber()
         phoneTextField.text = phone!
         print(phone!)
- 
+        
     }
     
     
@@ -186,11 +188,11 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         result = result.replace(")", withString: "")
         result = result.replace("-", withString: "")
         result = result.replace(" ", withString: "")
-
+        
         return result
         
     }
-
+    
     
     func checkEnglishPhoneNumberFormat(string: String?, str: String?) -> Bool{
         
@@ -298,7 +300,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     @IBAction func cancel(_ sender: Any)
     {
-     
+        
         let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
@@ -308,45 +310,24 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
-            if(SalesforceConnection.isNewContactWithAddress){
-                
-                self.dismiss(animated: true, completion: nil)
-            }
-            else{
+             self.dismiss(animated: true, completion: nil)
             
-              self.navigationController?.popViewController(animated: true);
-            }
+//            if(SalesforceConnection.isNewContactWithAddress){
+//                
+//                self.dismiss(animated: true, completion: nil)
+//            }
+//            else{
+//                
+//                self.navigationController?.popViewController(animated: true);
+//            }
             //Do some other stuff
         }
         alertCtrl.addAction(okAction)
         
-     
         
         
-    }
-    
-    func nextAction()
-    {
-        // self.performSegue(withIdentifier: "addressViewIdentifire", sender: nil)
-        let viewController = self.storyboard!.instantiateViewController(withIdentifier: "addressViewIdentifier") as? AddressViewController
-        
-        self.navigationController!.pushViewController(viewController!, animated: true)
-         //self.dismiss(animated: true, completion: nil)
-    }
-    
-    func saveAction(){
-        
-        self.saveTenantInfo()
-    }
-    
-    /*
-    @IBAction func save(_ sender: Any) {
-        
-        
-        self.saveTenantInfo()
         
     }
-    */
     
     func isValidEmail(testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")
@@ -356,9 +337,28 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         return emailTest.evaluate(with: testStr)
     }
     
+    func nextAction()
+    {
+        if(validateClientInfo()){
+            
+            
+            let viewController = self.storyboard!.instantiateViewController(withIdentifier: "addressViewIdentifier") as? AddressViewController
+            
+            viewController?.clientObj = ClientDO(firstName: firstName, lastName: lastName, middleName: middleName, suffix: suffix, phone: phone, email: email, dob: dob)
+            
+            
+            self.navigationController!.pushViewController(viewController!, animated: true)
+        }
+    }
     
-    func saveTenantInfo(){
+    func saveAction(){
         
+        self.saveTenantInfo()
+    }
+    
+    
+    
+    func validateClientInfo()->Bool{
         
         if let firstNameTemp = firstNameTxtField.text{
             
@@ -393,7 +393,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             }
             
             
-            return
+            return false
             
         }
         
@@ -425,7 +425,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             }
             
             
-            return
+            return false
             
         }
         
@@ -438,30 +438,10 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         
         
-//        if(phone.isEmpty){
-//            
-//            phoneView.shake()
-//            
-//            self.view.makeToast("Please enter Phone number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                
-//                if didTap {
-//                    print("Completion with tap")
-//                    
-//                } else {
-//                    print("Completion without tap")
-//                }
-//                
-//                
-//            }
-//            
-//            
-//            return
-//            
-//        }
         
         
         
-        if(!phone.isEmpty && phone.characters.count < 10){
+        if(!phone.isEmpty && phone.characters.count < 14){
             
             self.view.makeToast("Phone number should be in 10 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
@@ -476,7 +456,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             }
             
             
-            return
+            return false
             
         }
         
@@ -486,26 +466,6 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
         }
         
-//        if(email.isEmpty){
-//            
-//            emailView.shake()
-//            
-//            self.view.makeToast("Please enter email.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                
-//                if didTap {
-//                    print("Completion with tap")
-//                    
-//                } else {
-//                    print("Completion without tap")
-//                }
-//                
-//                
-//            }
-//            
-//            
-//            return
-//            
-//        }
         
         if(!email.isEmpty && !isValidEmail(testStr: email)){
             
@@ -522,7 +482,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             }
             
             
-            return
+            return false
             
         }
         
@@ -551,63 +511,52 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             }
             
             
-        }
-        
-        
-        var msg:String = ""
-        
-        
-        if(SalesforceConnection.currentTenantId == ""){
-            saveTenantInCoreData()
-            msg = "Client information has been created successfully."
-        }
-        else{
-            updateTenantInCoreData()
-            msg = "Client information has been updated successfully."
-        }
-        
-        
-        
-        //        editTenantDict = Utilities.createAndEditTenantData(firstName: firstName, lastName: lastName, email: email, phone: phone, dob: dob, locationUnitId: SalesforceConnection.unitId, currentTenantId: SalesforceConnection.currentTenantId,iOSTenantId: UUID().uuidString)
-        //
-        //
-        //
-        self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
-            
-            
-            
-            self.navigationController?.popViewController(animated: true);
-            
             
         }
         
+        return true
         
-        //        if(Network.reachability?.isReachable)!{
-        //
-        //            pushCreateEditTenantDataToSalesforce(message:msg)
-        //        }
-        //
-        //        else{
-        //            self.view.makeToast(msg, duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-        //
-        //                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateTenantView"), object: nil)
-        //
-        //
-        //
-        //                self.navigationController?.popViewController(animated: true);
-        //
-        //
-        //            }
-        //        }
-        //
+    }
+    
+    
+    
+    func saveTenantInfo(){
         
+        
+        if(validateClientInfo()){
+            
+            
+            var msg:String = ""
+            
+            
+            if(SalesforceConnection.currentTenantId == ""){
+                saveTenantInCoreData()
+                msg = "Client information has been created successfully."
+            }
+            else{
+                updateTenantInCoreData()
+                msg = "Client information has been updated successfully."
+            }
+            
+            
+            
+            
+            self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
+                
+                 self.dismiss(animated: true, completion: nil)
+                
+               // self.navigationController?.popViewController(animated: true);
+                
+                
+            }
+        }
         
         
     }
     
-
+    
     func saveTenantInCoreData(){
         
         let tenantObject = Tenant(context: context)
@@ -644,6 +593,21 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         tenantObject.assignmentLocUnitId = SalesforceConnection.assignmentLocationUnitId
         
+        tenantObject.virtualUnit = "false"
+        
+        tenantObject.attempt = ""
+        tenantObject.contact = ""
+        tenantObject.contactOutcome = ""
+        tenantObject.notes = ""
+        
+        tenantObject.streetNum = ""
+        tenantObject.streetName = ""
+        tenantObject.borough = ""
+        tenantObject.zip = ""
+        tenantObject.aptNo = ""
+        tenantObject.aptFloor = ""
+       
+
         
         appDelegate.saveContext()
         
@@ -786,7 +750,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
      
      return string == numberFiltered
      }
-
+     
      */
     
 }

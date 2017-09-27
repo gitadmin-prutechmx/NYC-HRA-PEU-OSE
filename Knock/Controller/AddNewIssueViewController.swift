@@ -197,7 +197,8 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         if(issueTypeData.count>0){
             
-            issueTypeStr =  String(issueTypeData[0].value!.characters.dropLast())
+            issueTypeStr = issueTypeData[0].value!
+            //String(issueTypeData[0].value!.characters.dropLast())
             //  statusArray = statusStr.components(separatedBy: ";")
             
         }

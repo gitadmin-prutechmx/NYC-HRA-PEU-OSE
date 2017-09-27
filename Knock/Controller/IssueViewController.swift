@@ -54,6 +54,8 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         NotificationCenter.default.addObserver(self, selector:#selector(IssueViewController.UpdateIssueView), name: NSNotification.Name(rawValue: "UpdateIssueView"), object:nil
         )
         
+        addIssueBtn.layer.cornerRadius = 5
+        
         // Do any additional setup after loading the view.
     }
     

@@ -268,7 +268,7 @@ class SyncUtility{
                 let tenantId = tenantData.id!
                 let locUnitId = tenantData.unitId!
                 
-                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,type:tenantData.actionStatus!)
+                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!,attempt:tenantData.attempt!,contact:tenantData.contact!,contactOutcome: tenantData.contactOutcome!,notes:tenantData.notes!,streetNum:tenantData.streetNum!,streetName:tenantData.streetName!,borough:tenantData.borough!,zip:tenantData.zip!,aptNo: tenantData.aptNo!,aptFloor: tenantData.aptFloor!, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,type:tenantData.actionStatus!)
                 
                 
                 

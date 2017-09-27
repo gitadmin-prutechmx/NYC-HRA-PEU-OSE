@@ -375,6 +375,7 @@ class ManageCoreData{
         DeleteAllRecords(salesforceEntityName: "AddCase")
         
         
+        
         deleteRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "actionStatus == %@", predicateValue: "Done", isPredicate: true)
         
         //DeleteAllRecords(salesforceEntityName: "SurveyResponse")
@@ -382,6 +383,8 @@ class ManageCoreData{
         //DeleteAllRecords(salesforceEntityName: "TenantAssign")
         DeleteAllRecords(salesforceEntityName: "EditUnit")
         DeleteAllRecords(salesforceEntityName: "EditLocation")
+        
+      
     }
     
 }
