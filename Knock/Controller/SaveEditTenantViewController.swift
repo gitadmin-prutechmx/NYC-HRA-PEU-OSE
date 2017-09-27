@@ -441,8 +441,9 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         
         
-        if(!phone.isEmpty && phone.characters.count < 14){
-            
+        if(!phone.isEmpty && phone.characters.count < 14)
+        {
+            phoneView.shake()
             self.view.makeToast("Phone number should be in 10 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 if didTap {

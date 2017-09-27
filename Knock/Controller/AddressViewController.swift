@@ -28,7 +28,10 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var streetNameTxtField: UITextField!
     
     
-     var arrNameList = NSMutableArray()
+     //var arrNameList = NSMutableArray()
+    
+     var boroughPickListArray: [String]!
+    
      let pickerView = UIPickerView()
     var selectedRow = 0
     
@@ -39,7 +42,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         super.viewDidLoad()
         pickerView.delegate = self
          self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
-        arrNameList = [ "Bronx", "Broonklyn", "Manhattan", "Queens", "Staten Island"]
+       // boroughPickListArray = [ "Bronx", "Broonklyn", "Manhattan", "Queens", "Staten Island"]
         pickerView.backgroundColor = .white
         pickerView.showsSelectionIndicator = true
         
@@ -71,12 +74,31 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         boroughTxtField.inputAssistantItem.trailingBarButtonGroups.removeAll()
         boroughTxtField.inputAccessoryView = toolBar
         
+        populateBorough()
+        
     }
+    
+    func populateBorough(){
+        
+        let boroughData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Contact",predicateValue2:  "Borough__c", isPredicate:true) as! [DropDown]
+        
+        
+        if(boroughData.count>0){
+            
+            var boroughStr = boroughData[0].value!
+            
+            boroughPickListArray = String(boroughStr.characters.dropLast()).components(separatedBy: ";")
+           
+            
+        }
+        
+    }
+
     
     
     func donePicker()
     {
-            self.boroughTxtField.text = arrNameList[selectedRow]as? String
+            self.boroughTxtField.text = boroughPickListArray[selectedRow]as? String
             boroughTxtField.resignFirstResponder()
         
     }
@@ -191,6 +213,27 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             zipView.shake()
             
             self.view.makeToast("Please enter zip", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            
+            return
+            
+        }
+        
+        if(zip.characters.count < 5){
+            
+            zipView.shake()
+            
+            self.view.makeToast("zip should be 5 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 if didTap {
                     print("Completion with tap")
@@ -342,6 +385,27 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         let filtered = inputString.joined(separator: "")
         return  phoneNumber == filtered
     }
+    
+    func isValidZipcode(value: String) -> Bool
+    {
+        
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = value.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        
+        let currentCharacterCount = zipTxtField.text?.characters.count ?? 0
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 9)
+        {
+            return false
+        }
+        
+        
+        return value == filtered
+
+
+    }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
@@ -352,10 +416,16 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             return (streetNameTxtField.text != nil)
             
         }
+            
+        else if (textField == zipTxtField)
+        {
+           return isValidZipcode(value: str)
+        }
         else
         {
             return validate(phoneNumber: str)
         }
+        
     }
     //Mark Pickerview delegate methods
     
@@ -368,15 +438,15 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
         
-        return self.arrNameList.count
+        return self.boroughPickListArray.count
         
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
+        return boroughPickListArray[row]
         
-        
-            return arrNameList.object(at: row)as? String
+        //    return boroughPickListArray.object(at: row)as? String
 
         
     }

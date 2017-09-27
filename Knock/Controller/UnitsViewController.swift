@@ -851,8 +851,6 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     //cell.attempt.image = UIImage(named: "transperntImg")
                 }
                 
-                
-                
                 if(editUnitObject?.contact == "Yes"){
                     cell.contact.image = UIImage(named: "Complete")
                 }
@@ -907,10 +905,12 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.lblUnitId.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
                 cell.lblSyncDate.text = ""
                 
-                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment.isEmpty){
-                    cell.lblUnverifiedunit.text = "             "
+                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment.isEmpty)
+                {
+                    cell.lblUnverifiedunit.text = "      "
                 }
-                else{
+                else
+                {
                      cell.lblUnverifiedunit.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment
                 }
                 
@@ -944,9 +944,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
                 cell.lblSyncDate.text = ""
                 if(clientDataArray[indexPath.row].apartment.isEmpty){
-                    cell.lblUnverifiedunit.text = "             "
+                    cell.lblUnverifiedunit.text = "      "
                 }
-                else{
+                else
+                {
                     cell.lblUnverifiedunit.text = clientDataArray[indexPath.row].apartment
                 }
                 
