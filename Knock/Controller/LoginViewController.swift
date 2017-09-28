@@ -194,16 +194,17 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
         if(salesforceConfigData.count == 0){
             
-            let companyName = "PEU"
-            let endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
-            let clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
-            let clientSecret = "5050630969965231251"
-            
 //            let companyName = "PEU"
-//            let endPointUrl = "https://nyc-mayorpeu--uat.cs32.my.salesforce.com"
-//            let clientId = "3MVG9ic.6IFhNpPr8GIEr8R0j25Wf7FJvQXGFDGTgWUsgBwOUUKxTOeyCltrF0fWu9kYbv3OQyqiQDdGdO6OA"
-//            let clientSecret = "6143163716371648599"
-//            
+//            let endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
+//            let clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
+//            let clientSecret = "5050630969965231251"
+            
+            //UAT environment
+            let companyName = "PEU"
+            let endPointUrl = "https://nyc-mayorpeu--uat.cs32.my.salesforce.com"
+            let clientId = "3MVG9ic.6IFhNpPr8GIEr8R0j25Wf7FJvQXGFDGTgWUsgBwOUUKxTOeyCltrF0fWu9kYbv3OQyqiQDdGdO6OA"
+            let clientSecret = "6143163716371648599"
+            
             
             
             let configData = SalesforceOrgConfig(context: context)
@@ -237,8 +238,8 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         }
         
         
-       // if validation()
-       // {
+        if validation()
+        {
             if(Network.reachability?.isReachable)!{
                 
                 onlineEnterToDashBoard()
@@ -271,7 +272,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             }
             
             
-        //}
+        }
         
         
     }
@@ -352,11 +353,11 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     
     func offlineEnterToDashBoard(){
         
-         SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        // SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
-         SalesforceConfig.password = "peuprutech1234"
+        // SalesforceConfig.password = "peuprutech1234"
         
-       // SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
         userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
         
@@ -367,13 +368,13 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                 
                 let password = try! userInfoData[0].password!.aesDecrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
                 
-                if(password == SalesforceConfig.password){
-                //if(password == passwordTextField.text!){
+               // if(password == SalesforceConfig.password){
+                if(password == passwordTextField.text!){
                     
                     getSalesforceOrgCredentials()
                     getUserSetting()
                     
-                    //SalesforceConfig.password = passwordTextField.text!
+                    SalesforceConfig.password = passwordTextField.text!
                     SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
                     SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
                     SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
@@ -455,14 +456,14 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
         //Need to be handle refresh token as well
         
-       // SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        SalesforceConfig.userName = emailTextField.text!.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
-       // SalesforceConfig.password = passwordTextField.text!
+        SalesforceConfig.password = passwordTextField.text!
         
         
-        SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
+        //SalesforceConfig.userName = "nik+peu@mtxb2b.com.dev".addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         
-        SalesforceConfig.password = "peuprutech1234"
+        //SalesforceConfig.password = "peuprutech1234"
         
         SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true,controller: self)
         

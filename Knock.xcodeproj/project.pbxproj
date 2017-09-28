@@ -1121,7 +1121,7 @@
 					"-l",
 					"c++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.Knock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.KnockUAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Knock/Knock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0.1;
@@ -1166,7 +1166,7 @@
 					"-l",
 					"c++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.Knock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.KnockUAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Knock/Knock-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
