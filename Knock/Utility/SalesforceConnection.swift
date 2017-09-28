@@ -98,6 +98,7 @@ class SalesforceConnection{
                 
             case .failure(let error):
                 Utilities.isRefreshBtnClick = false
+                print(loginUrl)
                 showLoginErrorMessage(error: error as NSError)
                 //print(error.localizedDescription)
                 completion(false)
