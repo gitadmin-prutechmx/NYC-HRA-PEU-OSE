@@ -523,6 +523,8 @@ class Utilities {
             updateTenantIdInCase(tenantDataDict: tenantDataDictonary)
             updateTenantIdInAddCase(tenantDataDict: tenantDataDictonary)
             
+            updateTenantIdInSurveyResponse(tenantDataDict: tenantDataDictonary)
+            
         }
         
         return isError
@@ -784,6 +786,9 @@ class Utilities {
             
             if(tenantCreateResults[0].assignmentLocUnitId !=  nil){
                 updateSyncDate(assignmentLocUnitId: tenantCreateResults[0].assignmentLocUnitId!)
+                
+                print("Tenant:- clientId updated")
+
             }
             
         }
@@ -811,6 +816,9 @@ class Utilities {
             
             ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "tenantId == %@", predicateValue: iosTenantId,isPredicate: true)
             
+            print("Edit Unit:- clientId updated")
+
+            
         }
     }
     
@@ -832,8 +840,40 @@ class Utilities {
             
             ManageCoreData.updateRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@", predicateValue: iosTenantId,isPredicate: true)
             
+            print("Cases:- clientId updated")
+            
         }
     }
+    
+    
+    class func updateTenantIdInSurveyResponse(tenantDataDict:[String:AnyObject]){
+        
+        let iosTenantId = tenantDataDict["iOSTenantId"] as! String?
+        let tenantId = tenantDataDict["tenantId"] as! String?
+        
+        
+        let surveyResResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "clientId == %@",predicateValue: iosTenantId,isPredicate:true) as! [SurveyResponse]
+        
+        
+        
+        if(surveyResResults.count > 0){
+            
+            
+            var updateObjectDic:[String:String] = [:]
+            updateObjectDic["forClient"] = tenantId
+            
+            
+            
+            ManageCoreData.updateRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "clientId == %@", predicateValue: iosTenantId,isPredicate: true)
+            
+            print("surveyResResults:- clientId updated")
+        }
+        
+       
+        
+    }
+    
+
     
     
     class func updateTenantIdInAddCase(tenantDataDict:[String:AnyObject]){

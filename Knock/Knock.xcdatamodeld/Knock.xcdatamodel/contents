@@ -50,22 +50,6 @@
         <attribute name="chartType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chartValue" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Client" representedClassName="Client" syncable="YES" codeGenerationType="class">
-        <attribute name="aptFloor" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="aptNo" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="borough" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="clientId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dob" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="middleName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="streetName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="streetNo" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="DropDown" representedClassName="DropDown" syncable="YES" codeGenerationType="class">
         <attribute name="fieldName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="object" optional="YES" attributeType="String" syncable="YES"/>
@@ -258,7 +242,6 @@
         <element name="CaseConfig" positionX="-117" positionY="54" width="128" height="60"/>
         <element name="Cases" positionX="-126" positionY="45" width="128" height="210"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
-        <element name="Client" positionX="-126" positionY="45" width="128" height="255"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="300"/>

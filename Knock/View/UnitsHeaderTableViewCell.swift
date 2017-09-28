@@ -52,7 +52,7 @@ class UnitsHeaderTableViewCell: UITableViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        print("infinite loop")
+       // print("infinite loop")
         super.init(coder: aDecoder)
          //setUp()
     }
