@@ -1199,9 +1199,11 @@ class Utilities {
                                         
                                     }
                                     
+                                        //|| Utilities.isBaseMapExist() == false
+                                        
                                     //This will happen when logout then login
                                     //when only basemap change
-                                    else if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                                    else if(SalesforceConfig.isBaseMapNeedToDownload == true ){
                                         
                                         SVProgressHUD.dismiss()
                                         

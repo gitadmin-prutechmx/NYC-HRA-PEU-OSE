@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18125DFD1F7E75A900298C70 /* AGSExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18125DFC1F7E75A900298C70 /* AGSExtensions.swift */; };
 		5D00F0D61F6ED5EE00FF7523 /* ExistingClientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00F0D51F6ED5EE00FF7523 /* ExistingClientsViewController.swift */; };
 		5D00F0D91F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00F0D71F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.swift */; };
 		5D00F0DA1F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D00F0D81F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.xib */; };
@@ -154,6 +155,7 @@
 /* Begin PBXFileReference section */
 		032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Knock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07955744F913E50DF5D5760A /* Pods-KnockUAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockUAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-KnockUAT/Pods-KnockUAT.release.xcconfig"; sourceTree = "<group>"; };
+		18125DFC1F7E75A900298C70 /* AGSExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGSExtensions.swift; sourceTree = "<group>"; };
 		438543A608078C74DA9D02EF /* Pods-KnockUAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockUAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KnockUAT/Pods-KnockUAT.debug.xcconfig"; sourceTree = "<group>"; };
 		5D00F0D51F6ED5EE00FF7523 /* ExistingClientsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingClientsViewController.swift; sourceTree = "<group>"; };
 		5D00F0D71F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingClientsHeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 		5DC9E99C1EEA60FE009A6396 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				18125DFC1F7E75A900298C70 /* AGSExtensions.swift */,
 				5DC9E9EF1EEE8391009A6396 /* StringExtension.swift */,
 				5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */,
 				5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */,
@@ -886,6 +889,7 @@
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
 				5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */,
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
+				18125DFD1F7E75A900298C70 /* AGSExtensions.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
 				5D757B1A1F18A38100308C05 /* DownloadProgressView.swift in Sources */,
 				5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */,

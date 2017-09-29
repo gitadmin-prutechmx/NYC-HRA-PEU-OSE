@@ -168,7 +168,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             
             settingData.settingsId = "1"
             
-            settingData.forgotPasswordUrl = "https://dev-providers.cs33.force.com/Core_Forgot_Password_Page"
+            settingData.forgotPasswordUrl = "http://uat-uat.cs32.force.com/Core_Forgot_Password_Page"
             
             settingData.offlineSyncTime = "2"
             

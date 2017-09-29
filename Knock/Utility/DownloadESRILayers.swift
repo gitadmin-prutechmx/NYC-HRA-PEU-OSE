@@ -216,7 +216,10 @@ class DownloadESRILayers{
         //kick off the job
         generateJob.start(statusHandler: { (status: AGSJobStatus) -> Void in
             
-            SVProgressHUD.show(withStatus: "Fetching layers data...", maskType: SVProgressHUDMaskType.gradient)
+        
+            SVProgressHUD.show(withStatus: "Fetching layers data:- " + status.statusString(), maskType: SVProgressHUDMaskType.gradient)
+            
+            //print(generateJob.messages)
             
         }) { [] (object: AnyObject?, error: Error?) -> Void in
             
@@ -230,9 +233,10 @@ class DownloadESRILayers{
                 
                 if(loginVC != nil){
                     
+                  
                     
                     // && Utilities.isBaseMapExist()==false
-                    if(SalesforceConfig.isBaseMapNeedToDownload == true){
+                    if(SalesforceConfig.isBaseMapNeedToDownload == true || Utilities.isBaseMapExist()==false){
                         
                         //Delete Basemap first and then download
                         Utilities.deleteBasemap()
