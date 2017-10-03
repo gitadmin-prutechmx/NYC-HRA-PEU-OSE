@@ -263,8 +263,10 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             self.dismiss(animated: true) {
                 
-                self.getDefaultSurvey()
-                
+                if(!self.isSurveyTaken()){
+                     self.getDefaultSurvey()
+                }
+               
                 self.completionHandler?(self)
                 
                 print("Completion");
@@ -763,8 +765,42 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-   
+    //if survey already taken on unit
+    func isSurveyTaken()->Bool{
+        
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId, isPredicate:true) as! [SurveyResponse]
+        
+        if(surveyResResultsArr.count > 0){
+            
+             let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@" ,predicateValue: surveyResResultsArr[0].surveyId,isPredicate:true) as! [SurveyQuestion]
+            
+            if(surveyQuestionResults.count > 0){
+                
+                SalesforceConnection.surveyId = surveyQuestionResults[0].surveyId!
+                
+                SalesforceConnection.surveyName = surveyQuestionResults[0].surveyName!
+                
+                
+                // return selectedSurveyId
+                
+            }
+            else{
+                SalesforceConnection.surveyId = ""
+                
+                SalesforceConnection.surveyName = ""
+            }
+            
+            return true
+        }
+        else{
+            return false
+        }
+
+    }
+
     
+   
+    //if no survey taken on unit
     func getDefaultSurvey(){
         
         

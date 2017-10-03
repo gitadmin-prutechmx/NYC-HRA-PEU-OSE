@@ -271,14 +271,25 @@ class ManageCoreData{
     }
     
     
-    static func deleteRecord(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,isPredicate:Bool){
+    static func deleteRecord(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         
-        if(isPredicate){
-            fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+        if(isPredicate)
+        {
+            if(predicateValue2 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+                
+            }
+            else {
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
+            }
+
         }
-       
+//        if(isPredicate){
+//            fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
+//        }
+//       
       
         
         let result = try? context.fetch(fetchRequest)
@@ -376,7 +387,7 @@ class ManageCoreData{
         
         
         
-        deleteRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "actionStatus == %@", predicateValue: "Done", isPredicate: true)
+       // deleteRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "actionStatus == %@", predicateValue: "Done", isPredicate: true)
         
         //DeleteAllRecords(salesforceEntityName: "SurveyResponse")
         

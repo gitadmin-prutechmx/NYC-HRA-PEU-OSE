@@ -803,27 +803,43 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     
                     
                 }
+               
+                let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
                 
-                
-                if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
-                    cell.surveyStatus.image = UIImage(named: "Complete")
-                }
-                else if(UnitDataArray[indexPath.row].surveyStatus == Utilities.inProgressSurvey){
+                if(survetResObject == Utilities.inProgressSurvey){
                     cell.surveyStatus.image = UIImage(named: "InProgress")
                 }
-                else
-                {
-                    let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
-                    
-                    
-                    if(survetResObject == Utilities.inProgressSurvey){
-                        cell.surveyStatus.image = UIImage(named: "InProgress")
+                else{
+                    if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
+                        cell.surveyStatus.image = UIImage(named: "Complete")
                     }
                     else{
                         cell.surveyStatus.image = nil
                     }
                 }
                 
+                
+                
+//                
+//                if(UnitDataArray[indexPath.row].surveyStatus == "Completed"){
+//                    cell.surveyStatus.image = UIImage(named: "Complete")
+//                }
+//                else if(UnitDataArray[indexPath.row].surveyStatus == Utilities.inProgressSurvey){
+//                    cell.surveyStatus.image = UIImage(named: "InProgress")
+//                }
+//                else
+//                {
+//                    //let survetResObject = surveyResDict[UnitDataArray[indexPath.row].unitId]
+//                    
+//                    
+//                    if(survetResObject == Utilities.inProgressSurvey){
+//                        cell.surveyStatus.image = UIImage(named: "InProgress")
+//                    }
+//                    else{
+//                        cell.surveyStatus.image = nil
+//                    }
+//                }
+//                
                 
                 
                 cell.unitId.text = UnitDataArray[indexPath.row].unitId
@@ -1046,36 +1062,36 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         //Units
         if(tableView == tblUnits)
         {
-            var surveyStatus:String = ""
+          //  var surveyStatus:String = ""
             
-            if(isFiltered && arrfilteredTableData.count > 0){
-                surveyStatus = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).surveyStatus
-            }
-            else{
-                surveyStatus = UnitDataArray[indexPath.row].surveyStatus
-            }
-           
+//            if(isFiltered && arrfilteredTableData.count > 0){
+//                surveyStatus = (arrfilteredTableData[indexPath.row] as! UnitsDataStruct).surveyStatus
+//            }
+//            else{
+//                surveyStatus = UnitDataArray[indexPath.row].surveyStatus
+//            }
+//           
+//            
+//            if("Completed" == surveyStatus)
+//            {
+//                
+//                let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitDataTableViewCell
+//                
+//                currentCell.shake(duration: 0.3, pathLength: 15)
+//                
+//                
+//                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                    if didTap {
+//                        print("completion from tap")
+//                    } else {
+//                        print("completion without tap")
+//                    }
+//                }
+//                
+//            }
+//                
+//            else{
             
-            if("Completed" == surveyStatus)
-            {
-                
-                let currentCell = tblUnits.cellForRow(at: tblUnits.indexPathForSelectedRow!) as! UnitDataTableViewCell
-                
-                currentCell.shake(duration: 0.3, pathLength: 15)
-                
-                
-                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        print("completion from tap")
-                    } else {
-                        print("completion without tap")
-                    }
-                }
-                
-            }
-                
-            else{
-                
                 var unitId:String = ""
                 var unitName:String = ""
                 var assignmentLocUnitId:String = ""
@@ -1107,7 +1123,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 showEditUnit()
 
-            }
+            //}
             
         }
            
@@ -1115,36 +1131,36 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         else
         {
             
-            let currentCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) as! ClientDataTableViewCell
+//            let currentCell = tableView.cellForRow(at: tableView.indexPathForSelectedRow!) as! ClientDataTableViewCell
+//            
+//            var surveyStatus:String = ""
+//            
+//            if(isFiltered && arrClientfilteredTableData.count > 0){
+//                surveyStatus = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).surveyStatus
+//            }
+//            else{
+//                surveyStatus = clientDataArray[indexPath.row].surveyStatus
+//            }
+//            
+//            
+//            
+//            if("Completed" == surveyStatus){
+//                
+//                
+//                currentCell.shake(duration: 0.3, pathLength: 15)
+//                
+//                
+//                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                    if didTap {
+//                        print("completion from tap")
+//                    } else {
+//                        print("completion without tap")
+//                    }
+//                }
+//                
+//            }
+//            else{
             
-            var surveyStatus:String = ""
-            
-            if(isFiltered && arrClientfilteredTableData.count > 0){
-                surveyStatus = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).surveyStatus
-            }
-            else{
-                surveyStatus = clientDataArray[indexPath.row].surveyStatus
-            }
-            
-            
-            
-            if("Completed" == surveyStatus){
-                
-                
-                currentCell.shake(duration: 0.3, pathLength: 15)
-                
-                
-                self.view.makeToast("Survey already has been completed.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        print("completion from tap")
-                    } else {
-                        print("completion without tap")
-                    }
-                }
-                
-            }
-            else{
-                
                 var unitId:String = ""
                 var unitName:String = ""
                 var assignmentLocUnitId:String = ""
@@ -1208,7 +1224,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                     
                     showEditUnit()
                 }
-            }
+           // }
             
         }
         

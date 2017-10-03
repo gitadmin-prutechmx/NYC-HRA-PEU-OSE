@@ -306,6 +306,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                                     
                                     
                                     let featureLayer = AGSFeatureLayer(featureTable: (self.geodatabaseFeatureTable)!)
+                                
+                                   
+                                   // self.filterfeaturesExpression = "Name = '69,HENRY STREET,BROOKLYN,NY,11201'"
                                     
                                     featureLayer.definitionExpression = (self.filterfeaturesExpression)
                                     
@@ -408,7 +411,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         //
         
         let queryParams = AGSQueryParameters()
-        queryParams.whereClause = "Name LIKE '%\(addressName)%'"
+        queryParams.whereClause = "Name = '\(addressName)'"
         
         
         
@@ -580,7 +583,17 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 
                 locDataArray.append(objectLocStruct)
                 
-                //filterfeaturesExpression = filterfeaturesExpression + "Name = '" + locationData.name! + "'OR "
+                
+//                let city = locationData.city!.lowercased()
+//                let updatedCity = city.capitalizingFirstLetter()
+//                
+//                
+//                
+//                let temp1 = locationData.streetNumber! + "," + locationData.streetName!
+//                let temp2 =  temp1 + "," + updatedCity + "," + locationData.state! + "," + locationData.zip!
+//                
+//                filterfeaturesExpression = filterfeaturesExpression + "Name = '" + temp2 + "'OR "
+                
                 
                 filterfeaturesExpression = filterfeaturesExpression + "Name = '\(locationData.name!)'OR "
             }

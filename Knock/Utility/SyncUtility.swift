@@ -516,7 +516,7 @@ class SyncUtility{
                 caseResponseParam["jsonCase"] = Utilities.jsonToString(json: caseJsonDict as AnyObject)!
                 
                 
-                SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.createCase, params: caseResponseParam){ jsonData in
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createCase, params: caseResponseParam){ jsonData in
                     
                     Utilities.parseCaseResponse(jsonObject: jsonData.1)
                     caseGroup.leave()
@@ -578,7 +578,7 @@ class SyncUtility{
                 
                 
                 
-                SalesforceConnection.SalesforceCaseData(restApiUrl: SalesforceRestApiUrl.createIssue, params: editIssue){ jsonData in
+                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createIssue, params: editIssue){ jsonData in
                     
                     
                     _ = Utilities.parseIssueResponse(jsonObject: jsonData.1)

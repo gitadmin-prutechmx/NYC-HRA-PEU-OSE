@@ -73,35 +73,39 @@ class DownloadESRILayers{
             
             syncTask = AGSGeodatabaseSyncTask(url: FEATURE_SERVICE_URL)
             
+            
+            
             self.syncTask.load { [] (error) -> Void in
                 if let error = error {
                     print("Could not load feature service \(error)")
                     
                 } else {
                     
-                    
-                    for (index, layerInfo) in syncTask.featureServiceInfo!.layerInfos.enumerated().reversed() {
+                    if syncTask.featureServiceInfo != nil {
+                        for (index, layerInfo) in syncTask.featureServiceInfo!.layerInfos.enumerated().reversed() {
+                            
+                            //For each layer in the serice, add a layer to the map
+                            let layerURL = FEATURE_SERVICE_URL.appendingPathComponent(String(index))
+                            
+                            let featureTable = AGSServiceFeatureTable(url:layerURL)
+                            let featureLayer = AGSFeatureLayer(featureTable: featureTable)
+                            featureLayer.name = layerInfo.name
+                            featureLayer.opacity = 0.65
+                            
+                        }
                         
-                        //For each layer in the serice, add a layer to the map
-                        let layerURL = FEATURE_SERVICE_URL.appendingPathComponent(String(index))
-                        
-                        let featureTable = AGSServiceFeatureTable(url:layerURL)
-                        let featureLayer = AGSFeatureLayer(featureTable: featureTable)
-                        featureLayer.name = layerInfo.name
-                        featureLayer.opacity = 0.65
                         
                     }
                     
-                    
-                }
-                
-                if(isGeodatabaseGenerate!){
-                    generateGeodatabase()
-                }
-                else{
-                    fetchUpdatedData()
+                    if(isGeodatabaseGenerate!){
+                        generateGeodatabase()
+                    }
+                    else{
+                        fetchUpdatedData()
+                    }
                 }
             }
+            
             
         }
         
@@ -216,7 +220,7 @@ class DownloadESRILayers{
         //kick off the job
         generateJob.start(statusHandler: { (status: AGSJobStatus) -> Void in
             
-        
+            
             SVProgressHUD.show(withStatus: "Fetching layers data:- " + status.statusString(), maskType: SVProgressHUDMaskType.gradient)
             
             //print(generateJob.messages)
@@ -233,7 +237,7 @@ class DownloadESRILayers{
                 
                 if(loginVC != nil){
                     
-                  
+                    
                     
                     // && Utilities.isBaseMapExist()==false
                     if(SalesforceConfig.isBaseMapNeedToDownload == true || Utilities.isBaseMapExist()==false){

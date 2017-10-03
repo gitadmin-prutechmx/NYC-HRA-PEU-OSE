@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import ArcGIS
+import SwiftMessages
 
 import Toast_Swift
 
@@ -1733,6 +1734,9 @@ class Utilities {
                     let streetNumber = locationData["streetNumber"] as? String  ?? ""
                     let streetName = locationData["street"] as? String  ?? ""
 
+                    locationObject.streetNumber = streetNumber
+                    locationObject.streetName = streetName
+                    
                     locationObject.street = streetNumber + " " + streetName
                     locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
                     locationObject.totalUnits = locationData["totalUnits"] as? String  ?? "0"
@@ -2089,6 +2093,93 @@ class Utilities {
             }
         }
         
+    }
+    
+    
+    class func showSwiftErrorMessage(error:String){
+        
+        let view: MessageView
+        
+     
+        view = try! SwiftMessages.viewFromNib()
+        
+        
+        
+        view.configureContent(title: "Error", body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
+        
+        let iconStyle: IconStyle
+        
+        iconStyle = .light
+        
+        //view.configureTheme(.error, iconStyle: iconStyle)
+        
+        view.configureTheme(backgroundColor: UIColor.init(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1.0), foregroundColor: UIColor.white, iconImage: nil, iconText: "")
+        
+        //view.button?.setImage(Icon.ErrorSubtle.image, for: .normal)
+        //view.button?.setTitle("Dismiss", for: .normal)
+       
+        
+            view.configureDropShadow()
+        
+       
+            //view.button?.isHidden = true
+        
+ 
+            //view.iconImageView?.isHidden = true
+            //view.iconLabel?.isHidden = true
+        
+            //view.titleLabel?.isHidden = true
+        
+            //view.bodyLabel?.isHidden = true
+        
+        
+        // Config setup
+        
+        var config = SwiftMessages.defaultConfig
+        
+//        switch presentationStyle.selectedSegmentIndex {
+//        case 1:
+//            config.presentationStyle = .bottom
+//        case 2: break
+//       
+//        default:
+//            break
+//        }
+        
+//        switch presentationContext.selectedSegmentIndex {
+//        case 1:
+//            config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+//        case 2:
+//            config.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
+//        default:
+//            break
+//        }
+//        
+       
+           // config.duration = .forever
+        
+           config.duration = .seconds(seconds: 5)
+            
+            config.dimMode = .gray(interactive: true)
+       
+        
+        config.shouldAutorotate = true
+        
+        config.interactiveHide = false
+        
+        // Set status bar style unless using card view (since it doesn't
+        // go behind the status bar).
+//        if case .top = config.presentationStyle, layout.selectedSegmentIndex != 1 {
+//            switch theme.selectedSegmentIndex {
+//            case 1...4:
+//                config.preferredStatusBarStyle = .lightContent
+//            default:
+//                break
+//            }
+//        }
+        
+        // Show
+        SwiftMessages.show(config: config, view: view)
     }
     
     

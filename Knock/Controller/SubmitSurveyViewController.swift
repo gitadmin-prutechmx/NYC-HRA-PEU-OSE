@@ -311,6 +311,10 @@ class SubmitSurveyViewController: UIViewController {
         
         surveyResponseObject.surveyQuestionRes = questionArray as NSObject?
         
+        surveyResponseObject.questionAnswers = Utilities.SurveyOutput as NSObject?
+        
+        surveyResponseObject.surveyQuestionIndex = 0
+        
         appDelegate.saveContext()
         
     }
@@ -321,7 +325,9 @@ class SubmitSurveyViewController: UIViewController {
         
          updateObjectDic["surveyId"] = SalesforceConnection.surveyId as AnyObject?
         
-        updateObjectDic["surveyQuestionIndex"] = Int64(Utilities.surveyQuestionArrayIndex) as AnyObject?
+        //  updateObjectDic["surveyQuestionIndex"] = Int64(Utilities.surveyQuestionArrayIndex) as AnyObject?
+        
+        
         
         
         updateObjectDic["surveyQuestionRes"] = questionArray as NSObject?
@@ -340,6 +346,7 @@ class SubmitSurveyViewController: UIViewController {
         }
         
         
+        updateObjectDic["questionAnswers"] = Utilities.SurveyOutput as NSObject?
         
         
         ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId,isPredicate: true)

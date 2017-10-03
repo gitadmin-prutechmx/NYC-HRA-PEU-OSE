@@ -9,6 +9,8 @@
 import Foundation
 import Alamofire
 import CoreData
+import SwiftyJSON
+
 
 class SalesforceConnection{
     
@@ -98,9 +100,32 @@ class SalesforceConnection{
                 
             case .failure(let error):
                 Utilities.isRefreshBtnClick = false
-                print(loginUrl)
-                showLoginErrorMessage(error: error as NSError)
-                //print(error.localizedDescription)
+                 var errorMessage = ""
+                
+                if let data = response.data {
+                    let responseJSON = JSON(data: data)
+                    
+                    print(responseJSON)
+                    
+//                        ▿ {
+//                            "error_description" : "authentication failure",
+//                            "error" : "invalid_grant"
+//                    }
+
+                    
+                    if let message: String = responseJSON["error_description"].stringValue {
+                        if !message.isEmpty {
+                            errorMessage = message
+                        }
+                    }
+                }
+                
+                SVProgressHUD.dismiss()
+                Utilities.showSwiftErrorMessage(error: errorMessage)
+                
+                //showErrorMessage(error: errorMessage)
+                //showLoginErrorMessage(error: error as NSError)
+                
                 completion(false)
                 
             }
@@ -109,8 +134,7 @@ class SalesforceConnection{
         
     }//end of loginToSalesforce
     
-    
-    
+ 
     
     static func SalesforceData(restApiUrl:String, params:[String:String]? = nil, methodType:String? = "POST" ,completion: @escaping AccessTokenCompletion) {
         
@@ -158,6 +182,7 @@ class SalesforceConnection{
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         
+
         
         Alamofire.request(urlRequest).validate().responseJSON{ response in
             switch response.result {
@@ -175,8 +200,27 @@ class SalesforceConnection{
                 
             case .failure(let error):
                 
+                var errorMessage = ""
+                
+                if let data = response.data {
+                    let responseJSON = JSON(data: data)
+                    
+                    
+                    if let message: String = responseJSON[0]["message"].stringValue {
+                        if !message.isEmpty {
+                            errorMessage = message
+                        }
+                    }
+                }
+                
+                print(errorMessage) //Contains General error message or specific.
+                
+                
                 Utilities.isRefreshBtnClick = false
-                showErrorMessage(error: error as NSError)
+               // showErrorMessage(error: error as NSError)
+                
+                Utilities.showSwiftErrorMessage(error: errorMessage)
+                //showErrorMessage(error: errorMessage)
                 return
                 
                 
@@ -187,52 +231,53 @@ class SalesforceConnection{
     }
     
     
-    static func SalesforceCaseData(restApiUrl:String, params:[String:String]? = nil, methodType:String? = "POST" ,completion: @escaping AccessTokenCompletion) {
-
-        
-        let url = URL(string: SalesforceConfig.hostUrl + restApiUrl)!
-        var urlRequest = URLRequest(url: url)
-        
-        if(methodType == "POST"){
-            urlRequest.httpMethod = "POST"
-            
-            
-            do {
-                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
-            } catch {
-                
-            }
-        }
-        else{
-            urlRequest.httpMethod = "GET"
-        }
-        
-        urlRequest.setValue("OAuth \(salesforceAccessToken)", forHTTPHeaderField: "Authorization")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        
-        
-        Alamofire.request(urlRequest).validate().responseJSON{ response in
-            switch response.result {
-                
-            case .success:
-             if response.result.value != nil {
-              
-                 completion(true, response.result.value as! Dictionary<String, AnyObject>)
-              }
-                
-            case .failure(let error):
-                
-                Utilities.isRefreshBtnClick = false
-                showErrorMessage(error: error as NSError)
-                return
-                
-                
-            }
-        }
-        
-        
-    }
+//    static func SalesforceCaseData(restApiUrl:String, params:[String:String]? = nil, methodType:String? = "POST" ,completion: @escaping AccessTokenCompletion) {
+//
+//        
+//        let url = URL(string: SalesforceConfig.hostUrl + restApiUrl)!
+//        var urlRequest = URLRequest(url: url)
+//        
+//        if(methodType == "POST"){
+//            urlRequest.httpMethod = "POST"
+//            
+//            
+//            do {
+//                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params!, options: [])
+//            } catch {
+//                
+//            }
+//        }
+//        else{
+//            urlRequest.httpMethod = "GET"
+//        }
+//        
+//        urlRequest.setValue("OAuth \(salesforceAccessToken)", forHTTPHeaderField: "Authorization")
+//        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        
+//        
+//        
+//        Alamofire.request(urlRequest).validate().responseJSON{ response in
+//            switch response.result {
+//                
+//            case .success:
+//             if response.result.value != nil {
+//              
+//                 completion(true, response.result.value as! Dictionary<String, AnyObject>)
+//              }
+//                
+//            case .failure(let error):
+//                
+//                Utilities.isRefreshBtnClick = false
+//                showErrorMessage(error: error as NSError)
+//                return
+//                
+//                
+//            }
+//        }
+//        
+//        
+//    }
+//    
     
     
     //    func isBaseMapDownloaded(chart: Chart) -> Bool {
@@ -312,10 +357,15 @@ class SalesforceConnection{
         //        }
     }
     
-    static func showErrorMessage(error:NSError){
+    static func showErrorMessage(error:String){
         SVProgressHUD.dismiss()
-        SVProgressHUD.showError(withStatus: error.localizedDescription)
+        SVProgressHUD.showError(withStatus: error)
     }
+    
+//    static func showErrorMessage(error:NSError){
+//        SVProgressHUD.dismiss()
+//        SVProgressHUD.showError(withStatus: error.localizedDescription)
+//    }
     
     static func showLoginErrorMessage(error:NSError){
         SVProgressHUD.dismiss()

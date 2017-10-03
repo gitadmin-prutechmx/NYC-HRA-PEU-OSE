@@ -18,4 +18,6 @@ target 'KnockUAT' do
   pod 'TPKeyboardAvoiding'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'SwiftyJSON'
+  pod 'SwiftMessages'
 end

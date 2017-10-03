@@ -239,7 +239,7 @@ class SurveyUtility {
         
         if let surveyResponse = getSurveyFromCoreData(){
             
-            Utilities.SurveyOutput = (surveyResponse.surveyQuestionRes! as NSObject) as! [String : SurveyResult]
+            Utilities.SurveyOutput = (surveyResponse.questionAnswers! as NSObject) as! [String : SurveyResult]
             
             
             
@@ -390,7 +390,9 @@ class SurveyUtility {
     
     class func getSurveyFromCoreData() -> SurveyResponse?{
         
-        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
+//        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
+        
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count > 0){
             return surveyResResultsArr[0]
@@ -402,9 +404,11 @@ class SurveyUtility {
     
     class func saveInProgressSurveyToCoreData(surveyStatus:String?=nil){
         
-        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
+//        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
         
-        if(surveyResResultsArr.count > 0){
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId, isPredicate:true) as! [SurveyResponse]
+        
+        if(surveyResResultsArr.count > 0){ // already exist
             updateSurveyRes(surveyStatus:surveyStatus)
         }
         else{
@@ -412,7 +416,7 @@ class SurveyUtility {
                 updateSurveyRes(surveyStatus:surveyStatus)
                 }
                 else{
-                    saveSurveyRes()
+                    saveSurveyRes() //new one
             }
         }
         
@@ -431,7 +435,7 @@ class SurveyUtility {
         
         surveyResponseObject.surveyQuestionIndex = Int64(Utilities.surveyQuestionArrayIndex)
         
-        surveyResponseObject.surveyQuestionRes = Utilities.SurveyOutput as NSObject?
+        surveyResponseObject.questionAnswers = Utilities.SurveyOutput as NSObject?
         
         // Serialized data
         //let data = NSKeyedArchiver.ar
@@ -449,9 +453,11 @@ class SurveyUtility {
         updateObjectDic["surveyQuestionIndex"] = Int64(Utilities.surveyQuestionArrayIndex) as AnyObject?
         
         
-        updateObjectDic["surveyQuestionRes"] = Utilities.SurveyOutput as NSObject?
+        updateObjectDic["questionAnswers"] = Utilities.SurveyOutput as NSObject?
         
         updateObjectDic["actionStatus"] = surveyStatus as NSObject?
+        
+       
         
         //  updateObjectDic["surveySignature "] =
         
