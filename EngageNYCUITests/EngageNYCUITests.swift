@@ -8,7 +8,7 @@
 
 import XCTest
 
-class KnockUITests: XCTestCase {
+class EngageNYCUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()

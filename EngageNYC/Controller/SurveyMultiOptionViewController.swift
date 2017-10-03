@@ -36,9 +36,11 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     @IBOutlet weak var prevBtnOutlet: UIButton!
     
     @IBOutlet weak var questionsView: UIView!
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
+        //optionsCollectionView.flashScrollIndicators()
         
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
@@ -56,7 +58,10 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         getDescriptionTextField.layer.cornerRadius = 10.0
         
         
-        
+//        if let layout = optionsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+//        {
+//            layout.scrollDirection = .vertical
+//        }
         
         /* let btnName = UIButton()
          btnName.setImage(UIImage(named: "ExitSurvey"), forState: .Normal)

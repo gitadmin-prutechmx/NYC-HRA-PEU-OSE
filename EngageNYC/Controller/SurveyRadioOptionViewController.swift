@@ -48,9 +48,12 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     
     
    
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        
+       // optionsCollectionView.flashScrollIndicators()
+
+
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         
@@ -61,6 +64,12 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+//        if let layout = optionsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+//        {
+//            layout.scrollDirection = .vertical
+//        }
+//        
         
         getDescriptionTextField.layer.borderColor = UIColor.gray.cgColor
         
@@ -230,9 +239,9 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     
     
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
-        
         
         
         if(Utilities.surveyQuestionArrayIndex == 0){

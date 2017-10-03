@@ -7,9 +7,9 @@
 //
 
 import XCTest
-@testable import Knock
+@testable import EngageNYC
 
-class KnockTests: XCTestCase {
+class EngageNYCTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
