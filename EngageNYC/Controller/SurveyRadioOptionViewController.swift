@@ -28,7 +28,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     //@IBOutlet weak var textView: UIView!
     //@IBOutlet weak var radioOptionsView: UIView!
     
-    @IBOutlet weak var optionsCollectionView: UICollectionView!
+    @IBOutlet  var optionsCollectionView: UICollectionView!
     
     @IBOutlet weak var radioOptionsView: UIView!
     
@@ -57,7 +57,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         
-        
+        optionsCollectionView.allowsMultipleSelection = false
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
@@ -65,19 +65,22 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-//        if let layout = optionsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
-//        {
-//            layout.scrollDirection = .vertical
-//        }
-//        
+        
+   // optionsCollectionView.scrollDirection = .vertical
+        
+      //  if let layout = optionsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+      //  {
+       // optionsCollectionView.scrollDirection = .vertical
+       // }
+        
         
         getDescriptionTextField.layer.borderColor = UIColor.gray.cgColor
         
         getDescriptionTextField.layer.borderWidth = 1.0
         
         getDescriptionTextField.layer.cornerRadius = 10.0
-        
-        
+    
+        //optionsCollectionView.register(SurveyOptionsButtonCell.self, forCellWithReuseIdentifier:"cell")
         
         
         /* let btnName = UIButton()
@@ -122,11 +125,6 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         //
         
         self.navigationItem.title =  SalesforceConnection.surveyName
-        
-        
-        
-        
-        
         
         let leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action:  nil)
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
@@ -244,7 +242,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         super.viewWillAppear(animated)
         
         
-        if(Utilities.surveyQuestionArrayIndex == 0){
+        if(Utilities.surveyQuestionArrayIndex == 0)
+        {
             
             prevBtnOutlet.isHidden = true
             // self.navigationItem.leftBarButtonItem = nil
@@ -284,6 +283,29 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     }
     
     
+    func populateSurveyOutput(){
+        
+        var getDescription:String = ""
+        
+        if(getDescriptionTextField.isHidden == false){
+            getDescription = getDescriptionTextField.text ?? "";
+        }
+            
+        else if (showTextLbl.isHidden == false){
+            getDescription = showTextLbl.text ?? "";
+        }
+        else{
+            getDescription = ""
+        }
+        
+        
+        
+        let objSurveyResult:SurveyResult =  SurveyResult(questionId:objSurveyQues.questionId, questionType: objSurveyQues.questionType, getDescription: getDescription, selectedAnswer: radiobuttonCurrentValue,multiOption: [])
+        
+        Utilities.SurveyOutput[objSurveyQues.questionNumber] = objSurveyResult
+        
+    }
+    
     
     var isSkipLogic:Bool = false
     
@@ -305,25 +327,9 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             return
         }
         
-        var getDescription:String = ""
-        
-        if(getDescriptionTextField.isHidden == false){
-            getDescription = getDescriptionTextField.text ?? "";
-        }
-            
-        else if (showTextLbl.isHidden == false){
-            getDescription = showTextLbl.text ?? "";
-        }
-        else{
-            getDescription = ""
-        }
-        
-        
-        
-        let objSurveyResult:SurveyResult =  SurveyResult(questionId:objSurveyQues.questionId, questionType: objSurveyQues.questionType, getDescription: getDescription, selectedAnswer: radiobuttonCurrentValue,multiOption: [])
-        
-        Utilities.SurveyOutput[objSurveyQues.questionNumber] = objSurveyResult
-        
+       
+        populateSurveyOutput()
+        print(objSurveyQues.questionNumber)
         
         // Utilities.SurveyOutput[objSurveyQues.questionId] = radiobuttonCurrentValue
         
@@ -332,7 +338,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         
         //Move to End of Survey
-        if(objSurveyQues.isSkipLogic == "true"){
+        if(objSurveyQues.isSkipLogic == "true")
+        {
             let skipLogicArr:[[String:SkipLogic]] =  objSurveyQues.skipLogicArray
             
             for objectSkipLogic in skipLogicArr{
@@ -575,7 +582,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             
             
         }
-        
+       // optionsCollectionView.reloadData()
         
     }
     
@@ -591,7 +598,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         //Dictionary child parent and parent child
         //6 3
         
-        //handle SkipLogic
+        //handle SkipLogic ??
         let objSurveyQues =  Utilities.surveyQuestionArray[Utilities.surveyQuestionArrayIndex].objectSurveyQuestion
         
         // let parentIndex = Int((objSurveyQues?.questionNumber)!)! - 1
@@ -704,7 +711,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
          }
          
          */
-        
+       // optionsCollectionView.reloadData()
     }
     
     
@@ -754,7 +761,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
          
          collectionViewLayout?.invalidateLayout()*/
         
-        if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) {
+        if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation)
+        {
             print("Landscape")
             //here you can do the logic for the cell size if phone is in landscape
         } else {
@@ -763,7 +771,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -776,11 +785,12 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     
     //selectItema
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SurveyOptionsButtonCell
         
         
-        
+                    
         
         cell.contentView.layer.cornerRadius = 10.0;
         cell.contentView.layer.borderWidth = 1.0;
@@ -794,24 +804,34 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         cell.layer.masksToBounds = false;
         cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath;
         
+      //  let selectionView = UIView()
         
-        if let object = Utilities.SurveyOutput[objSurveyQues.questionNumber] {
+       // selectionView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) // green
+
+         //  cell.selectedBackgroundView = selectionView
+        
+        if let object = Utilities.SurveyOutput[objSurveyQues.questionNumber]
+        {
             
-            if(optionsTextArray[indexPath.row] == object.selectedAnswer){
+             if(optionsTextArray[indexPath.row] == object.selectedAnswer)
+            {
                 
-                cell.isSelected = true
+                //cell.isSelected = true
+                
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.centeredVertically)
                 
                 radiobuttonCurrentValue = object.selectedAnswer
                 
-                cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-                
-                
-                if(objSurveyQues.isSkipLogic == "true"){
+                cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) // green
+               
+             //  collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.left, animated: true)
+                if(objSurveyQues.isSkipLogic == "true")
+                {
                     let skipLogicArr:[[String:SkipLogic]] =  objSurveyQues.skipLogicArray
                     
                     for objectSkipLogic in skipLogicArr{
-                        if(objectSkipLogic[object.selectedAnswer] != nil){
+                        if(objectSkipLogic[object.selectedAnswer] != nil)
+                        {
                             let tempObject:SkipLogic = objectSkipLogic[object.selectedAnswer]!
                             
                             if(tempObject.skipLogicType == "Show Text"){
@@ -823,7 +843,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                                 getDescriptionTextField.isHidden = false
                                 
                             }
-                            else{
+                            else
+                            {
                                 showTextLbl.isHidden = true
                                 getDescriptionTextField.isHidden = true
                             }
@@ -836,9 +857,6 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                     
                     
                 }
-                
-                
-                
                 
                 /*
                  if(getDescriptionTextField.hidden == false){
@@ -854,38 +872,35 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                 
                 
             }
+            
+            else
+            {
                 
-                // }
-                
-                
-                
-            else{
-                cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
-                
-                
+               cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
             }
-        }
             
-            
-        else{
-            
-            cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
-            
+           
         }
         
         
+        else
+        {
+            
+         cell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
+          //  cell.contentView.backgroundColor = UIColor.clear
+            
+            //cell.isSelected = false
+        }
         
+    
         cell.optionText.text = optionsTextArray[indexPath.row]
         cell.optionId.text = optionsTextArray[indexPath.row]
         
+       //optionsCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.bottom)
         
-        
-        
-        
-        
-        
-        
-        
+      
+
+               
         // cell.layer.cornerRadius = 5
         // cell.layer.masksToBounds = true
         
@@ -900,67 +915,94 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         return cell
     }
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    {
+        
+    }
     
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let currentCell = collectionView.cellForItem(at: indexPath) as! SurveyOptionsButtonCell
-        
-        currentCell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) // green
-        
-        
-        
-        radiobuttonCurrentValue = currentCell.optionId.text!
-        
-        if(radiobuttonCurrentValue == ""){
-            print("blank")
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool
+    {
+        return true
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        guard collectionView.cellForItem(at: indexPath) != nil else
+        {
+            return
         }
         
-        if(objSurveyQues.isSkipLogic == "true"){
-            let skipLogicArr:[[String:SkipLogic]] =  objSurveyQues.skipLogicArray
+      
+    
+            let currentCell = collectionView.cellForItem(at: indexPath) as! SurveyOptionsButtonCell
+        
+           currentCell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) // green
             
-            for objectSkipLogic in skipLogicArr{
-                if(objectSkipLogic[radiobuttonCurrentValue] != nil){
-                    let tempObject:SkipLogic = objectSkipLogic[radiobuttonCurrentValue]!
-                    if(tempObject.skipLogicType == "Show Text"){
-                        showTextLbl.isHidden = false
-                        showTextLbl.text = tempObject.showTextValue
-                        
-                        getDescriptionTextField.isHidden = true
-                        
-                    }
-                    else if(tempObject.skipLogicType == "Input Text"){
-                        showTextLbl.isHidden = true
-                        getDescriptionTextField.isHidden = false
-                        
-                        
-                        
+            radiobuttonCurrentValue = currentCell.optionId.text!
+            
+            if(radiobuttonCurrentValue == "")
+            {
+                print("blank")
+            }
+            
+            if(objSurveyQues.isSkipLogic == "true")
+            {
+                let skipLogicArr:[[String:SkipLogic]] =  objSurveyQues.skipLogicArray
+                
+                for objectSkipLogic in skipLogicArr{
+                    if(objectSkipLogic[radiobuttonCurrentValue] != nil){
+                        let tempObject:SkipLogic = objectSkipLogic[radiobuttonCurrentValue]!
+                        if(tempObject.skipLogicType == "Show Text"){
+                            showTextLbl.isHidden = false
+                            showTextLbl.text = tempObject.showTextValue
+                            
+                            getDescriptionTextField.isHidden = true
+                            
+                        }
+                        else if(tempObject.skipLogicType == "Input Text"){
+                            showTextLbl.isHidden = true
+                            getDescriptionTextField.isHidden = false
+                            
+                            
+                            
+                        }
+                        else{
+                            showTextLbl.isHidden = true
+                            getDescriptionTextField.isHidden = true
+                        }
                     }
                     else{
                         showTextLbl.isHidden = true
                         getDescriptionTextField.isHidden = true
                     }
                 }
-                else{
-                    showTextLbl.isHidden = true
-                    getDescriptionTextField.isHidden = true
-                }
+                
+                
             }
-            
-            
+
+        
+            populateSurveyOutput()
+        
+      
+       
+        
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath)
+    {
+    
+        guard collectionView.cellForItem(at: indexPath) != nil else {
+            return
         }
         
         
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let currentCell = collectionView.cellForItem(at: indexPath) as! SurveyOptionsButtonCell
+            let currentCell = collectionView.cellForItem(at: indexPath) as! SurveyOptionsButtonCell
+            
+          currentCell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
         
-        currentCell.backgroundColor = UIColor.init(red: 0.0/255.0, green: 102.0/255.0, blue: 204.0/255.0, alpha: 1) //blue
+      //  currentCell.contentView.backgroundColor = UIColor.clear
         
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         

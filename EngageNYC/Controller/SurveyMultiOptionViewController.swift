@@ -40,7 +40,7 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     {
         super.viewDidLoad()
         
-        //optionsCollectionView.flashScrollIndicators()
+       // optionsCollectionView.flashScrollIndicators()
         
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
@@ -57,11 +57,14 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         
         getDescriptionTextField.layer.cornerRadius = 10.0
         
+       //  optionsCollectionView.scrollDirection = .vertical
         
-//        if let layout = optionsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
-//        {
-//            layout.scrollDirection = .vertical
-//        }
+       // if let layout = optionsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+      //  {
+           // layout.scrollDirection = .vertical
+       // }
+        
+        
         
         /* let btnName = UIButton()
          btnName.setImage(UIImage(named: "ExitSurvey"), forState: .Normal)
@@ -168,7 +171,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     }
     
     
-    @IBAction func inTake(_ sender: Any) {
+    @IBAction func inTake(_ sender: Any)
+    {
         
         SurveyUtility.InTake(vc: self)
     }
@@ -231,11 +235,33 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
         // flagView.isHidden = true
         
     }
-    
+    func populateSurveyOutput()-> SurveyResult
+    {
+        var getDescription:String = ""
+        
+        if(getDescriptionTextField.isHidden == false){
+            getDescription = getDescriptionTextField.text ?? "";
+        }
+        else if (showTextLbl.isHidden == false){
+            getDescription = showTextLbl.text ?? "";
+        }
+        else
+        {
+            getDescription = ""
+        }
+        
+        let objSurveyRes:SurveyResult =  SurveyResult(questionId:objSurveyQues.questionId, questionType: objSurveyQues.questionType, getDescription: getDescription, selectedAnswer: radiobuttonCurrentValue,multiOption: selectedOptions)
+        
+        Utilities.SurveyOutput[objSurveyQues.questionNumber] = objSurveyRes
+        
+        return objSurveyRes
+
+    }
     
     var isSkipLogic:Bool = false
     
-    @IBAction func nextQuestion(_ sender: UIButton) {
+    @IBAction func nextQuestion(_ sender: UIButton)
+    {
         
         isSkipLogic = false
         
@@ -253,24 +279,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
             return
         }
         
-        var getDescription:String = ""
-        
-        if(getDescriptionTextField.isHidden == false){
-            getDescription = getDescriptionTextField.text ?? "";
-        }
-        else if (showTextLbl.isHidden == false){
-            getDescription = showTextLbl.text ?? "";
-        }
-        else
-        {
-            getDescription = ""
-        }
-        
-        let objSurveyResult:SurveyResult =  SurveyResult(questionId:objSurveyQues.questionId, questionType: objSurveyQues.questionType, getDescription: getDescription, selectedAnswer: radiobuttonCurrentValue,multiOption: selectedOptions)
-        
-        Utilities.SurveyOutput[objSurveyQues.questionNumber] = objSurveyResult
-        
-        
+
+     var objSurveyResult = populateSurveyOutput()
         // Utilities.SurveyOutput[objSurveyQues.questionId] = radiobuttonCurrentValue
         
         
@@ -772,13 +782,12 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     var selectedOptions = [String]()
     var selectedOption = ""
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        
         let currentCell = collectionView.cellForItem(at: indexPath as IndexPath) as! SurveyOptionsButtonCell
         
         selectedOption = currentCell.optionId.text!
-        
-        
-        
         
         if selectedOptions.contains(selectedOption){
             
@@ -846,6 +855,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
             
             
         }
+        
+           populateSurveyOutput()
         
         
     }
