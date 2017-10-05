@@ -271,26 +271,26 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
         }
         
-        if(aptFloor.isEmpty){
-            
-            aptNoView.shake()
-            
-            self.view.makeToast("Please enter apartment floor", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    print("Completion with tap")
-                    
-                } else {
-                    print("Completion without tap")
-                }
-                
-                
-            }
-            
-            
-            return
-            
-        }
+//        if(aptFloor.isEmpty){
+//            
+//            aptNoView.shake()
+//            
+//            self.view.makeToast("Please enter apartment floor", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                if didTap {
+//                    print("Completion with tap")
+//                    
+//                } else {
+//                    print("Completion without tap")
+//                }
+//                
+//                
+//            }
+//            
+//            
+//            return
+//            
+//        }
         
         saveClientAddress(streetNo: streetNum, streetName: streetName, borough: borough, zip: zip, aptNo: aptNo, aptFloor: aptFloor)
         
@@ -378,12 +378,12 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     }
     
     
-    func validate(phoneNumber: String) -> Bool
+    func validate(value: String) -> Bool
     {
         let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
-        let inputString = phoneNumber.components(separatedBy: charcterSet)
+        let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
-        return  phoneNumber == filtered
+        return  value == filtered
     }
     
     func isValidZipcode(value: String) -> Bool
@@ -406,6 +406,24 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
 
 
     }
+    
+    func isValidAptNo(value:String) -> Bool
+    {
+        let aSet =  NSCharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ").inverted
+        let compSepByCharInSet = value.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+        let currentCharacterCount = aptTextField.text?.characters.count ?? 0
+        
+       
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 19){
+            return false
+        }
+        
+        return value == numberFiltered
+        
+    }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
@@ -421,9 +439,13 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         {
            return isValidZipcode(value: str)
         }
+        else if (textField == aptTextField)
+        {
+            return isValidAptNo(value: str)
+        }
         else
         {
-            return validate(phoneNumber: str)
+            return validate(value: str)
         }
         
     }

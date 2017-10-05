@@ -12,6 +12,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     
     
     var privateHome:String = "No"
+     var aptName:String = ""
     
     var saveUnitDict : [String:String] = [:]
     
@@ -46,6 +47,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         // Do any additional setup after loading the view.
     }
     
+   
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -66,6 +68,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
             return false
         }
         
+        aptName = apartmentName.text! + string
         
         return string == numberFiltered
     }
@@ -104,9 +107,15 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         
         if((sender as AnyObject).isOn == true){
             privateHome = "Yes"
+            apartmentName.text = "PH/Main"
+            apartmentName.isEnabled = false
+            
+            
         }
         else{
             privateHome = "No"
+            apartmentName.text = aptName
+            apartmentName.isEnabled = true
         }
     }
     

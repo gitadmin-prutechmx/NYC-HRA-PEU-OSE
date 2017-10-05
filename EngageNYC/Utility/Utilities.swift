@@ -26,7 +26,7 @@ class Utilities {
     
     
     
-
+    
     
     static var timer:Timer?
     
@@ -42,11 +42,11 @@ class Utilities {
     
     static var caseConfigDict:[String:AnyObject] = [:]
     
-   // static var selectedDateTimeDictYYYYMMDD:[String:String?] = [:]
-   // static var selectedDateTimeDictInMMDDYYYY:[String:String?] = [:]
+    // static var selectedDateTimeDictYYYYMMDD:[String:String?] = [:]
+    // static var selectedDateTimeDictInMMDDYYYY:[String:String?] = [:]
     
-   // static var selectedDatePicker:[String:Date] = [:]
-
+    // static var selectedDatePicker:[String:Date] = [:]
+    
     
     
     static var currentApiName:String = ""
@@ -95,6 +95,7 @@ class Utilities {
     static var isEditLoc:Bool = false
     static var CanvassingStatus:String = ""
     static var isRefreshBtnClick:Bool = false
+    static var isBackgroundSync:Bool = false
     
     static var answerSurvey:String = ""
     
@@ -120,7 +121,7 @@ class Utilities {
         
         if(userSettingData.count > 0){
             
-       
+            
             offlineSyncTime = Int(userSettingData[0].offlineSyncTime!)!
             
             
@@ -133,7 +134,7 @@ class Utilities {
         }
         
         
-   
+        
     }
     
     @objc class func checkConnection(){
@@ -141,7 +142,9 @@ class Utilities {
         if(Network.reachability?.isReachable)!{
             
             if(Utilities.isRefreshBtnClick == false){
-               
+                
+                Utilities.isBackgroundSync = true
+                
                 print("\(Utilities.offlineSyncTime) minutes")
                 SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: false)
             }
@@ -249,15 +252,15 @@ class Utilities {
         
     }
     
-//    class func encryptedParams(dictParameters:AnyObject)-> String{
-//        let convertedString = Utilities.jsonToString(json: dictParameters as AnyObject)
-//        
-//        
-//        
-//        let encryptSaveUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-//        
-//        return encryptSaveUnitStr!
-//    }
+    //    class func encryptedParams(dictParameters:AnyObject)-> String{
+    //        let convertedString = Utilities.jsonToString(json: dictParameters as AnyObject)
+    //
+    //
+    //
+    //        let encryptSaveUnitStr = try! convertedString?.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+    //
+    //        return encryptSaveUnitStr!
+    //    }
     
     class func showErrorMessage(toastView:UIView,message:String,delay:TimeInterval,toastPosition:ToastPosition){
         
@@ -289,7 +292,7 @@ class Utilities {
         return newUnitDic
     }
     
-    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,contactOutcome:String?=nil,privateHome:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
+    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,contactOutcome:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
         
         var editUnitDict:[String:String] = [:]
         
@@ -305,7 +308,6 @@ class Utilities {
         
         editUnitDict["contactOutcome"] = contactOutcome
         
-        editUnitDict["privateHome"] = privateHome
         
         
         editUnitDict["surveyId"] = selectedSurveyId
@@ -343,7 +345,7 @@ class Utilities {
             editIssueDict["issueId"] = currentIssueId as AnyObject?
         }
         
-    
+        
         editIssueDict["iOSIssueId"] = iOSIssueId as AnyObject?
         
         editIssueDict["caseId"] = caseId as AnyObject?
@@ -352,13 +354,13 @@ class Utilities {
         
         editIssueDict["issueNotes"] = issueNotes as AnyObject?
         
-       
+        
         
         return editIssueDict
         
     }
     
-
+    
     
     class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,attempt:String,contact:String,contactOutcome:String,notes:String,streetNum:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,type:String)->[String:String]{
         
@@ -544,9 +546,9 @@ class Utilities {
         
         
         if(isError == false){
-       
+            
             updateIssueIdInCoreData(issueDataDict: issueDataDictonary)
-
+            
         }
         
         return isError
@@ -602,7 +604,7 @@ class Utilities {
     
     class func parseEditUnit(jsonObject: Dictionary<String, AnyObject>){
         
-    
+        
         let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
         
         let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND assignmentLocUnitId == %@" ,predicateValue: "edit",predicateValue2: "create",predicateValue3: assignmentLocUnitId,isPredicate:true) as! [EditUnit]
@@ -646,8 +648,8 @@ class Utilities {
     }
     
     
-   
- 
+    
+    
     
     class func updateIssueIdInCoreData(issueDataDict:[String:AnyObject]){
         
@@ -673,13 +675,13 @@ class Utilities {
             
             ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@", predicateValue: iOSIssueId,isPredicate: true)
             
-          
+            
             
         }
         
         
     }
-
+    
     
     
     class func updateCaseIdInAddCase(caseDataDict: [String:AnyObject]){
@@ -692,7 +694,7 @@ class Utilities {
             print("caseId updated")
         }
         
-          let caseResults = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "caseId == %@" ,predicateValue: iOSCaseId, isPredicate:true) as! [AddCase]
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "caseId == %@" ,predicateValue: iOSCaseId, isPredicate:true) as! [AddCase]
         
         if(caseResults.count > 0){
             
@@ -700,7 +702,7 @@ class Utilities {
             
             updateObjectDic["actionStatus"] = ""
             
-             ManageCoreData.updateRecord(salesforceEntityName: "AddCase", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: iOSCaseId,isPredicate: true)
+            ManageCoreData.updateRecord(salesforceEntityName: "AddCase", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: iOSCaseId,isPredicate: true)
             
             print("updateCaseIdInAddCase: \(iOSCaseId)")
         }
@@ -714,7 +716,7 @@ class Utilities {
         let caseId = caseDataDict["caseId"] as! String?
         let caseNumber = caseDataDict["caseNo"] as! String?
         
-    
+        
         let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "caseId == %@" ,predicateValue: iOSCaseId, isPredicate:true) as! [Cases]
         
         
@@ -739,7 +741,7 @@ class Utilities {
         let iOSCaseId = caseDataDict["iOSCaseId"] as! String?
         let caseId = caseDataDict["caseId"] as! String?
         
-      
+        
         
         let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "caseId == %@" ,predicateValue: iOSCaseId, isPredicate:true) as! [Issues]
         
@@ -752,15 +754,15 @@ class Utilities {
             
             ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: iOSCaseId,isPredicate: true)
             
-             print("updateCaseIdInIssue")
+            print("updateCaseIdInIssue")
             
             
         }
-
+        
         
         
     }
-   
+    
     
     
     class func updateTenantIdInCoreData(tenantDataDict:[String:AnyObject]){
@@ -789,7 +791,7 @@ class Utilities {
                 updateSyncDate(assignmentLocUnitId: tenantCreateResults[0].assignmentLocUnitId!)
                 
                 print("Tenant:- clientId updated")
-
+                
             }
             
         }
@@ -818,7 +820,7 @@ class Utilities {
             ManageCoreData.updateRecord(salesforceEntityName: "EditUnit", updateKeyValue: updateObjectDic, predicateFormat: "tenantId == %@", predicateValue: iosTenantId,isPredicate: true)
             
             print("Edit Unit:- clientId updated")
-
+            
             
         }
     }
@@ -870,11 +872,11 @@ class Utilities {
             print("surveyResResults:- clientId updated")
         }
         
-       
+        
         
     }
     
-
+    
     
     
     class func updateTenantIdInAddCase(tenantDataDict:[String:AnyObject]){
@@ -897,7 +899,7 @@ class Utilities {
             
         }
     }
-
+    
     
     
     
@@ -1137,7 +1139,7 @@ class Utilities {
                 
             }
         }
-
+        
         
     }
     
@@ -1153,9 +1155,9 @@ class Utilities {
         
         SalesforceConnection.loginToSalesforce() { response in
             
-          //  let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            //  let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
             
-         //   userParams["userId"] = encryptUserIdStr
+            //   userParams["userId"] = encryptUserIdStr
             
             userParams["userId"] = SalesforceConnection.salesforceUserId
             
@@ -1164,11 +1166,11 @@ class Utilities {
                 
                 Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
                 
-               // emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+                // emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
                 
-                 //emailParams["email"] =  SalesforceConfig.currentUserEmail
+                //emailParams["email"] =  SalesforceConfig.currentUserEmail
                 
-                 externalIdParams["externalId"] = SalesforceConfig.currentUserExternalId
+                externalIdParams["externalId"] = SalesforceConfig.currentUserExternalId
                 
                 SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: externalIdParams){ assignmentJsonData in
                     
@@ -1180,7 +1182,7 @@ class Utilities {
                             
                             SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.caseConfiguration, methodType:"GET"){ caseData in
                                 
-                               
+                                
                                 
                                 updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1,caseJsonData:caseData.1)
                                 
@@ -1199,11 +1201,11 @@ class Utilities {
                                         
                                         
                                     }
-                                    
+                                        
                                         //|| Utilities.isBaseMapExist() == false
                                         
-                                    //This will happen when logout then login
-                                    //when only basemap change
+                                        //This will happen when logout then login
+                                        //when only basemap change
                                     else if(SalesforceConfig.isBaseMapNeedToDownload == true ){
                                         
                                         SVProgressHUD.dismiss()
@@ -1248,8 +1250,8 @@ class Utilities {
                                     }
                                     else{
                                         
-//                                         SVProgressHUD.dismiss()
-//                                         callNotificationCenter()
+                                        //                                         SVProgressHUD.dismiss()
+                                        //                                         callNotificationCenter()
                                         
                                         DownloadESRILayers.RefreshData()
                                     }
@@ -1312,10 +1314,10 @@ class Utilities {
         //now add only those whose surveyId does not contain inprogress surveyids
         
         //Reset and fetch inprogres survey ids
-//        Utilities.inProgressSurveyIds = []
-//        Utilities.completeSurveyIds = []
-//        setInProgressCompleteSurveyIds()
-//        
+        //        Utilities.inProgressSurveyIds = []
+        //        Utilities.completeSurveyIds = []
+        //        setInProgressCompleteSurveyIds()
+        //
         
         ManageCoreData.DeleteAllDataFromEntities()
         
@@ -1365,7 +1367,7 @@ class Utilities {
         
         
         Utilities.isRefreshBtnClick = false
-        
+        Utilities.isBackgroundSync = false
     }
     
     
@@ -1499,7 +1501,7 @@ class Utilities {
             SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
             SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
             
-             SalesforceConnection.salesforceUserId = userInfoData[0].userId!
+            SalesforceConnection.salesforceUserId = userInfoData[0].userId!
             
             if let contactName = userInfoData[0].contactName{
                 
@@ -1593,398 +1595,396 @@ class Utilities {
             
             
             appDelegate.saveContext()
-//            
-//            guard let assignmentResults = eventData["Assignment"] as? [[String: AnyObject]]  else { break }
-//            
-//            for assignmentData in assignmentResults {
-                let assignmentObject = Assignment(context: context)
-                assignmentObject.id = assignmentData["assignmentId"] as? String  ?? ""
-                assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""
+            //
+            //            guard let assignmentResults = eventData["Assignment"] as? [[String: AnyObject]]  else { break }
+            //
+            //            for assignmentData in assignmentResults {
+            let assignmentObject = Assignment(context: context)
+            assignmentObject.id = assignmentData["assignmentId"] as? String  ?? ""
+            assignmentObject.name = assignmentData["assignmentName"] as? String  ?? ""
+            
+            
+            
+            assignmentObject.status = assignmentData["status"] as? String  ?? ""
+            assignmentObject.eventId = eventObject.id
+            
+            assignmentObject.totalLocations = String(assignmentData["totalLocation"] as! Int)
+            assignmentObject.totalUnits = String(assignmentData["totalLocationUnit"] as! Int)
+            assignmentObject.totalSurvey = String(assignmentData["totalSurvey"] as! Int)
+            assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
+            assignmentObject.completePercent = String(assignmentData["totalCanvassed"] as! Int)
+            assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
+            
+            
+            assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
+            
+            
+            
+            let assignedDate = assignmentData["assignedStatusDate"] as? String  ?? ""
+            
+            let completedDate = assignmentData["completeStatusDate"] as? String  ?? ""
+            
+            if(assignedDate != ""){
                 
+                let dateFormatter = DateFormatter()
+                //  dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                let date = dateFormatter.date(from: assignedDate)
                 
+                assignmentObject.assignedDate = date as NSDate?
                 
-                assignmentObject.status = assignmentData["status"] as? String  ?? ""
-                assignmentObject.eventId = eventObject.id
-                
-                assignmentObject.totalLocations = String(assignmentData["totalLocation"] as! Int)
-                assignmentObject.totalUnits = String(assignmentData["totalLocationUnit"] as! Int)
-                assignmentObject.totalSurvey = String(assignmentData["totalSurvey"] as! Int)
-                assignmentObject.totalCanvassed = String(assignmentData["totalCanvassed"] as! Int)
-                assignmentObject.completePercent = String(assignmentData["totalCanvassed"] as! Int)
-                assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
-                
-                
-                assignmentObject.noOfClients = String(assignmentData["numberOfClients"] as! Int)
-                
-                
-                
-                let assignedDate = assignmentData["assignedStatusDate"] as? String  ?? ""
-                
-                let completedDate = assignmentData["completeStatusDate"] as? String  ?? ""
-                
-                if(assignedDate != ""){
-                    
-                    let dateFormatter = DateFormatter()
-                    //  dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                    let date = dateFormatter.date(from: assignedDate)
-                    
-                    assignmentObject.assignedDate = date as NSDate?
-                    
-                }
-                else{
-                    assignmentObject.assignedDate = nil
-                }
-                
-                
-                if(completedDate != ""){
-                    
-                    let dateFormatter = DateFormatter()
-                    //  dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                    let date = dateFormatter.date(from: completedDate)
-                    
-                    assignmentObject.completedDate = date as NSDate?
-                    
-                    
-                }
-                else{
-                    
-                    assignmentObject.completedDate = assignmentObject.assignedDate?.addDays(daysToAdd: -3)
-                }
-                
-                //String(assignmentData["completePercent"] as! Int)
-                
-                //assignmentIdArray.append(assignmentObject.id!)
-                
-                //read surveydata
-                guard let surveyResults = assignmentData["AssignmentSurvey"] as? [[String: AnyObject]] else { break }
-                
-                
-                for surveyData in surveyResults {
-                    
-                    let assignmentId = assignmentObject.id!
-                    let surveyId = surveyData["surveyId"] as? String  ?? ""
-                    let surveyName = surveyData["surveyName"] as? String  ?? ""
-                    let isDefault = surveyData["isDefault"] as? Bool  ?? false
-                    
-                    let convertedJsonString = Utilities.jsonToString(json: surveyData as AnyObject)
-                    
-                    
-                    
-                    let surveyObject = SurveyQuestion(context: context)
-                    surveyObject.assignmentId = assignmentId
-                    surveyObject.surveyId = surveyId
-                    surveyObject.surveyName = surveyName
-                    surveyObject.surveyQuestionData = convertedJsonString
-                    
-                    //surveyObject.isDefault = "true"
-                    
-                    surveyObject.isDefault = String(isDefault)
-                  
-                    
-                     appDelegate.saveContext()
-//                    if(!Utilities.inProgressSurveyIds.contains(surveyId)){
-//                        appDelegate.saveContext()
-//                    }
-                    
             }
+            else{
+                assignmentObject.assignedDate = nil
+            }
+            
+            
+            if(completedDate != ""){
+                
+                let dateFormatter = DateFormatter()
+                //  dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                let date = dateFormatter.date(from: completedDate)
+                
+                assignmentObject.completedDate = date as NSDate?
+                
+                
+            }
+            else{
+                
+                assignmentObject.completedDate = assignmentObject.assignedDate?.addDays(daysToAdd: -3)
+            }
+            
+            //String(assignmentData["completePercent"] as! Int)
+            
+            //assignmentIdArray.append(assignmentObject.id!)
+            
+            //read surveydata
+            guard let surveyResults = assignmentData["AssignmentSurvey"] as? [[String: AnyObject]] else { break }
+            
+            
+            for surveyData in surveyResults {
+                
+                let assignmentId = assignmentObject.id!
+                let surveyId = surveyData["surveyId"] as? String  ?? ""
+                let surveyName = surveyData["surveyName"] as? String  ?? ""
+                let isDefault = surveyData["isDefault"] as? Bool  ?? false
+                
+                let convertedJsonString = Utilities.jsonToString(json: surveyData as AnyObject)
                 
                 
                 
-                //read location data
-                guard let locationResults = assignmentData["assignmentLocation"] as? [[String: AnyObject]]  else { break }
+                let surveyObject = SurveyQuestion(context: context)
+                surveyObject.assignmentId = assignmentId
+                surveyObject.surveyId = surveyId
+                surveyObject.surveyName = surveyName
+                surveyObject.surveyQuestionData = convertedJsonString
+                
+                //surveyObject.isDefault = "true"
+                
+                surveyObject.isDefault = String(isDefault)
                 
                 
-                /*    var totalUnits = 0;
-                 
-                 if(locationResults.count>0){
-                 
-                 assignmentObject.totalLocations = String(locationResults.count)
-                 
-                 for locationData in locationResults {
-                 
-                 let unit = locationData["totalUnits"] as? String  ?? "0"
-                 
-                 totalUnits =  totalUnits + Int(unit)!
-                 
-                 
-                 }
-                 }
-                 else{
-                 assignmentObject.totalLocations = "0"
-                 }
-                 
-                 assignmentObject.totalUnits = String(totalUnits)
-                 
-                 */
+                appDelegate.saveContext()
+                //                    if(!Utilities.inProgressSurveyIds.contains(surveyId)){
+                //                        appDelegate.saveContext()
+                //                    }
                 
+            }
+            
+            
+            
+            //read location data
+            guard let locationResults = assignmentData["assignmentLocation"] as? [[String: AnyObject]]  else { break }
+            
+            
+            /*    var totalUnits = 0;
+             
+             if(locationResults.count>0){
+             
+             assignmentObject.totalLocations = String(locationResults.count)
+             
+             for locationData in locationResults {
+             
+             let unit = locationData["totalUnits"] as? String  ?? "0"
+             
+             totalUnits =  totalUnits + Int(unit)!
+             
+             
+             }
+             }
+             else{
+             assignmentObject.totalLocations = "0"
+             }
+             
+             assignmentObject.totalUnits = String(totalUnits)
+             
+             */
+            
+            
+            
+            appDelegate.saveContext()
+            
+            for locationData in locationResults {
+                
+                let locationObject = Location(context: context)
+                locationObject.id = locationData["locId"] as? String  ?? ""
+                locationObject.name = locationData["name"] as? String  ?? ""
+                locationObject.state = locationData["state"] as? String  ?? ""
+                locationObject.city = locationData["city"] as? String  ?? ""
+                locationObject.zip = locationData["zip"] as? String  ?? ""
+                let streetNumber = locationData["streetNumber"] as? String  ?? ""
+                let streetName = locationData["street"] as? String  ?? ""
+                
+                locationObject.streetNumber = streetNumber
+                locationObject.streetName = streetName
+                
+                locationObject.street = streetNumber + " " + streetName
+                locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
+                locationObject.totalUnits = locationData["totalUnits"] as? String  ?? "0"
+                locationObject.syncDate = locationData["locationSyncDate"] as? String  ?? ""
+                
+                locationObject.assignmentId = assignmentObject.id!
+                locationObject.locStatus = locationData["status"] as? String  ?? ""
+                
+                
+                
+                locationObject.noOfClients = String(locationData["numberOfClients"] as! Int)
+                locationObject.noOfUnitsAttempt  = String(locationData["numberOfUnitsAttempted"] as! Int)
                 
                 
                 appDelegate.saveContext()
                 
-                for locationData in locationResults {
-                    
-                    let locationObject = Location(context: context)
-                    locationObject.id = locationData["locId"] as? String  ?? ""
-                    locationObject.name = locationData["name"] as? String  ?? ""
-                    locationObject.state = locationData["state"] as? String  ?? ""
-                    locationObject.city = locationData["city"] as? String  ?? ""
-                    locationObject.zip = locationData["zip"] as? String  ?? ""
-                    let streetNumber = locationData["streetNumber"] as? String  ?? ""
-                    let streetName = locationData["street"] as? String  ?? ""
-
-                    locationObject.streetNumber = streetNumber
-                    locationObject.streetName = streetName
-                    
-                    locationObject.street = streetNumber + " " + streetName
-                    locationObject.assignmentLocId = locationData["AssignLocId"] as? String  ?? ""
-                    locationObject.totalUnits = locationData["totalUnits"] as? String  ?? "0"
-                    locationObject.syncDate = locationData["locationSyncDate"] as? String  ?? ""
-                    
-                    locationObject.assignmentId = assignmentObject.id!
-                    locationObject.locStatus = locationData["status"] as? String  ?? ""
+                //EditLocation
+                
+                let editlocationObject = EditLocation(context: context)
+                editlocationObject.locationId = locationObject.id!
+                editlocationObject.assignmentId = assignmentObject.id!
+                editlocationObject.assignmentLocId = locationObject.assignmentLocId!
+                
+                editlocationObject.canvassingStatus = locationData["status"] as? String  ?? ""
+                editlocationObject.attempt = locationData["attempt"] as? String  ?? ""
+                editlocationObject.noOfUnits = locationObject.totalUnits!
+                
+                editlocationObject.notes = locationData["notes"] as? String  ?? ""
+                editlocationObject.actionStatus = ""
+                
+                appDelegate.saveContext()
+                
+                guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
+                
+                for unitData in unitResults {
                     
                     
+                    let unitObject = Unit(context: context)
+                    unitObject.id = unitData["locationUnitId"] as? String  ?? ""
+                    unitObject.name = unitData["Name"] as? String  ?? ""
+                    unitObject.apartment = unitData["apartmentNumber"] as? String  ?? ""
+                    unitObject.floor = unitData["floorNumber"] as? String  ?? ""
+                    unitObject.assignmentId = assignmentObject.id!
                     
-                    locationObject.noOfClients = String(locationData["numberOfClients"] as! Int)
-                    locationObject.noOfUnitsAttempt  = String(locationData["numberOfUnitsAttempted"] as! Int)
+                    unitObject.locationId = locationObject.id!
+                    unitObject.assignmentLocId = locationObject.assignmentLocId!
                     
+                    unitObject.actionStatus = ""
+                    
+                    let virtualUnit = unitData["virtualUnit"] as? Bool  ?? false
+                    
+                    unitObject.virtualUnit = String(virtualUnit)
+                    
+                    
+                    
+                    unitObject.unitSyncDate = unitData["unitSyncDate"] as? String  ?? ""
+                    
+                    let surveySyncDate = unitData["surveySyncDate"] as? String  ?? ""
+                    
+                    
+                    if(surveySyncDate != ""){
+                        unitObject.surveyStatus = "Completed"
+                    }
+                    else{
+                        unitObject.surveyStatus = ""
+                    }
+                    
+                    unitObject.privateHome = ""
+                    
+                    
+                    unitObject.assignmentLocUnitId = unitData["assignmentLocUnitId"] as? String  ?? ""
                     
                     appDelegate.saveContext()
                     
-                    //EditLocation
+                    //EditUnit
                     
-                    let editlocationObject = EditLocation(context: context)
-                    editlocationObject.locationId = locationObject.id!
-                    editlocationObject.assignmentId = assignmentObject.id!
-                    editlocationObject.assignmentLocId = locationObject.assignmentLocId!
+                    let editUnitObject = EditUnit(context: context)
+                    editUnitObject.locationId = locationObject.id!
+                    editUnitObject.assignmentId = assignmentObject.id!
+                    editUnitObject.assignmentLocId = locationObject.assignmentLocId!
+                    editUnitObject.unitId = unitObject.id!
+                    editUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
+                    editUnitObject.attempt = unitData["attempt"] as? String  ?? ""
+                    editUnitObject.inTake = unitData["intake"] as? String  ?? ""
+                    editUnitObject.reason = unitData["reason"] as? String  ?? ""
+                    editUnitObject.contactOutcome = unitData["contactOutcome"] as? String  ?? ""
+                    // editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
+                    editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
+                    editUnitObject.privateHome = unitData["privateHome"] as? String  ?? ""
                     
-                    editlocationObject.canvassingStatus = locationData["status"] as? String  ?? ""
-                    editlocationObject.attempt = locationData["attempt"] as? String  ?? ""
-                    editlocationObject.noOfUnits = locationObject.totalUnits!
-                    
-                    editlocationObject.notes = locationData["notes"] as? String  ?? ""
-                    editlocationObject.actionStatus = ""
+                    // editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
+                    editUnitObject.unitNotes = unitData["notes"] as? String  ?? ""
+                    editUnitObject.isContact = unitData["isContact"] as? String  ?? ""
+                    editUnitObject.actionStatus = ""
+                    editUnitObject.tenantId = unitData["tenant"] as? String  ?? ""
+                    editUnitObject.surveyId = unitData["survey"] as? String  ?? ""
                     
                     appDelegate.saveContext()
                     
-                    guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
                     
-                    for unitData in unitResults {
+                    
+                    guard let tenantInfoResults = unitData["TenantInfo"] as? [[String: AnyObject]]  else { break }
+                    
+                    for tenantData in tenantInfoResults {
+                        
+                        let tenantObject = Tenant(context: context)
+                        tenantObject.id = tenantData["tenantId"] as? String  ?? ""
+                        tenantObject.name = tenantData["name"] as? String  ?? ""
+                        tenantObject.firstName = tenantData["firstName"] as? String  ?? ""
+                        tenantObject.lastName =  tenantData["lastName"] as? String  ?? ""
+                        
+                        tenantObject.phone = tenantData["phone"] as? String  ?? ""
+                        tenantObject.email = tenantData["email"] as? String  ?? ""
+                        tenantObject.age = tenantData["age"] as? String  ?? ""
+                        tenantObject.dob = tenantData["dob"] as? String  ?? ""
+                        
+                        tenantObject.middleName = tenantData["middleName"] as? String  ?? ""
+                        tenantObject.suffix = tenantData["suffix"] as? String  ?? ""
                         
                         
-                        let unitObject = Unit(context: context)
-                        unitObject.id = unitData["locationUnitId"] as? String  ?? ""
-                        unitObject.name = unitData["Name"] as? String  ?? ""
-                        unitObject.apartment = unitData["apartmentNumber"] as? String  ?? ""
-                        unitObject.floor = unitData["floorNumber"] as? String  ?? ""
-                        unitObject.assignmentId = assignmentObject.id!
-                        
-                        unitObject.locationId = locationObject.id!
-                        unitObject.assignmentLocId = locationObject.assignmentLocId!
-                        
-                        unitObject.actionStatus = ""
-                        
-                        let virtualUnit = unitData["virtualUnit"] as? Bool  ?? false
-
-                        unitObject.virtualUnit = String(virtualUnit)
                         
                         
                         
-                        unitObject.unitSyncDate = unitData["unitSyncDate"] as? String  ?? ""
+                        tenantObject.assignmentId = assignmentObject.id!
+                        tenantObject.locationId = locationObject.id!
+                        tenantObject.unitId = unitObject.id!
+                        tenantObject.actionStatus = ""
+                        tenantObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                         
-                        let surveySyncDate = unitData["surveySyncDate"] as? String  ?? ""
+                        tenantObject.virtualUnit = unitObject.virtualUnit!
+                        tenantObject.middleName = tenantData["middleName"] as? String  ?? ""
+                        
+                        tenantObject.contact = tenantData["contact"] as? String  ?? ""
+                        
+                        tenantObject.attempt = tenantData["attempt"] as? String  ?? ""
+                        
+                        tenantObject.contactOutcome = tenantData["contactOutcome"] as? String  ?? ""
+                        
+                        tenantObject.notes = tenantData["notes"] as? String  ?? ""
                         
                         
-                        if(surveySyncDate != ""){
-                            unitObject.surveyStatus = "Completed"
-                        }
-                        else{
-                            unitObject.surveyStatus = ""
-                        }
-                        
-                        unitObject.privateHome = ""
-                        
-                        
-                        unitObject.assignmentLocUnitId = unitData["assignmentLocUnitId"] as? String  ?? ""
-                        
-                        appDelegate.saveContext()
-                        
-                        //EditUnit
-                        
-                        let editUnitObject = EditUnit(context: context)
-                        editUnitObject.locationId = locationObject.id!
-                        editUnitObject.assignmentId = assignmentObject.id!
-                        editUnitObject.assignmentLocId = locationObject.assignmentLocId!
-                        editUnitObject.unitId = unitObject.id!
-                        editUnitObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                        editUnitObject.attempt = unitData["attempt"] as? String  ?? ""
-                        editUnitObject.inTake = unitData["intake"] as? String  ?? ""
-                        editUnitObject.reason = unitData["reason"] as? String  ?? ""
-                        editUnitObject.contactOutcome = unitData["contactOutcome"] as? String  ?? ""
-                        // editUnitObject.inTakeStatus = unitData["intakeStatus"] as? String  ?? ""
-                        editUnitObject.reKnockNeeded = unitData["reKnockNeeded"] as? String  ?? ""
-                         editUnitObject.privateHome = unitData["privateHome"] as? String  ?? ""
-                        
-                        // editUnitObject.tenantStatus = unitData["tenantStatus"] as? String  ?? ""
-                        editUnitObject.unitNotes = unitData["notes"] as? String  ?? ""
-                        editUnitObject.isContact = unitData["isContact"] as? String  ?? ""
-                        editUnitObject.actionStatus = ""
-                        editUnitObject.tenantId = unitData["tenant"] as? String  ?? ""
-                        editUnitObject.surveyId = unitData["survey"] as? String  ?? ""
+                        tenantObject.aptNo = tenantData["aptNo"] as? String  ?? ""
+                        tenantObject.aptFloor = tenantData["aptFloor"] as? String  ?? ""
+                        tenantObject.streetNum = tenantData["streetNum"] as? String  ?? ""
+                        tenantObject.streetName = tenantData["streetName"] as? String  ?? ""
+                        tenantObject.borough = tenantData["borough"] as? String  ?? ""
+                        tenantObject.zip = tenantData["zip"] as? String  ?? ""
                         
                         appDelegate.saveContext()
                         
+                    }
+                    
+                    guard let casesInfoResults = unitData["caseInfo"] as? [[String: AnyObject]]  else { break }
+                    
+                    for casesInfo in casesInfoResults {
+                        
+                        guard let caseResults = casesInfo["caseList"] as? [[String: AnyObject]]  else { break }
+                        
+                        for caseData in caseResults{
+                            
+                            let caseObject = Cases(context: context)
+                            
+                            caseObject.caseId = caseData["Id"] as? String  ?? ""
+                            
+                            caseObject.caseNo = caseData["CaseNumber"] as? String  ?? ""
+                            caseObject.caseStatus = caseData["Status"] as? String  ?? ""
+                            
+                            caseObject.unitId = unitObject.id
+                            caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId
+                            
+                            
+                            
+                            let contactResult = caseData["Contact"] as? [String: AnyObject]
+                            
+                            caseObject.contactId = contactResult?["Id"] as? String  ?? ""
+                            caseObject.contactName = contactResult?["Name"] as? String  ?? ""
+                            
+                            let ownerResult = caseData["Owner"] as? [String: AnyObject]
+                            
+                            caseObject.caseOwnerId = ownerResult?["Id"] as? String  ?? ""
+                            caseObject.caseOwner = ownerResult?["Name"] as? String  ?? ""
+                            
+                            
+                            let dateOfIntake = caseData["Date_of_Intake__c"] as? String ?? ""
+                            
+                            if(dateOfIntake.isEmpty){
+                                caseObject.createdDate = ""
+                            }
+                            else{
+                                
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                                let formattedDate = dateFormatter.date(from: dateOfIntake)
+                                
+                                
+                                let dateFormatter1 = DateFormatter()
+                                dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
+                                let dateString = dateFormatter1.string(from: formattedDate!)
+                                
+                                caseObject.createdDate = dateString
+                            }
+                            
+                            //                                let createdDate = caseData["CreatedDate"] as? String  ?? ""
+                            //
+                            //
+                            //                                let dateFormatter = DateFormatter()
+                            //                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                            //                                let formattedDate = dateFormatter.date(from: createdDate)
+                            //
+                            //
+                            //                                let dateFormatter1 = DateFormatter()
+                            //                                dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
+                            //                                let dateString = dateFormatter1.string(from: formattedDate!)
+                            //
+                            //                                caseObject.createdDate = dateString
+                            
+                            caseObject.caseDynamic = caseData as NSObject
+                            
+                            appDelegate.saveContext()
+                        }
                         
                         
-                        guard let tenantInfoResults = unitData["TenantInfo"] as? [[String: AnyObject]]  else { break }
+                        guard let issueResults = casesInfo["issueList"] as? [[String: AnyObject]]  else { break }
                         
-                        for tenantData in tenantInfoResults {
+                        for issueInfo in issueResults {
                             
-                            let tenantObject = Tenant(context: context)
-                            tenantObject.id = tenantData["tenantId"] as? String  ?? ""
-                            tenantObject.name = tenantData["name"] as? String  ?? ""
-                            tenantObject.firstName = tenantData["firstName"] as? String  ?? ""
-                            tenantObject.lastName =  tenantData["lastName"] as? String  ?? ""
+                            let issueObject = Issues(context: context)
+                            issueObject.caseId = issueInfo["caseId"] as? String  ?? ""
+                            issueObject.actionStatus = ""
+                            issueObject.issueNo = issueInfo["issueNumber"] as? String  ?? ""
+                            issueObject.issueId = issueInfo["issueId"] as? String  ?? ""
+                            issueObject.issueType = issueInfo["issueType"] as? String  ?? ""
+                            issueObject.notes = issueInfo["issueNotes"] as? String  ?? ""
+                            issueObject.contactName = issueInfo["contactName"] as? String  ?? ""
                             
-                            tenantObject.phone = tenantData["phone"] as? String  ?? ""
-                            tenantObject.email = tenantData["email"] as? String  ?? ""
-                            tenantObject.age = tenantData["age"] as? String  ?? ""
-                            tenantObject.dob = tenantData["dob"] as? String  ?? ""
-                            
-                            tenantObject.middleName = tenantData["middleName"] as? String  ?? ""
-                            tenantObject.suffix = tenantData["suffix"] as? String  ?? ""
-                            
-                            
-                            
-                            
-                            
-                            tenantObject.assignmentId = assignmentObject.id!
-                            tenantObject.locationId = locationObject.id!
-                            tenantObject.unitId = unitObject.id!
-                            tenantObject.actionStatus = ""
-                            tenantObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
-                            
-                            tenantObject.virtualUnit = unitObject.virtualUnit!
-                            tenantObject.middleName = tenantData["middleName"] as? String  ?? ""
-                            
-                            tenantObject.contact = tenantData["contact"] as? String  ?? ""
-                            
-                            tenantObject.attempt = tenantData["attempt"] as? String  ?? ""
-                            
-                            tenantObject.contactOutcome = tenantData["contactOutcome"] as? String  ?? ""
-                            
-                            tenantObject.notes = tenantData["notes"] as? String  ?? ""
-                            
-                            
-                            tenantObject.aptNo = tenantData["aptNo"] as? String  ?? ""
-                            tenantObject.aptFloor = tenantData["aptFloor"] as? String  ?? ""
-                            tenantObject.streetNum = tenantData["streetNum"] as? String  ?? ""
-                            tenantObject.streetName = tenantData["streetName"] as? String  ?? ""
-                            tenantObject.borough = tenantData["borough"] as? String  ?? ""
-                            tenantObject.zip = tenantData["zip"] as? String  ?? ""
                             
                             appDelegate.saveContext()
                             
-                        }
-                        
-                        guard let casesInfoResults = unitData["caseInfo"] as? [[String: AnyObject]]  else { break }
-                        
-                        for casesInfo in casesInfoResults {
+                            guard let issueNotesResult = issueInfo["issueNotesList"] as? [[String: AnyObject]]  else { break }
                             
-                             guard let caseResults = casesInfo["caseList"] as? [[String: AnyObject]]  else { break }
-                        
-                            for caseData in caseResults{
+                            for issueNotesInfo in issueNotesResult{
                                 
-                                let caseObject = Cases(context: context)
-                                
-                                caseObject.caseId = caseData["Id"] as? String  ?? ""
-                               
-                                caseObject.caseNo = caseData["CaseNumber"] as? String  ?? ""
-                                caseObject.caseStatus = caseData["Status"] as? String  ?? ""
-                           
-                                caseObject.unitId = unitObject.id
-                                caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId
-                                
-
-                                
-                                let contactResult = caseData["Contact"] as? [String: AnyObject]
-                                
-                                caseObject.contactId = contactResult?["Id"] as? String  ?? ""
-                                caseObject.contactName = contactResult?["Name"] as? String  ?? ""
-                                
-                                let ownerResult = caseData["Owner"] as? [String: AnyObject]
-                                
-                                caseObject.caseOwnerId = ownerResult?["Id"] as? String  ?? ""
-                                caseObject.caseOwner = ownerResult?["Name"] as? String  ?? ""
-                                
-                                
-                                let dateOfIntake = caseData["Date_of_Intake__c"] as? String ?? ""
-                                
-                                if(dateOfIntake.isEmpty){
-                                    caseObject.createdDate = ""
-                                }
-                                else{
-                                    
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                                    let formattedDate = dateFormatter.date(from: dateOfIntake)
-                                    
-                                    
-                                    let dateFormatter1 = DateFormatter()
-                                    dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
-                                    let dateString = dateFormatter1.string(from: formattedDate!)
-                                    
-                                    caseObject.createdDate = dateString
-                                }
-                                
-//                                let createdDate = caseData["CreatedDate"] as? String  ?? ""
-//                                
-//                                
-//                                let dateFormatter = DateFormatter()
-//                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-//                                let formattedDate = dateFormatter.date(from: createdDate)
-//                                
-//                                
-//                                let dateFormatter1 = DateFormatter()
-//                                dateFormatter1.dateFormat = "MM/dd/yyyy hh:mm a"
-//                                let dateString = dateFormatter1.string(from: formattedDate!)
-//
-//                                caseObject.createdDate = dateString
-                                
-                                caseObject.caseDynamic = caseData as NSObject
-                               
+                                let issueNoteObject = IssueNotes(context: context)
+                                issueNoteObject.issueId = issueObject.issueId
+                                issueNoteObject.notes = issueNotesInfo["description"] as? String  ?? ""
                                 appDelegate.saveContext()
-                            }
-                            
-                            
-                            guard let issueResults = casesInfo["issueList"] as? [[String: AnyObject]]  else { break }
-                            
-                            for issueInfo in issueResults {
-                                
-                                let issueObject = Issues(context: context)
-                                issueObject.caseId = issueInfo["caseId"] as? String  ?? ""
-                                issueObject.actionStatus = ""
-                                issueObject.issueNo = issueInfo["issueNumber"] as? String  ?? ""
-                                issueObject.issueId = issueInfo["issueId"] as? String  ?? ""
-                                issueObject.issueType = issueInfo["issueType"] as? String  ?? ""
-                                issueObject.notes = issueInfo["issueNotes"] as? String  ?? ""
-                                issueObject.contactName = issueInfo["contactName"] as? String  ?? ""
-                                
-                                
-                                appDelegate.saveContext()
-                                
-                                guard let issueNotesResult = issueInfo["issueNotesList"] as? [[String: AnyObject]]  else { break }
-                               
-                                for issueNotesInfo in issueNotesResult{
-                                    
-                                  let issueNoteObject = IssueNotes(context: context)
-                                    issueNoteObject.issueId = issueObject.issueId
-                                    issueNoteObject.notes = issueNotesInfo["description"] as? String  ?? ""
-                                    appDelegate.saveContext()
-                                }
-                                
                             }
                             
                         }
@@ -1992,7 +1992,9 @@ class Utilities {
                     }
                     
                 }
-           // }
+                
+            }
+            // }
             
             
             
@@ -2100,7 +2102,7 @@ class Utilities {
         
         let view: MessageView
         
-     
+        
         view = try! SwiftMessages.viewFromNib()
         
         
@@ -2117,51 +2119,51 @@ class Utilities {
         
         //view.button?.setImage(Icon.ErrorSubtle.image, for: .normal)
         //view.button?.setTitle("Dismiss", for: .normal)
-       
         
-            view.configureDropShadow()
         
-       
-            //view.button?.isHidden = true
+        view.configureDropShadow()
         
- 
-            //view.iconImageView?.isHidden = true
-            //view.iconLabel?.isHidden = true
         
-            //view.titleLabel?.isHidden = true
+        //view.button?.isHidden = true
         
-            //view.bodyLabel?.isHidden = true
+        
+        //view.iconImageView?.isHidden = true
+        //view.iconLabel?.isHidden = true
+        
+        //view.titleLabel?.isHidden = true
+        
+        //view.bodyLabel?.isHidden = true
         
         
         // Config setup
         
         var config = SwiftMessages.defaultConfig
         
-//        switch presentationStyle.selectedSegmentIndex {
-//        case 1:
-//            config.presentationStyle = .bottom
-//        case 2: break
-//       
-//        default:
-//            break
-//        }
+        //        switch presentationStyle.selectedSegmentIndex {
+        //        case 1:
+        //            config.presentationStyle = .bottom
+        //        case 2: break
+        //
+        //        default:
+        //            break
+        //        }
         
-//        switch presentationContext.selectedSegmentIndex {
-//        case 1:
-//            config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
-//        case 2:
-//            config.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
-//        default:
-//            break
-//        }
-//        
-       
-           // config.duration = .forever
+        //        switch presentationContext.selectedSegmentIndex {
+        //        case 1:
+        //            config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+        //        case 2:
+        //            config.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
+        //        default:
+        //            break
+        //        }
+        //
         
-           config.duration = .seconds(seconds: 5)
-            
-            config.dimMode = .gray(interactive: true)
-       
+        // config.duration = .forever
+        
+        config.duration = .seconds(seconds: 5)
+        
+        config.dimMode = .gray(interactive: true)
+        
         
         config.shouldAutorotate = true
         
@@ -2169,20 +2171,43 @@ class Utilities {
         
         // Set status bar style unless using card view (since it doesn't
         // go behind the status bar).
-//        if case .top = config.presentationStyle, layout.selectedSegmentIndex != 1 {
-//            switch theme.selectedSegmentIndex {
-//            case 1...4:
-//                config.preferredStatusBarStyle = .lightContent
-//            default:
-//                break
-//            }
-//        }
+        //        if case .top = config.presentationStyle, layout.selectedSegmentIndex != 1 {
+        //            switch theme.selectedSegmentIndex {
+        //            case 1...4:
+        //                config.preferredStatusBarStyle = .lightContent
+        //            default:
+        //                break
+        //            }
+        //        }
         
         // Show
         SwiftMessages.show(config: config, view: view)
     }
     
     
+    class func forceSyncDataWithSalesforce(vc:UIViewController) {
+        
+        if(Network.reachability?.isReachable)!{
+            
+            if(Utilities.isBackgroundSync == false){
+                
+                Utilities.isRefreshBtnClick = true
+                
+                SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+                SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
+            }
+            else{
+                vc.view.makeToast("Background syncing is in progress. Please try after some time.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                }
+            }
+        }
+        else{
+            vc.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
+        }
+    }
     
     
 }

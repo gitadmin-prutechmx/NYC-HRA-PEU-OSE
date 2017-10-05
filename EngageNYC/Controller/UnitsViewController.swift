@@ -234,19 +234,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     @IBAction func syncData(_ sender: Any) {
         
-        if(Network.reachability?.isReachable)!{
-            
-            Utilities.isRefreshBtnClick = true
-            
-            SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
-            SyncUtility.syncDataWithSalesforce(isPullDataFromSFDC: true)
-            
-        }
-        else{
-            self.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-            }
-        }
+        Utilities.forceSyncDataWithSalesforce(vc: self)
         
     }
     

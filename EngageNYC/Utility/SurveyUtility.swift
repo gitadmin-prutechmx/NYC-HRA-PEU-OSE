@@ -392,7 +392,7 @@ class SurveyUtility {
         
 //        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
         
-        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId, isPredicate:true) as! [SurveyResponse]
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentLocationUnitId, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count > 0){
             return surveyResResultsArr[0]
@@ -406,7 +406,7 @@ class SurveyUtility {
         
 //        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
         
-        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId, isPredicate:true) as! [SurveyResponse]
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentLocationUnitId, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count > 0){ // already exist
             updateSurveyRes(surveyStatus:surveyStatus)
@@ -461,7 +461,7 @@ class SurveyUtility {
         
         //  updateObjectDic["surveySignature "] =
         
-        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId,isPredicate: true)
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
         
         
         
@@ -481,7 +481,7 @@ class SurveyUtility {
         
         let completionHandler:(ChooseSurveyViewController)->Void = { chooseSurveyVC in
             
-            ManageCoreData.deleteRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId, isPredicate: true)
+            ManageCoreData.deleteRecord(salesforceEntityName: "SurveyResponse", predicateFormat: "assignmentLocUnitId == %@", predicateValue: SalesforceConnection.assignmentLocationUnitId, isPredicate: true)
             
             SurveyUtility.showSurvey()
             

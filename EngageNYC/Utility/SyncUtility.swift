@@ -43,6 +43,8 @@ class SyncUtility{
                 
                 surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "Complete", isPredicate:true) as! [SurveyResponse]
                 
+//                 var surveyResResultsArr1 = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "assignmentLocUnitId == %@" ,predicateValue: "a04r0000002ZDvgAAG", isPredicate:true) as! [SurveyResponse]
+                
                 
                 editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
                 
@@ -76,6 +78,9 @@ class SyncUtility{
                 else{
                     if(isPullData){
                         Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                    }
+                    else{
+                        Utilities.isBackgroundSync = false
                     }
                 }
                 
@@ -164,6 +169,9 @@ class SyncUtility{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
+                else{
+                    Utilities.isBackgroundSync = false
+                }
             }
             
         }
@@ -242,6 +250,9 @@ class SyncUtility{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
+                else{
+                    Utilities.isBackgroundSync = false
+                }
             }
             
         }
@@ -319,6 +330,9 @@ class SyncUtility{
             else{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                }
+                else{
+                    Utilities.isBackgroundSync = false
                 }
             }
             
@@ -405,6 +419,9 @@ class SyncUtility{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
                 }
+                else{
+                    Utilities.isBackgroundSync = false
+                }
             }
             
             //assignmentdetail and charrts api
@@ -437,7 +454,7 @@ class SyncUtility{
                 editUnitGroup.enter()
                 
                 
-                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,privateHome:editUnitData.privateHome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
                 
                 
                 //lastCanvassedBy: SalesforceConfig.currentUserContactId
@@ -481,6 +498,9 @@ class SyncUtility{
             else
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+            }
+                else{
+                    Utilities.isBackgroundSync = false
             }
             
         }
@@ -549,6 +569,9 @@ class SyncUtility{
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
             }
+                else{
+                    Utilities.isBackgroundSync = false
+            }
             
         }
     }
@@ -605,7 +628,9 @@ class SyncUtility{
             if(isPullData){
                 Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
             }
-            
+            else{
+                Utilities.isBackgroundSync = false
+            }
         }
         
         

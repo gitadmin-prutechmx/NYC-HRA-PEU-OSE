@@ -100,6 +100,8 @@ class SalesforceConnection{
                 
             case .failure(let error):
                 Utilities.isRefreshBtnClick = false
+                Utilities.isBackgroundSync = false
+                
                  var errorMessage = ""
                 
                 if let data = response.data {
@@ -200,6 +202,9 @@ class SalesforceConnection{
                 
             case .failure(let error):
                 
+                Utilities.isRefreshBtnClick = false
+                Utilities.isBackgroundSync = false
+                
                 var errorMessage = ""
                 
                 if let data = response.data {
@@ -216,7 +221,7 @@ class SalesforceConnection{
                 print(errorMessage) //Contains General error message or specific.
                 
                 
-                Utilities.isRefreshBtnClick = false
+              
                // showErrorMessage(error: error as NSError)
                 
                 Utilities.showSwiftErrorMessage(error: errorMessage)

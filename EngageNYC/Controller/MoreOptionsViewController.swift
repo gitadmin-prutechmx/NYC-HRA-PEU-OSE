@@ -51,7 +51,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var contact:String = "No"
     var reknockNeeded:String = "No"
     var inTake:String = "No"
-    var privateHome:String = "No"
+   // var privateHome:String = "No"
     
     var reasonStatus:String = ""
     var contactOutcome:String = ""
@@ -198,16 +198,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    func privateHomeChanged(_ sender:UISwitch){
-        
-        if(sender.isOn){
-            privateHome = "Yes"
-        }
-        else{
-            privateHome = "No"
-        }
-    }
-    
+  
     func getPickListValue(pickListValue:String){
         
         if(isReasonSelect){
@@ -302,7 +293,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     func numberOfSections(in tableView: UITableView) -> Int
     {
         
-        return 7
+        return 6
         
     }
     
@@ -464,7 +455,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return reasonCell
             
         }
-        else if(indexPath.section == 5){
+        else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "reKnockCell", for: indexPath)
             
             cell.backgroundColor = UIColor.clear
@@ -497,39 +488,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
             
         }
-        else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "privateHomeCell", for: indexPath)
-            
-            cell.backgroundColor = UIColor.clear
-            
-            
-            cell.textLabel?.text = "Private Home/Main Entrance?"
-            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
-            
-            cell.selectionStyle = .none
-            
-            //accessory switch
-            let privateHomeSwitch = UISwitch(frame: CGRect.zero)
-            
-            if(privateHome == "Yes"){
-                privateHomeSwitch.isOn = true
-            }
-            else if (privateHome == "No"){
-                privateHomeSwitch.isOn = false
-                
-            }
-            else{
-                privateHomeSwitch.isOn = false
-            }
-            
-            
-            
-            privateHomeSwitch.addTarget(self, action: #selector(MoreOptionsViewController.privateHomeChanged(_:)), for: UIControlEvents.valueChanged)
-            
-            cell.accessoryView = privateHomeSwitch
-            return cell
-            
-        }
+        
         //privateHome
         
         
@@ -702,13 +661,6 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             
-            if(editUnitResults[0].privateHome == ""){
-                editUnitResults[0].privateHome = "No"
-            }
-            
-            
-            privateHome = editUnitResults[0].privateHome!
-            
             
             
             
@@ -737,9 +689,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
         }
-        else{
-            privateHome = SalesforceConnection.isPrivateHome
-        }
+       
     }
     
     
@@ -768,7 +718,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     //if survey already taken on unit
     func isSurveyTaken()->Bool{
         
-        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@" ,predicateValue: SalesforceConnection.unitId, isPredicate:true) as! [SurveyResponse]
+        let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentLocationUnitId, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count > 0){
             
@@ -869,7 +819,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             updateEditUnitInDatabase()
         }
         else{
-            saveEditUnitInDatabase(currentAttempt: attempt, currentInTake: inTake, currentReknockNeeded: reknockNeeded, currentReason: reasonStatus, currentNotes: notes, currentIsContact: contact,currentContactOutcome:contactOutcome, currentPrivateHome:privateHome,currentTenantId: "", currentSurveyId: "")
+            saveEditUnitInDatabase(currentAttempt: attempt, currentInTake: inTake, currentReknockNeeded: reknockNeeded, currentReason: reasonStatus, currentNotes: notes, currentIsContact: contact,currentContactOutcome:contactOutcome,currentTenantId: "", currentSurveyId: "")
             
         }
         
@@ -887,7 +837,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     
-    func saveEditUnitInDatabase(currentAttempt:String,currentInTake:String,currentReknockNeeded:String,currentReason:String,currentNotes:String,currentIsContact:String,currentContactOutcome:String,currentPrivateHome:String,currentTenantId:String,currentSurveyId:String){
+    func saveEditUnitInDatabase(currentAttempt:String,currentInTake:String,currentReknockNeeded:String,currentReason:String,currentNotes:String,currentIsContact:String,currentContactOutcome:String,currentTenantId:String,currentSurveyId:String){
         
         
         let editUnitObject = EditUnit(context: context)
@@ -912,7 +862,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         editUnitObject.contactOutcome = contactOutcome
         
-        editUnitObject.privateHome = privateHome
+        //editUnitObject.privateHome = privateHome
         
         
         editUnitObject.tenantId = currentTenantId
@@ -945,7 +895,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         updateObjectDic["isContact"] = contact
         updateObjectDic["contactOutcome"] = contactOutcome
         updateObjectDic["reKnockNeeded"] = reknockNeeded
-        updateObjectDic["privateHome"] = privateHome
+        //updateObjectDic["privateHome"] = privateHome
         updateObjectDic["actionStatus"] = "edit"
         
         

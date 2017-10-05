@@ -235,7 +235,7 @@ class SubmitSurveyViewController: UIViewController {
         //        print(surveyResponseStr)
         //
         
-         let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "unitId == %@ && actionStatus == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: Utilities.inProgressSurvey, isPredicate:true) as! [SurveyResponse]
+         let surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentLocationUnitId, isPredicate:true) as! [SurveyResponse]
         
         if(surveyResResultsArr.count>0){
             updateSurveyToCoreData()
@@ -349,7 +349,7 @@ class SubmitSurveyViewController: UIViewController {
         updateObjectDic["questionAnswers"] = Utilities.SurveyOutput as NSObject?
         
         
-        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "unitId == %@", predicateValue: SalesforceConnection.unitId,isPredicate: true)
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "SurveyResponse", updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: SalesforceConnection.assignmentLocationUnitId,isPredicate: true)
         
         
     }
