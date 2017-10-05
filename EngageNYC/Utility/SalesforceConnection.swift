@@ -123,7 +123,12 @@ class SalesforceConnection{
                 }
                 
                 SVProgressHUD.dismiss()
-                Utilities.showSwiftErrorMessage(error: errorMessage)
+                if(!errorMessage.isEmpty){
+                    Utilities.showSwiftErrorMessage(error: errorMessage)
+                }
+                else{
+                    showErrorMessage(error: error as NSError)
+                }
                 
                 //showErrorMessage(error: errorMessage)
                 //showLoginErrorMessage(error: error as NSError)
@@ -224,8 +229,14 @@ class SalesforceConnection{
               
                // showErrorMessage(error: error as NSError)
                 
-                Utilities.showSwiftErrorMessage(error: errorMessage)
-                //showErrorMessage(error: errorMessage)
+                if(!errorMessage.isEmpty){
+                    Utilities.showSwiftErrorMessage(error: errorMessage)
+                }
+                else{
+                    showErrorMessage(error: error as NSError)
+                }
+
+        
                 return
                 
                 
@@ -362,9 +373,9 @@ class SalesforceConnection{
         //        }
     }
     
-    static func showErrorMessage(error:String){
+    static func showErrorMessage(error:NSError){
         SVProgressHUD.dismiss()
-        SVProgressHUD.showError(withStatus: error)
+        SVProgressHUD.showError(withStatus: error.localizedDescription)
     }
     
 //    static func showErrorMessage(error:NSError){
