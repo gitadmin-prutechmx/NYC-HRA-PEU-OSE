@@ -36,6 +36,9 @@ class SurveyUtility {
                 showSurveyQuestions()
                 print("ShowSurveyQuestions")
             }
+            else{
+                Utilities.showSwiftErrorMessage(error: "There are no questions associated with the survey:- \(surveyQuestionResults[0].surveyName!)",title: "Message")
+            }
             
         }
     }
