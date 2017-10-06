@@ -2098,7 +2098,7 @@ class Utilities {
     }
     
     
-    class func showSwiftErrorMessage(error:String){
+    class func showSwiftErrorMessage(error:String,title:String = "Error"){
         
         let view: MessageView
         
@@ -2107,7 +2107,7 @@ class Utilities {
         
         
         
-        view.configureContent(title: "Error", body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
+        view.configureContent(title: title, body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
         
         let iconStyle: IconStyle
         
