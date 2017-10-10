@@ -909,7 +909,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 cell.lblUnitName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitName
                 cell.lblUnitId.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
-                cell.lblSyncDate.text = ""
+               // cell.lblSyncDate.text = ""
                 
                 if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment.isEmpty)
                 {
@@ -948,7 +948,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
                 cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
-                cell.lblSyncDate.text = ""
+                //cell.lblSyncDate.text = ""
                 if(clientDataArray[indexPath.row].apartment.isEmpty){
                     cell.lblUnverifiedunit.text = "      "
                 }
