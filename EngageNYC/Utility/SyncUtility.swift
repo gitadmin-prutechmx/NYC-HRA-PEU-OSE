@@ -279,7 +279,57 @@ class SyncUtility{
                 let tenantId = tenantData.id!
                 let locUnitId = tenantData.unitId!
                 
-                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!,attempt:tenantData.attempt!,contact:tenantData.contact!,contactOutcome: tenantData.contactOutcome!,notes:tenantData.notes!,streetNum:tenantData.streetNum!,streetName:tenantData.streetName!,borough:tenantData.borough!,zip:tenantData.zip!,aptNo: tenantData.aptNo!,aptFloor: tenantData.aptFloor!, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,type:tenantData.actionStatus!)
+                var unitName:String = ""
+                var assignmentLocId:String = ""
+                
+                var attempt:String = ""
+                var contact:String = ""
+                var contactOutcome:String = ""
+                var notes:String = ""
+                var streetNum:String = ""
+                var streetName:String = ""
+                var borough:String = ""
+                var zip:String = ""
+                var aptNo:String = ""
+                var aptFloor:String = ""
+                
+                if let tempUnitName = tenantData.unitName{
+                    unitName = tempUnitName
+                }
+                if let tempAssignmentLocId = tenantData.assignmentLocId{
+                    assignmentLocId = tempAssignmentLocId
+                }
+                if let tempAttempt = tenantData.attempt{
+                    attempt = tempAttempt
+                }
+                if let tempContact = tenantData.contact{
+                    contact = tempContact
+                }
+                if let tempNotes = tenantData.notes{
+                    notes = tempNotes
+                }
+                if let tempStreetNum = tenantData.streetNum{
+                    streetNum = tempStreetNum
+                }
+                if let tempStreetName = tenantData.streetName{
+                    streetName = tempStreetName
+                }
+                if let tempBorough = tenantData.borough{
+                    borough = tempBorough
+                }
+                if let tempZip = tenantData.zip{
+                    zip = tempZip
+                }
+                if let tempAptNo = tenantData.aptNo{
+                    aptNo = tempAptNo
+                }
+                if let tempAptFloor = tenantData.aptFloor{
+                    aptFloor = tempAptFloor
+                }
+                
+   
+                
+                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!,attempt:attempt,contact:contact,contactOutcome: contactOutcome,notes:notes,streetNum:streetNum,streetName:streetName,borough:borough,zip:zip,aptNo: aptNo,aptFloor: aptFloor, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,unitName:unitName,assignmentLocId: assignmentLocId, type:tenantData.actionStatus!)
                 
                 
                 
