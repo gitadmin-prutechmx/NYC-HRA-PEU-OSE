@@ -344,7 +344,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             let viewController = self.storyboard!.instantiateViewController(withIdentifier: "addressViewIdentifier") as? AddressViewController
             
-            viewController?.clientObj = ClientDO(firstName: firstName, lastName: lastName, middleName: middleName, suffix: suffix, phone: phone, email: email, dob: dob)
+            viewController?.clientObj = ClientDO(firstName: firstName, lastName: lastName, middleName: middleName, suffix: suffix, phone: phone, email: email, dob: dob,age:age)
             
             
             self.navigationController!.pushViewController(viewController!, animated: true)
@@ -497,28 +497,31 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             dob = dobTemp
             
-            if(dob != ""){
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM/dd/yyyy"
-                
-                let birthdate = dateFormatter.date(from: dob)
-                
-                let now = Date()
-                let calendar = Calendar.current
-                
-                
-                let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
-                age = String(ageComponents.year!)
-            }
-            
-            
-            
+            calculateAge()
         }
         
         return true
         
     }
     
+    
+    
+    func calculateAge(){
+        if(dob != ""){
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            
+            let birthdate = dateFormatter.date(from: dob)
+            
+            let now = Date()
+            let calendar = Calendar.current
+            
+            
+            let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
+            age = String(ageComponents.year!)
+        }
+
+    }
     
     
     func saveTenantInfo(){
@@ -607,6 +610,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.zip = ""
         tenantObject.aptNo = ""
         tenantObject.aptFloor = ""
+        tenantObject.unitName = ""
+        tenantObject.assignmentLocId = ""
        
 
         

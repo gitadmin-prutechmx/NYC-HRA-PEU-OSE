@@ -107,6 +107,7 @@
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="borough" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locStatus" optional="YES" attributeType="String" syncable="YES"/>
@@ -173,6 +174,7 @@
         <attribute name="aptFloor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="aptNo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attempt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="borough" optional="YES" attributeType="String" syncable="YES"/>
@@ -192,6 +194,7 @@
         <attribute name="streetNum" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="virtualUnit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -251,13 +254,13 @@
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
         <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="75"/>
         <element name="Issues" positionX="-126" positionY="45" width="128" height="150"/>
-        <element name="Location" positionX="-2" positionY="-36" width="128" height="300"/>
+        <element name="Location" positionX="-2" positionY="-36" width="128" height="315"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="105"/>
         <element name="Setting" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="210"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
-        <element name="Tenant" positionX="-126" positionY="45" width="128" height="435"/>
+        <element name="Tenant" positionX="-126" positionY="45" width="128" height="465"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="270"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="165"/>

@@ -17,8 +17,9 @@ class ClientDO{
     var phone:String
     var email:String
     var dob:String
+    var age:String
     
-    init(firstName:String,lastName:String,middleName:String,suffix:String,phone:String,email:String,dob:String) {
+    init(firstName:String,lastName:String,middleName:String,suffix:String,phone:String,email:String,dob:String,age:String) {
         
         self.firstName = firstName
         self.lastName = lastName
@@ -27,6 +28,7 @@ class ClientDO{
         self.phone = phone
         self.email = email
         self.dob = dob
+        self.age = age
         
     }
     

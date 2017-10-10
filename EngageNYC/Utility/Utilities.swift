@@ -362,7 +362,7 @@ class Utilities {
     
     
     
-    class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,attempt:String,contact:String,contactOutcome:String,notes:String,streetNum:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,type:String)->[String:String]{
+    class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,attempt:String,contact:String,contactOutcome:String,notes:String,streetNum:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,unitName:String,assignmentLocId:String,type:String)->[String:String]{
         
         var editTenantDict:[String:String] = [:]
         
@@ -411,6 +411,10 @@ class Utilities {
         editTenantDict["aptNo"] = aptNo
         
         editTenantDict["aptFloor"] = aptFloor
+        
+        
+         editTenantDict["unitName"] = unitName
+         editTenantDict["assignmentLocationId"] = assignmentLocId
         
         
         
@@ -1752,6 +1756,7 @@ class Utilities {
                 locationObject.noOfClients = String(locationData["numberOfClients"] as! Int)
                 locationObject.noOfUnitsAttempt  = String(locationData["numberOfUnitsAttempted"] as! Int)
                 
+                locationObject.borough = locationData["borough"] as? String  ?? ""
                 
                 appDelegate.saveContext()
                 
@@ -1770,6 +1775,60 @@ class Utilities {
                 editlocationObject.actionStatus = ""
                 
                 appDelegate.saveContext()
+                
+                //New Client Info
+                
+                guard let newClientInfoResults = locationData["TenantInfo"] as? [[String: AnyObject]]  else { break }
+                
+                for newClientInfoData in newClientInfoResults {
+                    
+                    let tenantObject = Tenant(context: context)
+                    tenantObject.id = newClientInfoData["tenantId"] as? String  ?? ""
+                    tenantObject.name = newClientInfoData["name"] as? String  ?? ""
+                    tenantObject.firstName = newClientInfoData["firstName"] as? String  ?? ""
+                    tenantObject.lastName =  newClientInfoData["lastName"] as? String  ?? ""
+                    
+                    tenantObject.phone = newClientInfoData["phone"] as? String  ?? ""
+                    tenantObject.email = newClientInfoData["email"] as? String  ?? ""
+                    tenantObject.age = newClientInfoData["age"] as? String  ?? ""
+                    tenantObject.dob = newClientInfoData["dob"] as? String  ?? ""
+                    
+                    tenantObject.middleName = newClientInfoData["middleName"] as? String  ?? ""
+                    tenantObject.suffix = newClientInfoData["suffix"] as? String  ?? ""
+                    
+                    
+                    
+                    
+                    
+                    tenantObject.assignmentId = assignmentObject.id!
+                    tenantObject.locationId = locationObject.id!
+                    tenantObject.unitId = ""
+                    tenantObject.actionStatus = ""
+                    tenantObject.assignmentLocUnitId = ""
+                    tenantObject.assignmentLocId = locationObject.assignmentLocId!
+                    
+                    //unit name
+                    
+                    tenantObject.virtualUnit = ""
+                 
+                    tenantObject.contact = newClientInfoData["contact"] as? String  ?? ""
+                    
+                    tenantObject.attempt = newClientInfoData["attempt"] as? String  ?? ""
+                    
+                    tenantObject.contactOutcome = newClientInfoData["contactOutcome"] as? String  ?? ""
+                    
+                    tenantObject.notes = newClientInfoData["notes"] as? String  ?? ""
+                    
+                    
+                    tenantObject.aptNo = newClientInfoData["aptNo"] as? String  ?? ""
+                    tenantObject.aptFloor = newClientInfoData["aptFloor"] as? String  ?? ""
+                    tenantObject.streetNum = newClientInfoData["streetNum"] as? String  ?? ""
+                    tenantObject.streetName = newClientInfoData["streetName"] as? String  ?? ""
+                    tenantObject.borough = newClientInfoData["borough"] as? String  ?? ""
+                    tenantObject.zip = newClientInfoData["zip"] as? String  ?? ""
+                    
+                    appDelegate.saveContext()
+                }
                 
                 guard let unitResults = locationData["assignmentLocUnit"] as? [[String: AnyObject]]  else { break }
                 
@@ -1869,7 +1928,8 @@ class Utilities {
                         tenantObject.assignmentLocUnitId = unitObject.assignmentLocUnitId!
                         
                         tenantObject.virtualUnit = unitObject.virtualUnit!
-                        tenantObject.middleName = tenantData["middleName"] as? String  ?? ""
+                        tenantObject.assignmentLocId = locationObject.assignmentLocId!
+                       
                         
                         tenantObject.contact = tenantData["contact"] as? String  ?? ""
                         
@@ -2098,7 +2158,7 @@ class Utilities {
     }
     
     
-    class func showSwiftErrorMessage(error:String){
+    class func showSwiftErrorMessage(error:String,title:String? = "Error"){
         
         let view: MessageView
         
@@ -2107,7 +2167,7 @@ class Utilities {
         
         
         
-        view.configureContent(title: "Error", body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
+        view.configureContent(title: title, body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
         
         let iconStyle: IconStyle
         
