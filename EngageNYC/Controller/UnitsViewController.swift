@@ -279,11 +279,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         
-        let editUnitResults =  ManageCoreData.fetchData(salesforceEntityName: "EditUnit", predicateFormat: "assignmentId == %@",predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [EditUnit]
+        let attemptUnitResults =  ManageCoreData.fetchData(salesforceEntityName: "EditUnit", predicateFormat: "assignmentId == %@ && locationId == %@",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, isPredicate:true) as! [EditUnit]
         
-        if(editUnitResults.count > 0){
+        if(attemptUnitResults.count > 0){
             
-            for editUnitData in editUnitResults{
+            for editUnitData in attemptUnitResults{
                 
                 if editUnitDict[editUnitData.unitId!] == nil{
                     editUnitDict[editUnitData.unitId!] = EditUnitDO(attempt: editUnitData.attempt!, contact: editUnitData.isContact!)

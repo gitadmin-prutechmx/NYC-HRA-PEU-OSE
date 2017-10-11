@@ -362,7 +362,7 @@ class Utilities {
     
     
     
-    class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,attempt:String,contact:String,contactOutcome:String,notes:String,streetNum:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,unitName:String,assignmentLocId:String,type:String)->[String:String]{
+    class func createAndEditTenantData(firstName:String,lastName:String,middleName:String,suffix:String,email:String,phone:String,dob:String,attempt:String,contact:String,contactOutcome:String,notes:String,streetNum:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,locationUnitId:String,currentTenantId:String,iOSTenantId:String,assignmentLocId:String,type:String)->[String:String]{
         
         var editTenantDict:[String:String] = [:]
         
@@ -413,7 +413,7 @@ class Utilities {
         editTenantDict["aptFloor"] = aptFloor
         
         
-         editTenantDict["unitName"] = unitName
+    
          editTenantDict["assignmentLocationId"] = assignmentLocId
         
         

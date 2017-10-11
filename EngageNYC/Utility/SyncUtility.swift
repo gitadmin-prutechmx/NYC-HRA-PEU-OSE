@@ -279,7 +279,7 @@ class SyncUtility{
                 let tenantId = tenantData.id!
                 let locUnitId = tenantData.unitId!
                 
-                var unitName:String = ""
+               
                 var assignmentLocId:String = ""
                 
                 var attempt:String = ""
@@ -293,9 +293,7 @@ class SyncUtility{
                 var aptNo:String = ""
                 var aptFloor:String = ""
                 
-                if let tempUnitName = tenantData.unitName{
-                    unitName = tempUnitName
-                }
+               
                 if let tempAssignmentLocId = tenantData.assignmentLocId{
                     assignmentLocId = tempAssignmentLocId
                 }
@@ -329,7 +327,7 @@ class SyncUtility{
                 
    
                 
-                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!,attempt:attempt,contact:contact,contactOutcome: contactOutcome,notes:notes,streetNum:streetNum,streetName:streetName,borough:borough,zip:zip,aptNo: aptNo,aptFloor: aptFloor, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,unitName:unitName,assignmentLocId: assignmentLocId, type:tenantData.actionStatus!)
+                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!,attempt:attempt,contact:contact,contactOutcome: contactOutcome,notes:notes,streetNum:streetNum,streetName:streetName,borough:borough,zip:zip,aptNo: aptNo,aptFloor: aptFloor, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,assignmentLocId: assignmentLocId, type:tenantData.actionStatus!)
                 
                 
                 

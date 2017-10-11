@@ -166,6 +166,8 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
             }
             
+           aptNo = unitName
+            
         }
         else{
             
@@ -323,34 +325,9 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             
             
-            
-            //        if(aptFloor.isEmpty){
-            //
-            //            aptNoView.shake()
-            //
-            //            self.view.makeToast("Please enter apartment floor", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-            //
-            //                if didTap {
-            //                    print("Completion with tap")
-            //
-            //                } else {
-            //                    print("Completion without tap")
-            //                }
-            //
-            //
-            //            }
-            //
-            //
-            //            return
-            //
-            //        }
-            
-            
-
-            
         }
         
-        saveClientAddress(streetNo: streetNum, streetName: streetName, borough: borough, zip: zip, aptNo: aptNo, aptFloor: aptFloor,unitName: unitName)
+        saveClientAddress(streetNo: streetNum, streetName: streetName, borough: borough, zip: zip, aptNo: aptNo, aptFloor: aptFloor)
         
         self.view.makeToast("Contact has been saved successfully.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
@@ -369,7 +346,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         // Utilities.clientAddressDict["StreetNum"] =
     }
     
-    func saveClientAddress(streetNo:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,unitName:String){
+    func saveClientAddress(streetNo:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String){
         
         let clientObject = Tenant(context: context)
         
@@ -411,7 +388,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         clientObject.assignmentLocId = SalesforceConnection.assignmentLocationId
         
-        clientObject.unitName = unitName
+        //clientObject.unitName = unitName
         
         appDelegate.saveContext()
         

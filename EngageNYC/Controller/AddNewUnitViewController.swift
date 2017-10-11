@@ -129,7 +129,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         var apartmentNumberVal:String = ""
         var notesVal:String = ""
         
-        
+          self.navigationItem.rightBarButtonItem?.isEnabled = false
         
         
         
@@ -144,9 +144,15 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
             
             apartmentView.shake()
             
+          
+            
+            //self.navigationItem.rightBarButtonItem?.al
+            
             self.view.makeToast("Please fill apartment.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
-            }
+                 self.navigationItem.rightBarButtonItem?.isEnabled = true
+           
+        }
             
             
             return

@@ -610,7 +610,6 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.zip = ""
         tenantObject.aptNo = ""
         tenantObject.aptFloor = ""
-        tenantObject.unitName = ""
         tenantObject.assignmentLocId = ""
        
 
