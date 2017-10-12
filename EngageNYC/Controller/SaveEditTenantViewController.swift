@@ -124,24 +124,32 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         }
         
         phoneTextField.delegate = self
+        firstNameTxtField.delegate = self
+        lastNameTxtField.delegate = self
+        txtMiddleName.delegate = self
+        txtSuffix.delegate = self
+        
         
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
-        let phoneNum = phoneTextField.text
-        phoneTextField.text = phoneNum!
-        
+        if(textField == phoneTextField){
+            let phoneNum = phoneTextField.text
+            phoneTextField.text = phoneNum!
+        }
     }
     
     
     
     func textFieldDidEndEditing(_ textField: UITextField)
     {
-        let phoneNum = phoneTextField.text
-        let phone = phoneNum?.toPhoneNumber()
-        phoneTextField.text = phone!
-        print(phone!)
+         if(textField == phoneTextField){
+            let phoneNum = phoneTextField.text
+            let phone = phoneNum?.toPhoneNumber()
+            phoneTextField.text = phone!
+            print(phone!)
+        }
         
     }
     
@@ -173,7 +181,36 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             return false
             
-        }else
+        }
+        else if textField == firstNameTxtField{
+            
+            guard let text = firstNameTxtField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 40 // Bool
+
+        }
+        else if textField == lastNameTxtField{
+            
+            guard let text = lastNameTxtField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 80 // Bool
+            
+        }
+        else if textField == txtMiddleName{
+            
+            guard let text = txtMiddleName.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 40 // Bool
+            
+        }
+        else if textField == txtSuffix{
+            
+            guard let text = txtSuffix.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 40 // Bool
+            
+        }
+        else
         {
             return true
             

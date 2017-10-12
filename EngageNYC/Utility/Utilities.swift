@@ -1474,6 +1474,8 @@ class Utilities {
         
         if(userInfoData.count == 0){
             
+            ManageCoreData.DeleteAllRecords(salesforceEntityName: "UserInfo")
+            
             //save userInfo
             let objUserInfo = UserInfo(context: context)
             
@@ -1488,6 +1490,8 @@ class Utilities {
             
             objUserInfo.passwordExpDate = dateAfterThreeDays
             
+            objUserInfo.isSaveUserName = SalesforceConfig.isSavedUserName
+            
             appDelegate.saveContext()
             
             
@@ -1498,6 +1502,7 @@ class Utilities {
             var updateObjectDic:[String:AnyObject] = [:]
             
             updateObjectDic["passwordExpDate"] = dateAfterThreeDays
+            updateObjectDic["isSaveUserName"] = SalesforceConfig.isSavedUserName as AnyObject?
             
             ManageCoreData.updateDate(salesforceEntityName: "UserInfo", updateKeyValue: updateObjectDic, predicateFormat: "userName == %@", predicateValue: SalesforceConfig.userName,isPredicate: true)
             
@@ -1535,12 +1540,13 @@ class Utilities {
             }
             
             
-            //update password expiration date
+            
             var updateObjectDic:[String:AnyObject] = [:]
             
             updateObjectDic["basemapUrl"] = SalesforceConfig.currentBaseMapUrl as AnyObject?
             updateObjectDic["featureLayerUrl"] = SalesforceConfig.currentFeatureLayerUrl as AnyObject?
             updateObjectDic["basemapDate"] = SalesforceConfig.currentBaseMapDate as AnyObject?
+           
             
             ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
             

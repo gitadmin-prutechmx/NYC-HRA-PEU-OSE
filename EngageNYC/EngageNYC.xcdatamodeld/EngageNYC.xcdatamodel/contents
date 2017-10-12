@@ -229,6 +229,7 @@
         <attribute name="contactId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isSaveUserName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="passwordExpDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
@@ -263,7 +264,7 @@
         <element name="Tenant" positionX="-126" positionY="45" width="128" height="465"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="270"/>
-        <element name="UserInfo" positionX="-126" positionY="45" width="128" height="165"/>
+        <element name="UserInfo" positionX="-126" positionY="45" width="128" height="180"/>
         <element name="VirtualUnitClient" positionX="-117" positionY="54" width="128" height="120"/>
     </elements>
 </model>

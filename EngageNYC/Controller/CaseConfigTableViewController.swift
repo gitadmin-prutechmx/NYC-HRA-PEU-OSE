@@ -705,6 +705,10 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             textfield.textColor = UIColor.gray
             
+            textfield.autocorrectionType = UITextAutocorrectionType.no
+            
+            textfield.spellCheckingType = UITextSpellCheckingType.no
+            
             textCell.accessoryView = textfield
             
             

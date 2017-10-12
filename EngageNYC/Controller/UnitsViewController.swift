@@ -114,19 +114,13 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         //segmentControl.selectedSegmentIndex = 0
-        let newUnitTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewUnitLblTapped:")))
         
-        // add it to the image view;
-        //  newUnitLbl.addGestureRecognizer(newUnitTapGesture)
-        // make sure imageView can be interacted with by user
-        //  newUnitLbl.isUserInteractionEnabled = true
-        
-        let newCaseTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewCaseLblTapped:")))
-        
-        // add it to the image view;
-        newCaseLbl.addGestureRecognizer(newCaseTapGesture)
-        // make sure imageView can be interacted with by user
-        newCaseLbl.isUserInteractionEnabled = true
+//        let newUnitTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewUnitLblTapped:")))
+//  
+//        let newCaseTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewCaseLblTapped:")))
+//        
+//        newCaseLbl.addGestureRecognizer(newCaseTapGesture)
+//        newCaseLbl.isUserInteractionEnabled = true
         
         NotificationCenter.default.addObserver(self, selector:#selector(UnitsViewController.UpdateUnitView), name: NSNotification.Name(rawValue: "UpdateUnitView"), object:nil
         )
@@ -199,17 +193,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     
-    func NewUnitLblTapped(gesture: UIGestureRecognizer)
-    {
-        // if the tapped view is a UIImageView then set it to imageview
-        self.performSegue(withIdentifier: "showNewAddClientIlistdentifier", sender: nil)
-    }
-    
-    func NewCaseLblTapped(gesture: UIGestureRecognizer) {
-        // if the tapped view is a UIImageView then set it to imageview
-        //self.performSegue(withIdentifier: "showAddNewCaseIdentifier", sender: nil)
-    }
-    
+//    func NewUnitLblTapped(gesture: UIGestureRecognizer)
+//    {
+//        
+//    }
+//    
+//    func NewCaseLblTapped(gesture: UIGestureRecognizer) {
+//
+//    }
+//    
     
     
     
@@ -921,7 +913,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                      cell.lblUnverifiedunit.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment
                 }
                 
-                 cell.lblSourceList.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList
+                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList.isEmpty)
+                {
+                    cell.lblSourceList.text = "       "
+                }
+                else
+                {
+                    cell.lblSourceList.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList
+                }
                 
                 
                
@@ -962,10 +961,20 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 }
                 
                
-                cell.lblSourceList.text = clientDataArray[indexPath.row].sourceList
-
                 
-
+                if(clientDataArray[indexPath.row].sourceList.isEmpty)
+                {
+                    cell.lblSourceList.text = "       "
+                    
+                }
+                else
+                {
+                    
+                    
+                    cell.lblSourceList.text = clientDataArray[indexPath.row].sourceList
+                }
+                
+                
                 clientData = clientDataArray[indexPath.row]
             }
             // cell.backgroundColor = UIColor.clear

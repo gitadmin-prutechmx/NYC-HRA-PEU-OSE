@@ -106,7 +106,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         if((sender as AnyObject).isOn == true){
 
-            aptTextField.text = "PH/Main"
+            aptTextField.text = "PHMain"
             aptTextField.isEnabled = false
             
             
@@ -122,7 +122,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         if((sender as AnyObject).isOn == true){
             
-            unitTextField.text = "PH/Main"
+            unitTextField.text = "PHMain"
             unitTextField.isEnabled = false
             
             
@@ -488,6 +488,28 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
     
+    func isValidFloor(value:String) -> Bool
+    {
+    
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = value.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        
+        let currentCharacterCount = aptFloorTxtField.text?.characters.count ?? 0
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 3)
+        {
+            return false
+        }
+        
+        
+        return value == filtered
+
+    }
+    
+    
+    
     func isValidAptNo(value:String) -> Bool
     {
         let aSet =  NSCharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ").inverted
@@ -498,7 +520,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         
         let newLength = currentCharacterCount + value.characters.count
-        if(newLength > 19){
+        if(newLength > 11){
             return false
         }
         
@@ -506,13 +528,56 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
     
+    func isValidUnitName(value:String) -> Bool
+    {
+        let aSet =  NSCharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ").inverted
+        let compSepByCharInSet = value.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+        let currentCharacterCount = unitTextField.text?.characters.count ?? 0
+        
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 11){
+            return false
+        }
+        
+        return value == numberFiltered
+        
+    }
+    
+    func isValidStreetNum(value:String) -> Bool
+    {
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = value.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        
+        let currentCharacterCount = streetNumTxtField.text?.characters.count ?? 0
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 23)
+        {
+            return false
+        }
+        
+        
+        return value == filtered
+        
+    }
+    
+    
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         
         let str = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         if textField == streetNameTxtField
         {
-            return (streetNameTxtField.text != nil)
+            guard let text = streetNameTxtField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 100 // Bool
+            
+          //  return (streetNameTxtField.text != nil)
             
         }
             
@@ -528,7 +593,15 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         else if (textField == unitTextField)
         {
             unitName = unitTextField.text! + string
-            return true
+            return isValidUnitName(value: str)
+        }
+        else if (textField == aptFloorTxtField)
+        {
+           return isValidFloor(value: str)
+        }
+        else if (textField == streetNumTxtField)
+        {
+            return isValidStreetNum(value: str)
         }
         else
         {

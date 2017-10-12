@@ -130,6 +130,27 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         emailTextField.text = ""
         passwordTextField.text = ""
         noOfAttempts = 0
+        
+        getUserInformation()
+    }
+    
+    func getUserInformation(){
+        
+        let userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo",predicateValue:  SalesforceConfig.userName, isPredicate:false) as! [UserInfo]
+        
+        if(userInfoData.count > 0){
+            if let saveUserName = userInfoData[0].isSaveUserName{
+                if(saveUserName == "Yes"){
+                    switchSaveUser.isOn = true
+                    emailTextField.text = userInfoData[0].userName!.removingPercentEncoding
+                }
+                else{
+                    switchSaveUser.isOn = false
+                }
+            }
+            
+          
+        }
     }
     
     
@@ -157,6 +178,21 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
     }
     
+    @IBAction func savedUserName(_ sender: Any) {
+//        
+//        if((sender as AnyObject).isOn == true){
+//            privateHome = "Yes"
+//            apartmentName.text = "PH/Main"
+//            apartmentName.isEnabled = false
+//            
+//            
+//        }
+//        else{
+//            privateHome = "No"
+//            apartmentName.text = aptName
+//            apartmentName.isEnabled = true
+//        }
+    }
     
     func saveUserSettings(){
         
@@ -265,7 +301,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                 }
                 else{
                     
-                    self.view.makeToast("No internet connection. Please relogin when newtwork gain access.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    self.view.makeToast("No internet connection. Please relogin when network gain access.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                         
                         
                     }
@@ -446,6 +482,13 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         //  var emailParams : [String:String] = [:]
         var userParams : [String:String] = [:]
         
+        
+        if(switchSaveUser.isOn){
+            SalesforceConfig.isSavedUserName = "Yes"
+        }
+        else{
+            SalesforceConfig.isSavedUserName = "No"
+        }
         
         getSalesforceOrgCredentials()
         
