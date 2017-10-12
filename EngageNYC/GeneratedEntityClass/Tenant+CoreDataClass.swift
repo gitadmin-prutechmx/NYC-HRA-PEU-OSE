@@ -2,7 +2,7 @@
 //  Tenant+CoreDataClass.swift
 //  
 //
-//  Created by Kamal on 11/10/17.
+//  Created by Kamal on 12/10/17.
 //
 //
 

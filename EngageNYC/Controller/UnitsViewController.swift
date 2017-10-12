@@ -37,6 +37,7 @@ struct ClientDataStruct
     var surveyStatus:String = ""
     var isVirtualUnit:String = ""
     var apartment:String = ""
+    var sourceList:String = ""
 }
 
 
@@ -369,7 +370,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                 
                 if(unitObject != nil){
-                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!)
+                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
                 
                     clientDataArray.append(objectTenantStruct)
                 }
@@ -920,6 +921,9 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                      cell.lblUnverifiedunit.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment
                 }
                 
+                 cell.lblSourceList.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList
+                
+                
                
                 
                  clientData = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct)
@@ -958,6 +962,8 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 }
                 
                
+                cell.lblSourceList.text = clientDataArray[indexPath.row].sourceList
+
                 
 
                 clientData = clientDataArray[indexPath.row]

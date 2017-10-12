@@ -23,6 +23,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     @IBOutlet weak var dontAccountLbl: UILabel!
     @IBOutlet weak var createAccountLbl: UIButton!
     
+    @IBOutlet weak var switchSaveUser: UISwitch!
     @IBOutlet weak var vwEmail: UIView!
     @IBOutlet var loginView: UIView!
     @IBOutlet weak var emailTextField: DesignableTextField!

@@ -1827,6 +1827,8 @@ class Utilities {
                     tenantObject.borough = newClientInfoData["borough"] as? String  ?? ""
                     tenantObject.zip = newClientInfoData["zip"] as? String  ?? ""
                     
+                    tenantObject.sourceList = newClientInfoData["sourceList"] as? String  ?? ""
+                    
                     appDelegate.saveContext()
                 }
                 
@@ -1946,6 +1948,8 @@ class Utilities {
                         tenantObject.streetName = tenantData["streetName"] as? String  ?? ""
                         tenantObject.borough = tenantData["borough"] as? String  ?? ""
                         tenantObject.zip = tenantData["zip"] as? String  ?? ""
+                        
+                          tenantObject.sourceList = tenantData["sourceList"] as? String  ?? ""
                         
                         appDelegate.saveContext()
                         
