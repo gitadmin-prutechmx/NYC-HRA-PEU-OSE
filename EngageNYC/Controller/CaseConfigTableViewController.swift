@@ -203,7 +203,15 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                     }
                         
                     else{
-                        Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        
+                        if(apiName == "Origin" && Utilities.caseActionStatus == "New"){
+                            
+                           Utilities.caseConfigDict[apiName] = "Door Knock" as AnyObject
+                        }
+            
+                        else{
+                            Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        }
                     }
                     
                 }
@@ -236,7 +244,14 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                     }
                         
                     else{
-                        Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        if(apiName == "Origin" && Utilities.caseActionStatus == "New"){
+                            
+                            Utilities.caseConfigDict[apiName] = "Door Knock" as AnyObject
+                        }
+                            
+                        else{
+                            Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        }
                     }
                     
                     
@@ -716,6 +731,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             pickListVC?.pickListProtocol = self
             
+           
             if let selectedVal = Utilities.caseConfigDict[currentPickListApiName]{
                 pickListVC?.selectedPickListValue = selectedVal as! String
             }
@@ -1124,7 +1140,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
         }
         else{
-           let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+           let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
             
             let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
                 //Do some stuff

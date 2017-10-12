@@ -104,6 +104,8 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 issueDataArray.append(objectIssueStruct)
                 
             }
+            
+            issueDataArray = issueDataArray.sorted { $0.issueType < $1.issueType }
         }
         
         

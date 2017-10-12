@@ -42,6 +42,9 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     var clientObj:ClientDO!
     
+    var aptNo:String = ""
+    var unitName:String = ""
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -55,7 +58,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         
-        let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(AddressViewController.cancelAction))
+        let leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(AddressViewController.cancelAction))
         
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
         
@@ -99,7 +102,37 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
     
+    @IBAction func diffLocMainSwitch(_ sender: Any) {
+        
+        if((sender as AnyObject).isOn == true){
+
+            aptTextField.text = "PH/Main"
+            aptTextField.isEnabled = false
+            
+            
+        }
+        else{
+
+            aptTextField.text = aptNo
+            aptTextField.isEnabled = true
+        }
+    }
     
+    @IBAction func sameLocMainSwitch(_ sender: Any) {
+        
+        if((sender as AnyObject).isOn == true){
+            
+            unitTextField.text = "PH/Main"
+            unitTextField.isEnabled = false
+            
+            
+        }
+        else{
+            
+            unitTextField.text = unitName
+            unitTextField.isEnabled = true
+        }
+    }
     
     func donePicker()
     {
@@ -121,9 +154,11 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         var streetName:String = ""
         var borough:String = ""
         var zip:String = ""
-        var aptNo:String = ""
         var aptFloor:String = ""
-        var unitName:String = ""
+        
+        aptNo = ""
+        unitName = ""
+      
         
         if(loctionSwitch.isOn){
             
@@ -404,7 +439,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func cancelAction ()
     {
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
         { action -> Void in
@@ -487,7 +522,13 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         else if (textField == aptTextField)
         {
+            aptNo = aptTextField.text! + string
             return isValidAptNo(value: str)
+        }
+        else if (textField == unitTextField)
+        {
+            unitName = unitTextField.text! + string
+            return true
         }
         else
         {

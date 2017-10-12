@@ -285,7 +285,7 @@ class EditLocationViewController: UIViewController,UITableViewDataSource,UITable
     
     @IBAction func cancelLocation(_ sender: Any)
     {
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
 
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
         }
