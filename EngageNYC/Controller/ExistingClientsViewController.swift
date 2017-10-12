@@ -76,12 +76,14 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                     
-                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
-                    
-                    
-                    existingClientsDataArray.append(objectTenantStruct)
-                    
-                    existingClientDict[tenantData.id!] = objectTenantStruct
+                    if(unitObject != nil){
+                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
+                        
+                        
+                        existingClientsDataArray.append(objectTenantStruct)
+                        
+                        existingClientDict[tenantData.id!] = objectTenantStruct
+                    }
                 }
                 
             }
@@ -130,14 +132,17 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
                 if(SalesforceConnection.unitId != tenantData.unitId!){
                     
+                    
                     let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                     
-                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
-                    
-                    
-                    existingClientsDataArray.append(objectTenantStruct)
-                    
-                    existingClientDict[tenantData.id!] = objectTenantStruct
+                    if(unitObject != nil){
+                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:"")
+                        
+                        
+                        existingClientsDataArray.append(objectTenantStruct)
+                        
+                        existingClientDict[tenantData.id!] = objectTenantStruct
+                    }
                 }
                 
             }
@@ -317,7 +322,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
-
+        
     {
         
         
@@ -711,7 +716,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             cell.clientId.text = existingClientsDataArray[indexPath.row].tenantId
             
-             cell.unit.text = existingClientsDataArray[indexPath.row].unitName
+            cell.unit.text = existingClientsDataArray[indexPath.row].unitName
             
             
             clientData = existingClientsDataArray[indexPath.row]

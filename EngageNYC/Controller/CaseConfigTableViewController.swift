@@ -655,6 +655,11 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             phoneTextfield.textColor = UIColor.gray
             
+            phoneTextfield.autocorrectionType = UITextAutocorrectionType.no
+            
+            phoneTextfield.spellCheckingType = UITextSpellCheckingType.no
+
+            
             return phoneCell
         }
         else{
