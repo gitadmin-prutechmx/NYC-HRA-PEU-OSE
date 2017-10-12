@@ -189,6 +189,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         NotificationCenter.default.addObserver(self, selector:#selector (MapLocationViewController.UpdateLocationView), name: NSNotification.Name(rawValue: "UpdateLocationView"), object:nil)
         
         
+        SVProgressHUD.show(withStatus: "Loading map", maskType: SVProgressHUDMaskType.gradient)
+        
         showMap(isSyncDataFromLoc: true)
         
     }
@@ -282,6 +284,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             }
             else {
                 
+                SVProgressHUD.dismiss()
+                
                 let i = 1
                 for i in 1..<self.map.operationalLayers.count
                 {
@@ -331,10 +335,11 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                                     self.mapView.map?.operationalLayers.add(featureLayer)
                                 }
                                 
-                                
-                                
-                                
                             }
+                        }
+                        
+                        if(self.isUpdateLocationView == false){
+                            self.selectFeature(addressName: self.firstLocationNameInArray,isShowCallOut: false)
                         }
                         
                     }
@@ -402,7 +407,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     //
     
     
-    func selectFeature(addressName:String){
+    func selectFeature(addressName:String,isShowCallOut:Bool = true){
         
         //        if self.selectedFeatures.count > 0 {
         //            self.featureLayer.unselectFeatures(self.selectedFeatures)
@@ -433,8 +438,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                     self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,scale:2000,completion: nil)
                     //,scale: 10000
                     
-                    self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false)
-                    
+                    if(isShowCallOut){
+                        self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false)
+                    }
                     
                     
                     
@@ -588,6 +594,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let endIndex = filterfeaturesExpression.index(filterfeaturesExpression.endIndex, offsetBy: -3)
         filterfeaturesExpression = self.filterfeaturesExpression.substring(to: endIndex)
         
+        
+        firstLocationNameInArray = locDataArray[0].salesforceLocationName
         
         tableView.reloadData()
         

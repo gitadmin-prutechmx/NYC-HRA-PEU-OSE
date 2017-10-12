@@ -105,7 +105,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         // Do any additional setup after loading the view, typically from a nib.
         
-        let rightExitSurveyBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
+       let rightExitSurveyBarButtonItem =  UIBarButtonItem(title: "Exit Survey", style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
         
         self.navigationItem.rightBarButtonItem  = rightExitSurveyBarButtonItem
         

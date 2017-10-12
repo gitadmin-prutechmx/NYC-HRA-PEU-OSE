@@ -238,7 +238,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     @IBAction func cancel(_ sender: Any) {
         
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
         
@@ -285,27 +285,27 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
             return
         }
         
-        if(notes.isEmpty){
-            
-            issueView.shake()
-            
-            self.view.makeToast("Please enter issue notes.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                if didTap {
-                    print("Completion with tap")
-                    
-                } else {
-                    print("Completion without tap")
-                }
-                
-                
-            }
-            
-            
-            return
-            
-        }
-        
+//        if(notes.isEmpty){
+//            
+//            issueView.shake()
+//            
+//            self.view.makeToast("Please enter issue notes.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+//                
+//                if didTap {
+//                    print("Completion with tap")
+//                    
+//                } else {
+//                    print("Completion without tap")
+//                }
+//                
+//                
+//            }
+//            
+//            
+//            return
+//            
+//        }
+//        
         
         
         var msg:String = ""

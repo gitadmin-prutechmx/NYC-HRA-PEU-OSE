@@ -61,8 +61,8 @@ class SubmitSurveyViewController: UIViewController {
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
 
         
-        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SubmitSurveyViewController.exitFromSurvey))
-        //#selector(self.exitFromSurvey(_:))
+        let rightBarButtonItem = UIBarButtonItem(title: "Exit Survey", style: .plain, target: self, action: #selector(SubmitSurveyViewController.exitFromSurvey))
+        
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         
         

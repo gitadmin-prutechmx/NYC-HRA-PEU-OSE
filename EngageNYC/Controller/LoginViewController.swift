@@ -23,6 +23,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
     @IBOutlet weak var dontAccountLbl: UILabel!
     @IBOutlet weak var createAccountLbl: UIButton!
     
+    @IBOutlet weak var switchSaveUser: UISwitch!
     @IBOutlet weak var vwEmail: UIView!
     @IBOutlet var loginView: UIView!
     @IBOutlet weak var emailTextField: DesignableTextField!
@@ -129,6 +130,27 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         emailTextField.text = ""
         passwordTextField.text = ""
         noOfAttempts = 0
+        
+        getUserInformation()
+    }
+    
+    func getUserInformation(){
+        
+        let userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo",predicateValue:  SalesforceConfig.userName, isPredicate:false) as! [UserInfo]
+        
+        if(userInfoData.count > 0){
+            if let saveUserName = userInfoData[0].isSaveUserName{
+                if(saveUserName == "Yes"){
+                    switchSaveUser.isOn = true
+                    emailTextField.text = userInfoData[0].userName!.removingPercentEncoding
+                }
+                else{
+                    switchSaveUser.isOn = false
+                }
+            }
+            
+          
+        }
     }
     
     
@@ -156,6 +178,21 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
     }
     
+    @IBAction func savedUserName(_ sender: Any) {
+//        
+//        if((sender as AnyObject).isOn == true){
+//            privateHome = "Yes"
+//            apartmentName.text = "PH/Main"
+//            apartmentName.isEnabled = false
+//            
+//            
+//        }
+//        else{
+//            privateHome = "No"
+//            apartmentName.text = aptName
+//            apartmentName.isEnabled = true
+//        }
+    }
     
     func saveUserSettings(){
         
@@ -194,6 +231,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         
         if(salesforceConfigData.count == 0){
             
+            //Dev environment
 //            let companyName = "PEU"
 //            let endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
 //            let clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
@@ -263,7 +301,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
                 }
                 else{
                     
-                    self.view.makeToast("No internet connection. Please relogin when newtwork gain access.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    self.view.makeToast("No internet connection. Please relogin when network gain access.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                         
                         
                     }
@@ -444,6 +482,13 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         //  var emailParams : [String:String] = [:]
         var userParams : [String:String] = [:]
         
+        
+        if(switchSaveUser.isOn){
+            SalesforceConfig.isSavedUserName = "Yes"
+        }
+        else{
+            SalesforceConfig.isSavedUserName = "No"
+        }
         
         getSalesforceOrgCredentials()
         

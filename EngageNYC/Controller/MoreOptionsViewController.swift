@@ -268,11 +268,25 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
         else{
             
+            btnNext.isEnabled = false
+            btnNext.alpha = 0.5
             
             chooseUnitInfoView.shake()
             //updateUnit()
             
             self.view.makeToast("You can only proceed to next step if Attempt , Contact and Reknock selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.btnNext.isEnabled = true
+                self.btnNext.alpha = 1.0
+                
+                print("Completion without tap")
+                
+//                if didTap {
+//                    print("Completion with tap")
+//                    
+//                } else {
+//                    print("Completion without tap")
+//                }
                 
                 //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                 
@@ -634,26 +648,29 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(editUnitResults.count > 0){
             
-            if(editUnitResults[0].attempt == ""){
-                editUnitResults[0].attempt = "No"
+            if(editUnitResults[0].attempt == "" || editUnitResults[0].attempt == "No"){
+                attempt =  "No"
             }
             
-            attempt = editUnitResults[0].attempt!
-            
-            
-            
-            if(editUnitResults[0].isContact == ""){
-                editUnitResults[0].isContact = "No"
+            else{
+                attempt = editUnitResults[0].attempt!
             }
             
             
-            contact = editUnitResults[0].isContact!
+            if(editUnitResults[0].isContact == "" || editUnitResults[0].attempt == "No"){
+                contact = "No"
+            }
+            else{
+                 contact = editUnitResults[0].isContact!
+            }
+            
+           
             
             
             
             
             if(editUnitResults[0].reKnockNeeded == ""){
-                editUnitResults[0].reKnockNeeded = "No"
+              //  editUnitResults[0].reKnockNeeded = "No"
             }
             
             
@@ -666,7 +683,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             if(editUnitResults[0].inTake == ""){
-                editUnitResults[0].inTake = "No"
+              //  editUnitResults[0].inTake = "No"
             }
             
             inTake = editUnitResults[0].inTake!
@@ -696,7 +713,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     @IBAction func cancel(_ sender: Any)
     {
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in

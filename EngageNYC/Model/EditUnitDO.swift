@@ -10,8 +10,8 @@ import Foundation
 
 
 class EditUnitDO{
-    var attempt:String
-    var contact:String
+    var attempt:String = ""
+    var contact:String = ""
     
     init(attempt:String,contact:String) {
         self.attempt = attempt

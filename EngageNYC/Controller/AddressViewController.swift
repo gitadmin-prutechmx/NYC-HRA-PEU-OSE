@@ -9,9 +9,9 @@
 import UIKit
 
 class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate
-
+    
 {
-
+    
     @IBOutlet weak var streetNumView: UIView!
     @IBOutlet weak var streetNumLbl: UILabel!
     @IBOutlet weak var aptFloorTxtField: UITextField!
@@ -27,22 +27,30 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var streetNameLbl: UILabel!
     @IBOutlet weak var streetNameTxtField: UITextField!
     
+    @IBOutlet weak var unitTextField: UITextField!
+    @IBOutlet weak var unitNameView: UIView! //for hidden
+    @IBOutlet weak var unitView: UIView!  //for shake
+    @IBOutlet weak var addressView: UIView!
+    @IBOutlet weak var loctionSwitch: UISwitch!
     
-     //var arrNameList = NSMutableArray()
+    //var arrNameList = NSMutableArray()
     
-     var boroughPickListArray: [String]!
+    var boroughPickListArray: [String]!
     
-     let pickerView = UIPickerView()
+    let pickerView = UIPickerView()
     var selectedRow = 0
     
     var clientObj:ClientDO!
+    
+    var aptNo:String = ""
+    var unitName:String = ""
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         pickerView.delegate = self
-         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
-       // boroughPickListArray = [ "Bronx", "Broonklyn", "Manhattan", "Queens", "Staten Island"]
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        // boroughPickListArray = [ "Bronx", "Broonklyn", "Manhattan", "Queens", "Staten Island"]
         pickerView.backgroundColor = .white
         pickerView.showsSelectionIndicator = true
         
@@ -50,7 +58,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         
-        let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(AddressViewController.cancelAction))
+        let leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(AddressViewController.cancelAction))
         
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
         
@@ -59,11 +67,11 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         toolBar.isTranslucent = false
         toolBar.tintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         toolBar.barTintColor = UIColor.white
-              
+        
         toolBar.sizeToFit()
         
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddressViewController.donePicker))
-       
+        
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style:UIBarButtonItemStyle.plain, target: self, action: #selector(AddressViewController.canclePicker))
         
@@ -88,268 +96,341 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             var boroughStr = boroughData[0].value!
             
             boroughPickListArray = String(boroughStr.characters.dropLast()).components(separatedBy: ";")
-           
+            
             
         }
         
     }
-
     
+    @IBAction func diffLocMainSwitch(_ sender: Any) {
+        
+        if((sender as AnyObject).isOn == true){
+
+            aptTextField.text = "PHMain"
+            aptTextField.isEnabled = false
+            
+            
+        }
+        else{
+
+            aptTextField.text = aptNo
+            aptTextField.isEnabled = true
+        }
+    }
+    
+    @IBAction func sameLocMainSwitch(_ sender: Any) {
+        
+        if((sender as AnyObject).isOn == true){
+            
+            unitTextField.text = "PHMain"
+            unitTextField.isEnabled = false
+            
+            
+        }
+        else{
+            
+            unitTextField.text = unitName
+            unitTextField.isEnabled = true
+        }
+    }
     
     func donePicker()
     {
-            self.boroughTxtField.text = boroughPickListArray[selectedRow]as? String
-            boroughTxtField.resignFirstResponder()
+        self.boroughTxtField.text = boroughPickListArray[selectedRow]as? String
+        boroughTxtField.resignFirstResponder()
         
     }
     func canclePicker()
     {
         boroughTxtField.resignFirstResponder()
-       
+        
     }
     
     func saveAction()
     {
-
+        
         
         var streetNum:String = ""
         var streetName:String = ""
         var borough:String = ""
         var zip:String = ""
-        var aptNo:String = ""
         var aptFloor:String = ""
         
-        if let tempStreetNum = streetNumTxtField.text{
-            streetNum = tempStreetNum
-        }
+        aptNo = ""
+        unitName = ""
+      
         
-        if let tempStreetName = streetNameTxtField.text{
-            streetName = tempStreetName
-        }
-        
-        if let tempBorough = boroughTxtField.text{
-            borough = tempBorough
-        }
-        
-        if let tempZip = zipTxtField.text{
-            zip = tempZip
-        }
-        if let tempAptNo = aptTextField.text{
-            aptNo = tempAptNo
-        }
-        if let tempAptFloor = aptFloorTxtField.text{
-            aptFloor = tempAptFloor
-        }
-        
-        
-        
-       
-        
-        if(streetNum.isEmpty){
+        if(loctionSwitch.isOn){
             
-            streetNumView.shake()
+            if let tempUnitName = unitTextField.text{
+                unitName = tempUnitName
+            }
             
-            self.view.makeToast("Please enter Street Number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            
+            if(unitName.isEmpty){
                 
-                if didTap {
-                    print("Completion with tap")
+                unitView.shake()
+                
+                self.view.makeToast("Please enter Unit Name", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
-                } else {
-                    print("Completion without tap")
+                    if didTap {
+                        print("Completion with tap")
+                        
+                    } else {
+                        print("Completion without tap")
+                    }
+                    
+                    
                 }
                 
+                
+                return
                 
             }
             
             
-            return
             
-        }
-        
-        if(streetName.isEmpty){
+            let locationData = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Location]
             
-            streetNameView.shake()
-            
-            self.view.makeToast("Please enter Street Name", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if(locationData.count > 0){
                 
-                if didTap {
-                    print("Completion with tap")
-                    
-                } else {
-                    print("Completion without tap")
-                }
-                
+                streetName = locationData[0].streetName!
+                streetNum = locationData[0].streetNumber!
+                borough = locationData[0].borough!
+                zip = locationData[0].zip!
                 
             }
             
-            
-            return
+           aptNo = unitName
             
         }
-        
-        if(borough.isEmpty){
+        else{
             
-            boroughView.shake()
+            if let tempStreetNum = streetNumTxtField.text{
+                streetNum = tempStreetNum
+            }
             
-            self.view.makeToast("Please select borough", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if let tempStreetName = streetNameTxtField.text{
+                streetName = tempStreetName
+            }
+            
+            if let tempBorough = boroughTxtField.text{
+                borough = tempBorough
+            }
+            
+            if let tempZip = zipTxtField.text{
+                zip = tempZip
+            }
+            if let tempAptNo = aptTextField.text{
+                aptNo = tempAptNo
+            }
+            if let tempAptFloor = aptFloorTxtField.text{
+                aptFloor = tempAptFloor
+            }
+           
+            
+            
+            if(streetNum.isEmpty){
                 
-                if didTap {
-                    print("Completion with tap")
+                streetNumView.shake()
+                
+                self.view.makeToast("Please enter Street Number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
-                } else {
-                    print("Completion without tap")
+                    if didTap {
+                        print("Completion with tap")
+                        
+                    } else {
+                        print("Completion without tap")
+                    }
+                    
+                    
                 }
                 
                 
+                return
+                
             }
             
-            
-            return
-            
-        }
-        
-        if(zip.isEmpty){
-            
-            zipView.shake()
-            
-            self.view.makeToast("Please enter zip", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if(streetName.isEmpty){
                 
-                if didTap {
-                    print("Completion with tap")
+                streetNameView.shake()
+                
+                self.view.makeToast("Please enter Street Name", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
-                } else {
-                    print("Completion without tap")
+                    if didTap {
+                        print("Completion with tap")
+                        
+                    } else {
+                        print("Completion without tap")
+                    }
+                    
+                    
                 }
                 
                 
+                return
+                
             }
             
-            
-            return
-            
-        }
-        
-        if(zip.characters.count < 5){
-            
-            zipView.shake()
-            
-            self.view.makeToast("zip should be 5 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if(borough.isEmpty){
                 
-                if didTap {
-                    print("Completion with tap")
+                boroughView.shake()
+                
+                self.view.makeToast("Please select borough", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
-                } else {
-                    print("Completion without tap")
+                    if didTap {
+                        print("Completion with tap")
+                        
+                    } else {
+                        print("Completion without tap")
+                    }
+                    
+                    
                 }
                 
                 
+                return
+                
             }
             
-            
-            return
-            
-        }
-        
-        if(aptNo.isEmpty){
-            
-            aptNoView.shake()
-            
-            self.view.makeToast("Please enter apartment number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if(zip.isEmpty){
                 
-                if didTap {
-                    print("Completion with tap")
+                zipView.shake()
+                
+                self.view.makeToast("Please enter zip", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
-                } else {
-                    print("Completion without tap")
+                    if didTap {
+                        print("Completion with tap")
+                        
+                    } else {
+                        print("Completion without tap")
+                    }
+                    
+                    
                 }
                 
                 
+                return
+                
             }
             
+            if(zip.characters.count < 5){
+                
+                zipView.shake()
+                
+                self.view.makeToast("zip should be 5 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    if didTap {
+                        print("Completion with tap")
+                        
+                    } else {
+                        print("Completion without tap")
+                    }
+                    
+                    
+                }
+                
+                
+                return
+                
+            }
             
-            return
+            if(aptNo.isEmpty){
+                
+                aptNoView.shake()
+                
+                self.view.makeToast("Please enter apartment number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    if didTap {
+                        print("Completion with tap")
+                        
+                    } else {
+                        print("Completion without tap")
+                    }
+                    
+                    
+                }
+                
+                
+                return
+                
+            }
+            
+            unitName = ""
+            
+            
             
         }
-        
-//        if(aptFloor.isEmpty){
-//            
-//            aptNoView.shake()
-//            
-//            self.view.makeToast("Please enter apartment floor", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                
-//                if didTap {
-//                    print("Completion with tap")
-//                    
-//                } else {
-//                    print("Completion without tap")
-//                }
-//                
-//                
-//            }
-//            
-//            
-//            return
-//            
-//        }
         
         saveClientAddress(streetNo: streetNum, streetName: streetName, borough: borough, zip: zip, aptNo: aptNo, aptFloor: aptFloor)
         
         self.view.makeToast("Contact has been saved successfully.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
-             self.dismiss(animated: true, completion: nil)
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateNoUnitClientView"), object: nil)
+            
+          
+            self.dismiss(animated: true, completion: nil)
             
             
         }
         
-
-
         
-       // Utilities.clientAddressDict["StreetNum"] =
+        
+        
+        // Utilities.clientAddressDict["StreetNum"] =
     }
     
     func saveClientAddress(streetNo:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String){
         
-                let clientObject = Tenant(context: context)
+        let clientObject = Tenant(context: context)
         
         
-                clientObject.id = UUID().uuidString
+        clientObject.id = UUID().uuidString
         
-                clientObject.firstName = clientObj.firstName
-                clientObject.lastName = clientObj.lastName
-                clientObject.middleName = clientObj.middleName
-                clientObject.suffix = clientObj.suffix
-                clientObject.phone = clientObj.phone
-                clientObject.email = clientObj.email
-                clientObject.dob = clientObj.dob
+ 
+        clientObject.name = clientObj.firstName + " " + clientObj.lastName
+        clientObject.firstName = clientObj.firstName
+        clientObject.lastName = clientObj.lastName
+        clientObject.middleName = clientObj.middleName
+        clientObject.suffix = clientObj.suffix
+        clientObject.phone = clientObj.phone
+        clientObject.email = clientObj.email
+        clientObject.age =  clientObj.age
+        clientObject.dob = clientObj.dob
         
-                clientObject.streetNum = streetNo
-                clientObject.streetName = streetName
-                clientObject.borough = borough
-                clientObject.aptNo = aptNo
-                clientObject.aptFloor = aptFloor
-                clientObject.zip = zip
+        clientObject.streetNum = streetNo
+        clientObject.streetName = streetName
+        clientObject.borough = borough
+        clientObject.aptNo = aptNo
+        clientObject.aptFloor = aptFloor
+        clientObject.zip = zip
         
-                clientObject.attempt = ""
-                clientObject.contact = ""
-                clientObject.contactOutcome = ""
-                clientObject.notes = ""
+        clientObject.attempt = ""
+        clientObject.contact = ""
+        clientObject.contactOutcome = ""
+        clientObject.notes = ""
         
-                clientObject.actionStatus = "create"
+        clientObject.actionStatus = "create"
         
-                clientObject.assignmentId = ""
+        clientObject.assignmentId = ""
         
-                clientObject.locationId = ""
+        clientObject.locationId = ""
         
-                clientObject.unitId = ""
+        clientObject.unitId = ""
         
-                clientObject.assignmentLocUnitId = ""
-                
-                appDelegate.saveContext()
+        clientObject.assignmentLocUnitId = ""
         
-
+        clientObject.assignmentLocId = SalesforceConnection.assignmentLocationId
+        
+        //clientObject.unitName = unitName
+        
+        appDelegate.saveContext()
+        
+        
         
     }
-
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -358,7 +439,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func cancelAction ()
     {
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
         { action -> Void in
@@ -403,9 +484,31 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         
         return value == filtered
-
+        
+        
+    }
+    
+    func isValidFloor(value:String) -> Bool
+    {
+    
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = value.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        
+        let currentCharacterCount = aptFloorTxtField.text?.characters.count ?? 0
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 3)
+        {
+            return false
+        }
+        
+        
+        return value == filtered
 
     }
+    
+    
     
     func isValidAptNo(value:String) -> Bool
     {
@@ -415,33 +518,90 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         let currentCharacterCount = aptTextField.text?.characters.count ?? 0
         
-       
+        
         let newLength = currentCharacterCount + value.characters.count
-        if(newLength > 19){
+        if(newLength > 11){
             return false
         }
         
         return value == numberFiltered
         
     }
-
+    
+    func isValidUnitName(value:String) -> Bool
+    {
+        let aSet =  NSCharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ").inverted
+        let compSepByCharInSet = value.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+        let currentCharacterCount = unitTextField.text?.characters.count ?? 0
+        
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 11){
+            return false
+        }
+        
+        return value == numberFiltered
+        
+    }
+    
+    func isValidStreetNum(value:String) -> Bool
+    {
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = value.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        
+        let currentCharacterCount = streetNumTxtField.text?.characters.count ?? 0
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 23)
+        {
+            return false
+        }
+        
+        
+        return value == filtered
+        
+    }
+    
+    
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         
         let str = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         if textField == streetNameTxtField
         {
-            return (streetNameTxtField.text != nil)
+            guard let text = streetNameTxtField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 100 // Bool
+            
+          //  return (streetNameTxtField.text != nil)
             
         }
             
         else if (textField == zipTxtField)
         {
-           return isValidZipcode(value: str)
+            return isValidZipcode(value: str)
         }
         else if (textField == aptTextField)
         {
+            aptNo = aptTextField.text! + string
             return isValidAptNo(value: str)
+        }
+        else if (textField == unitTextField)
+        {
+            unitName = unitTextField.text! + string
+            return isValidUnitName(value: str)
+        }
+        else if (textField == aptFloorTxtField)
+        {
+           return isValidFloor(value: str)
+        }
+        else if (textField == streetNumTxtField)
+        {
+            return isValidStreetNum(value: str)
         }
         else
         {
@@ -469,27 +629,43 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         return boroughPickListArray[row]
         
         //    return boroughPickListArray.object(at: row)as? String
-
+        
         
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         selectedRow = row
-     //  self.boroughTxtField.text = arrAgeList.object(at: row) as? String
+        //  self.boroughTxtField.text = arrAgeList.object(at: row) as? String
         
     }
-
+    
+    @IBAction func switchAction(_ sender: UISwitch)
+    {
+        if sender.isOn
+        {
+            addressView.isHidden = true
+            unitView.isHidden = false
+            
+        }
+            
+        else
+        {
+            unitView.isHidden = true
+            addressView.isHidden = false
+            
+        }
+    }
     
 }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+/*
+ // MARK: - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+ // Get the new view controller using segue.destinationViewController.
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 

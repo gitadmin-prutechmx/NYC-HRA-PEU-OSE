@@ -124,24 +124,32 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         }
         
         phoneTextField.delegate = self
+        firstNameTxtField.delegate = self
+        lastNameTxtField.delegate = self
+        txtMiddleName.delegate = self
+        txtSuffix.delegate = self
+        
         
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
-        let phoneNum = phoneTextField.text
-        phoneTextField.text = phoneNum!
-        
+        if(textField == phoneTextField){
+            let phoneNum = phoneTextField.text
+            phoneTextField.text = phoneNum!
+        }
     }
     
     
     
     func textFieldDidEndEditing(_ textField: UITextField)
     {
-        let phoneNum = phoneTextField.text
-        let phone = phoneNum?.toPhoneNumber()
-        phoneTextField.text = phone!
-        print(phone!)
+         if(textField == phoneTextField){
+            let phoneNum = phoneTextField.text
+            let phone = phoneNum?.toPhoneNumber()
+            phoneTextField.text = phone!
+            print(phone!)
+        }
         
     }
     
@@ -173,7 +181,36 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             return false
             
-        }else
+        }
+        else if textField == firstNameTxtField{
+            
+            guard let text = firstNameTxtField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 40 // Bool
+
+        }
+        else if textField == lastNameTxtField{
+            
+            guard let text = lastNameTxtField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 80 // Bool
+            
+        }
+        else if textField == txtMiddleName{
+            
+            guard let text = txtMiddleName.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 40 // Bool
+            
+        }
+        else if textField == txtSuffix{
+            
+            guard let text = txtSuffix.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 40 // Bool
+            
+        }
+        else
         {
             return true
             
@@ -301,7 +338,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     @IBAction func cancel(_ sender: Any)
     {
         
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
             //Do some stuff
@@ -344,7 +381,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             let viewController = self.storyboard!.instantiateViewController(withIdentifier: "addressViewIdentifier") as? AddressViewController
             
-            viewController?.clientObj = ClientDO(firstName: firstName, lastName: lastName, middleName: middleName, suffix: suffix, phone: phone, email: email, dob: dob)
+            viewController?.clientObj = ClientDO(firstName: firstName, lastName: lastName, middleName: middleName, suffix: suffix, phone: phone, email: email, dob: dob,age:age)
             
             
             self.navigationController!.pushViewController(viewController!, animated: true)
@@ -497,28 +534,31 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             dob = dobTemp
             
-            if(dob != ""){
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM/dd/yyyy"
-                
-                let birthdate = dateFormatter.date(from: dob)
-                
-                let now = Date()
-                let calendar = Calendar.current
-                
-                
-                let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
-                age = String(ageComponents.year!)
-            }
-            
-            
-            
+            calculateAge()
         }
         
         return true
         
     }
     
+    
+    
+    func calculateAge(){
+        if(dob != ""){
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            
+            let birthdate = dateFormatter.date(from: dob)
+            
+            let now = Date()
+            let calendar = Calendar.current
+            
+            
+            let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
+            age = String(ageComponents.year!)
+        }
+
+    }
     
     
     func saveTenantInfo(){
@@ -607,6 +647,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.zip = ""
         tenantObject.aptNo = ""
         tenantObject.aptFloor = ""
+        tenantObject.assignmentLocId = ""
        
 
         

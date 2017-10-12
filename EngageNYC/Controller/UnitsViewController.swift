@@ -37,6 +37,7 @@ struct ClientDataStruct
     var surveyStatus:String = ""
     var isVirtualUnit:String = ""
     var apartment:String = ""
+    var sourceList:String = ""
 }
 
 
@@ -113,19 +114,13 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         //segmentControl.selectedSegmentIndex = 0
-        let newUnitTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewUnitLblTapped:")))
         
-        // add it to the image view;
-        //  newUnitLbl.addGestureRecognizer(newUnitTapGesture)
-        // make sure imageView can be interacted with by user
-        //  newUnitLbl.isUserInteractionEnabled = true
-        
-        let newCaseTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewCaseLblTapped:")))
-        
-        // add it to the image view;
-        newCaseLbl.addGestureRecognizer(newCaseTapGesture)
-        // make sure imageView can be interacted with by user
-        newCaseLbl.isUserInteractionEnabled = true
+//        let newUnitTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewUnitLblTapped:")))
+//  
+//        let newCaseTapGesture = UITapGestureRecognizer(target: self, action: Selector(("NewCaseLblTapped:")))
+//        
+//        newCaseLbl.addGestureRecognizer(newCaseTapGesture)
+//        newCaseLbl.isUserInteractionEnabled = true
         
         NotificationCenter.default.addObserver(self, selector:#selector(UnitsViewController.UpdateUnitView), name: NSNotification.Name(rawValue: "UpdateUnitView"), object:nil
         )
@@ -198,16 +193,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     
     
     
-    func NewUnitLblTapped(gesture: UIGestureRecognizer) {
-        // if the tapped view is a UIImageView then set it to imageview
-        self.performSegue(withIdentifier: "showAddUnitIdentifier", sender: nil)
-    }
-    
-    func NewCaseLblTapped(gesture: UIGestureRecognizer) {
-        // if the tapped view is a UIImageView then set it to imageview
-        //self.performSegue(withIdentifier: "showAddNewCaseIdentifier", sender: nil)
-    }
-    
+//    func NewUnitLblTapped(gesture: UIGestureRecognizer)
+//    {
+//        
+//    }
+//    
+//    func NewCaseLblTapped(gesture: UIGestureRecognizer) {
+//
+//    }
+//    
     
     
     
@@ -278,11 +272,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         
         
-        let editUnitResults =  ManageCoreData.fetchData(salesforceEntityName: "EditUnit", predicateFormat: "assignmentId == %@",predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [EditUnit]
+        let attemptUnitResults =  ManageCoreData.fetchData(salesforceEntityName: "EditUnit", predicateFormat: "assignmentId == %@ && locationId == %@",predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, isPredicate:true) as! [EditUnit]
         
-        if(editUnitResults.count > 0){
+        if(attemptUnitResults.count > 0){
             
-            for editUnitData in editUnitResults{
+            for editUnitData in attemptUnitResults{
                 
                 if editUnitDict[editUnitData.unitId!] == nil{
                     editUnitDict[editUnitData.unitId!] = EditUnitDO(attempt: editUnitData.attempt!, contact: editUnitData.isContact!)
@@ -367,10 +361,11 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                 
-                let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!)
+                if(unitObject != nil){
+                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
                 
-                clientDataArray.append(objectTenantStruct)
-                
+                    clientDataArray.append(objectTenantStruct)
+                }
             }
         }
         
@@ -907,7 +902,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 cell.lblUnitName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitName
                 cell.lblUnitId.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
-                cell.lblSyncDate.text = ""
+               // cell.lblSyncDate.text = ""
                 
                 if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment.isEmpty)
                 {
@@ -917,6 +912,16 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 {
                      cell.lblUnverifiedunit.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment
                 }
+                
+                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList.isEmpty)
+                {
+                    cell.lblSourceList.text = "       "
+                }
+                else
+                {
+                    cell.lblSourceList.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList
+                }
+                
                 
                
                 
@@ -946,7 +951,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
                 cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
-                cell.lblSyncDate.text = ""
+                //cell.lblSyncDate.text = ""
                 if(clientDataArray[indexPath.row].apartment.isEmpty){
                     cell.lblUnverifiedunit.text = "      "
                 }
@@ -957,7 +962,19 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                
                 
-
+                if(clientDataArray[indexPath.row].sourceList.isEmpty)
+                {
+                    cell.lblSourceList.text = "       "
+                    
+                }
+                else
+                {
+                    
+                    
+                    cell.lblSourceList.text = clientDataArray[indexPath.row].sourceList
+                }
+                
+                
                 clientData = clientDataArray[indexPath.row]
             }
             // cell.backgroundColor = UIColor.clear
@@ -1700,7 +1717,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     @IBAction func NewClientAction(_ sender: Any)
     {
         SalesforceConnection.isNewContactWithAddress = true
-        self.performSegue(withIdentifier: "showAddClientIdentifier", sender: nil)
+        self.performSegue(withIdentifier: "showNewAddClientIlistdentifier", sender: nil)
 
     }
     

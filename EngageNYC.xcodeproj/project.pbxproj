@@ -15,8 +15,6 @@
 		5D00F0DC1F6ED81500FF7523 /* ExistingClientsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00F0DB1F6ED81500FF7523 /* ExistingClientsTableViewCell.swift */; };
 		5D01D4131F7A407300B3F8F6 /* ClientDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01D4121F7A407300B3F8F6 /* ClientDO.swift */; };
 		5D01D4191F7A55F200B3F8F6 /* VirtualUnitClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01D4181F7A55F200B3F8F6 /* VirtualUnitClientViewController.swift */; };
-		5D01D4201F7A84A900B3F8F6 /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01D41E1F7A84A900B3F8F6 /* Tenant+CoreDataClass.swift */; };
-		5D01D4211F7A84A900B3F8F6 /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01D41F1F7A84A900B3F8F6 /* Tenant+CoreDataProperties.swift */; };
 		5D0FC9DD1F6A7D03000F9994 /* EngageNYC.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC9DB1F6A7D03000F9994 /* EngageNYC.xcdatamodeld */; };
 		5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */; };
 		5D1BD4F01F067B7500C8FAF5 /* MapViewCollout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */; };
@@ -28,6 +26,12 @@
 		5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */; };
 		5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */; };
 		5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */; };
+		5D349DAC1F8F84C400641E1F /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DAA1F8F84C400641E1F /* Tenant+CoreDataClass.swift */; };
+		5D349DAD1F8F84C400641E1F /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DAB1F8F84C400641E1F /* Tenant+CoreDataProperties.swift */; };
+		5D349DAF1F8F84DC00641E1F /* AddClientWithAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DAE1F8F84DC00641E1F /* AddClientWithAddressTableViewCell.swift */; };
+		5D349DB11F8F84EC00641E1F /* AddNewClientWithAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DB01F8F84EC00641E1F /* AddNewClientWithAddressViewController.swift */; };
+		5D349DB41F8F850000641E1F /* AddNewClientHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DB21F8F850000641E1F /* AddNewClientHeaderTableViewCell.swift */; };
+		5D349DB51F8F850000641E1F /* AddNewClientHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D349DB31F8F850000641E1F /* AddNewClientHeaderTableViewCell.xib */; };
 		5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */; };
 		5D4C4E661F3C454500284725 /* CaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E651F3C454500284725 /* CaseViewController.swift */; };
 		5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */; };
@@ -165,8 +169,6 @@
 		5D00F0DB1F6ED81500FF7523 /* ExistingClientsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingClientsTableViewCell.swift; sourceTree = "<group>"; };
 		5D01D4121F7A407300B3F8F6 /* ClientDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDO.swift; sourceTree = "<group>"; };
 		5D01D4181F7A55F200B3F8F6 /* VirtualUnitClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualUnitClientViewController.swift; sourceTree = "<group>"; };
-		5D01D41E1F7A84A900B3F8F6 /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D01D41F1F7A84A900B3F8F6 /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D0FC9DC1F6A7D03000F9994 /* EngageNYC.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EngageNYC.xcdatamodel; sourceTree = "<group>"; };
 		5D1BD4ED1F067B7500C8FAF5 /* MapViewCollout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewCollout.swift; sourceTree = "<group>"; };
 		5D1BD4EE1F067B7500C8FAF5 /* MapViewCollout.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewCollout.xib; sourceTree = "<group>"; };
@@ -178,6 +180,12 @@
 		5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TenantHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewUnitViewController.swift; sourceTree = "<group>"; };
 		5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantViewCell.swift; sourceTree = "<group>"; };
+		5D349DAA1F8F84C400641E1F /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5D349DAB1F8F84C400641E1F /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5D349DAE1F8F84DC00641E1F /* AddClientWithAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddClientWithAddressTableViewCell.swift; sourceTree = "<group>"; };
+		5D349DB01F8F84EC00641E1F /* AddNewClientWithAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewClientWithAddressViewController.swift; sourceTree = "<group>"; };
+		5D349DB21F8F850000641E1F /* AddNewClientHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewClientHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		5D349DB31F8F850000641E1F /* AddNewClientHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddNewClientHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewIssueViewController.swift; sourceTree = "<group>"; };
 		5D4C4E651F3C454500284725 /* CaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseViewController.swift; sourceTree = "<group>"; };
 		5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -414,8 +422,8 @@
 		5DADD8791F074F72009CD89E /* GeneratedEntityClass */ = {
 			isa = PBXGroup;
 			children = (
-				5D01D41E1F7A84A900B3F8F6 /* Tenant+CoreDataClass.swift */,
-				5D01D41F1F7A84A900B3F8F6 /* Tenant+CoreDataProperties.swift */,
+				5D349DAA1F8F84C400641E1F /* Tenant+CoreDataClass.swift */,
+				5D349DAB1F8F84C400641E1F /* Tenant+CoreDataProperties.swift */,
 				5DBF2EE31F75044000B1A0D9 /* EditUnit+CoreDataClass.swift */,
 				5DBF2EE41F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift */,
 				5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */,
@@ -437,6 +445,7 @@
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5D349DB01F8F84EC00641E1F /* AddNewClientWithAddressViewController.swift */,
 				5DCEA6151F78CA1B0053FFF3 /* AddressViewController.swift */,
 				5D00F0D51F6ED5EE00FF7523 /* ExistingClientsViewController.swift */,
 				5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */,
@@ -531,6 +540,8 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5D349DB21F8F850000641E1F /* AddNewClientHeaderTableViewCell.swift */,
+				5D349DB31F8F850000641E1F /* AddNewClientHeaderTableViewCell.xib */,
 				5D00F0D71F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.swift */,
 				5D00F0D81F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.xib */,
 				5D65D4DF1F3015FC00302CE8 /* IssueHeaderTableViewCell.swift */,
@@ -584,6 +595,7 @@
 		5DE3C9651EEFE71700012C47 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				5D349DAE1F8F84DC00641E1F /* AddClientWithAddressTableViewCell.swift */,
 				5D65D4E51F30165A00302CE8 /* IssueTableViewCell.swift */,
 				5D65D4D31F2E45A000302CE8 /* DateTimeTableViewCell.swift */,
 				5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */,
@@ -758,6 +770,7 @@
 				5DA15B431F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				5DA15B491F2B572500EB90DC /* ClientDataTableViewCell.xib in Resources */,
+				5D349DB51F8F850000641E1F /* AddNewClientHeaderTableViewCell.xib in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
 				5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */,
@@ -875,7 +888,6 @@
 				5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */,
 				5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */,
 				5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */,
-				5D01D4211F7A84A900B3F8F6 /* Tenant+CoreDataProperties.swift in Sources */,
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
 				5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
@@ -899,6 +911,7 @@
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
 				18125DFD1F7E75A900298C70 /* AGSExtensions.swift in Sources */,
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
+				5D349DB11F8F84EC00641E1F /* AddNewClientWithAddressViewController.swift in Sources */,
 				5D757B1A1F18A38100308C05 /* DownloadProgressView.swift in Sources */,
 				5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */,
 				5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */,
@@ -916,6 +929,8 @@
 				5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */,
 				5DA15B451F2B32BF00EB90DC /* CaseTableViewCell.swift in Sources */,
 				5DBF2EE51F75044000B1A0D9 /* EditUnit+CoreDataClass.swift in Sources */,
+				5D349DB41F8F850000641E1F /* AddNewClientHeaderTableViewCell.swift in Sources */,
+				5D349DAF1F8F84DC00641E1F /* AddClientWithAddressTableViewCell.swift in Sources */,
 				5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5D65D4E61F30165A00302CE8 /* IssueTableViewCell.swift in Sources */,
@@ -928,6 +943,7 @@
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
 				5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */,
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
+				5D349DAD1F8F84C400641E1F /* Tenant+CoreDataProperties.swift in Sources */,
 				5D65D4DE1F3015EE00302CE8 /* IssueViewController.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
 				5D52F94E1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift in Sources */,
@@ -960,7 +976,6 @@
 				5DE3C9A41EF7CBF300012C47 /* SurveyMultiOptionViewController.swift in Sources */,
 				5D4C4E661F3C454500284725 /* CaseViewController.swift in Sources */,
 				5D65D4D81F2E45A900302CE8 /* MultiPickListViewController.swift in Sources */,
-				5D01D4201F7A84A900B3F8F6 /* Tenant+CoreDataClass.swift in Sources */,
 				5DC8C7341F28948700B57044 /* SortingButton.swift in Sources */,
 				5DE3C9A51EF7CBF300012C47 /* SurveyRadioOptionViewController.swift in Sources */,
 				5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */,
@@ -975,6 +990,7 @@
 				5DC8C72B1F25D2F900B57044 /* ClientsTableViewCell.swift in Sources */,
 				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
 				5DBF2EE61F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift in Sources */,
+				5D349DAC1F8F84C400641E1F /* Tenant+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

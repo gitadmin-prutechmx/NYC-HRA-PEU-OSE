@@ -35,7 +35,8 @@ class SurveyTextViewController: UIViewController {
         
          self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-        let rightExitSurveyBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
+        let rightExitSurveyBarButtonItem =  UIBarButtonItem(title: "Exit Survey", style: .plain, target: self, action: #selector(SurveyTextViewController.exitFromSurvey))
+        
         
         self.navigationItem.rightBarButtonItem  = rightExitSurveyBarButtonItem
 
