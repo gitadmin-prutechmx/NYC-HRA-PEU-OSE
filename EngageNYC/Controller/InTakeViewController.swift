@@ -343,7 +343,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.name.text = clientDataArray[indexPath.row].name
             cell.age.text = clientDataArray[indexPath.row].age
             cell.tenantId.text = clientDataArray[indexPath.row].clientId
-            
+            cell.sourceList.text = clientDataArray[indexPath.row].sourceList
             cell.editBtn.tag = indexPath.row
             
             

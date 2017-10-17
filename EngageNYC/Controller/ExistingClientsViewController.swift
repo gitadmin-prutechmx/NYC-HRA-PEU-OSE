@@ -630,9 +630,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
         
         if isFiltered
-            
-            
-            
+         
         {
             
             
@@ -644,10 +642,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             if((filteredTableData[indexPath.row] as! ClientDataStruct).phone.isEmpty){
                 
                 
-                
                 cell.phone.text = "                        "
-                
-                
                 
             }
                 
@@ -674,7 +669,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             
             cell.clientId.text = (filteredTableData[indexPath.row] as! ClientDataStruct).tenantId
-            
+            cell.sourceList.text = (filteredTableData[indexPath.row] as! ClientDataStruct).sourceList
             
             cell.unit.text = (filteredTableData[indexPath.row] as! ClientDataStruct).unitName
             
@@ -685,17 +680,10 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         }
             
             
-            
-            
-            
-            
-            
         else
-            
-            
+          
             
         {
-            
             
             
             cell.name.text = existingClientsDataArray[indexPath.row].name
@@ -712,8 +700,6 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
             }
                 
-                
-                
             else{
                 
                 
@@ -728,8 +714,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             cell.age.text = existingClientsDataArray[indexPath.row].age
             
-            
-            
+            cell.sourceList.text = existingClientsDataArray[indexPath.row].age
             cell.email.text = existingClientsDataArray[indexPath.row].email
             
             
@@ -765,19 +750,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
             {
                 
-                
-                
-                
-                
-                
-                
                 cell.backgroundColor = UIColor.clear//UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1)
-                
-                
-                
-                
-                
-                
                 
                 cell.existingClientView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1)
                 
@@ -797,23 +770,12 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
             }
                 
-                
-                
-                
-                
-                
-                
+       
             else
                 
                 
                 
             {
-                
-                
-                
-                
-                
-                
                 
                 cell.existingClientView.backgroundColor = UIColor.white
                 
@@ -828,11 +790,6 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
                 
                 cell.isSelected = false
-                
-                
-                
-                
-                
                 
                 
             }
