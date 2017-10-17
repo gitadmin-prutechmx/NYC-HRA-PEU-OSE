@@ -44,6 +44,8 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
         
+     
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +53,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         //populateExistingClientData()
         populateVirtualUnitClientData()
     }
+    
     
     func populateVirtualUnitClientData(){
         
@@ -76,8 +79,16 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                     
-                    if(unitObject != nil){
-                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
+                    if(unitObject != nil)
+                    {
+                        var srcList = ""
+                        
+                        if let tempSrcList=tenantData.sourceList
+                        {
+                            srcList = tempSrcList
+                            
+                        }
+                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:srcList)
                         
                         
                         existingClientsDataArray.append(objectTenantStruct)
@@ -126,7 +137,8 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         let clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Tenant]
         
         
-        if(clientResults.count > 0){
+        if(clientResults.count > 0)
+        {
             
             for tenantData in clientResults{
                 
@@ -135,8 +147,16 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                     
-                    if(unitObject != nil){
-                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:"")
+                    if(unitObject != nil)
+                    {
+                        var srcList = ""
+                        
+                        if let tempSrcList=tenantData.sourceList
+                        {
+                            srcList = tempSrcList
+                            
+                        }
+                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:srcList)
                         
                         
                         existingClientsDataArray.append(objectTenantStruct)

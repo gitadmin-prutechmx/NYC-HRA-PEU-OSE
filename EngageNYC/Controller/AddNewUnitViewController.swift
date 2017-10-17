@@ -148,7 +148,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
             
             //self.navigationItem.rightBarButtonItem?.al
             
-            self.view.makeToast("Please fill apartment.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("Please Enter Unit Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                  self.navigationItem.rightBarButtonItem?.isEnabled = true
            

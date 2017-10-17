@@ -25,8 +25,8 @@
 		5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */; };
 		5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */; };
 		5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */; };
-		5D349DA81F8F42F800641E1F /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DA61F8F42F800641E1F /* Tenant+CoreDataClass.swift */; };
-		5D349DA91F8F42F800641E1F /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DA71F8F42F800641E1F /* Tenant+CoreDataProperties.swift */; };
+		5D349DBC1F9598C100641E1F /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DBA1F9598C100641E1F /* Tenant+CoreDataClass.swift */; };
+		5D349DBD1F9598C100641E1F /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DBB1F9598C100641E1F /* Tenant+CoreDataProperties.swift */; };
 		5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */; };
 		5D4C4E661F3C454500284725 /* CaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E651F3C454500284725 /* CaseViewController.swift */; };
 		5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */; };
@@ -181,8 +181,8 @@
 		5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TenantHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewUnitViewController.swift; sourceTree = "<group>"; };
 		5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantViewCell.swift; sourceTree = "<group>"; };
-		5D349DA61F8F42F800641E1F /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D349DA71F8F42F800641E1F /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5D349DBA1F9598C100641E1F /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5D349DBB1F9598C100641E1F /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewIssueViewController.swift; sourceTree = "<group>"; };
 		5D4C4E651F3C454500284725 /* CaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseViewController.swift; sourceTree = "<group>"; };
 		5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -426,8 +426,8 @@
 		5DADD8791F074F72009CD89E /* GeneratedEntityClass */ = {
 			isa = PBXGroup;
 			children = (
-				5D349DA61F8F42F800641E1F /* Tenant+CoreDataClass.swift */,
-				5D349DA71F8F42F800641E1F /* Tenant+CoreDataProperties.swift */,
+				5D349DBA1F9598C100641E1F /* Tenant+CoreDataClass.swift */,
+				5D349DBB1F9598C100641E1F /* Tenant+CoreDataProperties.swift */,
 				5DBF2EE31F75044000B1A0D9 /* EditUnit+CoreDataClass.swift */,
 				5DBF2EE41F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift */,
 				5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */,
@@ -908,7 +908,7 @@
 				5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */,
 				5DA15B4D1F2B59BD00EB90DC /* UnitDataTableViewCell.swift in Sources */,
 				5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */,
-				5D349DA91F8F42F800641E1F /* Tenant+CoreDataProperties.swift in Sources */,
+				5D349DBD1F9598C100641E1F /* Tenant+CoreDataProperties.swift in Sources */,
 				5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */,
 				5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */,
 				5DA15B421F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift in Sources */,
@@ -947,7 +947,7 @@
 				5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */,
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
 				5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */,
-				5D349DA81F8F42F800641E1F /* Tenant+CoreDataClass.swift in Sources */,
+				5D349DBC1F9598C100641E1F /* Tenant+CoreDataClass.swift in Sources */,
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
 				5D65D4DE1F3015EE00302CE8 /* IssueViewController.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,

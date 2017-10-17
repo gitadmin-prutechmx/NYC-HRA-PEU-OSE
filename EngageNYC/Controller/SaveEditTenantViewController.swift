@@ -53,15 +53,22 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     var middleName:String = ""
     
     var suffix:String = ""
-    
     var editTenantDict : [String:String] = [:]
+    
+    var isSurveyAddClient : Bool = false
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         
-        if(SalesforceConnection.isNewContactWithAddress){
+        
+        orientationChanged()
+        
+        print(self.preferredContentSize)
+        
+        if(SalesforceConnection.isNewContactWithAddress)
+        {
             
             self.navigationItem.rightBarButtonItem =  nil
             
@@ -69,7 +76,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         }
-        else{
+        else
+        {
             self.navigationItem.rightBarButtonItem =  nil
             
             let rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(SaveEditTenantViewController.saveAction))
@@ -77,6 +85,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             self.navigationItem.rightBarButtonItem  = rightBarButtonItem
             
         }
+        
         
         picker.backgroundColor = .white
         
@@ -132,6 +141,59 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
     }
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    func orientationChanged() -> Void
+    {
+       if(isSurveyAddClient)
+       {
+        if UIDevice.current.orientation.isLandscape
+        {
+            print("Landscape")
+            self.view.superview?.center = self.view.center;
+            print(self.preferredContentSize)
+            print(self.view.superview?.frame)
+        }
+        else
+        {
+            print("Portrait")
+            self.view.superview?.center = self.view.center;
+            print(self.preferredContentSize)
+            print(self.view.superview?.frame)
+
+        }
+        
+        
+       }
+        
+        
+       else
+       {
+        if UIDevice.current.orientation.isLandscape
+        {
+            print("Landscape")
+            self.view.superview?.center = self.view.center;
+            self.preferredContentSize = CGSize(width: 620, height: 540)
+            print(self.preferredContentSize)
+        }
+        else
+        {
+            print("Portrait")
+            self.view.superview?.center = self.view.center;
+            self.preferredContentSize = CGSize(width: 540, height: 620)
+            print(self.preferredContentSize)
+        }
+
+        }
+       self.view.setNeedsLayout()
+       self.view.layoutIfNeeded()
+    }
+    
+        
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
         if(textField == phoneTextField){
@@ -376,14 +438,20 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     func nextAction()
     {
-        if(validateClientInfo()){
-            
+        if(validateClientInfo())
+        {
             
             let viewController = self.storyboard!.instantiateViewController(withIdentifier: "addressViewIdentifier") as? AddressViewController
             
             viewController?.clientObj = ClientDO(firstName: firstName, lastName: lastName, middleName: middleName, suffix: suffix, phone: phone, email: email, dob: dob,age:age)
             
-            
+            txtDob.resignFirstResponder()
+            lastNameTxtField.resignFirstResponder()
+            txtMiddleName.resignFirstResponder()
+            txtSuffix.resignFirstResponder()
+            emailTxtField.resignFirstResponder()
+            phoneTextField.resignFirstResponder()
+            firstNameTxtField.resignFirstResponder()
             self.navigationController!.pushViewController(viewController!, animated: true)
         }
     }
@@ -498,7 +566,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
         }
         
-        if let emailTemp = emailTxtField.text{
+        if let emailTemp = emailTxtField.text
+        {
             
             email = emailTemp
             
@@ -647,8 +716,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.zip = ""
         tenantObject.aptNo = ""
         tenantObject.aptFloor = ""
-        tenantObject.assignmentLocId = ""
-       
+        tenantObject.assignmentLocId = SalesforceConnection.assignmentLocationId
+        tenantObject.sourceList = ""
 
         
         appDelegate.saveContext()
@@ -688,7 +757,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         updateObjectDic["unitId"] = SalesforceConnection.unitId
         
-        
+        updateObjectDic["sourceList"] = ""
         let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
         
         if(tenantResults.count > 0){
@@ -789,12 +858,47 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
      return false
      }
      
+     func orientationChanged() -> Void
+     {
      
+     if UIDevice.current.orientation.isLandscape
+     {
+     print("Landscape")
+     self.view.superview?.frame = CGRect(x: 0, y: 0, width: 880, height: 590)
+     self.view.superview?.center = self.view.center;
+     //self.preferredContentSize = CGSize(width: 880, height: 570)
+     print(self.preferredContentSize)
+     }
+     else
+     {
+     print("Portrait")
+     self.view.superview?.frame = CGRect(x: 0, y: 0, width: 700, height: 700)
+     self.view.superview?.center = self.view.center;
+     // self.preferredContentSize = CGSize(width: 700, height: 800)
+     print(self.preferredContentSize)
+     }
+     
+     self.view.setNeedsLayout()
+     self.view.layoutIfNeeded()
+     }
+
      return string == numberFiltered
      }
      
      */
     
+    /*if isSurveyAddClient
+     {
+     // self.view.superview?.frame = CGRect(x: 0, y: 0, width: 700, height: 700)
+     // self.view.superview?.center = self.view.center;
+     
+     self.preferredContentSize = CGSize(width: 700, height: 800)
+     }
+     else
+     {
+     self.preferredContentSize = CGSize(width: 540, height: 620)
+     }*/
+   
 }
 
 
