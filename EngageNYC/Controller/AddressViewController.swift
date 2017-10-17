@@ -127,7 +127,8 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             
         }
-        else{
+        else
+        {
             
             unitTextField.text = unitName
             unitTextField.isEnabled = true
@@ -140,10 +141,10 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         boroughTxtField.resignFirstResponder()
         
     }
+    
     func canclePicker()
     {
         boroughTxtField.resignFirstResponder()
-        
     }
     
     func saveAction()
@@ -158,7 +159,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         aptNo = ""
         unitName = ""
-      
+        
         
         if(loctionSwitch.isOn){
             
@@ -171,7 +172,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
                 unitView.shake()
                 
-                self.view.makeToast("Please enter Unit Name", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please Enter Unit Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                     if didTap {
                         print("Completion with tap")
@@ -201,7 +202,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
             }
             
-           aptNo = unitName
+            aptNo = unitName
             
         }
         else{
@@ -227,7 +228,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             if let tempAptFloor = aptFloorTxtField.text{
                 aptFloor = tempAptFloor
             }
-           
+            
             
             
             if(streetNum.isEmpty){
@@ -339,7 +340,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
                 aptNoView.shake()
                 
-                self.view.makeToast("Please enter apartment number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please Enter Unit Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                     if didTap {
                         print("Completion with tap")
@@ -369,7 +370,9 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateNoUnitClientView"), object: nil)
             
-          
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
+            
             self.dismiss(animated: true, completion: nil)
             
             
@@ -388,7 +391,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         clientObject.id = UUID().uuidString
         
- 
+        
         clientObject.name = clientObj.firstName + " " + clientObj.lastName
         clientObject.firstName = clientObj.firstName
         clientObject.lastName = clientObj.lastName
@@ -413,23 +416,89 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         clientObject.actionStatus = "create"
         
-        clientObject.assignmentId = ""
+        clientObject.virtualUnit = "false"
         
-        clientObject.locationId = ""
         
-        clientObject.unitId = ""
+        clientObject.assignmentId = SalesforceConnection.assignmentId
         
-        clientObject.assignmentLocUnitId = ""
+        clientObject.locationId = SalesforceConnection.locationId
         
         clientObject.assignmentLocId = SalesforceConnection.assignmentLocationId
         
-        //clientObject.unitName = unitName
+        clientObject.sourceList = ""
+        
+        
+        if(loctionSwitch.isOn){
+            
+            var iOSUnitId = UUID().uuidString
+            var iOSAssignmentLocUnitId = UUID().uuidString
+            
+            //create new unit
+            createNewUnit(aptNo: aptNo,iOSUnitId:iOSUnitId,iOSAssignmentLocUnitId: iOSAssignmentLocUnitId)
+            
+            clientObject.unitId = iOSUnitId
+            
+            clientObject.assignmentLocUnitId = iOSAssignmentLocUnitId
+            
+        }
+        else{
+            clientObject.unitId = ""
+            
+            clientObject.assignmentLocUnitId = ""
+            
+        }
+        
+        
         
         appDelegate.saveContext()
         
         
         
     }
+    
+    func createNewUnit(aptNo:String,iOSUnitId:String,iOSAssignmentLocUnitId:String){
+        
+        let unitObject = Unit(context: context)
+        
+        unitObject.id = iOSUnitId
+        
+        unitObject.assignmentLocUnitId = iOSAssignmentLocUnitId
+        
+        
+        
+        unitObject.locationId = SalesforceConnection.locationId
+        
+        unitObject.assignmentLocId = SalesforceConnection.assignmentLocationId
+        
+        
+        
+        unitObject.name =  aptNo
+        
+        unitObject.apartment = aptNo
+        
+        unitObject.notes = ""
+        
+        unitObject.assignmentId = SalesforceConnection.assignmentId
+        
+        if(aptNo == "PHMain" || aptNo == "PH/Main"){
+            unitObject.privateHome =  "Yes"
+        }
+        else{
+            unitObject.privateHome =  "No"
+        }
+        
+        
+        unitObject.virtualUnit = "false"
+        
+        
+        unitObject.actionStatus = "create"
+        
+        unitObject.surveyStatus = ""
+        unitObject.unitSyncDate = ""
+        
+        appDelegate.saveContext()
+    }
+    
     
     override func didReceiveMemoryWarning()
     {
@@ -451,6 +520,12 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             self.boroughTxtField.resignFirstResponder()
+             self.unitTextField.resignFirstResponder()
+            self.streetNumTxtField.resignFirstResponder()
+            self.streetNameTxtField.resignFirstResponder()
+            self.zipTxtField.resignFirstResponder()
+            self.aptTextField.resignFirstResponder()
+            self.aptFloorTxtField.resignFirstResponder()
             // self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)
         }

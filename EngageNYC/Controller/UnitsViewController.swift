@@ -361,8 +361,16 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                 
-                if(unitObject != nil){
-                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
+                if(unitObject != nil)
+                {
+                    var srcList = ""
+                    
+                    if let tempSrcList=tenantData.sourceList
+                    {
+                        srcList = tempSrcList
+                        
+                    }
+                    let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:srcList)
                 
                     clientDataArray.append(objectTenantStruct)
                 }

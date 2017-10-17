@@ -69,20 +69,18 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
         
         clientDataArray = [ClientNoUnitDataStruct]()
         
-        
-        clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentLocId == %@" ,predicateValue: SalesforceConnection.assignmentLocationId,isPredicate:true) as! [Tenant]
-        
+        clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentLocId == %@ && assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentLocationId,predicateValue2: SalesforceConnection.assignmentId, isPredicate:true) as! [Tenant]
         
         if(clientResults.count > 0){
             
             for clientData in clientResults{
                 
-                if (clientData.unitId!.isEmpty){
+                //if (clientData.unitId!.isEmpty){
                     
                     let objectClientStruct:ClientNoUnitDataStruct = ClientNoUnitDataStruct(clientId: clientData.id!,name: clientData.name!, firstName: clientData.firstName!, lastName: clientData.lastName!, email: clientData.email!, phone: clientData.phone!, age: clientData.age!,dob:clientData.dob!)
                 
                     clientDataArray.append(objectClientStruct)
-                }
+                //}
                 
             }
         }
@@ -180,6 +178,17 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
         
         return 44.0
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "showAddClientIdentifier" {
+            let vc = segue.destination as! UINavigationController
+            let addVC = vc.viewControllers[0]  as! SaveEditTenantViewController
+            print(addVC.preferredContentSize)
+            addVC.isSurveyAddClient = false
+        }
+    }
+
 
     @IBAction func btnCancelAction(_ sender: Any)
     {
@@ -188,6 +197,7 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
     
     @IBAction func addNewClientAction(_ sender: Any)
     {
+        
        self.performSegue(withIdentifier: "showAddClientIdentifier", sender: nil)
     }
 

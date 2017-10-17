@@ -44,6 +44,8 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
         
+     
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +53,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         //populateExistingClientData()
         populateVirtualUnitClientData()
     }
+    
     
     func populateVirtualUnitClientData(){
         
@@ -76,8 +79,16 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                     
-                    if(unitObject != nil){
-                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:tenantData.sourceList!)
+                    if(unitObject != nil)
+                    {
+                        var srcList = ""
+                        
+                        if let tempSrcList=tenantData.sourceList
+                        {
+                            srcList = tempSrcList
+                            
+                        }
+                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:srcList)
                         
                         
                         existingClientsDataArray.append(objectTenantStruct)
@@ -126,7 +137,8 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         let clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Tenant]
         
         
-        if(clientResults.count > 0){
+        if(clientResults.count > 0)
+        {
             
             for tenantData in clientResults{
                 
@@ -135,8 +147,16 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                     
                     let unitObject = Utilities.unitClientDict[tenantData.unitId!]
                     
-                    if(unitObject != nil){
-                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:"")
+                    if(unitObject != nil)
+                    {
+                        var srcList = ""
+                        
+                        if let tempSrcList=tenantData.sourceList
+                        {
+                            srcList = tempSrcList
+                            
+                        }
+                        let objectTenantStruct:ClientDataStruct = ClientDataStruct(tenantId: tenantData.id!,name: tenantData.name!, firstName: tenantData.firstName!, lastName: tenantData.lastName!, email: tenantData.email!, phone: tenantData.phone!, age: tenantData.age!,dob:tenantData.dob!,unitId:tenantData.unitId!,assignmentLocUnitId:tenantData.assignmentLocUnitId!,unitName:(unitObject?.unitName)!,surveyStatus:(unitObject?.surveyStatus)!,isVirtualUnit:tenantData.virtualUnit!,apartment:tenantData.aptNo!,sourceList:srcList)
                         
                         
                         existingClientsDataArray.append(objectTenantStruct)
@@ -610,9 +630,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
         
         if isFiltered
-            
-            
-            
+         
         {
             
             
@@ -624,10 +642,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             if((filteredTableData[indexPath.row] as! ClientDataStruct).phone.isEmpty){
                 
                 
-                
                 cell.phone.text = "                        "
-                
-                
                 
             }
                 
@@ -654,7 +669,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             
             cell.clientId.text = (filteredTableData[indexPath.row] as! ClientDataStruct).tenantId
-            
+            cell.sourceList.text = (filteredTableData[indexPath.row] as! ClientDataStruct).sourceList
             
             cell.unit.text = (filteredTableData[indexPath.row] as! ClientDataStruct).unitName
             
@@ -665,17 +680,10 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         }
             
             
-            
-            
-            
-            
-            
         else
-            
-            
+          
             
         {
-            
             
             
             cell.name.text = existingClientsDataArray[indexPath.row].name
@@ -692,8 +700,6 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
             }
                 
-                
-                
             else{
                 
                 
@@ -708,8 +714,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             cell.age.text = existingClientsDataArray[indexPath.row].age
             
-            
-            
+            cell.sourceList.text = existingClientsDataArray[indexPath.row].sourceList
             cell.email.text = existingClientsDataArray[indexPath.row].email
             
             
@@ -745,19 +750,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
             {
                 
-                
-                
-                
-                
-                
-                
                 cell.backgroundColor = UIColor.clear//UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1)
-                
-                
-                
-                
-                
-                
                 
                 cell.existingClientView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1)
                 
@@ -777,23 +770,12 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
             }
                 
-                
-                
-                
-                
-                
-                
+       
             else
                 
                 
                 
             {
-                
-                
-                
-                
-                
-                
                 
                 cell.existingClientView.backgroundColor = UIColor.white
                 
@@ -808,11 +790,6 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 
                 
                 cell.isSelected = false
-                
-                
-                
-                
-                
                 
                 
             }

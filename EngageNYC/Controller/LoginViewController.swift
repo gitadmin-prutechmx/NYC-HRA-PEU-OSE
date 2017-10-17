@@ -205,7 +205,7 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
             
             settingData.settingsId = "1"
             
-            settingData.forgotPasswordUrl = "http://uat-uat.cs32.force.com/Core_Forgot_Password_Page"
+            settingData.forgotPasswordUrl = "https://dev-providers.cs33.force.com/Core_Forgot_Password_Page"
             
             settingData.offlineSyncTime = "2"
             
@@ -232,16 +232,16 @@ class LoginViewController: UIViewController,DownloadProgressViewDelegate {
         if(salesforceConfigData.count == 0){
             
             //Dev environment
-//            let companyName = "PEU"
-//            let endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
-//            let clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
-//            let clientSecret = "5050630969965231251"
+            let companyName = "PEU"
+            let endPointUrl = "https://nyc-mayorpeu--dev.cs33.my.salesforce.com"
+            let clientId = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN"
+            let clientSecret = "5050630969965231251"
             
             //UAT environment
-            let companyName = "PEU"
-            let endPointUrl = "https://nyc-mayorpeu--uat.cs32.my.salesforce.com"
-            let clientId = "3MVG9ic.6IFhNpPr8GIEr8R0j25Wf7FJvQXGFDGTgWUsgBwOUUKxTOeyCltrF0fWu9kYbv3OQyqiQDdGdO6OA"
-            let clientSecret = "6143163716371648599"
+//            let companyName = "PEU"
+//            let endPointUrl = "https://nyc-mayorpeu--uat.cs32.my.salesforce.com"
+//            let clientId = "3MVG9ic.6IFhNpPr8GIEr8R0j25Wf7FJvQXGFDGTgWUsgBwOUUKxTOeyCltrF0fWu9kYbv3OQyqiQDdGdO6OA"
+//            let clientSecret = "6143163716371648599"
             
             
             
