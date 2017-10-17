@@ -714,7 +714,7 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
             
             cell.age.text = existingClientsDataArray[indexPath.row].age
             
-            cell.sourceList.text = existingClientsDataArray[indexPath.row].age
+            cell.sourceList.text = existingClientsDataArray[indexPath.row].sourceList
             cell.email.text = existingClientsDataArray[indexPath.row].email
             
             
