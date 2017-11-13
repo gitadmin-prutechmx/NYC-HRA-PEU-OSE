@@ -30,6 +30,7 @@ class SalesforceConfig{
     static var currentOfflineSyncTime:Int = 2
     static var currentBaseMapDate:NSDate!
     static var currentBackgroundDate:Date!
+    static var currentGeodatabaseUrl:String = ""
     
     static var isBaseMapNeedToDownload:Bool!
     

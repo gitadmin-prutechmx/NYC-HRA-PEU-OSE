@@ -160,6 +160,37 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         }
         
         
+        apartmentNumberVal = apartmentNumberVal.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+
+        
+        let unitRes = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "assignmentId == %@ && locationId == %@" ,predicateValue: SalesforceConnection.assignmentId, predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Unit]
+        
+        if(unitRes.count > 0){
+            
+            for unitData in unitRes
+            {
+                if(unitData.name?.lowercased() == apartmentNumberVal.lowercased()){
+                    
+                    apartmentView.shake()
+                    
+                    
+                    self.view.makeToast("This Unit Number already exist.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        self.navigationItem.rightBarButtonItem?.isEnabled = true
+                        
+                    }
+                    
+                    
+                    return
+                }
+            }
+           
+
+        }
+
+        
+        
         if let notesTemp = notesTextArea.text{
             
             notesVal = notesTemp
@@ -254,6 +285,11 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         
         unitObject.surveyStatus = ""
         unitObject.unitSyncDate = ""
+        
+        
+        unitObject.iOSUnitId = saveUnitDict["iOSLocUnitId"]
+        
+        unitObject.iOSAssigLocUnitId = saveUnitDict["iOSAssignmentLocUnitId"]
         
         appDelegate.saveContext()
     }

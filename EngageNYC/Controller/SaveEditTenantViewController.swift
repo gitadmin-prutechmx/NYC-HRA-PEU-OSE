@@ -63,7 +63,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         
         
-        orientationChanged()
+       // orientationChanged()
         
         print(self.preferredContentSize)
         
@@ -149,51 +149,51 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     func orientationChanged() -> Void
     {
-       if(isSurveyAddClient)
-       {
-        if UIDevice.current.orientation.isLandscape
+        if(isSurveyAddClient)
         {
-            print("Landscape")
-            self.view.superview?.center = self.view.center;
-            print(self.preferredContentSize)
-            print(self.view.superview?.frame)
+            if UIDevice.current.orientation.isLandscape
+            {
+                print("Landscape")
+                self.view.superview?.center = self.view.center;
+                print(self.preferredContentSize)
+                print(self.view.superview?.frame)
+            }
+            else
+            {
+                print("Portrait")
+                self.view.superview?.center = self.view.center;
+                print(self.preferredContentSize)
+                print(self.view.superview?.frame)
+                
+            }
+            
+            
         }
+            
+            
         else
         {
-            print("Portrait")
-            self.view.superview?.center = self.view.center;
-            print(self.preferredContentSize)
-            print(self.view.superview?.frame)
-
+            if UIDevice.current.orientation.isLandscape
+            {
+                print("Landscape")
+                self.view.superview?.center = self.view.center;
+                self.preferredContentSize = CGSize(width: 540, height: 620)
+                print(self.preferredContentSize)
+            }
+            else
+            {
+                print("Portrait")
+                self.view.superview?.center = self.view.center;
+                self.preferredContentSize = CGSize(width: 540, height: 620)
+                print(self.preferredContentSize)
+            }
+            
         }
-        
-        
-       }
-        
-        
-       else
-       {
-        if UIDevice.current.orientation.isLandscape
-        {
-            print("Landscape")
-            self.view.superview?.center = self.view.center;
-            self.preferredContentSize = CGSize(width: 620, height: 540)
-            print(self.preferredContentSize)
-        }
-        else
-        {
-            print("Portrait")
-            self.view.superview?.center = self.view.center;
-            self.preferredContentSize = CGSize(width: 540, height: 620)
-            print(self.preferredContentSize)
-        }
-
-        }
-       self.view.setNeedsLayout()
-       self.view.layoutIfNeeded()
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
     }
     
-        
+    
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
         if(textField == phoneTextField){
@@ -206,7 +206,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     func textFieldDidEndEditing(_ textField: UITextField)
     {
-         if(textField == phoneTextField){
+        if(textField == phoneTextField){
             let phoneNum = phoneTextField.text
             let phone = phoneNum?.toPhoneNumber()
             phoneTextField.text = phone!
@@ -249,7 +249,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             guard let text = firstNameTxtField.text else { return true }
             let newLength = text.characters.count + string.characters.count - range.length
             return newLength <= 40 // Bool
-
+            
         }
         else if textField == lastNameTxtField{
             
@@ -409,16 +409,16 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
-             self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             
-//            if(SalesforceConnection.isNewContactWithAddress){
-//                
-//                self.dismiss(animated: true, completion: nil)
-//            }
-//            else{
-//                
-//                self.navigationController?.popViewController(animated: true);
-//            }
+            //            if(SalesforceConnection.isNewContactWithAddress){
+            //
+            //                self.dismiss(animated: true, completion: nil)
+            //            }
+            //            else{
+            //
+            //                self.navigationController?.popViewController(animated: true);
+            //            }
             //Do some other stuff
         }
         alertCtrl.addAction(okAction)
@@ -626,7 +626,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
             age = String(ageComponents.year!)
         }
-
+        
     }
     
     
@@ -655,9 +655,9 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
                 
-                 self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
                 
-               // self.navigationController?.popViewController(animated: true);
+                // self.navigationController?.popViewController(animated: true);
                 
                 
             }
@@ -695,6 +695,9 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.actionStatus = "create"
         
         
+        tenantObject.iOSTenantId = tenantObject.id
+        
+        
         tenantObject.assignmentId = SalesforceConnection.assignmentId
         
         tenantObject.locationId = SalesforceConnection.locationId
@@ -710,15 +713,34 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.contactOutcome = ""
         tenantObject.notes = ""
         
-        tenantObject.streetNum = ""
-        tenantObject.streetName = ""
-        tenantObject.borough = ""
-        tenantObject.zip = ""
-        tenantObject.aptNo = ""
+        
+        var streetNum:String = ""
+        var streetName:String = ""
+        var borough:String = ""
+        var zip:String = ""
+      //  var aptFloor:String = ""
+        
+        let locationData = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Location]
+        
+        if(locationData.count > 0){
+            
+            streetName = locationData[0].streetName!
+            streetNum = locationData[0].streetNumber!
+            borough = locationData[0].borough!
+            zip = locationData[0].zip!
+            
+        }
+
+        
+        tenantObject.streetNum = streetNum
+        tenantObject.streetName = streetName
+        tenantObject.borough = borough
+        tenantObject.zip = zip
+        tenantObject.aptNo = SalesforceConnection.unitName
         tenantObject.aptFloor = ""
         tenantObject.assignmentLocId = SalesforceConnection.assignmentLocationId
         tenantObject.sourceList = ""
-
+        
         
         appDelegate.saveContext()
         
@@ -758,6 +780,32 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         updateObjectDic["unitId"] = SalesforceConnection.unitId
         
         updateObjectDic["sourceList"] = ""
+        
+        var streetNum:String = ""
+        var streetName:String = ""
+        var borough:String = ""
+        var zip:String = ""
+        //  var aptFloor:String = ""
+        
+        let locationData = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Location]
+        
+        if(locationData.count > 0){
+            
+            streetName = locationData[0].streetName!
+            streetNum = locationData[0].streetNumber!
+            borough = locationData[0].borough!
+            zip = locationData[0].zip!
+            
+        }
+        
+         updateObjectDic["streetNum"] = streetNum
+         updateObjectDic["streetName"] = streetName
+         updateObjectDic["borough"] = borough
+         updateObjectDic["zip"] = zip
+         updateObjectDic["aptNo"] =  SalesforceConnection.unitName
+         updateObjectDic["aptFloor"] = ""
+        
+        
         let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
         
         if(tenantResults.count > 0){
@@ -881,7 +929,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
      self.view.setNeedsLayout()
      self.view.layoutIfNeeded()
      }
-
+     
      return string == numberFiltered
      }
      
@@ -898,7 +946,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
      {
      self.preferredContentSize = CGSize(width: 540, height: 620)
      }*/
-   
+    
 }
 
 

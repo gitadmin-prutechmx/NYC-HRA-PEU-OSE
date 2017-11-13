@@ -282,7 +282,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         else if(selectedClientId == "" && clientDiscloseSwitch.isOn == true){
             
-            SalesforceConnection.selectedTenantForSurvey = "empty"
+            SalesforceConnection.selectedTenantForSurvey = ""
             
             self.dismiss(animated: true, completion: nil)
         }

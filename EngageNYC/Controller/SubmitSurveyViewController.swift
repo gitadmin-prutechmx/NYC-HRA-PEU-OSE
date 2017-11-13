@@ -354,76 +354,8 @@ class SubmitSurveyViewController: UIViewController {
         
     }
     
-    func fetchSurveyFromCoreData(){
         
-        let surveyResResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",isPredicate:false) as! [SurveyResponse]
-        
-        if(surveyResResults.count > 0){
-            
-            responseDict["surveyId"] = SalesforceConnection.surveyId as AnyObject?
-            responseDict["response"] = surveyResResults[0].surveyQuestionRes! as AnyObject?
-            
-            
-            formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
-            
-            print(formatString)
-            
-            surveyResponseStr = try! formatString.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-            
-            
-            
-            print(surveyResponseStr)
-            
-            
-        }
-        
-        
-    }
     
-    
-    func sendSurveyToSalesforce(){
-        
-        // Utilities.isSubmitSurvey = true
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-        
-        
-        SVProgressHUD.show(withStatus: "Submit survey response..", maskType: SVProgressHUDMaskType.gradient)
-        
-        SalesforceConnection.loginToSalesforce() { response in
-            
-            if(response)
-            {
-                
-                self.surveyRes["surveyResponseFile"] = self.surveyResponseStr
-                
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.submitSurveyResponse, params: self.surveyRes){ jsonData in
-                    
-                    
-                    
-                    print(jsonData)
-                    
-                    SVProgressHUD.dismiss()
-                    
-                    // Utilities.isSubmitSurvey = true
-                    
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
-                    
-                    
-                    // JLToast.makeText("Survey Response has been submitted successfully.", duration: 3).show()
-                    
-                    
-                    
-                    
-                    
-                }
-            }
-        }
-        
-        
-        
-        
-    }
     
     
     

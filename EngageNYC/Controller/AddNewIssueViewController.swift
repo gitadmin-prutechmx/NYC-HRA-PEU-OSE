@@ -74,7 +74,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         populateIssueNotes()
         
         if(issueNotesArray.count == 0){
-             tblViewIssueNotes.isHidden = true
+            tblViewIssueNotes.isHidden = true
         }
     }
     
@@ -125,7 +125,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     func numberOfSections(in tableView: UITableView) -> Int
     {
-      return 1
+        return 1
     }
     
     // cell height
@@ -225,9 +225,9 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         }
     }
     
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 0.1
-//    }
+    //    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    //        return 0.1
+    //    }
     
     
     
@@ -241,12 +241,12 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
-        
+            
         }
         alertCtrl.addAction(cancelAction)
         
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
- 
+            
             self.navigationController?.popViewController(animated: true);
             //Do some other stuff
         }
@@ -285,27 +285,27 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
             return
         }
         
-//        if(notes.isEmpty){
-//            
-//            issueView.shake()
-//            
-//            self.view.makeToast("Please enter issue notes.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-//                
-//                if didTap {
-//                    print("Completion with tap")
-//                    
-//                } else {
-//                    print("Completion without tap")
-//                }
-//                
-//                
-//            }
-//            
-//            
-//            return
-//            
-//        }
-//        
+        //        if(notes.isEmpty){
+        //
+        //            issueView.shake()
+        //
+        //            self.view.makeToast("Please enter issue notes.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        //
+        //                if didTap {
+        //                    print("Completion with tap")
+        //
+        //                } else {
+        //                    print("Completion without tap")
+        //                }
+        //
+        //
+        //            }
+        //
+        //
+        //            return
+        //
+        //        }
+        //
         
         
         var msg:String = ""
@@ -364,7 +364,39 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         appDelegate.saveContext()
         
+        if(!(issueObject.notes?.isEmpty)!){
+            saveIssueNotes(issueObject:issueObject)
+        }
         
+        
+    }
+    
+    
+    func saveIssueNotes(issueObject:Issues){
+        let issueNoteObject = IssueNotes(context: context)
+        issueNoteObject.issueId = issueObject.issueId
+        issueNoteObject.notes = issueObject.notes
+        issueNoteObject.action = "Edit"
+        appDelegate.saveContext()
+    }
+    
+    func saveIssueNotesWhenEdit(){
+        let issueNoteObject = IssueNotes(context: context)
+        issueNoteObject.issueId = SalesforceConnection.currentIssueId
+        issueNoteObject.notes = notes
+        issueNoteObject.action = "Edit"
+        
+        appDelegate.saveContext()
+    }
+    
+    func updateIssueNotes(){
+        
+        var updateObjectDic:[String:String] = [:]
+        
+        updateObjectDic["notes"] = notes
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: "IssueNotes", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && action == %@", predicateValue: SalesforceConnection.currentIssueId,predicateValue2: "Edit", isPredicate: true)
         
     }
     
@@ -397,6 +429,16 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@", predicateValue: SalesforceConnection.currentIssueId,isPredicate: true)
         
+        if(!(notes.isEmpty)){
+            let issueNoteResults = ManageCoreData.fetchData(salesforceEntityName: "IssueNotes",predicateFormat: "issueId == %@ && action == %@" ,predicateValue: SalesforceConnection.currentIssueId,predicateValue2: "Edit",isPredicate:true) as! [IssueNotes]
+            
+            if(issueNoteResults.count == 0){
+                saveIssueNotesWhenEdit()
+            }
+            else{
+                updateIssueNotes()
+            }
+        }
         
     }
     

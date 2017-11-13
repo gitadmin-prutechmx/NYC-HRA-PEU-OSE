@@ -14,7 +14,7 @@ class PickListViewController: UIViewController,UITableViewDataSource,UITableView
     var pickListProtocol:PickListProtocol?
     var selectedPickListValue:String = ""
     var picklistStr:String = ""
-    
+    var isReset:Bool =  false
     
     
     var pickListArray: [String]!
@@ -32,6 +32,24 @@ class PickListViewController: UIViewController,UITableViewDataSource,UITableView
         
     }
     
+    @IBAction func resetAction(_ sender: Any) {
+        
+       selectedPickListValue = ""
+       isReset = true
+        
+       self.pickListTblView.reloadData()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        if(isReset){
+          pickListProtocol?.getPickListValue(pickListValue: "")
+        }
+    }
+    
+  
+    
     func populatePickList(){
    
         if(picklistStr != ""){
@@ -39,6 +57,7 @@ class PickListViewController: UIViewController,UITableViewDataSource,UITableView
             
             pickListArray = String(picklistStr.characters.dropLast()).components(separatedBy: ";")
         }
+        
         
         self.pickListTblView.reloadData()
 
