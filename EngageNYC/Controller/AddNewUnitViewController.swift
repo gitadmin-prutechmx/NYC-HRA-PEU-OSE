@@ -83,7 +83,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
     
     @IBAction func cancel(_ sender: Any)
     {
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
         { action -> Void in
@@ -129,7 +129,7 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         var apartmentNumberVal:String = ""
         var notesVal:String = ""
         
-        
+          self.navigationItem.rightBarButtonItem?.isEnabled = false
         
         
         
@@ -144,14 +144,51 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
             
             apartmentView.shake()
             
-            self.view.makeToast("Please fill apartment.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+          
+            
+            //self.navigationItem.rightBarButtonItem?.al
+            
+            self.view.makeToast("Please Enter Unit Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
-            }
+                 self.navigationItem.rightBarButtonItem?.isEnabled = true
+           
+        }
             
             
             return
             
         }
+        
+        
+        apartmentNumberVal = apartmentNumberVal.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+
+        
+        let unitRes = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "assignmentId == %@ && locationId == %@" ,predicateValue: SalesforceConnection.assignmentId, predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Unit]
+        
+        if(unitRes.count > 0){
+            
+            for unitData in unitRes
+            {
+                if(unitData.name?.lowercased() == apartmentNumberVal.lowercased()){
+                    
+                    apartmentView.shake()
+                    
+                    
+                    self.view.makeToast("This Unit Number already exist.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        self.navigationItem.rightBarButtonItem?.isEnabled = true
+                        
+                    }
+                    
+                    
+                    return
+                }
+            }
+           
+
+        }
+
         
         
         if let notesTemp = notesTextArea.text{
@@ -248,6 +285,11 @@ class AddNewUnitViewController: UIViewController,UITextFieldDelegate{
         
         unitObject.surveyStatus = ""
         unitObject.unitSyncDate = ""
+        
+        
+        unitObject.iOSUnitId = saveUnitDict["iOSLocUnitId"]
+        
+        unitObject.iOSAssigLocUnitId = saveUnitDict["iOSAssignmentLocUnitId"]
         
         appDelegate.saveContext()
     }

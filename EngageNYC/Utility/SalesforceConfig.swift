@@ -18,6 +18,7 @@ class SalesforceConfig{
     static var hostUrl:String = ""
     static var userName:String = ""
     static var password:String = ""
+    static var isSavedUserName:String = ""
     
     static var currentUserEmail:String = ""
     static var currentUserContactId:String = ""
@@ -29,6 +30,7 @@ class SalesforceConfig{
     static var currentOfflineSyncTime:Int = 2
     static var currentBaseMapDate:NSDate!
     static var currentBackgroundDate:Date!
+    static var currentGeodatabaseUrl:String = ""
     
     static var isBaseMapNeedToDownload:Bool!
     

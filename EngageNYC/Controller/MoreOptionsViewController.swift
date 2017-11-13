@@ -51,7 +51,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var contact:String = "No"
     var reknockNeeded:String = "No"
     var inTake:String = "No"
-   // var privateHome:String = "No"
+    // var privateHome:String = "No"
     
     var reasonStatus:String = ""
     var contactOutcome:String = ""
@@ -143,14 +143,37 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     
+    func enableNextBtn(){
+        
+        btnNext.isEnabled = true
+        btnNext.alpha = 1
+        
+    }
+    
+    func disableNextBtn(){
+        
+        btnNext.isEnabled = false
+        btnNext.alpha = 0.5
+        
+    }
+    
+    
+    
     func attemptChanged(_ sender: UISwitch) {
         if(sender.isOn){
             attempt = "Yes"
+            
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+                enableNextBtn()
+            }
         }
         else{
             attempt = "No"
+            
+            disableNextBtn()
         }
     }
+    
     
     
     func inTakeChanged(_ sender: UISwitch) {
@@ -161,14 +184,24 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             reasonCell.detailTextLabel?.isEnabled = false
             reasonCell.detailTextLabel?.text = "Select Reason"
             
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+                enableNextBtn()
+            }
+            
             
         }
         else
         {
             inTake = "No"
             reasonCell.detailTextLabel?.isEnabled = true
+            
+            if(reasonCell.detailTextLabel?.text == "Select Reason"){
+                reasonStatus = "Select Reason"
+            }
+            
             reasonCell.detailTextLabel?.text = reasonStatus
             
+            disableNextBtn()
         }
         
     }
@@ -179,11 +212,22 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             contact = "Yes"
             contactOutcomeCell.detailTextLabel?.isEnabled = false
             contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
+            
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+                enableNextBtn()
+            }
+            
         }
         else{
             contact = "No"
             contactOutcomeCell.detailTextLabel?.isEnabled = true
+            
+            if(contactOutcomeCell.detailTextLabel?.text == "Select Outcome"){
+                contactOutcome = "Select Outcome"
+            }
             contactOutcomeCell.detailTextLabel?.text = contactOutcome
+            
+            disableNextBtn()
         }
         
     }
@@ -192,13 +236,25 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(sender.isOn){
             reknockNeeded = "Yes"
+            
+            if(reknockNeeded == "Yes"){
+                disableNextBtn()
+            }
+            
+            
         }
         else{
             reknockNeeded = "No"
+            
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && reknockNeeded == "No"){
+                enableNextBtn()
+            }
+            
+            
         }
     }
     
-  
+    
     func getPickListValue(pickListValue:String){
         
         if(isReasonSelect){
@@ -248,16 +304,17 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     @IBAction func btnNextAction(_ sender: Any)
     {
-        if((attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")) || (attempt == "Yes" && contact == "Yes"  && inTake == "Yes")){
-            
+        // if((attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")) || (attempt == "Yes" && contact == "Yes"  && inTake == "Yes")){
+        
+        if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes"){
             updateUnit()
             
             self.dismiss(animated: true) {
                 
                 if(!self.isSurveyTaken()){
-                     self.getDefaultSurvey()
+                    self.getDefaultSurvey()
                 }
-               
+                
                 self.completionHandler?(self)
                 
                 print("Completion");
@@ -268,11 +325,25 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
         else{
             
+            btnNext.isEnabled = false
+            btnNext.alpha = 0.5
             
             chooseUnitInfoView.shake()
             //updateUnit()
             
             self.view.makeToast("You can only proceed to next step if Attempt , Contact and Reknock selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.btnNext.isEnabled = true
+                self.btnNext.alpha = 1.0
+                
+                print("Completion without tap")
+                
+                //                if didTap {
+                //                    print("Completion with tap")
+                //
+                //                } else {
+                //                    print("Completion without tap")
+                //                }
                 
                 //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
                 
@@ -283,7 +354,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-
+        
     }
     
     
@@ -634,26 +705,29 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(editUnitResults.count > 0){
             
-            if(editUnitResults[0].attempt == ""){
-                editUnitResults[0].attempt = "No"
+            if(editUnitResults[0].attempt == "" || editUnitResults[0].attempt == "No"){
+                attempt =  "No"
             }
-            
-            attempt = editUnitResults[0].attempt!
-            
-            
-            
-            if(editUnitResults[0].isContact == ""){
-                editUnitResults[0].isContact = "No"
+                
+            else{
+                attempt = editUnitResults[0].attempt!
             }
             
             
-            contact = editUnitResults[0].isContact!
+            if(editUnitResults[0].isContact == "" || editUnitResults[0].isContact == "No"){
+                contact = "No"
+            }
+            else{
+                contact = editUnitResults[0].isContact!
+            }
+            
+            
             
             
             
             
             if(editUnitResults[0].reKnockNeeded == ""){
-                editUnitResults[0].reKnockNeeded = "No"
+                //  editUnitResults[0].reKnockNeeded = "No"
             }
             
             
@@ -665,12 +739,12 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             
-            if(editUnitResults[0].inTake == ""){
-                editUnitResults[0].inTake = "No"
+            if(editUnitResults[0].inTake == "" || editUnitResults[0].inTake == "No"){
+                inTake = "No"
             }
-            
-            inTake = editUnitResults[0].inTake!
-            
+            else{
+                inTake = editUnitResults[0].inTake!
+            }
             
             
             if(editUnitResults[0].reason! != ""){
@@ -688,15 +762,27 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             notesTextArea.text = editUnitResults[0].unitNotes
             
             
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+                enableNextBtn()
+            }
+            else{
+                disableNextBtn()
+            }
+            
         }
-       
+        else{
+            
+            disableNextBtn()
+
+        }
+        
     }
     
     
     
     @IBAction func cancel(_ sender: Any)
     {
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
@@ -706,7 +792,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             
-           // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             self.dismiss(animated: true, completion: nil)
         }
@@ -722,7 +808,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(surveyResResultsArr.count > 0){
             
-             let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@" ,predicateValue: surveyResResultsArr[0].surveyId,isPredicate:true) as! [SurveyQuestion]
+            let surveyQuestionResults = ManageCoreData.fetchData(salesforceEntityName: "SurveyQuestion",predicateFormat: "surveyId == %@" ,predicateValue: surveyResResultsArr[0].surveyId,isPredicate:true) as! [SurveyQuestion]
             
             if(surveyQuestionResults.count > 0){
                 
@@ -745,11 +831,11 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         else{
             return false
         }
-
+        
     }
-
     
-   
+    
+    
     //if no survey taken on unit
     func getDefaultSurvey(){
         
@@ -779,9 +865,9 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBAction func save(_ sender: Any) {
         
         
-         updateUnit()
+        updateUnit()
         
-         self.view.makeToast("Unit has been updated successfully. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        self.view.makeToast("Unit has been updated successfully. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
@@ -789,7 +875,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
         }
         
-    
+        
     }
     
     
@@ -810,9 +896,19 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         if(inTake == "Yes"){
             reasonStatus = ""
         }
+        
         if(contact == "Yes"){
             contactOutcome = ""
         }
+        
+        if(contactOutcome == "Select Outcome"){
+            contactOutcome = ""
+        }
+        
+        if(reasonStatus == "Select Reason"){
+            reasonStatus = ""
+        }
+        
         
         if(editUnitResults.count > 0){
             

@@ -8,6 +8,7 @@
 
 import Foundation
 import Crashlytics
+import SalesforceSDKCore
 
 class SyncUtility{
     
@@ -32,62 +33,53 @@ class SyncUtility{
         isPullData = isPullDataFromSFDC
         loginViewController = controller
         
-        SalesforceConnection.loginToSalesforce() {isLoginTrue in
-            
-            if(isLoginTrue){
-                editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
-                
-                unitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [Unit]
-                
-                tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
-                
-                surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "Complete", isPredicate:true) as! [SurveyResponse]
-                
-//                 var surveyResResultsArr1 = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "assignmentLocUnitId == %@" ,predicateValue: "a04r0000002ZDvgAAG", isPredicate:true) as! [SurveyResponse]
-                
-                
-                editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
-                
-                
-                caseResultsArr = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [AddCase]
-                
-                issueResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Issues]
-                
-                
-                if( editLocationResultsArr.count > 0){
-                    updateEditLocData()
-                }
-                else if( unitResultsArr.count > 0){
-                    updateUnitData()
-                }
-                else if( tenantResultsArr.count > 0){
-                    updateTenantData()
-                }
-                else if( surveyResResultsArr.count > 0){
-                    updateSurveyResponseData()
-                }
-                else if( editUnitResultsArr.count > 0){
-                    updateEditUnitData()
-                }
-                else if( caseResultsArr.count > 0){
-                    updateCaseData()
-                }
-                else if( issueResultsArr.count > 0){
-                    updateIssueData()
-                }
-                else{
-                    if(isPullData){
-                        Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
-                    }
-                    else{
-                        Utilities.isBackgroundSync = false
-                    }
-                }
-                
-            }
-            
-            
+        
+        editLocationResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "actionStatus == %@" ,predicateValue: "edit", isPredicate:true) as! [EditLocation]
+        
+        unitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [Unit]
+        
+        tenantResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create", isPredicate:true) as! [Tenant]
+        
+        surveyResResultsArr = ManageCoreData.fetchData(salesforceEntityName: "SurveyResponse",predicateFormat: "actionStatus == %@" ,predicateValue: "Complete", isPredicate:true) as! [SurveyResponse]
+        
+        editUnitResultsArr = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [EditUnit]
+        
+        
+        caseResultsArr = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "actionStatus == %@" ,predicateValue: "create",isPredicate:true) as! [AddCase]
+        
+        issueResultsArr = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@ OR actionStatus == %@" ,predicateValue: "edit",predicateValue2: "create",isPredicate:true) as! [Issues]
+        
+        
+        if( editLocationResultsArr.count > 0){
+            updateEditLocData()
         }
+        else if( unitResultsArr.count > 0){
+            updateUnitData()
+        }
+        else if( tenantResultsArr.count > 0){
+            updateTenantData()
+        }
+        else if( surveyResResultsArr.count > 0){
+            updateSurveyResponseData()
+        }
+        else if( editUnitResultsArr.count > 0){
+            updateEditUnitData()
+        }
+        else if( caseResultsArr.count > 0){
+            updateCaseData()
+        }
+        else if( issueResultsArr.count > 0){
+            updateIssueData()
+        }
+        else{
+            if(isPullData){
+                Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+            }
+            else{
+                Utilities.isBackgroundSync = false
+            }
+        }
+        
     }
     
     
@@ -113,26 +105,37 @@ class SyncUtility{
                 
                 
                 editLoc["location"] = Utilities.jsonToString(json: locDict as AnyObject)!
-                //Utilities.encryptedParams(dictParameters: locDict as AnyObject)
                 
                 
                 
                 
+                //                    var params:[String:AnyObject] = [:]
+                //                    params["externalId"] = "123nik" as AnyObject
+                //
                 
+                let request = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.updateLocation, params: editLoc, methodType: SFRestMethod.POST)
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateLocation, params: editLoc){ jsonData in
+                SFRestAPI.sharedInstance().send(request, fail: {
+                    error in
                     
                     
-                    Utilities.parseEditLocation(jsonObject: jsonData.1)
-                    locGroup.leave()
+                    let errormsg = "SyncUtility:- UpdateEditLocData:- " + String(describing: error)
+                    Utilities.displayErrorMessage(errorMsg: errormsg)
                     
                     
-                    print("locGroup: \(editLocData.notes!)")
+                }, complete: {
+                    response in
+                    
+                    DispatchQueue.main.async {
+                        Utilities.parseEditLocation(jsonObject: response as! Dictionary<String, AnyObject>)
+                        locGroup.leave()
+                        
+                        
+                        print("locGroup: \(editLocData.notes!)")
+                    }
                     
                     
-                    
-                }//login to unit rest api
-                
+                })
                 
             }//end for loop
             
@@ -180,6 +183,7 @@ class SyncUtility{
     
     
     class func updateUnitData(){
+        var isError:Bool = false
         
         let unitGroup = DispatchGroup()
         
@@ -205,17 +209,32 @@ class SyncUtility{
                 //Utilities.encryptedParams(dictParameters: unitDict as AnyObject)
                 
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createUnit, params: saveUnit){ jsonData in
+                
+                let request = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.createUnit, params: saveUnit, methodType: SFRestMethod.POST)
+                
+                SFRestAPI.sharedInstance().send(request, fail: {
+                    error in
                     
                     
                     
-                    _ = Utilities.parseAddNewUnitResponse(jsonObject: jsonData.1)
+                    let errormsg = "SyncUtility:- UpdateUnitData:- " + String(describing: error)
+                    Utilities.displayErrorMessage(errorMsg: errormsg)
                     
-                    unitGroup.leave()
                     
-                    print("UnitGroup: \(unitData.name!)")
+                }, complete: {
+                    response in
                     
-                }//login to salesforce
+                    DispatchQueue.main.async {
+                        isError = Utilities.parseAddNewUnitResponse(jsonObject: response as! Dictionary<String, AnyObject>)
+                        
+                        unitGroup.leave()
+                        
+                        print("UnitGroup: \(unitData.name!)")
+                    }
+                })
+                
+                
+                
                 
             }//end for loop
             
@@ -231,28 +250,34 @@ class SyncUtility{
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
-            if( tenantResultsArr.count > 0){
-                updateTenantData()
-            }
-            else if( surveyResResultsArr.count > 0){
-                updateSurveyResponseData()
-            }
-            else if( editUnitResultsArr.count > 0){
-                updateEditUnitData()
-            }
-            else if( caseResultsArr.count > 0){
-                updateCaseData()
-            }
-            else if( issueResultsArr.count > 0){
-                updateIssueData()
-            }
-            else{
-                if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+            if(isError == false){
+                if( tenantResultsArr.count > 0){
+                    updateTenantData()
+                }
+                else if( surveyResResultsArr.count > 0){
+                    updateSurveyResponseData()
+                }
+                else if( editUnitResultsArr.count > 0){
+                    updateEditUnitData()
+                }
+                else if( caseResultsArr.count > 0){
+                    updateCaseData()
+                }
+                else if( issueResultsArr.count > 0){
+                    updateIssueData()
                 }
                 else{
-                    Utilities.isBackgroundSync = false
+                    if(isPullData){
+                        Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                    }
+                    else{
+                        Utilities.isBackgroundSync = false
+                    }
                 }
+                
+            }
+            else{
+                SVProgressHUD.dismiss()
             }
             
         }
@@ -260,6 +285,8 @@ class SyncUtility{
     
     
     class func updateTenantData(){
+        
+        var isError:Bool = false
         
         let tenantGroup = DispatchGroup()
         
@@ -277,9 +304,9 @@ class SyncUtility{
                 tenantGroup.enter()
                 
                 let tenantId = tenantData.id!
-                let locUnitId = tenantData.unitId!
+                var locUnitId = tenantData.unitId!
                 
-                var unitName:String = ""
+                
                 var assignmentLocId:String = ""
                 
                 var attempt:String = ""
@@ -293,9 +320,7 @@ class SyncUtility{
                 var aptNo:String = ""
                 var aptFloor:String = ""
                 
-                if let tempUnitName = tenantData.unitName{
-                    unitName = tempUnitName
-                }
+                
                 if let tempAssignmentLocId = tenantData.assignmentLocId{
                     assignmentLocId = tempAssignmentLocId
                 }
@@ -327,9 +352,27 @@ class SyncUtility{
                     aptFloor = tempAptFloor
                 }
                 
-   
                 
-                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!,attempt:attempt,contact:contact,contactOutcome: contactOutcome,notes:notes,streetNum:streetNum,streetName:streetName,borough:borough,zip:zip,aptNo: aptNo,aptFloor: aptFloor, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,unitName:unitName,assignmentLocId: assignmentLocId, type:tenantData.actionStatus!)
+                
+                let isiOSUnitId =  isiOSGeneratedId(generatedId: locUnitId)
+                
+                
+                
+                //if iOSClientId is a UUID string then get salesforce unitId from unit object
+                if(isiOSUnitId != nil){
+                    locUnitId = getSalesforceUnitId(unitId: locUnitId)
+                    
+                    if(isiOSGeneratedId(generatedId: locUnitId) != nil){
+                        Utilities.showSwiftErrorMessage(error: "updateTenantData:- LocUnitId:")
+                    }
+                }
+                
+                
+                //end
+                
+                
+                
+                tenantDict = Utilities.createAndEditTenantData(firstName: tenantData.firstName!, lastName: tenantData.lastName!, middleName:tenantData.middleName!,suffix:tenantData.suffix!, email: tenantData.email!, phone: tenantData.phone!, dob: tenantData.dob!,attempt:attempt,contact:contact,contactOutcome: contactOutcome,notes:notes,streetNum:streetNum,streetName:streetName,borough:borough,zip:zip,aptNo: aptNo,aptFloor: aptFloor, locationUnitId: locUnitId, currentTenantId: tenantId, iOSTenantId: tenantId,assignmentLocId: assignmentLocId, type:tenantData.actionStatus!)
                 
                 
                 
@@ -338,17 +381,28 @@ class SyncUtility{
                 
                 
                 
+                let request = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.createTenant, params: editTenant, methodType: SFRestMethod.POST)
+                
+                SFRestAPI.sharedInstance().send(request, fail: {
+                    error in
+                    
+                    
+                    let errormsg = "SyncUtility:- UpdateTenantData:- " + String(describing: error)
+                    Utilities.displayErrorMessage(errorMsg: errormsg)
+                    
+                    
+                }, complete: {
+                    response in
+                    
+                    DispatchQueue.main.async {
+                        isError = Utilities.parseTenantResponse(jsonObject: response as! Dictionary<String, AnyObject>)
+                        tenantGroup.leave()
+                        print("tenantGroup: \(tenantData.firstName!)")
+                    }
+                    
+                })
                 
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createTenant, params: editTenant){ jsonData in
-                    
-                    
-                    _ = Utilities.parseTenantResponse(jsonObject: jsonData.1)
-                    tenantGroup.leave()
-                    print("tenantGroup: \(tenantData.firstName!)")
-                    
-                    
-                }//login to unit rest api
             }//end for loop
             
         }
@@ -365,25 +419,31 @@ class SyncUtility{
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
             
-            if( surveyResResultsArr.count > 0){
-                updateSurveyResponseData()
-            }
-            else if( editUnitResultsArr.count > 0){
-                updateEditUnitData()
-            }
-            else if( caseResultsArr.count > 0){
-                updateCaseData()
-            }
-            else if( issueResultsArr.count > 0){
-                updateIssueData()
-            }
-            else{
-                if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+            
+            if(isError == false){
+                if( surveyResResultsArr.count > 0){
+                    updateSurveyResponseData()
+                }
+                else if( editUnitResultsArr.count > 0){
+                    updateEditUnitData()
+                }
+                else if( caseResultsArr.count > 0){
+                    updateCaseData()
+                }
+                else if( issueResultsArr.count > 0){
+                    updateIssueData()
                 }
                 else{
-                    Utilities.isBackgroundSync = false
+                    if(isPullData){
+                        Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                    }
+                    else{
+                        Utilities.isBackgroundSync = false
+                    }
                 }
+            }
+            else{
+                SVProgressHUD.dismiss()
             }
             
         }
@@ -398,7 +458,7 @@ class SyncUtility{
         let surveyResponseGroup = DispatchGroup()
         
         
-        var surveyResponseStr:String = ""
+        //var surveyResponseStr:String = ""
         var formatString:String = ""
         var responseDict : [String:AnyObject] = [:]
         var surveyResponseParam : [String:String] = [:]
@@ -410,19 +470,50 @@ class SyncUtility{
                 
                 surveyResponseGroup.enter()
                 
+                
+                
+                //Code for updating salesforceId
+                var updatedClientId:String = surveyResData.clientId!
+                var updatedAssigLocUnitId:String = surveyResData.assignmentLocUnitId!
+                
+                let isiOSClientId =  isiOSGeneratedId(generatedId: updatedClientId)
+                let isiOSAssignmentLocUnitId =  isiOSGeneratedId(generatedId: updatedAssigLocUnitId)
+                
+                
+                
+                //if iOSClientId is a UUID string then get salesforce clientId from tenant object
+                if(isiOSClientId != nil){
+                    updatedClientId = getSalesforceClientId(clientId: updatedClientId)
+                    
+                    if(isiOSGeneratedId(generatedId: updatedClientId) != nil){
+                        Utilities.showSwiftErrorMessage(error: "updateSurveyResponseData:- ClientId:")
+                    }
+                }
+                
+                //if isiOSAssignmentLocUnitId is a UUID string then get salesforce assignmentLocUnitId from unit object
+                if(isiOSAssignmentLocUnitId != nil){
+                    updatedAssigLocUnitId = getSalesforceAssignmentLocUnitId(assignmentLocUnitId: updatedAssigLocUnitId)
+                    
+                    if(isiOSGeneratedId(generatedId: updatedAssigLocUnitId) != nil){
+                        Utilities.showSwiftErrorMessage(error: "updateSurveyResponseData:- assignmentLocUnitId:")
+                    }
+                }
+                
+                //end
+                
                 responseDict["byContactId"] = surveyResData.contactId! as AnyObject?
                 responseDict["byUserId"] = surveyResData.userId! as AnyObject?
                 
-                responseDict["forClient"] = surveyResData.clientId! as AnyObject?
+                responseDict["forClient"] = updatedClientId as AnyObject?
                 
                 
                 responseDict["surveyId"] = surveyResData.surveyId! as AnyObject?
-                responseDict["assignmentLocUnitId"] = surveyResData.assignmentLocUnitId! as AnyObject?
+                responseDict["assignmentLocUnitId"] = updatedAssigLocUnitId as AnyObject?
                 //unitid
                 responseDict["QuestionList"] = surveyResData.surveyQuestionRes! as AnyObject?
                 responseDict["signature"] = surveyResData.surveySignature! as AnyObject?
                 
-              
+                
                 formatString = Utilities.jsonToString(json: responseDict as AnyObject)!
                 
                 
@@ -435,14 +526,29 @@ class SyncUtility{
                 
                 
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.submitSurveyResponse, params: surveyResponseParam){ jsonData in
+                let request = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.submitSurveyResponse, params: surveyResponseParam, methodType: SFRestMethod.POST)
+                
+                SFRestAPI.sharedInstance().send(request, fail: {
+                    error in
                     
                     
-                    Utilities.parseSurveyResponse(jsonObject: jsonData.1)
-                    surveyResponseGroup.leave()
-                    print("surveyResponseGroup: \(surveyResData.surveyId!)")
+                    let errormsg = "SyncUtility:- UpdateSurveyResponseData:- " + String(describing: error)
+                    Utilities.displayErrorMessage(errorMsg: errormsg)
                     
-                }//login to unit rest api
+                    
+                }, complete: {
+                    response in
+                    
+                    DispatchQueue.main.async {
+                        Utilities.parseSurveyResponse(jsonObject: response as! Dictionary<String, AnyObject>)
+                        surveyResponseGroup.leave()
+                        print("surveyResponseGroup: \(surveyResData.surveyId!)")
+                    }
+                    
+                })
+                
+                
+                
             }//end for loop
             
         }
@@ -503,8 +609,38 @@ class SyncUtility{
                 
                 editUnitGroup.enter()
                 
+                //Code for updating salesforceId
+                var updatedClientId:String = editUnitData.tenantId!
+                var updatedAssigLocUnitId:String = editUnitData.assignmentLocUnitId!
                 
-                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: editUnitData.assignmentLocUnitId!,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: editUnitData.tenantId!,lastCanvassedBy: "")
+                let isiOSClientId =  isiOSGeneratedId(generatedId: updatedClientId)
+                let isiOSAssignmentLocUnitId =  isiOSGeneratedId(generatedId: updatedAssigLocUnitId)
+                
+                
+                
+                //if iOSClientId is a UUID string then get salesforce clientId from tenant object
+                if(isiOSClientId != nil){
+                    updatedClientId = getSalesforceClientId(clientId: updatedClientId)
+                    
+                    if(isiOSGeneratedId(generatedId: updatedClientId) != nil){
+                        Utilities.showSwiftErrorMessage(error: "updateEditUnitData:- ClientId:")
+                    }
+                }
+                
+                //if isiOSAssignmentLocUnitId is a UUID string then get salesforce assignmentLocUnitId from unit object
+                if(isiOSAssignmentLocUnitId != nil){
+                    updatedAssigLocUnitId = getSalesforceAssignmentLocUnitId(assignmentLocUnitId: updatedAssigLocUnitId)
+                    
+                    if(isiOSGeneratedId(generatedId: updatedAssigLocUnitId) != nil){
+                        Utilities.showSwiftErrorMessage(error: "updateEditUnitData:- assignmentLocUnitId:")
+                    }
+                }
+                
+                //end
+                
+                
+                
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: updatedAssigLocUnitId,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: updatedClientId,lastCanvassedBy: "")
                 
                 
                 //lastCanvassedBy: SalesforceConfig.currentUserContactId
@@ -512,14 +648,26 @@ class SyncUtility{
                 updateUnit["unit"] = Utilities.jsonToString(json: editUnitDict as AnyObject)!
                 //Utilities.encryptedParams(dictParameters: editUnitDict as AnyObject)
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit){ jsonData in
-                    
-                    Utilities.parseEditUnit(jsonObject: jsonData.1)
-                    editUnitGroup.leave()
-                    //  print("editUnitGroup: \(editUnitData.tenantStatus!)")
-                    
-                }//login to unit rest api
                 
+                let request = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.updateUnit, params: updateUnit, methodType: SFRestMethod.POST)
+                
+                SFRestAPI.sharedInstance().send(request, fail: {
+                    error in
+                    
+                    
+                    let errormsg = "SyncUtility:- UpdateEditUnitData:- " + String(describing: error)
+                    Utilities.displayErrorMessage(errorMsg: errormsg)
+                    
+                    
+                }, complete: {
+                    response in
+                    
+                    DispatchQueue.main.async {
+                        Utilities.parseEditUnit(jsonObject: response as! Dictionary<String, AnyObject>)
+                        editUnitGroup.leave()
+                    }
+                    
+                })
                 
                 
             }
@@ -548,7 +696,7 @@ class SyncUtility{
             else
                 if(isPullData){
                     Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
-            }
+                }
                 else{
                     Utilities.isBackgroundSync = false
             }
@@ -558,6 +706,8 @@ class SyncUtility{
     }
     
     class func updateCaseData(){
+        
+        var isError:Bool = false
         
         let caseGroup = DispatchGroup()
         
@@ -572,9 +722,26 @@ class SyncUtility{
                 
                 caseGroup.enter()
                 
+                //Code for updating salesforceId
+                var updatedClientId:String = caseData.clientId!
+                
+                let isiOSClientId =  isiOSGeneratedId(generatedId: updatedClientId)
+                
+                
+                
+                //if iOSClientId is a UUID string then get salesforce clientId from tenant object
+                if(isiOSClientId != nil){
+                    updatedClientId = getSalesforceClientId(clientId: updatedClientId)
+                    
+                    if(isiOSGeneratedId(generatedId: updatedClientId) != nil){
+                        Utilities.showSwiftErrorMessage(error: "updateCaseData:- ClientId:")
+                    }
+                }
+                
+                
                 var caseResponseDict = caseData.caseResponse as! Dictionary<String,AnyObject>
                 
-                caseResponseDict["ContactId"] = caseData.clientId! as AnyObject?
+                caseResponseDict["ContactId"] = updatedClientId as AnyObject?
                 
                 caseResponseDict["OwnerId"] =  caseData.ownerId! as AnyObject?
                 
@@ -586,15 +753,24 @@ class SyncUtility{
                 caseResponseParam["jsonCase"] = Utilities.jsonToString(json: caseJsonDict as AnyObject)!
                 
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createCase, params: caseResponseParam){ jsonData in
-                    
-                    Utilities.parseCaseResponse(jsonObject: jsonData.1)
-                    caseGroup.leave()
-                    //  print("editUnitGroup: \(editUnitData.tenantStatus!)")
-                    
-                }//login to unit rest api
+                let request = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.createCase, params: caseResponseParam, methodType: SFRestMethod.POST)
                 
-                
+                SFRestAPI.sharedInstance().send(request, fail: {
+                    error in
+                    
+                    let errormsg = "SyncUtility:- UpdateCaseData:- " + String(describing: error)
+                    Utilities.displayErrorMessage(errorMsg: errormsg)
+                    
+                    
+                }, complete: {
+                    response in
+                    
+                    DispatchQueue.main.async {
+                        isError = Utilities.parseCaseResponse(jsonObject: response as! Dictionary<String, AnyObject>)
+                        caseGroup.leave()
+                    }
+                    
+                })
                 
             }
         }
@@ -612,22 +788,32 @@ class SyncUtility{
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCaseView"), object: nil)
             
-            if( issueResultsArr.count > 0){
-                updateIssueData()
+            if(isError == false){
+                if( issueResultsArr.count > 0){
+                    updateIssueData()
+                }
+                else
+                    if(isPullData){
+                        Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
+                    }
+                    else{
+                        Utilities.isBackgroundSync = false
+                }
             }
-            else
-                if(isPullData){
-                    Utilities.fetchAllDataFromSalesforce(loginViewController: loginViewController)
-            }
-                else{
-                    Utilities.isBackgroundSync = false
+            else{
+                SVProgressHUD.dismiss()
             }
             
         }
     }
     
+    
+    
+    
     class func updateIssueData(){
         let issueGroup = DispatchGroup()
+        
+        
         
         var issueDict:[String:AnyObject] = [:]
         var editIssue : [String:String] = [:]
@@ -642,24 +828,53 @@ class SyncUtility{
                 
                 issueGroup.enter()
                 
-                issueDict = Utilities.createAndEditIssueData(issueType: issueData.issueType!, issueNotes: issueData.notes!,caseId:issueData.caseId!, currentIssueId: issueData.issueId!, iOSIssueId: issueData.issueId!,type:issueData.actionStatus!)
+                //Code for updating salesforceId
+                var updatedCaseId:String = issueData.caseId!
+                
+                let isiOSCaseId =  isiOSGeneratedId(generatedId: updatedCaseId)
+                
+                
+                
+                //if isiOSCaseId is a UUID string then get salesforce caseId from case object
+                if(isiOSCaseId != nil){
+                    updatedCaseId = getSalesforceCaseId(caseId: updatedCaseId)
+                    
+                    if(isiOSGeneratedId(generatedId: updatedCaseId) != nil){
+                        Utilities.showSwiftErrorMessage(error: "updateIssueData:- CaseId:")
+                    }
+                }
+                
+                
+                
+                issueDict = Utilities.createAndEditIssueData(issueType: issueData.issueType!, issueNotes: issueData.notes!,caseId:updatedCaseId, currentIssueId: issueData.issueId!, iOSIssueId: issueData.issueId!,type:issueData.actionStatus!)
                 
                 
                 
                 editIssue["jsonIssue"] = Utilities.jsonToString(json: issueDict as AnyObject)!
                 
                 
+                let request = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.createIssue, params: editIssue, methodType: SFRestMethod.POST)
+                
+                SFRestAPI.sharedInstance().send(request, fail: {
+                    error in
+                    
+                    let errormsg = "SyncUtility:- UpdateIssueData:- " + String(describing: error)
+                    Utilities.displayErrorMessage(errorMsg: errormsg)
+                    
+                    
+                }, complete: {
+                    response in
+                    
+                    DispatchQueue.main.async {
+                        _ = Utilities.parseIssueResponse(jsonObject: response as! Dictionary<String, AnyObject>)
+                        issueGroup.leave()
+                        print("issueGroup: \(issueData.issueType!)")
+                    }
+                })
                 
                 
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.createIssue, params: editIssue){ jsonData in
-                    
-                    
-                    _ = Utilities.parseIssueResponse(jsonObject: jsonData.1)
-                    issueGroup.leave()
-                    print("issueGroup: \(issueData.issueType!)")
-                    
-                    
-                }//login to unit rest api
+                
+                
             }//end for loop
             
         }
@@ -685,6 +900,64 @@ class SyncUtility{
         
         
     }
+    
+    
+    
+    class func getSalesforceClientId(clientId:String)->String{
+        
+        let clientRes = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "iOSTenantId == %@" ,predicateValue: clientId, isPredicate:true) as! [Tenant]
+        
+        if(clientRes.count > 0){
+            return clientRes[0].id!
+        }
+        
+        return clientId
+        
+    }
+    
+    class func getSalesforceUnitId(unitId:String)->String{
+        
+        let unitRes = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "iOSUnitId == %@" ,predicateValue: unitId, isPredicate:true) as! [Unit]
+        
+        if(unitRes.count > 0){
+            return unitRes[0].id!
+        }
+        
+        return unitId
+        
+    }
+    
+    
+    class func getSalesforceAssignmentLocUnitId(assignmentLocUnitId:String)->String{
+        
+        let unitRes = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "iOSAssigLocUnitId == %@" ,predicateValue: assignmentLocUnitId, isPredicate:true) as! [Unit]
+        
+        if(unitRes.count > 0){
+            return unitRes[0].assignmentLocUnitId!
+        }
+        
+        return assignmentLocUnitId
+        
+    }
+    
+    class func getSalesforceCaseId(caseId:String)->String{
+        
+        let caseRes = ManageCoreData.fetchData(salesforceEntityName: "Case",predicateFormat: "iOSCaseId== %@" ,predicateValue: caseId, isPredicate:true) as! [AddCase]
+        
+        if(caseRes.count > 0){
+            return caseRes[0].caseId!
+        }
+        
+        return caseId
+        
+    }
+    
+    
+    
+    class func isiOSGeneratedId(generatedId:String)->NSUUID?{
+        return NSUUID(uuidString: generatedId)
+    }
+    
     
     
     

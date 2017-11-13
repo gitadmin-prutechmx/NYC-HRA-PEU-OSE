@@ -42,6 +42,9 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     var clientObj:ClientDO!
     
+    var aptNo:String = ""
+    var unitName:String = ""
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -55,7 +58,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         self.navigationItem.rightBarButtonItem  = rightBarButtonItem
         
-        let leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(AddressViewController.cancelAction))
+        let leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(AddressViewController.cancelAction))
         
         self.navigationItem.leftBarButtonItem  = leftBarButtonItem
         
@@ -99,7 +102,38 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
     
+    @IBAction func diffLocMainSwitch(_ sender: Any) {
+        
+        if((sender as AnyObject).isOn == true){
+
+            aptTextField.text = "PH/Main"
+            aptTextField.isEnabled = false
+            
+            
+        }
+        else{
+
+            aptTextField.text = aptNo
+            aptTextField.isEnabled = true
+        }
+    }
     
+    @IBAction func sameLocMainSwitch(_ sender: Any) {
+        
+        if((sender as AnyObject).isOn == true){
+            
+            unitTextField.text = "PH/Main"
+            unitTextField.isEnabled = false
+            
+            
+        }
+        else
+        {
+            
+            unitTextField.text = unitName
+            unitTextField.isEnabled = true
+        }
+    }
     
     func donePicker()
     {
@@ -107,10 +141,10 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         boroughTxtField.resignFirstResponder()
         
     }
+    
     func canclePicker()
     {
         boroughTxtField.resignFirstResponder()
-        
     }
     
     func saveAction()
@@ -121,9 +155,11 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         var streetName:String = ""
         var borough:String = ""
         var zip:String = ""
-        var aptNo:String = ""
         var aptFloor:String = ""
-        var unitName:String = ""
+        
+        aptNo = ""
+        unitName = ""
+        
         
         if(loctionSwitch.isOn){
             
@@ -136,7 +172,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
                 unitView.shake()
                 
-                self.view.makeToast("Please enter Unit Name", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please Enter Unit Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                     if didTap {
                         print("Completion with tap")
@@ -153,6 +189,39 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
             }
             
+            unitName = unitName.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            
+            let unitRes = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "assignmentId == %@ && locationId == %@" ,predicateValue: SalesforceConnection.assignmentId, predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Unit]
+            
+            if(unitRes.count > 0){
+                
+                for unitData in unitRes
+                {
+                    if(unitData.name?.lowercased() == unitName.lowercased()){
+                        
+                        unitView.shake()
+                        unitName = ""
+                        
+                        self.view.makeToast("This Unit Number already exist.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                            
+                            if didTap {
+                                print("Completion with tap")
+                                
+                            } else {
+                                print("Completion without tap")
+                            }
+                            
+                            
+                        }
+                        
+                        return
+                    }
+                }
+                
+                
+            }
+
             
             
             let locationData = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Location]
@@ -165,6 +234,8 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 zip = locationData[0].zip!
                 
             }
+            
+            aptNo = unitName
             
         }
         else{
@@ -190,7 +261,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             if let tempAptFloor = aptFloorTxtField.text{
                 aptFloor = tempAptFloor
             }
-           
+            
             
             
             if(streetNum.isEmpty){
@@ -302,7 +373,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
                 aptNoView.shake()
                 
-                self.view.makeToast("Please enter apartment number", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                self.view.makeToast("Please Enter Unit Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                     
                     if didTap {
                         print("Completion with tap")
@@ -323,41 +394,18 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             
             
-            
-            //        if(aptFloor.isEmpty){
-            //
-            //            aptNoView.shake()
-            //
-            //            self.view.makeToast("Please enter apartment floor", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-            //
-            //                if didTap {
-            //                    print("Completion with tap")
-            //
-            //                } else {
-            //                    print("Completion without tap")
-            //                }
-            //
-            //
-            //            }
-            //
-            //
-            //            return
-            //
-            //        }
-            
-            
-
-            
         }
         
-        saveClientAddress(streetNo: streetNum, streetName: streetName, borough: borough, zip: zip, aptNo: aptNo, aptFloor: aptFloor,unitName: unitName)
+        saveClientAddress(streetNo: streetNum, streetName: streetName, borough: borough, zip: zip, aptNo: aptNo, aptFloor: aptFloor)
         
         self.view.makeToast("Contact has been saved successfully.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateNoUnitClientView"), object: nil)
             
-          
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+            
+            
             self.dismiss(animated: true, completion: nil)
             
             
@@ -369,14 +417,14 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         // Utilities.clientAddressDict["StreetNum"] =
     }
     
-    func saveClientAddress(streetNo:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String,unitName:String){
+    func saveClientAddress(streetNo:String,streetName:String,borough:String,zip:String,aptNo:String,aptFloor:String){
         
         let clientObject = Tenant(context: context)
         
         
         clientObject.id = UUID().uuidString
+        clientObject.iOSTenantId = clientObject.id
         
- 
         clientObject.name = clientObj.firstName + " " + clientObj.lastName
         clientObject.firstName = clientObj.firstName
         clientObject.lastName = clientObj.lastName
@@ -401,23 +449,92 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         clientObject.actionStatus = "create"
         
-        clientObject.assignmentId = ""
+        clientObject.virtualUnit = "false"
         
-        clientObject.locationId = ""
         
-        clientObject.unitId = ""
+        clientObject.assignmentId = SalesforceConnection.assignmentId
         
-        clientObject.assignmentLocUnitId = ""
+        clientObject.locationId = SalesforceConnection.locationId
         
         clientObject.assignmentLocId = SalesforceConnection.assignmentLocationId
         
-        clientObject.unitName = unitName
+        clientObject.sourceList = ""
+        
+        
+        if(loctionSwitch.isOn){
+            
+            var iOSUnitId = UUID().uuidString
+            var iOSAssignmentLocUnitId = UUID().uuidString
+            
+            //create new unit
+            createNewUnit(aptNo: aptNo,iOSUnitId:iOSUnitId,iOSAssignmentLocUnitId: iOSAssignmentLocUnitId)
+            
+            clientObject.unitId = iOSUnitId
+            
+            clientObject.assignmentLocUnitId = iOSAssignmentLocUnitId
+            
+        }
+        else{
+            clientObject.unitId = ""
+            
+            clientObject.assignmentLocUnitId = ""
+            
+        }
+        
+        
         
         appDelegate.saveContext()
         
         
         
     }
+    
+    func createNewUnit(aptNo:String,iOSUnitId:String,iOSAssignmentLocUnitId:String){
+        
+        let unitObject = Unit(context: context)
+        
+        unitObject.id = iOSUnitId
+       
+        unitObject.assignmentLocUnitId = iOSAssignmentLocUnitId
+        
+        unitObject.iOSUnitId = iOSUnitId
+        unitObject.iOSAssigLocUnitId = iOSAssignmentLocUnitId
+        
+        
+        
+        unitObject.locationId = SalesforceConnection.locationId
+        
+        unitObject.assignmentLocId = SalesforceConnection.assignmentLocationId
+        
+        
+        
+        unitObject.name =  aptNo
+        
+        unitObject.apartment = aptNo
+        
+        unitObject.notes = ""
+        
+        unitObject.assignmentId = SalesforceConnection.assignmentId
+        
+        if(aptNo == "PH/Main"){
+            unitObject.privateHome =  "Yes"
+        }
+        else{
+            unitObject.privateHome =  "No"
+        }
+        
+        
+        unitObject.virtualUnit = "false"
+        
+        
+        unitObject.actionStatus = "create"
+        
+        unitObject.surveyStatus = ""
+        unitObject.unitSyncDate = ""
+        
+        appDelegate.saveContext()
+    }
+    
     
     override func didReceiveMemoryWarning()
     {
@@ -427,7 +544,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func cancelAction ()
     {
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
         { action -> Void in
@@ -439,6 +556,12 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             self.boroughTxtField.resignFirstResponder()
+             self.unitTextField.resignFirstResponder()
+            self.streetNumTxtField.resignFirstResponder()
+            self.streetNameTxtField.resignFirstResponder()
+            self.zipTxtField.resignFirstResponder()
+            self.aptTextField.resignFirstResponder()
+            self.aptFloorTxtField.resignFirstResponder()
             // self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)
         }
@@ -476,6 +599,28 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
     
+    func isValidFloor(value:String) -> Bool
+    {
+    
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = value.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        
+        let currentCharacterCount = aptFloorTxtField.text?.characters.count ?? 0
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 3)
+        {
+            return false
+        }
+        
+        
+        return value == filtered
+
+    }
+    
+    
+    
     func isValidAptNo(value:String) -> Bool
     {
         let aSet =  NSCharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ").inverted
@@ -494,13 +639,56 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
     
+    func isValidUnitName(value:String) -> Bool
+    {
+        let aSet =  NSCharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ").inverted
+        let compSepByCharInSet = value.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        
+        let currentCharacterCount = unitTextField.text?.characters.count ?? 0
+        
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 19){
+            return false
+        }
+        
+        return value == numberFiltered
+        
+    }
+    
+    func isValidStreetNum(value:String) -> Bool
+    {
+        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let inputString = value.components(separatedBy: charcterSet)
+        let filtered = inputString.joined(separator: "")
+        
+        let currentCharacterCount = streetNumTxtField.text?.characters.count ?? 0
+        
+        let newLength = currentCharacterCount + value.characters.count
+        if(newLength > 23)
+        {
+            return false
+        }
+        
+        
+        return value == filtered
+        
+    }
+    
+    
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         
         let str = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         if textField == streetNameTxtField
         {
-            return (streetNameTxtField.text != nil)
+            guard let text = streetNameTxtField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 100 // Bool
+            
+          //  return (streetNameTxtField.text != nil)
             
         }
             
@@ -510,7 +698,35 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         else if (textField == aptTextField)
         {
+            aptNo = aptTextField.text!
+            
+            let val = isValidUnitName(value: str)
+            
+            if(val){
+                aptNo = aptNo + string
+            }
+            
             return isValidAptNo(value: str)
+        }
+        else if (textField == unitTextField)
+        {
+            unitName = unitTextField.text!
+            
+            let val = isValidUnitName(value: str)
+            
+            if(val){
+                unitName = unitName + string
+            }
+            
+            return val
+        }
+        else if (textField == aptFloorTxtField)
+        {
+           return isValidFloor(value: str)
+        }
+        else if (textField == streetNumTxtField)
+        {
+            return isValidStreetNum(value: str)
         }
         else
         {

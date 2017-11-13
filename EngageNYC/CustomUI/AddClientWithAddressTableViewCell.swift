@@ -17,7 +17,7 @@ class AddClientWithAddressTableViewCell: UITableViewCell
     @IBOutlet weak var phone: UILabel!
     
     @IBOutlet weak var name: UILabel!
-    
+    @IBOutlet weak var address:UILabel!
    // @IBOutlet weak var tenantId: UILabel!
     
     @IBOutlet weak var tenantId: UILabel!

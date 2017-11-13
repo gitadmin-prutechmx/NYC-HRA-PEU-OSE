@@ -18,6 +18,7 @@ struct ClientUnitDataStruct
     var phone : String = ""
     var age : String = ""
     var dob:String = ""
+    var sourceList:String = ""
     //var teantStatus:String = ""
     //var inTakeStaus:String = ""
     
@@ -50,7 +51,8 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     var selectedCaseId:String = ""
     var selectedCaseNo:String = ""
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         addTenantOutlet.layer.cornerRadius = 5
@@ -63,12 +65,11 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
         
-        
         self.navigationController?.navigationBar.tintColor = UIColor.white
 
-        NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateClientView), name: NSNotification.Name(rawValue: "UpdateClientView"), object:nil
-        )
-        
+        NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateClientView), name: NSNotification.Name(rawValue: "UpdateClientView"), object:nil)
+      
+       
     }
     
     func UpdateClientView(){
@@ -79,14 +80,38 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
     
 
     // Cleanup notifications added in viewDidLoad
-    deinit {
+    deinit
+    {
         NotificationCenter.default.removeObserver("UpdateClientView")
     }
     
+   
+    func orientationChanged() -> Void
+    {
+        
+        if UIDevice.current.orientation.isLandscape
+        {
+            print("Landscape")
+            self.view.superview?.frame = CGRect(x: 0, y: 0, width: 980, height: 590)
+            self.view.superview?.center = self.view.center;
+            //self.preferredContentSize = CGSize(width: 880, height: 570)
+            print(self.preferredContentSize)
+        }
+        else
+        {
+            print("Portrait")
+            self.view.superview?.frame = CGRect(x: 0, y: 0, width: 700, height: 700)
+            self.view.superview?.center = self.view.center;
+           // self.preferredContentSize = CGSize(width: 700, height: 800)
+            print(self.preferredContentSize)
+        }
+        
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
+    }
     
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
         
         
@@ -94,13 +119,24 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         selectedClientName = ""
         selectedCaseId = ""
         selectedCaseNo = ""
- 
-        
-       
-            showClientView()
-        
-        
+        showClientView()
 
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSaveEditTenantIdentifier" {
+            let vc = segue.destination as! UINavigationController
+            let addVC = vc.viewControllers[0]  as! SaveEditTenantViewController
+            
+            addVC.isSurveyAddClient = true
+            addVC.view.superview?.frame = CGRect(x: 0, y: 0, width: (self.view.superview?.frame.size.width)!, height: (self.view.superview?.frame.size.height)!)
+             addVC.view.superview?.center = self.view.center;
+            
+            addVC.preferredContentSize = CGSize(width: (self.view.superview?.frame.size.width)!, height: (self.view.superview?.frame.size.height)!)
+            print(addVC.preferredContentSize)
+            print(self.view.superview?.frame)
+        }
     }
     
        
@@ -118,10 +154,14 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         if(clientResults.count > 0){
             
             for clientData in clientResults{
+                var srcList = ""
                 
-                
-                
-                let objectClientStruct:ClientUnitDataStruct = ClientUnitDataStruct(clientId: clientData.id!,name: clientData.name!, firstName: clientData.firstName!, lastName: clientData.lastName!, email: clientData.email!, phone: clientData.phone!, age: clientData.age!,dob:clientData.dob!)
+                if let tempSrcList=clientData.sourceList
+                {
+                    srcList = tempSrcList
+                    
+                }
+                let objectClientStruct:ClientUnitDataStruct = ClientUnitDataStruct(clientId: clientData.id!,name: clientData.name!, firstName: clientData.firstName!, lastName: clientData.lastName!, email: clientData.email!, phone: clientData.phone!, age: clientData.age!,dob:clientData.dob!,sourceList:srcList)
                 
                 clientDataArray.append(objectClientStruct)
                 
@@ -242,7 +282,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
         else if(selectedClientId == "" && clientDiscloseSwitch.isOn == true){
             
-            SalesforceConnection.selectedTenantForSurvey = "empty"
+            SalesforceConnection.selectedTenantForSurvey = ""
             
             self.dismiss(animated: true, completion: nil)
         }
@@ -303,7 +343,7 @@ class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.name.text = clientDataArray[indexPath.row].name
             cell.age.text = clientDataArray[indexPath.row].age
             cell.tenantId.text = clientDataArray[indexPath.row].clientId
-            
+            cell.sourceList.text = clientDataArray[indexPath.row].sourceList
             cell.editBtn.tag = indexPath.row
             
             

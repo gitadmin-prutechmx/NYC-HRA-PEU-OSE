@@ -20,6 +20,7 @@ class ClientDataTableViewCell: UITableViewCell
     @IBOutlet weak var lblCase: UILabel!
     @IBOutlet weak var lblPhone: UILabel!
     @IBOutlet weak var lblLastName: UILabel!
+    @IBOutlet weak var lblSourceList: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

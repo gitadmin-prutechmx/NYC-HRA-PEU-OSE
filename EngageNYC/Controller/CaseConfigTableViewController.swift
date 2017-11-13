@@ -44,7 +44,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     var orderedSectionFieldDict: [Int: [String:[CaseDO]]] = [:]
     
-    
+    var currentRow:Int = 0
     
     var switchDict:[Int:String] = [:]
     var textAreaDict:[Int:String] = [:]
@@ -203,7 +203,15 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                     }
                         
                     else{
-                        Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        
+                        if(apiName == "Origin" && Utilities.caseActionStatus == "New"){
+                            
+                           Utilities.caseConfigDict[apiName] = "Door Knock" as AnyObject
+                        }
+            
+                        else{
+                            Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        }
                     }
                     
                 }
@@ -236,7 +244,14 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                     }
                         
                     else{
-                        Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        if(apiName == "Origin" && Utilities.caseActionStatus == "New"){
+                            
+                            Utilities.caseConfigDict[apiName] = "Door Knock" as AnyObject
+                        }
+                            
+                        else{
+                            Utilities.caseConfigDict[apiName] = caseDynamicDict[apiName]
+                        }
                     }
                     
                     
@@ -365,7 +380,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         let caseObject:CaseDO = caseConfigArray[indexPath.section].sectionObjects[indexPath.row]
         
         
-        if(caseObject.dataType == "BOOLEAN"){
+        if(caseObject.dataType == "BOOLEAN")
+        {
             
             let switchCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
             
@@ -392,7 +408,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             if let switchValue = Utilities.caseConfigDict[caseObject.apiName]{
                 uiSwitch.isOn = switchValue as! Bool
             }
-            else{
+            else
+            {
                 uiSwitch.isOn = false
             }
             
@@ -415,7 +432,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             
         }
-        else if(caseObject.dataType == "TEXTAREA"){
+        else if(caseObject.dataType == "TEXTAREA")
+        {
             
             let textAreaCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
             
@@ -435,10 +453,10 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             let textArea = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 99))
             textArea.font = UIFont.init(name: "Arial", size: 16.0)
             textArea.textAlignment = .right
-            
-            textArea.tag = indexPath.row
+            currentRow = indexPath.row
+            textArea.tag = currentRow
             textArea.delegate = self
-            
+        
             if let textAreaValue = Utilities.caseConfigDict[caseObject.apiName] as! String! {
                 textArea.text  = textAreaValue
             }
@@ -545,7 +563,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
         }
             
-        else if(caseObject.dataType == "DATE"){
+        else if(caseObject.dataType == "DATE")
+        {
             
             let dateTimeCell = tableView.dequeueReusableCell(withIdentifier: "dateTimeCell", for: indexPath) as! DateTimeTableViewCell
             
@@ -640,6 +659,11 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             phoneTextfield.textColor = UIColor.gray
             
+            phoneTextfield.autocorrectionType = UITextAutocorrectionType.no
+            
+            phoneTextfield.spellCheckingType = UITextSpellCheckingType.no
+
+            
             return phoneCell
         }
         else{
@@ -690,6 +714,10 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             textfield.textColor = UIColor.gray
             
+            textfield.autocorrectionType = UITextAutocorrectionType.no
+            
+            textfield.spellCheckingType = UITextSpellCheckingType.no
+            
             textCell.accessoryView = textfield
             
             
@@ -716,6 +744,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             pickListVC?.pickListProtocol = self
             
+           
             if let selectedVal = Utilities.caseConfigDict[currentPickListApiName]{
                 pickListVC?.selectedPickListValue = selectedVal as! String
             }
@@ -782,9 +811,16 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         }
         
         
-        
-        
-        
+        else if(caseObject.dataType == "TEXTAREA" && Utilities.caseActionStatus != "View")
+        {
+            currentRow = indexPath.row
+            let currentCell: UITableViewCell? = caseTblView.cellForRow(at: indexPath)
+            let textView = currentCell?.viewWithTag(currentRow) as? UITextView
+            textView?.delegate = self
+            textView?.becomeFirstResponder()
+            
+          
+        }
         
     }
     
@@ -942,6 +978,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     @IBAction func save(_ sender: Any) {
         
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         
         var msg:String = ""
         
@@ -1049,6 +1086,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         addCaseObject.actionStatus = "create"
         
+        addCaseObject.iOSCaseId = iosCaseId
        
         
 
@@ -1124,7 +1162,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
         }
         else{
-           let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to cancel without saving?", vc: self)
+           let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
             
             let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
                 //Do some stuff

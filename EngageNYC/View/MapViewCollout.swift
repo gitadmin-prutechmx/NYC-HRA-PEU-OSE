@@ -20,6 +20,8 @@ class MapViewCollout: UIView
     
     @IBOutlet weak var lblAttemptPrecentage: UILabel!
     
+    @IBOutlet weak var lblName: UILabel!
+    
     //    @IBOutlet weak var lblNoOfUnits: UILabel!
     //
     //    @IBOutlet weak var lblNoClients: UILabel!

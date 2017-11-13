@@ -105,7 +105,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         // Do any additional setup after loading the view, typically from a nib.
         
-        let rightExitSurveyBarButtonItem = UIBarButtonItem(image: UIImage(named: "ExitSurvey.png"), style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
+       let rightExitSurveyBarButtonItem =  UIBarButtonItem(title: "Exit Survey", style: .plain, target: self, action: #selector(SurveyRadioOptionViewController.exitFromSurvey))
         
         self.navigationItem.rightBarButtonItem  = rightExitSurveyBarButtonItem
         
@@ -151,11 +151,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         optionsTextArray = options.components(separatedBy: ";")
         
-        
-        
-        
-        
-        /*  for optionData in objSurveyQues.singleOptionsString!
+              /*  for optionData in objSurveyQues.singleOptionsString!
          {
          optionsIdArray.append(optionData.componentsSeparatedByString(";")[1])
          optionsTextArray.append(optionData.componentsSeparatedByString(";")[0])
@@ -177,18 +173,17 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
         // Do any additional setup after loading the view.
     }
-    @IBAction func switchSurvey(_ sender: Any) {
-        
-        
+    @IBAction func switchSurvey(_ sender: Any)
+    {
        SurveyUtility.SwitchNewSurvey(vc: self)
         
     }
     
     
-    @IBAction func inTake(_ sender: Any) {
+    @IBAction func inTake(_ sender: Any)
+    {
         
        SurveyUtility.InTake(vc: self)
-
 
     }
     
@@ -196,8 +191,10 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     {
         if UIApplication.shared.canOpenURL(URL(string: "https://access.nyc.gov")!)
         {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string: "https://access.nyc.gov")!, options: [UIApplicationOpenURLOptionUniversalLinksOnly:""], completionHandler: { (completed) in
+            if #available(iOS 10.0, *)
+            {
+                UIApplication.shared.open(URL(string: "https://access.nyc.gov")!, options: [UIApplicationOpenURLOptionUniversalLinksOnly:""], completionHandler:{
+                    (completed) in
                     self.navigationController?.popToRootViewController(animated: true)
                 })
             } else {

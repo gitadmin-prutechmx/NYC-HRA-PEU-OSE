@@ -18,6 +18,8 @@ struct ClientNoUnitDataStruct
     var phone : String = ""
     var age : String = ""
     var dob:String = ""
+    var address:String = ""
+    
     //var teantStatus:String = ""
     //var inTakeStaus:String = ""
     
@@ -69,20 +71,24 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
         
         clientDataArray = [ClientNoUnitDataStruct]()
         
-        
-        clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentLocId == %@" ,predicateValue: SalesforceConnection.assignmentLocationId,isPredicate:true) as! [Tenant]
-        
+        clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentLocId == %@ && assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentLocationId,predicateValue2: SalesforceConnection.assignmentId, isPredicate:true) as! [Tenant]
         
         if(clientResults.count > 0){
             
             for clientData in clientResults{
                 
-                if (clientData.unitId!.isEmpty){
+             var address = clientData.streetNum! + " " + clientData.streetName! + " "
+                
+             address = address + clientData.borough! + ", " + clientData.zip!
+                
+                
+                
+                //if (clientData.unitId!.isEmpty){
                     
-                    let objectClientStruct:ClientNoUnitDataStruct = ClientNoUnitDataStruct(clientId: clientData.id!,name: clientData.name!, firstName: clientData.firstName!, lastName: clientData.lastName!, email: clientData.email!, phone: clientData.phone!, age: clientData.age!,dob:clientData.dob!)
+                let objectClientStruct:ClientNoUnitDataStruct = ClientNoUnitDataStruct(clientId: clientData.id!,name: clientData.name!, firstName: clientData.firstName!, lastName: clientData.lastName!, email: clientData.email!, phone: clientData.phone!, age: clientData.age!,dob:clientData.dob!,address:address)
                 
                     clientDataArray.append(objectClientStruct)
-                }
+                //}
                 
             }
         }
@@ -146,7 +152,7 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
         cell.age.text = clientDataArray[indexPath.row].age
         cell.tenantId.text = clientDataArray[indexPath.row].clientId
         
-
+        cell.address.text = clientDataArray[indexPath.row].address
         
         return cell
       }
@@ -180,6 +186,17 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
         
         return 44.0
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "showAddClientIdentifier" {
+            let vc = segue.destination as! UINavigationController
+            let addVC = vc.viewControllers[0]  as! SaveEditTenantViewController
+            print(addVC.preferredContentSize)
+            addVC.isSurveyAddClient = false
+        }
+    }
+
 
     @IBAction func btnCancelAction(_ sender: Any)
     {
@@ -188,6 +205,7 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
     
     @IBAction func addNewClientAction(_ sender: Any)
     {
+        
        self.performSegue(withIdentifier: "showAddClientIdentifier", sender: nil)
     }
 
