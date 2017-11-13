@@ -52,7 +52,9 @@ class ManageCoreData{
             return results
             
         } catch {
+            
             let nserror = error as NSError
+            Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Fetch Data issue:- \(nserror.userInfo)")
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             
         }
@@ -83,12 +85,15 @@ class ManageCoreData{
                 }
                 catch
                 {
+                    Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Update data issue:- \(error.localizedDescription)")
                     print(error.localizedDescription)
                 }
             }
         }
         catch
         {
+          
+              Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Outside catch:- Update data issue:- \(error.localizedDescription)")
             print(error.localizedDescription)
         }
         
@@ -147,12 +152,14 @@ class ManageCoreData{
                 }
                 catch
                 {
+                      Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Update record issue:- \(error.localizedDescription)")
                     print(error.localizedDescription)
                 }
             }
         }
         catch
         {
+              Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Outside Catch:- Update record issue:- \(error.localizedDescription)")
             print(error.localizedDescription)
         }
         
@@ -211,12 +218,14 @@ class ManageCoreData{
                 }
                 catch
                 {
+                      Utilities.showSwiftErrorMessage(error: "ManageCoreData:- UpdateAnyObjectRecord issue:- \(error.localizedDescription)")
                     print(error.localizedDescription)
                 }
             }
         }
         catch
         {
+              Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Outside Catch:- UpdateAnyObjectRecord issue:- \(error.localizedDescription)")
             print(error.localizedDescription)
         }
         
@@ -257,12 +266,15 @@ class ManageCoreData{
                 }
                 catch
                 {
+                    Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Update Date issue:- \(error.localizedDescription)")
                     print(error.localizedDescription)
                 }
             }
         }
         catch
         {
+             Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Outside Catch:- Update Date issue:- \(error.localizedDescription)")
+            
             print(error.localizedDescription)
         }
         
@@ -320,6 +332,7 @@ class ManageCoreData{
         }
         catch
         {
+              Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Delete Record issue:- \(error.localizedDescription)")
             print(error.localizedDescription)
         }
         
@@ -351,7 +364,10 @@ class ManageCoreData{
             
         } catch {
             let nserror = error as NSError
+            Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Delete All Records issue:- \(nserror.userInfo)")
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            
+        
             
         }
         

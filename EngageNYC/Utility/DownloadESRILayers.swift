@@ -37,7 +37,13 @@ class DownloadESRILayers{
         
         generatedGeodatabase = AGSGeodatabase(name: "NewYorkLayers")
         
-        loadSyncTask()
+        if(generatedGeodatabase != nil){
+            loadSyncTask()
+        }
+        else{
+            SVProgressHUD.dismiss()
+            Utilities.showSwiftErrorMessage(error: "DownloadESRILayers:- RefreshData:- Generated Geodatabase is nil ")
+        }
         
     }
     
@@ -73,37 +79,50 @@ class DownloadESRILayers{
             
             syncTask = AGSGeodatabaseSyncTask(url: FEATURE_SERVICE_URL)
             
+//            self.syncTask.registerSyncEnabledGeodatabase(<#T##geodatabase: AGSGeodatabase##AGSGeodatabase#>, completion: <#T##((Error?) -> Void)?##((Error?) -> Void)?##(Error?) -> Void#>)
+//            
             
-            
-            self.syncTask.load { [] (error) -> Void in
-                if let error = error {
-                    print("Could not load feature service \(error)")
-                    
-                } else {
-                    
-                    if syncTask.featureServiceInfo != nil {
-                        for (index, layerInfo) in syncTask.featureServiceInfo!.layerInfos.enumerated().reversed() {
+            if(syncTask != nil){
+                
+                self.syncTask.load { [] (error) -> Void in
+                    if let error = error {
+                        SVProgressHUD.dismiss()
+                        Utilities.showSwiftErrorMessage(error: "DownloadESRILayers:- loadSyncTask:- Could not load feature service  \(error.localizedDescription)")
+                        
+                        
+                        print("Could not load feature service \(error)")
+                        
+                    } else {
+                        
+                        if syncTask.featureServiceInfo != nil {
+                            for (index, layerInfo) in syncTask.featureServiceInfo!.layerInfos.enumerated().reversed() {
+                                
+                                //For each layer in the serice, add a layer to the map
+                                let layerURL = FEATURE_SERVICE_URL.appendingPathComponent(String(index))
+                                
+                                let featureTable = AGSServiceFeatureTable(url:layerURL)
+                                let featureLayer = AGSFeatureLayer(featureTable: featureTable)
+                                featureLayer.name = layerInfo.name
+                                featureLayer.opacity = 0.65
+                                
+                            }
                             
-                            //For each layer in the serice, add a layer to the map
-                            let layerURL = FEATURE_SERVICE_URL.appendingPathComponent(String(index))
-                            
-                            let featureTable = AGSServiceFeatureTable(url:layerURL)
-                            let featureLayer = AGSFeatureLayer(featureTable: featureTable)
-                            featureLayer.name = layerInfo.name
-                            featureLayer.opacity = 0.65
                             
                         }
                         
-                        
-                    }
-                    
-                    if(isGeodatabaseGenerate!){
-                        generateGeodatabase()
-                    }
-                    else{
-                        fetchUpdatedData()
+                        if(isGeodatabaseGenerate!){
+                            generateGeodatabase()
+                        }
+                        else{
+                            fetchUpdatedData()
+                        }
                     }
                 }
+            }
+            else{
+                SVProgressHUD.dismiss()
+                 Utilities.showSwiftErrorMessage(error: "DownloadESRILayers:- loadSyncTask:- Sync Task error :  \(userSettingData[0].featureLayerUrl!)")
+                
             }
             
             
@@ -135,12 +154,15 @@ class DownloadESRILayers{
             
         }, completion: { (results: [AGSSyncLayerResult]?, error: Error?) -> Void in
             if let error = error {
+                
+                SVProgressHUD.dismiss()
+                 Utilities.showSwiftErrorMessage(error: "DownloadESRILayers:- fetchUpdatedData:- Refreshing Data issue:  \(error.localizedDescription)")
+                
                 print(error.localizedDescription)
-                //SVProgressHUD.showError(withStatus: error.localizedDescription)
+                
+               
             }
             else {
-                print(results)
-                
                 
                 Utilities.callNotificationCenter()
             }
@@ -150,8 +172,6 @@ class DownloadESRILayers{
         
         
     }
-    
-    
     
     
     class func generateGeodatabase() {
@@ -220,24 +240,47 @@ class DownloadESRILayers{
         //kick off the job
         generateJob.start(statusHandler: { (status: AGSJobStatus) -> Void in
             
-            
-            SVProgressHUD.show(withStatus: "Fetching layers data:- " + status.statusString(), maskType: SVProgressHUDMaskType.gradient)
+            if(loginVC != nil){
+                loginVC.loadingSpinner.startAnimating()
+                loginVC.message.text = "Fetching layers data.."
+            }
+            else{
+                SVProgressHUD.show(withStatus: "Fetching layers data:- " + status.statusString(), maskType: SVProgressHUDMaskType.gradient)
+            }
             
             //print(generateJob.messages)
             
         }) { [] (object: AnyObject?, error: Error?) -> Void in
             
             if let error = error {
+                
                 print(error)
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                
+                if(loginVC != nil){
+                    loginVC.loadingSpinner.stopAnimating()
+                    loginVC.loadingSpinner.hidesWhenStopped = true
+                    loginVC.message.text = ""
+                }
+
+                
+                SVProgressHUD.dismiss()
+                Utilities.showSwiftErrorMessage(error: "DownloadESRILayers:- DownloadLayersData:- Error while generating geodatabase:  \(error.localizedDescription)")
+                
+                //Utilities.showSwiftErrorMessage(error: "Error while fetching location data from ESRI server.")
+                
+                //SVProgressHUD.showError(withStatus: error.localizedDescription)
+                
             }
             else {
                 
                 SVProgressHUD.dismiss()
                 
+                
                 if(loginVC != nil){
                     
-                    
+                    loginVC.loadingSpinner.stopAnimating()
+                    loginVC.loadingSpinner.hidesWhenStopped = true
+                    loginVC.message.text = ""
                     
                     // && Utilities.isBaseMapExist()==false
                     if(SalesforceConfig.isBaseMapNeedToDownload == true || Utilities.isBaseMapExist()==false){
@@ -246,7 +289,7 @@ class DownloadESRILayers{
                         Utilities.deleteBasemap()
                         
                         
-                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginVC)
+                        Download.downloadNewYorkCityData(loginViewController: loginVC)
                         
                         
                     }
@@ -264,7 +307,19 @@ class DownloadESRILayers{
                     
                     
                 }//end of loginVC
-                
+                    //If refresh icon click
+                else{
+                    if(SalesforceConfig.isBaseMapNeedToDownload == true || Utilities.isBaseMapExist() == false){
+                        
+                        //Delete Basemap first and then download
+                        Utilities.deleteBasemap()
+                        
+                        SVProgressHUD.show(withStatus: "Updating Basemap..", maskType: .gradient)
+                        
+                        Download.downloadNewYorkCityData(loginViewController: nil)
+                        
+                    }
+                }
                 
                 
                 

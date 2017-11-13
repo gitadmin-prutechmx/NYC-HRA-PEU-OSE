@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AddCase" representedClassName="AddCase" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseResponse" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="clientId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iOSCaseId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ownerId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Assignment" representedClassName="Assignment" syncable="YES" codeGenerationType="class">
@@ -61,6 +62,7 @@
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attempt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="canvassingStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastModifiedName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="noOfUnits" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
@@ -92,6 +94,7 @@
         <relationship name="eventAssignementR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="assignmentEventR" inverseEntity="Assignment" syncable="YES"/>
     </entity>
     <entity name="IssueNotes" representedClassName="IssueNotes" syncable="YES" codeGenerationType="class">
+        <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issueId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -136,6 +139,7 @@
         <attribute name="basemapUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="featureLayerUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="forgotPasswordUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="geodatabaseUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="offlineSyncTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="settingsId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -184,6 +188,7 @@
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iOSTenantId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="middleName" optional="YES" attributeType="String" syncable="YES"/>
@@ -215,6 +220,8 @@
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="floor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iOSAssigLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iOSUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
@@ -243,27 +250,27 @@
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AddCase" positionX="-126" positionY="45" width="128" height="120"/>
+        <element name="AddCase" positionX="-126" positionY="45" width="128" height="135"/>
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="255"/>
         <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
         <element name="CaseConfig" positionX="-117" positionY="54" width="128" height="60"/>
         <element name="Cases" positionX="-126" positionY="45" width="128" height="210"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
-        <element name="EditLocation" positionX="-117" positionY="54" width="128" height="165"/>
+        <element name="EditLocation" positionX="-117" positionY="54" width="128" height="180"/>
         <element name="EditUnit" positionX="-108" positionY="63" width="128" height="300"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
-        <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="75"/>
+        <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="Issues" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="Location" positionX="-2" positionY="-36" width="128" height="315"/>
         <element name="SalesforceOrgConfig" positionX="124" positionY="315" width="128" height="105"/>
-        <element name="Setting" positionX="-126" positionY="45" width="128" height="150"/>
+        <element name="Setting" positionX="-126" positionY="45" width="128" height="165"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="210"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
-        <element name="Tenant" positionX="-126" positionY="45" width="128" height="465"/>
+        <element name="Tenant" positionX="-126" positionY="45" width="128" height="480"/>
         <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
-        <element name="Unit" positionX="-162" positionY="-108" width="128" height="270"/>
+        <element name="Unit" positionX="-162" positionY="-108" width="128" height="300"/>
         <element name="UserInfo" positionX="-126" positionY="45" width="128" height="180"/>
         <element name="VirtualUnitClient" positionX="-117" positionY="54" width="128" height="120"/>
     </elements>

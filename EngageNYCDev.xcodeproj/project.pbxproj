@@ -25,8 +25,6 @@
 		5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */; };
 		5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */; };
 		5D2AFB141EFBF76B003AC7DD /* TenantViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */; };
-		5D349DBC1F9598C100641E1F /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DBA1F9598C100641E1F /* Tenant+CoreDataClass.swift */; };
-		5D349DBD1F9598C100641E1F /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D349DBB1F9598C100641E1F /* Tenant+CoreDataProperties.swift */; };
 		5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */; };
 		5D4C4E661F3C454500284725 /* CaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E651F3C454500284725 /* CaseViewController.swift */; };
 		5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */; };
@@ -38,8 +36,6 @@
 		5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */; };
 		5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */; };
 		5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */; };
-		5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */; };
-		5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */; };
 		5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */; };
 		5D5291D51F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */; };
 		5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9471F11EB4000623005 /* DateExtension.swift */; };
@@ -70,7 +66,7 @@
 		5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */; };
 		5D757B1A1F18A38100308C05 /* DownloadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B181F18A38100308C05 /* DownloadProgressView.swift */; };
 		5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D757B191F18A38100308C05 /* DownloadProgressView.xib */; };
-		5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */; };
+		5D757B1D1F18AB0800308C05 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1C1F18AB0800308C05 /* Download.swift */; };
 		5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757B1E1F18F4A200308C05 /* LocationDO.swift */; };
 		5D7603D61F5D392300ED157E /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7603D51F5D391900ED157E /* Alert.swift */; };
 		5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */; };
@@ -136,6 +132,13 @@
 		5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3C9A81EF7CF7B00012C47 /* SurveyQuestionDO.swift */; };
 		62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AC824C1F0A127B00F968FA /* ForgetPasswordViewController.swift */; };
 		70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */; };
+		8A11806C1FA9B8E300120B86 /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A11806B1FA9B8E300120B86 /* InitialViewController.xib */; };
+		8A56FBF01FB5A53D00B384DD /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */; };
+		8A56FBF11FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */; };
+		8AF2999D1FA72F25004F6AFC /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */; };
+		8AF2999E1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */; };
+		8AF299A21FA83D8F004F6AFC /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */; };
+		8AFC39AA1FB59EF400164C2A /* NewYorkCity.mmpk in Resources */ = {isa = PBXBuildFile; fileRef = 8AFC39A91FB59EEA00164C2A /* NewYorkCity.mmpk */; };
 		CCA1086177556BD0A4C375E0 /* Pods_EngageNYCDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DDC459DE57CF007385D800 /* Pods_EngageNYCDev.framework */; };
 /* End PBXBuildFile section */
 
@@ -181,8 +184,6 @@
 		5D2AFB0F1EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TenantHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		5D2AFB111EFBE964003AC7DD /* AddNewUnitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewUnitViewController.swift; sourceTree = "<group>"; };
 		5D2AFB131EFBF76B003AC7DD /* TenantViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantViewCell.swift; sourceTree = "<group>"; };
-		5D349DBA1F9598C100641E1F /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D349DBB1F9598C100641E1F /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewIssueViewController.swift; sourceTree = "<group>"; };
 		5D4C4E651F3C454500284725 /* CaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseViewController.swift; sourceTree = "<group>"; };
 		5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -194,8 +195,6 @@
 		5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D52F9471F11EB4000623005 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -232,7 +231,7 @@
 		5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadESRILayers.swift; sourceTree = "<group>"; };
 		5D757B181F18A38100308C05 /* DownloadProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressView.swift; sourceTree = "<group>"; };
 		5D757B191F18A38100308C05 /* DownloadProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadProgressView.xib; sourceTree = "<group>"; };
-		5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadBaseMap.swift; sourceTree = "<group>"; };
+		5D757B1C1F18AB0800308C05 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		5D757B1E1F18F4A200308C05 /* LocationDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDO.swift; sourceTree = "<group>"; };
 		5D7603D51F5D391900ED157E /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		5D8C6BF61F025C9B0045A65D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
@@ -305,6 +304,14 @@
 		62AC824C1F0A127B00F968FA /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		8361D8AB9EC26ADC2A936556 /* Pods-EngageNYCDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYCDev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYCDev/Pods-EngageNYCDev.debug.xcconfig"; sourceTree = "<group>"; };
+		8A0462931FACD9550070D173 /* EngageNYCDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngageNYCDev.entitlements; sourceTree = "<group>"; };
+		8A11806B1FA9B8E300120B86 /* InitialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialViewController.xib; sourceTree = "<group>"; };
+		8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		8AFC39A91FB59EEA00164C2A /* NewYorkCity.mmpk */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewYorkCity.mmpk; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		A9DDC459DE57CF007385D800 /* Pods_EngageNYCDev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EngageNYCDev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1486C9C4836237A402A7C99 /* Pods-EngageNYC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.release.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.release.xcconfig"; sourceTree = "<group>"; };
@@ -361,6 +368,7 @@
 		5D56CEFC1EE007060019882F = {
 			isa = PBXGroup;
 			children = (
+				8A0462931FACD9550070D173 /* EngageNYCDev.entitlements */,
 				5D56CF071EE007060019882F /* EngageNYC */,
 				5D56CF1F1EE007060019882F /* EngageNYCTests */,
 				5D56CF2A1EE007070019882F /* EngageNYCUITests */,
@@ -426,8 +434,10 @@
 		5DADD8791F074F72009CD89E /* GeneratedEntityClass */ = {
 			isa = PBXGroup;
 			children = (
-				5D349DBA1F9598C100641E1F /* Tenant+CoreDataClass.swift */,
-				5D349DBB1F9598C100641E1F /* Tenant+CoreDataProperties.swift */,
+				8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */,
+				8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */,
+				8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */,
+				8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */,
 				5DBF2EE31F75044000B1A0D9 /* EditUnit+CoreDataClass.swift */,
 				5DBF2EE41F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift */,
 				5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */,
@@ -438,8 +448,6 @@
 				5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */,
 				5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */,
 				5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */,
-				5D5291B21F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift */,
-				5D5291B31F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift */,
 				5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */,
 				5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */,
 			);
@@ -449,6 +457,7 @@
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */,
 				5D5C5F881F8CDC9900248683 /* AddNewClientWithAddressViewController.swift */,
 				5DCEA6151F78CA1B0053FFF3 /* AddressViewController.swift */,
 				5D00F0D51F6ED5EE00FF7523 /* ExistingClientsViewController.swift */,
@@ -534,7 +543,7 @@
 				5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */,
 				5D9A3A5E1F0BA8D300D4FCB6 /* SyncUtility.swift */,
 				5D757AF21F174FEF00308C05 /* DownloadESRILayers.swift */,
-				5D757B1C1F18AB0800308C05 /* DownloadBaseMap.swift */,
+				5D757B1C1F18AB0800308C05 /* Download.swift */,
 				5DC8C7331F28948700B57044 /* SortingButton.swift */,
 				5D7603D51F5D391900ED157E /* Alert.swift */,
 			);
@@ -544,6 +553,7 @@
 		5DC9E9A01EEA60FE009A6396 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8A11806B1FA9B8E300120B86 /* InitialViewController.xib */,
 				5D5C5F801F8CCBF000248683 /* AddNewClientHeaderTableViewCell.swift */,
 				5D5C5F811F8CCBF000248683 /* AddNewClientHeaderTableViewCell.xib */,
 				5D00F0D71F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.swift */,
@@ -575,6 +585,7 @@
 		5DC9E9DE1EEA7DF9009A6396 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8AFC39A81FB59EC500164C2A /* ESRIMap */,
 				5D1BD4F31F067FB100C8FAF5 /* GuageChart */,
 				5DE3C9881EF36A7B00012C47 /* SWRevealController */,
 				5DE3C97C1EF125DD00012C47 /* MBProgressHUD */,
@@ -634,6 +645,14 @@
 				5DE3C98A1EF36A7B00012C47 /* SWRevealViewController.m */,
 			);
 			path = SWRevealController;
+			sourceTree = "<group>";
+		};
+		8AFC39A81FB59EC500164C2A /* ESRIMap */ = {
+			isa = PBXGroup;
+			children = (
+				8AFC39A91FB59EEA00164C2A /* NewYorkCity.mmpk */,
+			);
+			name = ESRIMap;
 			sourceTree = "<group>";
 		};
 		B5C91A6AF2348DD30289CED2 /* Pods */ = {
@@ -724,7 +743,15 @@
 					5D56CF041EE007060019882F = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = YNCE3DFDTN;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					5D56CF1B1EE007060019882F = {
 						CreatedOnToolsVersion = 8.1;
@@ -765,11 +792,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AFC39AA1FB59EF400164C2A /* NewYorkCity.mmpk in Resources */,
 				5D00F0DA1F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.xib in Resources */,
 				5D65D4E31F3015FC00302CE8 /* IssueHeaderTableViewCell.xib in Resources */,
 				5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */,
 				5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */,
 				5DC8C72C1F25D2F900B57044 /* ClientsTableViewCell.xib in Resources */,
+				8A11806C1FA9B8E300120B86 /* InitialViewController.xib in Resources */,
 				5DA15B4C1F2B59BD00EB90DC /* UnitDataTableViewCell.xib in Resources */,
 				5D56CF161EE007060019882F /* LaunchScreen.storyboard in Resources */,
 				5DE3C9971EF406E200012C47 /* UnitsHeaderTableViewCell.xib in Resources */,
@@ -813,11 +842,11 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KnockUAT-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-EngageNYCDev-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3C006FB73344B9F646ED5E36 /* [CP] Copy Pods Resources */ = {
@@ -854,26 +883,42 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-KnockUAT/Pods-KnockUAT-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-EngageNYCDev/Pods-EngageNYCDev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/DLRadioButton/DLRadioButton.framework",
 				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
-				"${BUILT_PRODUCTS_DIR}/RNCryptor/RNCryptor.framework",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SalesforceAnalytics/SalesforceAnalytics.framework",
+				"${BUILT_PRODUCTS_DIR}/SalesforceSDKCore/SalesforceSDKCore.framework",
+				"${BUILT_PRODUCTS_DIR}/SmartStore/SmartStore.framework",
+				"${BUILT_PRODUCTS_DIR}/SmartSync/SmartSync.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DLRadioButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNCryptor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SalesforceAnalytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SalesforceSDKCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SmartStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SmartSync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -893,11 +938,10 @@
 				5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */,
 				5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */,
 				5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */,
-				5D5291CE1F0D3BCF00D5645F /* EditLocation+CoreDataClass.swift in Sources */,
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
 				5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
-				5D757B1D1F18AB0800308C05 /* DownloadBaseMap.swift in Sources */,
+				5D757B1D1F18AB0800308C05 /* Download.swift in Sources */,
 				5D0FC9DD1F6A7D03000F9994 /* EngageNYC.xcdatamodeld in Sources */,
 				5DA15B481F2B572500EB90DC /* ClientDataTableViewCell.swift in Sources */,
 				5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */,
@@ -908,8 +952,7 @@
 				5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */,
 				5DA15B4D1F2B59BD00EB90DC /* UnitDataTableViewCell.swift in Sources */,
 				5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */,
-				5D349DBD1F9598C100641E1F /* Tenant+CoreDataProperties.swift in Sources */,
-				5D5291CF1F0D3BCF00D5645F /* EditLocation+CoreDataProperties.swift in Sources */,
+				8AF2999E1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift in Sources */,
 				5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */,
 				5DA15B421F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift in Sources */,
 				5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */,
@@ -930,6 +973,7 @@
 				5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
 				5D65D4E21F3015FC00302CE8 /* IssueHeaderTableViewCell.swift in Sources */,
+				8A56FBF11FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift in Sources */,
 				5DE3C9851EF2656C00012C47 /* LocationCustomViewCell.swift in Sources */,
 				5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */,
 				5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */,
@@ -945,9 +989,10 @@
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
 				5D01D4131F7A407300B3F8F6 /* ClientDO.swift in Sources */,
 				5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */,
+				8A56FBF01FB5A53D00B384DD /* EditLocation+CoreDataClass.swift in Sources */,
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
 				5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */,
-				5D349DBC1F9598C100641E1F /* Tenant+CoreDataClass.swift in Sources */,
+				8AF2999D1FA72F25004F6AFC /* Tenant+CoreDataClass.swift in Sources */,
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
 				5D65D4DE1F3015EE00302CE8 /* IssueViewController.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
@@ -989,6 +1034,7 @@
 				5D65D4DC1F2E45BD00302CE8 /* CaseDO.swift in Sources */,
 				5D2AFB121EFBE964003AC7DD /* AddNewUnitViewController.swift in Sources */,
 				5D1BD4F61F067FB100C8FAF5 /* GaugeLayer.swift in Sources */,
+				8AF299A21FA83D8F004F6AFC /* InitialViewController.swift in Sources */,
 				5DC9E9E61EEA7DF9009A6396 /* SVIndefiniteAnimatedView.m in Sources */,
 				70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */,
 				5DE3C98F1EF3ACEC00012C47 /* UnitsViewController.swift in Sources */,
@@ -1149,6 +1195,8 @@
 			baseConfigurationReference = 8361D8AB9EC26ADC2A936556 /* Pods-EngageNYCDev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EngageNYCDev.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Das Nobel (ZTNLPMSDLU)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
@@ -1156,8 +1204,6 @@
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Charts\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/CryptoSwift\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/RNCryptor\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Toast-Swift\"",
 					"$(HOME)/Library/SDKs/ArcGIS/iOS/Frameworks/Static",
 				);
@@ -1171,10 +1217,6 @@
 					"-framework",
 					"\"Charts\"",
 					"-framework",
-					"\"CryptoSwift\"",
-					"-framework",
-					"\"RNCryptor\"",
-					"-framework",
 					"\"Toast_Swift\"",
 					"-ObjC",
 					"-framework",
@@ -1184,8 +1226,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "43eaa0f1-13f5-4566-be24-1032b34bdcdb";
+				PROVISIONING_PROFILE_SPECIFIER = "EngageNYCDev-PushNotification";
 				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1195,14 +1239,14 @@
 			baseConfigurationReference = 30F82021FDD70010DE5470B8 /* Pods-EngageNYCDev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EngageNYCDev.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dastagir Nobel (YNCE3DFDTN)";
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Charts\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/CryptoSwift\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/RNCryptor\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Toast-Swift\"",
 					"$(HOME)/Library/SDKs/ArcGIS/iOS/Frameworks/Static",
 				);
@@ -1217,10 +1261,6 @@
 					"-framework",
 					"\"Charts\"",
 					"-framework",
-					"\"CryptoSwift\"",
-					"-framework",
-					"\"RNCryptor\"",
-					"-framework",
 					"\"Toast_Swift\"",
 					"-ObjC",
 					"-framework",
@@ -1230,9 +1270,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "045b2199-7c45-4a2c-a3ff-9ef679b1be57";
+				PROVISIONING_PROFILE_SPECIFIER = "EngageNYCDev-Distribution_PushNotification";
 				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

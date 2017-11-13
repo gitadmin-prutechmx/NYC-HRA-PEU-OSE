@@ -26,6 +26,7 @@ struct locationDataStruct
     var salesforceLocationName:String = ""
     var noOfClients:String = ""
     var noOfUnitsAttempt:String = ""
+    var lastModifiedName:String = ""
 }
 
 class MapLocationViewController: UIViewController ,UITableViewDataSource, UITableViewDelegate , AGSGeoViewTouchDelegate, AGSCalloutDelegate, UISearchBarDelegate {
@@ -91,11 +92,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     var totalUnits:String = ""
     var noOfClients:String = ""
     var noOfUnitsAttempt:String = ""
+    var modifiedName:String = ""
     
     var isSyncDataFromLocation:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Utilities.UnzipFile()
         
         Utilities.currentLocationRowIndex = 0
         // self.tableView.allowsSelection = false
@@ -204,46 +208,52 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.mapPackage = AGSMobileMapPackage(name: "NewYorkCity")
         
         
-        
-        //load map package
-        self.mapPackage.load { [weak self] (error: Error?) in
-            if error != nil {
-                // SVProgressHUD.showErrorWithStatus(error.localizedDescription)
-            }
-            else {
-                if let weakSelf = self {
-                    if weakSelf.mapPackage.maps.count > 0 {
-                        
-                        weakSelf.map = weakSelf.mapPackage.maps[0]
-                        
-                        weakSelf.mapView.map = weakSelf.map
-                        
-                        
-                        Utilities.basemapMap = weakSelf.map
-                        
-                        
-                        //touch delegate
-                        weakSelf.mapView.touchDelegate = weakSelf
-                        
-                        //add graphic overlays
-                        weakSelf.mapView.graphicsOverlays.addObjects(from: [weakSelf.routeGraphicsOverlay, weakSelf.markerGraphicsOverlay])
-                        
-                        self?.locatorTask = self?.mapPackage.locatorTask
-                        
-                        
-                        
-                        self?.showLayers()
-                        
-                        
-                        
-                        //self?.startSearchingFirstText()
-                        
-                        self?.isSyncDataFromLocation = false
-                        
-                        
-                    }
-                    else {
-                        // SVProgressHUD.showErrorWithStatus("No mobile maps found in the map package")
+        if(self.mapPackage != nil){
+            
+            //load map package
+            self.mapPackage.load { [weak self] (error: Error?) in
+                if let error = error {
+                    SVProgressHUD.dismiss()
+                    Utilities.showSwiftErrorMessage(error: "Error while loading map:  \(error.localizedDescription). Please refresh again.")
+                   
+                    
+                   // SVProgressHUD.showError(withStatus: "Map Loading error.", maskType: .gradient)
+                }
+                else {
+                    if let weakSelf = self {
+                        if weakSelf.mapPackage.maps.count > 0 {
+                            
+                            weakSelf.map = weakSelf.mapPackage.maps[0]
+                            
+                            weakSelf.mapView.map = weakSelf.map
+                            
+                            
+                            Utilities.basemapMap = weakSelf.map
+                            
+                            
+                            //touch delegate
+                            weakSelf.mapView.touchDelegate = weakSelf
+                            
+                            //add graphic overlays
+                            weakSelf.mapView.graphicsOverlays.addObjects(from: [weakSelf.routeGraphicsOverlay, weakSelf.markerGraphicsOverlay])
+                            
+                            self?.locatorTask = self?.mapPackage.locatorTask
+                            
+                            
+                            
+                            self?.showLayers()
+                            
+                            
+                            
+                            //self?.startSearchingFirstText()
+                            
+                            self?.isSyncDataFromLocation = false
+                            
+                            
+                        }
+                        else {
+                            // SVProgressHUD.showErrorWithStatus("No mobile maps found in the map package")
+                        }
                     }
                 }
             }
@@ -280,6 +290,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         geodatabase.load(completion: { [] (error:Error?) -> Void in
             if let error = error {
+                SVProgressHUD.dismiss()
+                Utilities.showSwiftErrorMessage(error: "Error while fetching data from ESRI server:  \(error.localizedDescription). Please refresh again.")
+                
                 print(error)
             }
             else {
@@ -310,9 +323,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                                     
                                     
                                     let featureLayer = AGSFeatureLayer(featureTable: (self.geodatabaseFeatureTable)!)
-                                
-                                   
-                                   // self.filterfeaturesExpression = "Name = '69,HENRY STREET,BROOKLYN,NY,11201'"
+                                    
+                                    
+                                    // self.filterfeaturesExpression = "Name = '69,HENRY STREET,BROOKLYN,NY,11201'"
                                     
                                     featureLayer.definitionExpression = (self.filterfeaturesExpression)
                                     
@@ -419,40 +432,51 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         queryParams.whereClause = "Name = '\(addressName)'"
         
         
-        
-        
-        self.geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: { [weak self] (result:AGSFeatureQueryResult?, error:Error?) -> Void in
-            if let error = error {
-                print(error.localizedDescription)
-                
-                //update selected features array
-                // self?.selectedFeatures.removeAll(keepingCapacity: false)
-            }
-            else if let features = result?.featureEnumerator().allObjects {
-                if features.count > 0 {
-                    
+        if(geodatabaseFeatureTable != nil){
+            
+            self.geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: { [weak self] (result:AGSFeatureQueryResult?, error:Error?) -> Void in
+                if let error = error {
                     SVProgressHUD.dismiss()
+                    print(error.localizedDescription)
                     
-                    //zoom to the selected feature
-                    
-                    self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,scale:2000,completion: nil)
-                    //,scale: 10000
-                    
-                    if(isShowCallOut){
-                        self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false)
+                    //update selected features array
+                    // self?.selectedFeatures.removeAll(keepingCapacity: false)
+                }
+                else if let features = result?.featureEnumerator().allObjects {
+                    if features.count > 0 {
+                        
+                        SVProgressHUD.dismiss()
+                        
+                        //zoom to the selected feature
+                        
+                        self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,scale:2000,completion: nil)
+                        //,scale: 10000
+                        
+                        if(isShowCallOut){
+                            self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false)
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    else {
+                        SVProgressHUD.dismiss()
+                        Utilities.showSwiftErrorMessage(error: "Address does not exist.\(addressName)")
+                        
                     }
                     
-                    
-                    
-                    
                 }
-                else {
-                    SVProgressHUD.showError(withStatus: "Address does not exist.", maskType: .gradient)
-                }
-                
-            }
-        })
-        
+            })
+            
+        }
+        else{
+            SVProgressHUD.dismiss()
+            Utilities.showSwiftErrorMessage(error: "MapLocationVC:- Select feature:-  geodatabaseFeatureTable does not exist.")
+            
+
+            
+        }
         
     }
     
@@ -460,7 +484,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     
     @IBAction func syncData(_ sender: Any) {
         
-       Utilities.forceSyncDataWithSalesforce(vc: self)
+        Utilities.forceSyncDataWithSalesforce(vc: self)
     }
     
     var isUpdateLocationView = false
@@ -481,12 +505,14 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         if(SalesforceConfig.isBaseMapNeedToDownload == true){
             showMap(isSyncDataFromLoc: isSyncDataFromLocation)
         }
-        
-        if(SalesforceConfig.isBaseMapNeedToDownload == false && Utilities.isEditLoc == false){
-            showLayers()
-            //mapView.setViewpoint(AGSViewpoint(targetExtent: featureLayerExtent!), completion: nil)
-            
+        else if(Utilities.isEditLoc == false){
+             showLayers()
         }
+        
+//        if(SalesforceConfig.isBaseMapNeedToDownload == false && Utilities.isEditLoc == false){
+//            showLayers()
+//            
+//        }
         
     }
     
@@ -544,6 +570,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     var locDataArray = [locationDataStruct]()
     var filterfeaturesExpression:String = ""
     var locDict: [String:LocationDO] = [:]
+    var editLocDict: [String:String] = [:]
     
     func populateLocationData(){
         
@@ -551,8 +578,10 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         filterfeaturesExpression = ""
         locDataArray = [locationDataStruct]()
         locDict = [:]
+        editLocDict = [:]
         
         createLocationDictionary()
+        createEditLocationDictionary()
         
         let locationResults = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [Location]
         
@@ -569,22 +598,23 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                 
                 let fullAdress = locationData.street! + " " + locationData.city! + ", " + locationData.state! + " " + locationData.zip!
                 
+                let locModifiedName = editLocDict[locationData.id!]
                 
-                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!,locStatus:locationData.locStatus!,salesforceLocationName:locationData.name!,noOfClients:locationData.noOfClients!,noOfUnitsAttempt:locationData.noOfUnitsAttempt!)
+                let objectLocStruct:locationDataStruct = locationDataStruct(locId: locationData.id!,locName: locationName,fullAddress: fullAdress,assignmentLocId:locationData.assignmentLocId!,partialAddress:partialAddressData,street:locationData.street!,city:locationData.city!,state:locationData.state!,zip:locationData.zip!,totalUnits:locationData.totalUnits!,locStatus:locationData.locStatus!,salesforceLocationName:locationData.name!,noOfClients:locationData.noOfClients!,noOfUnitsAttempt:locationData.noOfUnitsAttempt!,lastModifiedName:locModifiedName!)
                 
                 
                 locDataArray.append(objectLocStruct)
                 
                 
-//                let city = locationData.city!.lowercased()
-//                let updatedCity = city.capitalizingFirstLetter()
-//                
-//                
-//                
-//                let temp1 = locationData.streetNumber! + "," + locationData.streetName!
-//                let temp2 =  temp1 + "," + updatedCity + "," + locationData.state! + "," + locationData.zip!
-//                
-//                filterfeaturesExpression = filterfeaturesExpression + "Name = '" + temp2 + "'OR "
+                //                let city = locationData.city!.lowercased()
+                //                let updatedCity = city.capitalizingFirstLetter()
+                //
+                //
+                //
+                //                let temp1 = locationData.streetNumber! + "," + locationData.streetName!
+                //                let temp2 =  temp1 + "," + updatedCity + "," + locationData.state! + "," + locationData.zip!
+                //
+                //                filterfeaturesExpression = filterfeaturesExpression + "Name = '" + temp2 + "'OR "
                 
                 
                 filterfeaturesExpression = filterfeaturesExpression + "Name = '\(locationData.name!)'OR "
@@ -622,6 +652,27 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                     
                     
                     locDict[locData.name!] = LocationDO(locId: locData.id!, assignmentLocId: locData.assignmentLocId!, fullAddress: fullAdress, totalUnits: locData.totalUnits!, noOfClients: locData.noOfClients!, noOfUnitsAttempt: locData.noOfUnitsAttempt!)
+                }
+                
+                
+            }
+        }
+        
+    }
+    
+    func createEditLocationDictionary(){
+        
+        
+        
+        let editLocResults =  ManageCoreData.fetchData(salesforceEntityName: "EditLocation",predicateFormat: "assignmentId == %@" ,predicateValue: SalesforceConnection.assignmentId,isPredicate:true) as! [EditLocation]
+        
+        if(editLocResults.count > 0){
+            
+            for editLocData in editLocResults{
+                
+                if editLocDict[editLocData.locationId!] == nil{
+                    
+                   editLocDict[editLocData.locationId!] = editLocData.lastModifiedName
                 }
                 
                 
@@ -793,6 +844,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         
         self.locatorTask?.geocode(withSearchText: text, parameters: self.geocodeParameters, completion: { [weak self] (results:[AGSGeocodeResult]?, error:Error?) -> Void in
             if let error = error {
+                SVProgressHUD.dismiss()
                 print(error.localizedDescription)
             }
             else {
@@ -838,6 +890,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         view.lblNoOfUnits.text = totalUnits
         view.lblNoClients.text = noOfClients
         view.lblAttemptPrecentage.text = noOfUnitsAttempt + "%"
+        view.lblName.text = modifiedName
         
         view.btnEditLocation.addTarget(self, action: #selector(MapLocationViewController.navigateToEditLocationView(_:)), for: .touchUpInside)
         
@@ -953,7 +1006,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         self.mapView.identifyLayers(atScreenPoint: screenPoint, tolerance: 12, returnPopupsOnly: false, maximumResultsPerLayer: 10) { [weak self] (results: [AGSIdentifyLayerResult]?, error: Error?) -> Void in
             
             if let error = error {
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                SVProgressHUD.dismiss()
+                Utilities.showSwiftErrorMessage(error: "MapLocationVC:- GeoView: \(error.localizedDescription)")
             }
             else {
                 SVProgressHUD.dismiss()
@@ -977,11 +1031,21 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                         self?.totalUnits = (locObject?.totalUnits)!
                         self?.noOfUnitsAttempt = (locObject?.noOfUnitsAttempt)!
                         self?.noOfClients = (locObject?.noOfClients)!
+                        self?.modifiedName = (self?.editLocDict[SalesforceConnection.locationId])!
                         
                         
                         if(self?.locDataArray.contains {$0.salesforceLocationName == address})!{
                             
                             self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: geoElement.geometry! as! AGSPoint, animated: true, offset: false)
+                            
+                            if let i = self?.locDataArray.index(where: {$0.salesforceLocationName == address})
+                            {
+                                print(i)
+                                let indexpath = IndexPath.init(row: i, section: 0)
+                                self?.tableView.selectRow(at: indexpath, animated: false, scrollPosition: .none)
+                                
+                            }
+
                         }
                         
                     }
@@ -1136,6 +1200,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             totalUnits = filteredStruct[indexPath.row].totalUnits
             noOfUnitsAttempt = filteredStruct[indexPath.row].noOfUnitsAttempt
             noOfClients = filteredStruct[indexPath.row].noOfClients
+            modifiedName = filteredStruct[indexPath.row].lastModifiedName
             
             Utilities.currentLocationRowIndex = indexPath.row
             
@@ -1155,6 +1220,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             totalUnits = locDataArray[indexPath.row].totalUnits
             noOfUnitsAttempt = locDataArray[indexPath.row].noOfUnitsAttempt
             noOfClients = locDataArray[indexPath.row].noOfClients
+            modifiedName = locDataArray[indexPath.row].lastModifiedName
             
             Utilities.currentLocationRowIndex = indexPath.row
             

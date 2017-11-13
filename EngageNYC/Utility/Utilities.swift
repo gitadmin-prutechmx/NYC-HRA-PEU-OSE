@@ -10,8 +10,11 @@ import Foundation
 import UIKit
 import ArcGIS
 import SwiftMessages
+import SalesforceSDKCore
 
 import Toast_Swift
+
+import Zip
 
 
 class Utilities {
@@ -112,6 +115,10 @@ class Utilities {
     static var currentLocationRowIndex = 0
     
     static var offlineSyncTime = 0
+    
+    
+//    static var isMapFileCorrupted:Bool = false
+//    static var isGeodatabaseFileCorrupted:Bool = false
     
     class func startBackgroundSyncing(){
         // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
@@ -217,40 +224,40 @@ class Utilities {
         
     }
     
-    class func decryptJsonData(jsonEncryptString:String) -> String{
-        
-        
-        
-        //  var returnjsonData:Data?
-        
-        
-        //Remove first two characters
-        
-        let startIndex = jsonEncryptString.index(jsonEncryptString.startIndex, offsetBy: 1)
-        
-        let headString = jsonEncryptString.substring(from: startIndex)
-        
-        
-        
-        //Remove last two characters
-        
-        let endIndex = headString.index(headString.endIndex, offsetBy: -1)
-        
-        let trailString = headString.substring(to: endIndex)
-        
-        
-        let decryptData = try! trailString.aesDecrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-        
-        
-        
-        // returnjsonData = decryptData.data(using: .utf8)
-        
-        
-        
-        
-        return decryptData
-        
-    }
+    //    class func decryptJsonData(jsonEncryptString:String) -> String{
+    //
+    //
+    //
+    //        //  var returnjsonData:Data?
+    //
+    //
+    //        //Remove first two characters
+    //
+    //        let startIndex = jsonEncryptString.index(jsonEncryptString.startIndex, offsetBy: 1)
+    //
+    //        let headString = jsonEncryptString.substring(from: startIndex)
+    //
+    //
+    //
+    //        //Remove last two characters
+    //
+    //        let endIndex = headString.index(headString.endIndex, offsetBy: -1)
+    //
+    //        let trailString = headString.substring(to: endIndex)
+    //
+    //
+    //        let decryptData = try! trailString.aesDecrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+    //
+    //
+    //
+    //        // returnjsonData = decryptData.data(using: .utf8)
+    //
+    //
+    //
+    //
+    //        return decryptData
+    //
+    //    }
     
     //    class func encryptedParams(dictParameters:AnyObject)-> String{
     //        let convertedString = Utilities.jsonToString(json: dictParameters as AnyObject)
@@ -413,8 +420,8 @@ class Utilities {
         editTenantDict["aptFloor"] = aptFloor
         
         
-    
-         editTenantDict["assignmentLocationId"] = assignmentLocId
+        
+        editTenantDict["assignmentLocationId"] = assignmentLocId
         
         
         
@@ -476,10 +483,20 @@ class Utilities {
     
     
     
+    
+    class func displayErrorMessage(errorMsg:String){
+        Utilities.isBackgroundSync = false
+        Utilities.isRefreshBtnClick = false
+        Utilities.showSwiftErrorMessage(error: errorMsg)
+    }
+    
+    
     class func parseAddNewUnitResponse(jsonObject: Dictionary<String, AnyObject>)->Bool {
         
         
         guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let message = jsonObject["message"] as? String,
             
             let unitDataDict = jsonObject["unitData"] as? [String: AnyObject] else { return true}
         
@@ -502,6 +519,11 @@ class Utilities {
             
             
         }
+        else{
+            
+            displayErrorMessage(errorMsg: "Error while adding new unit to salesforce.\(message)")
+            
+        }
         
         
         return isError
@@ -514,6 +536,8 @@ class Utilities {
     class func parseTenantResponse(jsonObject: Dictionary<String, AnyObject>)->Bool{
         
         guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let message = jsonObject["message"] as? String,
             
             let tenantDataDictonary = jsonObject["tenantData"] as? [String: AnyObject] else { return true }
         
@@ -533,26 +557,8 @@ class Utilities {
             updateTenantIdInSurveyResponse(tenantDataDict: tenantDataDictonary)
             
         }
-        
-        return isError
-        
-        
-    }
-    
-    
-    class func parseIssueResponse(jsonObject: Dictionary<String, AnyObject>)->Bool{
-        
-        guard let isError = jsonObject["hasError"] as? Bool,
-            
-            let issueDataDictonary = jsonObject["issueData"] as? [String: AnyObject] else { return true }
-        
-        
-        
-        
-        if(isError == false){
-            
-            updateIssueIdInCoreData(issueDataDict: issueDataDictonary)
-            
+        else{
+            displayErrorMessage(errorMsg: "Error while adding new tenant to salesforce.\(message)")
         }
         
         return isError
@@ -563,6 +569,8 @@ class Utilities {
     class func parseCaseResponse(jsonObject: Dictionary<String, AnyObject>)->Bool{
         
         guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let message = jsonObject["message"] as? String,
             
             let caseDataDictonary = jsonObject["caseData"] as? [String: AnyObject] else { return true }
         
@@ -577,11 +585,43 @@ class Utilities {
             updateCaseIdInIssue(caseDataDict: caseDataDictonary)
             
         }
+        else{
+            displayErrorMessage(errorMsg: "Error while adding new case to salesforce.\(message)")
+        }
+        
         
         return isError
         
         
     }
+    
+    class func parseIssueResponse(jsonObject: Dictionary<String, AnyObject>)->Bool{
+        
+        guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let message = jsonObject["message"] as? String,
+            
+            let issueDataDictonary = jsonObject["issueData"] as? [String: AnyObject] else { return true }
+        
+        
+        
+        
+        if(isError == false){
+            
+            updateIssueIdInCoreData(issueDataDict: issueDataDictonary)
+            
+        }
+        else{
+            
+            displayErrorMessage(errorMsg: "Error while adding new issue to salesforce.\(message)")
+        }
+        
+        return isError
+        
+        
+    }
+    
+    
     
     
     
@@ -1021,6 +1061,7 @@ class Utilities {
             print("EditUnit updated")
         }
         
+        
     }
     
     
@@ -1123,6 +1164,24 @@ class Utilities {
         }
     }
     
+    class func deleteGeodatabase() {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        do {
+            let files = try FileManager.default.contentsOfDirectory(atPath: path)
+            for file in files {
+                let remove = file.hasSuffix(".geodatabase")
+                if remove {
+                    try FileManager.default.removeItem(atPath: (path as NSString).appendingPathComponent(file))
+                    print("deleting geodatabase: \(file)")
+                }
+            }
+            print("deleted geodatabase")
+        }
+        catch {
+            print(error)
+        }
+    }
+    
     class func setInProgressCompleteSurveyIds(){
         
         
@@ -1147,132 +1206,165 @@ class Utilities {
         
     }
     
+    class func downloadESRIFeatureLayers(loginVC:LoginViewController?=nil){
+        
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        
+        let fullPath = "\(path)/NewYorkLayers.geodatabase"
+        
+        
+        if (Utilities.isGeoDatabseExist()==false) {
+            
+            //This will call when first then user install app
+            //download first layers data then basemap
+            DownloadESRILayers.DownloadData(loginViewController: loginVC,downloadPath:fullPath)
+            
+            
+        }
+    }
+    
     
     class func fetchAllDataFromSalesforce(loginViewController:LoginViewController?=nil){
         
-        //var emailParams : [String:String] = [:]
-        var externalIdParams : [String:String] = [:]
+        
         var userParams : [String:String] = [:]
         
+        if(loginViewController == nil){
+            SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+        }
         
-        SVProgressHUD.show(withStatus: "Syncing data..", maskType: SVProgressHUDMaskType.gradient)
+        SalesforceConnection.salesforceUserId  = (SFUserAccountManager.sharedInstance().currentUser?.idData.userId)!
         
-        SalesforceConnection.loginToSalesforce() { response in
+        //SFUserAccountManager.sharedInstance().currentUserIdentity?.userId
+        userParams["userId"] = SalesforceConnection.salesforceUserId
+        
+        
+        
+        let userDetailReq = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams, methodType: SFRestMethod.POST)
+        
+        SFRestAPI.sharedInstance().send(userDetailReq, fail: {
+            error in
             
-            //  let encryptUserIdStr = try! SalesforceConnection.salesforceUserId.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
+            Utilities.showSwiftErrorMessage(error: "Utilities:- FetchAllDataFromSFDC:- UserDetailRequest:- \(String(describing: error))")
             
-            //   userParams["userId"] = encryptUserIdStr
+        }, complete: {
+            userInfoJsonData in
             
-            userParams["userId"] = SalesforceConnection.salesforceUserId
-            
-            
-            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.userDetail, params: userParams){ userInfoJsonData in
+            DispatchQueue.main.async {
                 
-                Utilities.parseUserInfoData(jsonObject: userInfoJsonData.1)
-                
-                // emailParams["email"] = try! SalesforceConfig.currentUserEmail.aesEncrypt(SalesforceConfig.key, iv: SalesforceConfig.iv)
-                
-                //emailParams["email"] =  SalesforceConfig.currentUserEmail
-                
-                externalIdParams["externalId"] = SalesforceConfig.currentUserExternalId
-                
-                SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: externalIdParams){ assignmentJsonData in
-                    
-                    
-                    SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: externalIdParams){ chartJsonData in
-                        
-                        SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType:"GET"){ picklistData in
-                            
-                            
-                            SalesforceConnection.SalesforceData(restApiUrl: SalesforceRestApiUrl.caseConfiguration, methodType:"GET"){ caseData in
-                                
-                                
-                                
-                                updateDashBoard(assignmentJsonData: assignmentJsonData.1, chartJsonData: chartJsonData.1,pickListJsonData: picklistData.1,caseJsonData:caseData.1)
-                                
-                                if(loginViewController != nil){
-                                    
-                                    let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-                                    
-                                    let fullPath = "\(path)/NewYorkLayers.geodatabase"
-                                    
-                                    
-                                    if (Utilities.isGeoDatabseExist()==false) {
-                                        
-                                        //This will call when first then user install app
-                                        //download first layers data then basemap
-                                        DownloadESRILayers.DownloadData(loginViewController: loginViewController,downloadPath:fullPath)
-                                        
-                                        
-                                    }
-                                        
-                                        //|| Utilities.isBaseMapExist() == false
-                                        
-                                        //This will happen when logout then login
-                                        //when only basemap change
-                                    else if(SalesforceConfig.isBaseMapNeedToDownload == true ){
-                                        
-                                        SVProgressHUD.dismiss()
-                                        
-                                        //Delete Basemap first and then download
-                                        Utilities.deleteBasemap()
-                                        
-                                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: loginViewController)
-                                        
-                                    }
-                                        
-                                        
-                                    else{
-                                        
-                                        SVProgressHUD.dismiss()
-                                        DispatchQueue.main.async {
-                                            loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-                                        }
-                                        
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-                                else{
-                                    
-                                    
-                                    
-                                    //This will happen when refresh icon press
-                                    //when only basemap change
-                                    if(SalesforceConfig.isBaseMapNeedToDownload == true){
-                                        
-                                        
-                                        //Delete Basemap first and then download
-                                        Utilities.deleteBasemap()
-                                        
-                                        SVProgressHUD.show(withStatus: "Updating Basemap..", maskType: .gradient)
-                                        
-                                        DownloadBaseMap.downloadNewYorkCityBaseMap(loginViewController: nil)
-                                        
-                                    }
-                                    else{
-                                        
-                                        //                                         SVProgressHUD.dismiss()
-                                        //                                         callNotificationCenter()
-                                        
-                                        DownloadESRILayers.RefreshData()
-                                    }
-                                    
-                                    
-                                }
-                            }
-                            
-                        }
-                    }
-                }
+                Utilities.parseUserInfoData(jsonObject: userInfoJsonData as! Dictionary<String, AnyObject>)
+                self.PullDataFromSFDC(loginViewController:loginViewController)
                 
             }
             
-        }
+        })
+        
+        
+        
         
     }//end of class
+    
+    
+    class func PullDataFromSFDC(loginViewController:LoginViewController?=nil){
+        
+        var externalIdParams : [String:String] = [:]
+        
+        externalIdParams["externalId"] = SalesforceConfig.currentUserExternalId
+        
+        let eventAssignmentReq = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.getAllEventAssignmentData, params: externalIdParams, methodType: SFRestMethod.POST)
+        
+        SFRestAPI.sharedInstance().send(eventAssignmentReq, fail: {
+            error in
+            
+            Utilities.showSwiftErrorMessage(error: "Utilities:- FetchAllDataFromSFDC:- EventAssignmentRequest:- \(String(describing: error))")
+            
+        }, complete: {
+            assignmentJsonData in
+            
+            let chartReq = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.assignmentdetailchart, params: externalIdParams, methodType: SFRestMethod.POST)
+            
+            SFRestAPI.sharedInstance().send(chartReq, fail: {
+                error in
+                
+                Utilities.showSwiftErrorMessage(error: "Utilities:- FetchAllDataFromSFDC:- ChartRequest:- \(String(describing: error))")
+                
+            }, complete: {
+                chartJsonData in
+                
+                let pickListReq = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.picklistValue, methodType: SFRestMethod.GET)
+                
+                SFRestAPI.sharedInstance().send(pickListReq, fail: {
+                    error in
+                    
+                    Utilities.showSwiftErrorMessage(error: "Utilities:- FetchAllDataFromSFDC:- PickListRequest:- \(String(describing: error))")
+                    
+                }, complete: {
+                    picklistData in
+                    
+                    let caseReq = SalesforceConnection.generateSFDCRequest(restApiUrl: SalesforceRestApiUrl.caseConfiguration, methodType: SFRestMethod.GET)
+                    
+                    SFRestAPI.sharedInstance().send(caseReq, fail: {
+                        error in
+                        
+                        Utilities.showSwiftErrorMessage(error: "Utilities:- FetchAllDataFromSFDC:- CaseRequest:- \(String(describing: error))")
+                        
+                    }, complete: {
+                        caseData in
+                        
+                        
+                        DispatchQueue.main.async {
+                            
+                            updateDashBoard(assignmentJsonData: assignmentJsonData as! [String : AnyObject], chartJsonData: chartJsonData as! [String : AnyObject],pickListJsonData: picklistData as! [String : AnyObject],caseJsonData:caseData as! [String : AnyObject])
+                            
+                            if(loginViewController != nil){
+                                
+                                
+                                 if (Utilities.isGeoDatabseExist()==false) {
+                                    
+                                    //download geodatabase from salesforce
+                                    Download.downloadNewYorkCityData(loginViewController: loginViewController)
+                                }
+                                    
+                                    
+                                else{
+                                    
+                                    SVProgressHUD.dismiss()
+                                    DispatchQueue.main.async {
+                                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                                    }
+                                    
+                                    
+                                }
+                                
+                                
+                                
+                            }
+                            else{
+                                
+                                //This will happen when refresh icon press
+                                    DownloadESRILayers.RefreshData()
+                                
+                            }//end of else
+                            
+                        }
+                        
+                        
+                    })
+                    
+                    
+                    
+                })
+                
+                
+                
+            })
+            
+            
+            
+        })
+        
+        
+    }
     
     
     class func isBaseMapExist()->Bool{
@@ -1294,9 +1386,11 @@ class Utilities {
     
     class func isGeoDatabseExist()->Bool{
         
+      
+        
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         
-        let fullPath = "\(path)/NewYorkLayers.geodatabase"
+        let fullPath = "\(path)/NewYorkLayersGeodatabase/NewYorkLayers.geodatabase"
         
         
         let filemanager = FileManager.default
@@ -1307,6 +1401,35 @@ class Utilities {
         else{
             return false
         }
+    }
+    
+    class func UnzipFile(){
+        
+        do {
+            
+            let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            
+            let extractZipFilePath = "\(path)/NewYorkLayersGeodatabase.zip"
+            let databasePath = "\(path)/NewYorkLayersGeodatabase/NewYorkLayers.geodatabase"
+            
+            let filemanager = FileManager.default
+            
+            if !(filemanager.fileExists(atPath: databasePath)) {
+                
+                //let filePath = Bundle.main.url(forResource: extractZipFilePath, withExtension: "zip")!
+                
+                
+                let unZipFilePath = try Zip.quickUnzipFile(URL(string: extractZipFilePath)!) // Unzip
+                print(unZipFilePath)
+            }
+     
+            //            let zipFilePath = try Zip.quickZipFiles([filePath], fileName: "archive") // Zip
+        }
+        catch {
+            Utilities.showSwiftErrorMessage(error: "Something went wrong while unzip geodatabase.")
+        }
+        
+        
     }
     
     
@@ -1439,8 +1562,9 @@ class Utilities {
     
     class func parseUserInfoData(jsonObject: Dictionary<String, AnyObject>){
         
+        ManageCoreData.DeleteAllRecords(salesforceEntityName: "UserInfo")
+        
         let today = NSDate()
-        let dateAfterThreeDays = today.addDays(daysToAdd: 3)
         
         //let dateAfterThreeDays = Calendar.current.date(byAdding: .day, value: 3, to: today)
         
@@ -1449,12 +1573,14 @@ class Utilities {
         SalesforceConfig.currentUserContactId = jsonObject["contactId"] as? String  ?? ""
         SalesforceConfig.currentUserExternalId = jsonObject["externalId"] as? String  ?? ""
         SalesforceConfig.currentUserEmail = jsonObject["email"] as? String  ?? ""
-        
         SalesforceConfig.currentContactName = jsonObject["contactName"] as? String  ?? ""
         
         
         SalesforceConfig.currentBaseMapUrl = jsonObject["esriBaseMapLink"] as? String  ?? ""
         SalesforceConfig.currentFeatureLayerUrl = jsonObject["esriLayerLink"] as? String  ?? ""
+        
+        SalesforceConfig.currentGeodatabaseUrl = jsonObject["esriGeodatabase"] as? String  ?? ""
+        
         
         let basemapDate = jsonObject["esriBaseMapModifiedDate"] as? String  ?? ""
         
@@ -1465,16 +1591,14 @@ class Utilities {
         SalesforceConfig.currentBaseMapDate = date as NSDate?
         
         
-        //SalesforceConfig.isBaseMapNeedToDownload
         
         let userInfoData =  ManageCoreData.fetchData(salesforceEntityName: "UserInfo", predicateFormat:"userName == %@",predicateValue:  SalesforceConfig.userName, isPredicate:true) as! [UserInfo]
         
         let userSettingData = ManageCoreData.fetchData(salesforceEntityName: "Setting", predicateFormat:"settingsId == %@",predicateValue:"1", isPredicate:true) as! [Setting]
         
         
+        
         if(userInfoData.count == 0){
-            
-            ManageCoreData.DeleteAllRecords(salesforceEntityName: "UserInfo")
             
             //save userInfo
             let objUserInfo = UserInfo(context: context)
@@ -1483,40 +1607,14 @@ class Utilities {
             objUserInfo.externalId = SalesforceConfig.currentUserExternalId
             objUserInfo.contactEmail = SalesforceConfig.currentUserEmail
             objUserInfo.userName = SalesforceConfig.userName
-            objUserInfo.password = try! SalesforceConfig.password.aesEncrypt(Utilities.encryptDecryptKey, iv: Utilities.encryptDecryptIV)
             objUserInfo.contactName = SalesforceConfig.currentContactName
             
             objUserInfo.userId =  SalesforceConnection.salesforceUserId
-            
-            objUserInfo.passwordExpDate = dateAfterThreeDays
-            
+            objUserInfo.passwordExpDate = today
+            objUserInfo.password = ""
             objUserInfo.isSaveUserName = SalesforceConfig.isSavedUserName
             
             appDelegate.saveContext()
-            
-            
-        }
-        else{
-            
-            //update password expiration date
-            var updateObjectDic:[String:AnyObject] = [:]
-            
-            updateObjectDic["passwordExpDate"] = dateAfterThreeDays
-            updateObjectDic["isSaveUserName"] = SalesforceConfig.isSavedUserName as AnyObject?
-            
-            ManageCoreData.updateDate(salesforceEntityName: "UserInfo", updateKeyValue: updateObjectDic, predicateFormat: "userName == %@", predicateValue: SalesforceConfig.userName,isPredicate: true)
-            
-            SalesforceConfig.currentUserEmail = userInfoData[0].contactEmail!
-            SalesforceConfig.currentUserContactId = userInfoData[0].contactId!
-            SalesforceConfig.currentUserExternalId = userInfoData[0].externalId!
-            
-            SalesforceConnection.salesforceUserId = userInfoData[0].userId!
-            
-            if let contactName = userInfoData[0].contactName{
-                
-                SalesforceConfig.currentContactName = contactName
-            }
-            
             
             
         }
@@ -1546,7 +1644,8 @@ class Utilities {
             updateObjectDic["basemapUrl"] = SalesforceConfig.currentBaseMapUrl as AnyObject?
             updateObjectDic["featureLayerUrl"] = SalesforceConfig.currentFeatureLayerUrl as AnyObject?
             updateObjectDic["basemapDate"] = SalesforceConfig.currentBaseMapDate as AnyObject?
-           
+            updateObjectDic["geodatabaseUrl"] = SalesforceConfig.currentGeodatabaseUrl as AnyObject?
+            
             
             ManageCoreData.updateDate(salesforceEntityName: "Setting", updateKeyValue: updateObjectDic, predicateFormat: "settingsId == %@", predicateValue: "1",isPredicate: true)
             
@@ -1779,6 +1878,7 @@ class Utilities {
                 
                 editlocationObject.notes = locationData["notes"] as? String  ?? ""
                 editlocationObject.actionStatus = ""
+                editlocationObject.lastModifiedName = locationData["lastModifiedName"] as? String  ?? ""
                 
                 appDelegate.saveContext()
                 
@@ -1816,7 +1916,7 @@ class Utilities {
                     //unit name
                     
                     tenantObject.virtualUnit = ""
-                 
+                    
                     tenantObject.contact = newClientInfoData["contact"] as? String  ?? ""
                     
                     tenantObject.attempt = newClientInfoData["attempt"] as? String  ?? ""
@@ -1937,7 +2037,7 @@ class Utilities {
                         
                         tenantObject.virtualUnit = unitObject.virtualUnit!
                         tenantObject.assignmentLocId = locationObject.assignmentLocId!
-                       
+                        
                         
                         tenantObject.contact = tenantData["contact"] as? String  ?? ""
                         
@@ -1955,7 +2055,7 @@ class Utilities {
                         tenantObject.borough = tenantData["borough"] as? String  ?? ""
                         tenantObject.zip = tenantData["zip"] as? String  ?? ""
                         
-                          tenantObject.sourceList = tenantData["sourceList"] as? String  ?? ""
+                        tenantObject.sourceList = tenantData["sourceList"] as? String  ?? ""
                         
                         appDelegate.saveContext()
                         
@@ -2054,9 +2154,18 @@ class Utilities {
                                 let issueNoteObject = IssueNotes(context: context)
                                 issueNoteObject.issueId = issueObject.issueId
                                 issueNoteObject.notes = issueNotesInfo["description"] as? String  ?? ""
+                                issueNoteObject.action = ""
+                                
                                 appDelegate.saveContext()
                             }
                             
+                            if(issueNotesResult.count == 0){
+                                //add note
+                                let issueNoteObject = IssueNotes(context: context)
+                                issueNoteObject.issueId = issueObject.issueId
+                                issueNoteObject.notes = issueObject.notes
+                                appDelegate.saveContext()
+                            }
                         }
                         
                     }

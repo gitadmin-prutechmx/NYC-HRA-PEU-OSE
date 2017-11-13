@@ -7,9 +7,6 @@ target 'EngageNYCDev' do
 
   # Pods for EngageNYC
 
-   # Pods for Encrypt and Decrypt
-  pod 'RNCryptor' , '~> 5.0'
-  pod 'CryptoSwift'
   pod 'Alamofire'
   pod 'Toast-Swift'
   pod 'Charts'
@@ -20,4 +17,14 @@ target 'EngageNYCDev' do
   pod 'Crashlytics'
   pod 'SwiftyJSON'
   pod 'SwiftMessages'
+  pod 'Zip', '~> 0.8'
+  
+  # NB: get rid of next line once FMDB works with xcode 9
+  pod 'FMDB', :git => 'https://github.com/forcedotcom/fmdb', :branch => '2.7.2_xcode9'
+  
+  pod 'SalesforceAnalytics', :path => 'mobile_sdk/SalesforceMobileSDK-iOS'
+  pod 'SalesforceSDKCore', :path => 'mobile_sdk/SalesforceMobileSDK-iOS'
+  pod 'SmartStore', :path => 'mobile_sdk/SalesforceMobileSDK-iOS'
+  pod 'SmartSync', :path => 'mobile_sdk/SalesforceMobileSDK-iOS'
+  
 end

@@ -714,7 +714,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
             
-            if(editUnitResults[0].isContact == "" || editUnitResults[0].attempt == "No"){
+            if(editUnitResults[0].isContact == "" || editUnitResults[0].isContact == "No"){
                 contact = "No"
             }
             else{
@@ -739,12 +739,12 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             
-            if(editUnitResults[0].inTake == ""){
-                //  editUnitResults[0].inTake = "No"
+            if(editUnitResults[0].inTake == "" || editUnitResults[0].inTake == "No"){
+                inTake = "No"
             }
-            
-            inTake = editUnitResults[0].inTake!
-            
+            else{
+                inTake = editUnitResults[0].inTake!
+            }
             
             
             if(editUnitResults[0].reason! != ""){
@@ -896,9 +896,19 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         if(inTake == "Yes"){
             reasonStatus = ""
         }
+        
         if(contact == "Yes"){
             contactOutcome = ""
         }
+        
+        if(contactOutcome == "Select Outcome"){
+            contactOutcome = ""
+        }
+        
+        if(reasonStatus == "Select Reason"){
+            reasonStatus = ""
+        }
+        
         
         if(editUnitResults.count > 0){
             

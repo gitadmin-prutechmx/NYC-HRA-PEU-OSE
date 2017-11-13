@@ -272,7 +272,17 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
         
         updateObjectDic["unitId"] = SalesforceConnection.unitId
         
-        updateObjectDic["actionStatus"] = "edit"
+        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: tenantId,isPredicate:true) as! [Tenant]
+        
+        if(tenantResults.count > 0){
+            
+            if(tenantResults[0].actionStatus! == ""){
+                updateObjectDic["actionStatus"] = "edit"
+            }
+        }
+        
+        
+       // updateObjectDic["actionStatus"] = "edit"
         
         if(dob != ""){
             
@@ -289,6 +299,35 @@ class ExistingClientsViewController: UIViewController,UITableViewDataSource,UITa
                 updateObjectDic["dob"] = dob
             }
         }
+        
+        
+        var streetNum:String = ""
+        var streetName:String = ""
+        var borough:String = ""
+        var zip:String = ""
+        //  var aptFloor:String = ""
+        
+        let locationData = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Location]
+        
+        if(locationData.count > 0){
+            
+            streetName = locationData[0].streetName!
+            streetNum = locationData[0].streetNumber!
+            borough = locationData[0].borough!
+            zip = locationData[0].zip!
+            
+        }
+        
+        updateObjectDic["streetNum"] = streetNum
+        updateObjectDic["streetName"] = streetName
+        updateObjectDic["borough"] = borough
+        updateObjectDic["zip"] = zip
+        updateObjectDic["aptNo"] =  SalesforceConnection.unitName
+        updateObjectDic["aptFloor"] = ""
+        
+
+        
+
         
         //also check only that assignmentId ?
         ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@", predicateValue: tenantId,predicateValue2: SalesforceConnection.assignmentId,isPredicate: true)

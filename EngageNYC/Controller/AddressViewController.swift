@@ -106,7 +106,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         if((sender as AnyObject).isOn == true){
 
-            aptTextField.text = "PHMain"
+            aptTextField.text = "PH/Main"
             aptTextField.isEnabled = false
             
             
@@ -122,7 +122,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         if((sender as AnyObject).isOn == true){
             
-            unitTextField.text = "PHMain"
+            unitTextField.text = "PH/Main"
             unitTextField.isEnabled = false
             
             
@@ -189,6 +189,39 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 
             }
             
+            unitName = unitName.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            
+            let unitRes = ManageCoreData.fetchData(salesforceEntityName: "Unit",predicateFormat: "assignmentId == %@ && locationId == %@" ,predicateValue: SalesforceConnection.assignmentId, predicateValue2: SalesforceConnection.locationId,isPredicate:true) as! [Unit]
+            
+            if(unitRes.count > 0){
+                
+                for unitData in unitRes
+                {
+                    if(unitData.name?.lowercased() == unitName.lowercased()){
+                        
+                        unitView.shake()
+                        unitName = ""
+                        
+                        self.view.makeToast("This Unit Number already exist.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                            
+                            if didTap {
+                                print("Completion with tap")
+                                
+                            } else {
+                                print("Completion without tap")
+                            }
+                            
+                            
+                        }
+                        
+                        return
+                    }
+                }
+                
+                
+            }
+
             
             
             let locationData = ManageCoreData.fetchData(salesforceEntityName: "Location",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.locationId,isPredicate:true) as! [Location]
@@ -390,7 +423,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         
         clientObject.id = UUID().uuidString
-        
+        clientObject.iOSTenantId = clientObject.id
         
         clientObject.name = clientObj.firstName + " " + clientObj.lastName
         clientObject.firstName = clientObj.firstName
@@ -461,8 +494,11 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         let unitObject = Unit(context: context)
         
         unitObject.id = iOSUnitId
-        
+       
         unitObject.assignmentLocUnitId = iOSAssignmentLocUnitId
+        
+        unitObject.iOSUnitId = iOSUnitId
+        unitObject.iOSAssigLocUnitId = iOSAssignmentLocUnitId
         
         
         
@@ -480,7 +516,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         unitObject.assignmentId = SalesforceConnection.assignmentId
         
-        if(aptNo == "PHMain" || aptNo == "PH/Main"){
+        if(aptNo == "PH/Main"){
             unitObject.privateHome =  "Yes"
         }
         else{
@@ -595,7 +631,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         
         let newLength = currentCharacterCount + value.characters.count
-        if(newLength > 11){
+        if(newLength > 19){
             return false
         }
         
@@ -613,7 +649,7 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         
         let newLength = currentCharacterCount + value.characters.count
-        if(newLength > 11){
+        if(newLength > 19){
             return false
         }
         
@@ -662,13 +698,27 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         else if (textField == aptTextField)
         {
-            aptNo = aptTextField.text! + string
+            aptNo = aptTextField.text!
+            
+            let val = isValidUnitName(value: str)
+            
+            if(val){
+                aptNo = aptNo + string
+            }
+            
             return isValidAptNo(value: str)
         }
         else if (textField == unitTextField)
         {
-            unitName = unitTextField.text! + string
-            return isValidUnitName(value: str)
+            unitName = unitTextField.text!
+            
+            let val = isValidUnitName(value: str)
+            
+            if(val){
+                unitName = unitName + string
+            }
+            
+            return val
         }
         else if (textField == aptFloorTxtField)
         {

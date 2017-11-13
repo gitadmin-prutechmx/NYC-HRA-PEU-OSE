@@ -31,8 +31,8 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qz7-Ma-3uL">
-                                <rect key="frame" x="152" y="14" width="50" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qz7-Ma-3uL">
+                                <rect key="frame" x="142" y="14" width="50" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="9wz-9h-yZ4"/>
                                     <constraint firstAttribute="width" constant="50" id="SEr-pb-fLj"/>
@@ -41,8 +41,8 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ji-bj-dMy">
-                                <rect key="frame" x="272" y="14" width="64" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Phone" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ji-bj-dMy">
+                                <rect key="frame" x="262" y="14" width="64" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="5bY-yq-p5g"/>
                                     <constraint firstAttribute="width" constant="64" id="ABr-2s-PKH"/>
@@ -52,7 +52,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfw-0M-gCa">
-                                <rect key="frame" x="407" y="14" width="59" height="23"/>
+                                <rect key="frame" x="397" y="14" width="59" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="s01-ZG-SRR"/>
                                     <constraint firstAttribute="width" constant="59" id="weP-nM-ruU"/>
@@ -62,7 +62,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Source List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xu4-J6-oat">
-                                <rect key="frame" x="513" y="14" width="89" height="21"/>
+                                <rect key="frame" x="503" y="14" width="89" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="U3E-hj-hWd"/>
                                     <constraint firstAttribute="width" constant="89" id="uER-of-IL3"/>
@@ -75,7 +75,7 @@
                         <color key="backgroundColor" red="0.1176470588" green="0.34901960780000002" blue="0.59215686270000001" alpha="0.96204202589999999" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Qz7-Ma-3uL" firstAttribute="leading" secondItem="NXl-QN-UMS" secondAttribute="trailing" constant="70" id="4uM-Ve-aX1"/>
+                            <constraint firstItem="Qz7-Ma-3uL" firstAttribute="leading" secondItem="NXl-QN-UMS" secondAttribute="trailing" constant="60" id="4uM-Ve-aX1"/>
                             <constraint firstItem="8ji-bj-dMy" firstAttribute="leading" secondItem="Qz7-Ma-3uL" secondAttribute="trailing" constant="70" id="BYZ-ok-9l8"/>
                             <constraint firstItem="xu4-J6-oat" firstAttribute="top" secondItem="Cfw-0M-gCa" secondAttribute="top" id="DnX-lK-0xk"/>
                             <constraint firstItem="8ji-bj-dMy" firstAttribute="top" secondItem="Qz7-Ma-3uL" secondAttribute="top" id="Vxe-ND-QMY"/>

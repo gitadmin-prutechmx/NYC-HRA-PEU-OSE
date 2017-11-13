@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SalesforceSDKCore
 
 class SideMenuViewController: UITableViewController {
     
@@ -81,6 +82,17 @@ extension SideMenuViewController
         return 0.1
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == 2
+        {
+            
+            Utilities.timer?.invalidate()
+            SFAuthenticationManager.shared().logout()
+            //appDelegate.setupRootViewController(isLogin: false)
+            
+        }
+    }
     
 }
 
