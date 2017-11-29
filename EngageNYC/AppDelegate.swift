@@ -15,7 +15,7 @@ import SmartStore
 import UserNotifications
 
 // Fill these in when creating a new Connected Application on Force.com
-let RemoteAccessConsumerKey = "3MVG9Zdl7Yn6QDKMCsJWeIlvKopZ7msQYyL8QxLvD3E8Yd49Gt1N2HApGbrEtOMMU6x9yWuvY20_l5D7Tt0uN";
+let RemoteAccessConsumerKey = "3MVG9ic.6IFhNpPr8GIEr8R0j25Wf7FJvQXGFDGTgWUsgBwOUUKxTOeyCltrF0fWu9kYbv3OQyqiQDdGdO6OA";
 let OAuthRedirectURI        = "testsfdc:///mobilesdk/detect/oauth/done";
 
 @UIApplicationMain

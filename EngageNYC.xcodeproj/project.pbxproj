@@ -1190,6 +1190,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EngageNYC/EngageNYC.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
@@ -1217,10 +1218,10 @@
 					"-l",
 					"c++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0a45d0b0-ba1d-4c05-a3f3-9e2424d54870";
-				PROVISIONING_PROFILE_SPECIFIER = "EngageNYC-UAT_Development_PushNotifications";
+				PROVISIONING_PROFILE = "4caf9a59-f57e-4174-84db-b72fcebeab02";
+				PROVISIONING_PROFILE_SPECIFIER = EngageNYCTest_Sandbox;
 				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
 				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -1261,10 +1262,10 @@
 					"-l",
 					"c++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cf504ad8-0637-43cf-b0a6-5abd7fef61a5";
-				PROVISIONING_PROFILE_SPECIFIER = EngageNYC_UAT_AppStore_PushNotifications;
+				PROVISIONING_PROFILE = "91aebaa4-7f21-4b3a-84a7-391291f78c06";
+				PROVISIONING_PROFILE_SPECIFIER = EngageNYCTest_Testflight;
 				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0.1;
