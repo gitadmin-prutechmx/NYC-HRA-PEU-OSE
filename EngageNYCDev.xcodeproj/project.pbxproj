@@ -135,10 +135,10 @@
 		8A11806C1FA9B8E300120B86 /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A11806B1FA9B8E300120B86 /* InitialViewController.xib */; };
 		8A56FBF01FB5A53D00B384DD /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */; };
 		8A56FBF11FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */; };
+		8A6FD2231FC6E55D00A8A5BF /* MapData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A6FD2221FC6E55D00A8A5BF /* MapData.zip */; };
 		8AF2999D1FA72F25004F6AFC /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */; };
 		8AF2999E1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */; };
 		8AF299A21FA83D8F004F6AFC /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */; };
-		8AFC39AA1FB59EF400164C2A /* NewYorkCity.mmpk in Resources */ = {isa = PBXBuildFile; fileRef = 8AFC39A91FB59EEA00164C2A /* NewYorkCity.mmpk */; };
 		CCA1086177556BD0A4C375E0 /* Pods_EngageNYCDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DDC459DE57CF007385D800 /* Pods_EngageNYCDev.framework */; };
 /* End PBXBuildFile section */
 
@@ -308,10 +308,10 @@
 		8A11806B1FA9B8E300120B86 /* InitialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialViewController.xib; sourceTree = "<group>"; };
 		8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8A6FD2221FC6E55D00A8A5BF /* MapData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapData.zip; sourceTree = "<group>"; };
 		8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
-		8AFC39A91FB59EEA00164C2A /* NewYorkCity.mmpk */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewYorkCity.mmpk; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		A9DDC459DE57CF007385D800 /* Pods_EngageNYCDev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EngageNYCDev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1486C9C4836237A402A7C99 /* Pods-EngageNYC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.release.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.release.xcconfig"; sourceTree = "<group>"; };
@@ -585,7 +585,7 @@
 		5DC9E9DE1EEA7DF9009A6396 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8AFC39A81FB59EC500164C2A /* ESRIMap */,
+				8A6FD2211FC6E54600A8A5BF /* MapData */,
 				5D1BD4F31F067FB100C8FAF5 /* GuageChart */,
 				5DE3C9881EF36A7B00012C47 /* SWRevealController */,
 				5DE3C97C1EF125DD00012C47 /* MBProgressHUD */,
@@ -647,12 +647,12 @@
 			path = SWRevealController;
 			sourceTree = "<group>";
 		};
-		8AFC39A81FB59EC500164C2A /* ESRIMap */ = {
+		8A6FD2211FC6E54600A8A5BF /* MapData */ = {
 			isa = PBXGroup;
 			children = (
-				8AFC39A91FB59EEA00164C2A /* NewYorkCity.mmpk */,
+				8A6FD2221FC6E55D00A8A5BF /* MapData.zip */,
 			);
-			name = ESRIMap;
+			path = MapData;
 			sourceTree = "<group>";
 		};
 		B5C91A6AF2348DD30289CED2 /* Pods */ = {
@@ -792,8 +792,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AFC39AA1FB59EF400164C2A /* NewYorkCity.mmpk in Resources */,
 				5D00F0DA1F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.xib in Resources */,
+				8A6FD2231FC6E55D00A8A5BF /* MapData.zip in Resources */,
 				5D65D4E31F3015FC00302CE8 /* IssueHeaderTableViewCell.xib in Resources */,
 				5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */,
 				5D757B1B1F18A38100308C05 /* DownloadProgressView.xib in Resources */,
@@ -1210,6 +1210,10 @@
 				INFOPLIST_FILE = EngageNYC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mobile_sdk/salesforcemobilesdk-ios/external/ThirdPartyDependencies/sqlcipher",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -1254,6 +1258,10 @@
 				INFOPLIST_FILE = EngageNYC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mobile_sdk/salesforcemobilesdk-ios/external/ThirdPartyDependencies/sqlcipher",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
