@@ -117,8 +117,8 @@ class Utilities {
     static var offlineSyncTime = 0
     
     
-//    static var isMapFileCorrupted:Bool = false
-//    static var isGeodatabaseFileCorrupted:Bool = false
+    //    static var isMapFileCorrupted:Bool = false
+    //    static var isGeodatabaseFileCorrupted:Bool = false
     
     class func startBackgroundSyncing(){
         // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
@@ -1318,33 +1318,52 @@ class Utilities {
                             
                             if(loginViewController != nil){
                                 
+                                loginViewController?.loadingSpinner.stopAnimating()
+                                loginViewController?.loadingSpinner.hidesWhenStopped = true
+                                loginViewController?.message.text = ""
                                 
-                                 if (Utilities.isGeoDatabseExist()==false) {
-                                    
-                                    //download geodatabase from salesforce
-                                    Download.downloadNewYorkCityData(loginViewController: loginViewController)
+                                
+                                DispatchQueue.main.async {
+                                    loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
                                 }
-                                    
-                                    
-                                else{
-                                    
-                                    SVProgressHUD.dismiss()
-                                    DispatchQueue.main.async {
-                                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-                                    }
-                                    
-                                    
-                                }
-                                
-                                
-                                
                             }
+                                
                             else{
-                                
-                                //This will happen when refresh icon press
-                                    DownloadESRILayers.RefreshData()
-                                
-                            }//end of else
+                                DownloadESRILayers.RefreshData()
+                            }
+                            
+                            
+                            
+                            
+                            //                            if(loginViewController != nil){
+                            //
+                            //
+                            //                                 if (Utilities.isGeoDatabseExist()==false) {
+                            //
+                            //                                    //download geodatabase from salesforce
+                            //                                    Download.downloadNewYorkCityData(loginViewController: loginViewController)
+                            //                                }
+                            //
+                            //
+                            //                                else{
+                            //
+                            //                                    SVProgressHUD.dismiss()
+                            //                                    DispatchQueue.main.async {
+                            //                                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                            //                                    }
+                            //
+                            //
+                            //                                }
+                            //
+                            //
+                            //
+                            //                            }
+                            //                            else{
+                            //
+                            //                                //This will happen when refresh icon press
+                            //                                    DownloadESRILayers.RefreshData()
+                            //
+                            //                            }//end of else
                             
                         }
                         
@@ -1386,7 +1405,7 @@ class Utilities {
     
     class func isGeoDatabseExist()->Bool{
         
-      
+        
         
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         
@@ -1407,22 +1426,22 @@ class Utilities {
         
         do {
             
-            let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            //let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             
-            let extractZipFilePath = "\(path)/NewYorkLayersGeodatabase.zip"
-            let databasePath = "\(path)/NewYorkLayersGeodatabase/NewYorkLayers.geodatabase"
+            let mapDataPath = Bundle.main.path(forResource: "MapData", ofType: "zip")
+            let mapLayerPath = "\(String(describing: mapDataPath))/MapData/NewYorkLayers.geodatabase"
             
             let filemanager = FileManager.default
             
-            if !(filemanager.fileExists(atPath: databasePath)) {
+            if !(filemanager.fileExists(atPath: mapLayerPath)) {
                 
                 //let filePath = Bundle.main.url(forResource: extractZipFilePath, withExtension: "zip")!
                 
                 
-                let unZipFilePath = try Zip.quickUnzipFile(URL(string: extractZipFilePath)!) // Unzip
+                let unZipFilePath = try Zip.quickUnzipFile(URL(string: mapDataPath!)!) // Unzip
                 print(unZipFilePath)
             }
-     
+            
             //            let zipFilePath = try Zip.quickZipFiles([filePath], fileName: "archive") // Zip
         }
         catch {
@@ -1431,6 +1450,35 @@ class Utilities {
         
         
     }
+    
+    //    class func UnzipFile(){
+    //
+    //        do {
+    //
+    //            let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    //
+    //            let extractZipFilePath = "\(path)/NewYorkLayersGeodatabase.zip"
+    //            let databasePath = "\(path)/NewYorkLayersGeodatabase/NewYorkLayers.geodatabase"
+    //
+    //            let filemanager = FileManager.default
+    //
+    //            if !(filemanager.fileExists(atPath: databasePath)) {
+    //
+    //                //let filePath = Bundle.main.url(forResource: extractZipFilePath, withExtension: "zip")!
+    //
+    //
+    //                let unZipFilePath = try Zip.quickUnzipFile(URL(string: extractZipFilePath)!) // Unzip
+    //                print(unZipFilePath)
+    //            }
+    //
+    //            //            let zipFilePath = try Zip.quickZipFiles([filePath], fileName: "archive") // Zip
+    //        }
+    //        catch {
+    //            Utilities.showSwiftErrorMessage(error: "Something went wrong while unzip geodatabase.")
+    //        }
+    //
+    //
+    //    }
     
     
     
