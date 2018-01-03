@@ -42,14 +42,14 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         tblViewIssueNotes.tableFooterView = UIView()
         
         
-        if(Utilities.issueActionStatus == "View"){
+        if(GlobalIssue.issueActionStatus == "View"){
             self.navigationItem.rightBarButtonItem = nil
             txtIssueNotes.isEditable = false
         }
         
         
         
-        if(SalesforceConnection.currentIssueId != ""){
+        if(GlobalIssue.currentIssueId != ""){
             fillIssueInfo()
         }
         else{
@@ -63,7 +63,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     func fillIssueInfo(){
         
         
-        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "issueId == %@" ,predicateValue: SalesforceConnection.currentIssueId,isPredicate:true) as! [Issues]
+        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "issueId == %@" ,predicateValue: GlobalIssue.currentIssueId,isPredicate:true) as! [Issues]
         
         if(issueResults.count > 0){
             
@@ -81,7 +81,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     func populateIssueNotes(){
         
-        let issueNotesResults = ManageCoreData.fetchData(salesforceEntityName: "IssueNotes",predicateFormat: "issueId == %@" ,predicateValue: SalesforceConnection.currentIssueId,isPredicate:true) as! [IssueNotes]
+        let issueNotesResults = ManageCoreData.fetchData(salesforceEntityName: "IssueNotes",predicateFormat: "issueId == %@" ,predicateValue: GlobalIssue.currentIssueId,isPredicate:true) as! [IssueNotes]
         
         if(issueNotesResults.count > 0){
             for issueNote in issueNotesResults{
@@ -155,7 +155,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddIssueCell")!
             cell.backgroundColor = UIColor.clear
             
-            if(Utilities.issueActionStatus == "View"){
+            if(GlobalIssue.issueActionStatus == "View"){
                 cell.accessoryType = .none
             }
             else{
@@ -209,7 +209,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if(tableView !=  tblViewIssueNotes){
-            if(Utilities.issueActionStatus != "View"){
+            if(GlobalIssue.issueActionStatus != "View"){
                 
                 let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
                 
@@ -225,9 +225,9 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         }
     }
     
-    //    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    //        return 0.1
-    //    }
+        func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+            return 0.1
+        }
     
     
     
@@ -310,7 +310,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         var msg:String = ""
         
-        if(SalesforceConnection.currentIssueId == ""){
+        if(GlobalIssue.currentIssueId == ""){
             saveIssueInCoreData()
             //createJsonData()
             msg = "Issue information has been created successfully."
@@ -345,7 +345,20 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         issueObject.issueId = UUID().uuidString
         
-        issueObject.caseId = SalesforceConnection.caseId
+        if(GlobalCase.caseId.isEmpty){
+            
+            issueObject.caseId = UUID().uuidString
+            issueObject.actionStatus = "temp"
+
+        }
+        else{
+           
+            issueObject.caseId = GlobalCase.caseId
+            issueObject.actionStatus = "create"
+
+        }
+        
+        issueObject.contactName = GlobalClient.currentTenantName
         
         issueObject.issueNo = ""
         
@@ -354,9 +367,8 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         issueObject.notes = notes
         
-        issueObject.actionStatus = "create"
         
-        issueObject.contactName = SalesforceConnection.currentTenantName
+       
         
         
         
@@ -382,7 +394,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
     
     func saveIssueNotesWhenEdit(){
         let issueNoteObject = IssueNotes(context: context)
-        issueNoteObject.issueId = SalesforceConnection.currentIssueId
+        issueNoteObject.issueId = GlobalIssue.currentIssueId
         issueNoteObject.notes = notes
         issueNoteObject.action = "Edit"
         
@@ -396,7 +408,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         updateObjectDic["notes"] = notes
         
         
-        ManageCoreData.updateRecord(salesforceEntityName: "IssueNotes", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && action == %@", predicateValue: SalesforceConnection.currentIssueId,predicateValue2: "Edit", isPredicate: true)
+        ManageCoreData.updateRecord(salesforceEntityName: "IssueNotes", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && action == %@", predicateValue: GlobalIssue.currentIssueId,predicateValue2: "Edit", isPredicate: true)
         
     }
     
@@ -414,7 +426,7 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         updateObjectDic["notes"] = notes
         
         
-        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "issueId == %@" ,predicateValue: SalesforceConnection.currentIssueId,isPredicate:true) as! [Issues]
+        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "issueId == %@" ,predicateValue: GlobalIssue.currentIssueId,isPredicate:true) as! [Issues]
         
         
         if(issueResults.count > 0){
@@ -427,10 +439,10 @@ class AddNewIssueViewController: UIViewController,UITableViewDataSource,UITableV
         
         
         
-        ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@", predicateValue: SalesforceConnection.currentIssueId,isPredicate: true)
+        ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@", predicateValue: GlobalIssue.currentIssueId,isPredicate: true)
         
         if(!(notes.isEmpty)){
-            let issueNoteResults = ManageCoreData.fetchData(salesforceEntityName: "IssueNotes",predicateFormat: "issueId == %@ && action == %@" ,predicateValue: SalesforceConnection.currentIssueId,predicateValue2: "Edit",isPredicate:true) as! [IssueNotes]
+            let issueNoteResults = ManageCoreData.fetchData(salesforceEntityName: "IssueNotes",predicateFormat: "issueId == %@ && action == %@" ,predicateValue: GlobalIssue.currentIssueId,predicateValue2: "Edit",isPredicate:true) as! [IssueNotes]
             
             if(issueNoteResults.count == 0){
                 saveIssueNotesWhenEdit()

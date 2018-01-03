@@ -6,6 +6,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     
     @IBOutlet weak var toolBarView: UIView!
     
+    @IBOutlet weak var clientView: UIView!
+    @IBOutlet weak var lblClientName: UILabel!
     
     @IBOutlet weak var getDescriptionTextField: UITextField!
     
@@ -39,6 +41,15 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        if(!SalesforceConnection.selectedTenantForSurvey.isEmpty && !SalesforceConnection.selectedTenantNameForSurvey.isEmpty){
+            
+            lblClientName.text = SalesforceConnection.selectedTenantNameForSurvey
+        }
+        else{
+            
+            clientView.isHidden = true
+        }
         
        // optionsCollectionView.flashScrollIndicators()
         
@@ -307,15 +318,7 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                         if(SalesforceConnection.selectedTenantForSurvey == ""){
                             
                             
-                            toolBarView.shake()
-                            
-                            self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                                if didTap {
-                                    print("completion from tap")
-                                } else {
-                                    print("completion without tap")
-                                }
-                            }
+                            showIntake()
                             
                             return
                             
@@ -360,16 +363,7 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
             if(SalesforceConnection.selectedTenantForSurvey == ""){
                 
                 
-                toolBarView.shake()
-                
-                self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        print("completion from tap")
-                    } else {
-                        print("completion without tap")
-                    }
-                }
-                
+               showIntake()
                 return
                 
             }
@@ -410,8 +404,8 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                                 
                                 if(SalesforceConnection.selectedTenantForSurvey == ""){
                                     
-                                    
-                                    toolBarView.shake()
+                                    showIntake()
+                                   /* toolBarView.shake()
                                     
                                     self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                                         if didTap {
@@ -420,7 +414,7 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
                                             print("completion without tap")
                                         }
                                     }
-                                    
+                                    */
                                     return
                                     
                                 }
@@ -539,6 +533,38 @@ class SurveyMultiOptionViewController: UIViewController , UICollectionViewDelega
             }
             
         }//end of else
+        
+        
+    }
+    
+    func showIntake()
+    {
+        
+        self.toolBarView.shake()
+        
+        self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if didTap
+            {
+                print("completion from tap")
+                
+            } else {
+                print("completion without tap")
+            }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let inTakeVC = storyboard.instantiateViewController(withIdentifier: "InTakeViewControllerSID") as! InTakeViewController
+            
+            
+            let navigationController = UINavigationController(rootViewController: inTakeVC)
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            
+            //self.present(navigationController, animated: true, completion: nil)
+            self.present(navigationController, animated: true)
+            {
+                
+            }
+        }
         
         
     }

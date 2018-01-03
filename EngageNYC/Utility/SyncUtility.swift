@@ -18,7 +18,6 @@ class SyncUtility{
     static var editUnitResultsArr = [EditUnit]()
     static var surveyUnitResultsArr = [SurveyUnit]()
     static var tenantResultsArr  = [Tenant]()
-    static var tenantAssignResultsArr = [TenantAssign]()
     static var surveyResResultsArr = [SurveyResponse]()
     
     static var issueResultsArr = [Issues]()
@@ -640,7 +639,7 @@ class SyncUtility{
                 
                 
                 
-                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: updatedAssigLocUnitId,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: updatedClientId,lastCanvassedBy: "")
+                editUnitDict = Utilities.editUnitTenantAndSurveyDicData(intake:editUnitData.inTake!, notes: editUnitData.unitNotes!, attempt: editUnitData.attempt!, contact: editUnitData.isContact!, reKnockNeeded: editUnitData.reKnockNeeded!, reason: editUnitData.reason!, contactOutcome:editUnitData.contactOutcome!,assignmentLocationUnitId: updatedAssigLocUnitId,selectedSurveyId: editUnitData.surveyId!,selectedTenantId: updatedClientId,followUpType: editUnitData.followUpType!,followUpDate: editUnitData.followUpDate!,lastCanvassedBy: "")
                 
                 
                 //lastCanvassedBy: SalesforceConfig.currentUserContactId

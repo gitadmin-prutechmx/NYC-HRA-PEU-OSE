@@ -8,6 +8,18 @@
 
 import UIKit
 
+class ContactPicklist{
+    var contactId:String!
+    var isShowContactName:Bool!
+    var selectedContactName:String!
+    
+    init(contactId:String,isShowContactName:Bool,selectedContactName:String) {
+        self.contactId = contactId
+        self.isShowContactName = isShowContactName
+        self.selectedContactName = selectedContactName
+    }
+}
+
 class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
 {
     @IBOutlet weak var lastNameView: UIView!
@@ -61,9 +73,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     {
         super.viewDidLoad()
         
-        
-        
-       // orientationChanged()
+        orientationChanged()
         
         print(self.preferredContentSize)
         
@@ -127,7 +137,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         txtDob.inputAccessoryView = toolBar
         
         if(SalesforceConnection.isNewContactWithAddress == false){
-            if(SalesforceConnection.currentTenantId != ""){
+            if(GlobalClient.currentTenantId != ""){
                 fillTenantInfo()
             }
         }
@@ -141,61 +151,69 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-        super.viewWillAppear(animated)
-        
-    }
+   
     
+   
     func orientationChanged() -> Void
     {
-        if(isSurveyAddClient)
+        /* if(isSurveyAddClient)
+         {
+         if UIDevice.current.orientation.isLandscape
+         {
+         print("Landscape")
+         self.view.superview?.center = self.view.center;
+         self.preferredContentSize = CGSize(width: 700, height: 667)
+         print(self.preferredContentSize)
+         
+         }
+         else
+         {
+         print("Portrait")
+         self.view.superview?.center = self.view.center;
+         self.preferredContentSize = CGSize(width: 700, height: 667)
+         print(self.preferredContentSize)
+         
+         
+         }
+         
+         
+         }
+         
+         
+         else
+         {*/
+        if UIDevice.current.orientation.isLandscape
         {
-            if UIDevice.current.orientation.isLandscape
-            {
-                print("Landscape")
-                self.view.superview?.center = self.view.center;
-                print(self.preferredContentSize)
-                print(self.view.superview?.frame)
-            }
-            else
-            {
-                print("Portrait")
-                self.view.superview?.center = self.view.center;
-                print(self.preferredContentSize)
-                print(self.view.superview?.frame)
-                
-            }
-            
-            
+            print("Landscape")
+            self.view.superview?.center = self.view.center;
+            self.preferredContentSize = CGSize(width: 700, height: 667)
+            print(self.preferredContentSize)
         }
-            
-            
         else
         {
-            if UIDevice.current.orientation.isLandscape
-            {
-                print("Landscape")
-                self.view.superview?.center = self.view.center;
-                self.preferredContentSize = CGSize(width: 540, height: 620)
-                print(self.preferredContentSize)
-            }
-            else
-            {
-                print("Portrait")
-                self.view.superview?.center = self.view.center;
-                self.preferredContentSize = CGSize(width: 540, height: 620)
-                print(self.preferredContentSize)
-            }
-            
+            print("Portrait")
+           self.view.superview?.center = self.view.center;
+            self.preferredContentSize = CGSize(width: 700, height: 667)
+            print(self.preferredContentSize)
         }
+        
+        //}
         self.view.setNeedsLayout()
         self.view.layoutIfNeeded()
     }
     
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        orientationChanged()
+        return true
+    }
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        orientationChanged()
+        return true
+    }
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
+        
         if(textField == phoneTextField){
             let phoneNum = phoneTextField.text
             phoneTextField.text = phoneNum!
@@ -214,7 +232,27 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         }
         
     }
-    
+   /*
+    func setupUI()
+    {
+     addVC.view.superview?.frame = CGRect(x: 0, y: 0, width: (self.view.superview?.frame.size.width)!, height: (self.view.superview?.frame.size.height)!)
+     addVC.view.superview?.center = self.view.center;
+     
+     addVC.preferredContentSize = CGSize(width: (self.view.superview?.frame.size.width)!, height: (self.view.superview?.frame.size.height)!)
+        self.view.frame = CGRect(x: 0,y: 0,width: 700,height: 667)
+        print(self.view.frame)
+        self.preferredContentSize = CGSize(width: 700, height: 667)
+        print(self.preferredContentSize)
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
+    }
+    */
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+       // perform(#selector(SaveEditTenantViewController.setupUI), with: nil, afterDelay: 1.0)
+      
+    }
+
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -353,7 +391,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     
     func fillTenantInfo(){
         
-        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@ AND id == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,predicateValue4: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
+        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@ AND id == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,predicateValue4: GlobalClient.currentTenantId,isPredicate:true) as! [Tenant]
         
         if(tenantResults.count > 0){
             
@@ -409,8 +447,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
-            self.dismiss(animated: true, completion: nil)
-            
+           // self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
             //            if(SalesforceConnection.isNewContactWithAddress){
             //
             //                self.dismiss(animated: true, completion: nil)
@@ -629,6 +667,8 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
     }
     
+   
+    
     
     func saveTenantInfo(){
         
@@ -637,10 +677,10 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             
             
             var msg:String = ""
+            let UUIDClientId:String = UUID().uuidString
             
-            
-            if(SalesforceConnection.currentTenantId == ""){
-                saveTenantInCoreData()
+            if(GlobalClient.currentTenantId == ""){
+                saveTenantInCoreData(clientId:UUIDClientId)
                 msg = "Client information has been created successfully."
             }
             else{
@@ -649,16 +689,34 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
             }
             
             
+//            pickListVC?.picklistStr = selectContactStr
+//
+//            pickListVC?.showContactName = true
+//
+//            pickListVC?.pickListProtocol = self
+//            pickListVC?.selectedPickListValue = selectContact
             
             
             self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
+               
                 
-                self.dismiss(animated: true, completion: nil)
+                if(SalesforceConnection.isFromPickListToNewClient){
                 
-                // self.navigationController?.popViewController(animated: true);
+                    let contactPicklistObj = ContactPicklist(contactId:UUIDClientId,isShowContactName: true, selectedContactName: self.firstName + " " + self.lastName)
+                    
+                    let contactDataDict:[String: ContactPicklist] = ["contactKey": contactPicklistObj]
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdatePicklistView"), object: nil,userInfo:contactDataDict)
+             
+                }
+                else{
+                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateClientView"), object: nil)
+                   
+                    // self.dismiss(animated: true, completion: nil)
+                }
                 
+                 self.navigationController?.popViewController(animated: true);
                 
             }
         }
@@ -667,12 +725,12 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
     }
     
     
-    func saveTenantInCoreData(){
+    func saveTenantInCoreData(clientId:String){
         
         let tenantObject = Tenant(context: context)
         
         
-        tenantObject.id = UUID().uuidString
+        tenantObject.id = clientId
         
         tenantObject.name = firstName + " " + lastName
         
@@ -741,6 +799,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         tenantObject.assignmentLocId = SalesforceConnection.assignmentLocationId
         tenantObject.sourceList = ""
         
+        tenantObject.createById = SalesforceConnection.salesforceUserId
         
         appDelegate.saveContext()
         
@@ -806,7 +865,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
          updateObjectDic["aptFloor"] = ""
         
         
-        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: SalesforceConnection.currentTenantId,isPredicate:true) as! [Tenant]
+        let tenantResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: GlobalClient.currentTenantId,isPredicate:true) as! [Tenant]
         
         if(tenantResults.count > 0){
             
@@ -817,7 +876,7 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         
         
-        ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@ AND locationId == %@ AND unitId == %@", predicateValue: SalesforceConnection.currentTenantId,predicateValue2: SalesforceConnection.assignmentId, predicateValue3: SalesforceConnection.locationId,predicateValue4: SalesforceConnection.unitId,isPredicate: true)
+        ManageCoreData.updateRecord(salesforceEntityName: "Tenant", updateKeyValue: updateObjectDic, predicateFormat: "id == %@ AND assignmentId == %@ AND locationId == %@ AND unitId == %@", predicateValue: GlobalClient.currentTenantId,predicateValue2: SalesforceConnection.assignmentId, predicateValue3: SalesforceConnection.locationId,predicateValue4: SalesforceConnection.unitId,isPredicate: true)
         
         
     }
@@ -840,7 +899,16 @@ class SaveEditTenantViewController: UIViewController,UITextFieldDelegate
         
         picker.minimumDate = minDate
         
+        if let dateStr = txtDob.text{
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            picker.date = dateFormatter.date(from: dateStr)!
+        }
+        
+        
         sender.inputView = picker
+        
+       
         
         // txtDob.inputView = picker
         

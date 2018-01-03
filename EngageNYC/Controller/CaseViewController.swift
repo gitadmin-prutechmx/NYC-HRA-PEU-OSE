@@ -18,6 +18,7 @@ struct CaseDataStruct
     var caseOwnerId:String = ""
     var caseOwner:String = ""
     var dateOfIntake:String = ""
+    var actionStatus:String = ""
     
 }
 
@@ -41,7 +42,7 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         addCaseOutlet.layer.cornerRadius = 5
         
-        fullAddressTxt.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
+        // fullAddressTxt.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
@@ -50,7 +51,7 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
-        self.navigationItem.title =  SalesforceConnection.currentTenantName
+        self.navigationItem.title =  GlobalClient.currentTenantName
         
         NotificationCenter.default.addObserver(self, selector:#selector(CaseViewController.UpdateCaseView), name: NSNotification.Name(rawValue: "UpdateCaseView"), object:nil
         )
@@ -70,23 +71,37 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         NotificationCenter.default.removeObserver("UpdateCaseView")
     }
     
-    @IBAction func cancel(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true);
-    }
+    
     
     @IBAction func addCase(_ sender: Any) {
         
-        SalesforceConnection.caseId =  ""
         
-        SalesforceConnection.caseNumber = ""
+        let tempCaseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "actionStatus == %@" ,predicateValue: "temp",isPredicate:true) as! [Cases]
         
-        
-        Utilities.caseActionStatus = "New"
-        
-        
-        self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
-        
-        
+        if(tempCaseResults.count < 1){
+            GlobalCase.caseId =  ""
+            
+            GlobalCase.caseNumber = ""
+            
+            GlobalCase.caseActionStatus = "New"
+            
+            
+            self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
+            
+        }
+        else{
+            self.view.makeToast("You can create only one open case.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+        }
         
         
     }
@@ -107,26 +122,77 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         caseDataArray = [CaseDataStruct]()
         
         
-        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "contactId == %@" ,predicateValue: SalesforceConnection.currentTenantId,isPredicate:true) as! [Cases]
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "contactId == %@ && assignmentLocUnitId == %@" ,predicateValue: GlobalClient.currentTenantId,predicateValue2: SalesforceConnection.assignmentLocationUnitId, isPredicate:true) as! [Cases]
         
         if(caseResults.count > 0){
             
             for caseData in caseResults{
                 
-                let objectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: caseData.caseId!, caseNo: caseData.caseNo!, contactId: caseData.contactId!, contacName: caseData.contactName!,caseStatus:caseData.caseStatus!,caseOwnerId:caseData.caseOwnerId!,caseOwner:caseData.caseOwner!,dateOfIntake:caseData.createdDate!)
+                let objectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: caseData.caseId!, caseNo: caseData.caseNo!, contactId: caseData.contactId!, contacName: caseData.contactName!,caseStatus:caseData.caseStatus!,caseOwnerId:caseData.caseOwnerId!,caseOwner:caseData.caseOwner!,dateOfIntake:caseData.createdDate!,actionStatus:caseData.actionStatus!)
                 
                 caseDataArray.append(objectCaseStruct)
                 
             }
         }
         
+        addTempCases()
         
         self.tblCaseView.reloadData()
         
     }
     
-    // MARK: UITenantTableView and UIEditTableView
     
+    func addTempCases(){
+        
+        let tempCaseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "actionStatus == %@" ,predicateValue: "temp",isPredicate:true) as! [Cases]
+        
+        if(tempCaseResults.count > 0){
+            
+            for tempCaseData in tempCaseResults{
+                
+                
+                let tempObjectCaseStruct:CaseDataStruct = CaseDataStruct(caseId: tempCaseData.caseId!, caseNo: tempCaseData.caseNo!, contactId: tempCaseData.contactId!, contacName: tempCaseData.contactName!,caseStatus:tempCaseData.caseStatus!,caseOwnerId:tempCaseData.caseOwnerId!,caseOwner:tempCaseData.caseOwner!,dateOfIntake:tempCaseData.createdDate!,actionStatus:tempCaseData.actionStatus!)
+                
+                caseDataArray.append(tempObjectCaseStruct)
+                
+            }
+        }
+    }
+    
+    @IBAction func caseEdit(_ sender: Any)
+    {
+         let indexRow = (sender as AnyObject).tag
+        GlobalCase.caseId =  caseDataArray[indexRow!].caseId
+        GlobalCase.caseNumber = caseDataArray[indexRow!].caseNo
+        GlobalCase.dateOfIntake = caseDataArray[indexRow!].dateOfIntake
+        
+        GlobalCase.caseStatus = caseDataArray[indexRow!].caseStatus
+        GlobalCase.caseOwnerId = caseDataArray[indexRow!].caseOwnerId
+        
+        
+        if(caseDataArray[indexRow!].caseStatus == "Closed" || SalesforceConnection.salesforceUserId != caseDataArray[indexRow!].caseOwnerId)
+                {
+                    GlobalCase.caseActionStatus = "View"
+                }
+                else
+                    {
+                    GlobalCase.caseActionStatus = "Edit"
+                }
+        
+                if(GlobalClient.currentTenantId.isEmpty)
+                {
+                    GlobalCase.caseActionStatus = "Edit"
+                }
+        
+        
+                self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
+    }
+    
+    
+    
+   
+    // MARK: UITenantTableView and UIEditTableView
+  
     func numberOfSections(in tableView: UITableView) -> Int
     {
         
@@ -151,8 +217,7 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "caseCell", for: indexPath) as! CaseTableViewCell
         
-        cell.caseView.backgroundColor = UIColor.white
-        cell.contentView.backgroundColor = UIColor.clear
+        
         
         cell.caseNo.text = caseDataArray[indexPath.row].caseNo
         cell.ownerName.text = caseDataArray[indexPath.row].caseOwner
@@ -160,6 +225,17 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
         cell.dateOfIntake.text = caseDataArray[indexPath.row].dateOfIntake
         
         cell.caseStatus.text = caseDataArray[indexPath.row].caseStatus
+        cell.editBtn.tag = indexPath.row
+        if(caseDataArray[indexPath.row].actionStatus == "temp"){
+            cell.caseView.backgroundColor = UIColor.yellow
+        }
+        else{
+            cell.caseView.backgroundColor = UIColor.white
+        }
+        cell.contentView.backgroundColor = UIColor.clear
+        
+        //        cell.caseView.backgroundColor = UIColor.white
+        //        cell.contentView.backgroundColor = UIColor.clear
         
         return cell
         
@@ -170,46 +246,56 @@ class CaseViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //            let indexPathArray = tblCaseView.indexPathsForVisibleRows
-        //
-        //            for indexPath in indexPathArray!{
-        //
-        //            let cell = tblCaseView.cellForRow(at: indexPath) as! CaseTableViewCell
-        //
-        //            if tblCaseView.indexPathForSelectedRow != indexPath {
-        //
-        //            cell.caseView.backgroundColor = UIColor.white
-        //            cell.contentView.backgroundColor = UIColor.clear
-        //
-        //            }
-        //            else{
-        //
-        //            cell.caseView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-        //
-        //            cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-        //
-        //
-        //            }
-        //            }
+        let indexPathArray = tblCaseView.indexPathsForVisibleRows
         
-        
-        SalesforceConnection.caseId =  caseDataArray[indexPath.row].caseId
-        SalesforceConnection.caseNumber = caseDataArray[indexPath.row].caseNo
-        SalesforceConnection.dateOfIntake = caseDataArray[indexPath.row].dateOfIntake
-        
-        SalesforceConnection.caseStatus = caseDataArray[indexPath.row].caseStatus
-        SalesforceConnection.caseOwnerId = caseDataArray[indexPath.row].caseOwnerId
-        
-        
-        if(caseDataArray[indexPath.row].caseStatus == "Closed" || SalesforceConnection.salesforceUserId != caseDataArray[indexPath.row].caseOwnerId){
-            Utilities.caseActionStatus = "View"
-        }
-        else{
-            Utilities.caseActionStatus = "Edit"
+        for indexPath in indexPathArray!{
+            
+            let cell = tblCaseView.cellForRow(at: indexPath) as! CaseTableViewCell
+            
+            if tblCaseView.indexPathForSelectedRow != indexPath {
+                
+                cell.caseView.backgroundColor = UIColor.white
+                cell.contentView.backgroundColor = UIColor.clear
+                
+            }
+            else{
+                
+                cell.caseView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+                
+               // cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
+                
+                
+            }
         }
         
+        GlobalCase.caseId =  caseDataArray[indexPath.row].caseId
+        GlobalCase.caseNumber = caseDataArray[indexPath.row].caseNo
+        GlobalCase.dateOfIntake = caseDataArray[indexPath.row].dateOfIntake
+        GlobalCase.caseStatus = caseDataArray[indexPath.row].caseStatus
+        GlobalCase.caseOwnerId = caseDataArray[indexPath.row].caseOwnerId
         
-        self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
+        
+//        GlobalCase.caseId =  caseDataArray[indexPath.row].caseId
+//        GlobalCase.caseNumber = caseDataArray[indexPath.row].caseNo
+//        GlobalCase.dateOfIntake = caseDataArray[indexPath.row].dateOfIntake
+//
+//        GlobalCase.caseStatus = caseDataArray[indexPath.row].caseStatus
+//        GlobalCase.caseOwnerId = caseDataArray[indexPath.row].caseOwnerId
+//
+//
+//        if(caseDataArray[indexPath.row].caseStatus == "Closed" || SalesforceConnection.salesforceUserId != caseDataArray[indexPath.row].caseOwnerId){
+//            GlobalCase.caseActionStatus = "View"
+//        }
+//        else{
+//            GlobalCase.caseActionStatus = "Edit"
+//        }
+//
+//        if(GlobalClient.currentTenantId.isEmpty){
+//            GlobalCase.caseActionStatus = "Edit"
+//        }
+//
+//
+//        self.performSegue(withIdentifier: "caseConfigIdentifier", sender: nil)
         
         
         

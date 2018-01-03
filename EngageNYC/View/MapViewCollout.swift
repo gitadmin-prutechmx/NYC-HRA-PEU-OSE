@@ -14,6 +14,9 @@ class MapViewCollout: UIView
     @IBOutlet weak var btnViewUnits: UIButton!
     @IBOutlet weak var btnEditLocation: UIButton!
     
+    @IBOutlet weak var viewLocationStatus: UIView!
+    @IBOutlet weak var lblAddress: UILabel!
+    @IBOutlet weak var lblLocationStatus: UILabel!
     @IBOutlet weak var lblNoOfUnits: UILabel!
     
     @IBOutlet weak var lblNoClients: UILabel!

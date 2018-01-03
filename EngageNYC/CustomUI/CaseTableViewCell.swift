@@ -17,7 +17,7 @@ class CaseTableViewCell: UITableViewCell {
     @IBOutlet weak var ownerName: UILabel!
   
     @IBOutlet weak var dateOfIntake: UILabel!
-    
+    @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var caseView: UIView!
     @IBOutlet weak var caseStatus: UILabel!
     

@@ -37,6 +37,17 @@ protocol ReasonStatusProtocol {
 }
 
 
+enum unitAttemptScreen:Int{
+    case attempt = 0
+    case contacted
+    case contactOutcome
+    case inTake
+    case contactPicklist
+    case followUpDate
+    case followUpType
+   
+}
+
 
 class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,PickListProtocol
 {
@@ -49,12 +60,15 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     var attempt:String = "No"
     var contact:String = "No"
-    var reknockNeeded:String = "No"
     var inTake:String = "No"
     // var privateHome:String = "No"
     
     var reasonStatus:String = ""
     var contactOutcome:String = ""
+    var selectContact:String = ""
+    var followUpType:String = ""
+    var followUpDate:Date?
+    var followUpDateStr:String = ""
     
     var notes:String = ""
     
@@ -64,6 +78,9 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     var reasonCell:UITableViewCell!
     var contactOutcomeCell:UITableViewCell!
+    var selectContactCell:UITableViewCell!
+    var followUpTypeCell:UITableViewCell!
+    var followUpDateCell:FollowUpDateTableViewCell!
     
     @IBOutlet weak var saveOutlet: UIBarButtonItem!
     @IBOutlet weak var addTenantOutlet: UIButton!
@@ -85,12 +102,15 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var editUnitDict : [String:String] = [:]
     
     
-    var isReasonSelect:Bool = false
+  
     var isContactOutcomeSelect:Bool = false
+    var isFollowUpTypeSelect:Bool = false
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        print(self.preferredContentSize)
         btnNext.layer.cornerRadius = 5.0
         fullAddressText.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
@@ -112,8 +132,9 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         populateEditUnit()
+        populateFollowUpType()
         
-        
+        // orientationChanged()
         
         
         // Do any additional setup after loading the view.
@@ -123,15 +144,40 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        isReasonSelect = false
+        Utilities.isSelectContactSelect = false
         isContactOutcomeSelect = false
+        isFollowUpTypeSelect = false
         
-        populateReason()
-        populateContactOutcome()
+        if(SalesforceConnection.selectedTenantForSurvey.isEmpty){
+            populateSelectContact()
+        }
+        
+       // populateReason()
+      //  populateContactOutcome()
         
     }
     
-    
+    func orientationChanged() -> Void
+    {
+        
+        if UIDevice.current.orientation.isLandscape
+        {
+            print("Landscape")
+            self.view.superview?.center = self.view.center;
+            self.preferredContentSize = CGSize(width: 700, height: 667)
+            print(self.preferredContentSize)
+        }
+        else
+        {
+            print("Portrait")
+            self.view.superview?.center = self.view.center;
+            self.preferredContentSize = CGSize(width: 700, height: 667)
+            print(self.preferredContentSize)
+        }
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
+    }
+
     //    func getReasonStatus(strReasonStatus:String){
     //
     //        if(isReasonSelect){
@@ -163,7 +209,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         if(sender.isOn){
             attempt = "Yes"
             
-            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes"){
                 enableNextBtn()
             }
         }
@@ -181,10 +227,10 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         if(sender.isOn)
         {
             inTake = "Yes"
-            reasonCell.detailTextLabel?.isEnabled = false
-            reasonCell.detailTextLabel?.text = "Select Reason"
-            
-            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+//            reasonCell.detailTextLabel?.isEnabled = false
+//            reasonCell.detailTextLabel?.text = "Select Reason"
+//            
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes"){
                 enableNextBtn()
             }
             
@@ -193,13 +239,13 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         else
         {
             inTake = "No"
-            reasonCell.detailTextLabel?.isEnabled = true
-            
-            if(reasonCell.detailTextLabel?.text == "Select Reason"){
-                reasonStatus = "Select Reason"
-            }
-            
-            reasonCell.detailTextLabel?.text = reasonStatus
+//            reasonCell.detailTextLabel?.isEnabled = true
+//            
+//            if(reasonCell.detailTextLabel?.text == "Select Reason"){
+//                reasonStatus = "Select Reason"
+//            }
+//            
+//            reasonCell.detailTextLabel?.text = reasonStatus
             
             disableNextBtn()
         }
@@ -210,64 +256,66 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if(sender.isOn){
             contact = "Yes"
-            contactOutcomeCell.detailTextLabel?.isEnabled = false
-            contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
-            
-            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+           // contactOutcomeCell.detailTextLabel?.isEnabled = false
+            if(reasonStatus.isEmpty){
+                reasonStatus = "Select Outcome"
+            }
+            contactOutcomeCell.detailTextLabel?.text = reasonStatus
+           
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes"){
                 enableNextBtn()
             }
             
         }
         else{
             contact = "No"
-            contactOutcomeCell.detailTextLabel?.isEnabled = true
             
-            if(contactOutcomeCell.detailTextLabel?.text == "Select Outcome"){
+            //contactOutcomeCell.detailTextLabel?.isEnabled = true
+            
+            if(contactOutcome.isEmpty){
                 contactOutcome = "Select Outcome"
             }
             contactOutcomeCell.detailTextLabel?.text = contactOutcome
-            
+          
             disableNextBtn()
         }
         
     }
     
-    func reKnockChanged(_ sender: UISwitch) {
-        
-        if(sender.isOn){
-            reknockNeeded = "Yes"
-            
-            if(reknockNeeded == "Yes"){
-                disableNextBtn()
-            }
-            
-            
-        }
-        else{
-            reknockNeeded = "No"
-            
-            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && reknockNeeded == "No"){
-                enableNextBtn()
-            }
-            
-            
-        }
-    }
     
+    
+    var selectedClientId:String = ""
     
     func getPickListValue(pickListValue:String){
         
-        if(isReasonSelect){
-            reasonStatus = pickListValue
+        if( Utilities.isSelectContactSelect){
+            
+            if(!pickListValue.isEmpty){
+                selectContact = Utilities.getClientName(tenantId: pickListValue)
+            }
+            else{
+                selectContact = pickListValue
+            }
+            
+            selectedClientId = pickListValue
+            
         }
         
         if(isContactOutcomeSelect){
-            contactOutcome = pickListValue
+            if(contact == "No"){
+                contactOutcome = pickListValue
+            }
+            else{
+                reasonStatus = pickListValue
+            }
         }
         
-        //        isReasonSelect = false
-        //        isContactOutcomeSelect = false
-        //
+        if(isFollowUpTypeSelect){
+            
+            followUpType = pickListValue
+            
+        }
+        
         tblEditUnit.reloadData()
     }
     
@@ -280,9 +328,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     var tempAttempt:String = ""
     var tempContact:String = ""
     var tempReason:String = ""
-    var tempReKnock:String = ""
-    
-    
+  
     func getIntakeContactAttempt(){
         
         let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId ==%@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId, predicateValue4: SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
@@ -295,7 +341,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             tempContact = editUnitResults[0].isContact!
             
             tempReason = editUnitResults[0].reason!
-            tempReKnock = editUnitResults[0].reKnockNeeded!
+           
         }
         
         
@@ -304,12 +350,20 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     @IBAction func btnNextAction(_ sender: Any)
     {
-        // if((attempt == "Yes" && contact == "Yes"  && (inTake == "No" && reknockNeeded == "Yes")) || (attempt == "Yes" && contact == "Yes"  && inTake == "Yes")){
+        
         
         if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes"){
             updateUnit()
             
             self.dismiss(animated: true) {
+                
+                if(!self.selectedClientId.isEmpty){
+                    
+                    SalesforceConnection.selectedTenantForSurvey = self.selectedClientId
+                    SalesforceConnection.selectedTenantNameForSurvey = Utilities.getClientName(tenantId: self.selectedClientId)
+                }
+                
+                
                 
                 if(!self.isSurveyTaken()){
                     self.getDefaultSurvey()
@@ -331,7 +385,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             chooseUnitInfoView.shake()
             //updateUnit()
             
-            self.view.makeToast("You can only proceed to next step if Attempt , Contact and Reknock selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            self.view.makeToast("You can only proceed to next step if Attempt , Contact and Intake selected. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
                 self.btnNext.isEnabled = true
                 self.btnNext.alpha = 1.0
@@ -364,7 +418,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     func numberOfSections(in tableView: UITableView) -> Int
     {
         
-        return 6
+        return 7
         
     }
     
@@ -385,7 +439,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-        if(indexPath.section == 0){
+        if(indexPath.section == unitAttemptScreen.attempt.rawValue){
             let cell = tableView.dequeueReusableCell(withIdentifier: "attemptCell", for: indexPath)
             
             cell.backgroundColor = UIColor.clear
@@ -416,7 +470,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.accessoryView = attemptSwitch
             return cell
         }
-        else if(indexPath.section == 1){
+        else if(indexPath.section == unitAttemptScreen.contacted.rawValue){
             let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath)
             
             cell.backgroundColor = UIColor.clear
@@ -448,7 +502,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
             
         }
-        else if(indexPath.section == 2){
+        else if(indexPath.section == unitAttemptScreen.contactOutcome.rawValue){
             contactOutcomeCell = tableView.dequeueReusableCell(withIdentifier: "contactOutcomeCell", for: indexPath)
             
             contactOutcomeCell.accessoryType = .disclosureIndicator
@@ -456,13 +510,29 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             contactOutcomeCell.backgroundColor = UIColor.clear
             
             
-            contactOutcomeCell.textLabel?.text = "If No Contact, Outcome?"
+            contactOutcomeCell.textLabel?.text = "Contact Outcome"
             contactOutcomeCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
-            if(contactOutcome.isEmpty){
+            
+            if(contactOutcome.isEmpty && reasonStatus.isEmpty){
                 contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
             }
             else{
-                contactOutcomeCell.detailTextLabel?.text = contactOutcome
+                if(contact == "No"){
+                    if(contactOutcome.isEmpty){
+                        contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
+                    }
+                    else{
+                        contactOutcomeCell.detailTextLabel?.text = contactOutcome
+                    }
+                }
+                else{
+                    if(reasonStatus.isEmpty){
+                         contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
+                    }
+                    else{
+                        contactOutcomeCell.detailTextLabel?.text = reasonStatus
+                    }
+                }
             }
             
             contactOutcomeCell.detailTextLabel?.textColor = UIColor.lightGray
@@ -470,7 +540,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             return contactOutcomeCell
         }
-        else if(indexPath.section == 3){
+        else if(indexPath.section == unitAttemptScreen.inTake.rawValue){
             let cell = tableView.dequeueReusableCell(withIdentifier: "inTakeCell", for: indexPath)
             
             cell.backgroundColor = UIColor.clear
@@ -503,76 +573,126 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
             
         }
-        else if(indexPath.section == 4){
-            reasonCell = tableView.dequeueReusableCell(withIdentifier: "reasonCell", for: indexPath)
+       
+        else if(indexPath.section == unitAttemptScreen.contactPicklist.rawValue){
+           
+            selectContactCell = tableView.dequeueReusableCell(withIdentifier: "selectContactCell", for: indexPath)
             
-            reasonCell.accessoryType = .disclosureIndicator
+            if(SalesforceConnection.selectedTenantForSurvey.isEmpty){
+                selectContactCell.accessoryType = .disclosureIndicator
+                selectContactCell.selectionStyle = .default
+              }
+            else{
+                selectContactCell.accessoryType = .none
+                selectContactCell.selectionStyle = .none
+
+            }
             
-            reasonCell.backgroundColor = UIColor.clear
+            selectContactCell.backgroundColor = UIColor.clear
             
             
-            reasonCell.textLabel?.text = "If No Survey, Reason?"
-            reasonCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
-            if(reasonStatus.isEmpty){
-                reasonCell.detailTextLabel?.text = "Select Reason"
+            selectContactCell.textLabel?.text = "Select Contact"
+            selectContactCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            
+            if(selectContact.isEmpty){
+                selectContactCell.detailTextLabel?.text = "Select Contact"
             }
             else{
-                reasonCell.detailTextLabel?.text = reasonStatus
+                selectContactCell.detailTextLabel?.text = selectContact
             }
             
-            reasonCell.detailTextLabel?.textColor = UIColor.lightGray
+            selectContactCell.detailTextLabel?.textColor = UIColor.lightGray
             
             
-            return reasonCell
+            return selectContactCell
+
+        }
+        else if(indexPath.section == unitAttemptScreen.followUpDate.rawValue){
             
+            followUpDateCell = tableView.dequeueReusableCell(withIdentifier: "followUpDateCell", for: indexPath) as! FollowUpDateTableViewCell
+            
+            tblEditUnit.scrollToRow(at: indexPath, at: .top, animated: true)
+           
+            followUpDateCell.selectionStyle = .none
+        
+          
+            if let val = followUpDate
+            {
+
+                followUpDateCell.datePicker.date = val
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MM/dd/yyyy"
+                followUpDateStr = dateFormatter.string(from: val)
+                followUpDateCell.detail.text = followUpDateStr
+                
+            }
+                
+            else
+            {
+            
+                followUpDateCell.datePicker.date = Date()
+                followUpDateCell.detail.text = "Select Date"
+               
+            }
+            
+          
+            followUpDateCell.accessoryType = .disclosureIndicator
+            followUpDateCell.detail.textColor = UIColor.lightGray
+           // followUpDateCell.detail.font = UIFont.init(name: "Arial", size: 16.0)
+            
+            followUpDateCell.delegate = self
+            
+            return followUpDateCell
         }
         else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "reKnockCell", for: indexPath)
             
-            cell.backgroundColor = UIColor.clear
+            followUpTypeCell = tableView.dequeueReusableCell(withIdentifier: "followUpTypeCell", for: indexPath)
+          
+            followUpTypeCell.accessoryType = .disclosureIndicator
+            
+            followUpTypeCell.backgroundColor = UIColor.clear
             
             
-            cell.textLabel?.text = "Reknock Required?"
-            cell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
+            followUpTypeCell.textLabel?.text = "Select Follow-up"
+            followUpTypeCell.textLabel?.font = UIFont.init(name: "Arial", size: 18.0)
             
-            cell.selectionStyle = .none
-            
-            //accessory switch
-            let reKnockSwitch = UISwitch(frame: CGRect.zero)
-            
-            if(reknockNeeded == "Yes"){
-                reKnockSwitch.isOn = true
-            }
-            else if (reknockNeeded == "No"){
-                reKnockSwitch.isOn = false
-                // attemptRdb.isOn = false
+            if(followUpType.isEmpty){
+                followUpTypeCell.detailTextLabel?.text = "Select Follow-up"
             }
             else{
-                reKnockSwitch.isOn = false
+                followUpTypeCell.detailTextLabel?.text = followUpType
             }
             
+            followUpTypeCell.detailTextLabel?.textColor = UIColor.lightGray
             
             
-            reKnockSwitch.addTarget(self, action: #selector(MoreOptionsViewController.reKnockChanged(_:)), for: UIControlEvents.valueChanged)
-            
-            cell.accessoryView = reKnockSwitch
-            return cell
+            return followUpTypeCell
             
         }
+
         
-        //privateHome
+        //followUpTypeCell
         
         
         
     }
     
     var contactOutcomeStr:String = ""
-    var reasonStr:String = ""
+    var selectContactStr:String = ""
+    var followUpTypeStr:String = ""
     
-    func populateContactOutcome(){
+    func populateContactOutcome(contact:String){
         
-        let contactOutcomeData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location_Unit__c",predicateValue2:  "Contact_Outcome__c", isPredicate:true) as! [DropDown]
+        var contactOutcomeData = [DropDown]()
         
+        if(contact == "No"){
+            contactOutcomeData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location_Unit__c",predicateValue2:  "Contact_Outcome__c", isPredicate:true) as! [DropDown]
+        }
+        else{
+            contactOutcomeData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location_Unit__c",predicateValue2:  "reason__c", isPredicate:true) as! [DropDown]
+
+        }
         
         if(contactOutcomeData.count>0){
             
@@ -583,81 +703,147 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    func populateReason(){
-        
-        let reasonData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location_Unit__c",predicateValue2:  "reason__c", isPredicate:true) as! [DropDown]
+    func populateFollowUpType(){
         
         
-        if(reasonData.count>0){
+        let followUpTypeData =  ManageCoreData.fetchData(salesforceEntityName: "DropDown", predicateFormat:"object == %@ AND fieldName == %@",predicateValue:  "Assignment_Location_Unit__c",predicateValue2:  "Follow_Up_Type__c", isPredicate:true) as! [DropDown]
             
-            reasonStr =  reasonData[0].value!//String(reasonData[0].value!.characters.dropLast())
+        
+        
+        if(followUpTypeData.count>0){
             
+            followUpTypeStr =  followUpTypeData[0].value!
         }
         
     }
     
+    func populateSelectContact(){
+        
+        selectContactStr = ""
+        
+        
+        let clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "unitId == %@ AND assignmentId == %@ AND locationId == %@" ,predicateValue: SalesforceConnection.unitId,predicateValue2: SalesforceConnection.assignmentId,predicateValue3: SalesforceConnection.locationId,isPredicate:true) as! [Tenant]
+   
+        
+        if(clientResults.count > 0){
+            
+            for client in clientResults{
+                selectContactStr += client.id! + ";"
+            }
+            
+        }
+        
+      
+        
+        
+    }
     
+    
+    var selectedIndexPath:IndexPath?
+
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
         
-        if indexPath.section == 2{
+        if indexPath.section == unitAttemptScreen.contactOutcome.rawValue{
             
-            if(contact == "No"){
+       
+                populateContactOutcome(contact: contact)
                 
-                
+          
                 let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
                 
                 pickListVC?.picklistStr = contactOutcomeStr
+            
+                pickListVC?.showContactName = false
                 
                 pickListVC?.pickListProtocol = self
+            
+            if(contact == "Yes"){
+                 pickListVC?.selectedPickListValue = reasonStatus
+            }
+            else{
                 pickListVC?.selectedPickListValue = contactOutcome
+            }
+            
                 
                 
                 isContactOutcomeSelect = true
                 
                 self.navigationController?.pushViewController(pickListVC!, animated: true)
-                
-                
-                //                    let reasonStatusVC = self.storyboard!.instantiateViewController(withIdentifier: "reasonStatusIdentifier") as? SelectReasonStatusViewController
-                //
-                //                    reasonStatusVC?.reasonStatusProtocol = self
-                //
-                //                    reasonStatusVC?.selectedReasonStatus = reasonStatus
-                //
-                //                    self.navigationController?.pushViewController(reasonStatusVC!, animated: true)
-                
-                
-                
-                
-            }
             
         }
         
-        if indexPath.section == 4{
+        if indexPath.section == unitAttemptScreen.contactPicklist.rawValue && SalesforceConnection.selectedTenantForSurvey.isEmpty{
             
-            if(inTake == "No"){
-                
+           
                 
                 let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
                 
-                pickListVC?.picklistStr = reasonStr
+                pickListVC?.picklistStr = selectContactStr
+            
+                pickListVC?.showContactName = true
                 
                 pickListVC?.pickListProtocol = self
-                pickListVC?.selectedPickListValue = reasonStatus
+                pickListVC?.selectedPickListValue = selectContact
                 
-                isReasonSelect = true
+                Utilities.isSelectContactSelect = true
                 
                 self.navigationController?.pushViewController(pickListVC!, animated: true)
                 
-                
-                
-            }
+            
             
         }
+        if indexPath.section == unitAttemptScreen.followUpDate.rawValue{
+    
+            
         
+               // Utilities.currentApiName = caseObject.apiName
+                
+                let previousIndexPath =   selectedIndexPath
+                if(indexPath == selectedIndexPath){
+                    selectedIndexPath = nil
+                }
+                else{
+                    selectedIndexPath = indexPath
+                }
+                
+                var indexPaths:Array<IndexPath> = []
+                if let previous = previousIndexPath{
+                    indexPaths += [previous]
+                }
+                if let current = selectedIndexPath{
+                    indexPaths += [current]
+                }
+                
+                if indexPaths.count > 0 {
+                    tableView.reloadRows(at: indexPaths, with: UITableViewRowAnimation.automatic)
+                }
+                
+            
+        }
+        if indexPath.section == unitAttemptScreen.followUpType.rawValue{
+            
+            
+            
+            let pickListVC = self.storyboard!.instantiateViewController(withIdentifier: "picklistIdentifier") as? PickListViewController
+            
+            pickListVC?.picklistStr = followUpTypeStr
+            
+            pickListVC?.showContactName = false
+            
+            pickListVC?.pickListProtocol = self
+            pickListVC?.selectedPickListValue = followUpType
+            
+            isFollowUpTypeSelect = true
+            
+            self.navigationController?.pushViewController(pickListVC!, animated: true)
+            
+            
+            
+        }
         
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -666,6 +852,50 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
     }
+    
+
+    
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if(indexPath.section == unitAttemptScreen.followUpDate.rawValue){
+            (cell as! FollowUpDateTableViewCell).watchFrameChanges()
+            
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if(indexPath.section == unitAttemptScreen.followUpDate.rawValue){
+            (cell as! FollowUpDateTableViewCell).ignoreFrameChanges()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if(indexPath.section == unitAttemptScreen.followUpDate.rawValue){
+        
+      
+         //return FollowUpDateTableViewCell.defaultHeight
+        
+            if indexPath == selectedIndexPath {
+                return FollowUpDateTableViewCell.expandHeight
+            } else {
+                return FollowUpDateTableViewCell.defaultHeight
+            }
+        }
+        
+        else{
+            return UITableViewAutomaticDimension
+        }
+        
+        
+        
+        
+    }
+
     
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -683,19 +913,6 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         return  0.0
         
     }
-    
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    
-    
-    
     
     
     
@@ -724,21 +941,6 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             
-            
-            
-            if(editUnitResults[0].reKnockNeeded == ""){
-                //  editUnitResults[0].reKnockNeeded = "No"
-            }
-            
-            
-            reknockNeeded = editUnitResults[0].reKnockNeeded!
-            
-            
-            
-            
-            
-            
-            
             if(editUnitResults[0].inTake == "" || editUnitResults[0].inTake == "No"){
                 inTake = "No"
             }
@@ -747,26 +949,67 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
             
-            if(editUnitResults[0].reason! != ""){
+            if(editUnitResults[0].contactOutcome! != ""){
                 
-                reasonStatus = editUnitResults[0].reason!
+                if(contact == "Yes"){
+                    reasonStatus = editUnitResults[0].contactOutcome!
+                }
+                else{
+                    contactOutcome = editUnitResults[0].contactOutcome!
+                }
                 
             }
             
-            if(editUnitResults[0].contactOutcome! != ""){
-                
-                contactOutcome = editUnitResults[0].contactOutcome!
-                
-            }
+           
             
             notesTextArea.text = editUnitResults[0].unitNotes
             
             
-            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes" && (reknockNeeded == "No" || reknockNeeded == "")){
+            if(attempt == "Yes" && contact == "Yes"  && inTake == "Yes"){
                 enableNextBtn()
             }
             else{
                 disableNextBtn()
+            }
+            
+            selectedClientId = SalesforceConnection.selectedTenantForSurvey
+            
+            //if tap to unitlisting screen
+            if(SalesforceConnection.selectedTenantForSurvey.isEmpty){
+                if let tenantId = editUnitResults[0].tenantId{
+                    selectContact = Utilities.getClientName(tenantId: tenantId)
+                    selectedClientId = tenantId
+                }
+            }
+            else{
+                selectContact =  Utilities.getClientName(tenantId: SalesforceConnection.selectedTenantForSurvey)
+            }
+            
+          
+            
+            if let followUpTypeVal = editUnitResults[0].followUpType{
+                followUpType = followUpTypeVal
+            }
+            
+            if let followUpDateVal = editUnitResults[0].followUpDate{
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let date = dateFormatter.date(from: followUpDateVal)
+                
+                if(date != nil){
+                    
+                    dateFormatter.dateFormat = "MM/dd/yyyy"
+                    let strDate = dateFormatter.string(from: date!)
+                    followUpDate = dateFormatter.date(from: strDate)
+                }
+                else{
+                    dateFormatter.dateFormat = "MM/dd/yyyy"
+                    followUpDate = dateFormatter.date(from: followUpDateVal)
+
+                }
+               
+                
             }
             
         }
@@ -776,8 +1019,10 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
 
         }
         
+         //tblEditUnit.reloadData()
+        
     }
-    
+   
     
     
     @IBAction func cancel(_ sender: Any)
@@ -792,7 +1037,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
             
-            // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateUnitView"), object: nil)
             
             self.dismiss(animated: true, completion: nil)
         }
@@ -893,46 +1138,27 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let editUnitResults = ManageCoreData.fetchData(salesforceEntityName: "EditUnit",predicateFormat: "assignmentId == %@ AND locationId == %@ AND assignmentLocId == %@ AND unitId == %@ AND assignmentLocUnitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId, predicateValue3: SalesforceConnection.assignmentLocationId,predicateValue4:SalesforceConnection.unitId,predicateValue5: SalesforceConnection.assignmentLocationUnitId,isPredicate:true) as! [EditUnit]
         
-        if(inTake == "Yes"){
-            reasonStatus = ""
+       
+        var conOutcomeVal = contactOutcomeCell.detailTextLabel?.text
+        
+        if(conOutcomeVal == "Select Outcome"){
+            conOutcomeVal = ""
         }
         
-        if(contact == "Yes"){
-            contactOutcome = ""
-        }
-        
-        if(contactOutcome == "Select Outcome"){
-            contactOutcome = ""
-        }
-        
-        if(reasonStatus == "Select Reason"){
-            reasonStatus = ""
-        }
-        
-        
+
         if(editUnitResults.count > 0){
             
-            updateEditUnitInDatabase()
+            updateEditUnitInDatabase(strContactOutcome:conOutcomeVal!)
         }
         else{
-            saveEditUnitInDatabase(currentAttempt: attempt, currentInTake: inTake, currentReknockNeeded: reknockNeeded, currentReason: reasonStatus, currentNotes: notes, currentIsContact: contact,currentContactOutcome:contactOutcome,currentTenantId: "", currentSurveyId: "")
+            saveEditUnitInDatabase(currentAttempt: attempt, currentInTake: inTake, currentReknockNeeded: "No", currentReason: "", currentNotes: notes, currentIsContact: contact,currentContactOutcome:conOutcomeVal!,currentTenantId: "", currentSurveyId: "")
             
         }
         
-        
-        
-        
-        
-        
-        
-        
+    
     }
     
-    
-    
-    
-    
-    
+  
     func saveEditUnitInDatabase(currentAttempt:String,currentInTake:String,currentReknockNeeded:String,currentReason:String,currentNotes:String,currentIsContact:String,currentContactOutcome:String,currentTenantId:String,currentSurveyId:String){
         
         
@@ -961,11 +1187,16 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         //editUnitObject.privateHome = privateHome
         
         
-        editUnitObject.tenantId = currentTenantId
+        editUnitObject.tenantId = selectedClientId
         
         editUnitObject.surveyId = currentSurveyId
         
         editUnitObject.lastCanvassedBy = SalesforceConfig.currentUserContactId
+        
+        editUnitObject.followUpType = followUpType
+        
+        editUnitObject.followUpDate = followUpDateStr
+        
         
         
         appDelegate.saveContext()
@@ -976,7 +1207,7 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     
-    func updateEditUnitInDatabase(){
+    func updateEditUnitInDatabase(strContactOutcome:String){
         
         var updateObjectDic:[String:String] = [:]
         
@@ -984,15 +1215,19 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         
-        updateObjectDic["reason"] = reasonStatus
+        updateObjectDic["reason"] = ""
         updateObjectDic["inTake"] = inTake
         updateObjectDic["unitNotes"] = notes
         updateObjectDic["attempt"] = attempt
         updateObjectDic["isContact"] = contact
-        updateObjectDic["contactOutcome"] = contactOutcome
-        updateObjectDic["reKnockNeeded"] = reknockNeeded
+        updateObjectDic["contactOutcome"] = strContactOutcome
+        updateObjectDic["reKnockNeeded"] = "No"
         //updateObjectDic["privateHome"] = privateHome
         updateObjectDic["actionStatus"] = "edit"
+        
+        updateObjectDic["tenantId"] = selectedClientId
+        updateObjectDic["followUpType"] = followUpType
+        updateObjectDic["followUpDate"] = followUpDateStr
         
         
         
@@ -1003,17 +1238,19 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     func dismissVCCompletion(completionHandler: @escaping typeCompletionHandler) {
         self.completion = completionHandler
     }
     
     
 }
+
+extension MoreOptionsViewController : FollowUpDateTableViewCellDelegate{
+    
+    func selectFollowUpDate(forDate date: Date){
+        
+        followUpDate = date
+    }
+}
+
+

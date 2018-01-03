@@ -324,6 +324,22 @@ class ManageCoreData{
             }
             
         }
+        else if(salesforceEntityName == "Cases"){
+            let resultData = result as! [Cases]
+            
+            for object in resultData {
+                context.delete(object)
+            }
+            
+        }
+        else if(salesforceEntityName == "Issues"){
+            let resultData = result as! [Issues]
+            
+            for object in resultData {
+                context.delete(object)
+            }
+            
+        }
        
         
         do{

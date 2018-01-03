@@ -13,6 +13,50 @@ import SwiftyJSON
 import SalesforceSDKCore
 
 
+class GlobalCase{
+    
+    static var caseId:String = ""
+    static var caseNumber:String = ""
+    static var caseStatus:String = ""
+    static var caseOwnerId:String = ""
+    static var dateOfIntake:String = ""
+    static var caseActionStatus:String = ""
+    
+    static func reset(){
+        caseId = ""
+        caseStatus = ""
+        caseOwnerId = ""
+        caseNumber = ""
+        dateOfIntake = ""
+        caseActionStatus = ""
+        
+       
+    }
+}
+
+class GlobalIssue{
+    
+     static var currentIssueId:String = ""
+     static var issueActionStatus:String = ""
+    
+     static func reset(){
+        currentIssueId = ""
+        issueActionStatus = ""
+    }
+
+}
+
+class GlobalClient{
+    
+    static var currentTenantId:String =  ""
+    static var currentTenantName:String = ""
+    
+    static func reset(){
+        currentTenantId = ""
+        currentTenantName = ""
+    }
+}
+
 class SalesforceConnection{
     
     
@@ -29,12 +73,11 @@ class SalesforceConnection{
     static var isPrivateHome:String = ""
     static var assignmentLocationUnitId:String = ""
     
-    static var currentTenantId:String =  ""
-    static var currentTenantName:String = ""
-    
     static var isNewContactWithAddress:Bool = false
+    static var isFromPickListToNewClient:Bool = false
     
     static var selectedTenantForSurvey:String = ""
+    static var selectedTenantNameForSurvey:String = ""
     
     static var unitName:String = ""
     static var surveyId:String = ""
@@ -42,13 +85,6 @@ class SalesforceConnection{
     
     static var fullAddress:String = ""
     
-    static var caseId:String = ""
-    static var caseNumber:String = ""
-    static var dateOfIntake:String = ""
-    static var caseStatus:String = ""
-    static var caseOwnerId:String = ""
-    
-    static var currentIssueId:String = ""
     
     
     

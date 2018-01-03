@@ -17,6 +17,7 @@ struct IssueDataStruct
     var issueType : String = ""
     var contactName:String = ""
     var issueNotes:String = ""
+    var actionStatus:String = ""
     
 }
 
@@ -26,8 +27,6 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
    
     @IBOutlet weak var tblIssueList: UITableView!
     
-    @IBOutlet weak var fullAddressLbl: UILabel!
-    //    @IBOutlet weak var fullAddressLbl: UILabel!
     
     @IBOutlet weak var addIssueBtn: UIButton!
     
@@ -37,8 +36,12 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     {
         super.viewDidLoad()
         
-        if(SalesforceConnection.caseStatus == "Closed" || SalesforceConnection.salesforceUserId != SalesforceConnection.caseOwnerId){
+        if(GlobalCase.caseStatus == "Closed" || SalesforceConnection.salesforceUserId != GlobalCase.caseOwnerId){
             addIssueBtn.isHidden = true
+        }
+        
+        if(GlobalCase.caseId.isEmpty){
+            addIssueBtn.isHidden = false
         }
         
         
@@ -46,9 +49,9 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         tblIssueList.dataSource = self
         self.tblIssueList.tableFooterView = UIView()
         
-        self.fullAddressLbl.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
+      
         
-        self.navigationItem.title =  SalesforceConnection.caseNumber
+        self.navigationItem.title =  GlobalCase.caseNumber
         
         
         NotificationCenter.default.addObserver(self, selector:#selector(IssueViewController.UpdateIssueView), name: NSNotification.Name(rawValue: "UpdateIssueView"), object:nil
@@ -80,7 +83,7 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         let indexRow = (sender as AnyObject).tag
         
-        SalesforceConnection.currentIssueId =  issueDataArray[indexRow!].issueId
+        GlobalIssue.currentIssueId =  issueDataArray[indexRow!].issueId
         
         self.performSegue(withIdentifier: "showAddIssueIdentifier", sender: nil)
     }
@@ -89,8 +92,9 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         issueDataArray = [IssueDataStruct]()
         
+      
         
-        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "caseId == %@" ,predicateValue: SalesforceConnection.caseId,isPredicate:true) as! [Issues]
+        let issueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "caseId == %@" ,predicateValue: GlobalCase.caseId,isPredicate:true) as! [Issues]
         
         
         if(issueResults.count > 0){
@@ -99,14 +103,19 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 
                 
                 
-                let objectIssueStruct:IssueDataStruct = IssueDataStruct(caseId: issueData.caseId!, issueId: issueData.issueId!, issueNo: issueData.issueNo!, issueType: issueData.issueType!,contactName:issueData.contactName!,issueNotes:issueData.notes!)
+                let objectIssueStruct:IssueDataStruct = IssueDataStruct(caseId: issueData.caseId!, issueId: issueData.issueId!, issueNo: issueData.issueNo!, issueType: issueData.issueType!,contactName:issueData.contactName!,issueNotes:issueData.notes!,actionStatus:issueData.actionStatus!)
                 
                 issueDataArray.append(objectIssueStruct)
                 
             }
-            
-            issueDataArray = issueDataArray.sorted { $0.issueType < $1.issueType }
+           
         }
+        
+        
+        addTempIssues()
+        
+        issueDataArray = issueDataArray.sorted { $0.issueType < $1.issueType }
+        
         
         
         
@@ -116,6 +125,23 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         
         
+    }
+    
+    func addTempIssues(){
+        
+        
+        let tempIssueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@" ,predicateValue: "temp",isPredicate:true) as! [Issues]
+        
+        if(tempIssueResults.count > 0){
+            
+            for tempIssueData in tempIssueResults{
+                
+                let objecttempIssueStruct:IssueDataStruct = IssueDataStruct(caseId: tempIssueData.caseId!, issueId: tempIssueData.issueId!, issueNo: tempIssueData.issueNo!, issueType: tempIssueData.issueType!,contactName:tempIssueData.contactName!,issueNotes:tempIssueData.notes!,actionStatus:tempIssueData.actionStatus!)
+                
+                issueDataArray.append(objecttempIssueStruct)
+                
+            }
+        }
     }
     
     
@@ -147,11 +173,23 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "issueCell", for: indexPath) as! IssueTableViewCell
         
-        cell.lblIssueNo.text = issueDataArray[indexPath.row].issueNo
+        let issueNo = issueDataArray[indexPath.row].issueNo
+        let contactName = issueDataArray[indexPath.row].contactName
+        
+        cell.lblIssueNo.text = issueNo.isEmpty ? "-" : issueNo
         cell.lblIssueType.text = issueDataArray[indexPath.row].issueType
         cell.lblIssueId.text = issueDataArray[indexPath.row].issueId
         cell.issueBtn.tag = indexPath.row
-        cell.lblContactName.text = issueDataArray[indexPath.row].contactName
+        cell.lblContactName.text = contactName.isEmpty ? "-" : contactName
+        
+        if(issueDataArray[indexPath.row].actionStatus == "temp"){
+            cell.issueView.backgroundColor = UIColor.yellow
+        }
+        else{
+            cell.issueView.backgroundColor = UIColor.white
+        }
+         //cell.contentView.backgroundColor = UIColor.clear
+        
         
         return cell
         
@@ -179,16 +217,20 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        SalesforceConnection.currentIssueId =  issueDataArray[indexPath.row].issueId
+        GlobalIssue.currentIssueId =  issueDataArray[indexPath.row].issueId
         
-        
-        if(SalesforceConnection.caseStatus == "Closed" || SalesforceConnection.salesforceUserId != SalesforceConnection.caseOwnerId){
-            Utilities.issueActionStatus = "View"
+       
+        if(GlobalCase.caseStatus == "Closed" || SalesforceConnection.salesforceUserId != GlobalCase.caseOwnerId){
+            GlobalIssue.issueActionStatus = "View"
         }
         else{
-            Utilities.issueActionStatus = "Edit"
+            GlobalIssue.issueActionStatus = "Edit"
         }
         
+        
+        if(GlobalCase.caseOwnerId.isEmpty){
+             GlobalIssue.issueActionStatus = "Edit"
+        }
         
         self.performSegue(withIdentifier: "showAddIssueIdentifier", sender: nil)
         
@@ -205,17 +247,11 @@ class IssueViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     
     
-    
-    @IBAction func cancel(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true);
-    }
-    
-    
     @IBAction func addIssueAction(_ sender: Any)
     {
-        SalesforceConnection.currentIssueId =  ""
+        GlobalIssue.currentIssueId =  ""
         
-        Utilities.issueActionStatus = "New"
+        GlobalIssue.issueActionStatus = "New"
         
         
         self.performSegue(withIdentifier: "showAddIssueIdentifier", sender: nil)

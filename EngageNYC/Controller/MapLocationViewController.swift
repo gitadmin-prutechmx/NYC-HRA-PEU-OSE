@@ -10,6 +10,14 @@ import UIKit
 import ArcGIS
 import Crashlytics
 
+
+enum locationStatus:String{
+    case planned = "Planned"
+    case inprogress = "In Progress"
+    case completed = "Completed"
+    case blocked = "Blocked"
+}
+
 struct locationDataStruct
 {
     var locId : String = ""
@@ -93,6 +101,9 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
     var noOfClients:String = ""
     var noOfUnitsAttempt:String = ""
     var modifiedName:String = ""
+    var locAddress:String = ""
+    var locStatus:String = ""
+    
     
     var isSyncDataFromLocation:Bool = false
     
@@ -227,6 +238,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                             
                             weakSelf.mapView.map = weakSelf.map
                             
+                          //  weakSelf.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanMode.recenter
                             
                             Utilities.basemapMap = weakSelf.map
                             
@@ -651,7 +663,7 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                     let fullAdress = locData.street! + " " + locData.city! + ", " + locData.state! + " " + locData.zip!
                     
                     
-                    locDict[locData.name!] = LocationDO(locId: locData.id!, assignmentLocId: locData.assignmentLocId!, fullAddress: fullAdress, totalUnits: locData.totalUnits!, noOfClients: locData.noOfClients!, noOfUnitsAttempt: locData.noOfUnitsAttempt!)
+                    locDict[locData.name!] = LocationDO(locId: locData.id!, assignmentLocId: locData.assignmentLocId!, fullAddress: fullAdress, totalUnits: locData.totalUnits!, noOfClients: locData.noOfClients!, noOfUnitsAttempt: locData.noOfUnitsAttempt!,locStatus:locData.locStatus!)
                 }
                 
                 
@@ -887,10 +899,28 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! MapViewCollout
         
         
+        
+        
         view.lblNoOfUnits.text = totalUnits
         view.lblNoClients.text = noOfClients
         view.lblAttemptPrecentage.text = noOfUnitsAttempt + "%"
         view.lblName.text = modifiedName
+        
+        view.lblLocationStatus.text = locStatus
+        
+        view.lblAddress.text = locAddress
+        if(locStatus == "Completed"){
+            view.viewLocationStatus.backgroundColor = UIColor.green
+        }
+        else if(locStatus == "In Progress"){
+            view.viewLocationStatus.backgroundColor = UIColor.yellow
+        }
+        else if(locStatus == "Blocked"){
+            view.viewLocationStatus.backgroundColor = UIColor.red
+        }
+        else{
+            view.viewLocationStatus.backgroundColor = UIColor.blue
+        }
         
         view.btnEditLocation.addTarget(self, action: #selector(MapLocationViewController.navigateToEditLocationView(_:)), for: .touchUpInside)
         
@@ -1032,7 +1062,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
                         self?.noOfUnitsAttempt = (locObject?.noOfUnitsAttempt)!
                         self?.noOfClients = (locObject?.noOfClients)!
                         self?.modifiedName = (self?.editLocDict[SalesforceConnection.locationId])!
-                        
+                        self?.locAddress = (locObject?.fullAddress)!
+                        self?.locStatus = (locObject?.locStatus)!
                         
                         if(self?.locDataArray.contains {$0.salesforceLocationName == address})!{
                             
@@ -1125,15 +1156,15 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             cell.dataLocation.text = filteredStruct[indexPath.row].locName
             cell.dataLocId.text = filteredStruct[indexPath.row].locId
             
-            if(filteredStruct[indexPath.row].locStatus == "Completed"){
+            if(filteredStruct[indexPath.row].locStatus == locationStatus.completed.rawValue){
                 cell.dataLocStatus.isHidden = false
                 cell.dataLocStatus.image = UIImage(named: "Complete")
             }
-            else if(filteredStruct[indexPath.row].locStatus == "In Progress"){
+            else if(filteredStruct[indexPath.row].locStatus == locationStatus.inprogress.rawValue){
                 cell.dataLocStatus.isHidden = false
                 cell.dataLocStatus.image = UIImage(named: "InProgress")
             }
-            else if(filteredStruct[indexPath.row].locStatus == "Blocked"){
+            else if(filteredStruct[indexPath.row].locStatus == locationStatus.blocked.rawValue){
                 cell.dataLocStatus.isHidden = false
                 cell.dataLocStatus.image = UIImage(named: "Blocked")
             }
@@ -1150,15 +1181,15 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             cell.dataFullAddress.text = locDataArray[indexPath.row].partialAddress
             cell.dataLocId.text = locDataArray[indexPath.row].locId
             
-            if(locDataArray[indexPath.row].locStatus == "Completed"){
+            if(locDataArray[indexPath.row].locStatus == locationStatus.completed.rawValue){
                 cell.dataLocStatus.isHidden = false
                 cell.dataLocStatus.image = UIImage(named: "Complete")
             }
-            else if(locDataArray[indexPath.row].locStatus == "In Progress"){
+            else if(locDataArray[indexPath.row].locStatus == locationStatus.inprogress.rawValue){
                 cell.dataLocStatus.isHidden = false
                 cell.dataLocStatus.image = UIImage(named: "InProgress")
             }
-            else if(locDataArray[indexPath.row].locStatus == "Blocked"){
+            else if(locDataArray[indexPath.row].locStatus == locationStatus.blocked.rawValue){
                 cell.dataLocStatus.isHidden = false
                 cell.dataLocStatus.image = UIImage(named: "Blocked")
             }
@@ -1201,6 +1232,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             noOfUnitsAttempt = filteredStruct[indexPath.row].noOfUnitsAttempt
             noOfClients = filteredStruct[indexPath.row].noOfClients
             modifiedName = filteredStruct[indexPath.row].lastModifiedName
+            locAddress = filteredStruct[indexPath.row].fullAddress
+            locStatus = filteredStruct[indexPath.row].locStatus
             
             Utilities.currentLocationRowIndex = indexPath.row
             
@@ -1221,6 +1254,8 @@ class MapLocationViewController: UIViewController ,UITableViewDataSource, UITabl
             noOfUnitsAttempt = locDataArray[indexPath.row].noOfUnitsAttempt
             noOfClients = locDataArray[indexPath.row].noOfClients
             modifiedName = locDataArray[indexPath.row].lastModifiedName
+            locAddress = locDataArray[indexPath.row].fullAddress
+            locStatus = locDataArray[indexPath.row].locStatus
             
             Utilities.currentLocationRowIndex = indexPath.row
             

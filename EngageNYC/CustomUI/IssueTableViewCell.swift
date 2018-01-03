@@ -17,6 +17,7 @@ class IssueTableViewCell: UITableViewCell
     @IBOutlet weak var issueBtn: UIButton!
     @IBOutlet weak var lblContactName: UILabel!
     
+    @IBOutlet weak var issueView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

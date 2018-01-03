@@ -1,417 +1,302 @@
 //
 //  InTakeViewController.swift
-//  Knock
+//  EngageNYCDev
 //
-//  Created by Kamal on 27/07/17.
+//  Created by Kamal on 11/12/17.
 //  Copyright © 2017 mtxb2b. All rights reserved.
 //
 
 import UIKit
 
-struct ClientUnitDataStruct
-{
-    var clientId : String = ""
-    var name:String = ""
-    var firstName : String = ""
-    var lastName : String = ""
-    var email : String = ""
-    var phone : String = ""
-    var age : String = ""
-    var dob:String = ""
-    var sourceList:String = ""
-    //var teantStatus:String = ""
-    //var inTakeStaus:String = ""
-    
-}
+class InTakeViewController: UIViewController {
 
-
-
-class InTakeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-
-    
-    @IBOutlet weak var btnExistingClients: UIButton!
-    @IBOutlet weak var viewTenent: UIView!
-    @IBOutlet weak var btnGotoCase: UIButton!
-    
-    @IBOutlet weak var fullAddressTxt: UILabel!
-   
-    
-    @IBOutlet weak var tblTenantView: UITableView!
-    
-    @IBOutlet weak var addTenantOutlet: UIButton!
+    @IBOutlet weak var lblAddress: UILabel!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
     
     
-    @IBOutlet weak var clientDiscloseSwitch: UISwitch!
+    var clientListVC:ClientListingViewController!
+    var caseVC:CaseViewController!
+    var issueVC:IssueViewController!
     
-    var clientDataArray = [ClientUnitDataStruct]()
-    var caseDataArray = [CaseDataStruct]()
+    @IBOutlet var superView: UIView!
+    @IBOutlet weak var containerView: UIView!
     
-    var selectedClientId:String = ""
-    var selectedClientName:String = ""
-    var selectedCaseId:String = ""
-    var selectedCaseNo:String = ""
-    
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
-        addTenantOutlet.layer.cornerRadius = 5
-        btnExistingClients.layer.cornerRadius = 5
-        btnGotoCase.layer.cornerRadius = 5
-        
-        fullAddressTxt.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
-        
+        orientationChanged()
+         lblAddress.text = "Unit: " + SalesforceConnection.unitName + "  |  " + SalesforceConnection.fullAddress
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
         
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
 
-        NotificationCenter.default.addObserver(self, selector:#selector(InTakeViewController.UpdateClientView), name: NSNotification.Name(rawValue: "UpdateClientView"), object:nil)
-      
-       
+        
+        GlobalClient.reset()
+        GlobalCase.reset()
+        
+        
+        Utilities.inTakeVC = self
+        
+        Utilities.isClientDoesNotReveal = false
+        
+        
+        // Do any additional setup after loading the view.
     }
     
-    func UpdateClientView(){
-        print("UpdateClientView")
-      
-        populateClientData()
-    }
-    
-
-    // Cleanup notifications added in viewDidLoad
-    deinit
-    {
-        NotificationCenter.default.removeObserver("UpdateClientView")
-    }
-    
-   
     func orientationChanged() -> Void
     {
         
         if UIDevice.current.orientation.isLandscape
         {
             print("Landscape")
-            self.view.superview?.frame = CGRect(x: 0, y: 0, width: 980, height: 590)
             self.view.superview?.center = self.view.center;
-            //self.preferredContentSize = CGSize(width: 880, height: 570)
+            self.preferredContentSize = CGSize(width: 740, height: 667)
             print(self.preferredContentSize)
         }
         else
         {
             print("Portrait")
-            self.view.superview?.frame = CGRect(x: 0, y: 0, width: 700, height: 700)
             self.view.superview?.center = self.view.center;
-           // self.preferredContentSize = CGSize(width: 700, height: 800)
+            self.preferredContentSize = CGSize(width: 700, height: 667)
             print(self.preferredContentSize)
         }
-        
         self.view.setNeedsLayout()
         self.view.layoutIfNeeded()
     }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
-        super.viewWillAppear(animated)
+    /// Method to switch between different panels that are region specific
+    func prepareIntakePanelsInfo(viewCtrlType:String){
         
-        
-        selectedClientId = ""
-        selectedClientName = ""
-        selectedCaseId = ""
-        selectedCaseNo = ""
-        showClientView()
+//        
+//        let caseVC = self.storyboard!.instantiateViewController(withIdentifier: "caseviewcontrollerSID") as? CaseViewController
+//        
+//        self.present(caseVC!, animated: true, completion: nil)
 
-    }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showSaveEditTenantIdentifier" {
-            let vc = segue.destination as! UINavigationController
-            let addVC = vc.viewControllers[0]  as! SaveEditTenantViewController
+        
+        //opportunityViewCtrl = iTeroDashboardStoryboard().instantiateViewController(withIdentifier: "ATOpportunityEMEAViewController") as! ATOpportunityEMEAViewController
+        
+        DispatchQueue.main.async {
             
-            addVC.isSurveyAddClient = true
-            addVC.view.superview?.frame = CGRect(x: 0, y: 0, width: (self.view.superview?.frame.size.width)!, height: (self.view.superview?.frame.size.height)!)
-             addVC.view.superview?.center = self.view.center;
+            var panelCtrl:UIViewController!
             
-            addVC.preferredContentSize = CGSize(width: (self.view.superview?.frame.size.width)!, height: (self.view.superview?.frame.size.height)!)
-            print(addVC.preferredContentSize)
-            print(self.view.superview?.frame)
-        }
-    }
-    
-       
-    var clientResults = [Tenant]()
-    
-    
-    func populateClientData(){
-        
-        clientDataArray = [ClientUnitDataStruct]()
-        
-        
-        clientResults = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "assignmentId == %@ AND locationId == %@ AND unitId == %@" ,predicateValue: SalesforceConnection.assignmentId,predicateValue2: SalesforceConnection.locationId,predicateValue3: SalesforceConnection.unitId,isPredicate:true) as! [Tenant]
-        
-        
-        if(clientResults.count > 0){
-            
-            for clientData in clientResults{
-                var srcList = ""
-                
-                if let tempSrcList=clientData.sourceList
-                {
-                    srcList = tempSrcList
-                    
-                }
-                let objectClientStruct:ClientUnitDataStruct = ClientUnitDataStruct(clientId: clientData.id!,name: clientData.name!, firstName: clientData.firstName!, lastName: clientData.lastName!, email: clientData.email!, phone: clientData.phone!, age: clientData.age!,dob:clientData.dob!,sourceList:srcList)
-                
-                clientDataArray.append(objectClientStruct)
+            if(viewCtrlType == "Client"){
+                panelCtrl = self.storyboard!.instantiateViewController(withIdentifier: "clientListViewControllerSID") as? ClientListingViewController
                 
             }
-        }
-        
-        
-        
-        
-       // selectedTenantId = setSelectedTenant()
-        
-        self.tblTenantView.reloadData()
-        
-      
-        
-        
-        
-    }
-
-
-   
-    
-    @IBAction func addTenant(_ sender: Any) {
-        
-        //Utilities.currentSurveyInTake = "Client"
-        
-        showAddNewClient()
-    }
-    
-    func showAddNewClient(){
-        
-        SalesforceConnection.currentTenantId =  ""
-        
-        SalesforceConnection.isNewContactWithAddress = false
-        
-        self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
-    }
-
-    @IBAction func editTenant(_ sender: Any) {
-      
-        let indexRow = (sender as AnyObject).tag
-        
-        SalesforceConnection.currentTenantId =  clientDataArray[indexRow!].clientId
-        
-        SalesforceConnection.isNewContactWithAddress = false
-        
-        self.performSegue(withIdentifier: "showSaveEditTenantIdentifier", sender: nil)
-        
-    }
-        
-    @IBAction func discloseSwitch(_ sender: Any) {
-        
-    }
-    @IBAction func cancel(_ sender: Any) {
-        
-          self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-   
-    @IBAction func btnExistingClientsViewAction(_ sender: Any)
-    {
-        self.performSegue(withIdentifier: "ExistingViewIdentifier", sender: nil)
-    }
-    
-    @IBAction func btnGotoCaseAction(_ sender: Any) {
-        
-        if(selectedClientId == ""){
-            viewTenent.shake()
-            self.view.makeToast("Please select client. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                
+            else if(viewCtrlType == "Case"){
+                panelCtrl = self.storyboard!.instantiateViewController(withIdentifier: "caseviewcontrollerSID") as? CaseViewController
             }
-            
-        }
-        else{
-            SalesforceConnection.currentTenantId = selectedClientId
-            
-            SalesforceConnection.currentTenantName =  selectedClientName
-            
-            self.performSegue(withIdentifier: "showCaseIdentifier", sender: nil)
-            
-            
-            
-        }
-    }
-    
-    func addRightBarButtonOnClient()
-    {
-        
-        self.navigationItem.rightBarButtonItem =  nil
-        
-        let rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(InTakeViewController.saveAction))
-        
-        self.navigationItem.rightBarButtonItem  = rightBarButtonItem
-    }
-    
-    
-    func showClientView(){
-
-        addRightBarButtonOnClient()
-        populateClientData()
-        
-    }
-    
-       
-    func saveAction()
-    {
-      
-        
-        if(selectedClientId == "" && clientDiscloseSwitch.isOn == false){
-            viewTenent.shake()
-            self.view.makeToast("Please select client. ", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                
-                
-            }
-            
-        }
-        else if(selectedClientId == "" && clientDiscloseSwitch.isOn == true){
-            
-            SalesforceConnection.selectedTenantForSurvey = ""
-            
-            self.dismiss(animated: true, completion: nil)
-        }
-       
-        else{
-            
-            SalesforceConnection.selectedTenantForSurvey = selectedClientId
-            
-            self.dismiss(animated: true, completion: nil)
-            
-            
-        }
-        
-
-    }
-    
-    
-  
-    
-    // MARK: UITenantTableView and UIEditTableView
-    
-    func numberOfSections(in tableView: UITableView) -> Int
-    {
-        
-        return 1
-        
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return clientDataArray.count
-    }
-    
-    // cell height
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
- 
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        
-        
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TenantViewCell
-            
-            cell.tenantView.backgroundColor = UIColor.white
-            cell.contentView.backgroundColor = UIColor.clear
-            
-
-            
-            cell.email.text = clientDataArray[indexPath.row].email
-            if(clientDataArray[indexPath.row].phone.isEmpty){
-                cell.phone.text = "             "
+            else if(viewCtrlType == "Issue"){
+                panelCtrl = self.storyboard!.instantiateViewController(withIdentifier: "issueviewcontrollerSID") as? IssueViewController
             }
             else{
-                cell.phone.text = clientDataArray[indexPath.row].phone.toPhoneNumber()
+                  panelCtrl = self.storyboard!.instantiateViewController(withIdentifier: "clientListViewControllerSID") as? ClientListingViewController
             }
-            cell.name.text = clientDataArray[indexPath.row].name
-            cell.age.text = clientDataArray[indexPath.row].age
-            cell.tenantId.text = clientDataArray[indexPath.row].clientId
-            cell.sourceList.text = clientDataArray[indexPath.row].sourceList
-            cell.editBtn.tag = indexPath.row
             
             
-            return cell
-        
+            // Utilities.switchBetweenViewControllers(senderVC: self, fromVC: childVC, toVC: panelCtrl)
             
+            
+            for childVC in self.childViewControllers{
                 
+                if childVC.isKind(of: ClientListingViewController.self){
+                    Utilities.switchBetweenViewControllers(senderVC: self, fromVC: childVC, toVC: panelCtrl)
+                }
+                else if childVC.isKind(of: CaseViewController.self){
+                    Utilities.switchBetweenViewControllers(senderVC: self, fromVC: childVC, toVC: panelCtrl)
+                }
+                else if childVC.isKind(of: IssueViewController.self){
+                    Utilities.switchBetweenViewControllers(senderVC: self, fromVC: childVC, toVC: panelCtrl)
+                }
+            }
+        }
     }
     
     
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    @IBAction func close(_ sender: Any) {
+        
+        let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to close without saving?", vc: self)
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
+            
+        }
+        alertCtrl.addAction(cancelAction)
+        
+        let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
+            
+            //delete all temp cases and issue data
+            
+            ManageCoreData.deleteRecord(salesforceEntityName: "Cases", predicateFormat: "actionStatus == %@", predicateValue: "temp", isPredicate: true)
+             ManageCoreData.deleteRecord(salesforceEntityName: "Issues", predicateFormat: "actionStatus == %@", predicateValue: "temp", isPredicate: true)
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+        alertCtrl.addAction(okAction)
         
         
-            let indexPathArray = tblTenantView.indexPathsForVisibleRows
-            
-            for indexPath in indexPathArray!
-            {
-                
-                let cell = tblTenantView.cellForRow(at: indexPath) as! TenantViewCell
-                
-                if tblTenantView.indexPathForSelectedRow != indexPath {
-                    
-                    cell.tenantView.backgroundColor = UIColor.white
-                    cell.contentView.backgroundColor = UIColor.clear
-                    
-                }
-                else{
-                    
-                    cell.tenantView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-                    
-                    cell.contentView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 206.0/255.0, blue: 35.0/255.0, alpha: 1) //green
-                    
-                    
-                }
-            }
-            
-            selectedClientId = clientDataArray[indexPath.row].clientId
-            selectedClientName = clientDataArray[indexPath.row].name
+        
+    }
 
+    @IBAction func save(_ sender: Any) {
         
-    }
-    
-  
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+       
         
-        // Dequeue with the reuse identifier
+        //if new temp case then by default bind all new temp issues
+        //if no new temp case then give warning
         
-            let identifier = "tenantHeader"
-            var cell: TenantHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
+        
+        //Temp issues:- no temp case
+        
+        var isTempCase = false
+        var isTempIssue = false
+        var tempCaseId:String = ""
+      
+        let tempCaseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "actionStatus == %@" ,predicateValue: "temp",isPredicate:true) as! [Cases]
+        
+        if(tempCaseResults.count == 1){
+            isTempCase = true
+            tempCaseId = tempCaseResults[0].caseId!
+        }
+        
+        let tempIssueResults = ManageCoreData.fetchData(salesforceEntityName: "Issues",predicateFormat: "actionStatus == %@" ,predicateValue: "temp",isPredicate:true) as! [Issues]
+
+   
+            if(tempIssueResults.count > 0){
+                isTempIssue = true
+            }
+        
+        
+        
+        var isTempRecordsExist = false
+        
+        //no tempcase and not selected any existing case to bind issues
+        if(isTempCase == false && GlobalCase.caseId.isEmpty){
+            if(isTempIssue == true){
+                isTempRecordsExist = true
+            }
+        }
+        
+        if(Utilities.isClientDoesNotReveal){
             
-            if cell == nil {
-                tableView.register(UINib(nibName: "TenantHeaderTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-                cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? TenantHeaderTableViewCell
+            SalesforceConnection.selectedTenantForSurvey = "empty"
+            SalesforceConnection.selectedTenantNameForSurvey = ""
+            
+            self.view.makeToast("Saved successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.dismiss(animated: true, completion: nil)
+                
             }
             
-            return cell
+            return
+        }
+       
+        
+let isSave = GlobalClient.currentTenantId.isEmpty == true ? false : isTempRecordsExist == true ? false : true
+        
+        if(isSave){
+            
+            //mapping here
+            
+            if(isTempCase == true){
+                
+                for tempCaseData in tempCaseResults{
+                    
+                    var updateObjectDic:[String:String] = [:]
+                    
+                    updateObjectDic["contactId"] = GlobalClient.currentTenantId
+                    updateObjectDic["actionStatus"] = ""
+                    
+                    
+                    ManageCoreData.updateRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && actionStatus == %@", predicateValue: tempCaseData.caseId!,predicateValue2: "temp", isPredicate: true)
+                    
+                }
+            }
+            if(isTempIssue == true){
+                
+                for tempIssueData in tempIssueResults{
+                    
+                    var updateObjectDic:[String:String] = [:]
+                    
+                    if(!GlobalCase.caseId.isEmpty){
+                        updateObjectDic["caseId"] = GlobalCase.caseId
+                    }
+                    else{
+                         updateObjectDic["caseId"] = tempCaseId
+                    }
+                    updateObjectDic["actionStatus"] = "create"
+                    updateObjectDic["contactName"] =  GlobalClient.currentTenantName
+                    
+                    
+                    ManageCoreData.updateRecord(salesforceEntityName: "Issues", updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && actionStatus == %@", predicateValue: tempIssueData.issueId!,predicateValue2: "temp", isPredicate: true)
+                    
+                
+                }
+            }
+            
+            SalesforceConnection.selectedTenantForSurvey = GlobalClient.currentTenantId
+            SalesforceConnection.selectedTenantNameForSurvey = GlobalClient.currentTenantName
+            
+            self.view.makeToast("Saved successfully", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }
+            
+            
+            
+        }
+        else{
+            
+            var msg = ""
+            if(GlobalClient.currentTenantId.isEmpty){
+                msg = "Please select client."
+            }
+            else if(isTempCase == false){
+                msg = "Please select case."
+            }
+            
+            superView.shake()
+            self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
+            
+            
+        }
         
         
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-       
-            return 44.0
+    //click to tab means toVC controller
+    //Now from which tab
+    
+    @IBAction func segmentChanged(_ sender: Any) {
+
+        switch segmentControl.selectedSegmentIndex
+        {
+        case 0:
+            GlobalClient.reset()
+            GlobalCase.reset()
+            prepareIntakePanelsInfo(viewCtrlType: "Client")
+            
+        case 1:
+            if(GlobalClient.currentTenantId.isEmpty){
+                GlobalClient.reset()
+            }
+            GlobalCase.reset()
+            prepareIntakePanelsInfo(viewCtrlType: "Case")
+        
+        case 2:
+            if(GlobalCase.caseId.isEmpty){
+                GlobalCase.reset()
+            }
+            prepareIntakePanelsInfo(viewCtrlType: "Issue")
+        
+        default:
+            break;
+        }
     }
+    
+
 
 }
-    
-    
-
-

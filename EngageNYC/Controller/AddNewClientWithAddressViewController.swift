@@ -190,10 +190,10 @@ class AddNewClientWithAddressViewController: UIViewController,UITableViewDataSou
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if segue.identifier == "showAddClientIdentifier" {
-            let vc = segue.destination as! UINavigationController
-            let addVC = vc.viewControllers[0]  as! SaveEditTenantViewController
-            print(addVC.preferredContentSize)
-            addVC.isSurveyAddClient = false
+            let vc = segue.destination as! SaveEditTenantViewController
+            //let addVC = vc.viewControllers[0]  as! SaveEditTenantViewController
+            print(vc.preferredContentSize)
+            vc.isSurveyAddClient = false
         }
     }
 

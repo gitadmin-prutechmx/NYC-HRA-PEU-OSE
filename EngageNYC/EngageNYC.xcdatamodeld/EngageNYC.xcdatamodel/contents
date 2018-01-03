@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AddCase" representedClassName="AddCase" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
@@ -24,15 +24,11 @@
         <relationship name="assignmentEventR" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="eventAssignementR" inverseEntity="Event" syncable="YES"/>
         <relationship name="assignmentLocR" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="locAssignmentR" inverseEntity="Location" syncable="YES"/>
     </entity>
-    <entity name="Canvasser" representedClassName="Canvasser" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="CaseConfig" representedClassName="CaseConfig" syncable="YES" codeGenerationType="class">
         <attribute name="caseConfigData" optional="YES" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="Cases" representedClassName="Cases" syncable="YES" codeGenerationType="class">
+        <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseDynamic" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
@@ -45,7 +41,7 @@
         <attribute name="createdDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Chart" representedClassName="Chart" syncable="YES">
+    <entity name="Chart" representedClassName="Chart" syncable="YES" codeGenerationType="class">
         <attribute name="chartField" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chartLabel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chartType" optional="YES" attributeType="String" syncable="YES"/>
@@ -56,7 +52,7 @@
         <attribute name="object" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="EditLocation" representedClassName="EditLocation" syncable="YES">
+    <entity name="EditLocation" representedClassName="EditLocation" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
@@ -67,13 +63,15 @@
         <attribute name="noOfUnits" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="EditUnit" representedClassName="EditUnit" syncable="YES">
+    <entity name="EditUnit" representedClassName="EditUnit" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attempt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactOutcome" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="followUpDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="followUpType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="inTake" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isContact" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastCanvassedBy" optional="YES" attributeType="String" syncable="YES"/>
@@ -86,7 +84,7 @@
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitNotes" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Event" representedClassName="Event" syncable="YES">
+    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -163,7 +161,7 @@
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="SurveyUnit" representedClassName="SurveyUnit" syncable="YES">
+    <entity name="SurveyUnit" representedClassName="SurveyUnit" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
@@ -172,7 +170,7 @@
         <attribute name="surveyId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Tenant" representedClassName="Tenant" syncable="YES">
+    <entity name="Tenant" representedClassName="Tenant" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="age" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="aptFloor" optional="YES" attributeType="String" syncable="YES"/>
@@ -184,6 +182,7 @@
         <attribute name="borough" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contact" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactOutcome" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createById" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dob" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
@@ -202,15 +201,6 @@
         <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="virtualUnit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="TenantAssign" representedClassName="TenantAssign" syncable="YES">
-        <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tenantId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="unitId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Unit" representedClassName="Unit" syncable="YES" codeGenerationType="class">
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
@@ -239,6 +229,7 @@
         <attribute name="isSaveUserName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="passwordExpDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="profileName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -252,13 +243,12 @@
     <elements>
         <element name="AddCase" positionX="-126" positionY="45" width="128" height="135"/>
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="255"/>
-        <element name="Canvasser" positionX="-20" positionY="342" width="128" height="90"/>
         <element name="CaseConfig" positionX="-117" positionY="54" width="128" height="60"/>
-        <element name="Cases" positionX="-126" positionY="45" width="128" height="210"/>
+        <element name="Cases" positionX="-126" positionY="45" width="128" height="225"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="EditLocation" positionX="-117" positionY="54" width="128" height="180"/>
-        <element name="EditUnit" positionX="-108" positionY="63" width="128" height="300"/>
+        <element name="EditUnit" positionX="-108" positionY="63" width="128" height="330"/>
         <element name="Event" positionX="-162" positionY="153" width="128" height="120"/>
         <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="Issues" positionX="-126" positionY="45" width="128" height="150"/>
@@ -268,10 +258,9 @@
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="210"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>
-        <element name="Tenant" positionX="-126" positionY="45" width="128" height="480"/>
-        <element name="TenantAssign" positionX="-99" positionY="72" width="128" height="150"/>
+        <element name="Tenant" positionX="-126" positionY="45" width="128" height="495"/>
         <element name="Unit" positionX="-162" positionY="-108" width="128" height="300"/>
-        <element name="UserInfo" positionX="-126" positionY="45" width="128" height="180"/>
+        <element name="UserInfo" positionX="-126" positionY="45" width="128" height="195"/>
         <element name="VirtualUnitClient" positionX="-117" positionY="54" width="128" height="120"/>
     </elements>
 </model>

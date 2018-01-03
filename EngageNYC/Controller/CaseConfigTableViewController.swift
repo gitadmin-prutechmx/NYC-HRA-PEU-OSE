@@ -33,9 +33,6 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     var selectedIndexPath:IndexPath?
     private var dateTimePickerCellExpanded: Bool = false
     
-    @IBOutlet weak var btnGotoissue: UIButton!
-    
-    
     @IBOutlet weak var lblDescrption: UILabel!
     @IBOutlet var caseTblView: UITableView!
     var caseConfigArray = [caseConfigObjects]()
@@ -62,6 +59,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
+    
+    var isGoToIssueBtnTap:Bool = false
     
     func getPickListValue(pickListValue:String){
         
@@ -96,46 +95,46 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        lblDescrption.text = SalesforceConnection.dateOfIntake
+        lblDescrption.text = GlobalCase.dateOfIntake
         
-        btnGotoissue.layer.cornerRadius = 5
-        btnGotoissue.layer.borderColor = UIColor.black.cgColor
-        btnGotoissue.layer.borderWidth = 1
-        btnGotoissue.clipsToBounds = true
+        lblDescrption.layer.cornerRadius = 5
+        lblDescrption.layer.borderColor = UIColor.gray.cgColor
+        lblDescrption.layer.borderWidth = 2
+        lblDescrption.clipsToBounds = true
         
         
-        if(Utilities.caseActionStatus == "New"){
+        if(GlobalCase.caseActionStatus == "New"){
             self.navigationItem.title = "Case Info"
             issueView.isHidden = true
             issueView.frame.size.height = 0.0
             
         }
         else{
-            self.navigationItem.title = SalesforceConnection.caseNumber
+            self.navigationItem.title = GlobalCase.caseNumber
             issueView.isHidden = false
-            issueView.frame.size.height = 78.0
+            issueView.frame.size.height = 56.0
         }
         
         Utilities.caseConfigDict = [:]
         caseDynamicDict = [:]
         
-        if(Utilities.caseActionStatus == "View"){
+        if(GlobalCase.caseActionStatus == "View"){
             self.navigationItem.rightBarButtonItem = nil
         }
         
         
-        if(SalesforceConnection.caseId != ""){
+        if(GlobalCase.caseId != ""){
             readCaseData()
         }
         
         
         readJson()
         
-        
+        isGoToIssueBtnTap = false
     }
     
     private func readCaseData(){
-        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "caseId == %@" ,predicateValue: SalesforceConnection.caseId,isPredicate:true) as! [Cases]
+        let caseResults = ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "caseId == %@" ,predicateValue: GlobalCase.caseId,isPredicate:true) as! [Cases]
         
         if(caseResults.count > 0){
             caseDynamicDict = caseResults[0].caseDynamic as! [String : AnyObject]
@@ -204,7 +203,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                         
                     else{
                         
-                        if(apiName == "Origin" && Utilities.caseActionStatus == "New"){
+                        if(apiName == "Origin" && GlobalCase.caseActionStatus == "New"){
                             
                            Utilities.caseConfigDict[apiName] = "Door Knock" as AnyObject
                         }
@@ -244,7 +243,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
                     }
                         
                     else{
-                        if(apiName == "Origin" && Utilities.caseActionStatus == "New"){
+                        if(apiName == "Origin" && GlobalCase.caseActionStatus == "New"){
                             
                             Utilities.caseConfigDict[apiName] = "Door Knock" as AnyObject
                         }
@@ -334,9 +333,31 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         //        }
     }
     
-    @IBAction func btnGotoIssueAction(_ sender: Any) {
-        //self.performSegue(withIdentifier: "showIssueIdentifier", sender: nil)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if(isGoToIssueBtnTap){
+            
+            let panelCtrl = self.storyboard!.instantiateViewController(withIdentifier: "issueviewcontrollerSID") as? IssueViewController
+            
+            Utilities.inTakeVC.segmentControl.selectedSegmentIndex = inTakeSegment.issues.rawValue
+            
+            for childVC in  Utilities.inTakeVC.childViewControllers{
+                
+                if childVC.isKind(of: CaseViewController.self){
+                    Utilities.switchBetweenViewControllers(senderVC: Utilities.inTakeVC, fromVC: childVC, toVC: panelCtrl!)
+                    
+                    
+                }
+                
+            }
+        }
     }
+    
+  //  @IBAction func btnGotoIssueAction(_ sender: Any) {
+      //  isGoToIssueBtnTap = true
+       // self.navigationController?.popViewController(animated: true);
+   // }
     
     
     override func didReceiveMemoryWarning() {
@@ -414,7 +435,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             }
             
             
-            if(Utilities.caseActionStatus != "View"){
+            if(GlobalCase.caseActionStatus != "View"){
                 
                 uiSwitch.addTarget(self, action: #selector(CaseConfigTableViewController.switchChanged(_:)), for: UIControlEvents.valueChanged)
                 
@@ -474,7 +495,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             //
             textArea.layer.backgroundColor = grayColor.cgColor
             
-            if(Utilities.caseActionStatus == "View"){
+            if(GlobalCase.caseActionStatus == "View"){
                 textArea.isEditable = false
             }
             
@@ -497,7 +518,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             // pickListCell.backgroundColor = UIColor.clear
             
-            if(Utilities.caseActionStatus == "View"){
+            if(GlobalCase.caseActionStatus == "View"){
                 pickListCell.accessoryType = .none
                 pickListCell.selectionStyle = .none
                 
@@ -531,7 +552,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             multiPickListCell.textLabel?.text = caseObject.fieldName
             multiPickListCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
-            if(Utilities.caseActionStatus == "View"){
+            if(GlobalCase.caseActionStatus == "View"){
                 multiPickListCell.accessoryType = .none
                 
             }
@@ -601,7 +622,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             }
             
             
-            if(Utilities.caseActionStatus == "View"){
+            if(GlobalCase.caseActionStatus == "View"){
                dateTimeCell.accessoryType = .none
             }
             else{
@@ -651,7 +672,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             phoneTextfield.layer.backgroundColor = whiteColor.cgColor
             
-            if(Utilities.caseActionStatus == "View"){
+            if(GlobalCase.caseActionStatus == "View"){
                 phoneTextfield.isEnabled = false
             }
             
@@ -666,7 +687,8 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             return phoneCell
         }
-        else{
+        else
+        {
             
             let textCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
             
@@ -674,7 +696,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             textCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
             
             //textCell.backgroundColor = UIColor.clear
-            //            textCell.layer.borderWidth = 1
+            //     textCell.layer.borderWidth = 1
             //            textCell.layer.cornerRadius = 8
             //            textCell.clipsToBounds = true
             
@@ -693,6 +715,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             if let textFieldValue = Utilities.caseConfigDict[caseObject.apiName] as! String! {
                 textfield.text  = textFieldValue
+                
             }
             else{
                 textfield.text  = ""
@@ -708,7 +731,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             //
             textfield.layer.backgroundColor = grayColor.cgColor
             
-            if(Utilities.caseActionStatus == "View"){
+            if(GlobalCase.caseActionStatus == "View"){
                 textfield.isEnabled = false
             }
             
@@ -720,7 +743,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             textCell.accessoryView = textfield
             
-            
+           // textfield.delegate = self
             
             return textCell
         }
@@ -733,7 +756,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         let caseObject:CaseDO = caseConfigArray[indexPath.section].sectionObjects[indexPath.row]
         
-        if(caseObject.dataType == "PICKLIST" && Utilities.caseActionStatus != "View"){
+        if(caseObject.dataType == "PICKLIST" && GlobalCase.caseActionStatus != "View"){
             
             currentPickListApiName = caseObject.apiName
             
@@ -755,7 +778,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             self.navigationController?.pushViewController(pickListVC!, animated: true)
         }
             
-        else if(caseObject.dataType == "MULTIPICKLIST" && Utilities.caseActionStatus != "View"){
+        else if(caseObject.dataType == "MULTIPICKLIST" && GlobalCase.caseActionStatus != "View"){
             
             currentMultiPickListApiName = caseObject.apiName
             
@@ -776,7 +799,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
             
             self.navigationController?.pushViewController(multiPickListVC!, animated: true)
         }
-        else if(caseObject.dataType == "DATE" && Utilities.caseActionStatus != "View"){
+        else if(caseObject.dataType == "DATE" && GlobalCase.caseActionStatus != "View"){
             
             Utilities.currentApiName = caseObject.apiName
             
@@ -811,7 +834,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         }
         
         
-        else if(caseObject.dataType == "TEXTAREA" && Utilities.caseActionStatus != "View")
+        else if(caseObject.dataType == "TEXTAREA" && GlobalCase.caseActionStatus != "View")
         {
             currentRow = indexPath.row
             let currentCell: UITableViewCell? = caseTblView.cellForRow(at: indexPath)
@@ -975,6 +998,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     }
     
     var iosCaseId:String = ""
+  
     
     @IBAction func save(_ sender: Any) {
         
@@ -987,15 +1011,15 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         //New Case --> Edit Case (Not handled)
         //Edit Case
         
-        if(SalesforceConnection.caseId != ""){
+        if(GlobalCase.caseId != ""){
             
-            iosCaseId = SalesforceConnection.caseId
+            iosCaseId = GlobalCase.caseId
             
-            if(SalesforceConnection.caseNumber != ""){
-                caseResponseDict["Id"] = SalesforceConnection.caseId as AnyObject?
+            if(GlobalCase.caseNumber != ""){
+                caseResponseDict["Id"] = GlobalCase.caseId as AnyObject?
             }
             
-            let caseResults = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "caseId == %@" ,predicateValue: SalesforceConnection.caseId,isPredicate:true) as! [AddCase]
+            let caseResults = ManageCoreData.fetchData(salesforceEntityName: "AddCase",predicateFormat: "caseId == %@" ,predicateValue: GlobalCase.caseId,isPredicate:true) as! [AddCase]
 
             if(caseResults.count > 0){
                 updateCaseResponseInCoreData()
@@ -1076,7 +1100,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         let addCaseObject = AddCase(context: context)
         
         
-        addCaseObject.clientId = SalesforceConnection.currentTenantId
+      
         
         addCaseObject.ownerId = SalesforceConnection.salesforceUserId
         
@@ -1084,7 +1108,18 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         
         addCaseObject.caseId = iosCaseId
         
-        addCaseObject.actionStatus = "create"
+        if(GlobalClient.currentTenantId.isEmpty){
+            
+            addCaseObject.clientId = UUID().uuidString
+            addCaseObject.actionStatus = "temp"
+            
+        }
+        else{
+            addCaseObject.clientId = GlobalClient.currentTenantId
+            addCaseObject.actionStatus = "create"
+
+        }
+        
         
         addCaseObject.iOSCaseId = iosCaseId
        
@@ -1102,7 +1137,7 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         updateObjectDic["caseResponse"] = caseResponseDict as NSObject?
      
        
-        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "AddCase", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: SalesforceConnection.caseId,isPredicate: true)
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "AddCase", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: GlobalCase.caseId,isPredicate: true)
         
         
     }
@@ -1117,12 +1152,26 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         caseObject.unitId = SalesforceConnection.unitId
         caseObject.caseId =  iosCaseId
         caseObject.caseNo =  ""
-        caseObject.contactId = SalesforceConnection.currentTenantId
-        caseObject.contactName = SalesforceConnection.currentTenantName
+       
+        caseObject.contactName = GlobalClient.currentTenantName
         caseObject.caseStatus = "Open"
         
         caseObject.caseOwnerId = SalesforceConnection.salesforceUserId
         caseObject.caseOwner = SalesforceConfig.currentContactName
+        
+        if(GlobalClient.currentTenantId.isEmpty){
+            
+            caseObject.contactId =   UUID().uuidString
+            caseObject.actionStatus = "temp"
+            
+        }
+        else{
+            
+            caseObject.contactId = GlobalClient.currentTenantId
+            caseObject.actionStatus = ""
+            
+        }
+        
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
@@ -1150,14 +1199,14 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
         updateObjectDic["createdDate"] = dateString as AnyObject
 
         
-        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: SalesforceConnection.caseId,isPredicate: true)
+        ManageCoreData.updateAnyObjectRecord(salesforceEntityName: "Cases", updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: GlobalCase.caseId,isPredicate: true)
     }
     
     
     
     @IBAction func cancel(_ sender: Any) {
         
-        if(Utilities.caseActionStatus == "View"){
+        if(GlobalCase.caseActionStatus == "View"){
             self.navigationController?.popViewController(animated: true);
             
         }

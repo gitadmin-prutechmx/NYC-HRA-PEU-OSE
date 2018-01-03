@@ -14,7 +14,9 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
     @IBOutlet weak var toolBarView: UIView!
     
     
+    @IBOutlet weak var lblClientName: UILabel!
     
+    @IBOutlet weak var clientView: UIView!
     @IBOutlet weak var getDescriptionTextField: UITextField!
     
     //@IBOutlet weak var showTextLbl: UILabel!
@@ -53,6 +55,14 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         super.viewDidLoad()
        // optionsCollectionView.flashScrollIndicators()
 
+        if(!SalesforceConnection.selectedTenantForSurvey.isEmpty && !SalesforceConnection.selectedTenantNameForSurvey.isEmpty){
+            
+             lblClientName.text = SalesforceConnection.selectedTenantNameForSurvey
+        }
+        else{
+            
+            clientView.isHidden = true
+        }
 
         self.toolBarView.layer.borderWidth = 2
         self.toolBarView.layer.borderColor =  UIColor(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
@@ -303,7 +313,37 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
         
     }
     
-    
+    func showIntake()
+    {
+        
+        self.toolBarView.shake()
+        
+        self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if didTap
+            {
+                print("completion from tap")
+                
+            } else {
+                print("completion without tap")
+            }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let inTakeVC = storyboard.instantiateViewController(withIdentifier: "InTakeViewControllerSID") as! InTakeViewController
+            
+            
+            let navigationController = UINavigationController(rootViewController: inTakeVC)
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            
+            //self.present(navigationController, animated: true, completion: nil)
+            self.present(navigationController, animated: true)
+            {
+        
+            }
+        }
+        
+        
+    }
     var isSkipLogic:Bool = false
     
     @IBAction func nextQuestion(_ sender: UIButton) {
@@ -348,17 +388,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                         
                         if(SalesforceConnection.selectedTenantForSurvey == ""){
                           
-                            
-                            toolBarView.shake()
-                            
-                            self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                                if didTap {
-                                    print("completion from tap")
-                                } else {
-                                    print("completion without tap")
-                                }
-                            }
-                            
+                            showIntake()
+
                             return
                             
                         }
@@ -393,16 +424,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
             
             if(SalesforceConnection.selectedTenantForSurvey == ""){
                 
-                
-                toolBarView.shake()
-                
-                self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    if didTap {
-                        print("completion from tap")
-                    } else {
-                        print("completion without tap")
-                    }
-                }
+                showIntake()
                 
                 return
                 
@@ -442,7 +464,8 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                                 
                                 if(SalesforceConnection.selectedTenantForSurvey == ""){
                                     
-                                    
+                                    showIntake()
+                                    /*
                                     toolBarView.shake()
                                     
                                     self.view.makeToast("Please select client first.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
@@ -452,7 +475,7 @@ class SurveyRadioOptionViewController: UIViewController , UICollectionViewDelega
                                             print("completion without tap")
                                         }
                                     }
-                                    
+                                    */
                                     return
                                     
                                 }

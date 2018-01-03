@@ -17,19 +17,34 @@ import Toast_Swift
 import Zip
 
 
+enum inTakeSegment: Int{
+    case clients = 0
+    case cases
+    case issues
+    
+}
+
 class Utilities {
+    
+    static var isClientDoesNotReveal:Bool = false
+    
+    static var isSelectContactSelect:Bool = false
+    
+    static var inTakeVC:InTakeViewController!
     
     
     static var clientAddressDict: [String:String] = [:]
     
     
     static var unitClientDict: [String:UnitDO] = [:]
+    
     static var caseDict: [String:String] = [:]
+    static var caseOpenDict: [String:Int] = [:]
+    static var caseConfigDict:[String:AnyObject] = [:]
+
+    
     static var countCases:Int  = 1
-    
-    
-    
-    
+    static var openCountCases:Int  = 1
     
     static var timer:Timer?
     
@@ -39,11 +54,7 @@ class Utilities {
     static var inProgressSurveyIds = [String]()
     static var completeSurveyIds = [String]()
     
-    static var caseActionStatus:String = ""
-    static var issueActionStatus:String = ""
-    
-    
-    static var caseConfigDict:[String:AnyObject] = [:]
+   
     
     // static var selectedDateTimeDictYYYYMMDD:[String:String?] = [:]
     // static var selectedDateTimeDictInMMDDYYYY:[String:String?] = [:]
@@ -119,6 +130,39 @@ class Utilities {
     
     //    static var isMapFileCorrupted:Bool = false
     //    static var isGeodatabaseFileCorrupted:Bool = false
+    
+    
+    
+    class func getClientName(tenantId:String)-> String{
+        
+        let clientName = ManageCoreData.fetchData(salesforceEntityName: "Tenant",predicateFormat: "id == %@" ,predicateValue: tenantId,isPredicate:true) as! [Tenant]
+        
+        if(clientName.count > 0){
+            return clientName[0].name!
+        }
+        else{
+            return ""
+            
+        }
+        
+    }
+    
+    
+    class func switchBetweenViewControllers(senderVC: UIViewController, fromVC : UIViewController, toVC: UIViewController){
+        let newVC = toVC
+        let oldVC = fromVC
+        
+        oldVC.willMove(toParentViewController: nil)
+        senderVC.addChildViewController(newVC)
+        newVC.view.frame = oldVC.view.frame
+        senderVC.transition(from: oldVC, to: newVC, duration: 0.25, options: .transitionCrossDissolve, animations: {
+            //nothing
+        }) { (finished) in
+            oldVC.removeFromParentViewController()
+            newVC.didMove(toParentViewController: senderVC)
+        }
+    }
+    
     
     class func startBackgroundSyncing(){
         // Scheduling timer to Call the function **Countdown** with the interval of 1 seconds
@@ -299,7 +343,7 @@ class Utilities {
         return newUnitDic
     }
     
-    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,contactOutcome:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
+    class func editUnitTenantAndSurveyDicData(intake:String?=nil,notes:String?=nil,attempt:String?=nil,contact:String?=nil,reKnockNeeded:String?=nil,reason:String?=nil,contactOutcome:String?=nil,assignmentLocationUnitId:String?=nil,selectedSurveyId:String?=nil,selectedTenantId:String?=nil,followUpType:String?=nil,followUpDate:String?=nil,lastCanvassedBy:String?=nil)->[String:String]{
         
         var editUnitDict:[String:String] = [:]
         
@@ -322,9 +366,19 @@ class Utilities {
         
         editUnitDict["lastCanvassedBy"] = lastCanvassedBy
         
-        
-        
-        
+        if(followUpDate != ""){
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            let date = dateFormatter.date(from: followUpDate!)!
+            
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            editUnitDict["followUpDate"] = dateFormatter.string(from: date)
+        }
+      
+        editUnitDict["followUpType"] = followUpType
+       
         return editUnitDict
     }
     
@@ -487,6 +541,8 @@ class Utilities {
     class func displayErrorMessage(errorMsg:String){
         Utilities.isBackgroundSync = false
         Utilities.isRefreshBtnClick = false
+        
+        SVProgressHUD.dismiss()
         Utilities.showSwiftErrorMessage(error: errorMsg)
     }
     
@@ -701,8 +757,8 @@ class Utilities {
         let issueId = issueDataDict["issueId"] as! String?
         let issueNo = issueDataDict["issueNumber"] as! String?
         
-        if(SalesforceConnection.currentIssueId == iOSIssueId){
-            SalesforceConnection.currentIssueId =  issueId!
+        if(GlobalIssue.currentIssueId == iOSIssueId){
+            GlobalIssue.currentIssueId =  issueId!
             print("issueId updated")
         }
         
@@ -733,8 +789,8 @@ class Utilities {
         let iOSCaseId = caseDataDict["iOSCaseId"] as! String?
         let caseId = caseDataDict["caseId"] as! String?
         
-        if(SalesforceConnection.caseId == iOSCaseId){
-            SalesforceConnection.caseId =  caseId!
+        if(GlobalCase.caseId == iOSCaseId){
+            GlobalCase.caseId =  caseId!
             print("caseId updated")
         }
         
@@ -814,8 +870,8 @@ class Utilities {
         let iosTenantId = tenantDataDict["iOSTenantId"] as! String?
         let tenantId = tenantDataDict["tenantId"] as! String?
         
-        if(SalesforceConnection.currentTenantId == iosTenantId){
-            SalesforceConnection.currentTenantId =  tenantId!
+        if(GlobalClient.currentTenantId == iosTenantId){
+            GlobalClient.currentTenantId =  tenantId!
             print("tenantId updated")
         }
         
@@ -1629,6 +1685,7 @@ class Utilities {
         
         SalesforceConfig.currentGeodatabaseUrl = jsonObject["esriGeodatabase"] as? String  ?? ""
         
+        SalesforceConfig.currentProfileName = jsonObject["profileName"] as? String  ?? ""
         
         let basemapDate = jsonObject["esriBaseMapModifiedDate"] as? String  ?? ""
         
@@ -1661,6 +1718,7 @@ class Utilities {
             objUserInfo.passwordExpDate = today
             objUserInfo.password = ""
             objUserInfo.isSaveUserName = SalesforceConfig.isSavedUserName
+            objUserInfo.profileName =  SalesforceConfig.currentProfileName
             
             appDelegate.saveContext()
             
@@ -1983,6 +2041,8 @@ class Utilities {
                     
                     tenantObject.sourceList = newClientInfoData["sourceList"] as? String  ?? ""
                     
+                    tenantObject.createById = newClientInfoData["CreatedById"] as? String ?? ""
+                    
                     appDelegate.saveContext()
                 }
                 
@@ -2051,6 +2111,9 @@ class Utilities {
                     editUnitObject.tenantId = unitData["tenant"] as? String  ?? ""
                     editUnitObject.surveyId = unitData["survey"] as? String  ?? ""
                     
+                    editUnitObject.followUpType = unitData["followUpType"] as? String  ?? ""
+                    editUnitObject.followUpDate = unitData["followUpDate"] as? String  ?? ""
+                    
                     appDelegate.saveContext()
                     
                     
@@ -2105,6 +2168,8 @@ class Utilities {
                         
                         tenantObject.sourceList = tenantData["sourceList"] as? String  ?? ""
                         
+                        tenantObject.createById = tenantData["CreatedById"] as? String ?? ""
+                        
                         appDelegate.saveContext()
                         
                     }
@@ -2126,7 +2191,7 @@ class Utilities {
                             
                             caseObject.unitId = unitObject.id
                             caseObject.assignmentLocUnitId = unitObject.assignmentLocUnitId
-                            
+                            caseObject.actionStatus = ""
                             
                             
                             let contactResult = caseData["Contact"] as? [String: AnyObject]
@@ -2265,6 +2330,34 @@ class Utilities {
         //        }
     }
     
+    
+    class func createOpenCaseDictionary(){
+        
+        openCountCases = 1
+        
+        let openCaseResults =  ManageCoreData.fetchData(salesforceEntityName: "Cases",predicateFormat: "caseStatus==%@",predicateValue: "Open", isPredicate:true) as! [Cases]
+        
+        if(openCaseResults.count > 0){
+            
+            for openCaseData in openCaseResults{
+                
+                if caseOpenDict[openCaseData.contactId!] == nil{
+                    
+                    openCountCases = 1
+                    caseOpenDict[openCaseData.contactId!] = countCases
+                }
+                else{
+                    
+                    let count = caseOpenDict[openCaseData.contactId!]
+                    openCountCases = count! + 1
+                    caseOpenDict[openCaseData.contactId!] = countCases
+                }
+                
+                
+            }
+        }
+        
+    }
     
     
     class func createCaseDictionary(){
