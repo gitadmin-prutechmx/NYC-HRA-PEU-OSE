@@ -28,16 +28,6 @@
 		5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */; };
 		5D4C4E661F3C454500284725 /* CaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C4E651F3C454500284725 /* CaseViewController.swift */; };
 		5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */; };
-		5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */; };
-		5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A11F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift */; };
-		5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */; };
-		5D5291C11F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */; };
-		5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */; };
-		5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */; };
-		5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */; };
-		5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */; };
-		5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */; };
-		5D5291D51F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */; };
 		5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9471F11EB4000623005 /* DateExtension.swift */; };
 		5D52F94A1F149DC300623005 /* EditUnitDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F9491F149DC300623005 /* EditUnitDO.swift */; };
 		5D52F94C1F14A3FB00623005 /* TenantDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52F94B1F14A3FB00623005 /* TenantDO.swift */; };
@@ -82,8 +72,6 @@
 		5DA15B4C1F2B59BD00EB90DC /* UnitDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA15B4A1F2B59BD00EB90DC /* UnitDataTableViewCell.xib */; };
 		5DA15B4D1F2B59BD00EB90DC /* UnitDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA15B4B1F2B59BD00EB90DC /* UnitDataTableViewCell.swift */; };
 		5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */; };
-		5DBF2EE51F75044000B1A0D9 /* EditUnit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF2EE31F75044000B1A0D9 /* EditUnit+CoreDataClass.swift */; };
-		5DBF2EE61F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF2EE41F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift */; };
 		5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */; };
 		5DC8C72B1F25D2F900B57044 /* ClientsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */; };
 		5DC8C72C1F25D2F900B57044 /* ClientsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DC8C72A1F25D2F900B57044 /* ClientsTableViewCell.xib */; };
@@ -133,11 +121,9 @@
 		62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62AC824C1F0A127B00F968FA /* ForgetPasswordViewController.swift */; };
 		70E7465A1EFBD5C400060D79 /* TenantHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E746581EFBD5C400060D79 /* TenantHeaderTableViewCell.swift */; };
 		8A11806C1FA9B8E300120B86 /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A11806B1FA9B8E300120B86 /* InitialViewController.xib */; };
-		8A56FBF01FB5A53D00B384DD /* EditLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */; };
-		8A56FBF11FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */; };
 		8A6FD2231FC6E55D00A8A5BF /* MapData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A6FD2221FC6E55D00A8A5BF /* MapData.zip */; };
-		8AF2999D1FA72F25004F6AFC /* Tenant+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */; };
-		8AF2999E1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */; };
+		8ACDB5A21FFD040200FF360E /* FollowUpDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACDB5A11FFD040200FF360E /* FollowUpDateTableViewCell.swift */; };
+		8ACDB5A41FFD041000FF360E /* ClientListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACDB5A31FFD041000FF360E /* ClientListingViewController.swift */; };
 		8AF299A21FA83D8F004F6AFC /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */; };
 		CCA1086177556BD0A4C375E0 /* Pods_EngageNYCDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DDC459DE57CF007385D800 /* Pods_EngageNYCDev.framework */; };
 /* End PBXBuildFile section */
@@ -187,16 +173,6 @@
 		5D4C4E631F3087A900284725 /* AddNewIssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewIssueViewController.swift; sourceTree = "<group>"; };
 		5D4C4E651F3C454500284725 /* CaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseViewController.swift; sourceTree = "<group>"; };
 		5D5291261F0C8A5200D5645F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
-		5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291A11F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SurveyUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TenantAssign+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Chart+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Canvasser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5D52F9471F11EB4000623005 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		5D52F9491F149DC300623005 /* EditUnitDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUnitDO.swift; sourceTree = "<group>"; };
 		5D52F94B1F14A3FB00623005 /* TenantDO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenantDO.swift; sourceTree = "<group>"; };
@@ -247,8 +223,6 @@
 		5DA15B4A1F2B59BD00EB90DC /* UnitDataTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnitDataTableViewCell.xib; sourceTree = "<group>"; };
 		5DA15B4B1F2B59BD00EB90DC /* UnitDataTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitDataTableViewCell.swift; sourceTree = "<group>"; };
 		5DADD8FC1F0B7D0E009CD89E /* SurveyUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyUtility.swift; sourceTree = "<group>"; };
-		5DBF2EE31F75044000B1A0D9 /* EditUnit+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5DBF2EE41F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditUnit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5DC8C7271F25D2E800B57044 /* ClientCustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientCustomTableViewCell.swift; sourceTree = "<group>"; };
 		5DC8C7291F25D2F900B57044 /* ClientsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientsTableViewCell.swift; sourceTree = "<group>"; };
 		5DC8C72A1F25D2F900B57044 /* ClientsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientsTableViewCell.xib; sourceTree = "<group>"; };
@@ -306,11 +280,9 @@
 		8361D8AB9EC26ADC2A936556 /* Pods-EngageNYCDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYCDev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYCDev/Pods-EngageNYCDev.debug.xcconfig"; sourceTree = "<group>"; };
 		8A0462931FACD9550070D173 /* EngageNYCDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngageNYCDev.entitlements; sourceTree = "<group>"; };
 		8A11806B1FA9B8E300120B86 /* InitialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialViewController.xib; sourceTree = "<group>"; };
-		8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
-		8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8A6FD2221FC6E55D00A8A5BF /* MapData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapData.zip; sourceTree = "<group>"; };
-		8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataClass.swift"; sourceTree = "<group>"; };
-		8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tenant+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8ACDB5A11FFD040200FF360E /* FollowUpDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpDateTableViewCell.swift; sourceTree = "<group>"; };
+		8ACDB5A31FFD041000FF360E /* ClientListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListingViewController.swift; sourceTree = "<group>"; };
 		8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		A9DDC459DE57CF007385D800 /* Pods_EngageNYCDev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EngageNYCDev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -391,7 +363,6 @@
 		5D56CF071EE007060019882F /* EngageNYC */ = {
 			isa = PBXGroup;
 			children = (
-				5DADD8791F074F72009CD89E /* GeneratedEntityClass */,
 				5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */,
 				5DE3C9651EEFE71700012C47 /* CustomUI */,
 				5DC9E99B1EEA60FE009A6396 /* Controller */,
@@ -431,32 +402,10 @@
 			path = KnockUITests;
 			sourceTree = "<group>";
 		};
-		5DADD8791F074F72009CD89E /* GeneratedEntityClass */ = {
-			isa = PBXGroup;
-			children = (
-				8A56FBEE1FB5A53D00B384DD /* EditLocation+CoreDataClass.swift */,
-				8A56FBEF1FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift */,
-				8AF2999B1FA72F25004F6AFC /* Tenant+CoreDataClass.swift */,
-				8AF2999C1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift */,
-				5DBF2EE31F75044000B1A0D9 /* EditUnit+CoreDataClass.swift */,
-				5DBF2EE41F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift */,
-				5D5291A01F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift */,
-				5D5291A11F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift */,
-				5D5291A41F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift */,
-				5D5291A51F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift */,
-				5D5291A81F0D3BCF00D5645F /* Event+CoreDataClass.swift */,
-				5D5291A91F0D3BCF00D5645F /* Event+CoreDataProperties.swift */,
-				5D5291B01F0D3BCF00D5645F /* Chart+CoreDataClass.swift */,
-				5D5291B11F0D3BCF00D5645F /* Chart+CoreDataProperties.swift */,
-				5D5291B81F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift */,
-				5D5291B91F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift */,
-			);
-			path = GeneratedEntityClass;
-			sourceTree = "<group>";
-		};
 		5DC9E99B1EEA60FE009A6396 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8ACDB5A31FFD041000FF360E /* ClientListingViewController.swift */,
 				8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */,
 				5D5C5F881F8CDC9900248683 /* AddNewClientWithAddressViewController.swift */,
 				5DCEA6151F78CA1B0053FFF3 /* AddressViewController.swift */,
@@ -610,6 +559,7 @@
 		5DE3C9651EEFE71700012C47 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				8ACDB5A11FFD040200FF360E /* FollowUpDateTableViewCell.swift */,
 				5D5C5F7E1F8CCBDF00248683 /* AddClientWithAddressTableViewCell.swift */,
 				5D65D4E51F30165A00302CE8 /* IssueTableViewCell.swift */,
 				5D65D4D31F2E45A000302CE8 /* DateTimeTableViewCell.swift */,
@@ -937,25 +887,22 @@
 				5D00F0D61F6ED5EE00FF7523 /* ExistingClientsViewController.swift in Sources */,
 				5DE3C9691EEFE74500012C47 /* LoginViewController.swift in Sources */,
 				5DE3C9671EEFE71700012C47 /* DesignableTextField.swift in Sources */,
-				5D5291C01F0D3BCF00D5645F /* TenantAssign+CoreDataClass.swift in Sources */,
 				5D8C6BFD1F035AFB0045A65D /* Reachability.swift in Sources */,
 				5D757AE71F15477800308C05 /* SelectReasonStatusViewController.swift in Sources */,
 				5DC9E9FA1EEF8958009A6396 /* OAuth2Handler.swift in Sources */,
 				5D757B1D1F18AB0800308C05 /* Download.swift in Sources */,
 				5D0FC9DD1F6A7D03000F9994 /* EngageNYC.xcdatamodeld in Sources */,
 				5DA15B481F2B572500EB90DC /* ClientDataTableViewCell.swift in Sources */,
-				5D5291BD1F0D3BCF00D5645F /* SurveyUnit+CoreDataProperties.swift in Sources */,
 				5D9A3A5F1F0BA8D300D4FCB6 /* SyncUtility.swift in Sources */,
 				5D65D4D91F2E45A900302CE8 /* PickListViewController.swift in Sources */,
 				5D01D4191F7A55F200B3F8F6 /* VirtualUnitClientViewController.swift in Sources */,
 				5D757AEB1F16324400308C05 /* SettingsTableViewController.swift in Sources */,
-				5D5291C51F0D3BCF00D5645F /* Event+CoreDataProperties.swift in Sources */,
 				5DA15B4D1F2B59BD00EB90DC /* UnitDataTableViewCell.swift in Sources */,
 				5D4C4E641F3087A900284725 /* AddNewIssueViewController.swift in Sources */,
-				8AF2999E1FA72F25004F6AFC /* Tenant+CoreDataProperties.swift in Sources */,
 				5D757AF31F174FEF00308C05 /* DownloadESRILayers.swift in Sources */,
 				5DA15B421F2B1D9800EB90DC /* InCaseHeaderTableViewCell.swift in Sources */,
 				5DC8C7281F25D2E800B57044 /* ClientCustomTableViewCell.swift in Sources */,
+				8ACDB5A41FFD041000FF360E /* ClientListingViewController.swift in Sources */,
 				5DC9E9F41EEEE63D009A6396 /* SalesforceConfig.swift in Sources */,
 				5D757B1F1F18F4A200308C05 /* LocationDO.swift in Sources */,
 				5DE3C9931EF3DD8000012C47 /* EditLocationViewController.swift in Sources */,
@@ -963,23 +910,18 @@
 				5DC9E9F21EEEB647009A6396 /* ManageCoreData.swift in Sources */,
 				5D757B1A1F18A38100308C05 /* DownloadProgressView.swift in Sources */,
 				5D5291271F0C8A5200D5645F /* ViewControllerExtension.swift in Sources */,
-				5D5291D41F0D3BCF00D5645F /* Canvasser+CoreDataClass.swift in Sources */,
 				5DE3C9811EF1264800012C47 /* MBProgressHUD.m in Sources */,
 				5D2AFB0A1EFB73F7003AC7DD /* SaveEditTenantViewController.swift in Sources */,
 				5DE3C9911EF3B10000012C47 /* UnitsCustomViewCell.swift in Sources */,
 				5DC8C72E1F25E16E00B57044 /* UnitDO.swift in Sources */,
 				5DC8C7301F286E6F00B57044 /* ChooseSurveyViewController.swift in Sources */,
-				5D5291C11F0D3BCF00D5645F /* TenantAssign+CoreDataProperties.swift in Sources */,
 				5DE3C9831EF262C400012C47 /* MapLocationViewController.swift in Sources */,
 				5DC9E9EE1EEE8313009A6396 /* SalesforceConnection.swift in Sources */,
 				5D65D4E21F3015FC00302CE8 /* IssueHeaderTableViewCell.swift in Sources */,
-				8A56FBF11FB5A53D00B384DD /* EditLocation+CoreDataProperties.swift in Sources */,
 				5DE3C9851EF2656C00012C47 /* LocationCustomViewCell.swift in Sources */,
 				5D9718701F1B45A800F6A5ED /* SortingTableViewController.swift in Sources */,
-				5D5291C41F0D3BCF00D5645F /* Event+CoreDataClass.swift in Sources */,
 				5DA15B451F2B32BF00EB90DC /* CaseTableViewCell.swift in Sources */,
 				5D5C5F7F1F8CCBDF00248683 /* AddClientWithAddressTableViewCell.swift in Sources */,
-				5DBF2EE51F75044000B1A0D9 /* EditUnit+CoreDataClass.swift in Sources */,
 				5DE3C9A91EF7CF7B00012C47 /* SurveyQuestionDO.swift in Sources */,
 				5DC9E9E81EEA7DF9009A6396 /* SVProgressHUD.m in Sources */,
 				5D65D4E61F30165A00302CE8 /* IssueTableViewCell.swift in Sources */,
@@ -989,12 +931,10 @@
 				5DC9E9EC1EEE81A6009A6396 /* SalesforceRestApiUrl.swift in Sources */,
 				5D01D4131F7A407300B3F8F6 /* ClientDO.swift in Sources */,
 				5DE3C9A61EF7CBF300012C47 /* SurveyTextViewController.swift in Sources */,
-				8A56FBF01FB5A53D00B384DD /* EditLocation+CoreDataClass.swift in Sources */,
 				5DE3C9731EF012C400012C47 /* EventAssignmentViewCell.swift in Sources */,
-				5D5291BC1F0D3BCF00D5645F /* SurveyUnit+CoreDataClass.swift in Sources */,
-				8AF2999D1FA72F25004F6AFC /* Tenant+CoreDataClass.swift in Sources */,
 				5D1BD4F21F067B9000C8FAF5 /* ChartCollectionViewCell.swift in Sources */,
 				5D65D4DE1F3015EE00302CE8 /* IssueViewController.swift in Sources */,
+				8ACDB5A21FFD040200FF360E /* FollowUpDateTableViewCell.swift in Sources */,
 				5DC9E9F81EEF7D0F009A6396 /* EventDO.swift in Sources */,
 				5D52F94E1F14C67E00623005 /* SelectCanvasssingStatusViewController.swift in Sources */,
 				5DE3C99D1EF7A90500012C47 /* SurveyCollectionViewCell.swift in Sources */,
@@ -1002,7 +942,6 @@
 				5DE3C9A71EF7CBF300012C47 /* SubmitSurveyViewController.swift in Sources */,
 				5D8C6BF71F025C9B0045A65D /* ViewExtension.swift in Sources */,
 				5D00F0DC1F6ED81500FF7523 /* ExistingClientsTableViewCell.swift in Sources */,
-				5D5291D51F0D3BCF00D5645F /* Canvasser+CoreDataProperties.swift in Sources */,
 				5DE3C9711EF00EA000012C47 /* HeaderTableViewCell.swift in Sources */,
 				5DE3C99B1EF76C6E00012C47 /* MoreOptionsViewController.swift in Sources */,
 				5DE3C98D1EF36E1900012C47 /* SideMenuViewController.swift in Sources */,
@@ -1010,7 +949,6 @@
 				5D5C5F891F8CDC9900248683 /* AddNewClientWithAddressViewController.swift in Sources */,
 				5DE3C98B1EF36A7B00012C47 /* SWRevealViewController.m in Sources */,
 				5D52F9481F11EB4000623005 /* DateExtension.swift in Sources */,
-				5D5291CC1F0D3BCF00D5645F /* Chart+CoreDataClass.swift in Sources */,
 				5DE3C9961EF406E200012C47 /* UnitsHeaderTableViewCell.swift in Sources */,
 				62AC824D1F0A127B00F968FA /* ForgetPasswordViewController.swift in Sources */,
 				5DE3C9991EF6B66000012C47 /* YPDrawSignatureView.swift in Sources */,
@@ -1019,7 +957,6 @@
 				5DADD8FD1F0B7D0E009CD89E /* SurveyUtility.swift in Sources */,
 				5D1BD4EF1F067B7500C8FAF5 /* MapViewCollout.swift in Sources */,
 				5D7603D61F5D392300ED157E /* Alert.swift in Sources */,
-				5D5291CD1F0D3BCF00D5645F /* Chart+CoreDataProperties.swift in Sources */,
 				5DE3C99F1EF7CBD600012C47 /* SurveyOptionsButtonCell.swift in Sources */,
 				5D65D4DA1F2E45A900302CE8 /* CaseConfigTableViewController.swift in Sources */,
 				5D5C5F821F8CCBF000248683 /* AddNewClientHeaderTableViewCell.swift in Sources */,
@@ -1042,7 +979,6 @@
 				5D52F94C1F14A3FB00623005 /* TenantDO.swift in Sources */,
 				5DC8C72B1F25D2F900B57044 /* ClientsTableViewCell.swift in Sources */,
 				5DE3C96D1EF007BF00012C47 /* DashBoardViewController.swift in Sources */,
-				5DBF2EE61F75044000B1A0D9 /* EditUnit+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1226,8 +1162,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "43eaa0f1-13f5-4566-be24-1032b34bdcdb";
-				PROVISIONING_PROFILE_SPECIFIER = "EngageNYCDev-PushNotification";
+				PROVISIONING_PROFILE = "d97d283e-bd2e-4312-8a21-b41e84651be3";
+				PROVISIONING_PROFILE_SPECIFIER = PushNotification_EngageNYCDev_Debug;
 				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -1270,8 +1206,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "045b2199-7c45-4a2c-a3ff-9ef679b1be57";
-				PROVISIONING_PROFILE_SPECIFIER = "EngageNYCDev-Distribution_PushNotification";
+				PROVISIONING_PROFILE = "0639c803-5cc1-4cc6-8839-26d662187126";
+				PROVISIONING_PROFILE_SPECIFIER = PushNotification_EngageNYCDev_Testflight;
 				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
