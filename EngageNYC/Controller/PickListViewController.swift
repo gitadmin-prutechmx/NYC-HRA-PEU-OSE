@@ -141,6 +141,9 @@ class PickListViewController: UIViewController,UITableViewDataSource,UITableView
             
             pickListArray = String(picklistStr.characters.dropLast()).components(separatedBy: ";")
         }
+        else{
+            pickListArray = []
+        }
         
         
         if(showContactName){
@@ -194,18 +197,20 @@ class PickListViewController: UIViewController,UITableViewDataSource,UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         
-        if(showContactName){
-            cell.textLabel?.text = contactDict[pickListArray[indexPath.row]]
-        }
-        else{
-            cell.textLabel?.text = pickListArray[indexPath.row]
-        }
-        
-        if(selectedPickListValue ==  cell.textLabel?.text){
-            cell.accessoryType = UITableViewCellAccessoryType.checkmark;
-        }
-        else{
-            cell.accessoryType = UITableViewCellAccessoryType.none;
+        if(pickListArray.count > 0){
+            if(showContactName){
+                cell.textLabel?.text = contactDict[pickListArray[indexPath.row]]
+            }
+            else{
+                cell.textLabel?.text = pickListArray[indexPath.row]
+            }
+            
+            if(selectedPickListValue ==  cell.textLabel?.text){
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark;
+            }
+            else{
+                cell.accessoryType = UITableViewCellAccessoryType.none;
+            }
         }
         
         return cell

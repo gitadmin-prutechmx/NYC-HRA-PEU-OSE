@@ -41,7 +41,7 @@ class Utilities {
     static var caseDict: [String:String] = [:]
     static var caseOpenDict: [String:Int] = [:]
     static var caseConfigDict:[String:AnyObject] = [:]
-
+    
     
     static var countCases:Int  = 1
     static var openCountCases:Int  = 1
@@ -54,7 +54,7 @@ class Utilities {
     static var inProgressSurveyIds = [String]()
     static var completeSurveyIds = [String]()
     
-   
+    
     
     // static var selectedDateTimeDictYYYYMMDD:[String:String?] = [:]
     // static var selectedDateTimeDictInMMDDYYYY:[String:String?] = [:]
@@ -376,9 +376,9 @@ class Utilities {
             
             editUnitDict["followUpDate"] = dateFormatter.string(from: date)
         }
-      
+        
         editUnitDict["followUpType"] = followUpType
-       
+        
         return editUnitDict
     }
     
@@ -1368,59 +1368,66 @@ class Utilities {
                         caseData in
                         
                         
-                        DispatchQueue.main.async {
+                        EventsConfigAPI.shared.syncDownWithCompletion{
                             
-                            updateDashBoard(assignmentJsonData: assignmentJsonData as! [String : AnyObject], chartJsonData: chartJsonData as! [String : AnyObject],pickListJsonData: picklistData as! [String : AnyObject],caseJsonData:caseData as! [String : AnyObject])
-                            
-                            if(loginViewController != nil){
-                                
-                                loginViewController?.loadingSpinner.stopAnimating()
-                                loginViewController?.loadingSpinner.hidesWhenStopped = true
-                                loginViewController?.message.text = ""
+                            EventsAPI.shared.syncDownWithCompletion{
                                 
                                 
                                 DispatchQueue.main.async {
-                                    loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                                    
+                                    updateDashBoard(assignmentJsonData: assignmentJsonData as! [String : AnyObject], chartJsonData: chartJsonData as! [String : AnyObject],pickListJsonData: picklistData as! [String : AnyObject],caseJsonData:caseData as! [String : AnyObject])
+                                    
+                                    if(loginViewController != nil){
+                                        
+                                        loginViewController?.loadingSpinner.stopAnimating()
+                                        loginViewController?.loadingSpinner.hidesWhenStopped = true
+                                        loginViewController?.message.text = ""
+                                        
+                                        
+                                        DispatchQueue.main.async {
+                                            loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                                        }
+                                    }
+                                        
+                                    else{
+                                        DownloadESRILayers.RefreshData()
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                    //                            if(loginViewController != nil){
+                                    //
+                                    //
+                                    //                                 if (Utilities.isGeoDatabseExist()==false) {
+                                    //
+                                    //                                    //download geodatabase from salesforce
+                                    //                                    Download.downloadNewYorkCityData(loginViewController: loginViewController)
+                                    //                                }
+                                    //
+                                    //
+                                    //                                else{
+                                    //
+                                    //                                    SVProgressHUD.dismiss()
+                                    //                                    DispatchQueue.main.async {
+                                    //                                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
+                                    //                                    }
+                                    //
+                                    //
+                                    //                                }
+                                    //
+                                    //
+                                    //
+                                    //                            }
+                                    //                            else{
+                                    //
+                                    //                                //This will happen when refresh icon press
+                                    //                                    DownloadESRILayers.RefreshData()
+                                    //
+                                    //                            }//end of else
+                                    
                                 }
                             }
-                                
-                            else{
-                                DownloadESRILayers.RefreshData()
-                            }
-                            
-                            
-                            
-                            
-                            //                            if(loginViewController != nil){
-                            //
-                            //
-                            //                                 if (Utilities.isGeoDatabseExist()==false) {
-                            //
-                            //                                    //download geodatabase from salesforce
-                            //                                    Download.downloadNewYorkCityData(loginViewController: loginViewController)
-                            //                                }
-                            //
-                            //
-                            //                                else{
-                            //
-                            //                                    SVProgressHUD.dismiss()
-                            //                                    DispatchQueue.main.async {
-                            //                                        loginViewController?.performSegue(withIdentifier: "loginIdentifier", sender: nil)
-                            //                                    }
-                            //
-                            //
-                            //                                }
-                            //
-                            //
-                            //
-                            //                            }
-                            //                            else{
-                            //
-                            //                                //This will happen when refresh icon press
-                            //                                    DownloadESRILayers.RefreshData()
-                            //
-                            //                            }//end of else
-                            
                         }
                         
                         
@@ -1561,21 +1568,26 @@ class Utilities {
         
         Utilities.parseCaseConfigData(jsonObject: caseJsonData)
         
+       
         
     }
     
     
     class func parseCaseConfigData(jsonObject: Dictionary<String, AnyObject>){
         //save case config
-        let caseConfig = CaseConfig(context: context)
+        let metadataConfig = MetadataConfig(context: context)
         
-        caseConfig.caseConfigData = jsonObject as NSObject?
+        metadataConfig.configData = jsonObject as NSObject?
+        metadataConfig.type = MetadataConfigEnum.cases.rawValue
         
         appDelegate.saveContext()
         
         //end
     }
     
+   
+    
+   
     
     class func callNotificationCenter(){
         
@@ -1789,6 +1801,19 @@ class Utilities {
     }
     
     
+    class func getEventFormattedAddress(eventObj:Events)->String{
+        
+        let streetNum = eventObj.streetNum ?? ""
+        let streetName = eventObj.streetName ?? ""
+        let borough = eventObj.borough ?? ""
+        let zip = eventObj.zip ?? ""
+        
+        let address = "\(streetNum) \(streetName), \(borough),\(zip)"
+        
+        return address
+        
+    }
+    
     
     class func parseEventAssignmentData(jsonObject: Dictionary<String, AnyObject>){
         
@@ -1801,7 +1826,7 @@ class Utilities {
         
         for assignmentData in assignmentObjectResults {
             
-            let eventObject = Event(context: context)
+            let eventObject = AssignmentEvent(context: context)
             eventObject.id = assignmentData["eventId"] as? String  ?? ""
             eventObject.name = assignmentData["eventName"] as? String  ?? ""
             eventObject.startDate = assignmentData["eventStartDate"] as? String  ?? ""

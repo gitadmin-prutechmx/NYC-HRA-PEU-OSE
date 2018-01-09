@@ -39,7 +39,7 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     
     
-    var eventDict: [String:EventDO] = [:]
+    var eventDict: [String:AssignmentEventDO] = [:]
     var chartResults = [Chart]()
     
     let status = ["Completed", "In Progress", "Pending"]
@@ -570,14 +570,14 @@ class DashBoardViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         
         
-        let eventResults =  ManageCoreData.fetchData(salesforceEntityName: "Event", isPredicate:false) as! [Event]
+        let eventResults =  ManageCoreData.fetchData(salesforceEntityName: "AssignmentEvent", isPredicate:false) as! [AssignmentEvent]
         
         if(eventResults.count > 0){
             
             for eventData in eventResults{
                 
                 if eventDict[eventData.id!] == nil{
-                    eventDict[eventData.id!] = EventDO(eventId: eventData.id!, eventName: eventData.name!, startDate: eventData.startDate!, endDate: eventData.endDate!)
+                    eventDict[eventData.id!] = AssignmentEventDO(eventId: eventData.id!, eventName: eventData.name!, startDate: eventData.startDate!, endDate: eventData.endDate!)
                 }
                 
                 

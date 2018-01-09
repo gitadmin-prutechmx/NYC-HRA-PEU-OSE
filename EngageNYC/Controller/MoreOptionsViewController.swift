@@ -1015,11 +1015,19 @@ class MoreOptionsViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         else{
             
+            //If New Unit Create then that case there is no assignmentLocationUnit that time
+            
+            selectedClientId = SalesforceConnection.selectedTenantForSurvey
+            
+            //if tap to unitlisting screen
+            if(!SalesforceConnection.selectedTenantForSurvey.isEmpty){
+                selectContact =  Utilities.getClientName(tenantId: SalesforceConnection.selectedTenantForSurvey)
+            }
+            
             disableNextBtn()
 
         }
         
-         //tblEditUnit.reloadData()
         
     }
    

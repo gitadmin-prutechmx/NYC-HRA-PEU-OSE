@@ -465,8 +465,8 @@ class AddressViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         if(loctionSwitch.isOn){
             
-            var iOSUnitId = UUID().uuidString
-            var iOSAssignmentLocUnitId = UUID().uuidString
+            let iOSUnitId = UUID().uuidString
+            let iOSAssignmentLocUnitId = UUID().uuidString
             
             //create new unit
             createNewUnit(aptNo: aptNo,iOSUnitId:iOSUnitId,iOSAssignmentLocUnitId: iOSAssignmentLocUnitId)

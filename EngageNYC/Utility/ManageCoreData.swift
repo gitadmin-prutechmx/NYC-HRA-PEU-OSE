@@ -356,7 +356,27 @@ class ManageCoreData{
     }
     
     
-    
+    static func DeleteAllRecords(salesforceEntityName:String,completion: @escaping ((Bool)->())){
+        
+      
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
+        let request = NSBatchDeleteRequest(fetchRequest: fetch)
+        
+        do {
+            
+            try context.execute(request)
+            completion(true)
+            
+        } catch {
+            let nserror = error as NSError
+            Utilities.showSwiftErrorMessage(error: "ManageCoreData:- Delete All Records issue:- \(nserror.userInfo)")
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            completion(false)
+            
+            
+        }
+        
+    }
     
     
     
@@ -390,7 +410,7 @@ class ManageCoreData{
     }
     
     static func DeleteAllDataFromEntities(){
-        DeleteAllRecords(salesforceEntityName: "Event")
+        DeleteAllRecords(salesforceEntityName: "AssignmentEvent")
         DeleteAllRecords(salesforceEntityName: "Assignment")
         DeleteAllRecords(salesforceEntityName: "Location")
         
@@ -409,9 +429,10 @@ class ManageCoreData{
         // DeleteAllRecords(salesforceEntityName: "SurveyUnit")
         DeleteAllRecords(salesforceEntityName: "Tenant")
         DeleteAllRecords(salesforceEntityName: "Cases")
-        DeleteAllRecords(salesforceEntityName: "CaseConfig")
+       // DeleteAllRecords(salesforceEntityName: "MetadataConfig")
         DeleteAllRecords(salesforceEntityName: "Issues")
         DeleteAllRecords(salesforceEntityName: "IssueNotes")
+        
         
     
         

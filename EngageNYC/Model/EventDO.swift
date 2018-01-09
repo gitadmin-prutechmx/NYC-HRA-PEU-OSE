@@ -8,7 +8,7 @@
 
 import Foundation
 
-class EventDO{
+class AssignmentEventDO{
     var eventId:String!
     var eventName:String!
     var startDate:String!

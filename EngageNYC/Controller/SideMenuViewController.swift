@@ -84,13 +84,24 @@ extension SideMenuViewController
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.row == 2
+        if indexPath.row == 3
         {
             
             Utilities.timer?.invalidate()
             SFAuthenticationManager.shared().logout()
             //appDelegate.setupRootViewController(isLogin: false)
             
+        }
+        else if indexPath.row == 2
+        {
+            
+            if let eventVC = EventsStoryboard().instantiateViewController(withIdentifier: "EventsViewController") as? EventsViewController{
+                
+                let navigationController = UINavigationController(rootViewController: eventVC)
+                navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+                self.present(navigationController, animated: true)
+            }
+          
         }
     }
     

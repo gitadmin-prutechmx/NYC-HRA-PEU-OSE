@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NHaasGroteskDSPro-55Rg.otf">
+            <string>NHaasGroteskDSPro-55Rg</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Listing Popover Table View Controller-->
+        <scene sceneID="Q9r-zJ-s87">
+            <objects>
+                <tableViewController storyboardIdentifier="ListingPopoverTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nnj-Zw-h1k" customClass="ListingPopoverTableViewController" customModule="EngageNYCDev" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="7zk-pT-Eno">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="308"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="44" id="wHS-Vm-Rmo" customClass="PopOverListCell" customModule="EngageNYC" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="300" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wHS-Vm-Rmo" id="mh7-er-RyH">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOt-75-9fw">
+                                            <rect key="frame" x="8" y="11" width="284" height="21"/>
+                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="LOt-75-9fw" firstAttribute="leading" secondItem="mh7-er-RyH" secondAttribute="leading" constant="8" id="H2e-fx-6YV"/>
+                                        <constraint firstItem="LOt-75-9fw" firstAttribute="top" secondItem="mh7-er-RyH" secondAttribute="top" constant="11" id="OXf-AM-qq5"/>
+                                        <constraint firstAttribute="trailing" secondItem="LOt-75-9fw" secondAttribute="trailing" constant="8" id="TXl-As-2Km"/>
+                                        <constraint firstAttribute="bottom" secondItem="LOt-75-9fw" secondAttribute="bottom" constant="11.5" id="wr0-OF-AX6"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="lblTitle" destination="LOt-75-9fw" id="YSG-mR-rq6"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nnj-Zw-h1k" id="Xec-aA-g7S"/>
+                            <outlet property="delegate" destination="nnj-Zw-h1k" id="szM-1c-2sE"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="308"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s8V-JQ-bP6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1194" y="-621"/>
+        </scene>
+    </scenes>
+</document>

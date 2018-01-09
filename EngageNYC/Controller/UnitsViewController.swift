@@ -694,7 +694,7 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         
         if(tableView == tblUnits)
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "unitCellIdentifier", for: indexPath as IndexPath) as! UnitDataTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! UnitsCustomViewCell
             
             var unitData: UnitsDataStruct
             
@@ -881,13 +881,14 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         else
         {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "clientCellDataId", for: indexPath) as! ClientDataTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cellClient", for: indexPath) as! ClientCustomTableViewCell
             var clientData: ClientDataStruct
 
             if isFiltered
             {
-                cell.lblFirstName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).firstName
-                cell.lblLastName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).lastName
+                
+                cell.lblFirst.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).firstName
+                cell.lblLast.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).lastName
                 if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).phone.isEmpty)
                 {
                     cell.lblPhone.text = "                        "
@@ -900,46 +901,26 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 if let caseCount = noOfCases
                 {
-                    cell.lblCase.text = caseCount
+                    cell.lblNoCase.text = caseCount
                 }
                 else
                 {
-                    cell.lblCase.text = "0"
+                    cell.lblNoCase.text = "0"
                 }
     
                 
-                cell.lblUnitName.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitName
-                cell.lblUnitId.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
+                cell.unit.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitName
+                cell.unitId.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).unitId
                // cell.lblSyncDate.text = ""
                 
-                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment.isEmpty)
-                {
-                    cell.lblUnverifiedunit.text = "      "
-                }
-                else
-                {
-                     cell.lblUnverifiedunit.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).apartment
-                }
-                
-                if((arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList.isEmpty)
-                {
-                    cell.lblSourceList.text = "       "
-                }
-                else
-                {
-                    cell.lblSourceList.text = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct).sourceList
-                }
-                
-                
-               
-                
+            
                  clientData = (arrClientfilteredTableData[indexPath.row] as! ClientDataStruct)
             }
             
             else
             {
-                cell.lblFirstName.text = clientDataArray[indexPath.row].firstName
-                cell.lblLastName.text = clientDataArray[indexPath.row].lastName
+                cell.lblFirst.text = clientDataArray[indexPath.row].firstName
+                cell.lblLast.text = clientDataArray[indexPath.row].lastName
                 if(clientDataArray[indexPath.row].phone.isEmpty){
                     cell.lblPhone.text = "                        "
                 }
@@ -950,37 +931,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
                 
                 if let caseCount = noOfCases
                 {
-                    cell.lblCase.text = caseCount
+                    cell.lblNoCase.text = caseCount
                 }
                 else
                 {
-                    cell.lblCase.text = "0"
+                    cell.lblNoCase.text = "0"
                 }
                 
-                cell.lblUnitName.text = clientDataArray[indexPath.row].unitName
-                cell.lblUnitId.text = clientDataArray[indexPath.row].unitId
-                //cell.lblSyncDate.text = ""
-                if(clientDataArray[indexPath.row].apartment.isEmpty){
-                    cell.lblUnverifiedunit.text = "      "
-                }
-                else
-                {
-                    cell.lblUnverifiedunit.text = clientDataArray[indexPath.row].apartment
-                }
-                
-               
-                
-                if(clientDataArray[indexPath.row].sourceList.isEmpty)
-                {
-                    cell.lblSourceList.text = "       "
-                    
-                }
-                else
-                {
-                    
-                    
-                    cell.lblSourceList.text = clientDataArray[indexPath.row].sourceList
-                }
+                cell.unit.text = clientDataArray[indexPath.row].unitName
+                cell.unitId.text = clientDataArray[indexPath.row].unitId
                 
                 
                 clientData = clientDataArray[indexPath.row]
@@ -1559,9 +1518,10 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
     }
     
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        if tableView == tblUnits
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
+          return nil
+       /* if tableView == tblUnits
         {
             let identifier = "unitCellId"
             var cell: UnitsHeaderTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? UnitsHeaderTableViewCell
@@ -1575,24 +1535,15 @@ class UnitsViewController: UIViewController,UITableViewDataSource, UITableViewDe
         }
         else
         {
-            
-            let identifier = "clientHeaderIdentifier"
-            var cell: ClientsTableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier) as? ClientsTableViewCell
-            if cell == nil {
-                tableView.register(UINib(nibName: "ClientsTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-                cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ClientsTableViewCell
-            }
-            
-            return cell
-            
-        }
-        
-        
+           */
+        //}
+     
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         
-        return  41.0
+            return  0.0
+        
     }
     
     

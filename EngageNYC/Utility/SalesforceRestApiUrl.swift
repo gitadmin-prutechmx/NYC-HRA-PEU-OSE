@@ -34,6 +34,10 @@ class SalesforceRestApiUrl{
     
     static let createIssue = "/services/apexrest/createissue"
     
+    static let events = "/services/apexrest/eventdetail/"
+    
+    static let eventsConfig = "/services/apexrest/eventconfiguration"
+    
     //Core_Picklist_Value_API
     //urlMapping = picklistValue
     

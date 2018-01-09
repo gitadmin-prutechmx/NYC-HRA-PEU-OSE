@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum MetadataConfigEnum:String{
+    case cases = "cases"
+    case events = "events"
+}
+
 struct caseConfigObjects {
     
     var sectionName : String!
@@ -300,12 +305,12 @@ class CaseConfigTableViewController: UITableViewController,PickListProtocol,Mult
     
     private func readJson() {
         
-        let caseConfigResults =  ManageCoreData.fetchData(salesforceEntityName: "CaseConfig", isPredicate:false) as! [CaseConfig]
+        let caseConfigResults =  ManageCoreData.fetchData(salesforceEntityName: "MetadataConfig",predicateFormat: "type == %@",predicateValue: MetadataConfigEnum.cases.rawValue, isPredicate:true) as! [MetadataConfig]
         
         
         if(caseConfigResults.count>0){
             
-            parseJson(jsonObject: caseConfigResults[0].caseConfigData as! Dictionary<String, AnyObject>)
+            parseJson(jsonObject: caseConfigResults[0].configData as! Dictionary<String, AnyObject>)
             
         }
         
