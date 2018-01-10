@@ -145,6 +145,9 @@
 		8A2B8344200470AA0098A049 /* EventsConfigAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2B8343200470AA0098A049 /* EventsConfigAPI.swift */; };
 		8A2B834720049CC20098A049 /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2B834620049CC20098A049 /* EventsViewModel.swift */; };
 		8A6FD2231FC6E55D00A8A5BF /* MapData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A6FD2221FC6E55D00A8A5BF /* MapData.zip */; };
+		8A7A44772006049400AE3BE3 /* NewClientInfoWithAddress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A44762006049400AE3BE3 /* NewClientInfoWithAddress.storyboard */; };
+		8A7A4479200609C000AE3BE3 /* ClientAddress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A4478200609C000AE3BE3 /* ClientAddress.storyboard */; };
+		8A7A447B20060A9E00AE3BE3 /* ClientInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A447A20060A9E00AE3BE3 /* ClientInfo.storyboard */; };
 		8AE2585F1FDD58A3005AB558 /* FollowUpDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE2585E1FDD58A3005AB558 /* FollowUpDateTableViewCell.swift */; };
 		8AE258611FDE19C4005AB558 /* InTakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE258601FDE19C4005AB558 /* InTakeViewController.swift */; };
 		8AF299A21FA83D8F004F6AFC /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */; };
@@ -327,6 +330,9 @@
 		8A2B8343200470AA0098A049 /* EventsConfigAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsConfigAPI.swift; sourceTree = "<group>"; };
 		8A2B834620049CC20098A049 /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
 		8A6FD2221FC6E55D00A8A5BF /* MapData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapData.zip; sourceTree = "<group>"; };
+		8A7A44762006049400AE3BE3 /* NewClientInfoWithAddress.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewClientInfoWithAddress.storyboard; sourceTree = "<group>"; };
+		8A7A4478200609C000AE3BE3 /* ClientAddress.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClientAddress.storyboard; sourceTree = "<group>"; };
+		8A7A447A20060A9E00AE3BE3 /* ClientInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClientInfo.storyboard; sourceTree = "<group>"; };
 		8AE2585E1FDD58A3005AB558 /* FollowUpDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpDateTableViewCell.swift; sourceTree = "<group>"; };
 		8AE258601FDE19C4005AB558 /* InTakeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InTakeViewController.swift; sourceTree = "<group>"; };
 		8AF299A11FA83D8F004F6AFC /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -682,6 +688,9 @@
 				8A02D85F20035BE3007E6560 /* EventsDrillDown.storyboard */,
 				8A02D861200364CD007E6560 /* EventsDetail.storyboard */,
 				8A02D863200364FC007E6560 /* EventsRegistration.storyboard */,
+				8A7A44762006049400AE3BE3 /* NewClientInfoWithAddress.storyboard */,
+				8A7A4478200609C000AE3BE3 /* ClientAddress.storyboard */,
+				8A7A447A20060A9E00AE3BE3 /* ClientInfo.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -886,6 +895,7 @@
 				5D00F0DA1F6ED5FF00FF7523 /* ExistingClientsHeaderTableViewCell.xib in Resources */,
 				8A6FD2231FC6E55D00A8A5BF /* MapData.zip in Resources */,
 				5D65D4E31F3015FC00302CE8 /* IssueHeaderTableViewCell.xib in Resources */,
+				8A7A447B20060A9E00AE3BE3 /* ClientInfo.storyboard in Resources */,
 				8A02D86020035BE3007E6560 /* EventsDrillDown.storyboard in Resources */,
 				5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */,
 				8A02D864200364FC007E6560 /* EventsRegistration.storyboard in Resources */,
@@ -899,11 +909,13 @@
 				5DE3C9971EF406E200012C47 /* UnitsHeaderTableViewCell.xib in Resources */,
 				5DA15B431F2B1D9800EB90DC /* InCaseHeaderTableViewCell.xib in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
+				8A7A4479200609C000AE3BE3 /* ClientAddress.storyboard in Resources */,
 				5DA15B491F2B572500EB90DC /* ClientDataTableViewCell.xib in Resources */,
 				5D5C5F831F8CCBF000248683 /* AddNewClientHeaderTableViewCell.xib in Resources */,
 				5D56CF0E1EE007060019882F /* Main.storyboard in Resources */,
 				5DE3C9701EF00EA000012C47 /* HeaderTableViewCell.xib in Resources */,
 				5D2AFB101EFBE7FF003AC7DD /* TenantHeaderTableViewCell.xib in Resources */,
+				8A7A44772006049400AE3BE3 /* NewClientInfoWithAddress.storyboard in Resources */,
 				5DC9E9E71EEA7DF9009A6396 /* SVProgressHUD.bundle in Resources */,
 				5D1BD4F01F067B7500C8FAF5 /* MapViewCollout.xib in Resources */,
 				8A02D862200364CD007E6560 /* EventsDetail.storyboard in Resources */,

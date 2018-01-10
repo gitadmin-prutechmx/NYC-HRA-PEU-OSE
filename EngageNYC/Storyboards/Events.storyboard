@@ -31,9 +31,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="700" height="665"/>
                                 <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XqY-HK-g5U">
-                                <rect key="frame" x="0.0" y="77" width="700" height="588"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XqY-HK-g5U">
+                                <rect key="frame" x="0.0" y="77" width="700" height="590"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2S-c5-rxY" userLabel="ViewHeader">
@@ -75,7 +74,7 @@
                                                 <rect key="frame" x="33" y="2" width="81" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                                 <color key="textColor" red="0.69803921570000005" green="0.70588235290000001" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -84,7 +83,6 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
-                                                    <action selector="btnFromDateClick:" destination="ZLd-7g-pUE" eventType="touchUpInside" id="44T-SG-2zH"/>
                                                     <action selector="btnToDateClick:" destination="ZLd-7g-pUE" eventType="touchUpInside" id="3tZ-4v-y0f"/>
                                                 </connections>
                                             </button>
@@ -95,7 +93,7 @@
                                         <rect key="frame" x="322" y="10" width="118" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                         <state key="normal" title="Type">
                                             <color key="titleColor" red="0.69803921570000005" green="0.70588235290000001" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -126,7 +124,7 @@
                                                 <rect key="frame" x="33" y="2" width="81" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                                 <color key="textColor" red="0.69803921570000005" green="0.70588235290000001" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -247,6 +245,7 @@
                             <constraint firstItem="EJb-yA-DoS" firstAttribute="top" secondItem="E2S-c5-rxY" secondAttribute="bottom" constant="-4" id="197-DH-7r1"/>
                             <constraint firstItem="NaH-w0-x8e" firstAttribute="top" secondItem="taf-y0-XlU" secondAttribute="top" id="7nl-eU-f6H"/>
                             <constraint firstItem="z9H-Iy-Jx1" firstAttribute="top" secondItem="Pgg-u9-LNC" secondAttribute="bottom" constant="11" id="8tl-b6-ndv"/>
+                            <constraint firstItem="XqY-HK-g5U" firstAttribute="leading" secondItem="PcX-0t-9z8" secondAttribute="leading" id="9nb-IN-atb"/>
                             <constraint firstAttribute="trailing" secondItem="E2S-c5-rxY" secondAttribute="trailing" id="AcS-M0-cgH"/>
                             <constraint firstItem="NaH-w0-x8e" firstAttribute="trailing" secondItem="PcX-0t-9z8" secondAttribute="trailing" id="Hqf-Ze-Ql7"/>
                             <constraint firstItem="KNe-50-aVw" firstAttribute="leading" secondItem="taf-y0-XlU" secondAttribute="leading" constant="8" id="Hw2-Vh-8gg"/>
@@ -257,13 +256,16 @@
                             <constraint firstItem="KNe-50-aVw" firstAttribute="top" secondItem="h1r-4w-Xti" secondAttribute="bottom" id="RUc-6z-LAB"/>
                             <constraint firstItem="z9H-Iy-Jx1" firstAttribute="top" secondItem="NaH-w0-x8e" secondAttribute="bottom" constant="2" id="SHA-wK-671"/>
                             <constraint firstAttribute="trailing" secondItem="KNe-50-aVw" secondAttribute="trailing" constant="8" id="amy-cf-mKE"/>
+                            <constraint firstItem="XqY-HK-g5U" firstAttribute="trailing" secondItem="PcX-0t-9z8" secondAttribute="trailing" id="fqc-Yi-PX3"/>
                             <constraint firstItem="Pgg-u9-LNC" firstAttribute="leading" secondItem="taf-y0-XlU" secondAttribute="leading" constant="8" id="iaC-zb-bAX"/>
                             <constraint firstItem="E2S-c5-rxY" firstAttribute="leading" secondItem="taf-y0-XlU" secondAttribute="leading" id="k31-Rp-fjV"/>
                             <constraint firstItem="NaH-w0-x8e" firstAttribute="leading" secondItem="PcX-0t-9z8" secondAttribute="leading" id="llR-Dc-UPv"/>
+                            <constraint firstItem="z9H-Iy-Jx1" firstAttribute="top" secondItem="XqY-HK-g5U" secondAttribute="bottom" id="mwv-ur-EAR"/>
                             <constraint firstAttribute="trailing" secondItem="Pgg-u9-LNC" secondAttribute="trailing" constant="8" id="nQU-OO-lXJ"/>
                             <constraint firstItem="E2S-c5-rxY" firstAttribute="top" secondItem="hzk-gz-8fH" secondAttribute="bottom" id="oDO-y2-Hqq"/>
                             <constraint firstItem="h1r-4w-Xti" firstAttribute="top" secondItem="EJb-yA-DoS" secondAttribute="bottom" constant="17" id="oGb-kE-Xhc"/>
                             <constraint firstItem="Pgg-u9-LNC" firstAttribute="top" secondItem="KNe-50-aVw" secondAttribute="bottom" constant="-2" id="vlm-Nr-6Cp"/>
+                            <constraint firstItem="XqY-HK-g5U" firstAttribute="top" secondItem="E2S-c5-rxY" secondAttribute="bottom" constant="1" id="zNp-Ht-bYI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PcX-0t-9z8"/>
                     </view>

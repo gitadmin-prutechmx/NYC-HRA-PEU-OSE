@@ -55,7 +55,7 @@ class EventsViewController: UIViewController,UITableViewDelegate,UITableViewData
         imgBtnTo.image = imgBtnTo.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         imgBtnTo.tintColor = UIColor.lightGray
         
-        imgBtnFrom.image = imgBtnTo.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        imgBtnFrom.image = imgBtnFrom.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         imgBtnFrom.tintColor = UIColor.lightGray
     }
     
@@ -127,7 +127,10 @@ class EventsViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
 
+    
+    
 }
+
 
 extension EventsViewController {
     
