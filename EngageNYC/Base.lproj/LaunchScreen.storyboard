@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="NHaasGroteskDSPro-75Bd.otf">
+            <string>NHaasGroteskDSPro-75Bd</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -21,18 +26,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenNYCLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4Zm-An-sk0">
-                                <rect key="frame" x="112" y="258" width="150" height="150"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="MWt-Qd-RgH"/>
-                                    <constraint firstAttribute="width" constant="150" id="b1W-YP-nrX"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="QAb-Le-2ms">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EngageNYC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDD-2Z-z43">
+                                <rect key="frame" x="127.5" y="320.5" width="120" height="26"/>
+                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-75Bd" family="Neue Haas Grotesk Display Pro" pointSize="22"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.23921568627450979" green="0.22352941176470587" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="4Zm-An-sk0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="god-nd-HlN"/>
-                            <constraint firstItem="4Zm-An-sk0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="yar-wH-JD8"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="QAb-Le-2ms" secondAttribute="bottom" id="EHk-gR-DuE"/>
+                            <constraint firstItem="qDD-2Z-z43" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="M68-YW-xC8"/>
+                            <constraint firstItem="QAb-Le-2ms" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="X2X-ZR-uvz"/>
+                            <constraint firstAttribute="trailing" secondItem="QAb-Le-2ms" secondAttribute="trailing" id="fzS-45-gKE"/>
+                            <constraint firstItem="qDD-2Z-z43" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="t20-NI-mDB"/>
+                            <constraint firstItem="QAb-Le-2ms" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="yft-WO-YMc"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -42,6 +53,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenNYCLogo" width="200" height="72"/>
+        <image name="Background" width="1335" height="1339"/>
     </resources>
 </document>

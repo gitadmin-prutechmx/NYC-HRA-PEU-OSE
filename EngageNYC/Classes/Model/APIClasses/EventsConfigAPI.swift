@@ -23,7 +23,7 @@ final class EventsConfigAPI : SFCommonAPI
         }
     }
     
-    /// Get Events Config from rest api. We are saving these Events to core data for offline use.
+    /// Get Event Config from rest api. We are saving these event config to core data for offline use.
     ///
     /// - Parameters:
     ///   - callback: callback block.
@@ -42,9 +42,9 @@ final class EventsConfigAPI : SFCommonAPI
         }
     }
     
-    /// Get event config from core data.
+    /// Get case config from core data.
     ///
-    /// - Returns: array of events.
+    /// - Returns: metadataconfig.
     func getEventsConfig()->MetadataConfig? {
         
         let eventConfigResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.metadataConfig.rawValue ,predicateFormat: "type == %@", predicateValue: MetadataConfigEnum.events.rawValue,isPredicate:true) as! [MetadataConfig]
@@ -56,22 +56,17 @@ final class EventsConfigAPI : SFCommonAPI
         return nil
     }
     
-    /// Convert the provided JSON into array of Events objects.
+    /// Convert the provided JSON into array of CaseConfig object.
     ///
     /// - Parameter jsonResponse: json fetched from api.
     /// - Returns: nothing.
     private func EventsConfigFromJSONList(jsonResponse:Dictionary<String, AnyObject>){
         
-        ManageCoreData.DeleteAllRecords(salesforceEntityName: coreDataEntity.metadataConfig.rawValue,completion: { isSuccess in
-            
-            if(isSuccess){
-                let metadataConfig = MetadataConfig(context: context)
-                metadataConfig.configData = jsonResponse as NSObject?
-                metadataConfig.type = MetadataConfigEnum.events.rawValue
-                
-                appDelegate.saveContext()
-            }
-        })
+        let metadataConfig = MetadataConfig(context: context)
+        metadataConfig.configData = jsonResponse as NSObject?
+        metadataConfig.type = MetadataConfigEnum.events.rawValue
+        
+        appDelegate.saveContext()
         
     }
     

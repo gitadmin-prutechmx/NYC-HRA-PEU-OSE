@@ -9,10 +9,43 @@
 import Foundation
 import SalesforceSDKCore
 
+enum MetadataConfigEnum:String{
+    case cases = "cases"
+    case events = "events"
+}
+
 enum coreDataEntity:String{
+    
     case events = "Events"
     case eventsReg = "EventsReg"
+   
+    case assignment = "Assignment"
+    case location = "Location"
+    case assignmentLocation = "AssignmentLocation"
+    case locationUnit = "LocationUnit"
+    case assignmentLocationUnit = "AssignmentLocationUnit"
+    case contact = "Contact"
+    
+    case cases = "Cases"
+    case issues = "Issues"
+    case issueNotes = "IssueNotes"
+    case caseNotes = "CaseNotes"
+    
+    case surveyQuestion = "SurveyQuestion"
+    case surveyResponse = "SurveyResponse"
+
+    case chart = "Chart"
+ 
     case metadataConfig = "MetadataConfig"
+    
+    case userInfo = "UserInfo"
+    
+    case settings = "Setting"
+    
+    case dropDown = "DropDown"
+    
+    case assignmentnotes = "AssignmentNotes"
+    
 }
 
 final class EventsAPI : SFCommonAPI
@@ -47,6 +80,202 @@ final class EventsAPI : SFCommonAPI
             print(error)
             //failure(error)
         }
+    }
+    
+    func getAllUpdatedEventsReg() -> [EventsReg]?{
+        
+        let eventsRegRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.eventsReg.rawValue ,predicateFormat: "actionStatus == %@",predicateValue:actionStatus.create.rawValue, isPredicate:true) as? [EventsReg]
+        
+        return eventsRegRes
+    }
+    
+    func updateClientId(salesforceClientId:String,iOSClientId:String){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["clientId"] = salesforceClientId as AnyObject
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.eventsReg.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "clientId == %@", predicateValue:  iOSClientId,isPredicate: true)
+        
+    }
+    
+        
+    
+    func syncUpCompletion(completion: @escaping (()->()))
+    {
+        if let arrEventsReg = getAllUpdatedEventsReg(){
+            
+            let eventRegGroup = DispatchGroup()
+            
+            for eventReg in arrEventsReg{
+                
+                var eventRegDict:[String:String] = [:]
+                var eventRegParams:[String:String] = [:]
+                
+                    let isiOSClientId = Utility.isiOSGeneratedId(generatedId: eventReg.clientId!)
+                    
+                    //if isiOSClientId is a UUID string then get salesforce clientid from contact object
+                    if(isiOSClientId != nil){
+                        let clientId = ContactAPI.shared.getSalesforceClientId(iOSClientId: eventReg.clientId!)
+                        
+                         eventReg.clientId = clientId //update contact id here
+                        
+                        if(Utility.isiOSGeneratedId(generatedId: clientId) != nil){
+                            print("Error:- iOS clientId")
+                            return
+                        }
+                        else{
+                            //update ClientId here
+                            updateClientId(salesforceClientId: clientId, iOSClientId: eventReg.clientId!)
+                        }
+                    }
+                
+                if(eventReg.actionStatus == actionStatus.edit.rawValue){
+                     eventRegDict["EventRegId"] = eventReg.eventRegId
+                     eventRegDict["iOSEventRegId"] = eventReg.iOSEventRegId
+                    
+                }
+                else{
+                     eventRegDict["iOSEventRegId"] = eventReg.iOSEventRegId
+                }
+                
+            
+            
+                eventRegDict["AttendeeStatus"] = eventReg.attendeeStatus
+                eventRegDict["contactId"] = eventReg.clientId
+                eventRegDict["eventId"] = eventReg.eventId
+            
+                eventRegParams["eventReg"] = Utility.jsonToString(json: eventRegDict as AnyObject)!
+                
+                let req = SFRestRequest(method: .POST, path: SalesforceRestApiUrl.createNewEventReg, queryParams: nil)
+                
+                do {
+                    
+                    let bodyData = try JSONSerialization.data(withJSONObject: eventRegParams, options: [])
+                    req.setCustomRequestBodyData(bodyData, contentType: "application/json")
+                }
+                catch{
+                    
+                    
+                }
+                
+                req.endpoint = ""
+                
+                eventRegGroup.enter()
+                
+                self.sendRequest(request: req, callback: { (response) in
+                    
+                    DispatchQueue.main.async {
+                        
+                        self.parseEventRegResponse(jsonObject: response as! Dictionary<String, AnyObject>)
+                        
+                        eventRegGroup.leave()
+                        
+                        print("EventRegGroup: \(eventReg.attendeeStatus!)")
+                    }
+                    
+                    
+                    
+                }) { (error) in
+                    Logger.shared.log(level: .error, msg: error)
+                    Utility.displayErrorMessage(errorMsg: error)
+                    //failure(error)
+                }
+                
+            }
+            
+            eventRegGroup.notify(queue: .main) {
+                completion()
+            }
+        }
+        
+        else{
+            completion()
+        }
+        
+        
+    }
+    
+    
+    func parseEventRegResponse(jsonObject: Dictionary<String, AnyObject>){
+        
+        guard let isError = jsonObject["hasError"] as? Bool,
+            
+            let message = jsonObject["message"] as? String,
+            
+            let eventRegDataDictonary = jsonObject["EventRegDataInfo"] as? [String: AnyObject] else { return }
+        
+        
+        
+        
+        if(isError == false){
+            
+            updateEventRegId(eventRegDataDict: eventRegDataDictonary)
+        }
+        else{
+            let errorMsg = "Error while adding new event reg to salesforce.\(message)"
+            
+            Logger.shared.log(level: .error, msg: errorMsg)
+            Utility.displayErrorMessage(errorMsg: errorMsg)
+        
+        }
+        
+        
+        
+     
+        
+        
+    }
+    
+    func updateEventRegId(eventRegDataDict:[String:AnyObject]){
+        
+        let eventRegId = eventRegDataDict["EventRegId"] as? String
+        let iOSEventRegId = eventRegDataDict["iOSEventRegId"] as? String
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["actionStatus"] = "" as AnyObject
+        updateObjectDic["eventRegId"] = eventRegId as AnyObject
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.eventsReg.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "iOSEventRegId == %@", predicateValue:  iOSEventRegId,isPredicate: true)
+        
+        
+    }
+    
+    
+    
+    
+    
+    func saveEventReg(newEventRegObj:NewEventRegDO){
+    
+        let newEventReg = EventsReg(context:context)
+        newEventReg.eventId = newEventRegObj.objEvent.id
+        newEventReg.clientId = newEventRegObj.clientId
+        newEventReg.clientName = newEventRegObj.clientName
+        newEventReg.attendeeStatus = newEventRegObj.attendeeStatusName
+        newEventReg.iOSEventRegId = UUID().uuidString
+        newEventReg.eventRegId = UUID().uuidString
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+        
+        newEventReg.regDate  = dateFormatter.string(from: Date())
+        newEventReg.actionStatus = actionStatus.create.rawValue
+        
+        appDelegate.saveContext()
+    
+    }
+    
+    func IsClientExistForthatEvent(clientId:String,eventId:String)->Bool{
+        let eventRegResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.eventsReg.rawValue ,predicateFormat: "clientId == %@ && eventId == %@",predicateValue: clientId,predicateValue2: eventId, isPredicate:true) as! [EventsReg]
+        
+        if(eventRegResults.count > 0){
+            return true
+        }
+        
+        return false
     }
     
     /// Get all the events from core data.
@@ -134,8 +363,10 @@ extension EventsAPI{
             let eventRegObject = EventsReg(context:context)
             eventRegObject.eventRegId = (eventRegResponseObject as AnyObject).value(forKey: "eventRegId") as? String
             eventRegObject.eventId = (eventRegResponseObject as AnyObject).value(forKey: "eventId") as? String
+            eventRegObject.clientId = (eventRegResponseObject as AnyObject).value(forKey: "clientId") as? String
             eventRegObject.clientName = (eventRegResponseObject as AnyObject).value(forKey: "clientName") as? String
             eventRegObject.regDate = (eventRegResponseObject as AnyObject).value(forKey: "createdDate") as? String
+            eventRegObject.attendeeStatus = (eventRegResponseObject as AnyObject).value(forKey: "attendeeStatus") as? String
 
             appDelegate.saveContext()
         }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4Ed-Wj-wwi">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NHaasGroteskDSPro-45Lt.otf">
+            <string>NHaasGroteskDSPro-45Lt</string>
+        </array>
+        <array key="NHaasGroteskDSPro-75Bd.otf">
+            <string>NHaasGroteskDSPro-75Bd</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Branding View Controller-->
+        <scene sceneID="WeV-pE-fTF">
+            <objects>
+                <viewController id="4Ed-Wj-wwi" customClass="BrandingViewController" customModule="EngageNYC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AuC-3c-0nI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="q7O-zJ-gOY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EngageNYC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bo7-E5-Iuz">
+                                <rect key="frame" x="78.5" y="309.5" width="218.5" height="48"/>
+                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-75Bd" family="Neue Haas Grotesk Display Pro" pointSize="40"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByD-sW-XyO" userLabel="ErrorMessage">
+                                <rect key="frame" x="16" y="365" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="MA8-gj-mhb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-45Lt" family="Neue Haas Grotesk Display Pro" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.23921568627450979" green="0.22352941176470587" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ByD-sW-XyO" firstAttribute="leading" secondItem="Pss-Ji-AJi" secondAttribute="leading" constant="16" id="NcI-fo-ENm"/>
+                            <constraint firstItem="ByD-sW-XyO" firstAttribute="top" secondItem="bo7-E5-Iuz" secondAttribute="bottom" constant="7.5" id="Qzh-oA-Bhv"/>
+                            <constraint firstItem="bo7-E5-Iuz" firstAttribute="centerX" secondItem="AuC-3c-0nI" secondAttribute="centerX" id="RnK-eL-v1d"/>
+                            <constraint firstItem="q7O-zJ-gOY" firstAttribute="bottom" secondItem="Pss-Ji-AJi" secondAttribute="bottom" id="YQz-Ky-eUn"/>
+                            <constraint firstItem="bo7-E5-Iuz" firstAttribute="centerY" secondItem="AuC-3c-0nI" secondAttribute="centerY" id="efa-io-G2A"/>
+                            <constraint firstItem="Pss-Ji-AJi" firstAttribute="trailing" secondItem="ByD-sW-XyO" secondAttribute="trailing" constant="16" id="flA-sM-B1i"/>
+                            <constraint firstItem="q7O-zJ-gOY" firstAttribute="leading" secondItem="Pss-Ji-AJi" secondAttribute="leading" id="k3Z-Xf-2C8"/>
+                            <constraint firstItem="q7O-zJ-gOY" firstAttribute="top" secondItem="AuC-3c-0nI" secondAttribute="top" id="mNz-eI-Ft7"/>
+                            <constraint firstItem="q7O-zJ-gOY" firstAttribute="trailing" secondItem="Pss-Ji-AJi" secondAttribute="trailing" id="xnd-Ue-njb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Pss-Ji-AJi"/>
+                    </view>
+                    <connections>
+                        <outlet property="errorMessage" destination="ByD-sW-XyO" id="Dcc-H3-nIl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RL5-xa-yUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="83.208395802098963"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Background" width="1335" height="1339"/>
+    </resources>
+</document>
