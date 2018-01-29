@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NHaasGroteskDSPro-55Rg.otf">
+            <string>NHaasGroteskDSPro-55Rg</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Listing Popover Table View Controller-->
+        <scene sceneID="Nyq-rp-R5Z">
+            <objects>
+                <tableViewController storyboardIdentifier="ListingPopoverTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A1Q-7l-AUn" customClass="ListingPopoverTableViewController" customModule="EngageNYC" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5HG-eQ-8HF">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="308"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="44" id="gfY-jo-qr7" customClass="PopOverListCell" customModule="EngageNYC" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="300" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gfY-jo-qr7" id="cNV-gE-sEO">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1U-SF-7Cc">
+                                            <rect key="frame" x="84" y="11" width="208" height="21"/>
+                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="41g-sx-hXz" userLabel="lblImage">
+                                            <rect key="frame" x="32" y="9" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="0zj-Pe-K8Y"/>
+                                                <constraint firstAttribute="width" constant="25" id="tyI-K6-Mwc"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="41g-sx-hXz" firstAttribute="leading" secondItem="cNV-gE-sEO" secondAttribute="leading" constant="32" id="5th-gQ-7Mi"/>
+                                        <constraint firstAttribute="trailing" secondItem="F1U-SF-7Cc" secondAttribute="trailing" constant="8" id="CHn-HG-Vke"/>
+                                        <constraint firstAttribute="bottom" secondItem="41g-sx-hXz" secondAttribute="bottom" constant="9.5" id="W9w-Vt-4Oi"/>
+                                        <constraint firstAttribute="bottom" secondItem="F1U-SF-7Cc" secondAttribute="bottom" constant="11.5" id="YMP-YF-qn8"/>
+                                        <constraint firstItem="F1U-SF-7Cc" firstAttribute="leading" secondItem="cNV-gE-sEO" secondAttribute="leading" constant="84" id="izh-PT-Ujk"/>
+                                        <constraint firstItem="F1U-SF-7Cc" firstAttribute="top" secondItem="cNV-gE-sEO" secondAttribute="top" constant="11" id="nlT-P9-tvL"/>
+                                        <constraint firstItem="41g-sx-hXz" firstAttribute="top" secondItem="cNV-gE-sEO" secondAttribute="top" constant="9" id="wqo-hk-4F7"/>
+                                        <constraint firstItem="F1U-SF-7Cc" firstAttribute="leading" secondItem="41g-sx-hXz" secondAttribute="trailing" constant="27" id="yLR-0P-g0m"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="lblImage" destination="41g-sx-hXz" id="bsc-22-Kq1"/>
+                                    <outlet property="lblTitle" destination="F1U-SF-7Cc" id="Zq9-IG-lVo"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="A1Q-7l-AUn" id="LRE-Nr-eBP"/>
+                            <outlet property="delegate" destination="A1Q-7l-AUn" id="9Bc-tG-H06"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="308"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5is-7T-5PI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1193.5999999999999" y="-621.58920539730138"/>
+        </scene>
+    </scenes>
+</document>

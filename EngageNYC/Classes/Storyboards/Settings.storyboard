@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Arial.ttf">
+            <string>ArialMT</string>
+        </array>
+        <array key="NHaasGroteskDSPro-45Lt.otf">
+            <string>NHaasGroteskDSPro-45Lt</string>
+        </array>
+        <array key="NHaasGroteskDSPro-55Rg.otf">
+            <string>NHaasGroteskDSPro-55Rg</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Settings View Controller-->
+        <scene sceneID="w1d-My-Rcr">
+            <objects>
+                <viewController storyboardIdentifier="SettingsViewController" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ikc-F3-sR1" customClass="SettingsViewController" customModule="EngageNYC" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mh9-El-ebh"/>
+                        <viewControllerLayoutGuide type="bottom" id="yON-8L-uoB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="r1X-Q9-ofA">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wMx-Vc-mY3">
+                                <rect key="frame" x="173" y="117" width="677" height="534"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f2Q-Qe-1vn">
+                                        <rect key="frame" x="0.0" y="0.0" width="677" height="55"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="7pl-uP-U9t">
+                                                <rect key="frame" x="0.0" y="0.0" width="677" height="55"/>
+                                                <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="55" id="KlI-kE-yDG"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2VI-Wy-m3J">
+                                                <rect key="frame" x="212.5" y="13.5" width="252" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="d3A-63-b0B"/>
+                                                    <constraint firstAttribute="width" constant="252" id="mKb-Hx-qna"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="26"/>
+                                                <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8io-E1-Ag6">
+                                                <rect key="frame" x="619" y="9" width="36" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="36" id="1ng-f0-Bk1"/>
+                                                    <constraint firstAttribute="height" constant="36" id="3ve-eu-feu"/>
+                                                </constraints>
+                                                <state key="normal" image="Save"/>
+                                                <connections>
+                                                    <action selector="btnSavePressed:" destination="ikc-F3-sR1" eventType="touchUpInside" id="kuZ-GA-nlW"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZn-K2-q4J">
+                                                <rect key="frame" x="21" y="8" width="36" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="36" id="ZGH-nC-dI9"/>
+                                                    <constraint firstAttribute="width" constant="36" id="b0I-2V-bT7"/>
+                                                </constraints>
+                                                <state key="normal" image="CloseBtn"/>
+                                                <connections>
+                                                    <action selector="btnClosePressed:" destination="ikc-F3-sR1" eventType="touchUpInside" id="QJc-GI-JAk"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="7pl-uP-U9t" secondAttribute="trailing" id="0Sj-FB-HuL"/>
+                                            <constraint firstAttribute="bottom" secondItem="7pl-uP-U9t" secondAttribute="bottom" id="4Wp-Kb-Kh6"/>
+                                            <constraint firstItem="7pl-uP-U9t" firstAttribute="leading" secondItem="f2Q-Qe-1vn" secondAttribute="leading" id="4ud-Fr-PLn"/>
+                                            <constraint firstItem="WZn-K2-q4J" firstAttribute="leading" secondItem="f2Q-Qe-1vn" secondAttribute="leading" constant="21" id="81G-DP-ZU8"/>
+                                            <constraint firstAttribute="height" constant="55" id="FzR-R1-kMx"/>
+                                            <constraint firstItem="2VI-Wy-m3J" firstAttribute="centerX" secondItem="f2Q-Qe-1vn" secondAttribute="centerX" id="Gg4-Mw-YSr"/>
+                                            <constraint firstAttribute="trailing" secondItem="8io-E1-Ag6" secondAttribute="trailing" constant="22" id="Ixy-U1-Lu8"/>
+                                            <constraint firstItem="2VI-Wy-m3J" firstAttribute="top" secondItem="f2Q-Qe-1vn" secondAttribute="top" constant="13.43" id="Woo-fL-cHs"/>
+                                            <constraint firstItem="8io-E1-Ag6" firstAttribute="top" secondItem="f2Q-Qe-1vn" secondAttribute="top" constant="9" id="X9D-GH-89p"/>
+                                            <constraint firstItem="WZn-K2-q4J" firstAttribute="top" secondItem="f2Q-Qe-1vn" secondAttribute="top" constant="8" id="fBA-y4-8se"/>
+                                            <constraint firstItem="7pl-uP-U9t" firstAttribute="top" secondItem="f2Q-Qe-1vn" secondAttribute="top" id="vdk-Mv-WwD"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="130" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-P3-4zL">
+                                        <rect key="frame" x="0.0" y="54" width="677" height="444"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsSwitchCell" id="hI0-br-6cL" customClass="SettingsSwitchTableViewCell" customModule="EngageNYC" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="677" height="130"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hI0-br-6cL" id="1kH-Xk-6Jm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="677" height="130"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Switch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5OG-La-BpB">
+                                                            <rect key="frame" x="12" y="39" width="316" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="316" id="bsa-Bo-pmu"/>
+                                                                <constraint firstAttribute="height" constant="18" id="rtH-dr-0QW"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="21"/>
+                                                            <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dZe-nD-gmT">
+                                                            <rect key="frame" x="12" y="65" width="623" height="1"/>
+                                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="MEO-lE-ZI2"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="When switched on, automatic sync will only occur when connected to WiFi." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjT-Zm-SdF">
+                                                            <rect key="frame" x="12" y="74" width="439.5" height="17"/>
+                                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-45Lt" family="Neue Haas Grotesk Display Pro" pointSize="15"/>
+                                                            <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hep-7m-L6E">
+                                                            <rect key="frame" x="571" y="26" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="switchChanged:" destination="hI0-br-6cL" eventType="valueChanged" id="P8i-yL-nam"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="Hep-7m-L6E" secondAttribute="trailing" constant="42" id="5ZQ-1U-0fm"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZjT-Zm-SdF" secondAttribute="trailing" constant="20" symbolic="YES" id="6t1-jD-1ta"/>
+                                                        <constraint firstItem="dZe-nD-gmT" firstAttribute="top" secondItem="5OG-La-BpB" secondAttribute="bottom" constant="8" symbolic="YES" id="Cvs-jQ-GjA"/>
+                                                        <constraint firstItem="ZjT-Zm-SdF" firstAttribute="top" secondItem="dZe-nD-gmT" secondAttribute="bottom" constant="8" id="NZJ-Zh-7YN"/>
+                                                        <constraint firstItem="5OG-La-BpB" firstAttribute="top" secondItem="1kH-Xk-6Jm" secondAttribute="topMargin" constant="28" id="OSr-6P-BEG"/>
+                                                        <constraint firstItem="5OG-La-BpB" firstAttribute="leading" secondItem="1kH-Xk-6Jm" secondAttribute="leading" constant="12" id="Zoq-oi-sy1"/>
+                                                        <constraint firstItem="ZjT-Zm-SdF" firstAttribute="leading" secondItem="dZe-nD-gmT" secondAttribute="leading" id="cPV-qW-nfr"/>
+                                                        <constraint firstItem="dZe-nD-gmT" firstAttribute="top" secondItem="Hep-7m-L6E" secondAttribute="bottom" constant="8" id="hog-Sn-9k3"/>
+                                                        <constraint firstItem="dZe-nD-gmT" firstAttribute="top" secondItem="1kH-Xk-6Jm" secondAttribute="top" constant="65" id="lsI-BG-7QU"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5OG-La-BpB" secondAttribute="trailing" constant="20" symbolic="YES" id="t5t-Zt-YwC"/>
+                                                        <constraint firstItem="dZe-nD-gmT" firstAttribute="leading" secondItem="1kH-Xk-6Jm" secondAttribute="leading" constant="12" id="tzz-ma-4ZK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="dZe-nD-gmT" secondAttribute="trailing" constant="42" id="xcW-mc-U1R"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="autoSyncSwitch" destination="Hep-7m-L6E" id="MCl-aD-8wA"/>
+                                                </connections>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SliderCell" rowHeight="190" id="Mm6-73-9eL" customClass="SettingsSliderTableViewCell" customModule="EngageNYC" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="158" width="677" height="190"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Mm6-73-9eL" id="p5b-J6-qXi">
+                                                    <rect key="frame" x="0.0" y="0.0" width="677" height="190"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Time (in minutes)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtG-FY-JFw">
+                                                            <rect key="frame" x="12" y="39" width="316" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="5gd-Rc-jgo"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="316" id="JAF-nV-hAI"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="21"/>
+                                                            <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lzx-h7-8Io">
+                                                            <rect key="frame" x="12" y="65" width="623" height="1"/>
+                                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="aiw-Ja-lz2"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s4O-Qc-dIu" userLabel="syncTimeLbl">
+                                                            <rect key="frame" x="603" y="39" width="30" height="26"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="HID-b5-77a"/>
+                                                                <constraint firstAttribute="height" constant="26" id="l7N-eZ-dCC"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="This will adjust your offline syncing timing" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nQ9-qs-S6R">
+                                                            <rect key="frame" x="12" y="74" width="239" height="17"/>
+                                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-45Lt" family="Neue Haas Grotesk Display Pro" pointSize="15"/>
+                                                            <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="2" maxValue="60" translatesAutoresizingMaskIntoConstraints="NO" id="MxG-a0-NdS">
+                                                            <rect key="frame" x="76" y="136" width="525" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="29" id="cke-kW-eH3"/>
+                                                                <constraint firstAttribute="width" constant="521" id="ehJ-Tj-g60"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="syncTimeSlider:" destination="Mm6-73-9eL" eventType="valueChanged" id="QOY-79-Hb3"/>
+                                                            </connections>
+                                                        </slider>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PtG-FY-JFw" secondAttribute="trailing" constant="20" symbolic="YES" id="2QC-uP-z7Y"/>
+                                                        <constraint firstItem="s4O-Qc-dIu" firstAttribute="top" secondItem="PtG-FY-JFw" secondAttribute="top" id="5l7-tI-vhy"/>
+                                                        <constraint firstItem="lzx-h7-8Io" firstAttribute="top" secondItem="PtG-FY-JFw" secondAttribute="bottom" constant="8" symbolic="YES" id="Ca7-cn-QFd"/>
+                                                        <constraint firstItem="MxG-a0-NdS" firstAttribute="centerX" secondItem="p5b-J6-qXi" secondAttribute="centerX" id="IgK-Bb-2i4"/>
+                                                        <constraint firstAttribute="trailing" secondItem="lzx-h7-8Io" secondAttribute="trailing" constant="42" id="Kqo-yp-1Oz"/>
+                                                        <constraint firstItem="nQ9-qs-S6R" firstAttribute="top" secondItem="lzx-h7-8Io" secondAttribute="bottom" constant="8" id="Sit-o8-5ux"/>
+                                                        <constraint firstItem="lzx-h7-8Io" firstAttribute="top" secondItem="p5b-J6-qXi" secondAttribute="top" constant="65" id="WiZ-Bq-uJw"/>
+                                                        <constraint firstAttribute="trailing" secondItem="s4O-Qc-dIu" secondAttribute="trailing" constant="44" id="b4a-af-lFX"/>
+                                                        <constraint firstItem="MxG-a0-NdS" firstAttribute="top" secondItem="nQ9-qs-S6R" secondAttribute="bottom" constant="45" id="hzt-tx-1If"/>
+                                                        <constraint firstItem="PtG-FY-JFw" firstAttribute="leading" secondItem="p5b-J6-qXi" secondAttribute="leading" constant="12" id="kkf-C9-wQN"/>
+                                                        <constraint firstItem="nQ9-qs-S6R" firstAttribute="leading" secondItem="p5b-J6-qXi" secondAttribute="leading" constant="12" id="pAA-zj-5ZV"/>
+                                                        <constraint firstItem="lzx-h7-8Io" firstAttribute="leading" secondItem="p5b-J6-qXi" secondAttribute="leading" constant="12" id="qeH-gk-qJG"/>
+                                                        <constraint firstItem="PtG-FY-JFw" firstAttribute="top" secondItem="p5b-J6-qXi" secondAttribute="topMargin" constant="28" id="vNn-Q9-jDc"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nQ9-qs-S6R" secondAttribute="trailing" id="x26-VS-2QL"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <outlet property="syncTimeLabelText" destination="s4O-Qc-dIu" id="IzG-3x-mn8"/>
+                                                    <outlet property="syncTimeSlider" destination="MxG-a0-NdS" id="9l9-Cs-nZ5"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="ikc-F3-sR1" id="Wco-LA-Hv1"/>
+                                            <outlet property="delegate" destination="ikc-F3-sR1" id="afy-Sm-2zb"/>
+                                        </connections>
+                                    </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Version 1.03 (5)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cA6-gJ-hHg">
+                                        <rect key="frame" x="261" y="505" width="155" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="cOl-fF-UD3"/>
+                                            <constraint firstAttribute="width" constant="155" id="w1C-EJ-hd0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="14"/>
+                                        <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="cA6-gJ-hHg" firstAttribute="top" secondItem="d2U-P3-4zL" secondAttribute="bottom" constant="7" id="Ffv-RY-CtZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="cA6-gJ-hHg" secondAttribute="bottom" constant="8" id="KrG-oA-7Rt"/>
+                                    <constraint firstAttribute="width" constant="677" id="Op6-FS-nZ9"/>
+                                    <constraint firstItem="f2Q-Qe-1vn" firstAttribute="top" secondItem="wMx-Vc-mY3" secondAttribute="top" id="VXD-1U-RrN"/>
+                                    <constraint firstItem="f2Q-Qe-1vn" firstAttribute="leading" secondItem="wMx-Vc-mY3" secondAttribute="leading" id="bWF-o5-7My"/>
+                                    <constraint firstItem="d2U-P3-4zL" firstAttribute="trailing" secondItem="f2Q-Qe-1vn" secondAttribute="trailing" id="csa-V5-mig"/>
+                                    <constraint firstAttribute="trailing" secondItem="f2Q-Qe-1vn" secondAttribute="trailing" id="hS7-Cm-QDl"/>
+                                    <constraint firstAttribute="height" constant="534" id="jsZ-EU-tk7"/>
+                                    <constraint firstItem="d2U-P3-4zL" firstAttribute="leading" secondItem="f2Q-Qe-1vn" secondAttribute="leading" id="wnv-lT-j0T"/>
+                                    <constraint firstItem="cA6-gJ-hHg" firstAttribute="centerX" secondItem="wMx-Vc-mY3" secondAttribute="centerX" id="yrX-20-2MR"/>
+                                    <constraint firstItem="d2U-P3-4zL" firstAttribute="top" secondItem="wMx-Vc-mY3" secondAttribute="top" constant="54" id="zSA-bT-EyR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wMx-Vc-mY3" firstAttribute="centerY" secondItem="r1X-Q9-ofA" secondAttribute="centerY" id="gfQ-hI-UmX"/>
+                            <constraint firstItem="wMx-Vc-mY3" firstAttribute="centerX" secondItem="r1X-Q9-ofA" secondAttribute="centerX" id="rWP-LZ-IBu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="r7i-Q0-Qph"/>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1024" height="768"/>
+                    <connections>
+                        <outlet property="btnClosePressed" destination="WZn-K2-q4J" id="r0M-nH-acn"/>
+                        <outlet property="btnSavePressed" destination="8io-E1-Ag6" id="xI8-8m-JjT"/>
+                        <outlet property="lblAppVersion" destination="cA6-gJ-hHg" id="pVK-Me-jHJ"/>
+                        <outlet property="tblSettingsUI" destination="d2U-P3-4zL" id="Bwz-EX-jWG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9FA-U4-ofC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4606.640625" y="-667.96875"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Background" width="1335" height="1339"/>
+        <image name="CloseBtn" width="33" height="30"/>
+        <image name="Save" width="50" height="50"/>
+    </resources>
+</document>
