@@ -54,6 +54,8 @@ final class ChartAPI : SFCommonAPI
             self.ChartsFromJSONList(jsonResponse: response)
             completion()
         }) { (error) in
+            Logger.shared.log(level: .error, msg: error)
+            Utility.displayErrorMessage(errorMsg: error)
             print(error)
             //failure(error)
         }

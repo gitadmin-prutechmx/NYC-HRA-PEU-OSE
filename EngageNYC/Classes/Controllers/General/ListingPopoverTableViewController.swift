@@ -46,11 +46,12 @@ class ListingPopoverTableViewController: UITableViewController {
     var delegate : ListingPopoverDelegate?
     
     var selectedId : String?
+    let IMAGE_WIDTH_MARGIN = 110
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.isScrollEnabled = false
+        self.tableView.isScrollEnabled = true
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44.0
@@ -86,11 +87,14 @@ class ListingPopoverTableViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: when) {
             
             var height = 0
-            let width = 200
+            let strwidth = self.getLongestString()
+            let font = UIFont(name: "NHaasGroteskDSPro-55Rg", size: 18.0)
+            let width = self.widthOfString(strwidth, withFont: font!)
             
             for index in 0...self.arrList.count{
                 let frame = self.tableView.rectForRow(at: IndexPath(row: index, section: 0))
                 height = height + Int(frame.size.height)
+                
             }
             
             
@@ -98,8 +102,29 @@ class ListingPopoverTableViewController: UITableViewController {
                 height = 600
             }
             
-            self.preferredContentSize = CGSize(width: width, height: height)
+            self.preferredContentSize = CGSize(width: Int(width)+self.IMAGE_WIDTH_MARGIN, height: height)
         }
+    }
+    
+    
+    func getLongestString() -> String {
+        
+        var longestWord = ""
+        
+        for item in self.arrList
+        {
+            let str = item.name
+            if longestWord == "" || (str?.count)! > longestWord.count {
+                longestWord = str!
+            }
+        }
+        
+        return longestWord
+    }
+    
+    func widthOfString(_ string: String, withFont font: UIFont) -> CGFloat {
+        let attributes: [NSAttributedStringKey : Any] = [NSFontAttributeName as NSString: font]
+        return NSAttributedString(string: string, attributes: attributes as [String : Any]).size().width
     }
     
     

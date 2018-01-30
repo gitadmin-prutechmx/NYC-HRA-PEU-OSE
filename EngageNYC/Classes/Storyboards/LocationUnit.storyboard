@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L86-Wb-ql9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L86-Wb-ql9">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -275,7 +275,7 @@
                                                             <rect key="frame" x="104" y="0.0" width="104" height="73.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Complete" translatesAutoresizingMaskIntoConstraints="NO" id="VUx-9P-PZF" userLabel="attempt">
-                                                                    <rect key="frame" x="35.517241379310576" y="20" width="29.999999999999989" height="30.000000000000227"/>
+                                                                    <rect key="frame" x="38.5" y="23" width="30" height="30"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
@@ -285,7 +285,7 @@
                                                             <rect key="frame" x="208" y="0.0" width="104" height="73.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Complete" translatesAutoresizingMaskIntoConstraints="NO" id="obn-VO-6bx" userLabel="contact">
-                                                                    <rect key="frame" x="35.793103448263082" y="20" width="29.999999999999972" height="30.000000000000227"/>
+                                                                    <rect key="frame" x="43.816091953980504" y="20" width="30.000000000000028" height="30.000000000000227"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
@@ -295,7 +295,7 @@
                                                             <rect key="frame" x="312" y="0.0" width="104" height="73.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Complete" translatesAutoresizingMaskIntoConstraints="NO" id="2Sm-d1-MqJ" userLabel="surveyStatus">
-                                                                    <rect key="frame" x="36.068965517215474" y="20.000000000000455" width="30.000000000000028" height="27.999999999999773"/>
+                                                                    <rect key="frame" x="42.999999999957481" y="20" width="30.000000000000028" height="28.000000000000227"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
@@ -311,7 +311,7 @@
                                                             <rect key="frame" x="520" y="0.0" width="104" height="73.5"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Complete" translatesAutoresizingMaskIntoConstraints="NO" id="JlH-T6-aQo" userLabel="sync">
-                                                                    <rect key="frame" x="36.620689655120259" y="20.000000000000455" width="30.000000000000057" height="29.999999999999773"/>
+                                                                    <rect key="frame" x="51.620689655120259" y="20.000000000000455" width="30.000000000000057" height="29.999999999999773"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>
@@ -320,15 +320,20 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4XW-g2-2fp">
                                                             <rect key="frame" x="624" y="0.0" width="104" height="73.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="07/12/2007 9:000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Klb-GI-Ud1" userLabel="syncDate">
-                                                                    <rect key="frame" x="0.0" y="20" width="101" height="38"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07/12/2007 9:000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Klb-GI-Ud1" userLabel="syncDate">
+                                                                    <rect key="frame" x="1" y="9" width="101" height="58"/>
                                                                     <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="Klb-GI-Ud1" secondAttribute="trailing" constant="1.97" id="4tO-At-JVu"/>
+                                                                <constraint firstItem="Klb-GI-Ud1" firstAttribute="leading" secondItem="4XW-g2-2fp" secondAttribute="leading" constant="1.03" id="Clm-ln-wOk"/>
+                                                                <constraint firstItem="Klb-GI-Ud1" firstAttribute="top" secondItem="4XW-g2-2fp" secondAttribute="top" constant="9.0500000000000007" id="DuB-2a-zQ9"/>
+                                                                <constraint firstAttribute="bottom" secondItem="Klb-GI-Ud1" secondAttribute="bottom" constant="6.4500000000000002" id="gMV-1w-oQW"/>
+                                                            </constraints>
                                                         </view>
                                                     </subviews>
                                                 </stackView>
@@ -386,7 +391,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kmT-Gf-blQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="174" y="814"/>
+            <point key="canvasLocation" x="173.4375" y="813.8671875"/>
         </scene>
         <!--ClientListingViewController-->
         <scene sceneID="RZe-gq-hCv">
@@ -479,7 +484,7 @@
                                                             <rect key="frame" x="455" y="0.0" width="91" height="71"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Complete" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-fB-Ngb" userLabel="sync">
-                                                                    <rect key="frame" x="28.379310344746955" y="20" width="29.999999999999773" height="30"/>
+                                                                    <rect key="frame" x="33.701149425311996" y="20" width="29.999999999999773" height="30"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
                                                             </subviews>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -359,6 +359,7 @@
                         <outlet property="boroughView" destination="9bc-3g-PiC" id="fiK-ds-1CB"/>
                         <outlet property="btnAptNumber" destination="lR1-M7-fTA" id="apy-og-ZF0"/>
                         <outlet property="lblAddress" destination="Ssq-Yo-Eld" id="hkh-Z6-7Im"/>
+                        <outlet property="rightBarButton" destination="xMQ-xG-QCc" id="KK8-iD-XlA"/>
                         <outlet property="streetNameView" destination="vdg-Bq-VnE" id="Kvl-Pp-mdv"/>
                         <outlet property="streetNumberView" destination="Fuo-NC-X7n" id="acU-UQ-Lyg"/>
                         <outlet property="txtAptFloor" destination="Y2B-HO-bc5" id="xhx-r9-5zF"/>

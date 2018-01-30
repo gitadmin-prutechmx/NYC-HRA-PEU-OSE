@@ -84,6 +84,10 @@ class NewClientInfoWithAddressViewController: UIViewController {
                     newContactObj.locationUnitId = locationUnitTuple.locUnitId
                     newContactObj.assignmentLocUnitid = locationUnitTuple.assignmentLocUnitId
                 }
+                else{
+                    newContactObj.locationUnitId = newContactObj.sameLocUnitId
+                }
+               
                 
                 
                 //create new contact
@@ -106,7 +110,34 @@ class NewClientInfoWithAddressViewController: UIViewController {
                     
                 }
             }
-            else if(newContactObj.zip.characters.count < 5){
+            else if(newContactObj.streetNum.isEmpty){
+                //apartmentView.shake()
+                self.view.makeToast("Please enter street Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    self.rightBarButton.isEnabled = true
+                    
+                    
+                }
+            }
+            else if(newContactObj.streetName.isEmpty){
+                //apartmentView.shake()
+                self.view.makeToast("Please enter street Name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    self.rightBarButton.isEnabled = true
+                    
+                    
+                }
+            }
+            else if(newContactObj.borough.isEmpty){
+                //apartmentView.shake()
+                self.view.makeToast("Please select borough.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                    
+                    self.rightBarButton.isEnabled = true
+                    
+                    
+                }
+            }
+            else if(newContactObj.zip.count < 5){
                 
                 // zipView.shake()
                 
@@ -126,6 +157,9 @@ class NewClientInfoWithAddressViewController: UIViewController {
                     newContactObj.locationUnitId = locationUnitTuple.locUnitId
                     newContactObj.assignmentLocUnitid = locationUnitTuple.assignmentLocUnitId
                   
+                }
+                else{
+                    newContactObj.locationUnitId = newContactObj.diffLocUnitId
                 }
                 
                 //create new contact

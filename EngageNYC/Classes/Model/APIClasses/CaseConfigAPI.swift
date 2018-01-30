@@ -36,6 +36,8 @@ final class CaseConfigAPI : SFCommonAPI
             self.CaseConfigFromJSONList(jsonResponse: response as! Dictionary<String, AnyObject>)
             completion()
         }) { (error) in
+            Logger.shared.log(level: .error, msg: error)
+            Utility.displayErrorMessage(errorMsg: error)
             print(error)
             //failure(error)
         }

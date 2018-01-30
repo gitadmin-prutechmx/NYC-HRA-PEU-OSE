@@ -32,9 +32,9 @@ class AddressInfoViewModel{
         }
         
         let unknownListingPopOverObj = ListingPopOverDO()
-        unknownListingPopOverObj.id = ""
+        unknownListingPopOverObj.id = virtualUnitName.unknown.rawValue
         unknownListingPopOverObj.name = virtualUnitName.unknown.rawValue
-        unknownListingPopOverObj.additionalId = ""
+        unknownListingPopOverObj.additionalId = virtualUnitName.unknown.rawValue
         
         arrLocationUnits.insert(unknownListingPopOverObj, at: 0)
         
@@ -47,7 +47,7 @@ class AddressInfoViewModel{
         var arrBorough = [String]()
         if let picklist =  PicklistAPI.shared.getPicklist(objectType: objectType, fieldName: fieldName){
             let boroughStr = picklist.value!
-            arrBorough = String(boroughStr.characters.dropLast()).components(separatedBy: ";")
+            arrBorough = String(boroughStr.dropLast()).components(separatedBy: ";")
         }
         
         return arrBorough

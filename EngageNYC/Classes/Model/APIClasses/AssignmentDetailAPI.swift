@@ -56,7 +56,8 @@ final class AssignmentDetailAPI : SFCommonAPI
             self.AssignmentsFromJSONList(jsonResponse: response)
             completion()
         }) { (error) in
-            print(error)
+            Logger.shared.log(level: .error, msg: error)
+            Utility.displayErrorMessage(errorMsg: error)
             //failure(error)
         }
     }

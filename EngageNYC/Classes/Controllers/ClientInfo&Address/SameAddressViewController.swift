@@ -37,7 +37,7 @@ class SameAddressViewController: UIViewController {
             popoverContent.popoverPresentationController?.sourceView = btnAptNo
             popoverContent.popoverPresentationController?.sourceRect = btnAptNo.bounds
             popoverContent.type = .unitsList
-            popoverContent.selectedId = self.newContactObj.locationUnitId
+            popoverContent.selectedId = self.newContactObj.sameLocUnitId
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
             popoverContent.delegate = self
             self.present(popoverContent, animated: true, completion: nil)
@@ -58,7 +58,7 @@ class SameAddressViewController: UIViewController {
                 if let unitName = newUnitVC.txtUnit.text{
                     self.btnAptNo.setTitle(unitName, for: .normal)
                     self.newContactObj.sameUnitName = unitName
-                    self.newContactObj.locationUnitId = newUnitVC.locUnitId
+                    self.newContactObj.sameLocUnitId = newUnitVC.locUnitId
                     self.newContactObj.assignmentLocUnitid = newUnitVC.assignmentLocUnitId
                 }
             }
@@ -78,7 +78,7 @@ extension SameAddressViewController : ListingPopoverDelegate{
         btnAptNo.setTitle(obj.name, for: .normal)
 
         self.newContactObj.sameUnitName = obj.name
-        self.newContactObj.locationUnitId = obj.id
+        self.newContactObj.sameLocUnitId = obj.id
         self.newContactObj.assignmentLocUnitid = obj.additionalId
     }
 }

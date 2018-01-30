@@ -18,9 +18,9 @@ class UnitListingViewModel{
         
         var header = [SortingHeaderCell]()
         
-        header.append(SortingHeaderCell(withTitle: "Unit", headerSubTitle: "", headerArrowPostion: .none, allignment: .left))
-        header.append(SortingHeaderCell(withTitle: "Attempt", headerSubTitle: "", headerArrowPostion: .up, allignment: .center))
-        header.append(SortingHeaderCell(withTitle: "Contact", headerSubTitle: "", headerArrowPostion: .none, allignment: .center))
+        header.append(SortingHeaderCell(withTitle: "Unit", headerSubTitle: "", headerArrowPostion: .up, allignment: .left))
+        header.append(SortingHeaderCell(withTitle: "Attempt", headerSubTitle: "", headerArrowPostion: .none, allignment: .left))
+        header.append(SortingHeaderCell(withTitle: "Contact", headerSubTitle: "", headerArrowPostion: .none, allignment: .left))
         header.append(SortingHeaderCell(withTitle: "Survey", headerSubTitle: "", headerArrowPostion: .none, allignment: .center))
         header.append(SortingHeaderCell(withTitle: "# of Clients", headerSubTitle: "", headerArrowPostion: .none, allignment: .center))
         header.append(SortingHeaderCell(withTitle: "Sync", headerSubTitle: "", headerArrowPostion: .none, allignment: .center))

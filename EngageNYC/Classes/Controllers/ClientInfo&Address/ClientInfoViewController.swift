@@ -25,12 +25,14 @@ class NewContactDO{
     var age:String = ""
     var syncDate:String = ""
     var sameUnitName:String = ""
+    var sameLocUnitId:String = ""
     
     var streetNum:String = ""
     var streetName:String = ""
     var borough:String = ""
     var zip:String = ""
     var diffUnitName:String = ""
+    var diffLocUnitId:String = ""
     var floor:String = ""
     
     
@@ -461,7 +463,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
         if let phone = txtPhoneName.text{
             // objNewContact.phone = phone
-            if(!phone.isEmpty && phone.characters.count < 14)
+            if(!phone.isEmpty && phone.count < 14)
             {
                 phoneView.shake()
                 self.view.makeToast("Phone number should be in 10 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in

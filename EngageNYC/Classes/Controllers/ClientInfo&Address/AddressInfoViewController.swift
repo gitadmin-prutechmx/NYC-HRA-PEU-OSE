@@ -26,6 +26,7 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
     @IBOutlet weak var txtAptFloor: UITextField!
     @IBOutlet weak var lblAddress: UILabel!
     
+    @IBOutlet weak var rightBarButton: UIButton!
     var boroughPickListArray: [String]!
     let pickerView = UIPickerView()
     
@@ -111,26 +112,60 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
     }
     @IBAction func btnRightBarPressed(_ sender: Any) {
         
-      if(contactObj.aptNo == virtualUnitName.unknown.rawValue){
-            
-        let locationUnitTuple = self.viewModel.createVirtualUnit(unitName:contactObj.aptNo,canvasserTaskDataObject:canvasserTaskDataObject)
-        contactObj.locationUnitId = locationUnitTuple.locUnitId
-        contactObj.assignmentLocUnitId = locationUnitTuple.assignmentLocUnitId
+        self.rightBarButton.isEnabled = false
         
+        if(contactObj.streetNum.isEmpty){
+            //apartmentView.shake()
+            self.view.makeToast("Please enter street Number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.rightBarButton.isEnabled = true
+                
+                
+            }
+        }
+        else if(contactObj.streetName.isEmpty){
+            //apartmentView.shake()
+            self.view.makeToast("Please enter street Name.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.rightBarButton.isEnabled = true
+                
+                
+            }
+        }
+        else if(contactObj.borough.isEmpty){
+            //apartmentView.shake()
+            self.view.makeToast("Please select borough.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.rightBarButton.isEnabled = true
+                
+                
+            }
+        }
+        else{
+            
+            if(contactObj.aptNo == virtualUnitName.unknown.rawValue){
+                
+                let locationUnitTuple = self.viewModel.createVirtualUnit(unitName:contactObj.aptNo,canvasserTaskDataObject:canvasserTaskDataObject)
+                contactObj.locationUnitId = locationUnitTuple.locUnitId
+                contactObj.assignmentLocUnitId = locationUnitTuple.assignmentLocUnitId
+                
+            }
+            
+            self.viewModel.updateContact(objContactDO: contactObj)
+            
+            self.view.makeToast("Contact has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                //Notification Center:- reload unitlisting
+                CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+                
+                //Notification Center:- reload unitlisting
+                CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.CLIENTLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }
+            
         }
         
-       self.viewModel.updateContact(objContactDO: contactObj)
-        
-       self.view.makeToast("Contact has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-            //Notification Center:- reload unitlisting
-            CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
-            
-            //Notification Center:- reload unitlisting
-            CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.CLIENTLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        }
     }
     
     @IBAction func btnAptNoPressed(_ sender: Any) {
@@ -142,7 +177,7 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
             popoverContent.popoverPresentationController?.sourceView = btnAptNumber
             popoverContent.popoverPresentationController?.sourceRect = btnAptNumber.bounds
             popoverContent.type = .unitsList
-            popoverContent.selectedId = btnAptNumber.titleLabel?.text
+            popoverContent.selectedId = self.contactObj.locationUnitId
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
             popoverContent.delegate = self
             self.present(popoverContent, animated: true, completion: nil)
@@ -195,9 +230,9 @@ extension AddressInfoViewController{
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         
-        let currentCharacterCount = txtZip.text?.characters.count ?? 0
+        let currentCharacterCount = txtZip.text?.count ?? 0
         
-        let newLength = currentCharacterCount + value.characters.count
+        let newLength = currentCharacterCount + value.count
         if(newLength > 9)
         {
             self.contactObj.streetNum = txtZip.text!
@@ -218,9 +253,9 @@ extension AddressInfoViewController{
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         
-        let currentCharacterCount = txtAptFloor.text?.characters.count ?? 0
+        let currentCharacterCount = txtAptFloor.text?.count ?? 0
         
-        let newLength = currentCharacterCount + value.characters.count
+        let newLength = currentCharacterCount + value.count
         if(newLength > 3)
         {
             self.contactObj.floor = txtAptFloor.text!
@@ -239,9 +274,9 @@ extension AddressInfoViewController{
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         
-        let currentCharacterCount = txtStreetNumber.text?.characters.count ?? 0
+        let currentCharacterCount = txtStreetNumber.text?.count ?? 0
         
-        let newLength = currentCharacterCount + value.characters.count
+        let newLength = currentCharacterCount + value.count
         if(newLength > 23)
         {
             self.contactObj.streetNum = txtStreetNumber.text!
@@ -266,7 +301,7 @@ extension AddressInfoViewController{
             guard let text = txtStreetName.text else { return true }
             
             
-            let newLength = text.characters.count + string.characters.count - range.length
+            let newLength = text.count + string.count - range.length
             if(newLength > 100){
                 self.contactObj.streetName = txtStreetName.text!
                 return false
@@ -338,6 +373,7 @@ extension AddressInfoViewController{
 
 extension AddressInfoViewController : ListingPopoverDelegate{
     func selectedItem(withObj obj: ListingPopOverDO, selectedIndex index: Int, popOverType type: PopoverType) {
+        btnAptNumber.setTitle(obj.name, for: .normal)
         self.contactObj.aptNo = obj.name
         self.contactObj.locationUnitId = obj.id
         self.contactObj.assignmentLocUnitId = obj.additionalId
