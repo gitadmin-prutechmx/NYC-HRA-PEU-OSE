@@ -126,7 +126,7 @@ final class LocationUnitAPI:SFCommonAPI {
                         
                         locationUnitGroup.leave()
                         
-                        print("assignmentLocGroup: \(locationUnit.unitName!)")
+                        print("LocationUnitGroup: \(locationUnit.unitName!)")
                     }
                     
                     

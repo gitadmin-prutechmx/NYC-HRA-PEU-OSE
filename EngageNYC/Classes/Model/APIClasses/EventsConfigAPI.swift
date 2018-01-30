@@ -37,6 +37,8 @@ final class EventsConfigAPI : SFCommonAPI
             self.EventsConfigFromJSONList(jsonResponse: response as! Dictionary<String, AnyObject>)
             completion()
         }) { (error) in
+            Logger.shared.log(level: .error, msg: error)
+            Utility.displayErrorMessage(errorMsg: error)
             print(error)
             //failure(error)
         }

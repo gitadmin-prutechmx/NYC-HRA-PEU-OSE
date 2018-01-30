@@ -18,8 +18,8 @@ class ClientListingViewModel{
         
         var header = [SortingHeaderCell]()
         
-        header.append(SortingHeaderCell(withTitle: "First Name", headerSubTitle: "", headerArrowPostion: .none, allignment: .left))
-        header.append(SortingHeaderCell(withTitle: "Last Name", headerSubTitle: "", headerArrowPostion: .up, allignment: .left))
+        header.append(SortingHeaderCell(withTitle: "First Name", headerSubTitle: "", headerArrowPostion: .up, allignment: .left))
+        header.append(SortingHeaderCell(withTitle: "Last Name", headerSubTitle: "", headerArrowPostion: .none, allignment: .left))
         header.append(SortingHeaderCell(withTitle: "Unit", headerSubTitle: "", headerArrowPostion: .none, allignment: .left))
         header.append(SortingHeaderCell(withTitle: "Phone", headerSubTitle: "", headerArrowPostion: .none, allignment: .center))
         header.append(SortingHeaderCell(withTitle: "# of Cases", headerSubTitle: "", headerArrowPostion: .none, allignment: .center))

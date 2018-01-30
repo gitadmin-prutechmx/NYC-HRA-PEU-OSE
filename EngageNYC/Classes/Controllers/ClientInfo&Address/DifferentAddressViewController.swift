@@ -100,7 +100,7 @@ class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITe
             popoverContent.popoverPresentationController?.sourceView = btnAptNumber
             popoverContent.popoverPresentationController?.sourceRect = btnAptNumber.bounds
             popoverContent.type = .unitsList
-            popoverContent.selectedId = self.newContactObj.locationUnitId
+            popoverContent.selectedId = self.newContactObj.diffLocUnitId
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
             popoverContent.delegate = self
             self.present(popoverContent, animated: true, completion: nil)
@@ -122,7 +122,7 @@ class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITe
                     self.btnAptNumber.setTitle(unitName, for: .normal)
                     
                     self.newContactObj.diffUnitName = unitName
-                    self.newContactObj.locationUnitId = newUnitVC.locUnitId
+                    self.newContactObj.diffLocUnitId = newUnitVC.locUnitId
                     self.newContactObj.assignmentLocUnitid = newUnitVC.assignmentLocUnitId
                 }
             }
@@ -154,9 +154,9 @@ extension DifferentAddressViewController{
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         
-        let currentCharacterCount = txtZip.text?.characters.count ?? 0
+        let currentCharacterCount = txtZip.text?.count ?? 0
         
-        let newLength = currentCharacterCount + value.characters.count
+        let newLength = currentCharacterCount + value.count
         if(newLength > 9)
         {
             self.newContactObj.streetNum = txtZip.text!
@@ -177,9 +177,9 @@ extension DifferentAddressViewController{
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         
-        let currentCharacterCount = txtAptFloor.text?.characters.count ?? 0
+        let currentCharacterCount = txtAptFloor.text?.count ?? 0
         
-        let newLength = currentCharacterCount + value.characters.count
+        let newLength = currentCharacterCount + value.count
         if(newLength > 3)
         {
             self.newContactObj.floor = txtAptFloor.text!
@@ -198,9 +198,9 @@ extension DifferentAddressViewController{
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         
-        let currentCharacterCount = txtStreetNumber.text?.characters.count ?? 0
+        let currentCharacterCount = txtStreetNumber.text?.count ?? 0
         
-        let newLength = currentCharacterCount + value.characters.count
+        let newLength = currentCharacterCount + value.count
         if(newLength > 23)
         {
             self.newContactObj.streetNum = txtStreetNumber.text!
@@ -225,7 +225,7 @@ extension DifferentAddressViewController{
             guard let text = txtStreetName.text else { return true }
             
             
-            let newLength = text.characters.count + string.characters.count - range.length
+            let newLength = text.count + string.count - range.length
             if(newLength > 100){
                 self.newContactObj.streetName = txtStreetName.text!
                 return false
@@ -294,7 +294,7 @@ extension DifferentAddressViewController : ListingPopoverDelegate{
         btnAptNumber.setTitle(obj.name, for: .normal)
         
         self.newContactObj.diffUnitName = obj.name
-        self.newContactObj.locationUnitId = obj.id
+        self.newContactObj.diffLocUnitId = obj.id
         self.newContactObj.assignmentLocUnitid = obj.additionalId
     }
 }

@@ -308,11 +308,11 @@ extension NewUnitViewController{
         let compSepByCharInSet = string.components(separatedBy: aSet)
         let numberFiltered = compSepByCharInSet.joined(separator: "")
         
-        let currentCharacterCount = txtUnit.text?.characters.count ?? 0
+        let currentCharacterCount = txtUnit.text?.count ?? 0
         if (range.length + range.location > currentCharacterCount){
             return false
         }
-        let newLength = currentCharacterCount + string.characters.count - range.length
+        let newLength = currentCharacterCount + string.count - range.length
         if(newLength > 10){
             return false
         }
