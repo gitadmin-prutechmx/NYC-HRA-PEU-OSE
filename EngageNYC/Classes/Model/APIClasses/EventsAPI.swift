@@ -355,6 +355,11 @@ extension EventsAPI{
             eventObject.city = events.value(forKey: "Event_City__c") as? String
             eventObject.eventsDynamic = events as NSObject
             
+            if let eventStaffLeadResult = (events as AnyObject).value(forKey: "Event_Staff_Lead__r") as? NSDictionary {
+                eventObject.eventStaffLeadId = eventStaffLeadResult.value(forKey: "Id") as? String ?? ""
+                eventObject.eventStaffLeadName = eventStaffLeadResult.value(forKey: "Name") as? String ?? ""
+            }
+            
             appDelegate.saveContext()
         }
         

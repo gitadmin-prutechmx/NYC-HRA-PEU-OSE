@@ -47,6 +47,7 @@ class ContactDO{
     init(){
         self.openCases = 0
         self.totalCases = "0"
+        self.createdById = ""
     }
 
 }
@@ -186,7 +187,7 @@ class ClientListingViewController: BroadcastReceiverViewController,UITableViewDe
             if let clientlistingHeader = self.viewModel.getClientListingHeader(){
                 self.tableHeader.arrSortingHeader = clientlistingHeader
             }
-             self.lblClients.text = "CLIENTS (\(self.arrContactsMain.count))"
+             self.lblClients.text = "CLIENTS (\(self.arrContactsSorted.count))"
             
             self.tblClients.reloadData()
         }
@@ -205,7 +206,7 @@ class ClientListingViewController: BroadcastReceiverViewController,UITableViewDe
                 
             {
                 self.arrContactsSorted = clientlistingColoumn.sort(inOrder: direction, main: self.arrContactsMain)
-                self.arrContactsMain = self.arrContactsSorted
+                //self.arrContactsMain = self.arrContactsSorted
                 
             }
             tblClients.reloadData()
@@ -223,10 +224,14 @@ class ClientListingViewController: BroadcastReceiverViewController,UITableViewDe
             selectedContactObj =  arrContactsFiltered[indexRow!]
         }
         else{
-            selectedContactObj =  arrContactsMain[indexRow!]
+            selectedContactObj =  arrContactsSorted[indexRow!]
         }
         
-        if let noOfOpenCases = selectedContactObj.openCases , noOfOpenCases > 0 && canvasserTaskDataObject.userObj.userId !=  selectedContactObj.createdById  {
+        if selectedContactObj.createdById == nil{
+            selectedContactObj.createdById = ""
+        }
+        
+        if let noOfOpenCases = selectedContactObj.openCases , noOfOpenCases > 0 && canvasserTaskDataObject.userObj.userId !=  selectedContactObj.createdById && !selectedContactObj.createdById.isEmpty  {
             
             self.view.makeToast("This client already have open cases so you can't edit it.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                 
@@ -302,7 +307,7 @@ extension ClientListingViewController{
             self.lblClients.text = "CLIENTS (\(self.arrContactsFiltered.count))"
         }
         else{
-            self.lblClients.text = "CLIENTS (\(self.arrContactsMain.count))"
+            self.lblClients.text = "CLIENTS (\(self.arrContactsSorted.count))"
         }
         self.tblClients.reloadData()
         
@@ -321,7 +326,7 @@ extension ClientListingViewController {
             return arrContactsFiltered.count
         }
         
-        return arrContactsMain.count
+        return arrContactsSorted.count
         
         
     }
@@ -341,7 +346,7 @@ extension ClientListingViewController {
             cell.setupView(forCellObject:arrContactsFiltered[indexPath.row],index:indexPath)
         }
         else{
-            cell.setupView(forCellObject:arrContactsMain[indexPath.row],index:indexPath)
+            cell.setupView(forCellObject:arrContactsSorted[indexPath.row],index:indexPath)
         }
         
         
@@ -363,7 +368,7 @@ extension ClientListingViewController {
             selectedContactObj = arrContactsFiltered[indexPath.row]
         }
         else{
-            selectedContactObj = arrContactsMain[indexPath.row]
+            selectedContactObj = arrContactsSorted[indexPath.row]
         }
         
         

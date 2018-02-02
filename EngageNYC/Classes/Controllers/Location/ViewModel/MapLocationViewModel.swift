@@ -23,6 +23,8 @@ class MapLocationViewModel{
         LocationAPI.shared.updateLocationStatus(assignmentLocId: assignmentLocId,locStatus: locStatus)
     }
     
+   
+    
 
     func loadLocations(assignmentId:String) -> [MapLocationDO]{
         

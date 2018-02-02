@@ -136,6 +136,8 @@ class AssignmentLocationUnitInfoDO{
         
         self.isObjectChanged = false
         
+        self.isUnitListing = false
+        
     }
     
     func EnableDisableSaveBtn(){
@@ -220,6 +222,10 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
         assignmentLocUnitInfoObj.notes = textView.text
     }
     
+    func updateContactList(){
+         self.ContactsPicklist = self.viewModel.getContactsOnUnit(assignmentLocUnitId: self.assignmentLocUnitInfoObj.assignmentLocationUnitId)
+    }
+    
     
     
     func reloadView(){
@@ -229,7 +235,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
             self.contactOutcomePicklist = self.viewModel.getAssignmentLocUnitPicklist(objectType: "Assignment_Location_Unit__c", fieldName: "Contact_Outcome__c")
             self.reasonPicklist = self.viewModel.getAssignmentLocUnitPicklist(objectType: "Assignment_Location_Unit__c", fieldName: "reason__c")
             self.followUpTypePicklist = self.viewModel.getAssignmentLocUnitPicklist(objectType: "Assignment_Location_Unit__c", fieldName: "Follow_Up_Type__c")
-            self.ContactsPicklist = self.viewModel.getContactsOnUnit(assignmentLocUnitId: self.assignmentLocUnitInfoObj.assignmentLocationUnitId)
+           self.updateContactList()
             
             if(self.assignmentLocUnitInfoObj != nil){
                 
@@ -313,6 +319,11 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        isContactOutcomeSelect = false
+        isFollowUpTypeSelect = false
+        isSelectContactSelect = false
+        
         self.navigationController?.isNavigationBarHidden = true;
     }
     
@@ -889,12 +900,14 @@ extension AssignmentLocationUnitInformationViewController:DynamicPicklistDelegat
         if(isSelectContactSelect){
              assignmentLocUnitInfoObj.contactName = pickListValue.name
              assignmentLocUnitInfoObj.contactId = pickListValue.id
+            
+            self.updateContactList()
         }
-        
-        isContactOutcomeSelect = false
-        isFollowUpTypeSelect = false
-        isSelectContactSelect = false
-        
+//
+//        isContactOutcomeSelect = false
+//        isFollowUpTypeSelect = false
+//        isSelectContactSelect = false
+//
         self.tblAssignmentLocationUnit.reloadData()
     }
 }

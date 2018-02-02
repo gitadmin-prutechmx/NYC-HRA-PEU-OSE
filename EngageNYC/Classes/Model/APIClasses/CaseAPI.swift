@@ -189,6 +189,7 @@ final class CaseAPI:SFCommonAPI {
             
             updateCaseIdInCoreData(caseDataDict: caseDataDictonary)
             updateCaseIdInIssue(caseDataDict: caseDataDictonary)
+           // addCaseNotes(caseDataDict: caseDataDictonary)
             
         }
         else{
@@ -228,6 +229,10 @@ final class CaseAPI:SFCommonAPI {
             print("update CaseIdInCoreData")
             
         }
+        
+    }
+    
+    func addCaseNotes(caseDataDict:[String:AnyObject]){
         
     }
     
@@ -394,8 +399,41 @@ final class CaseAPI:SFCommonAPI {
             caseData.actionStatus = actionStatus.create.rawValue
         }
         
+        
+        
         appDelegate.saveContext()
       
+        //saveCaseNotes(caseId: caseData.caseId!, objCase: objCase)
+        
+    }
+    
+    func saveCaseNotes(caseId:String,objCase:CaseDO){
+        
+        let caseNoteObject = CaseNotes(context:context)
+        
+        caseNoteObject.caseId = caseId
+        
+        caseNoteObject.createdDate = ""
+        caseNoteObject.notes = objCase.caseNotes
+        
+        caseNoteObject.assignmentLocUnitId = objCase.assignmentLocUnitId
+        
+        caseNoteObject.assignmentId = objCase.assignmentId
+        
+        appDelegate.saveContext()
+        
+    }
+    
+    func updateCaseNotes(objCase:CaseDO){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        updateObjectDic["notes"] = objCase.caseNotes as AnyObject?
+        updateObjectDic["createdDate"] = "" as AnyObject?
+        
+        
+       
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.cases.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && assignmentLocUnitId == %@", predicateValue: objCase.caseId,predicateValue2: objCase.assignmentLocId, isPredicate: true)
+        
         
         
     }
@@ -410,9 +448,9 @@ final class CaseAPI:SFCommonAPI {
         updateObjectDic["caseDynamic"] = objCase.caseApiResponseDict as AnyObject?
         updateObjectDic["assignmentLocUnitId"] = objCase.assignmentLocUnitId as AnyObject?
         
-        if(objCase.caseNo.isEmpty){
-            updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
-        }
+        
+       updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
+        
         
         //only Edit when actionStatus is blank
         

@@ -20,6 +20,7 @@ class DatePickerListingPopOver: UIViewController {
     
 //    var eventDate : Date?
 //    var minTime : Date?
+    @IBOutlet weak var btnToday: UIButton!
     
     @IBOutlet var datePicker: UIDatePicker!
     
@@ -76,4 +77,9 @@ class DatePickerListingPopOver: UIViewController {
         delegate?.didSelectDate(selectedDate: datePicker.date, forType: pickeType!)
     }
 
+    @IBAction func btnTodayClick(_ sender: Any)
+    {
+        delegate?.didSelectDate(selectedDate: Date(), forType: pickeType!)
+         self.dismiss(animated: true, completion: nil)
+    }
 }

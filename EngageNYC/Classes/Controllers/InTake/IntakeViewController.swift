@@ -49,14 +49,16 @@ class IntakeViewController: UIViewController {
     var canvasserTaskDataObject:CanvasserTaskDataObject!
     
     var globalSelectedClient:ContactDO!
+    var globalSelectedCase:CaseDO!
+    
     var viewModel:InTakeViewModel!
     
     @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var addBtn: UIButton!
     
     
-    var globalSelectedClientForBinding:ContactDO!
-    var globalSelectedCaseForBinding:CaseDO!
+   // var globalSelectedClientForBinding:ContactDO!
+   // var globalSelectedCaseForBinding:CaseDO!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +105,7 @@ class IntakeViewController: UIViewController {
                     intakeClient.canvasserTaskDataObject = self.canvasserTaskDataObject
                     intakeClient.inTakeVC = self
                     
-                    self.globalSelectedClient = nil
+                   // self.globalSelectedClient = nil
                     
                     panelCtrl = intakeClient
                 }
@@ -130,6 +132,17 @@ class IntakeViewController: UIViewController {
                 if let intakeIssue = IntakeIssueStoryboard().instantiateViewController(withIdentifier: "IntakeIssueViewController") as? IntakeIssueViewController{
                     
                     intakeIssue.inTakeVC = self
+                    
+                    if let obj = self.globalSelectedCase{
+                        intakeIssue.selectedCaseObj = obj
+                    }
+                    
+                    if let obj = self.globalSelectedClient{
+                        intakeIssue.selectedClient = obj
+                    }
+                    
+                    
+                    
                     intakeIssue.canvasserTaskDataObject = self.canvasserTaskDataObject
                     
                     panelCtrl = intakeIssue
@@ -168,7 +181,7 @@ class IntakeViewController: UIViewController {
     {
          if(self.viewModel.isTempCaseExist(assignmentLocUnitId: canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId) || self.viewModel.isTempIssuesExist(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId)){
             
-            let alertCtrl = Alert.showUIAlert(title: "Message", message: Static.exitMessage, vc: self)
+            let alertCtrl = Alert.showUIAlert(title: "Message", message: "There are some cases or issues which does not bind with client. Do you want to close whithout saving?", vc: self)
             
             let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
             { action -> Void in
@@ -296,6 +309,7 @@ class IntakeViewController: UIViewController {
                 
                 clientInfoVC.showAddressScreen = false
                 clientInfoVC.fromIntakeClient = true
+                //clientInfoVC.delegate = self
                 clientInfoVC.canvasserTaskDataObject = canvasserTaskDataObject
                 
                 clientInfoVC.modalPresentationStyle = UIModalPresentationStyle.formSheet
@@ -340,10 +354,17 @@ extension IntakeViewController{
         var clientId:String = ""
         var caseId:String = ""
         
-        if let clientObj = globalSelectedClientForBinding{
+//        if globalSelectedClient != nil{
+//            globalSelectedClientForBinding = globalSelectedClient
+//        }
+//        if globalSelectedCase != nil{
+//            globalSelectedCaseForBinding = globalSelectedCase
+//        }
+        
+        if let clientObj = globalSelectedClient{
             clientId = clientObj.contactId
         }
-        if let caseObj = globalSelectedCaseForBinding{
+        if let caseObj = globalSelectedCase{
             caseId = caseObj.caseId
         }
         

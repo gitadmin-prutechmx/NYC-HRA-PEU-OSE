@@ -270,7 +270,7 @@ extension AddressInfoViewController{
     
     func isValidStreetNum(value:String) -> Bool
     {
-        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+         let charcterSet  = NSCharacterSet(charactersIn: "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").inverted
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         

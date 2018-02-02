@@ -51,9 +51,9 @@ class AssignmentLocationUnitViewController: UIViewController {
         
         self.bindView()
         self.assignmentLocUnitInfoObj = self.viewModel.getAssignmentLocationUnit(assignmentLocUnitId: canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId)
-       
-     
+        
         self.assignmentLocUnitInfoObj.isUnitListing = self.isUnitListing
+        
         
         
         if let controller = segue.destination as? AssignmentLocationUnitInformationViewController

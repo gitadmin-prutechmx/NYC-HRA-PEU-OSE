@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITextFieldDelegate,UIPickerViewDataSource {
     
     @IBOutlet weak var streetNumberView: UIView!
@@ -194,7 +193,7 @@ extension DifferentAddressViewController{
     
     func isValidStreetNum(value:String) -> Bool
     {
-        let charcterSet  = NSCharacterSet(charactersIn: "+0123456789").inverted
+        let charcterSet  = NSCharacterSet(charactersIn: "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").inverted
         let inputString = value.components(separatedBy: charcterSet)
         let filtered = inputString.joined(separator: "")
         
@@ -212,7 +211,7 @@ extension DifferentAddressViewController{
         
     }
     
-    
+
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {

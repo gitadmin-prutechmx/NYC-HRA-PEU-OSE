@@ -203,10 +203,15 @@ extension IntakeCaseViewController:ListingPopoverDelegate{
               
                // issueVC.selectedCase = self.selectedCaseObj
                 
+                
+               
                 issueVC.selectedCaseObj = self.selectedCaseObj
                 issueVC.selectedClient = self.selectedClient
+                
                 issueVC.canvasserTaskDataObject = self.canvasserTaskDataObject
                 issueVC.inTakeVC = self.inTakeVC
+                
+                inTakeVC.globalSelectedCase = self.selectedCaseObj //to maintain global selection of case
                 
                 inTakeVC.segmentCtrl.selectedSegmentIndex = inTakeSegment.issues.rawValue
                 
@@ -257,12 +262,21 @@ extension IntakeCaseViewController {
             
             var isHighlight:Bool = false
             
-            if let obj = inTakeVC.globalSelectedCaseForBinding{
-                
+            //for intake save button
+//            if let obj = inTakeVC.globalSelectedCaseForBinding{
+//
+//                if(obj.caseId == arrCaseMain[indexPath.row].caseId){
+//                    isHighlight = true
+//                }
+//            }
+            
+            //for maintain intake global case selection
+            if let obj = inTakeVC.globalSelectedCase{
                 if(obj.caseId == arrCaseMain[indexPath.row].caseId){
                     isHighlight = true
                 }
             }
+            
             
             
             cell.setupView(forCellObject: arrCaseMain[indexPath.row],isHighlight:isHighlight, index: indexPath)
@@ -283,7 +297,7 @@ extension IntakeCaseViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if(inTakeVC.saveBtn.isHidden == false){
+       // if(inTakeVC.saveBtn.isHidden == false){
             
             let indexPathArray = tblCase.indexPathsForVisibleRows
             
@@ -315,9 +329,12 @@ extension IntakeCaseViewController {
                     
                 }
             }
+        
             //Here set bindingGlobalCase
-            inTakeVC.globalSelectedCaseForBinding = arrCaseMain[indexPath.row]
-        }
+           //inTakeVC.globalSelectedCaseForBinding = arrCaseMain[indexPath.row]
+            
+            inTakeVC.globalSelectedCase = arrCaseMain[indexPath.row]
+        //}
         
     }
 }

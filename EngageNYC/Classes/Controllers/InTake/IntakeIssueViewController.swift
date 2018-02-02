@@ -160,6 +160,7 @@ extension IntakeIssueViewController:ListingPopoverDelegate{
              if let addIssueVC = AddIssueStoryboard().instantiateViewController(withIdentifier: "AddIssueViewController") as? AddIssueViewController{
                 
                 addIssueVC.objIssue = selectedIssueObj
+                addIssueVC.objIssue.assignmentId = canvasserTaskDataObject.assignmentObj.assignmentId
                 addIssueVC.inTakeVC = self.inTakeVC
                 
                 if let obj  = selectedCaseObj{

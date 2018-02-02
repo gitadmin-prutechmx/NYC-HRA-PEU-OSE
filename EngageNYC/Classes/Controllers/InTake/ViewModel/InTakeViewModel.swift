@@ -41,7 +41,7 @@ class InTakeViewModel{
         var isTempRecordsExist = false
         
         if let tempCaseResults = CaseAPI.shared.getAllTempCasesOnAssigmentLocationUnit(assignmentLocUnitId: assignmentLocUnitId){
-            if tempCaseResults.count == 1{
+            if tempCaseResults.count >= 1{
                 isTempCase = true
                 tempCaseId = tempCaseResults[0].caseId!
             }
@@ -50,7 +50,7 @@ class InTakeViewModel{
         //Temp issues:- no temp case
         
         if let tempIssueResults = IssueAPI.shared.getAllTempIssuesOnAssignment(assignmentId: assignmentId){
-            if tempIssueResults.count == 1{
+            if tempIssueResults.count >= 1{
                 isTempIssue = true
             }
         }

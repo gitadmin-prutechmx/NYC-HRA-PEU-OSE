@@ -119,13 +119,15 @@ class AssignmentLocationUnitViewModel{
     
     func updateAssignmentLocationUnit(assignmentLocationUnitInfoObj:AssignmentLocationUnitInfoDO,assignmentId:String){
         
-        if(Utility.isiOSGeneratedId(generatedId: assignmentLocationUnitInfoObj.assignmentLocationUnitId) != nil){
-            AssignmentLocationUnitAPI.shared.createNewAssignmentLocationUnit(assignmentLocUnitInfo: assignmentLocationUnitInfoObj,assignmentId:assignmentId)
-        }
-        else{
-            AssignmentLocationUnitAPI.shared.updateAssignmentLocationUnit(assignmentLocUnitInfo: assignmentLocationUnitInfoObj)
-        }
-        
+        AssignmentLocationUnitAPI.shared.updateAssignmentLocationUnit(assignmentLocUnitInfo: assignmentLocationUnitInfoObj)
+//
+//        if(Utility.isiOSGeneratedId(generatedId: assignmentLocationUnitInfoObj.assignmentLocationUnitId) != nil){
+//            AssignmentLocationUnitAPI.shared.createNewAssignmentLocationUnit(assignmentLocUnitInfo: assignmentLocationUnitInfoObj,assignmentId:assignmentId)
+//        }
+//        else{
+//            AssignmentLocationUnitAPI.shared.updateAssignmentLocationUnit(assignmentLocUnitInfo: assignmentLocationUnitInfoObj)
+//        }
+//
       
     }
     

@@ -97,28 +97,42 @@ class Utility{
             }
             else{
                 surveyObj = surveyVM.getDefaultSurvey(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId)
+                if(surveyObj == nil){
+                    
+                    vctrl.view.makeToast("There is no default survey on this assignment.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                    }
+                    
+                    
+                }
+                
             }
         }
         
-        if let surveyObject = surveyVM.parseSurveyQuestion(objSurvey: surveyObj!){
+        if let objSurvey = surveyObj{
             
-            if(surveyObject.totalSurveyQuestions > 0){
+            if let surveyObject = surveyVM.parseSurveyQuestion(objSurvey: objSurvey){
                 
-                surveyObject.assignmentLocUnitId = canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId
-                surveyObject.canvasserContactId = canvasserTaskDataObject.contactObj.contactId
-                surveyObject.assignmentId = canvasserTaskDataObject.assignmentObj.assignmentId
-                surveyObj?.clientId = contactId
-                surveyObj?.canvasserContactId = canvasserTaskDataObject.userObj.contactId
-                //surveyObject.locationUnitVC = vctrl as! LocationUnitViewController
+                if(surveyObject.totalSurveyQuestions > 0){
+                    
+                    surveyObject.assignmentLocUnitId = canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId
+                    surveyObject.canvasserContactId = canvasserTaskDataObject.contactObj.contactId
+                    surveyObject.assignmentId = canvasserTaskDataObject.assignmentObj.assignmentId
+                    surveyObj?.clientId = contactId
+                    surveyObj?.canvasserContactId = canvasserTaskDataObject.userObj.contactId
+                    //surveyObject.locationUnitVC = vctrl as! LocationUnitViewController
+                    
+                    Utility.showSurvey(surveyObject: surveyObject, canvasserTaskDataObject: canvasserTaskDataObject, surveyVM: surveyVM, vctrl: vctrl)
+                    
+                }
+                else{
+                    showSwiftErrorMessage(error: "There are no questions associated with the survey:- \(surveyObject.surveyName!)",title: "Message")
+                }
                 
-                Utility.showSurvey(surveyObject: surveyObject, canvasserTaskDataObject: canvasserTaskDataObject, surveyVM: surveyVM, vctrl: vctrl)
-                
-            }
-            else{
-                showSwiftErrorMessage(error: "There are no questions associated with the survey:- \(surveyObject.surveyName!)",title: "Message")
             }
             
         }
+        
         
         
     }
@@ -306,6 +320,14 @@ class Utility{
         
     }
     
+    class func directoryExistsAtPath(_ path: String) -> Bool {
+        var isDirectory = ObjCBool(true)
+        let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+        return exists && isDirectory.boolValue
+    }
+    
+    
+    
     
     class func getEventFormattedAddress(eventObj:Events)->String{
         
@@ -314,9 +336,11 @@ class Utility{
         let borough = eventObj.borough ?? ""
         let zip = eventObj.zip ?? ""
         
-        let address = "\(streetNum) \(streetName), \(borough),\(zip)"
+        if(streetNum.isEmpty && streetName.isEmpty && borough.isEmpty && zip.isEmpty){
+            return ""
+        }
         
-        return address
+        return "\(streetNum) \(streetName), \(borough),\(zip)"
         
     }
     
@@ -343,7 +367,7 @@ class Utility{
         
         view.configureContent(title: title, body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
         
-         let iconStyle: IconStyle
+        let iconStyle: IconStyle
         
         iconStyle = .light
         
@@ -492,12 +516,12 @@ class Utility{
                     vc.performSegue(withIdentifier: "UnwindBackToDashboardIdentifier", sender: self)
                     
                     
-//                    if let dashboardVC = dashboardStoryboard().instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController
-//                    {
-//                        dashboardVC.isFirstTimeLoad = false
-//                        dashboardVC.modalPresentationStyle = UIModalPresentationStyle.formSheet
-//                        vc.navigationController?.pushViewController(dashboardVC, animated: true)
-//                    }
+                    //                    if let dashboardVC = dashboardStoryboard().instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController
+                    //                    {
+                    //                        dashboardVC.isFirstTimeLoad = false
+                    //                        dashboardVC.modalPresentationStyle = UIModalPresentationStyle.formSheet
+                    //                        vc.navigationController?.pushViewController(dashboardVC, animated: true)
+                    //                    }
                 }
                 
                 
@@ -771,6 +795,7 @@ class Utility{
             
             for settingData in settingRes{
                 
+                //if false{
                 if settingData.isSyncON{
                     
                     let syncTime:TimeInterval = TimeInterval(CGFloat(Int(settingData.offlineSyncTime!)! * 60))

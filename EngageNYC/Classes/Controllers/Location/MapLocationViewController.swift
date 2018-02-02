@@ -8,6 +8,7 @@
 
 import UIKit
 import ArcGIS
+import Zip
 
 
 //Default (Pending), Completed, Inaccessible/Vacant, In Progress, Address Does Not Exist
@@ -70,16 +71,19 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     
     var searchActive : Bool = false
     var isSyncDataFromLocation:Bool = false
-    
     var arrMapLocationsMain = [MapLocationDO]()
     var arrMapLocationsFiltered = [MapLocationDO]()
-    
+    var selectedIndex:IndexPath!
     var viewModel:MapLocationViewModel!
     var canvasserTaskDataObject:CanvasserTaskDataObject!
     var filterfeaturesExpression = ""
     var isUpdateLocationView = false
     var selectedLocationObj:MapLocationDO!
     
+    var styleResourcesDirectory:URL!
+    var vtpkMapFile:URL!
+    
+    var containerDirectory:URL!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,17 +92,22 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         
        // self.setUpMapLicense()
         
-        self.setUpUI()
-        
         //Bind viewModel
         self.setupView()
         
+        //SetUp UI
+        self.setUpUI()
+        
         //Bind Locations data
-        self.reloadView()
-     
-        self.showMap(isSyncDataFromLoc: true)
+         self.reloadView()
+        
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+  }
     
     override func onReceive(notification: NSNotification) {
         super.onReceive(notification: notification)
@@ -156,8 +165,6 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     
     func setUpUI(){
         
-        Utility.UnzipFile()
-        
         lblAssignment.text = canvasserTaskDataObject.assignmentObj.assignmentName
        
         btnLoginName.setTitle(canvasserTaskDataObject.userObj.userName, for: .normal)
@@ -178,10 +185,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         
         CustomNotificationCenter.registerReceiver(receiver: self.broadcastReceiver, notificationName: SF_NOTIFICATION.LOCATIONLISTING_SYNC)
         
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.bindView()
-        }
+        self.bindView()
+        self.UnzipMapFile()
     }
     
     func reloadView(){
@@ -196,7 +201,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
             self.filterfeaturesExpression = self.filterfeaturesExpression.substring(to: endIndex)
             
             self.tblLocations.reloadData()
-            self.showMap()
+            self.showVTPKMap()
+           // self.showMap()
         }
     }
     
@@ -206,13 +212,99 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         NotificationCenter.default.removeObserver("UpdateLocationView")
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
-        super.viewWillAppear(animated)
-        // self.navigationController?.isNavigationBarHidden = true;
+   
+    
+    func UnzipMapFile(){
+        
+        do {
+        
+            
+            
+            let mapDataPath = Bundle.main.path(forResource: "MapData", ofType: "zip")
+   
+            let unZipFilePath = try Zip.quickUnzipFile(URL(string: mapDataPath!)!) // Unzip
+                
+            let mapDirpath = unZipFilePath.absoluteString + "MapData"
+      
+            vtpkMapFile = URL(string:(mapDirpath + "/NewYorkCity.vtpk"))
+            styleResourcesDirectory = URL(string:(mapDirpath + "/VTPKResources"))
+                
+//                containerDirectory = unZipFilePath.appendingPathComponent("MapData")
+//
+//                vtpkMapFile = URL(fileURLWithPath: "NewYorkCity.vtpk", relativeTo: containerDirectory)
+//
+//                styleResourcesDirectory = URL(fileURLWithPath: "VTPKResources", isDirectory: true, relativeTo: containerDirectory)
+                
+                
+                
+                print(unZipFilePath)
+                
+            
+            
+        }
+        catch {
+            Utility.showSwiftErrorMessage(error: "Something went wrong while unzip geodatabase.")
+        }
+        
         
     }
     
+    
+    func showVTPKMap(){
+        
+         isUpdateLocationView = false
+        
+    
+        
+//        containerDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("VTPKs")
+//
+//        vtpkMapFile = URL(fileURLWithPath: "NewYorkCity.vtpk", relativeTo: containerDirectory)
+//
+//
+//
+//       styleResourcesDirectory = URL(fileURLWithPath: "VTPKResources", isDirectory: true, relativeTo: containerDirectory)
+
+        
+        if(FileManager.default.fileExists(atPath: vtpkMapFile.path) == true && Utility.directoryExistsAtPath(styleResourcesDirectory.path) == true){
+            
+            let vectorCache = AGSVectorTileCache(fileURL: vtpkMapFile)
+            
+            let resourceCache = AGSItemResourceCache(fileURL: styleResourcesDirectory)
+            
+            let vectorLayer = AGSArcGISVectorTiledLayer(vectorTileCache: vectorCache, itemResourceCache: resourceCache)
+            
+            
+            
+            let map = AGSMap(basemap: AGSBasemap(baseLayer: vectorLayer))
+            
+            
+            
+//            let ext = AGSEnvelope(xMin: -8271401.806445, yMin: 4933175.027794,
+//
+//                                  xMax: -8206454.295366, yMax: 5003544.051723,
+//
+//                                  spatialReference: AGSSpatialReference.webMercator())
+//
+//            map.initialViewpoint = AGSViewpoint(targetExtent: ext)
+            
+            self.mapView.map = map
+            
+            SVProgressHUD.dismiss()
+            
+            //touch delegate
+            self.mapView.touchDelegate = self
+            
+            //add graphic overlays
+            self.mapView.graphicsOverlays.addObjects(from: [self.routeGraphicsOverlay, self.markerGraphicsOverlay])
+        
+            self.showLayers()
+       
+            
+        }
+        
+       
+        
+    }
     
     
     
@@ -253,7 +345,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                             
                             self?.showLayers()
                             
-                            self?.isSyncDataFromLocation = false
+                           // self?.isSyncDataFromLocation = false
                             
                             
                         }
@@ -289,12 +381,12 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                 
                 SVProgressHUD.dismiss()
                 
-                let i = 1
-                for i in 1..<self.map.operationalLayers.count
-                {
-                    print("Number \(i)")
-                    self.map.operationalLayers.removeObject(at: i)
-                }
+//                let i = 1
+//                for i in 1..<self.map.operationalLayers.count
+//                {
+//                    print("Number \(i)")
+//                    self.map.operationalLayers.removeObject(at: i)
+//                }
                 
                 
                 
@@ -511,7 +603,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     // MARK: Button EditLocation Action
     func navigateToEditLocationView(_ sender: AnyObject?)
     {
-        self.mapView.callout.dismiss()
+        
+       // self.mapView.callout.dismiss()
         
         if let assignmentLocationVC = AssignmentLocationStoryboard().instantiateViewController(withIdentifier: "AssignmentLocationViewController") as? AssignmentLocationViewController{
             
@@ -691,7 +784,7 @@ extension MapLocationViewController{
         // Row selected, so set textField to relevant value, hide tableView
         // endEditing can trigger some other action according to requirements
         
-        
+        selectedIndex = indexPath
         if(searchActive && arrMapLocationsFiltered.count > 0){
             self.selectFeature(objLoc: arrMapLocationsFiltered[indexPath.row])
         }
@@ -713,15 +806,41 @@ extension MapLocationViewController{
         return 0.1
     }
 }
-
+/*
 extension MapLocationViewController : AssignmentLocationDelegate{
     func updateLocationStatus(assignmentLocId: String,locStatus:String) {
         //update location status
         self.viewModel.updateLocationStatus(assignmentLocId:assignmentLocId,locStatus:locStatus)
+        
         self.reloadView()
     }
     
   
+}
+ */
+extension MapLocationViewController : AssignmentLocationDelegate{
+    func updateLocationStatus(assignmentLocId: String,locStatus:String) {
+        //update location status
+        self.viewModel.updateLocationStatus(assignmentLocId:assignmentLocId,locStatus:locStatus)
+         //self.tblLocations.reloadData()
+        
+      //  let indexPath = IndexPath(item: selectedIndex.row, section: 0)
+      //  tblLocations.reloadRows(at: [indexPath], with: .top)
+        
+        DispatchQueue.main.async {
+            
+            self.arrMapLocationsMain = self.viewModel.loadLocations(assignmentId: self.canvasserTaskDataObject.assignmentObj.assignmentId)
+            
+            self.tblLocations.reloadData()
+            
+            
+            self.tblLocations.selectRow(at: self.selectedIndex, animated: false, scrollPosition: .none)
+            self.tblLocations.delegate?.tableView!(self.tblLocations, didSelectRowAt: self.selectedIndex!)
+        }
+       
+    }
+    
+    
 }
 
 extension MapLocationViewController : ListingPopoverDelegate{

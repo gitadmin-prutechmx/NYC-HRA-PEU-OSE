@@ -310,9 +310,9 @@ final class IssueAPI:SFCommonAPI {
         
         updateObjectDic["issueType"] = objIssue.issueType as AnyObject?
         
-        if(!objIssue.issueNo.isEmpty){
-            updateObjectDic["notes"] = objIssue.notes as AnyObject?
-        }
+        
+        updateObjectDic["notes"] = objIssue.notes as AnyObject?
+        
         
         //only Edit when actionStatus is blank
         if(objIssue.dbActionStatus.isEmpty){

@@ -100,9 +100,9 @@ final class AssignmentDetailAPI : SFCommonAPI
                                     
                                     ManageCoreData.DeleteAllRecords(salesforceEntityName: coreDataEntity.cases.rawValue,completion: { isSuccess in
                                         
-                                      
+                                        ManageCoreData.DeleteAllRecords(salesforceEntityName: coreDataEntity.issues.rawValue,completion: { isSuccess in
                                             
-                                            ManageCoreData.DeleteAllRecords(salesforceEntityName: coreDataEntity.issues.rawValue,completion: { isSuccess in
+                                            ManageCoreData.DeleteAllRecords(salesforceEntityName: coreDataEntity.caseNotes.rawValue,completion: { isSuccess in
                                                 
                                                 ManageCoreData.DeleteAllRecords(salesforceEntityName: coreDataEntity.issueNotes.rawValue,completion: { isSuccess in
                                                     
@@ -121,7 +121,7 @@ final class AssignmentDetailAPI : SFCommonAPI
                                                         }
                                                     })
                                                     
-                                               
+                                                })
                                             })
                                         })
                                     })
@@ -322,7 +322,7 @@ extension AssignmentDetailAPI {
                 
                 appDelegate.saveContext()
                 
-              
+                
                 
                 //AssignmentLocationUnit
                 
@@ -347,7 +347,7 @@ extension AssignmentDetailAPI {
                 
                 assignmentLocationUnitObj.surveySyncDate = (assignmentLocationUnit as AnyObject).value(forKey: "surveySyncDate") as? String ?? ""
                 
-               // surveySyncDate
+                // surveySyncDate
                 
                 assignmentLocationUnitObj.surveyed = (assignmentLocationUnit as AnyObject).value(forKey: "intake") as? String ?? ""
                 assignmentLocationUnitObj.surveyId = (assignmentLocationUnit as AnyObject).value(forKey: "survey") as? String ?? ""
@@ -371,7 +371,7 @@ extension AssignmentDetailAPI {
                     assignmentLocNoteObject.createdDate = (assignmentLocNote as AnyObject).value(forKey: "createDate") as? String ?? ""
                     assignmentLocNoteObject.canvasserId = (assignmentLocNote as AnyObject).value(forKey: "canvasserNameId") as? String ?? ""
                     assignmentLocNoteObject.canvasserName = (assignmentLocNote as AnyObject).value(forKey: "canvasserName") as? String ?? ""
-                     assignmentLocNoteObject.unitOutcome = (assignmentLocNote as AnyObject).value(forKey: "UnitOutcome") as? String ?? ""
+                    assignmentLocNoteObject.unitOutcome = (assignmentLocNote as AnyObject).value(forKey: "UnitOutcome") as? String ?? ""
                     
                     
                     appDelegate.saveContext()
@@ -439,6 +439,8 @@ extension AssignmentDetailAPI {
                         caseObject.assignmentLocUnitId = locationUnitObject.assignmentLocUnitId
                         caseObject.actionStatus = ""
                         
+                        caseObject.caseNotes = (caseData as AnyObject).value(forKey: "Description") as? String ?? ""
+                        
                         
                         if let contactResult = (caseData as AnyObject).value(forKey: "Contact") as? NSDictionary {
                             caseObject.clientId = contactResult.value(forKey: "Id") as? String ?? ""
@@ -449,6 +451,25 @@ extension AssignmentDetailAPI {
                             caseObject.caseOwnerId = ownerResult.value(forKey: "Id") as? String ?? ""
                             caseObject.caseOwner = ownerResult.value(forKey: "Name") as? String ?? ""
                         }
+                        
+                        
+                        
+                        
+                        let dateOfIntake = (caseData as AnyObject).value(forKey: "Date_of_Intake__c") as? String ?? ""
+                        
+                        if(dateOfIntake.isEmpty){
+                            caseObject.createdDate = ""
+                        }
+                        else{
+                            
+                            caseObject.createdDate =  Utility.convertToDateTimeFormat(dateVal: dateOfIntake)
+                        }
+                        
+                        caseObject.caseDynamic = caseData as? NSObject
+                        
+                        appDelegate.saveContext()
+                        
+                        
                         
                         if let caseNotesRes = (caseData as AnyObject).value(forKey: "Case_Notes__r") as? NSDictionary {
                             
@@ -471,7 +492,7 @@ extension AssignmentDetailAPI {
                                 }
                                 
                                 
-                                 caseNoteObject.notes = (caseNote as AnyObject).value(forKey: "Case_Note_Description__c") as? String ?? ""
+                                caseNoteObject.notes = (caseNote as AnyObject).value(forKey: "Case_Note_Description__c") as? String ?? ""
                                 
                                 caseNoteObject.assignmentLocUnitId = locationUnitObject.assignmentLocUnitId
                                 
@@ -480,26 +501,10 @@ extension AssignmentDetailAPI {
                                 appDelegate.saveContext()
                             }
                             
-                           
-                        }
-                        
-                        
-                        
-                        
-                        
-                        let dateOfIntake = (caseData as AnyObject).value(forKey: "Date_of_Intake__c") as? String ?? ""
-                        
-                        if(dateOfIntake.isEmpty){
-                            caseObject.createdDate = ""
-                        }
-                        else{
                             
-                            caseObject.createdDate =  Utility.convertToDateTimeFormat(dateVal: dateOfIntake)
                         }
                         
-                        caseObject.caseDynamic = caseData as? NSObject
                         
-                        appDelegate.saveContext()
                     }
                     
                     
@@ -514,7 +519,7 @@ extension AssignmentDetailAPI {
                         issueObject.issueId = (issueInfo as AnyObject).value(forKey: "issueId") as? String ?? ""
                         issueObject.issueType = (issueInfo as AnyObject).value(forKey: "issueType") as? String ?? ""
                         issueObject.notes = (issueInfo as AnyObject).value(forKey: "issueNotes") as? String ?? ""
-                       
+                        
                         
                         issueObject.assignmentId = assignmentObject.assignmentId
                         issueObject.actionStatus = ""
@@ -530,7 +535,7 @@ extension AssignmentDetailAPI {
                             issueNoteObject.notes = (issueNotesInfo as AnyObject).value(forKey: "description") as? String ?? ""
                             issueNoteObject.createdDate = (issueNotesInfo as AnyObject).value(forKey: "createdDate") as? String ?? ""
                             issueNoteObject.assignmentId = assignmentObject.assignmentId
-
+                            
                             appDelegate.saveContext()
                         }
                         

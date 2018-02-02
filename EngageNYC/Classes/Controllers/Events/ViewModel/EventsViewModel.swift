@@ -29,12 +29,41 @@ class EventsViewModel{
                     objEvent.endTime = event.endTime ?? ""
                     objEvent.address = Utility.getEventFormattedAddress(eventObj:event)
                     objEvent.eventsDynamic = event.eventsDynamic!
+                    objEvent.eventStaffLeadId = event.eventStaffLeadId
+                    objEvent.eventStaffLeadName = event.eventStaffLeadName
+                    
                     
                     arrEvents.append(objEvent)
                 }
             }
             return arrEvents
         }
+    
+    
+   
+    
+    
+    func getEventsTypeicklist(objectType:String,fieldName:String)->[ListingPopOverDO]{
+        
+       var arrPickList = [ListingPopOverDO]()
+        
+        if let picklist =  PicklistAPI.shared.getPicklist(objectType: objectType, fieldName: fieldName){
+            let arr = String(picklist.value!.dropLast()).components(separatedBy: ";")
+            for val in arr{
+                
+                let listingPopOverObj = ListingPopOverDO()
+                listingPopOverObj.id = val
+                listingPopOverObj.name = val
+                listingPopOverObj.additionalId = val
+                
+                arrPickList.append(listingPopOverObj)
+                
+            }
+        }
+        
+        return arrPickList
+        
+    }
     
 }
 

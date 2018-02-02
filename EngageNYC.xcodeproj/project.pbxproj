@@ -16,7 +16,6 @@
 		5DE3C9871EF28C2600012C47 /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */; };
 		8A02D80E200332E9007E6560 /* GaugeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02D7FD200332E9007E6560 /* GaugeLayer.swift */; };
 		8A02D80F200332E9007E6560 /* GaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02D7FE200332E9007E6560 /* GaugeView.swift */; };
-		8A02D810200332E9007E6560 /* MapData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A02D800200332E9007E6560 /* MapData.zip */; };
 		8A02D811200332E9007E6560 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A02D803200332E9007E6560 /* MBProgressHUD.m */; };
 		8A02D812200332E9007E6560 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A02D806200332E9007E6560 /* SVIndefiniteAnimatedView.m */; };
 		8A02D813200332E9007E6560 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8A02D808200332E9007E6560 /* SVProgressHUD.bundle */; };
@@ -46,6 +45,7 @@
 		8A02D84420033350007E6560 /* NHaasGroteskTXPro-75Bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A02D82E2003334F007E6560 /* NHaasGroteskTXPro-75Bd.otf */; };
 		8A02D84520033350007E6560 /* NHaasGroteskTXPro-76BdIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A02D82F2003334F007E6560 /* NHaasGroteskTXPro-76BdIt.otf */; };
 		8A02D86C20036D03007E6560 /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02D86B20036D03007E6560 /* AssignmentTableViewCell.swift */; };
+		8A06FA7E20216F9800F4C745 /* MapData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A06FA7D20216F9800F4C745 /* MapData.zip */; };
 		8A2CC784200CD1B400CD1819 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2CC783200CD1B400CD1819 /* DateTableViewCell.swift */; };
 		8A2CC786200CD22800CD1819 /* NewEventRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2CC785200CD22800CD1819 /* NewEventRegistrationViewController.swift */; };
 		8A2CC788200CD23400CD1819 /* NewEventRegistration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A2CC787200CD23300CD1819 /* NewEventRegistration.storyboard */; };
@@ -257,7 +257,6 @@
 		8361D8AB9EC26ADC2A936556 /* Pods-EngageNYCDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYCDev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYCDev/Pods-EngageNYCDev.debug.xcconfig"; sourceTree = "<group>"; };
 		8A02D7FD200332E9007E6560 /* GaugeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeLayer.swift; sourceTree = "<group>"; };
 		8A02D7FE200332E9007E6560 /* GaugeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
-		8A02D800200332E9007E6560 /* MapData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapData.zip; sourceTree = "<group>"; };
 		8A02D802200332E9007E6560 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8A02D803200332E9007E6560 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		8A02D805200332E9007E6560 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -293,6 +292,7 @@
 		8A02D82F2003334F007E6560 /* NHaasGroteskTXPro-76BdIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NHaasGroteskTXPro-76BdIt.otf"; sourceTree = "<group>"; };
 		8A02D86B20036D03007E6560 /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
 		8A0462931FACD9550070D173 /* EngageNYC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngageNYC.entitlements; sourceTree = "<group>"; };
+		8A06FA7D20216F9800F4C745 /* MapData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapData.zip; sourceTree = "<group>"; };
 		8A2CC783200CD1B400CD1819 /* DateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		8A2CC785200CD22800CD1819 /* NewEventRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventRegistrationViewController.swift; sourceTree = "<group>"; };
 		8A2CC787200CD23300CD1819 /* NewEventRegistration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewEventRegistration.storyboard; sourceTree = "<group>"; };
@@ -598,7 +598,7 @@
 		8A02D7FF200332E9007E6560 /* MapData */ = {
 			isa = PBXGroup;
 			children = (
-				8A02D800200332E9007E6560 /* MapData.zip */,
+				8A06FA7D20216F9800F4C745 /* MapData.zip */,
 			);
 			path = MapData;
 			sourceTree = "<group>";
@@ -1266,6 +1266,7 @@
 				8ACDB6A520021F0F00FF360E /* ListingPopOver.storyboard in Resources */,
 				8A02D83320033350007E6560 /* NHaasGroteskDSPro-95Blk.otf in Resources */,
 				8A02D84420033350007E6560 /* NHaasGroteskTXPro-75Bd.otf in Resources */,
+				8A06FA7E20216F9800F4C745 /* MapData.zip in Resources */,
 				8A78D32D201ECCC80085E096 /* IssueNotes.storyboard in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
 				8A7A451A2008CA7E00AE3BE3 /* MapLocation.storyboard in Resources */,
@@ -1276,7 +1277,6 @@
 				8AB12EF5201A0CB600481212 /* InTakeCase.plist in Resources */,
 				8A7A44BD20086BC200AE3BE3 /* LocationUnit.storyboard in Resources */,
 				8A7A4527200A01B700AE3BE3 /* AssignmentLocation.storyboard in Resources */,
-				8A02D810200332E9007E6560 /* MapData.zip in Resources */,
 				8A02D83220033350007E6560 /* NHaasGroteskDSPro-65Md.otf in Resources */,
 				8A02D83E20033350007E6560 /* NHaasGroteskDSPro-96BlkIt.otf in Resources */,
 				8A02D83920033350007E6560 /* NHaasGroteskDSPro-15UltTh.otf in Resources */,

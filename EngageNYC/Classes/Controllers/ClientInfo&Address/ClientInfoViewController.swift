@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class NewContactDO{
     var locationUnitId:String = ""
     var assignmentLocUnitid:String = ""
@@ -337,6 +336,8 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
     
     func saveNewContact(){
         
+        self.rightBarButton.isEnabled = false
+        
         objNewContact.streetNum = canvasserTaskDataObject.locationObj.objMapLocation.streetNum
         objNewContact.streetName = canvasserTaskDataObject.locationObj.objMapLocation.streetName
         objNewContact.borough = canvasserTaskDataObject.locationObj.objMapLocation.borough
@@ -353,9 +354,13 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         self.view.makeToast("New Contact has been created successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
             
             
+            self.rightBarButton.isEnabled = true
+            
             if(self.fromIntakeClient){
                 
                 //update clientIntake screen
+                Static.newClientIdFromIntakeScreen = self.objNewContact.contactId
+                
                 CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.INTAKECLIENTLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
                 self.navigationController?.popViewController(animated: true)
             }

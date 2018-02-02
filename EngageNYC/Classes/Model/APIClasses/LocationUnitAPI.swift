@@ -66,6 +66,11 @@ final class LocationUnitAPI:SFCommonAPI {
         newUnit.syncDate = objNewUnit.syncDate
         
         appDelegate.saveContext()
+        
+        //create assignment location unit here
+        AssignmentLocationUnitAPI.shared.createNewTempAssignmentLocationUnit(assignmentLocUnitId: objNewUnit.iOSAssignmentLocUnitId, assignmentId: objNewUnit.assignmentId)
+        
+        
     }
     
     
@@ -178,7 +183,13 @@ final class LocationUnitAPI:SFCommonAPI {
             
            //update assignmentlocationUnitId
            updateCases(unitDataDict: unitDataDict)
-//
+            
+            //No need right now...Only need for case notes
+            
+            //update case notes
+            
+            //update assignment notes
+
             
             
         }
@@ -363,18 +374,22 @@ final class LocationUnitAPI:SFCommonAPI {
         return locationUnitId
     }
     
+    
     func getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId:String)->String{
         
         var assignmentLocationUnitId:String = ""
         
-        let assignmentLocationUnitRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.locationUnit.rawValue,predicateFormat: "iOSAssignmentLocUnitId == %@" ,predicateValue: iOSAssignmentLocUnitId, isPredicate:true) as! [AssignmentLocationUnit]
+        let locationUnitRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.locationUnit.rawValue,predicateFormat: "iOSAssignmentLocUnitId == %@" ,predicateValue: iOSAssignmentLocUnitId, isPredicate:true) as! [LocationUnit]
         
-        if(assignmentLocationUnitRes.count > 0){
-            assignmentLocationUnitId = (assignmentLocationUnitRes.first?.assignmentLocUnitId)!
+        if(locationUnitRes.count > 0){
+            assignmentLocationUnitId = (locationUnitRes.first?.assignmentLocUnitId)!
         }
         
         return assignmentLocationUnitId
     }
+    
+    
+    
     
     
     
