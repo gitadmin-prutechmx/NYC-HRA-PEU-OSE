@@ -10,14 +10,13 @@ target 'EngageNYC' do
   pod 'Alamofire'
   pod 'Toast-Swift'
   pod 'Charts'
-  pod 'DropDown'
-  pod 'DLRadioButton'
   pod 'TPKeyboardAvoiding'
-  pod 'Fabric'
-  pod 'Crashlytics'
   pod 'SwiftyJSON'
   pod 'SwiftMessages'
   pod 'Zip', '~> 0.8'
+  pod 'TPKeyboardAvoiding'
+  pod 'SwiftyBeaver', '~> 1.4'
+  pod 'IQKeyboardManagerSwift', '~> 5.0'
   
   # NB: get rid of next line once FMDB works with xcode 9
   pod 'FMDB', :git => 'https://github.com/forcedotcom/fmdb', :branch => '2.7.2_xcode9'

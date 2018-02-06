@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NHaasGroteskDSPro-75Bd.otf">
+            <string>NHaasGroteskDSPro-75Bd</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="MBu-cW-Gcb">
+            <view key="view" contentMode="scaleToFill" id="9qV-A7-F4M">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="7GS-KT-8YB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EngageNYC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIm-37-c9s">
+                        <rect key="frame" x="78" y="310" width="219.5" height="47"/>
+                        <fontDescription key="fontDescription" name="NHaasGroteskDSPro-75Bd" family="Neue Haas Grotesk Display Pro" pointSize="40"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.23921568627450979" green="0.22352941176470587" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="7GS-KT-8YB" firstAttribute="trailing" secondItem="Jtv-uq-lkR" secondAttribute="trailing" id="6eg-K4-S1G"/>
+                    <constraint firstItem="7GS-KT-8YB" firstAttribute="top" secondItem="9qV-A7-F4M" secondAttribute="top" id="C2Z-l2-l9Q"/>
+                    <constraint firstItem="7GS-KT-8YB" firstAttribute="leading" secondItem="Jtv-uq-lkR" secondAttribute="leading" id="Je8-uW-atD"/>
+                    <constraint firstItem="7GS-KT-8YB" firstAttribute="bottom" secondItem="Jtv-uq-lkR" secondAttribute="bottom" id="OR8-GK-Sjc"/>
+                    <constraint firstItem="OIm-37-c9s" firstAttribute="centerY" secondItem="9qV-A7-F4M" secondAttribute="centerY" id="R9Z-Rr-fzS"/>
+                    <constraint firstItem="OIm-37-c9s" firstAttribute="centerX" secondItem="9qV-A7-F4M" secondAttribute="centerX" id="kpq-bC-Yzb"/>
+                </constraints>
+                <viewLayoutGuide key="safeArea" id="Jtv-uq-lkR"/>
+            </view>
+            <point key="canvasLocation" x="-278.5" y="1362.5"/>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="Background" width="1335" height="1339"/>
+    </resources>
+</document>

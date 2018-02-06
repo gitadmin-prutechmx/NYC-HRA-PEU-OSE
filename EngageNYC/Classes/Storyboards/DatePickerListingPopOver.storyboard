@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NHaasGroteskDSPro-45Lt.otf">
+            <string>NHaasGroteskDSPro-45Lt</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--DatePickerListingPopOver-->
+        <scene sceneID="O3J-M0-o8X">
+            <objects>
+                <viewController storyboardIdentifier="DatePickerListingPopOver" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e5v-31-BqW" userLabel="DatePickerListingPopOver" customClass="DatePickerListingPopOver" customModule="EngageNYC" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2Ss-lm-xsQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="h4z-aA-8AI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="i39-H0-k33">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Fvs-DQ-y6c">
+                                <rect key="frame" x="0.0" y="39.5" width="320" height="162"/>
+                                <date key="date" timeIntervalSinceReferenceDate="519305214.939044">
+                                    <!--2017-06-16 11:26:54 +0000-->
+                                </date>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lds-qr-K09">
+                                <rect key="frame" x="0.0" y="220" width="320" height="30"/>
+                                <color key="backgroundColor" red="0.1176470588" green="0.34901960780000002" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="LcV-iC-rPX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-45Lt" family="Neue Haas Grotesk Display Pro" pointSize="22"/>
+                                <state key="normal" title="Today">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnTodayClick:" destination="e5v-31-BqW" eventType="touchUpInside" id="k54-27-Bq0"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Fvs-DQ-y6c" firstAttribute="centerX" secondItem="i39-H0-k33" secondAttribute="centerX" id="7mW-6b-z93"/>
+                            <constraint firstItem="Fvs-DQ-y6c" firstAttribute="centerY" secondItem="i39-H0-k33" secondAttribute="centerY" constant="-4.5" id="NwB-aP-WO0"/>
+                            <constraint firstItem="h4z-aA-8AI" firstAttribute="top" secondItem="lds-qr-K09" secondAttribute="bottom" id="PTA-yf-J0s"/>
+                            <constraint firstItem="gYX-Um-HaE" firstAttribute="trailing" secondItem="lds-qr-K09" secondAttribute="trailing" id="Soc-fq-qsD"/>
+                            <constraint firstItem="lds-qr-K09" firstAttribute="leading" secondItem="gYX-Um-HaE" secondAttribute="leading" id="Yxf-ue-Ze9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gYX-Um-HaE"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="320" height="216"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="250"/>
+                    <connections>
+                        <outlet property="btnToday" destination="lds-qr-K09" id="Kby-a7-Q59"/>
+                        <outlet property="datePicker" destination="Fvs-DQ-y6c" id="IMi-3k-9Pb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NY9-7n-0ez" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1860.8" y="-1927.7361319340332"/>
+        </scene>
+    </scenes>
+</document>

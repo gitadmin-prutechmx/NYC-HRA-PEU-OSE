@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>EngageNYCUAT</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -19,7 +17,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>7</string>
+	<key>ESRIRuntimeLiteLicenseKey</key>
+	<string>$(ESRI_RUNTIME_LITE_LICENSE_KEY)</string>
+	<key>ESRIRuntimeSMPNAExtensionLicenseKey</key>
+	<string>$(ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY)</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -78,8 +80,44 @@
 	<string>To show your location on the map</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For adding pictures from your photo library as attachments</string>
+	<key>SFAuthScopes</key>
+	<array>
+		<string>web</string>
+		<string>api</string>
+	</array>
 	<key>SFDCOAuthLoginHost</key>
-	<string>nyc-mayorpeu--uat.cs32.my.salesforce.com</string>
+	<string>$(SF_LOGIN_HOST)</string>
+	<key>SFLoginHost</key>
+	<string>$(SF_LOGIN_HOST)</string>
+	<key>SFOAuthRedirectURI</key>
+	<string>testsfdc:///mobilesdk/detect/oauth/done</string>
+	<key>SFRemoteAccessConsumerKey</key>
+	<string>$(SF_CONSUMER_KEY)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NHaasGroteskDSPro-15UltTh</string>
+		<string>NHaasGroteskDSPro-16UltThIt</string>
+		<string>NHaasGroteskDSPro-25Th</string>
+		<string>NHaasGroteskDSPro-26ThIt</string>
+		<string>NHaasGroteskDSPro-35XLt</string>
+		<string>NHaasGroteskDSPro-36XLtIt</string>
+		<string>NHaasGroteskDSPro-45Lt</string>
+		<string>NHaasGroteskDSPro-46LtIt</string>
+		<string>NHaasGroteskDSPro</string>
+		<string>NHaasGroteskDSPro-56It</string>
+		<string>NHaasGroteskDSPro-65Md</string>
+		<string>NHaasGroteskDSPro-66MdIt</string>
+		<string>NHaasGroteskDSPro-75Bd</string>
+		<string>NHaasGroteskDSPro-76BdIt</string>
+		<string>NHaasGroteskDSPro-95Blk</string>
+		<string>NHaasGroteskDSPro-96BlkIt</string>
+		<string>NHaasGroteskTXPro-55Rg</string>
+		<string>NHaasGroteskTXPro-56It</string>
+		<string>NHaasGroteskTXPro-65Md</string>
+		<string>NHaasGroteskTXPro-66MdIt</string>
+		<string>NHaasGroteskTXPro-75Bd</string>
+		<string>NHaasGroteskTXPro-76BdIt</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -88,8 +126,6 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
