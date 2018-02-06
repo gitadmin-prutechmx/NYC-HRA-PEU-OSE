@@ -49,6 +49,7 @@ final class SettingsAPI
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.settings.rawValue, updateKeyValue: updateObjectDic,isPredicate: false)
         
     }
+   
     
    
 }

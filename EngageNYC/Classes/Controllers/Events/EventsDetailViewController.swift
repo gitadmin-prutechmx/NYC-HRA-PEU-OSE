@@ -99,25 +99,77 @@ extension EventsDetailViewController {
         
         let metadataConfigObject:MetadataConfigDO = metadataConfigArray[indexPath.section].sectionObjects[indexPath.row]
 
-            let textCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
         
-        
-        
+        if(metadataConfigObject.dataType == "BOOLEAN")
+        {
+            
+            let switchCell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
+            
+            
+            switchCell.textLabel?.text = metadataConfigObject.fieldName
+            switchCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
+            
+            switchCell.backgroundColor = UIColor.white
+            
+            switchCell.selectionStyle = .none
+            
+            
+            //accessory switch
+            let uiSwitch = UISwitch(frame: CGRect.zero)
+            
+            uiSwitch.tag = indexPath.row
+            
+            uiSwitch.backgroundColor = UIColor.white
+            
+            
+            if let switchValue = eventsDynamicDict[metadataConfigObject.apiName] {
+                uiSwitch.isOn = switchValue as! Bool
+            }
+            else
+            {
+                uiSwitch.isOn = false
+            }
+            
+            
+           
+            uiSwitch.isEnabled = false
+            
+            
+            
+            switchCell.accessoryView = uiSwitch
+            
+            return switchCell
+            
+            
+        }
+        else{
+            
+            let textCell = tableView.dequeueReusableCell(withIdentifier: "rightDetailCell", for: indexPath)
+            
+            
+            
             textCell.textLabel?.text = metadataConfigObject.fieldName
             textCell.textLabel?.font = UIFont.init(name: "Arial", size: 16.0)
-        
+            
             if let val = eventsDynamicDict[metadataConfigObject.apiName] {
-                textCell.detailTextLabel?.text = "\(val)"
+                if(metadataConfigObject.apiName == "Event_Staff_Lead__c"){
+                    textCell.detailTextLabel?.text = objEvent.eventStaffLeadName
+                }
+                else{
+                    textCell.detailTextLabel?.text = "\(val)"
+                }
             }
             else{
                 textCell.detailTextLabel?.text = ""
             }
-        
+            
             textCell.detailTextLabel?.font = UIFont.init(name: "Arial", size: 16.0)
-        
+            
             textCell.selectionStyle = .none
-
+            
             return textCell
+        }
+        
         
     }
 }

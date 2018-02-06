@@ -14,4 +14,5 @@ struct Static {
     static var isRefreshBtnClick:Bool = false
     static var isBackgroundSync:Bool = false
     static var exitMessage:String = "Are you sure you want to close without saving?"
+    static var newClientIdFromIntakeScreen:String = ""
 }

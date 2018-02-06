@@ -4,9 +4,9 @@
 <array>
 	<dict>
 		<key>id</key>
-		<string>Cases</string>
+		<string>EditCase</string>
 		<key>name</key>
-		<string>Cases</string>
+		<string>EditCase</string>
 	</dict>
 	<dict>
 		<key>id</key>

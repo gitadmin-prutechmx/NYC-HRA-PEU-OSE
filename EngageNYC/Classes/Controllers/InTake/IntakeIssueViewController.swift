@@ -160,6 +160,7 @@ extension IntakeIssueViewController:ListingPopoverDelegate{
              if let addIssueVC = AddIssueStoryboard().instantiateViewController(withIdentifier: "AddIssueViewController") as? AddIssueViewController{
                 
                 addIssueVC.objIssue = selectedIssueObj
+                addIssueVC.objIssue.assignmentId = canvasserTaskDataObject.assignmentObj.assignmentId
                 addIssueVC.inTakeVC = self.inTakeVC
                 
                 if let obj  = selectedCaseObj{
@@ -188,7 +189,7 @@ extension IntakeIssueViewController:ListingPopoverDelegate{
        
         else if(obj.name == InTakeIssue.notes.rawValue){
             
-            if(!selectedIssueObj.issueNo.isEmpty){
+            
                 if let issueNotesVC = IssueNotesStoryboard().instantiateViewController(withIdentifier: "IssueNotesViewController") as? IssueNotesViewController{
                     
                     issueNotesVC.selectedIssueObj = selectedIssueObj
@@ -197,14 +198,8 @@ extension IntakeIssueViewController:ListingPopoverDelegate{
                     navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
                     self.navigationController?.pushViewController(issueNotesVC, animated: true)
                 }
-            }
-            else{
-                
-                self.view.makeToast("This issue does not have any notes", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    
-                }
-                
-            }
+            
+        
             
             
             print("Notes")

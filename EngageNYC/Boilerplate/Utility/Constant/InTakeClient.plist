@@ -6,13 +6,13 @@
 		<key>id</key>
 		<string>EditClient</string>
 		<key>name</key>
-		<string>Client</string>
+		<string>EditClient</string>
 	</dict>
-    <dict>
-        <key>id</key>
-        <string>ViewCases</string>
-        <key>name</key>
-        <string>Cases</string>
-    </dict>
+	<dict>
+		<key>id</key>
+		<string>ViewCases</string>
+		<key>name</key>
+		<string>Cases</string>
+	</dict>
 </array>
 </plist>

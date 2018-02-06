@@ -92,6 +92,8 @@ class ClientListingViewModel{
                 objContact.dob = contact.dob!
                 objContact.contactId = contact.contactId!
                 objContact.contactName = contact.contactName!
+                objContact.email = contact.email!
+                objContact.age = contact.age!
                 
                 objContact.streetNum = contact.streetNum!
                 objContact.streetName = contact.streetName!
@@ -212,6 +214,8 @@ class ClientListingViewModel{
                 objContact.dob = contact.dob!
                 objContact.contactId = contact.contactId!
                 objContact.contactName = contact.contactName!
+                objContact.email = contact.email!
+                objContact.age = contact.age!
                 
                 objContact.streetNum = contact.streetNum!
                 objContact.streetName = contact.streetName!

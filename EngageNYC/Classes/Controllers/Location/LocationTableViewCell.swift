@@ -35,6 +35,9 @@ class LocationTableViewCell: UITableViewCell {
         lblStreet.text = object.street
         lblAdditionalAddress.text = object.additionalAddress
 
+        lblStreet.textColor = UIColor.white
+        lblAdditionalAddress.textColor = UIColor.white
+        
         if(object.locStatus == locationStatus.pending.rawValue){
             imgLocStatus.isHidden = false
             imgLocStatus.image = UIImage(named: "Planned")
@@ -50,6 +53,10 @@ class LocationTableViewCell: UITableViewCell {
         else if(object.locStatus == locationStatus.inaccessible.rawValue || object.locStatus == locationStatus.addressNotExist.rawValue || object.locStatus == locationStatus.vacant.rawValue){
             imgLocStatus.isHidden = false
             imgLocStatus.image = UIImage(named: "Blocked")
+            
+            lblStreet.textColor = UIColor.red
+            lblAdditionalAddress.textColor = UIColor.red
+            
         }
         else{
             imgLocStatus.isHidden = true

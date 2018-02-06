@@ -279,17 +279,21 @@ class CaseViewModel{
         objCase.caseApiResponseDict["Date_of_Intake__c"] =  dateOfIntakeFormat.string(from: Date()) as AnyObject?
         objCase.caseApiResponseDict["Description"] = objCase.caseNotes as AnyObject
         
+        objCase.dateOfIntake = Utility.currentDateAndTime()
         
-        dateOfIntakeFormat.dateFormat = "MM/dd/yyyy hh:mm a"
-        objCase.dateOfIntake = dateOfIntakeFormat.string(from: Date())
+       
         
-        
-        
+        //Public_and_or_Rental_Assistance__c
         
         
         for (key, value) in objCase.caseResponseDynamicDict {
             
             if let str = value as? String {
+                
+                if(key == "Public_and_or_Rental_Assistance__c" && str.contains("OTHER")){
+                    objCase.caseApiResponseDict["Other_public_rental_assistance__c"] = value as AnyObject
+                }
+                
                 objCase.caseApiResponseDict[key] = str.replacingOccurrences(of: ",", with: ";") as AnyObject?
             }
             else{

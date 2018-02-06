@@ -90,7 +90,7 @@ final class ContactAPI:SFCommonAPI {
         }
         
         newContact.syncDate = objNewContact.syncDate
-        //newContact.createdById =
+        newContact.createdById = objNewContact.createdById
         
        
         
@@ -111,7 +111,7 @@ final class ContactAPI:SFCommonAPI {
         updateObjectDic["phone"] = objContact.phone as AnyObject
         updateObjectDic["email"] = objContact.email as AnyObject
         updateObjectDic["dob"] = objContact.dob as AnyObject
-        
+        updateObjectDic["age"] = objContact.age as AnyObject
         
         updateObjectDic["streetName"] = objContact.streetName as AnyObject
         updateObjectDic["streetNum"] = objContact.streetNum as AnyObject
@@ -289,7 +289,9 @@ final class ContactAPI:SFCommonAPI {
             
             
             updateContactId(contactDataDict: contactDataDictonary)
+            
 
+            updateContactIdInAssignmentLocationUnit(contactDataDict: contactDataDictonary)
             updateContactIdInCase(contactDataDict: contactDataDictonary)
             updateContactIdInSurveyResponse(contactDataDict: contactDataDictonary)
             updateContactIdInEventsReg(contactDataDict: contactDataDictonary)
@@ -323,15 +325,14 @@ final class ContactAPI:SFCommonAPI {
         if(contactResults.count > 0){
             
            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+          
             
             var updateObjectDic:[String:AnyObject] = [:]
             updateObjectDic["contactId"] = contactId as AnyObject
             updateObjectDic["actionStatus"] = "" as AnyObject
             updateObjectDic["locationUnitId"] = locUnitId as AnyObject
             updateObjectDic["assignmentLocUnitId"] = assignmentLocUnitId as AnyObject
-            updateObjectDic["syncDate"]  = dateFormatter.string(from: Date()) as AnyObject
+            updateObjectDic["syncDate"]  = Utility.currentDateAndTime() as AnyObject
             
             
             ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.contact.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@", predicateValue: iOSContactId,isPredicate: true)
@@ -364,6 +365,31 @@ final class ContactAPI:SFCommonAPI {
         }
         
     }
+    
+    func updateContactIdInAssignmentLocationUnit(contactDataDict:[String:AnyObject]){
+        
+        let iOSContactId = contactDataDict["iOSTenantId"] as! String?
+        let contactId = contactDataDict["tenantId"] as! String?
+        
+        
+        let assignmentLocUnitResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue,predicateFormat: "contactId == %@" ,predicateValue: iOSContactId,isPredicate:true) as! [AssignmentLocationUnit]
+        
+        if(assignmentLocUnitResults.count > 0){
+            
+            for _ in assignmentLocUnitResults{
+                
+                var updateObjectDic:[String:AnyObject] = [:]
+                updateObjectDic["contactId"] = contactId as AnyObject
+                
+                ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@", predicateValue: iOSContactId,isPredicate: true)
+                
+                
+                print("AssignmentLocUnit Results update contactId")
+            }
+        }
+        
+    }
+    
     
     
     func updateContactIdInSurveyResponse(contactDataDict:[String:AnyObject]){
@@ -441,7 +467,7 @@ final class ContactAPI:SFCommonAPI {
         
         var clientId:String = ""
         
-        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "iOSContactId == %@" ,predicateValue: iOSClientId, isPredicate:true) as! [AssignmentLocationUnit]
+        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "iOSContactId == %@" ,predicateValue: iOSClientId, isPredicate:true) as! [Contact]
         
         if(contactRes.count > 0){
             clientId = (contactRes.first?.contactId)!

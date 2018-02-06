@@ -189,6 +189,7 @@ final class CaseAPI:SFCommonAPI {
             
             updateCaseIdInCoreData(caseDataDict: caseDataDictonary)
             updateCaseIdInIssue(caseDataDict: caseDataDictonary)
+            updateCaseIdInCaseNotes(caseDataDict: caseDataDictonary)
             
         }
         else{
@@ -222,10 +223,36 @@ final class CaseAPI:SFCommonAPI {
             updateObjectDic["caseId"] = caseId as AnyObject
             updateObjectDic["caseNo"] = caseNumber as AnyObject
             updateObjectDic["actionStatus"] = "" as AnyObject
+            updateObjectDic["caseNotes"] = "" as AnyObject
             
             ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.cases.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@", predicateValue: iOSCaseId,isPredicate: true)
             
             print("update CaseIdInCoreData")
+            
+        }
+        
+    }
+    
+    func updateCaseIdInCaseNotes(caseDataDict:[String:AnyObject]){
+        
+        let iOSCaseId = caseDataDict["iOSCaseId"] as! String?
+        let caseId = caseDataDict["caseId"] as! String?
+        
+        
+        let caseNotesResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.caseNotes.rawValue,predicateFormat: "caseId == %@ && actionStatus == %@" ,predicateValue: iOSCaseId,predicateValue2: actionStatus.edit.rawValue ,isPredicate:true) as! [CaseNotes]
+        
+        
+        
+        if(caseNotesResults.count > 0){
+            
+            var updateObjectDic:[String:AnyObject] = [:]
+            updateObjectDic["caseId"] = caseId as AnyObject
+            updateObjectDic["actionStatus"] = "" as AnyObject
+          
+            
+            ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.caseNotes.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && actionStatus == %@" ,predicateValue: iOSCaseId,predicateValue2: actionStatus.edit.rawValue ,isPredicate:true)
+            
+            print("update CaseNotes InCoreData")
             
         }
         
@@ -394,9 +421,75 @@ final class CaseAPI:SFCommonAPI {
             caseData.actionStatus = actionStatus.create.rawValue
         }
         
+        
+        
         appDelegate.saveContext()
       
+       if(!objCase.caseNotes.isEmpty){
+            saveCaseNotes(caseId: caseData.caseId!, objCase: objCase)
+        }
         
+    }
+    
+    func saveCaseNotes(caseId:String,objCase:CaseDO){
+        
+        let caseNoteObject = CaseNotes(context:context)
+        
+        caseNoteObject.caseId = caseId
+        
+        caseNoteObject.createdDate = Utility.currentDateAndTime()
+        caseNoteObject.notes = objCase.caseNotes
+        
+        caseNoteObject.actionStatus = actionStatus.edit.rawValue
+        
+        caseNoteObject.assignmentLocUnitId = objCase.assignmentLocUnitId
+        
+        caseNoteObject.assignmentId = objCase.assignmentId
+        
+        appDelegate.saveContext()
+        
+    }
+    
+    func updateCaseNotes(objCase:CaseDO){
+        
+        if(checkCaseNotesExist(objCase: objCase)){
+
+            if(objCase.caseNotes.isEmpty){
+                
+                ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.caseNotes.rawValue, predicateFormat: "caseId == %@ && actionStatus == %@ && assignmentLocUnitId == %@", predicateValue: objCase.caseId,predicateValue2:actionStatus.edit.rawValue, predicateValue3: objCase.assignmentLocUnitId, isPredicate: true)
+                
+                
+            }
+            else{
+                
+                var updateObjectDic:[String:AnyObject] = [:]
+                updateObjectDic["notes"] = objCase.caseNotes as AnyObject?
+                updateObjectDic["createdDate"] = Utility.currentDateAndTime() as AnyObject?
+                
+                
+                
+                ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.caseNotes.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && actionStatus == %@ && assignmentLocUnitId == %@", predicateValue: objCase.caseId,predicateValue2:actionStatus.edit.rawValue, predicateValue3: objCase.assignmentLocUnitId, isPredicate: true)
+            }
+            
+            
+        }
+        else{
+            if(!objCase.caseNotes.isEmpty){
+                 saveCaseNotes(caseId: objCase.caseId, objCase: objCase)
+            }
+           
+        }
+        
+    }
+    
+    func checkCaseNotesExist(objCase:CaseDO)->Bool{
+        
+        let caseNotesResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.caseNotes.rawValue,predicateFormat: "caseId == %@ && actionStatus == %@ && assignmentLocUnitId == %@", predicateValue: objCase.caseId,predicateValue2:actionStatus.edit.rawValue, predicateValue3: objCase.assignmentLocUnitId, isPredicate: true) as! [CaseNotes]
+        
+        if(caseNotesResults.count > 0){
+            return true
+        }
+        return false
         
     }
     
@@ -410,9 +503,9 @@ final class CaseAPI:SFCommonAPI {
         updateObjectDic["caseDynamic"] = objCase.caseApiResponseDict as AnyObject?
         updateObjectDic["assignmentLocUnitId"] = objCase.assignmentLocUnitId as AnyObject?
         
-        if(objCase.caseNo.isEmpty){
-            updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
-        }
+        
+       updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
+        
         
         //only Edit when actionStatus is blank
         
@@ -422,6 +515,8 @@ final class CaseAPI:SFCommonAPI {
         
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.cases.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && assignmentLocId == %@", predicateValue: objCase.caseId,predicateValue2: objCase.assignmentLocId, isPredicate: true)
         
+        
+        updateCaseNotes(objCase: objCase)
         
     }
     

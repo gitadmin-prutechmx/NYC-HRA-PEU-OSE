@@ -208,7 +208,7 @@ extension AssignmentsViewController {
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "assignmentCell", for: indexPath) as! AssignmentTableViewCell
         
-        if(arrAssignmentsMain.count > 0){
+        if(arrAssignmentsSorted.count > 0){
             cell.setupView(forCellObject: arrAssignmentsSorted[indexPath.row], index: indexPath)
         }
         
@@ -229,7 +229,7 @@ extension AssignmentsViewController {
         
         
         //  canvasserTaskDataObject = CanvasserTaskDataObject()
-        canvasserTaskDataObject.assignmentObj = AssignmentDataObject(assignmentId: arrAssignmentsMain[indexPath.row].assignmentId, assignmentName: arrAssignmentsMain[indexPath.row].assignmentName)
+        canvasserTaskDataObject.assignmentObj = AssignmentDataObject(assignmentId: arrAssignmentsSorted[indexPath.row].assignmentId, assignmentName: arrAssignmentsSorted[indexPath.row].assignmentName)
         
         
         if let mapLocationVC = MapLocationStoryboard().instantiateViewController(withIdentifier: "MapLocationViewController") as? MapLocationViewController

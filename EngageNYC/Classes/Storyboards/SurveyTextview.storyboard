@@ -293,6 +293,7 @@
                         <outlet property="questionTextField" destination="r5K-IT-NUE" id="SrF-Yv-11D"/>
                         <outlet property="questionView" destination="tpn-9o-YMq" id="KlT-Ob-iXb"/>
                         <segue destination="Gwu-DB-aYh" kind="unwind" identifier="UnwindBackFromSurveyIdentifier" unwindAction="UnwindBackFromSurveyWithSegue:" id="Qvz-SY-MFe"/>
+                        <segue destination="Gwu-DB-aYh" kind="unwind" identifier="UnwindBackToDashboardIdentifier" unwindAction="UnwindBackToDashboardWithSegue:" id="hgC-Fp-SvN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XLd-w5-0sm" userLabel="First Responder" sceneMemberID="firstResponder"/>

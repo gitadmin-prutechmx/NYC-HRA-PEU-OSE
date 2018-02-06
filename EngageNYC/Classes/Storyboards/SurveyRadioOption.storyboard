@@ -378,6 +378,7 @@
                         <outlet property="questionsView" destination="lAi-dw-0lb" id="63C-MR-wEs"/>
                         <outlet property="showTextLbl" destination="dmc-jP-JDS" id="qTc-D3-jyQ"/>
                         <segue destination="kCd-dO-T5B" kind="unwind" identifier="UnwindBackFromSurveyIdentifier" unwindAction="UnwindBackFromSurveyWithSegue:" id="WU7-b2-chZ"/>
+                        <segue destination="kCd-dO-T5B" kind="unwind" identifier="UnwindBackToDashboardIdentifier" unwindAction="UnwindBackToDashboardWithSegue:" id="eWC-y1-ixv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6lb-0I-F3w" userLabel="First Responder" sceneMemberID="firstResponder"/>

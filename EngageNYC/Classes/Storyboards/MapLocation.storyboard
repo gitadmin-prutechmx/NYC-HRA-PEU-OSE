@@ -198,7 +198,7 @@
                                             <outlet property="delegate" destination="eQ7-76-kYT" id="WSd-W1-6yn"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kb6-Ba-2Ov" userLabel="btnReset">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kb6-Ba-2Ov" userLabel="btnReset">
                                         <rect key="frame" x="706" y="885" width="39" height="34"/>
                                         <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>

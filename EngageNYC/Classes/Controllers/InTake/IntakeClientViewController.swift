@@ -24,6 +24,8 @@ class IntakeClientViewController: BroadcastReceiverViewController,UITableViewDel
     var selectedClientObj:ContactDO!
     var inTakeVC:IntakeViewController!
     
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,7 +94,11 @@ extension IntakeClientViewController:ListingPopoverDelegate{
         if(obj.name == InTakeClient.client.rawValue){
             //show contact screen
             
-            if let noOfOpenCases = self.selectedClientObj.openCases , noOfOpenCases > 0 && canvasserTaskDataObject.userObj.userId !=  self.selectedClientObj.createdById  {
+            if self.selectedClientObj.createdById == nil{
+                self.selectedClientObj.createdById = ""
+            }
+            
+            if let noOfOpenCases = self.selectedClientObj.openCases , noOfOpenCases > 0 && canvasserTaskDataObject.userObj.userId !=  self.selectedClientObj.createdById && !self.selectedClientObj.createdById.isEmpty {
                 
                 self.view.makeToast("This client already have open cases so you can't edit it.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
   
@@ -128,7 +134,7 @@ extension IntakeClientViewController:ListingPopoverDelegate{
                 
                 
                 inTakeVC.segmentCtrl.selectedSegmentIndex = inTakeSegment.cases.rawValue
-                inTakeVC.globalSelectedClient = self.selectedClientObj //to maintain global selection
+                inTakeVC.globalSelectedClient = self.selectedClientObj //to maintain global selection of client
                 
                 caseVC.inTakeVC = inTakeVC
                 caseVC.inTakeVC.addBtn.isHidden = false
@@ -178,9 +184,27 @@ extension IntakeClientViewController {
             
             var isHighlight:Bool = false
             
-            if let obj = inTakeVC.globalSelectedClientForBinding{
-                
-                if(obj.contactId == arrContactsMain[indexPath.row].contactId){
+            //for intake save button
+//            if let obj = inTakeVC.globalSelectedClientForBinding{
+//                
+//                if(obj.contactId == arrContactsMain[indexPath.row].contactId){
+//                    isHighlight = true
+//                }
+//            }
+            
+            //for maintain intake global client selection
+            if(Static.newClientIdFromIntakeScreen.isEmpty){
+                if let obj = inTakeVC.globalSelectedClient{
+                    if(obj.contactId == arrContactsMain[indexPath.row].contactId){
+                        isHighlight = true
+                    }
+                }
+            }
+            else{
+                if(Static.newClientIdFromIntakeScreen == arrContactsMain[indexPath.row].contactId){
+                    inTakeVC.globalSelectedClient = arrContactsMain[indexPath.row]
+                    inTakeVC.globalSelectedCase = nil
+                    Static.newClientIdFromIntakeScreen = ""
                     isHighlight = true
                 }
             }
@@ -204,7 +228,7 @@ extension IntakeClientViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(inTakeVC.saveBtn.isHidden == false){
+//        if(inTakeVC.saveBtn.isHidden == false){
             let indexPathArray = tblClients.indexPathsForVisibleRows
             
             for indexPath in indexPathArray!
@@ -237,12 +261,17 @@ extension IntakeClientViewController {
             }
             
              //Here set bindingGlobalClient
-            inTakeVC.globalSelectedClientForBinding = arrContactsMain[indexPath.row]
+            //inTakeVC.globalSelectedClientForBinding = arrContactsMain[indexPath.row]
+        
+            inTakeVC.globalSelectedClient = arrContactsMain[indexPath.row]
+            inTakeVC.globalSelectedCase = nil
             
             
-        }
+        //}
         
        
         
     }
 }
+
+

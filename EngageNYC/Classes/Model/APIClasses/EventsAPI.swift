@@ -260,10 +260,7 @@ final class EventsAPI : SFCommonAPI
         newEventReg.iOSEventRegId = UUID().uuidString
         newEventReg.eventRegId = UUID().uuidString
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-        
-        newEventReg.regDate  = dateFormatter.string(from: Date())
+        newEventReg.regDate  = Utility.currentDateAndTime()
         newEventReg.actionStatus = actionStatus.create.rawValue
         
         appDelegate.saveContext()
@@ -354,6 +351,11 @@ extension EventsAPI{
             eventObject.borough = events.value(forKey: "Event_Borough__c") as? String
             eventObject.city = events.value(forKey: "Event_City__c") as? String
             eventObject.eventsDynamic = events as NSObject
+            
+            if let eventStaffLeadResult = (events as AnyObject).value(forKey: "Event_Staff_Lead__r") as? NSDictionary {
+                eventObject.eventStaffLeadId = eventStaffLeadResult.value(forKey: "Id") as? String ?? ""
+                eventObject.eventStaffLeadName = eventStaffLeadResult.value(forKey: "Name") as? String ?? ""
+            }
             
             appDelegate.saveContext()
         }

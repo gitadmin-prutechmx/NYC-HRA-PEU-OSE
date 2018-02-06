@@ -66,6 +66,11 @@ final class LocationUnitAPI:SFCommonAPI {
         newUnit.syncDate = objNewUnit.syncDate
         
         appDelegate.saveContext()
+        
+        //create assignment location unit here
+        AssignmentLocationUnitAPI.shared.createNewTempAssignmentLocationUnit(assignmentLocUnitId: objNewUnit.iOSAssignmentLocUnitId, assignmentId: objNewUnit.assignmentId)
+        
+        
     }
     
     
@@ -178,7 +183,13 @@ final class LocationUnitAPI:SFCommonAPI {
             
            //update assignmentlocationUnitId
            updateCases(unitDataDict: unitDataDict)
-//
+            
+             //update case notes
+            updateAssignmentLocUnitInCaseNotes(unitDataDict: unitDataDict)
+           
+             //No need right now
+            //update assignment notes
+
             
             
         }
@@ -207,12 +218,9 @@ final class LocationUnitAPI:SFCommonAPI {
     
     func updateSyncDate(assignmentLocUnitId:String){
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-        
-        
         var updateObjectDic:[String:AnyObject] = [:]
-        updateObjectDic["syncDate"]  = dateFormatter.string(from: Date()) as AnyObject
+        
+        updateObjectDic["syncDate"]  = Utility.currentDateAndTime() as AnyObject
         
         
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.locationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: assignmentLocUnitId,isPredicate: true)
@@ -230,15 +238,13 @@ final class LocationUnitAPI:SFCommonAPI {
         
         let iOSLocUnitId = unitDataDict["iOSLocUnitId"] as! String?
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-        
+       
         
         var updateObjectDic:[String:AnyObject] = [:]
         updateObjectDic["locationUnitId"] = locUnitId as AnyObject
         updateObjectDic["assignmentLocUnitId"] = assignmentLocUnitId as AnyObject
         updateObjectDic["actionStatus"] = "" as AnyObject
-        updateObjectDic["syncDate"]  = dateFormatter.string(from: Date()) as AnyObject
+        updateObjectDic["syncDate"]  = Utility.currentDateAndTime() as AnyObject
         
         
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.locationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "locationUnitId == %@", predicateValue: iOSLocUnitId,isPredicate: true)
@@ -340,6 +346,33 @@ final class LocationUnitAPI:SFCommonAPI {
     }
     
     
+    func updateAssignmentLocUnitInCaseNotes(unitDataDict:[String:AnyObject]){
+        
+        
+        let assignmentLocUnitId = unitDataDict["assignmentLocUnitId"] as! String?
+        
+        let iOSAssignmentLocUnitId = unitDataDict["iOSAssignmentLocUnitId"] as! String?
+        
+        let caseNotesResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.caseNotes.rawValue,predicateFormat: "assignmentLocUnitId == %@" ,predicateValue: iOSAssignmentLocUnitId,isPredicate:true) as! [CaseNotes]
+        
+        if(caseNotesResults.count > 0){
+            
+            for _ in caseNotesResults{
+                
+                var updateObjectDic:[String:AnyObject] = [:]
+                updateObjectDic["assignmentLocUnitId"] = assignmentLocUnitId as AnyObject
+                
+                ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.caseNotes.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: iOSAssignmentLocUnitId,isPredicate: true)
+                
+                
+                print("Case Notes Results update assignmentlocunitId")
+            }
+        }
+        
+        
+    }
+    
+    
     
     
     func getAllNewUnits()->[LocationUnit]?{
@@ -363,18 +396,22 @@ final class LocationUnitAPI:SFCommonAPI {
         return locationUnitId
     }
     
+    
     func getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId:String)->String{
         
         var assignmentLocationUnitId:String = ""
         
-        let assignmentLocationUnitRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.locationUnit.rawValue,predicateFormat: "iOSAssignmentLocUnitId == %@" ,predicateValue: iOSAssignmentLocUnitId, isPredicate:true) as! [AssignmentLocationUnit]
+        let locationUnitRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.locationUnit.rawValue,predicateFormat: "iOSAssignmentLocUnitId == %@" ,predicateValue: iOSAssignmentLocUnitId, isPredicate:true) as! [LocationUnit]
         
-        if(assignmentLocationUnitRes.count > 0){
-            assignmentLocationUnitId = (assignmentLocationUnitRes.first?.assignmentLocUnitId)!
+        if(locationUnitRes.count > 0){
+            assignmentLocationUnitId = (locationUnitRes.first?.assignmentLocUnitId)!
         }
         
         return assignmentLocationUnitId
     }
+    
+    
+    
     
     
     

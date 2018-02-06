@@ -101,6 +101,27 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
                     }
                 }
                 
+                
+                let isiOSClientId = Utility.isiOSGeneratedId(generatedId: assignmentLocUnit.contactId!)
+                
+                //if isiOSClientId is a UUID string then get salesforce clientid from contact object
+                if(isiOSClientId != nil){
+                    let clientId = ContactAPI.shared.getSalesforceClientId(iOSClientId: assignmentLocUnit.contactId!)
+                    
+                    assignmentLocUnit.contactId = clientId //update clientId
+                    
+                    if(Utility.isiOSGeneratedId(generatedId: clientId) != nil){
+                        print("Error:- ios clientId")
+                        return
+                    }
+                    else{
+                        //update assignmentLocationUnitId here
+                        updateClientId(salesforceClientId: clientId, iOSClientId: assignmentLocUnit.contactId!)
+                    }
+                }
+                
+                
+                
                 //reason, reknockneeded
                 //intake :- update to survyed
                 //tenantId:- update to contactId
@@ -221,6 +242,32 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
     
     
     
+    func createNewTempAssignmentLocationUnit(assignmentLocUnitId:String,assignmentId:String){
+    
+        
+        let assignmentLocUnit = AssignmentLocationUnit(context:context)
+        assignmentLocUnit.actionStatus = ""
+        assignmentLocUnit.assignmentLocUnitId = assignmentLocUnitId
+        assignmentLocUnit.attempted = ""
+        assignmentLocUnit.contacted = ""
+        assignmentLocUnit.surveyed = ""
+        assignmentLocUnit.contactOutcome = ""
+        assignmentLocUnit.contactId = ""
+        assignmentLocUnit.followUpType = ""
+        assignmentLocUnit.followUpDate = ""
+        assignmentLocUnit.assignmentId = assignmentId
+        assignmentLocUnit.notes = ""
+        assignmentLocUnit.lastCanvassedBy = ""
+        assignmentLocUnit.surveySyncDate = ""
+        assignmentLocUnit.surveyId = ""
+        
+        
+        appDelegate.saveContext()
+        
+    }
+    
+    
+    
  
     
     
@@ -249,6 +296,10 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
         assignmmentLocUnit.assignmentId = assignmentId
         assignmmentLocUnit.notes = assignmentLocUnitInfo.notes
         assignmmentLocUnit.lastCanvassedBy = ""
+        assignmmentLocUnit.surveySyncDate = ""
+        assignmmentLocUnit.surveyId = ""
+        
+        appDelegate.saveContext()
         
     }
     
@@ -278,6 +329,19 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
         
     }
     
+    func updateClientId(salesforceClientId:String,iOSClientId:String){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["contactId"] = salesforceClientId as AnyObject
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@", predicateValue:  iOSClientId,isPredicate: true)
+        
+    }
+    
+    
+   
     
     
 }

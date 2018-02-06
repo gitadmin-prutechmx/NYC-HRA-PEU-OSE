@@ -225,6 +225,7 @@
                         <outlet property="signatureView" destination="fVb-44-Wn0" id="aN5-7A-Odd"/>
                         <outlet property="toolBarView" destination="wF0-iQ-CfC" id="KM5-Py-r1O"/>
                         <segue destination="49u-ZJ-LfN" kind="unwind" identifier="UnwindBackFromSurveyIdentifier" unwindAction="UnwindBackFromSurveyWithSegue:" id="kTb-n7-Pcj"/>
+                        <segue destination="49u-ZJ-LfN" kind="unwind" identifier="UnwindBackToDashboardIdentifier" unwindAction="UnwindBackToDashboardWithSegue:" id="V1M-pm-Z9P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RPk-oc-rw5" userLabel="First Responder" sceneMemberID="firstResponder"/>

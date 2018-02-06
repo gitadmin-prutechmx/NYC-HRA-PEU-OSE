@@ -82,6 +82,7 @@ class NewEventRegistrationViewController: UIViewController,UITableViewDelegate,U
     }
     
     
+    
     func setupView() {
       
         DispatchQueue.global(qos: .userInitiated).async {
@@ -90,13 +91,17 @@ class NewEventRegistrationViewController: UIViewController,UITableViewDelegate,U
     }
     
     
-   
+    func updateContactPicklist(){
+        
+        self.clientsPicklist = self.viewModel.getContactsOnEvents(assignmentLocUnitId: self.canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId)
+        
+    }
     
     func reloadView(){
         DispatchQueue.main.async {
             
             
-            self.clientsPicklist = self.viewModel.getContactsOnEvents(assignmentLocUnitId: self.canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId)
+            self.updateContactPicklist()
             self.attendeeStatus = self.viewModel.getAttendeeStatus(objectType: "Event_Registration__c", fieldName: "Attendee_Status__c")
             
             self.lblEventName.text = self.newEventRegObj.objEvent.name
@@ -108,6 +113,10 @@ class NewEventRegistrationViewController: UIViewController,UITableViewDelegate,U
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        isSelectContactSelect = false
+        isSelectAttendeeStatus = false
+        
         // Hide the navigation bar for current view controller
         self.navigationController?.isNavigationBarHidden = true;
     }
@@ -193,9 +202,15 @@ extension NewEventRegistrationViewController
             
             let dynamicPicklistVC = DynamicPicklistStoryboard().instantiateViewController(withIdentifier: "DynamicPicklistViewController") as? DynamicPicklistViewController
             
+            
+          
+           
+            
             let dynamicPicklistObj = DynamicPicklistDO()
             dynamicPicklistObj.selectedDynamicPickListValue = newEventRegObj.clientName
             dynamicPicklistObj.dynamicPickListArray = self.clientsPicklist
+            dynamicPicklistObj.canvasserTaskDataObject = self.canvasserTaskDataObject
+            
             
             
             dynamicPicklistObj.dynamicPicklistName = "Contact"
@@ -247,14 +262,14 @@ extension NewEventRegistrationViewController:DynamicPicklistDelegate{
         if(isSelectContactSelect){
             newEventRegObj.clientName = pickListValue.name
             newEventRegObj.clientId = pickListValue.id
+            
+            self.updateContactPicklist()
         }
         if(isSelectAttendeeStatus){
             newEventRegObj.attendeeStatusName = pickListValue.name
             newEventRegObj.attendeeStatusId = pickListValue.id
         }
         
-        isSelectContactSelect = false
-        isSelectAttendeeStatus = false
        
         tblRegistration.reloadData()
     }

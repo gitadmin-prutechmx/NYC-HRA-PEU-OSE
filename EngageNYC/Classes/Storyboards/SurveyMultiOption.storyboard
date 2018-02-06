@@ -379,6 +379,7 @@
                         <outlet property="radioOptionsView" destination="hta-co-88u" id="HzX-5d-aHW"/>
                         <outlet property="showTextLbl" destination="yeL-AN-zHA" id="0Qe-rb-L2m"/>
                         <segue destination="JUs-nb-P2g" kind="unwind" identifier="UnwindBackFromSurveyIdentifier" unwindAction="UnwindBackFromSurveyWithSegue:" id="Lbb-RE-6m0"/>
+                        <segue destination="JUs-nb-P2g" kind="unwind" identifier="UnwindBackToDashboardIdentifier" unwindAction="UnwindBackToDashboardWithSegue:" id="wl2-7s-IGb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZu-xP-TJ0" userLabel="First Responder" sceneMemberID="firstResponder"/>

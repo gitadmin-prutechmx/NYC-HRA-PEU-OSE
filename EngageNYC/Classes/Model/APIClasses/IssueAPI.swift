@@ -160,6 +160,7 @@ final class IssueAPI:SFCommonAPI {
         if(isError == false){
             
             updateIssueIdInCoreData(issueDataDict: issueDataDictonary)
+            updateIssueIdInIssueNotes(issueDataDict: issueDataDictonary)
             
         }
         else{
@@ -184,7 +185,7 @@ final class IssueAPI:SFCommonAPI {
         
        
         
-        let issueResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.issues.rawValue,predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND issueId == %@" ,predicateValue: actionStatus.create.rawValue,predicateValue2: actionStatus.edit.rawValue, predicateValue3: iOSIssueId, isPredicate:true) as! [Issues]
+        let issueResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.issues.rawValue,predicateFormat: "issueId == %@" ,predicateValue: iOSIssueId, isPredicate:true) as! [Issues]
         
         
         
@@ -194,6 +195,7 @@ final class IssueAPI:SFCommonAPI {
             updateObjectDic["issueId"] = issueId as AnyObject
             updateObjectDic["issueNo"] = issueNo as AnyObject
             updateObjectDic["actionStatus"] = "" as AnyObject
+            updateObjectDic["notes"] = "" as AnyObject
             
             ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.issues.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@", predicateValue: iOSIssueId,isPredicate: true)
             
@@ -203,6 +205,34 @@ final class IssueAPI:SFCommonAPI {
         
         
     }
+    
+    
+    func updateIssueIdInIssueNotes(issueDataDict:[String:AnyObject]){
+        
+        let iOSIssueId = issueDataDict["iOSIssueId"] as! String?
+        let issueId = issueDataDict["issueId"] as! String?
+        
+        
+        let issueNotesResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.issueNotes.rawValue,predicateFormat: "issueId == %@ && actionStatus == %@" ,predicateValue: iOSIssueId,predicateValue2: actionStatus.edit.rawValue ,isPredicate:true) as! [IssueNotes]
+        
+        
+        
+        if(issueNotesResults.count > 0){
+            
+            var updateObjectDic:[String:AnyObject] = [:]
+            updateObjectDic["issueId"] = issueId as AnyObject
+            updateObjectDic["actionStatus"] = "" as AnyObject
+            
+            
+            ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.issueNotes.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && actionStatus == %@" ,predicateValue: iOSIssueId,predicateValue2: actionStatus.edit.rawValue ,isPredicate:true)
+            
+            print("update IssueNotes InCoreData")
+            
+        }
+        
+    }
+    
+    
     
     
     /// Get all the issues notes from core data.
@@ -272,8 +302,101 @@ final class IssueAPI:SFCommonAPI {
         appDelegate.saveContext()
         
         
+        if(!objIssue.notes.isEmpty){
+            saveIssueNotes(issueId: issueData.issueId!, objIssue: objIssue)
+        }
+        
         
     }
+    
+    func saveIssueNotes(issueId:String,objIssue:IssueDO){
+        
+        let issueNoteObject = IssueNotes(context:context)
+        
+        issueNoteObject.issueId = issueId
+        
+        issueNoteObject.createdDate = Utility.currentDateAndTime()
+        
+        issueNoteObject.notes = objIssue.notes
+        
+        issueNoteObject.actionStatus = actionStatus.edit.rawValue
+        
+        issueNoteObject.assignmentId = objIssue.assignmentId
+        
+        appDelegate.saveContext()
+       
+        
+    }
+    
+    func updateIssueNotes(objIssue:IssueDO){
+        
+        if(checkIssueNotesExist(objIssue: objIssue)){
+            
+            if(objIssue.notes.isEmpty){
+                
+                ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.issueNotes.rawValue, predicateFormat: "issueId == %@ && actionStatus == %@ && assignmentId == %@", predicateValue: objIssue.issueId,predicateValue2:actionStatus.edit.rawValue, predicateValue3: objIssue.assignmentId, isPredicate: true)
+                
+                
+            }
+            else{
+                
+                var updateObjectDic:[String:AnyObject] = [:]
+                updateObjectDic["notes"] = objIssue.notes as AnyObject?
+                updateObjectDic["createdDate"] = Utility.currentDateAndTime() as AnyObject?
+                
+                
+                
+                ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.issueNotes.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && actionStatus == %@ && assignmentId == %@", predicateValue: objIssue.issueId,predicateValue2:actionStatus.edit.rawValue, predicateValue3: objIssue.assignmentId, isPredicate: true)
+            }
+            
+            
+        }
+        else{
+            if(!objIssue.notes.isEmpty){
+                saveIssueNotes(issueId: objIssue.issueId, objIssue: objIssue)
+            }
+            
+        }
+        
+    }
+    
+    func checkIssueNotesExist(objIssue:IssueDO)->Bool{
+        
+        let issueNotesResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.issueNotes.rawValue,predicateFormat: "issueId == %@ && actionStatus == %@ && assignmentId == %@", predicateValue: objIssue.issueId,predicateValue2:actionStatus.edit.rawValue, predicateValue3: objIssue.assignmentId, isPredicate: true) as! [IssueNotes]
+        
+        if(issueNotesResults.count > 0){
+            return true
+        }
+        return false
+        
+    }
+    
+    
+    
+    
+    func updateIssue(objIssue:IssueDO){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["issueType"] = objIssue.issueType as AnyObject?
+        
+        
+        updateObjectDic["notes"] = objIssue.notes as AnyObject?
+        
+        
+        //only Edit when actionStatus is blank
+        if(objIssue.dbActionStatus.isEmpty){
+            updateObjectDic["actionStatus"] = actionStatus.edit.rawValue as AnyObject?
+        }
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.issues.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && assignmentId == %@", predicateValue:  objIssue.issueId,predicateValue2: objIssue.assignmentId, isPredicate: true)
+        
+        
+         updateIssueNotes(objIssue: objIssue)
+        
+    }
+    
+    
     
     func updateAllTempIssues(caseId:String,assignmentId:String,tempCaseId:String){
         
@@ -300,26 +423,6 @@ final class IssueAPI:SFCommonAPI {
             
         }
         
-        
-        
-    }
-    
-    func updateIssue(objIssue:IssueDO){
-        
-        var updateObjectDic:[String:AnyObject] = [:]
-        
-        updateObjectDic["issueType"] = objIssue.issueType as AnyObject?
-        
-        if(!objIssue.issueNo.isEmpty){
-            updateObjectDic["notes"] = objIssue.notes as AnyObject?
-        }
-        
-        //only Edit when actionStatus is blank
-        if(objIssue.dbActionStatus.isEmpty){
-            updateObjectDic["actionStatus"] = actionStatus.edit.rawValue as AnyObject?
-        }
-        
-        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.issues.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "issueId == %@ && assignmentId == %@", predicateValue:  objIssue.issueId,predicateValue2: objIssue.assignmentId, isPredicate: true)
         
         
     }

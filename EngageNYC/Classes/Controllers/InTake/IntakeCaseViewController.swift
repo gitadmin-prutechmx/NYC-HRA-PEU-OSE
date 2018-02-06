@@ -173,7 +173,7 @@ extension IntakeCaseViewController:ListingPopoverDelegate{
  
         else if(obj.name == InTakeCase.notes.rawValue){
             
-            if(!selectedCaseObj.caseNo.isEmpty){
+ 
                 if let caseNotesVC = CaseNotesStoryboard().instantiateViewController(withIdentifier: "CaseNotesViewController") as? CaseNotesViewController{
                     
                     caseNotesVC.selectedCaseObj = selectedCaseObj
@@ -182,14 +182,8 @@ extension IntakeCaseViewController:ListingPopoverDelegate{
                     navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
                     self.navigationController?.pushViewController(caseNotesVC, animated: true)
                 }
-            }
-            else{
-                
-                self.view.makeToast("This case does not have any notes", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    
-                }
-                
-            }
+            
+        
             
             print("Notes")
             
@@ -203,10 +197,15 @@ extension IntakeCaseViewController:ListingPopoverDelegate{
               
                // issueVC.selectedCase = self.selectedCaseObj
                 
+                
+               
                 issueVC.selectedCaseObj = self.selectedCaseObj
                 issueVC.selectedClient = self.selectedClient
+                
                 issueVC.canvasserTaskDataObject = self.canvasserTaskDataObject
                 issueVC.inTakeVC = self.inTakeVC
+                
+                inTakeVC.globalSelectedCase = self.selectedCaseObj //to maintain global selection of case
                 
                 inTakeVC.segmentCtrl.selectedSegmentIndex = inTakeSegment.issues.rawValue
                 
@@ -257,12 +256,21 @@ extension IntakeCaseViewController {
             
             var isHighlight:Bool = false
             
-            if let obj = inTakeVC.globalSelectedCaseForBinding{
-                
+            //for intake save button
+//            if let obj = inTakeVC.globalSelectedCaseForBinding{
+//
+//                if(obj.caseId == arrCaseMain[indexPath.row].caseId){
+//                    isHighlight = true
+//                }
+//            }
+            
+            //for maintain intake global case selection
+            if let obj = inTakeVC.globalSelectedCase{
                 if(obj.caseId == arrCaseMain[indexPath.row].caseId){
                     isHighlight = true
                 }
             }
+            
             
             
             cell.setupView(forCellObject: arrCaseMain[indexPath.row],isHighlight:isHighlight, index: indexPath)
@@ -283,7 +291,7 @@ extension IntakeCaseViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if(inTakeVC.saveBtn.isHidden == false){
+       // if(inTakeVC.saveBtn.isHidden == false){
             
             let indexPathArray = tblCase.indexPathsForVisibleRows
             
@@ -315,9 +323,12 @@ extension IntakeCaseViewController {
                     
                 }
             }
+        
             //Here set bindingGlobalCase
-            inTakeVC.globalSelectedCaseForBinding = arrCaseMain[indexPath.row]
-        }
+           //inTakeVC.globalSelectedCaseForBinding = arrCaseMain[indexPath.row]
+            
+            inTakeVC.globalSelectedCase = arrCaseMain[indexPath.row]
+        //}
         
     }
 }

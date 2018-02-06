@@ -82,9 +82,11 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
             }  
         }
         
-        if(objIssue.issueNo.isEmpty){
-            txtNotes.text = objIssue.notes
-        }
+         txtNotes.text = objIssue.notes
+        
+//        if(objIssue.issueNo.isEmpty){
+//            txtNotes.text = objIssue.notes
+//        }
         
     }
     
@@ -104,26 +106,36 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
         
         var msg:String = ""
         
-        if(objIssue.issueId.isEmpty){
-            viewModel.SaveIssueInCoreData(objIssue:objIssue)
-            msg = "Issue has been created successfully."
+        if(objIssue.issueType.isEmpty){
             
-            if(self.objIssue.caseId.isEmpty){
-                self.inTakeVC.saveBtn.isHidden = false
+            self.view.makeToast("Please select Issue Type", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                self.saveBtn.isEnabled = true
+                
             }
         }
         else{
-            viewModel.UpdateIssueInCoreData(objIssue:objIssue)
-            msg = "Issue has been updated successfully."
-        }
-        
-        
-        self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+            if(objIssue.issueId.isEmpty){
+                viewModel.SaveIssueInCoreData(objIssue:objIssue)
+                msg = "Issue has been created successfully."
+                
+                if(self.objIssue.caseId.isEmpty){
+                    self.inTakeVC.saveBtn.isHidden = false
+                }
+            }
+            else{
+                viewModel.UpdateIssueInCoreData(objIssue:objIssue)
+                msg = "Issue has been updated successfully."
+            }
             
-             CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.INTAKEISSUELISTING_SYNC.rawValue, sender: nil, userInfo: nil)
             
-            self.navigationController?.popViewController(animated: true);
+            self.view.makeToast(msg, duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                 CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.INTAKEISSUELISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+                
+                self.navigationController?.popViewController(animated: true);
 
+            }
         }
         
         

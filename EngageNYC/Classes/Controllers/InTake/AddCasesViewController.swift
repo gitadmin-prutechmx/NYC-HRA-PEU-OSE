@@ -88,9 +88,11 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
             
         }
         
-        if(objCase.caseNo.isEmpty){
-            txtNotes.text = objCase.caseNotes
-        }
+        txtNotes.text = objCase.caseNotes
+        
+//        if(objCase.caseNo.isEmpty){
+//            txtNotes.text = objCase.caseNotes
+//        }
        
         
         btnIssue.isHidden = true

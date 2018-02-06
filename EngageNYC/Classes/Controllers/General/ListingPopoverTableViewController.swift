@@ -199,7 +199,7 @@ extension ListingPopoverTableViewController {
         else if(type == .inTakeCaseList){
             
             if(arrList[indexPath.row].name == InTakeCase.cases.rawValue){
-                cell.lblImage.image = UIImage(named: "Case")
+                cell.lblImage.image = UIImage(named: "Edit")
             }
             if(arrList[indexPath.row].name == InTakeCase.notes.rawValue){
                 cell.lblImage.image = UIImage(named: "Note")
@@ -214,7 +214,7 @@ extension ListingPopoverTableViewController {
         else if(type == .inTakeIssueList){
             
             if(arrList[indexPath.row].name == InTakeIssue.issue.rawValue){
-                cell.lblImage.image = UIImage(named: "Issues")
+                cell.lblImage.image = UIImage(named: "Edit")
             }
             if(arrList[indexPath.row].name == InTakeIssue.notes.rawValue){
                 cell.lblImage.image = UIImage(named: "Note")

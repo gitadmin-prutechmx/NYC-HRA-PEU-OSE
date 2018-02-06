@@ -132,7 +132,7 @@ class ManageCoreData{
     
    
     
-    static func deleteRecord(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,isPredicate:Bool){
+    static func deleteRecord(salesforceEntityName:String,predicateFormat:String?=nil,predicateValue:String?=nil,predicateValue2:String?=nil,predicateValue3:String?=nil,isPredicate:Bool){
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: salesforceEntityName)
         
@@ -142,8 +142,12 @@ class ManageCoreData{
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
                 
             }
+            if(predicateValue3 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateFormat!, predicateValue!,predicateValue2!)
+                
+            }
             else {
-                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!,predicateValue3!)
             }
 
         }
@@ -153,7 +157,7 @@ class ManageCoreData{
         
      
         
-        if(salesforceEntityName == "SurveyResponse"){
+        if(salesforceEntityName == coreDataEntity.surveyResponse.rawValue){
             let resultData = result as! [SurveyResponse]
             
             for object in resultData {
@@ -161,7 +165,7 @@ class ManageCoreData{
             }
             
         }
-        else if(salesforceEntityName == "SurveyQuestion"){
+        else if(salesforceEntityName == coreDataEntity.surveyQuestion.rawValue){
             let resultData = result as! [SurveyQuestion]
             
             for object in resultData {
@@ -169,7 +173,7 @@ class ManageCoreData{
             }
             
         }
-        else if(salesforceEntityName == "Cases"){
+        else if(salesforceEntityName == coreDataEntity.cases.rawValue){
             let resultData = result as! [Cases]
             
             for object in resultData {
@@ -177,8 +181,24 @@ class ManageCoreData{
             }
             
         }
-        else if(salesforceEntityName == "Issues"){
+        else if(salesforceEntityName == coreDataEntity.caseNotes.rawValue){
+            let resultData = result as! [CaseNotes]
+            
+            for object in resultData {
+                context.delete(object)
+            }
+            
+        }
+        else if(salesforceEntityName == coreDataEntity.issues.rawValue){
             let resultData = result as! [Issues]
+            
+            for object in resultData {
+                context.delete(object)
+            }
+            
+        }
+        else if(salesforceEntityName == coreDataEntity.issueNotes.rawValue){
+            let resultData = result as! [IssueNotes]
             
             for object in resultData {
                 context.delete(object)

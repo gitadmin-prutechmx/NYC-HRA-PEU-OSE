@@ -27,13 +27,14 @@ class RefreshAll: BroadcastReceiverNSObject
     /**
      -This method will fire a full refresh Data from all models/api classes we have.
      */
-    func refreshFullData(isLogout:Bool? = false)
+    func refreshFullData(isFromSurveyScreen:Bool?=false, isLogout:Bool? = false)
     {
-        presentRefreshView {
+        presentRefreshView(isFromSurveyScreen: isFromSurveyScreen) {
             self.synUpAllObjects(isLogout: isLogout)
         }
     }
     
+    //for background syncing
     func refreshDataWithOutModel()
     {
         self.synUpAllObjects(isLogout: false,isBackgroundSync:true)
@@ -73,7 +74,7 @@ class RefreshAll: BroadcastReceiverNSObject
                                             }
                                             else{
                                                 
-                                                 Logger.shared.log(level: .info, msg: "Background syncing finish..")
+                                                Logger.shared.log(level: .info, msg: "Background syncing finish..")
                                                 Static.isBackgroundSync = false
                                             }
                                             
@@ -148,8 +149,11 @@ class RefreshAll: BroadcastReceiverNSObject
         
     }
     
-    func presentRefreshView(completion: (() -> Swift.Void)!){
+    
+    
+    func presentRefreshView(isFromSurveyScreen:Bool? = false , completion: (() -> Swift.Void)!){
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
+   
         if Static.refreshView == nil {
             if let refreshView = RefreshStoryboard().instantiateViewController(withIdentifier: "RefreshViewController") as? RefreshViewController
             {
@@ -165,15 +169,10 @@ class RefreshAll: BroadcastReceiverNSObject
                 completion()
             })
         }
+
+       
     }
     
-    /**
-     -This method will fire a full refresh Data from all models/api classes we have. It won't present any activity model you need to take care for this.
-     */
-    //    func refreshFullDataWithoutModel()
-    //    {
-    //        self.fireFullRefresh()
-    //    }
     
 }
 
