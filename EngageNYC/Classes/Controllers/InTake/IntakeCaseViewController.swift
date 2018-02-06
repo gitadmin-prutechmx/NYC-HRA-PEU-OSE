@@ -173,7 +173,7 @@ extension IntakeCaseViewController:ListingPopoverDelegate{
  
         else if(obj.name == InTakeCase.notes.rawValue){
             
-            if(!selectedCaseObj.caseNo.isEmpty){
+ 
                 if let caseNotesVC = CaseNotesStoryboard().instantiateViewController(withIdentifier: "CaseNotesViewController") as? CaseNotesViewController{
                     
                     caseNotesVC.selectedCaseObj = selectedCaseObj
@@ -182,14 +182,8 @@ extension IntakeCaseViewController:ListingPopoverDelegate{
                     navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
                     self.navigationController?.pushViewController(caseNotesVC, animated: true)
                 }
-            }
-            else{
-                
-                self.view.makeToast("This case does not have any notes", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                    
-                }
-                
-            }
+            
+        
             
             print("Notes")
             

@@ -156,7 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Set showNavBar to NO if you want to hide the top bar
         // loginViewController.showNavbar = true;
         //Set showSettingsIcon to NO if you want to hide the settings icon on the nav bar
-        loginViewController.showSettingsIcon = false;
+        loginViewController.showSettingsIcon = true;
         // Set primary color to different color to style the navigation header
         loginViewController.navBarColor = UIColor.Charcoal
         loginViewController.navBarFont = UIFont (name: "NHaasGroteskDSPro-55Rg", size: 16);

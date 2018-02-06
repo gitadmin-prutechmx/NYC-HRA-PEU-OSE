@@ -181,7 +181,7 @@ extension SurveyRadioOptionViewController:ListingPopoverDelegate{
              Utility.switchToNewSurvey(surveyObj: surveyObj, vctrl: self, listingPopOverObj: obj, btnSurveySelect: btnSurveySelect, viewModel: viewModel, canvasserTaskDataObject: canvasserTaskDataObject)
         }
         else{
-             Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true,canvasserTaskDataObject:canvasserTaskDataObject)
+             Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true,canvasserTaskDataObject:canvasserTaskDataObject,surveyVM: viewModel,surveyObj: surveyObj)
         }
     }
     
@@ -200,6 +200,10 @@ extension SurveyRadioOptionViewController {
             
         }
         else if(surveyQuestionObj.isRequired == true && radiobuttonCurrentValue.isEmpty){
+            
+            self.view.makeToast("Please select option.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
             
             self.questionsView.shake()
             

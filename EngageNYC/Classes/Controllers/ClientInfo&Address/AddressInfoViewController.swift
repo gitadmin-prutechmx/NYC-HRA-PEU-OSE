@@ -33,6 +33,7 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
     var canvasserTaskDataObject:CanvasserTaskDataObject!
     var viewModel:AddressInfoViewModel!
     var contactObj:ContactDO!
+    var isFromClientIntake:Bool = false
     
     var selectedRow = 0
     
@@ -154,6 +155,20 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
             self.viewModel.updateContact(objContactDO: contactObj)
             
             self.view.makeToast("Contact has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if(self.isFromClientIntake){
+                    
+                     //reload intakelisting and redirect canvasser to intake client screen
+                    
+                    //Notification Center:- reload intakelisting
+                    CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.INTAKECLIENTLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+                    
+                   
+                    self.performSegue(withIdentifier: "UnwindBackToInTakeIdentifier", sender: self)
+                }
+               
+                
+                
                 //Notification Center:- reload unitlisting
                 CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
                 

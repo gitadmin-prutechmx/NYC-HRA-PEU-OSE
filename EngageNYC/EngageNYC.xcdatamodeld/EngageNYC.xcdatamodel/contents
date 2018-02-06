@@ -50,6 +50,7 @@
         <attribute name="unitOutcome" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CaseNotes" representedClassName="CaseNotes" syncable="YES" codeGenerationType="class">
+        <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caseId" optional="YES" attributeType="String" syncable="YES"/>
@@ -140,6 +141,7 @@
         <attribute name="regDate" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="IssueNotes" representedClassName="IssueNotes" syncable="YES" codeGenerationType="class">
+        <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="issueId" optional="YES" attributeType="String" syncable="YES"/>
@@ -241,14 +243,14 @@
         <element name="AssignmentLocation" positionX="-117" positionY="54" width="128" height="135"/>
         <element name="AssignmentLocationUnit" positionX="-108" positionY="63" width="128" height="255"/>
         <element name="AssignmentNotes" positionX="-126" positionY="117" width="128" height="165"/>
-        <element name="CaseNotes" positionX="-117" positionY="126" width="128" height="120"/>
+        <element name="CaseNotes" positionX="-117" positionY="126" width="128" height="135"/>
         <element name="Cases" positionX="-126" positionY="45" width="128" height="270"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="Contact" positionX="-99" positionY="72" width="128" height="435"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="Events" positionX="-117" positionY="54" width="128" height="270"/>
         <element name="EventsReg" positionX="-108" positionY="63" width="128" height="165"/>
-        <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="105"/>
+        <element name="IssueNotes" positionX="-126" positionY="45" width="128" height="120"/>
         <element name="Issues" positionX="-126" positionY="45" width="128" height="150"/>
         <element name="Location" positionX="-2" positionY="-36" width="128" height="285"/>
         <element name="LocationUnit" positionX="-126" positionY="45" width="128" height="240"/>

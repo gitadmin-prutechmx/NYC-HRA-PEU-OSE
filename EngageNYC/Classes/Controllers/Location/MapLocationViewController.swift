@@ -68,6 +68,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     private var map:AGSMap!
     var geodatabaseFeatureTable:AGSGeodatabaseFeatureTable!
     var featureLayerExtent:AGSEnvelope?
+    var featureLayer:AGSFeatureLayer!
     
     var searchActive : Bool = false
     var isSyncDataFromLocation:Bool = false
@@ -84,6 +85,10 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     var vtpkMapFile:URL!
     
     var containerDirectory:URL!
+    
+    var locSearchText:String = ""
+    
+    private var sheet:CustomContextSheet!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,7 +119,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         
         if (notification.name.rawValue == SF_NOTIFICATION.LOCATIONLISTING_SYNC.rawValue)
         {
-            self.reloadView()
+            self.reloadMapLocations()
         }
     }
     
@@ -127,10 +132,13 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         Utility.openNavigationItem(btnLoginUserName: btnLoginName, vc: self)
     }
     
-    @IBAction func btnResetMapPressed(_ sender: Any) {
+    func resetMap(){
         self.mapView.callout.dismiss()
-        
         self.mapView.setViewpoint(AGSViewpoint(targetExtent: featureLayerExtent!), completion: nil)
+    }
+    
+    @IBAction func btnResetMapPressed(_ sender: Any) {
+        resetMap()
         
         //self.mapView.setViewpoint(AGSViewpoint(latitude: 40.717111188296814, longitude: -73.99110721511707,scale: 9027.977411), duration: 2, completion: nil)
     }
@@ -179,7 +187,36 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         self.geocodeParameters.resultAttributeNames.append(contentsOf: ["Match_addr"])
         self.geocodeParameters.minScore = 75
 
+        
+        self.sheet = CustomContextSheet(images: ["LocationDisplayDisabledIcon", "LocationDisplayDefaultIcon"], highlightImages: nil, titles: ["Stop", "Re-Center"])
+        
+        
+        self.sheet.translatesAutoresizingMaskIntoConstraints = false
+        self.sheet.delegate = self
+        self.view.addSubview(self.sheet)
+        
+        //add constraints
+        let constraints = [sheet.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+                           sheet.bottomAnchor.constraint(equalTo: self.mapView.attributionTopAnchor, constant: -20)]
+        NSLayoutConstraint.activate(constraints)
+        
     }
+    
+    //to start location display, the first time
+    //dont forget to add the location request field in the info.plist file
+    func startLocationDisplay(with autoPanMode:AGSLocationDisplayAutoPanMode) {
+        self.mapView.locationDisplay.autoPanMode = autoPanMode
+        self.mapView.locationDisplay.start { (error:Error?) -> Void in
+            if let error = error {
+                SVProgressHUD.showError(withStatus: error.localizedDescription, maskType: .gradient)
+                
+                //update context sheet to Stop
+                self.sheet.selectedIndex = 0
+            }
+        }
+    }
+    
+    
     
     func setupView() {
         
@@ -275,6 +312,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
             
             
             
+             //let map = AGSMap(basemap: AGSBasemap.streets())
+            
             let map = AGSMap(basemap: AGSBasemap(baseLayer: vectorLayer))
             
             
@@ -333,7 +372,13 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                             
                             //weakSelf.map.minScale =
                             
+                            
+                            
                             weakSelf.mapView.map = weakSelf.map
+                            
+                            
+                            
+                            
                         
                             //touch delegate
                             weakSelf.mapView.touchDelegate = weakSelf
@@ -357,6 +402,85 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
             }
         }
         
+        
+    }
+    
+
+    
+    
+    
+   
+    
+  
+    
+    func selectFeature(isShowCallOut:Bool = true,objLoc:MapLocationDO){
+        
+        let queryParams = AGSQueryParameters()
+        queryParams.whereClause = "Name = '\(objLoc.locName!)'"
+        
+        
+        if(geodatabaseFeatureTable != nil){
+            
+            self.geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: { [weak self] (result:AGSFeatureQueryResult?, error:Error?) -> Void in
+                if let error = error {
+                    SVProgressHUD.dismiss()
+                    print(error.localizedDescription)
+                    
+                }
+                else if let features = result?.featureEnumerator().allObjects {
+                    if features.count > 0 {
+                        
+                      
+                        //                        self?.geodatabaseFeatureTable.queryRelatedFeatureCount(for: AGSArcGISFeature, completion: <#T##(Int, Error?) -> Void#>)
+                        //
+                        
+                        
+                        //                    self?.geodatabaseFeatureTable.update(<#T##feature: AGSFeature##AGSFeature#>, completion: <#T##((Error?) -> Void)?##((Error?) -> Void)?##(Error?) -> Void#>)
+                        //                        features[0].attributes["street_name"] = "CHRYSTIE STREET 1"
+                        //
+                        //
+                        //                        self?.geodatabaseFeatureTable.update(features[0]) { [weak self] (error: Error?) -> Void in
+                        //                            if let error = error {
+                        //                                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                        //                            }
+                        //                            else {
+                        //                                    print("Update")
+                        //                            }
+                        //                        }
+                        //
+                        
+                        
+                        SVProgressHUD.dismiss()
+                        
+                        //zoom to the selected feature
+                        
+                        self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,scale:2000,completion: nil)
+                        
+                        if(isShowCallOut){
+                            self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false,objLoc: objLoc)
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    else {
+                        SVProgressHUD.dismiss()
+                        Utility.showSwiftErrorMessage(error: "Address does not exist.\(objLoc.locName)")
+                        
+                    }
+                    
+                }
+            })
+            
+        }
+        else{
+            SVProgressHUD.dismiss()
+            Utility.showSwiftErrorMessage(error: "MapLocationVC:- Select feature:-  geodatabaseFeatureTable does not exist.")
+            
+            
+            
+        }
         
     }
     
@@ -400,18 +524,22 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                                     
                                     self.geodatabaseFeatureTable = self.geodatabase.geodatabaseFeatureTable(withName: featureTable.tableName)!
                                     
+                                    //featureTable.layerInfo?.drawingInfo?.renderer?.toJSON()
+                                    //featureTable.numberOfFeatures
                                     
-                                    let featureLayer = AGSFeatureLayer(featureTable: (self.geodatabaseFeatureTable)!)
+                                    self.featureLayer = AGSFeatureLayer(featureTable: (self.geodatabaseFeatureTable)!)
                                     
-                                    featureLayer.definitionExpression = (self.filterfeaturesExpression)
+                                    self.featureLayer.definitionExpression = (self.filterfeaturesExpression)
                                     
-                                    self.mapView.map?.operationalLayers.add(featureLayer)
+                                    self.mapView.map?.operationalLayers.add(self.featureLayer)
                                     
                                     self.featureLayerExtent =  featureTable.layerInfo!.extent!
                                     
                                     
                                     if(self.isUpdateLocationView == false){
                                         self.mapView.setViewpoint(AGSViewpoint(targetExtent: self.featureLayerExtent!), completion: nil)
+                                        
+                                       // self.highlightFeatures(inLayer: featureLayer, forIDs: [])
                                     }
                                     
                                 }
@@ -428,7 +556,14 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                         }
                         
                         if(self.isUpdateLocationView == false && self.arrMapLocationsMain.count > 0){
-                            self.selectFeature(isShowCallOut: false, objLoc:self.arrMapLocationsMain[0])
+                            
+                            //set arrObjectIds based on status
+                            
+                           self.updatePinColor()
+                            
+                           self.selectFeature(isShowCallOut: false, objLoc:self.arrMapLocationsMain[0])
+                            
+                           
                         }
                         
                     }
@@ -438,74 +573,6 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         
         
     }
-    
-    
-    func selectFeature(isShowCallOut:Bool = true,objLoc:MapLocationDO){
-        
-        let queryParams = AGSQueryParameters()
-        queryParams.whereClause = "Name = '\(objLoc.locName!)'"
-        
-        
-        if(geodatabaseFeatureTable != nil){
-            
-            self.geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: { [weak self] (result:AGSFeatureQueryResult?, error:Error?) -> Void in
-                if let error = error {
-                    SVProgressHUD.dismiss()
-                    print(error.localizedDescription)
-                    
-                }
-                else if let features = result?.featureEnumerator().allObjects {
-                    if features.count > 0 {
-                        
-//                        features[0].attributes["street_name"] = "CHRYSTIE STREET 1"
-//
-//
-//                        self?.geodatabaseFeatureTable.update(features[0]) { [weak self] (error: Error?) -> Void in
-//                            if let error = error {
-//                                SVProgressHUD.showError(withStatus: error.localizedDescription)
-//                            }
-//                            else {
-//                                    print("Update")
-//                            }
-//                        }
-//
-                       
-                        
-                        SVProgressHUD.dismiss()
-                        
-                        //zoom to the selected feature
-                        
-                        self?.mapView.setViewpointCenter(features[0].geometry! as! AGSPoint,scale:2000,completion: nil)
-                        
-                        if(isShowCallOut){
-                            self?.showCalloutForGraphic(graphic: AGSGraphic(), tapLocation: features[0].geometry! as! AGSPoint, animated: true, offset: false,objLoc: objLoc)
-                        }
-                        
-                        
-                        
-                        
-                    }
-                    else {
-                        SVProgressHUD.dismiss()
-                        Utility.showSwiftErrorMessage(error: "Address does not exist.\(objLoc.locName)")
-                        
-                    }
-                    
-                }
-            })
-            
-        }
-        else{
-            SVProgressHUD.dismiss()
-            Utility.showSwiftErrorMessage(error: "MapLocationVC:- Select feature:-  geodatabaseFeatureTable does not exist.")
-            
-            
-            
-        }
-        
-    }
-    
-    
     
     
     
@@ -584,7 +651,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     // MARK: Button Unit Action
     func navigateToUnitView(_ sender: AnyObject?)
     {
-        self.mapView.callout.dismiss()
+       //self.mapView.callout.dismiss()
         
         if let locationUnitVC = LocationUnitStoryboard().instantiateViewController(withIdentifier: "LocationUnitViewController") as? LocationUnitViewController
         {
@@ -653,9 +720,14 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                                     
                                     if let i = self?.arrMapLocationsMain.index(where: {$0.locName == address})
                                     {
-                                        print(i)
+                                       
                                         let indexpath = IndexPath.init(row: i, section: 0)
+                                        
+                                        self?.selectedIndex = indexpath
+                                        
                                         self?.tblLocations.selectRow(at: indexpath, animated: false, scrollPosition: .none)
+                                        self?.tblLocations.scrollToRow(at: indexpath, at: .top, animated: true)
+                                     
                                         
                                     }
                                     
@@ -678,26 +750,239 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     
 }
 
+
+//To update map pin color
+extension MapLocationViewController{
+    
+    func removeOffsetFromExp(expression:String)->String{
+        
+        let endIndex = expression.index(expression.endIndex, offsetBy: -3)
+        return expression.substring(to: endIndex)
+        
+    }
+    
+    
+    func highlightFeatures(inLayer featureLayer:AGSFeatureLayer, arrAGSUniqueValues:[AGSUniqueValue]) {
+        
+        
+        
+        let normalSymbol = AGSPictureMarkerSymbol(image: UIImage(named: "MapPinBlue")!)
+        
+        let oidField = (featureLayer.featureTable as? AGSArcGISFeatureTable)?.objectIDField ?? "OBJECTID"
+        
+        let renderer = AGSUniqueValueRenderer(fieldNames: [oidField],
+                                              
+                                              uniqueValues: arrAGSUniqueValues,
+                                              
+                                              defaultLabel: "",
+                                              
+                                              defaultSymbol: normalSymbol)
+        
+        featureLayer.renderer = renderer
+        
+    }
+    
+    
+    
+    func updatePinColor(){
+        
+        //pending
+        //inprogress
+        //completed
+        //inaccessible
+        //vacant
+        //address does not exist
+        
+        getAllStatusAGSUniqueValues(status: locationStatus.pending.rawValue, callback: {
+            (arrPendingAGSUniqueValues) in
+            self.getAllStatusAGSUniqueValues(status: locationStatus.inprogress.rawValue, callback: {
+                (arrInProgressAGSUniqueValues) in
+                self.getAllStatusAGSUniqueValues(status: locationStatus.completed.rawValue, callback: {
+                    (arrCompletedAGSUniqueValues) in
+                    self.getAllStatusAGSUniqueValues(status: locationStatus.inaccessible.rawValue, callback: {
+                        (arrInAccessibleAGSUniqueValues) in
+                        self.getAllStatusAGSUniqueValues(status: locationStatus.vacant.rawValue, callback: {
+                            (arrVacantAGSUniqueValues) in
+                            self.getAllStatusAGSUniqueValues(status: locationStatus.addressNotExist.rawValue, callback: {
+                                (arrAddressNotExistAGSUniqueValues) in
+                                
+                                var arrAGSUniqueValues = [AGSUniqueValue]()
+                                
+                                if let arr = arrPendingAGSUniqueValues as? [AGSUniqueValue] {
+                                    arrAGSUniqueValues.append(contentsOf: arr)
+                                }
+                                if let arr = arrInProgressAGSUniqueValues as? [AGSUniqueValue] {
+                                    arrAGSUniqueValues.append(contentsOf: arr)
+                                }
+                                if let arr = arrCompletedAGSUniqueValues as? [AGSUniqueValue] {
+                                    arrAGSUniqueValues.append(contentsOf: arr)
+                                }
+                                if let arr = arrInAccessibleAGSUniqueValues as? [AGSUniqueValue] {
+                                    arrAGSUniqueValues.append(contentsOf: arr)
+                                }
+                                if let arr = arrVacantAGSUniqueValues as? [AGSUniqueValue] {
+                                    arrAGSUniqueValues.append(contentsOf: arr)
+                                }
+                                if let arr = arrAddressNotExistAGSUniqueValues as? [AGSUniqueValue] {
+                                    arrAGSUniqueValues.append(contentsOf: arr)
+                                }
+                                
+                                
+                                
+                                self.highlightFeatures(inLayer: self.featureLayer, arrAGSUniqueValues: arrAGSUniqueValues)
+                                
+                            })
+                        })
+                        
+                    })
+                })
+            })
+        })
+        
+        
+    }
+    
+    func getAllStatusAGSUniqueValues(status:String,callback: @escaping ((Any?)->())){
+        
+        if let locFilterExp = self.viewModel.statusLocationDict[status]{
+            
+            fetchObjectIds(status:status,locFilterExp: removeOffsetFromExp(expression: locFilterExp), callback: {
+                (arrAGSUniqueValues) in
+                
+                callback(arrAGSUniqueValues)
+                
+            })
+        }
+        else{
+            callback(nil)
+        }
+        
+        
+    }
+    
+    func fetchObjectIds(status:String,locFilterExp:String, callback: @escaping ((Any?)->()))
+    {
+        
+        let queryParams = AGSQueryParameters()
+        
+        queryParams.whereClause =  locFilterExp
+        
+        //queryParams.whereClause = "Name = \'117 HENRY STREET,NEW YORK,NY,10024\'OR Name = \'133 HENRY STREET,NEW YORK,NY,10025\'"
+        
+        if(geodatabaseFeatureTable != nil){
+            
+            self.geodatabaseFeatureTable.queryFeatures(with: queryParams, completion: { (result:AGSFeatureQueryResult?, error:Error?) -> Void in
+                if let error = error {
+                    SVProgressHUD.dismiss()
+                    print(error.localizedDescription)
+                    
+                }
+                else if let features = result?.featureEnumerator().allObjects {
+                    if features.count > 0 {
+                        
+                        var arrObjectIds = [Int]()
+                        
+                        for feature:AGSFeature in features{
+                            arrObjectIds.append(feature.attributes["F__OBJECTID"] as! Int)
+                        }
+                        
+                        
+                        callback(self.getAGSUniqueValues(status: status, forIDs: arrObjectIds))
+                        
+                    }
+                    else {
+                        callback(nil)
+                    }
+                    
+                }
+            })
+            
+        }
+        else{
+            callback(nil)
+            Utility.showSwiftErrorMessage(error: "MapLocationVC:- fetchObjectIds.")
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+    func getAGSUniqueValues(status:String,forIDs arrayOfIDs:[Int])->[AGSUniqueValue]{
+        
+        var pinSymbol:AGSPictureMarkerSymbol!
+        
+        
+        let markerImage:UIImage!
+        
+        // Inaccessible should be Gray along with Vacant. Only "Address does not exist" should be in red.
+        
+        if(status == locationStatus.pending.rawValue){
+            markerImage = UIImage(named: "MapPinBlue")!
+            pinSymbol = AGSPictureMarkerSymbol(image: markerImage)
+        }
+        else if(status == locationStatus.inprogress.rawValue){
+            markerImage = UIImage(named: "MapPinYellow")!
+            pinSymbol = AGSPictureMarkerSymbol(image: markerImage)
+        }
+        else if(status == locationStatus.completed.rawValue){
+            markerImage = UIImage(named: "MapPinGreen")!
+            pinSymbol = AGSPictureMarkerSymbol(image: markerImage)
+        }
+        else if(status == locationStatus.vacant.rawValue || status == locationStatus.inaccessible.rawValue){
+            markerImage = UIImage(named: "MapPinGray")!
+            pinSymbol = AGSPictureMarkerSymbol(image: markerImage)
+        }
+        else{
+            markerImage = UIImage(named: "MapPinRed")!
+            pinSymbol = AGSPictureMarkerSymbol(image: markerImage)
+        }
+        
+        
+        //        pinSymbol.leaderOffsetY = markerImage.size.height/2
+        //        pinSymbol.offsetY = markerImage.size.height/2
+        
+        
+        return  arrayOfIDs.map { oid -> AGSUniqueValue in
+            
+            return AGSUniqueValue(description: "", label: "",
+                                  
+                                  symbol: pinSymbol,
+                                  
+                                  values: [oid])
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+}
+
 //Searching locations
 extension MapLocationViewController{
     
     
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchActive = true;
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
-    }
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        searchActive = true;
+//    }
+//
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        searchActive = false;
+//    }
+//
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchActive = false;
+//    }
+//
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        searchActive = false;
+//    }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -707,6 +992,7 @@ extension MapLocationViewController{
             var isSearch = false
             
             if(searchText != ""){
+                locSearchText = searchText
                 isSearch = ($0.locName.lowercased() as NSString).contains(searchText.lowercased())
             }
             
@@ -785,6 +1071,7 @@ extension MapLocationViewController{
         // endEditing can trigger some other action according to requirements
         
         selectedIndex = indexPath
+        
         if(searchActive && arrMapLocationsFiltered.count > 0){
             self.selectFeature(objLoc: arrMapLocationsFiltered[indexPath.row])
         }
@@ -806,38 +1093,48 @@ extension MapLocationViewController{
         return 0.1
     }
 }
-/*
+
 extension MapLocationViewController : AssignmentLocationDelegate{
     func updateLocationStatus(assignmentLocId: String,locStatus:String) {
         //update location status
         self.viewModel.updateLocationStatus(assignmentLocId:assignmentLocId,locStatus:locStatus)
-        
-        self.reloadView()
-    }
-    
-  
-}
- */
-extension MapLocationViewController : AssignmentLocationDelegate{
-    func updateLocationStatus(assignmentLocId: String,locStatus:String) {
-        //update location status
-        self.viewModel.updateLocationStatus(assignmentLocId:assignmentLocId,locStatus:locStatus)
-         //self.tblLocations.reloadData()
         
       //  let indexPath = IndexPath(item: selectedIndex.row, section: 0)
       //  tblLocations.reloadRows(at: [indexPath], with: .top)
         
+        self.reloadMapLocations()
+      
+       
+    }
+    
+    
+    func reloadMapLocations(){
         DispatchQueue.main.async {
             
             self.arrMapLocationsMain = self.viewModel.loadLocations(assignmentId: self.canvasserTaskDataObject.assignmentObj.assignmentId)
             
-            self.tblLocations.reloadData()
             
+            if(self.searchActive){
+                self.arrMapLocationsFiltered = self.arrMapLocationsMain.filter {
+                    
+                    var isSearch = false
+                    
+                    if(self.locSearchText != ""){
+                        isSearch = ($0.locName.lowercased() as NSString).contains(self.locSearchText.lowercased())
+                    }
+                    
+                    return isSearch
+                    
+                    
+                }
+            }
+            
+            self.tblLocations.reloadData()
+            self.updatePinColor()
             
             self.tblLocations.selectRow(at: self.selectedIndex, animated: false, scrollPosition: .none)
-            self.tblLocations.delegate?.tableView!(self.tblLocations, didSelectRowAt: self.selectedIndex!)
+            self.tblLocations.delegate?.tableView!(self.tblLocations, didSelectRowAt: self.selectedIndex!) //update map pin window status header color
         }
-       
     }
     
     
@@ -847,5 +1144,27 @@ extension MapLocationViewController : ListingPopoverDelegate{
     func selectedItem(withObj obj: ListingPopOverDO, selectedIndex index: Int, popOverType type: PopoverType) {
          Utility.selectedNavigationItem(obj: obj, vc: self)
     }
+    
+}
+
+extension MapLocationViewController:CustomContextSheetDelegate{
+    //MARK: - CustomContextSheetDelegate
+    
+    //for selection on the context sheet
+    //update the autoPanMode based on the selection
+    func customContextSheet(_ customContextSheet: CustomContextSheet, didSelectItemAtIndex index: Int) {
+        switch index {
+        case 0:
+            self.mapView.callout.dismiss()
+            self.mapView.setViewpoint(AGSViewpoint(targetExtent: featureLayerExtent!), completion: nil)
+            self.mapView.locationDisplay.stop()
+        case 1:
+            self.startLocationDisplay(with: AGSLocationDisplayAutoPanMode.recenter)
+          //self.startLocationDisplay(with: AGSLocationDisplayAutoPanMode.off)
+        default:
+           resetMap()
+        }
+    }
+    
     
 }

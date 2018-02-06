@@ -279,9 +279,7 @@ class CaseViewModel{
         objCase.caseApiResponseDict["Date_of_Intake__c"] =  dateOfIntakeFormat.string(from: Date()) as AnyObject?
         objCase.caseApiResponseDict["Description"] = objCase.caseNotes as AnyObject
         
-        
-        dateOfIntakeFormat.dateFormat = "MM/dd/yyyy hh:mm a"
-        objCase.dateOfIntake = dateOfIntakeFormat.string(from: Date())
+        objCase.dateOfIntake = Utility.currentDateAndTime()
         
        
         

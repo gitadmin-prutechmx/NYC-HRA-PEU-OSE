@@ -94,15 +94,6 @@
                                                             <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Issue Type" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk9-wK-h3Z">
-                                                            <rect key="frame" x="495.5" y="38" width="155.5" height="20"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="20" id="oEe-2z-ZS8"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="21"/>
-                                                            <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHw-CZ-934">
                                                             <rect key="frame" x="12" y="83" width="639" height="1"/>
                                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -111,6 +102,15 @@
                                                                 <constraint firstAttribute="height" constant="1" id="Psn-ws-UrE"/>
                                                             </constraints>
                                                         </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Issue Type" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk9-wK-h3Z">
+                                                            <rect key="frame" x="495" y="27" width="156" height="42"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="42" id="oEe-2z-ZS8"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="21"/>
+                                                            <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -121,7 +121,7 @@
                                                         <constraint firstItem="xKa-pD-CTY" firstAttribute="top" secondItem="MHp-lH-znv" secondAttribute="topMargin" constant="28" id="b9B-Ak-YeR"/>
                                                         <constraint firstAttribute="trailing" secondItem="HHw-CZ-934" secondAttribute="trailing" constant="15" id="bPM-M0-Ws2"/>
                                                         <constraint firstItem="HHw-CZ-934" firstAttribute="top" secondItem="xKa-pD-CTY" secondAttribute="bottom" constant="26" id="mCi-Ys-IFo"/>
-                                                        <constraint firstItem="dk9-wK-h3Z" firstAttribute="top" secondItem="MHp-lH-znv" secondAttribute="top" constant="38" id="y6E-nW-qjc"/>
+                                                        <constraint firstItem="dk9-wK-h3Z" firstAttribute="top" secondItem="MHp-lH-znv" secondAttribute="top" constant="27" id="y6E-nW-qjc"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>

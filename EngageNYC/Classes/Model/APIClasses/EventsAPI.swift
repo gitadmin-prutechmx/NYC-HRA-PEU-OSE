@@ -260,10 +260,7 @@ final class EventsAPI : SFCommonAPI
         newEventReg.iOSEventRegId = UUID().uuidString
         newEventReg.eventRegId = UUID().uuidString
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-        
-        newEventReg.regDate  = dateFormatter.string(from: Date())
+        newEventReg.regDate  = Utility.currentDateAndTime()
         newEventReg.actionStatus = actionStatus.create.rawValue
         
         appDelegate.saveContext()

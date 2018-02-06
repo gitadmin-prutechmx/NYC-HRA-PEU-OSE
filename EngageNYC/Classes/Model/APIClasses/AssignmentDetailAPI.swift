@@ -432,6 +432,7 @@ extension AssignmentDetailAPI {
                         caseObject.assignmentLocId = locationObject.assignmentLocId
                         
                         caseObject.caseId = (caseData as AnyObject).value(forKey: "Id") as? String ?? ""
+                        caseObject.iOSCaseId = (caseData as AnyObject).value(forKey: "Id") as? String ?? ""
                         
                         caseObject.caseNo = (caseData as AnyObject).value(forKey: "CaseNumber") as? String ?? ""
                         caseObject.caseStatus = (caseData as AnyObject).value(forKey: "Status") as? String ?? ""
@@ -439,7 +440,7 @@ extension AssignmentDetailAPI {
                         caseObject.assignmentLocUnitId = locationUnitObject.assignmentLocUnitId
                         caseObject.actionStatus = ""
                         
-                        caseObject.caseNotes = (caseData as AnyObject).value(forKey: "Description") as? String ?? ""
+                       // caseObject.caseNotes = (caseData as AnyObject).value(forKey: "Description") as? String ?? ""
                         
                         
                         if let contactResult = (caseData as AnyObject).value(forKey: "Contact") as? NSDictionary {
@@ -518,7 +519,8 @@ extension AssignmentDetailAPI {
                         issueObject.issueNo = (issueInfo as AnyObject).value(forKey: "issueNumber") as? String ?? ""
                         issueObject.issueId = (issueInfo as AnyObject).value(forKey: "issueId") as? String ?? ""
                         issueObject.issueType = (issueInfo as AnyObject).value(forKey: "issueType") as? String ?? ""
-                        issueObject.notes = (issueInfo as AnyObject).value(forKey: "issueNotes") as? String ?? ""
+                        //issueObject.notes = (issueInfo as AnyObject).value(forKey: "issueNotes") as? String ?? ""
+                    
                         
                         
                         issueObject.assignmentId = assignmentObject.assignmentId

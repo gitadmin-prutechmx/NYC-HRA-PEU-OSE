@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +21,7 @@
         <!--ClientInfoViewController-->
         <scene sceneID="5BU-So-Dix">
             <objects>
-                <viewController storyboardIdentifier="ClientInfoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bw1-ag-q1a" userLabel="ClientInfoViewController" customClass="ClientInfoViewController" customModule="EngageNYCDev" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ClientInfoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bw1-ag-q1a" userLabel="ClientInfoViewController" customClass="ClientInfoViewController" customModule="EngageNYC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Tja-vL-9Xf">
                         <rect key="frame" x="0.0" y="0.0" width="700" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -412,6 +412,7 @@
                     <connections>
                         <outlet property="firstNameView" destination="QuY-Gp-vbO" id="QPl-vn-rRf"/>
                         <outlet property="lastNameView" destination="4gL-og-rDc" id="oZ0-jz-QSl"/>
+                        <outlet property="lblHeadertitle" destination="5qf-7o-Eg5" id="naY-yA-u4A"/>
                         <outlet property="leftbarbutton" destination="ERC-hK-TIY" id="ADN-Ho-Kkt"/>
                         <outlet property="phoneView" destination="2UO-mb-XvR" id="ynZ-LZ-1BA"/>
                         <outlet property="rightBarButton" destination="GFd-sg-2h7" id="4bi-N8-kFf"/>

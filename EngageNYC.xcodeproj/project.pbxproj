@@ -46,6 +46,7 @@
 		8A02D84520033350007E6560 /* NHaasGroteskTXPro-76BdIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A02D82F2003334F007E6560 /* NHaasGroteskTXPro-76BdIt.otf */; };
 		8A02D86C20036D03007E6560 /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02D86B20036D03007E6560 /* AssignmentTableViewCell.swift */; };
 		8A06FA7E20216F9800F4C745 /* MapData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A06FA7D20216F9800F4C745 /* MapData.zip */; };
+		8A0AD02520286E4500F67237 /* CustomContextSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0AD02420286E4500F67237 /* CustomContextSheet.swift */; };
 		8A2CC784200CD1B400CD1819 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2CC783200CD1B400CD1819 /* DateTableViewCell.swift */; };
 		8A2CC786200CD22800CD1819 /* NewEventRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2CC785200CD22800CD1819 /* NewEventRegistrationViewController.swift */; };
 		8A2CC788200CD23400CD1819 /* NewEventRegistration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A2CC787200CD23300CD1819 /* NewEventRegistration.storyboard */; };
@@ -293,6 +294,7 @@
 		8A02D86B20036D03007E6560 /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
 		8A0462931FACD9550070D173 /* EngageNYC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngageNYC.entitlements; sourceTree = "<group>"; };
 		8A06FA7D20216F9800F4C745 /* MapData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapData.zip; sourceTree = "<group>"; };
+		8A0AD02420286E4500F67237 /* CustomContextSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomContextSheet.swift; sourceTree = "<group>"; };
 		8A2CC783200CD1B400CD1819 /* DateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		8A2CC785200CD22800CD1819 /* NewEventRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventRegistrationViewController.swift; sourceTree = "<group>"; };
 		8A2CC787200CD23300CD1819 /* NewEventRegistration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewEventRegistration.storyboard; sourceTree = "<group>"; };
@@ -808,6 +810,7 @@
 		8A7A450F2008CA2600AE3BE3 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				8A0AD02420286E4500F67237 /* CustomContextSheet.swift */,
 				8A7A452C200A7C5100AE3BE3 /* AssignmentLocationHistoryTableViewCell.swift */,
 				8A7A451D2008CDE600AE3BE3 /* Xib */,
 				8A7A45122008CA4800AE3BE3 /* AssignmentLocationViewController.swift */,
@@ -1526,6 +1529,7 @@
 				8A7A4564200C5C2000AE3BE3 /* AddressInfoViewModel.swift in Sources */,
 				8A7A455A200C4A8200AE3BE3 /* NewClientInfoWithAddressViewController.swift in Sources */,
 				8A7A44D02008740600AE3BE3 /* SFCommonAPI.swift in Sources */,
+				8A0AD02520286E4500F67237 /* CustomContextSheet.swift in Sources */,
 				8A59DB692017624700BDB9F2 /* AddCasesViewController.swift in Sources */,
 				8A7A44E9200893FB00AE3BE3 /* ClientListingViewController.swift in Sources */,
 				8A78D326201DA5120085E096 /* DynamicMultiPicklistViewController.swift in Sources */,

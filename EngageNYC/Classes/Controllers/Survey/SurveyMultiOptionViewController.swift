@@ -200,7 +200,7 @@ extension SurveyMultiOptionViewController:ListingPopoverDelegate{
              Utility.switchToNewSurvey(surveyObj: surveyObj, vctrl: self, listingPopOverObj: obj, btnSurveySelect: btnSurveySelect, viewModel: viewModel, canvasserTaskDataObject: canvasserTaskDataObject)
         }
         else{
-            Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true,canvasserTaskDataObject:canvasserTaskDataObject)
+             Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true,canvasserTaskDataObject:canvasserTaskDataObject,surveyVM: viewModel,surveyObj: surveyObj)
         }
     }
     
@@ -219,6 +219,10 @@ extension SurveyMultiOptionViewController{
             
         }
         else if(surveyQuestionObj.isRequired == true && selectedOptions.count == 0){
+            
+            self.view.makeToast("Please select option.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
             
             self.questionsView.shake()
             

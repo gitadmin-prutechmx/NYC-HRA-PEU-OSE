@@ -12,6 +12,7 @@ class MapLocationViewModel{
     
     var filterfeaturesExpression:String = ""
     var locationAddressDict:[String:MapLocationDO] = [:]
+    var statusLocationDict:[String:String] = [:]
     
     static func getViewModel() -> MapLocationViewModel {
         return MapLocationViewModel()
@@ -29,30 +30,10 @@ class MapLocationViewModel{
     func loadLocations(assignmentId:String) -> [MapLocationDO]{
         
         var arrMapLocations = [MapLocationDO]()
+  
+        filterfeaturesExpression = ""
         
-//        let objMapLocation = MapLocationDO()
-//        objMapLocation.locId = "1"
-//        objMapLocation.locName = "137 CHRYSTIE STREET,NEW YORK,NY,10076"
-//        objMapLocation.street = "137 CHRYSTIE STREET"
-//        objMapLocation.state = "NY"
-//        objMapLocation.zip = "10076"
-//        objMapLocation.city = "NEW YORK"
-//        objMapLocation.totalUnits = "2"
-//        objMapLocation.totalClients = "3"
-//        objMapLocation.noOfUnitsAttempt = "5"
-//        objMapLocation.lastModifiedName = "Kamal"
-//
-//        objMapLocation.assignmentLocId = "2"
-//        objMapLocation.locStatus = "Planned"
-//        objMapLocation.additionalAddress = "NEW YORK" + ", " + "NY" + ", " + "10076"
-//
-//        if(locationAddressDict["137 CHRYSTIE STREET,NEW YORK,NY,10076"] == nil){
-//            locationAddressDict["137 CHRYSTIE STREET,NEW YORK,NY,10076"] = objMapLocation
-//        }
-//
-//        filterfeaturesExpression = filterfeaturesExpression + "Name = 137 CHRYSTIE STREET,NEW YORK,NY,10076'OR "
-//
-//        arrMapLocations.append(objMapLocation)
+        statusLocationDict = [:]
         
         if let locations = LocationAPI.shared.getAllLocations(assignmentId: assignmentId){
             for location:Location in locations{
@@ -73,6 +54,20 @@ class MapLocationViewModel{
 
                 objMapLocation.assignmentLocId = location.assignmentLocId
                 objMapLocation.locStatus = location.locStatus
+                
+                var locationExpression:String = ""
+   
+                if(statusLocationDict[location.locStatus!] == nil){
+                    locationExpression = locationExpression + "Name = '\(location.locationName!)'OR "
+                    statusLocationDict[location.locStatus!] = locationExpression
+                }
+                else{
+                    locationExpression = statusLocationDict[location.locStatus!]! + "Name = '\(location.locationName!)'OR "
+                    statusLocationDict[location.locStatus!] = locationExpression
+                }
+                
+                
+                
                 objMapLocation.additionalAddress = location.city! + ", " + location.state! + ", " + location.zip!
 
                 if(locationAddressDict[location.locationName!] == nil){

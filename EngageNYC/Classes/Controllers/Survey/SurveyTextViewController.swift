@@ -159,8 +159,9 @@ extension SurveyTextViewController:ListingPopoverDelegate{
             
             Utility.switchToNewSurvey(surveyObj: surveyObj, vctrl: self, listingPopOverObj: obj, btnSurveySelect: btnSurveySelect, viewModel: viewModel, canvasserTaskDataObject: canvasserTaskDataObject)
         }
+            
         else{
-          Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true,canvasserTaskDataObject:canvasserTaskDataObject)
+          Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true,canvasserTaskDataObject:canvasserTaskDataObject,surveyVM: viewModel,surveyObj: surveyObj)
         }
     }
 
@@ -188,6 +189,9 @@ extension SurveyTextViewController{
         }
         else if(surveyQuestionObj.isRequired == true && surveyObj.answerSurvey.isEmpty){
             
+            self.view.makeToast("Please enter your answer.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+            }
             self.questionView.shake()
             return
         }

@@ -100,7 +100,7 @@ class Utility{
                 if(surveyObj == nil){
                     
                     vctrl.view.makeToast("There is no default survey on this assignment.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                        
+                      
                     }
                     
                     
@@ -132,7 +132,7 @@ class Utility{
             }
             
         }
-        
+       
         
         
     }
@@ -152,6 +152,10 @@ class Utility{
         else{
             
             surveyObject.currentSurveyPage = surveyObject.surveyQuestionArrayIndex + 1 //Not use this time
+            
+            if(surveyObject.surveyQuestionArrayIndex > surveyObject.totalSurveyQuestions){
+                surveyObject.surveyQuestionArrayIndex = surveyObject.surveyQuestionArrayIndex - 1
+            }
             
             if let objSurveyQues =  surveyObject.surveyQuestionArray[surveyObject.surveyQuestionArrayIndex].objectSurveyQuestion{
                 
@@ -193,7 +197,7 @@ class Utility{
         
     }
     
-    class func exitFromSurvey(vctrl:UIViewController,surveyVM:SurveyViewModel,surveyObj:SurveyDO,isSubmitSurvey:Bool?=false){
+    class func exitFromSurvey(vctrl:UIViewController,surveyVM:SurveyViewModel,surveyObj:SurveyDO,isSubmitSurvey:Bool?=false,isShowDashboard:Bool?=false){
         
         let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to exit from survey?", vc: vctrl)
         
@@ -204,19 +208,32 @@ class Utility{
         
         let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             
-            if(isSubmitSurvey)!{
-                surveyObj.surveyQuestionArrayIndex = surveyObj.surveyQuestionArrayIndex + 1
+            updateSurveyofUnit(surveyVM: surveyVM, surveyObj: surveyObj,isSubmitSurvey: isSubmitSurvey)
+            
+            if(isShowDashboard!){
+                vctrl.performSegue(withIdentifier: "UnwindBackToDashboardIdentifier", sender: self)
+               
             }
-            
-            surveyVM.saveInProgressSurvey(surveyObj: surveyObj)
-            
-            vctrl.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
-            
-            CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
-            
+            else{
+                
+                vctrl.performSegue(withIdentifier: "UnwindBackFromSurveyIdentifier", sender: self)
+                
+                CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+            }
             
         }
         alertCtrl.addAction(okAction)
+        
+        
+    }
+    
+    class func updateSurveyofUnit(surveyVM:SurveyViewModel,surveyObj:SurveyDO,isSubmitSurvey:Bool?=false){
+        
+        if(isSubmitSurvey)!{
+            surveyObj.surveyQuestionArrayIndex = surveyObj.surveyQuestionArrayIndex + 1
+        }
+        
+        surveyVM.saveInProgressSurvey(surveyObj: surveyObj)
         
         
     }
@@ -326,7 +343,7 @@ class Utility{
         return exists && isDirectory.boolValue
     }
     
-    
+   
     
     
     class func getEventFormattedAddress(eventObj:Events)->String{
@@ -367,7 +384,7 @@ class Utility{
         
         view.configureContent(title: title, body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
         
-        let iconStyle: IconStyle
+         let iconStyle: IconStyle
         
         iconStyle = .light
         
@@ -502,7 +519,9 @@ class Utility{
         }
     }
     
-    class func selectedNavigationItem(obj:ListingPopOverDO,vc:UIViewController,isFromSurveyScreen:Bool? = false,canvasserTaskDataObject:CanvasserTaskDataObject?=nil){
+   
+    
+    class func selectedNavigationItem(obj:ListingPopOverDO,vc:UIViewController,isFromSurveyScreen:Bool? = false,isSubmitSurvey:Bool?=false,canvasserTaskDataObject:CanvasserTaskDataObject?=nil,surveyVM:SurveyViewModel?=nil,surveyObj:SurveyDO?=nil){
         
         
         Logger.shared.log(level: .error, msg: "Name: \(obj.name)")
@@ -516,26 +535,30 @@ class Utility{
                     vc.performSegue(withIdentifier: "UnwindBackToDashboardIdentifier", sender: self)
                     
                     
-                    //                    if let dashboardVC = dashboardStoryboard().instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController
-                    //                    {
-                    //                        dashboardVC.isFirstTimeLoad = false
-                    //                        dashboardVC.modalPresentationStyle = UIModalPresentationStyle.formSheet
-                    //                        vc.navigationController?.pushViewController(dashboardVC, animated: true)
-                    //                    }
+//                    if let dashboardVC = dashboardStoryboard().instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController
+//                    {
+//                        dashboardVC.isFirstTimeLoad = false
+//                        dashboardVC.modalPresentationStyle = UIModalPresentationStyle.formSheet
+//                        vc.navigationController?.pushViewController(dashboardVC, animated: true)
+//                    }
+                }
+                else{
+                    
+                    exitFromSurvey(vctrl: vc, surveyVM: surveyVM!, surveyObj: surveyObj!,isSubmitSurvey: isSubmitSurvey,isShowDashboard: true)
                 }
                 
                 
                 Logger.shared.log(level: .verbose, msg: "Home: \(obj.name)")
             case .refreshData:
                 
-                if(isFromSurveyScreen == false){
+                
                     if(NetworkUtility.shared.isConnected() == true){
                         
                         if(Static.isBackgroundSync == false){
                             
                             Static.isRefreshBtnClick = true
                             
-                            RefreshAll.sharedInstance.refreshFullData()
+                            RefreshAll.sharedInstance.refreshFullData(isFromSurveyScreen: isFromSurveyScreen)
                         }
                         else{
                             vc.view.makeToast("Background syncing is in progress. Please try after some time.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
@@ -548,7 +571,7 @@ class Utility{
                             
                         }
                     }
-                }
+                
                 
                 Logger.shared.log(level: .verbose, msg: "RefreshData: \(obj.name)")
                 
@@ -587,7 +610,7 @@ class Utility{
                 }
                 
             case .signOut:
-                if(isFromSurveyScreen == false){
+        
                     let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to logout?", vc: vc)
                     
                     let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
@@ -598,11 +621,18 @@ class Utility{
                     alertCtrl.addAction(cancelAction)
                     
                     let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
+                        
+                        if(isFromSurveyScreen)!{
+                            
+                            updateSurveyofUnit(surveyVM: surveyVM!, surveyObj: surveyObj!,isSubmitSurvey: isSubmitSurvey)
+                            
+                        }
                         RefreshAll.sharedInstance.refreshFullData(isLogout: true)
+                        
                         
                     }
                     alertCtrl.addAction(okAction)
-                }
+                
                 
                 Logger.shared.log(level: .verbose, msg: "Signout: \(obj.name)")
             case .events:
@@ -863,7 +893,14 @@ class Utility{
         
     }
     
+    class func currentDateAndTime()-> String{
     
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+    
+        return dateFormatter.string(from: Date())
+    
+    }
     
     
     

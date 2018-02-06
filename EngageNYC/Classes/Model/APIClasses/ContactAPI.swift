@@ -90,7 +90,7 @@ final class ContactAPI:SFCommonAPI {
         }
         
         newContact.syncDate = objNewContact.syncDate
-        //newContact.createdById =
+        newContact.createdById = objNewContact.createdById
         
        
         
@@ -111,7 +111,7 @@ final class ContactAPI:SFCommonAPI {
         updateObjectDic["phone"] = objContact.phone as AnyObject
         updateObjectDic["email"] = objContact.email as AnyObject
         updateObjectDic["dob"] = objContact.dob as AnyObject
-        
+        updateObjectDic["age"] = objContact.age as AnyObject
         
         updateObjectDic["streetName"] = objContact.streetName as AnyObject
         updateObjectDic["streetNum"] = objContact.streetNum as AnyObject
@@ -325,15 +325,14 @@ final class ContactAPI:SFCommonAPI {
         if(contactResults.count > 0){
             
            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+          
             
             var updateObjectDic:[String:AnyObject] = [:]
             updateObjectDic["contactId"] = contactId as AnyObject
             updateObjectDic["actionStatus"] = "" as AnyObject
             updateObjectDic["locationUnitId"] = locUnitId as AnyObject
             updateObjectDic["assignmentLocUnitId"] = assignmentLocUnitId as AnyObject
-            updateObjectDic["syncDate"]  = dateFormatter.string(from: Date()) as AnyObject
+            updateObjectDic["syncDate"]  = Utility.currentDateAndTime() as AnyObject
             
             
             ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.contact.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@", predicateValue: iOSContactId,isPredicate: true)

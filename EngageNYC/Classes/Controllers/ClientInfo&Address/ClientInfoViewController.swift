@@ -50,6 +50,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var rightBarButton: UIButton!
     
     
+    @IBOutlet weak var lblHeadertitle: UILabel!
     
     @IBOutlet weak var firstNameView: UIView!
     @IBOutlet weak var lastNameView: UIView!
@@ -90,6 +91,8 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
         self.bindView()
         
+        lblHeadertitle.text = "New Client Info"
+        
         if(objContact != nil){
             populateContactObject()
         }
@@ -109,6 +112,8 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         txtSuffixName.text = objContact.suffix
         txtPhoneName.text = objContact.phone.toPhoneNumber()
         txtEmailName.text = objContact.email
+        
+        lblHeadertitle.text = objContact.contactName
         
         if(objContact.dob != ""){
             let dateFormatter = DateFormatter()
@@ -232,7 +237,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
             
             objContact.dob = dob
             
-            calculateAge()
+            objContact.age = calculateAge(dob: objContact.dob)
         }
         
         objContact.iOSContactId = objContact.contactId
@@ -242,7 +247,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
         objContact.contactName = objContact.firstName + " " + objContact.middleName + " " + objContact.lastName
         
-        objContact.createdById = canvasserTaskDataObject.userObj.contactId
+        objContact.createdById = canvasserTaskDataObject.userObj.userId
         
         //        objNewContact.assignmentId = canvasserTaskDataObject.assignmentObj.assignmentId
         //        objNewContact.assignmentLocId = canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId
@@ -255,6 +260,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
                 
                 addressInfo.canvasserTaskDataObject = canvasserTaskDataObject
                 addressInfo.contactObj = objContact
+                addressInfo.isFromClientIntake = fromIntakeClient
                 
                 addressInfo.modalPresentationStyle = UIModalPresentationStyle.formSheet
                 self.navigationController?.pushViewController(addressInfo, animated: true)
@@ -287,7 +293,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
             
             objNewContact.dob = dob
             
-            calculateAge()
+            objNewContact.age = calculateAge(dob: objNewContact.dob)
         }
         
         
@@ -297,7 +303,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
         objNewContact.assignmentId = canvasserTaskDataObject.assignmentObj.assignmentId
         objNewContact.assignmentLocId = canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId
-        objNewContact.createdById = canvasserTaskDataObject.userObj.contactId
+        objNewContact.createdById = canvasserTaskDataObject.userObj.userId
         
         if(showAddressScreen){
             showNewAddressVC()
@@ -519,38 +525,31 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
         
         
-        
-        
-        //        if let dob = txtDobName.text{
-        //
-        //            objNewContact.dob = dob
-        //
-        //            calculateAge()
-        //        }
-        //
-        
-        
-        
         return true
         
     }
     
     
     
-    func calculateAge(){
-        if(objNewContact.dob != ""){
+    func calculateAge(dob:String)->String{
+        
+        var age:String = ""
+        
+        if(dob != ""){
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
             
-            let birthdate = dateFormatter.date(from: objNewContact.dob)
+            let birthdate = dateFormatter.date(from: dob)
             
             let now = Date()
             let calendar = Calendar.current
             
             
             let ageComponents = calendar.dateComponents([.year], from: birthdate!, to: now)
-            objNewContact.age = String(ageComponents.year!)
+            age = String(ageComponents.year!)
         }
+        
+        return age
         
     }
     

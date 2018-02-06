@@ -177,7 +177,7 @@ extension SubmitSurveyViewController:ListingPopoverDelegate{
             btnSurvey.isEnabled = true
         }
         else{
-            Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true)
+             Utility.selectedNavigationItem(obj: obj, vc: self,isFromSurveyScreen: true,isSubmitSurvey: true, canvasserTaskDataObject:canvasserTaskDataObject,surveyVM: viewModel,surveyObj: surveyObj)
         }
     }
 }
