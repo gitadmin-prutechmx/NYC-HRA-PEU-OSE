@@ -19,6 +19,7 @@ class AssignmentLocationUnitViewController: UIViewController {
     var completionHandler : ((_ childVC:AssignmentLocationUnitViewController) -> Void)?
     
     @IBOutlet weak var rightBarButton: UIButton!
+    @IBOutlet weak var leftBarButton: UIButton!
     
     @IBOutlet weak var lblLocationName: UILabel!
     @IBOutlet weak var segmentCtrl: UISegmentedControl!
@@ -40,6 +41,9 @@ class AssignmentLocationUnitViewController: UIViewController {
         headerTitle.text = canvasserTaskDataObject.locationUnitObj.locationUnitName
         lblLocationName.text = canvasserTaskDataObject.locationObj.objMapLocation.locName
         rightBarButton.isEnabled = false
+        
+        Utility.makeButtonBorder(btn: leftBarButton)
+        Utility.makeButtonBorder(btn: rightBarButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {

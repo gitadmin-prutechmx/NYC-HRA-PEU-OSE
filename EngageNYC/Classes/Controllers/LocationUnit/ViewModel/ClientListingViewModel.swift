@@ -74,8 +74,8 @@ class ClientListingViewModel{
             
         }
         
-        
-        if let contacts = ContactAPI.shared.getIntakeContacts(assignmentLocUnitId:assignmentLocUnitId){
+        //getIntakeContacts
+        if let contacts = ContactAPI.shared.getAllContactsOnUnit(assignmentLocUnitId:assignmentLocUnitId){
             
             for contact:Contact in contacts{
                 

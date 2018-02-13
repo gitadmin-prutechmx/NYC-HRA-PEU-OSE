@@ -49,6 +49,9 @@ class DynamicPicklistViewController: UIViewController,UITableViewDataSource,UITa
         else{
             btnAddClient.isHidden = true
         }
+        
+        
+        Utility.makeButtonBorder(btn: btnAddClient)
     }
     
     func setUpView(){

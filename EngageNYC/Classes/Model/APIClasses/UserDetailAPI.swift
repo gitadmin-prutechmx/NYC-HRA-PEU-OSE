@@ -126,23 +126,13 @@ extension UserDetailAPI{
         
         
         //Setting
-        let basemapDate = jsonObject.value(forKey:"esriBaseMapModifiedDate") as? String  ?? ""
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        let date = dateFormatter.date(from: basemapDate)
-        
-        
         if let settingRes = SettingsAPI.shared.getSettings(){
             
             if(settingRes.count == 0){
                 let settingObject = Setting(context: context)
                 settingObject.settingsId = "1"
                 settingObject.offlineSyncTime = "2"
-                settingObject.basemapUrl = jsonObject.value(forKey: "esriBaseMapLink") as? String ?? ""
                 settingObject.featureLayerUrl = jsonObject.value(forKey: "esriLayerLink") as? String ?? ""
-                settingObject.geodatabaseUrl = jsonObject.value(forKey: "esriGeodatabase") as? String ?? ""
-                settingObject.basemapDate = date as NSDate?
                 settingObject.isSyncON = true
                 
                 appDelegate.saveContext()

@@ -138,10 +138,15 @@ class ClientListingViewController: BroadcastReceiverViewController,UITableViewDe
     
     var locationUnitVC:LocationUnitViewController!
     
+    var sortDirection: ArrowDirection!
+    var isLoadingFirstTime = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupView()
+        
+        sortDirection = .up
         
         //Bind Clients data
         self.reloadView()
@@ -182,12 +187,25 @@ class ClientListingViewController: BroadcastReceiverViewController,UITableViewDe
         DispatchQueue.main.async {
             
             self.arrContactsMain = self.viewModel.loadContacts(assignmentId: self.canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: self.canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
-            self.sortData(forHeaderIndex: ClientListingColoum.firstName.rawValue, direction: .up)
-            
-            if let clientlistingHeader = self.viewModel.getClientListingHeader(){
-                self.tableHeader.arrSortingHeader = clientlistingHeader
+            if self.searchActive {
+                 if let clientlistingColoumn = ClientListingColoum(rawValue: ClientListingColoum.firstName.rawValue)
+                 {
+                    self.arrContactsSorted = clientlistingColoumn.sort(inOrder: self.sortDirection, main: self.arrContactsMain)
+                    
+                    self.filterContactForSearchedText(searchText: self.clientSearchBar.text!)
+                    self.lblClients.text = "CLIENTS (\(self.arrContactsFiltered.count))"
+                }
+            } else {
+                self.sortData(forHeaderIndex: ClientListingColoum.firstName.rawValue, direction: self.sortDirection)
+                self.lblClients.text = "CLIENTS (\(self.arrContactsSorted.count))"
             }
-             self.lblClients.text = "CLIENTS (\(self.arrContactsSorted.count))"
+            
+            if  self.isLoadingFirstTime{
+                self.isLoadingFirstTime = false
+                if let clientlistingHeader = self.viewModel.getClientListingHeader(){
+                    self.tableHeader.arrSortingHeader = clientlistingHeader
+                }
+            }
             
             self.tblClients.reloadData()
         }
@@ -266,24 +284,22 @@ extension ClientListingViewController{
 extension ClientListingViewController{
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchActive = true;
+       // searchActive = true;
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchActive = false;
+       // searchActive = false;
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
+       // searchActive = false;
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
+       // searchActive = false;
     }
     
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+    func filterContactForSearchedText(searchText: String) {
         arrContactsFiltered = arrContactsSorted.filter {
             
             var isSearch = false
@@ -296,6 +312,11 @@ extension ClientListingViewController{
             
             
         }
+        
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        filterContactForSearchedText(searchText: searchText)
         
         if(arrContactsFiltered.count == 0){
             searchActive = false;

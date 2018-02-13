@@ -21,18 +21,28 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
  
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var saveBtn:UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
+    
+    @IBOutlet weak var btnNotes: UIButton!
+    @IBOutlet weak var imgNote: UIImageView!
+    @IBOutlet weak var lblNote: UILabel!
+    
+    
     
     var objIssue:IssueDO!
     var viewModel:IssueViewModel!
     var inTakeVC:IntakeViewController!
     
-     var issueTypePicklist:[DropDownDO]!
+    var issueTypePicklist:[DropDownDO]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
         self.bindView()
         self.reloadView()
+        
+        Utility.makeButtonBorder(btn: saveBtn)
+        Utility.makeButtonBorder(btn: cancelBtn)
     }
     
     func reloadView(){
@@ -47,6 +57,20 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
         
     }
 
+    @IBAction func btnNotesPressed(_ sender: Any) {
+        
+        if let issueNotesVC = IssueNotesStoryboard().instantiateViewController(withIdentifier: "IssueNotesViewController") as? IssueNotesViewController{
+            
+            issueNotesVC.selectedIssueObj = objIssue
+            
+            let navigationController = UINavigationController(rootViewController: issueNotesVC)
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            self.navigationController?.pushViewController(issueNotesVC, animated: true)
+        }
+        
+        
+    }
+    
     func setUpUI(){
         txtNotes.layer.cornerRadius = 5
         txtNotes.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
@@ -54,6 +78,11 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
         txtNotes.clipsToBounds = true
         txtNotes.textColor = UIColor.black
         self.tblAddIssue?.tableFooterView = UIView()
+        
+    
+        imgNote.isHidden = false
+        lblNote.isHidden = false
+        btnNotes.isHidden = false
         
         
         if(objIssue.issueActionStatus ==  enumIssueActionStatus.View.rawValue){
@@ -66,10 +95,16 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
             else{
                 headerTitle.text = objIssue.issueNo
             }
+            
+            
         }
         else if(objIssue.issueActionStatus ==  enumIssueActionStatus.Add.rawValue){
             saveBtn.isHidden = false
             headerTitle.text = "Add Issue"
+            
+            imgNote.isHidden = true
+            lblNote.isHidden = true
+            btnNotes.isHidden = true
         }
         else{
             saveBtn.isHidden = false
@@ -79,7 +114,8 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
             }
             else{
                 headerTitle.text = objIssue.issueNo
-            }  
+            }
+            
         }
         
          txtNotes.text = objIssue.notes

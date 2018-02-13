@@ -311,7 +311,8 @@ extension AssignmentDetailAPI {
                 locationUnitObject.locationId = locationObject.locationId
                 locationUnitObject.assignmentLocId = locationObject.assignmentLocId
                 locationUnitObject.assignmentLocUnitId = (assignmentLocationUnit as AnyObject).value(forKey: "assignmentLocUnitId") as? String ?? ""
-                
+                locationUnitObject.iOSAssignmentLocUnitId = locationUnitObject.assignmentLocUnitId
+               
                 locationUnitObject.actionStatus = ""
                 locationUnitObject.syncDate = (assignmentLocationUnit as AnyObject).value(forKey: "unitSyncDate") as? String ?? ""
                 
@@ -440,8 +441,7 @@ extension AssignmentDetailAPI {
                         caseObject.assignmentLocUnitId = locationUnitObject.assignmentLocUnitId
                         caseObject.actionStatus = ""
                         
-                       // caseObject.caseNotes = (caseData as AnyObject).value(forKey: "Description") as? String ?? ""
-                        
+                        caseObject.caseNotes = ""
                         
                         if let contactResult = (caseData as AnyObject).value(forKey: "Contact") as? NSDictionary {
                             caseObject.clientId = contactResult.value(forKey: "Id") as? String ?? ""
@@ -519,8 +519,7 @@ extension AssignmentDetailAPI {
                         issueObject.issueNo = (issueInfo as AnyObject).value(forKey: "issueNumber") as? String ?? ""
                         issueObject.issueId = (issueInfo as AnyObject).value(forKey: "issueId") as? String ?? ""
                         issueObject.issueType = (issueInfo as AnyObject).value(forKey: "issueType") as? String ?? ""
-                        //issueObject.notes = (issueInfo as AnyObject).value(forKey: "issueNotes") as? String ?? ""
-                    
+                        issueObject.notes = ""
                         
                         
                         issueObject.assignmentId = assignmentObject.assignmentId

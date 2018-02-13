@@ -83,6 +83,7 @@ class IssueViewModel{
                 objTempIssue.contactName = ""
                 objTempIssue.notes = tempIssueData.notes
                 objTempIssue.dbActionStatus = tempIssueData.actionStatus
+                objTempIssue.assignmentId = tempIssueData.assignmentId
                 
                 arrTempIssues.append(objTempIssue)
                 

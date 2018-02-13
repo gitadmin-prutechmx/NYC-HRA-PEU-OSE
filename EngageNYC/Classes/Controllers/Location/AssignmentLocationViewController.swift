@@ -38,6 +38,7 @@ class AssignmentLocationViewController: UIViewController
     @IBOutlet weak var lblLocationName: UILabel!
     @IBOutlet weak var segmentCtrl: UISegmentedControl!
     
+    @IBOutlet weak var leftBarButton: UIButton!
     @IBOutlet weak var rightBarButton: UIButton!
     var canvasserTaskDataObject:CanvasserTaskDataObject!
     var viewModel:AssignmentLocationViewModel!
@@ -50,8 +51,13 @@ class AssignmentLocationViewController: UIViewController
         super.viewDidLoad()
         lblLocationName.text = canvasserTaskDataObject.locationObj.objMapLocation.locName
         rightBarButton.isEnabled = false
+        
+       Utility.makeButtonBorder(btn: self.leftBarButton)
+       Utility.makeButtonBorder(btn: self.rightBarButton)
       
     }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

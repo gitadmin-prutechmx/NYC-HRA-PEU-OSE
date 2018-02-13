@@ -18,6 +18,7 @@ class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITe
     @IBOutlet weak var aptFloorView: UIView!
     
     @IBOutlet weak var btnAptNumber: UIButton!
+    @IBOutlet weak var btnNewUnit: UIButton!
     
     @IBOutlet weak var txtStreetNumber: UITextField!
     @IBOutlet weak var txtStreetName: UITextField!
@@ -43,6 +44,8 @@ class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITe
         btnAptNumber.clipsToBounds = true
         
         setUpUI()
+        
+        Utility.makeButtonBorder(btn: btnNewUnit)
     }
     
     
@@ -99,7 +102,10 @@ class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITe
             popoverContent.popoverPresentationController?.sourceView = btnAptNumber
             popoverContent.popoverPresentationController?.sourceRect = btnAptNumber.bounds
             popoverContent.type = .unitsList
+            
+            popoverContent.iOSselectedId = self.newContactObj.diffLocUnitId
             popoverContent.selectedId = self.newContactObj.diffLocUnitId
+            
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
             popoverContent.delegate = self
             self.present(popoverContent, animated: true, completion: nil)
