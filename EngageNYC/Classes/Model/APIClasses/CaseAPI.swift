@@ -66,17 +66,20 @@ final class CaseAPI:SFCommonAPI {
                 var caseParams:[String:String] = [:]
                 
                 
+                var sfdcClientId = caseData.clientId
+                
+                
                 
                 //...........assignmentLocUnit info
                 
                 //update clientId
-                let isiOSClientId = Utility.isiOSGeneratedId(generatedId: caseData.clientId!)
+                let isiOSClientId = Utility.isiOSGeneratedId(generatedId: sfdcClientId!)
                 
                 //if isiOSClientId is a UUID string then get salesforce contactId from contact object
                 if(isiOSClientId != nil){
-                    let contactId = ContactAPI.shared.getSalesforceClientId(iOSClientId: caseData.clientId!)
+                    let contactId = ContactAPI.shared.getSalesforceClientId(iOSClientId: sfdcClientId!)
                     
-                    caseData.clientId = contactId //update contact id here
+                    sfdcClientId = contactId //update contact id here
                     
                     if(Utility.isiOSGeneratedId(generatedId: contactId) != nil){
                         print("Error:- ios contactId")
@@ -84,34 +87,18 @@ final class CaseAPI:SFCommonAPI {
                     }
                     else{
                         //update contactId here
-                        updateClientId(salesforceClientId: contactId, iOSClientId: caseData.clientId!)
+                        
+                        //updateClientId(salesforceClientId: contactId, iOSClientId: caseData.clientId!)
                     }
                 }
                 
                 
-                //update assignmentLocUnitId
-                let isiOSAssignmentLocUnitId = Utility.isiOSGeneratedId(generatedId: caseData.assignmentLocUnitId!)
-                
-                //if isiOSLocationUnitId is a UUID string then get salesforce assignmentlocationUnit from unit object
-                if(isiOSAssignmentLocUnitId != nil){
-                    let assignmentLocUnitId = LocationUnitAPI.shared.getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId: caseData.assignmentLocUnitId!)
-                
-                    
-                    if(Utility.isiOSGeneratedId(generatedId: assignmentLocUnitId) != nil){
-                        print("Error:- ios assignmentlocationunitid")
-                        return
-                    }
-                    else{
-                        //update assignmentLocationUnitId here
-                        updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId: assignmentLocUnitId, iOSAssignmentLocUnitId: caseData.assignmentLocUnitId!)
-                    }
-                }
-                
+               
                 
                 
                 var caseResponseDict = caseData.caseResponse as! Dictionary<String,AnyObject>
                 
-                caseResponseDict["ContactId"] = caseData.clientId as AnyObject?
+                caseResponseDict["ContactId"] = sfdcClientId as AnyObject?
                 caseResponseDict["OwnerId"] = caseData.caseOwnerId as AnyObject?
                 
                 
@@ -188,8 +175,10 @@ final class CaseAPI:SFCommonAPI {
         if(isError == false){
             
             updateCaseIdInCoreData(caseDataDict: caseDataDictonary)
-            updateCaseIdInIssue(caseDataDict: caseDataDictonary)
-            updateCaseIdInCaseNotes(caseDataDict: caseDataDictonary)
+            
+            
+//            updateCaseIdInIssue(caseDataDict: caseDataDictonary)
+//            updateCaseIdInCaseNotes(caseDataDict: caseDataDictonary)
             
         }
         else{
@@ -303,17 +292,7 @@ final class CaseAPI:SFCommonAPI {
     }
     
     
-    /// Get all the issues notes from core data.
-    ///
-    /// - Returns: array of issues notes.
-    func getAllCaseNotesOnCase(caseId:String,assignmentLocUnitId:String)->[CaseNotes]? {
-        
-        let caseNotesRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.caseNotes.rawValue,predicateFormat: "caseId == %@ && assignmentLocUnitId == %@",predicateValue: caseId,predicateValue2: assignmentLocUnitId, isPredicate:true) as? [CaseNotes]
-        
-        
-        return caseNotesRes
-        
-    }
+  
     
     /// Get all the open cases from core data.
     ///
@@ -361,24 +340,17 @@ final class CaseAPI:SFCommonAPI {
         
     }
     
-    func updateAllTempCases(clientId:String,assignmentLocUnitId:String){
+    
+    /// Get all the issues notes from core data.
+    ///
+    /// - Returns: array of issues notes.
+    func getAllCaseNotesOnCase(caseId:String,assignmentLocUnitId:String)->[CaseNotes]? {
         
-        if let tempCaseResults = getAllTempCasesOnAssigmentLocationUnit(assignmentLocUnitId: assignmentLocUnitId){
-            
-            for tempCaseData in tempCaseResults{
-                
-                var updateObjectDic:[String:AnyObject] = [:]
-                
-                updateObjectDic["clientId"] = clientId as AnyObject
-                updateObjectDic["actionStatus"] = actionStatus.create.rawValue as AnyObject
-               
-                ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.cases.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && actionStatus == %@", predicateValue: tempCaseData.caseId,predicateValue2: actionStatus.temp.rawValue, isPredicate: true)
-                
-            }
-            
-        }
-       
         
+        let caseNotesRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.caseNotes.rawValue,predicateFormat: "caseId == %@ && assignmentLocUnitId == %@",predicateValue: caseId,predicateValue2: assignmentLocUnitId, isPredicate:true) as? [CaseNotes]
+        
+        
+        return caseNotesRes
         
     }
     
@@ -450,10 +422,34 @@ final class CaseAPI:SFCommonAPI {
         
     }
     
+   
+    
+    func updateAllTempCases(clientId:String,assignmentLocUnitId:String){
+        
+        if let tempCaseResults = getAllTempCasesOnAssigmentLocationUnit(assignmentLocUnitId: assignmentLocUnitId){
+            
+            for tempCaseData in tempCaseResults{
+                
+                var updateObjectDic:[String:AnyObject] = [:]
+                
+                updateObjectDic["clientId"] = clientId as AnyObject
+                updateObjectDic["actionStatus"] = actionStatus.create.rawValue as AnyObject
+                
+                ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.cases.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && actionStatus == %@", predicateValue: tempCaseData.caseId,predicateValue2: actionStatus.temp.rawValue, isPredicate: true)
+                
+            }
+            
+        }
+        
+        
+        
+    }
+    
+    
     func updateCaseNotes(objCase:CaseDO){
         
         if(checkCaseNotesExist(objCase: objCase)){
-
+            
             if(objCase.caseNotes.isEmpty){
                 
                 ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.caseNotes.rawValue, predicateFormat: "caseId == %@ && actionStatus == %@ && assignmentLocUnitId == %@", predicateValue: objCase.caseId,predicateValue2:actionStatus.edit.rawValue, predicateValue3: objCase.assignmentLocUnitId, isPredicate: true)
@@ -475,9 +471,9 @@ final class CaseAPI:SFCommonAPI {
         }
         else{
             if(!objCase.caseNotes.isEmpty){
-                 saveCaseNotes(caseId: objCase.caseId, objCase: objCase)
+                saveCaseNotes(caseId: objCase.caseId, objCase: objCase)
             }
-           
+            
         }
         
     }
@@ -493,32 +489,7 @@ final class CaseAPI:SFCommonAPI {
         
     }
     
-    func updateCase(objCase:CaseDO){
-        
-        var updateObjectDic:[String:AnyObject] = [:]
-       
-        updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
-        updateObjectDic["caseResponse"] = objCase.caseApiResponseDict as AnyObject?
-        updateObjectDic["createdDate"] = objCase.dateOfIntake as AnyObject?
-        updateObjectDic["caseDynamic"] = objCase.caseApiResponseDict as AnyObject?
-        updateObjectDic["assignmentLocUnitId"] = objCase.assignmentLocUnitId as AnyObject?
-        
-        
-       updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
-        
-        
-        //only Edit when actionStatus is blank
-        
-        if(objCase.dbActionStatus.isEmpty){
-             updateObjectDic["actionStatus"] = actionStatus.edit.rawValue as AnyObject?
-        }
-        
-        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.cases.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "caseId == %@ && assignmentLocId == %@", predicateValue: objCase.caseId,predicateValue2: objCase.assignmentLocId, isPredicate: true)
-        
-        
-        updateCaseNotes(objCase: objCase)
-        
-    }
+   
     
     func deleteCaseTempRecord(){
         ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.cases.rawValue, predicateFormat: "actionStatus == %@", predicateValue: actionStatus.temp.rawValue, isPredicate: true)
@@ -537,6 +508,63 @@ final class CaseAPI:SFCommonAPI {
         
         return caseId
     }
+    
+    
+}
+
+extension CaseAPI{
+    
+   
+    
+    func updateCase(objCase:CaseDO){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
+        updateObjectDic["caseResponse"] = objCase.caseApiResponseDict as AnyObject?
+        updateObjectDic["createdDate"] = objCase.dateOfIntake as AnyObject?
+        updateObjectDic["caseDynamic"] = objCase.caseApiResponseDict as AnyObject?
+        updateObjectDic["assignmentLocUnitId"] = objCase.assignmentLocUnitId as AnyObject?
+        
+        
+        updateObjectDic["caseNotes"] = objCase.caseNotes as AnyObject?
+        
+        
+        //only Edit when actionStatus is blank
+        
+        if(objCase.dbActionStatus.isEmpty){
+            updateObjectDic["actionStatus"] = actionStatus.edit.rawValue as AnyObject?
+        }
+        
+        let queryString = getQueryString(caseId: objCase.caseId) + "&& assignmentLocId == %@"
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.cases.rawValue , updateKeyValue: updateObjectDic, predicateFormat: queryString, predicateValue: objCase.caseId,predicateValue2: objCase.assignmentLocId, isPredicate: true)
+        
+        
+        updateCaseNotes(objCase: objCase)
+        
+    }
+    
+    
+    
+    func getQueryString(caseId:String)->String{
+        
+        var queryString = ""
+        let isiOSCaseId = Utility.isiOSGeneratedId(generatedId: caseId)
+        
+        //if isiOSCaseId is a UUID string
+        if(isiOSCaseId != nil){
+            queryString = "iOSCaseId == %@"
+        }
+        else{
+            queryString = "caseId == %@"
+        }
+        
+        return queryString
+        
+        
+    }
+    
     
     
 }

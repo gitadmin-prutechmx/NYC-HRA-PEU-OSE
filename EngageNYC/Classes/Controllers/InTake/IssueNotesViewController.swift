@@ -17,6 +17,7 @@ class IssueNoteDO{
 class IssueNotesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 {
 
+    @IBOutlet weak var lblIssueNotes: UILabel!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var tblIssueNotes: UITableView!
     var viewModel:IssueViewModel!
@@ -38,6 +39,9 @@ class IssueNotesViewController: UIViewController,UITableViewDelegate,UITableView
     
     func reloadView(){
         self.arrIssueMain = self.viewModel.loadIssueNotes(issueId: selectedIssueObj.issueId, assignmentId: selectedIssueObj.assignmentId)
+        
+        self.lblIssueNotes.text = "ISSUE NOTES (\(self.arrIssueMain.count))"
+        
         self.tblIssueNotes.reloadData()
     }
 
@@ -56,10 +60,9 @@ extension IssueNotesViewController {
     }
     
     // cell height
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64.0
     }
-    
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell

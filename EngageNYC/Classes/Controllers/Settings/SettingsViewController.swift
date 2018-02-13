@@ -21,9 +21,9 @@ class SettingsDO{
 class SettingsViewController: UIViewController {
     
     @IBOutlet weak var lblAppVersion: UILabel!
-    @IBOutlet weak var btnClosePressed: UIButton!
+    @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var tblSettingsUI: UITableView!
-    @IBOutlet weak var btnSavePressed: UIButton!
+    @IBOutlet weak var btnSave: UIButton!
     
     var viewModel:SettingsViewModel!
     var settingsObj:SettingsDO!
@@ -34,6 +34,9 @@ class SettingsViewController: UIViewController {
         
         self.bindView()
         self.reloadView()
+        
+        Utility.makeButtonBorder(btn: btnCancel)
+        Utility.makeButtonBorder(btn: btnSave)
         
     }
     

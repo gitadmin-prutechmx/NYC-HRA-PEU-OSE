@@ -54,7 +54,10 @@ class IntakeViewController: UIViewController {
     var viewModel:InTakeViewModel!
     
     @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var cancelbtn: UIButton!
     @IBOutlet weak var addBtn: UIButton!
+    @IBOutlet weak var imgAdd: UIImageView!
+    @IBOutlet weak var lblAdd: UILabel!
     
     
    // var globalSelectedClientForBinding:ContactDO!
@@ -68,6 +71,11 @@ class IntakeViewController: UIViewController {
         saveBtn.isHidden = true
         
         self.bindView()
+        
+        Utility.makeButtonBorder(btn: saveBtn)
+        Utility.makeButtonBorder(btn: cancelbtn)
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -93,7 +101,7 @@ class IntakeViewController: UIViewController {
     func prepareIntakePanelsInfo(viewCtrlType:String){
         DispatchQueue.main.async {
             
-            self.addBtn.isHidden = false
+            Utility.enableDisableIntakeAddBtn(btn: self.addBtn, lbl: self.lblAdd, img: self.imgAdd, isHidden: false)
             
             var panelCtrl:UIViewController?
             
@@ -331,12 +339,20 @@ class IntakeViewController: UIViewController {
         switch segmentCtrl.selectedSegmentIndex
         {
         case 0:
+         
+           
             prepareIntakePanelsInfo(viewCtrlType: Intake.intakeClient.rawValue)
             
         case 1:
+           
+           
+            
             prepareIntakePanelsInfo(viewCtrlType: Intake.intakeCase.rawValue)
             
         case 2:
+           
+           
+            
             prepareIntakePanelsInfo(viewCtrlType: Intake.intakeIssue.rawValue)
         default:
             break;

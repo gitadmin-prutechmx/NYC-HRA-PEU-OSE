@@ -53,28 +53,34 @@
                                                     <constraint firstAttribute="height" constant="30" id="d3A-63-b0B"/>
                                                     <constraint firstAttribute="width" constant="252" id="mKb-Hx-qna"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="26"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
                                                 <color key="textColor" red="0.23921568630000001" green="0.22352941179999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8io-E1-Ag6">
-                                                <rect key="frame" x="619" y="9" width="36" height="36"/>
+                                                <rect key="frame" x="597" y="9" width="64" height="36"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="36" id="1ng-f0-Bk1"/>
+                                                    <constraint firstAttribute="width" constant="64" id="1ng-f0-Bk1"/>
                                                     <constraint firstAttribute="height" constant="36" id="3ve-eu-feu"/>
                                                 </constraints>
-                                                <state key="normal" image="Save"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                                <state key="normal" title="Save">
+                                                    <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="btnSavePressed:" destination="ikc-F3-sR1" eventType="touchUpInside" id="kuZ-GA-nlW"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZn-K2-q4J">
-                                                <rect key="frame" x="21" y="8" width="36" height="36"/>
+                                                <rect key="frame" x="15" y="8" width="82" height="36"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="36" id="ZGH-nC-dI9"/>
-                                                    <constraint firstAttribute="width" constant="36" id="b0I-2V-bT7"/>
+                                                    <constraint firstAttribute="width" constant="82" id="b0I-2V-bT7"/>
                                                 </constraints>
-                                                <state key="normal" image="CloseBtn"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="btnClosePressed:" destination="ikc-F3-sR1" eventType="touchUpInside" id="QJc-GI-JAk"/>
                                                 </connections>
@@ -85,10 +91,10 @@
                                             <constraint firstAttribute="trailing" secondItem="7pl-uP-U9t" secondAttribute="trailing" id="0Sj-FB-HuL"/>
                                             <constraint firstAttribute="bottom" secondItem="7pl-uP-U9t" secondAttribute="bottom" id="4Wp-Kb-Kh6"/>
                                             <constraint firstItem="7pl-uP-U9t" firstAttribute="leading" secondItem="f2Q-Qe-1vn" secondAttribute="leading" id="4ud-Fr-PLn"/>
-                                            <constraint firstItem="WZn-K2-q4J" firstAttribute="leading" secondItem="f2Q-Qe-1vn" secondAttribute="leading" constant="21" id="81G-DP-ZU8"/>
+                                            <constraint firstItem="WZn-K2-q4J" firstAttribute="leading" secondItem="f2Q-Qe-1vn" secondAttribute="leading" constant="15" id="81G-DP-ZU8"/>
                                             <constraint firstAttribute="height" constant="55" id="FzR-R1-kMx"/>
                                             <constraint firstItem="2VI-Wy-m3J" firstAttribute="centerX" secondItem="f2Q-Qe-1vn" secondAttribute="centerX" id="Gg4-Mw-YSr"/>
-                                            <constraint firstAttribute="trailing" secondItem="8io-E1-Ag6" secondAttribute="trailing" constant="22" id="Ixy-U1-Lu8"/>
+                                            <constraint firstAttribute="trailing" secondItem="8io-E1-Ag6" secondAttribute="trailing" constant="16" id="Ixy-U1-Lu8"/>
                                             <constraint firstItem="2VI-Wy-m3J" firstAttribute="top" secondItem="f2Q-Qe-1vn" secondAttribute="top" constant="13.43" id="Woo-fL-cHs"/>
                                             <constraint firstItem="8io-E1-Ag6" firstAttribute="top" secondItem="f2Q-Qe-1vn" secondAttribute="top" constant="9" id="X9D-GH-89p"/>
                                             <constraint firstItem="WZn-K2-q4J" firstAttribute="top" secondItem="f2Q-Qe-1vn" secondAttribute="top" constant="8" id="fBA-y4-8se"/>
@@ -275,8 +281,8 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="1024" height="768"/>
                     <connections>
-                        <outlet property="btnClosePressed" destination="WZn-K2-q4J" id="r0M-nH-acn"/>
-                        <outlet property="btnSavePressed" destination="8io-E1-Ag6" id="xI8-8m-JjT"/>
+                        <outlet property="btnCancel" destination="WZn-K2-q4J" id="hL5-eB-ACK"/>
+                        <outlet property="btnSave" destination="8io-E1-Ag6" id="Lo4-Ax-vvH"/>
                         <outlet property="lblAppVersion" destination="cA6-gJ-hHg" id="pVK-Me-jHJ"/>
                         <outlet property="tblSettingsUI" destination="d2U-P3-4zL" id="Bwz-EX-jWG"/>
                     </connections>
@@ -288,7 +294,5 @@
     </scenes>
     <resources>
         <image name="Background" width="1335" height="1339"/>
-        <image name="CloseBtn" width="33" height="30"/>
-        <image name="Save" width="50" height="50"/>
     </resources>
 </document>

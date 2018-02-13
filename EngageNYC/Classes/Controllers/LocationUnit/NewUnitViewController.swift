@@ -86,6 +86,9 @@ class NewUnitViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         self.setUpUI()
         self.bindView()
+        
+        Utility.makeButtonBorder(btn: rightBarButton)
+         Utility.makeButtonBorder(btn: leftBarButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,12 +105,12 @@ class NewUnitViewController: UIViewController,UITextFieldDelegate {
         
         txtUnit.delegate = self
         
-        if(isFromUnitListing == true){
-            if let image = UIImage(named: "CloseBtn.png") {
-                leftBarButton.setImage(image, for: .normal)
-            }
-            
-        }
+//        if(isFromUnitListing == true){
+//            if let image = UIImage(named: "CloseBtn.png") {
+//                leftBarButton.setImage(image, for: .normal)
+//            }
+//
+//        }
     }
     
     @IBAction func btnLeftPressed(_ sender: Any) {

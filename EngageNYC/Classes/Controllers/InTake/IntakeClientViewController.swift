@@ -37,6 +37,9 @@ class IntakeClientViewController: BroadcastReceiverViewController,UITableViewDel
         self.reloadView()
         
         
+        inTakeVC.lblAdd.text = "New Client"
+        inTakeVC.imgAdd.image = UIImage(named:"AddClient.png")
+        
         
     }
     
@@ -137,7 +140,10 @@ extension IntakeClientViewController:ListingPopoverDelegate{
                 inTakeVC.globalSelectedClient = self.selectedClientObj //to maintain global selection of client
                 
                 caseVC.inTakeVC = inTakeVC
-                caseVC.inTakeVC.addBtn.isHidden = false
+                
+                Utility.enableDisableIntakeAddBtn(btn: inTakeVC.addBtn, lbl: inTakeVC.lblAdd, img: inTakeVC.imgAdd, isHidden: false)
+                
+            
                 
                 for childVC in inTakeVC.childViewControllers{
                     

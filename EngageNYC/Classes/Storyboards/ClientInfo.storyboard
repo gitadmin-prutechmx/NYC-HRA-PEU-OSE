@@ -37,35 +37,41 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ERC-hK-TIY" userLabel="LeftBarButton">
-                                        <rect key="frame" x="20" y="28" width="30" height="30"/>
+                                        <rect key="frame" x="20" y="28" width="73" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="9gS-27-jWK"/>
-                                            <constraint firstAttribute="width" constant="30" id="VwW-iU-Vfk"/>
+                                            <constraint firstAttribute="width" constant="73" id="VwW-iU-Vfk"/>
                                         </constraints>
-                                        <state key="normal" image="NavigationBack"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnLeftBarPressed:" destination="bw1-ag-q1a" eventType="touchUpInside" id="Zeb-oG-6eN"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GFd-sg-2h7" userLabel="RightBarButton">
-                                        <rect key="frame" x="644" y="28" width="33" height="30"/>
+                                        <rect key="frame" x="614" y="28" width="64" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="33" id="VQp-6Q-hkr"/>
+                                            <constraint firstAttribute="width" constant="64" id="VQp-6Q-hkr"/>
                                             <constraint firstAttribute="height" constant="30" id="v5F-1U-ILm"/>
                                         </constraints>
-                                        <state key="normal" image="CloseBtn"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnRightBarPressed:" destination="bw1-ag-q1a" eventType="touchUpInside" id="7l9-yn-BhC"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Client Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qf-7o-Eg5">
-                                        <rect key="frame" x="292" y="32" width="116" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Client Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qf-7o-Eg5">
+                                        <rect key="frame" x="217" y="32" width="240" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="SLd-pd-yDS"/>
-                                            <constraint firstAttribute="width" constant="116" id="ef5-WK-XdF"/>
+                                            <constraint firstAttribute="width" constant="240" id="ef5-WK-XdF"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.1176470588" green="0.34901960780000002" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -76,11 +82,11 @@
                                     <constraint firstAttribute="height" constant="84" id="HQO-E9-ttX"/>
                                     <constraint firstItem="GFd-sg-2h7" firstAttribute="top" secondItem="biG-XB-Axi" secondAttribute="top" constant="28" id="VcE-B9-UJq"/>
                                     <constraint firstItem="apV-cB-yOw" firstAttribute="top" secondItem="biG-XB-Axi" secondAttribute="top" id="b0b-gs-pFv"/>
-                                    <constraint firstAttribute="trailing" secondItem="GFd-sg-2h7" secondAttribute="trailing" constant="23" id="cmF-N7-iVN"/>
+                                    <constraint firstAttribute="trailing" secondItem="GFd-sg-2h7" secondAttribute="trailing" constant="22" id="cmF-N7-iVN"/>
                                     <constraint firstItem="apV-cB-yOw" firstAttribute="leading" secondItem="biG-XB-Axi" secondAttribute="leading" id="gra-aG-bec"/>
                                     <constraint firstItem="ERC-hK-TIY" firstAttribute="top" secondItem="biG-XB-Axi" secondAttribute="top" constant="28" id="ijj-mY-NQ0"/>
                                     <constraint firstItem="ERC-hK-TIY" firstAttribute="leading" secondItem="biG-XB-Axi" secondAttribute="leading" constant="20" id="yxT-zA-gyw"/>
-                                    <constraint firstItem="5qf-7o-Eg5" firstAttribute="centerX" secondItem="biG-XB-Axi" secondAttribute="centerX" id="yzr-SL-Gqo"/>
+                                    <constraint firstItem="5qf-7o-Eg5" firstAttribute="centerX" secondItem="biG-XB-Axi" secondAttribute="centerX" constant="-13" id="yzr-SL-Gqo"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aIa-5l-ftr" userLabel="BottomView">
@@ -427,12 +433,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="chr-Cw-AC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.19999999999999" y="140.77961019490255"/>
+            <point key="canvasLocation" x="131.19999999999999" y="139.880059970015"/>
         </scene>
     </scenes>
     <resources>
         <image name="Background" width="1335" height="1339"/>
-        <image name="CloseBtn" width="33" height="30"/>
-        <image name="NavigationBack" width="1000" height="1000"/>
     </resources>
 </document>

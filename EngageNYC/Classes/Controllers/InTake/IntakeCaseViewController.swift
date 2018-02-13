@@ -71,6 +71,10 @@ class IntakeCaseViewController: BroadcastReceiverViewController,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        inTakeVC.lblAdd.text = "New Case"
+        inTakeVC.imgAdd.image = UIImage(named:"AddCase.png")
+        
+        
         self.setupView()
         
         self.setUpMoreNavItems()

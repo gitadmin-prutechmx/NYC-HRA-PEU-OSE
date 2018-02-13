@@ -69,7 +69,7 @@ class UnitListingViewModel{
                 let objLocationUnit = LocationUnitDO()
                 objLocationUnit.unitName = locationUnit.unitName
                 objLocationUnit.locationUnitId = locationUnit.locationUnitId
-                objLocationUnit.assignmentLocUnitId = locationUnit.assignmentLocUnitId
+                objLocationUnit.assignmentLocUnitId = locationUnit.iOSAssignmentLocUnitId
                 objLocationUnit.syncDate = locationUnit.syncDate!
                 
                 

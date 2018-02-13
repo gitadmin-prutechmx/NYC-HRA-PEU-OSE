@@ -84,7 +84,8 @@ final class SurveyAPI:SFCommonAPI{
                     }
                     else{
                         //update assignmentLocationUnitId here
-                        updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId: assignmentLocUnitId, iOSAssignmentLocUnitId: surveyRes.assignmentLocUnitId!)
+                        
+                        //updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId: assignmentLocUnitId, iOSAssignmentLocUnitId: surveyRes.assignmentLocUnitId!)
                     }
                 }
                 
@@ -104,7 +105,8 @@ final class SurveyAPI:SFCommonAPI{
                         }
                         else{
                             //update assignmentLocationUnitId here
-                            updateClientId(salesforceClientId: clientId, iOSClientId: surveyRes.clientId!)
+                            
+                            //updateClientId(salesforceClientId: clientId, iOSClientId: surveyRes.clientId!)
                         }
                     }
                 }

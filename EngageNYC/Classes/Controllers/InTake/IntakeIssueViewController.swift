@@ -29,6 +29,7 @@ class IssueDO{
         notes = ""
         issueActionStatus = ""
         dbActionStatus = ""
+        assignmentId = ""
     }
 }
 
@@ -64,6 +65,9 @@ class IntakeIssueViewController: BroadcastReceiverViewController,UITableViewData
         
         self.reloadView()
         
+        inTakeVC.lblAdd.text = "New Issue"
+        inTakeVC.imgAdd.image = UIImage(named:"AddIssue.png")
+        
     }
     
     func setUpMoreNavItems(){
@@ -86,12 +90,11 @@ class IntakeIssueViewController: BroadcastReceiverViewController,UITableViewData
             
             if (caseObj.caseStatus == enumCaseStaus.closed.rawValue || canvasserTaskDataObject.userObj.userId != caseObj.ownerId) {
                 //hide button
-                inTakeVC.addBtn.isHidden = true
-                
+                Utility.enableDisableIntakeAddBtn(btn: inTakeVC.addBtn, lbl: inTakeVC.lblAdd, img: inTakeVC.imgAdd, isHidden: true)
             }
             else{
                 //show button
-                inTakeVC.addBtn.isHidden = false
+                Utility.enableDisableIntakeAddBtn(btn: inTakeVC.addBtn, lbl: inTakeVC.lblAdd, img: inTakeVC.imgAdd, isHidden: false)
               
             }
             

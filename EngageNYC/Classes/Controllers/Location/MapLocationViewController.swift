@@ -613,6 +613,9 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         
         //Default (Pending) = #0b5394, Completed = #b0ffb6, Inaccessible/Vacant = #cccccc, In Progress = #ffff80, Address Does Not Exist = #ff6060
         
+        
+       
+        
         if(objLoc.locStatus == locationStatus.pending.rawValue){
             view.viewLocationStatus.backgroundColor = UIColor(red: 11/255.0, green: 83/255.0, blue: 148/255.0, alpha: 1.0)
             view.lblLocationStatus.textColor = UIColor.white
@@ -620,10 +623,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         else if(objLoc.locStatus == locationStatus.completed.rawValue){
             view.viewLocationStatus.backgroundColor = UIColor(red: 176/255.0, green: 255/255.0, blue: 182/255.0, alpha: 1.0)
         }
-        else if(objLoc.locStatus == locationStatus.inaccessible.rawValue){
-            view.viewLocationStatus.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1.0)
-        }
-        else if(objLoc.locStatus == locationStatus.vacant.rawValue){
+        else if(objLoc.locStatus == locationStatus.inaccessible.rawValue || objLoc.locStatus == locationStatus.vacant.rawValue){
             view.viewLocationStatus.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1.0)
         }
         else if(objLoc.locStatus == locationStatus.inprogress.rawValue){
@@ -882,8 +882,15 @@ extension MapLocationViewController{
                         
                         var arrObjectIds = [Int]()
                         
+                        
+                       
+                        
+                        
                         for feature:AGSFeature in features{
-                            arrObjectIds.append(feature.attributes["F__OBJECTID"] as! Int)
+                            
+                             let objectIdVal = feature.attributes["F__OBJECTID"] as! Int ?? feature.attributes["OBJECTID"] as! Int
+                            
+                            arrObjectIds.append(objectIdVal)
                         }
                         
                         

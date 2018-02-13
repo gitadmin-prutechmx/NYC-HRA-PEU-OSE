@@ -17,6 +17,7 @@ class EventsDrillDownViewController: UIViewController {
     
     var objEvent:EventDO!
     @IBOutlet weak var lblEventName: UILabel!
+    @IBOutlet weak var rightBarButton: UIButton!
     
     @IBOutlet weak var segmentCtrl: UISegmentedControl!
     
@@ -37,6 +38,7 @@ class EventsDrillDownViewController: UIViewController {
              btnNewEventReg.isHidden = true
         }
        
+        Utility.makeButtonBorder(btn: rightBarButton)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -414,7 +414,10 @@ class Utility{
             popoverContent.popoverPresentationController?.sourceView = btnSelectedClientName
             popoverContent.popoverPresentationController?.sourceRect = btnSelectedClientName.bounds
             popoverContent.type = .clientList
+            
+            popoverContent.iOSselectedId = surveyObj.clientId
             popoverContent.selectedId = surveyObj.clientId
+            
             popoverContent.arrList = viewModel.getAllContactsOnUnit(assignmentLocUnitId: surveyObj.assignmentLocUnitId)
             popoverContent.delegate = vc as! ListingPopoverDelegate
             vc.present(popoverContent, animated: true, completion: nil)
@@ -567,6 +570,10 @@ class Utility{
                         }
                     }
                     else{
+                        
+                        Static.isBackgroundSync = false
+                        Static.isRefreshBtnClick = false
+                        
                         vc.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                             
                         }
@@ -625,10 +632,11 @@ class Utility{
                         if(isFromSurveyScreen)!{
                             
                             updateSurveyofUnit(surveyVM: surveyVM!, surveyObj: surveyObj!,isSubmitSurvey: isSubmitSurvey)
-                            
+                              RefreshAll.sharedInstance.refreshFullData(isFromSurveyScreen: true, isLogout: true)
                         }
-                        RefreshAll.sharedInstance.refreshFullData(isLogout: true)
-                        
+                        else{
+                            RefreshAll.sharedInstance.refreshFullData(isLogout: true)
+                        }
                         
                     }
                     alertCtrl.addAction(okAction)
@@ -900,6 +908,23 @@ class Utility{
     
         return dateFormatter.string(from: Date())
     
+    }
+    
+    class func makeButtonBorder(btn:UIButton){
+        btn.backgroundColor = .clear
+        btn.layer.cornerRadius = 5
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor =  UIColor(red:20/255.0, green:123/255.0, blue:237/255.0, alpha: 1.0).cgColor
+    }
+    
+    class func enableDisableIntakeAddBtn(btn:UIButton,lbl:UILabel,img:UIImageView,isHidden:Bool){
+        btn.isHidden = isHidden
+        lbl.isHidden = isHidden
+        if(isHidden){
+             img.image = UIImage()
+        }
+        
+       
     }
     
     

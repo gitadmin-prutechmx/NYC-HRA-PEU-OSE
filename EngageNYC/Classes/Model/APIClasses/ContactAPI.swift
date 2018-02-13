@@ -23,16 +23,7 @@ final class ContactAPI:SFCommonAPI {
         }
     }
     
-    /// Get all the contacts of assignmentLocationUnit from core data.
-    ///
-    /// - Returns: array of contacts.
-    func getAllContactsOnUnit(assignmentLocUnitId:String)->[Contact]? {
-        
-        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "assignmentLocUnitId == %@",predicateValue:assignmentLocUnitId, isPredicate:true) as? [Contact]
-        
-        return contactRes
-        
-    }
+   
 
     
     /// Get all the contacts from core data.
@@ -46,12 +37,7 @@ final class ContactAPI:SFCommonAPI {
         
     }
     
-    func getIntakeContacts(assignmentLocUnitId:String)->[Contact]? {
-        
-        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "assignmentLocUnitId == %@",predicateValue: assignmentLocUnitId, isPredicate:true) as? [Contact]
-        
-        return contactRes
-    }
+  
     
     func saveNewContact(objNewContact:NewContactDO,isSameUnit:Bool){
         
@@ -98,6 +84,7 @@ final class ContactAPI:SFCommonAPI {
         
     }
     
+    
     func updateContact(objContact:ContactDO){
         
         var updateObjectDic:[String:AnyObject] = [:]
@@ -130,9 +117,25 @@ final class ContactAPI:SFCommonAPI {
         updateObjectDic["createdById"] = objContact.createdById as AnyObject
         
         
-        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.contact.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@ && assignmentLocId == %@", predicateValue: objContact.contactId,predicateValue2:objContact.assignmentLocId,  isPredicate: true)
+        var queryString = getQueryString(contactId: objContact.contactId)
+        
+        queryString = queryString + "&& assignmentLocId == %@"
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.contact.rawValue, updateKeyValue: updateObjectDic, predicateFormat: queryString, predicateValue: objContact.contactId,predicateValue2:objContact.assignmentLocId,  isPredicate: true)
         
     }
+    
+    func updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId:String,iOSAssignmentLocUnitId:String){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["assignmentLocUnitId"] = salesforceAssignmentLocUnitId as AnyObject
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.contact.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue:  iOSAssignmentLocUnitId,isPredicate: true)
+        
+    }
+    
     
     
     func syncUpCompletion(completion: @escaping (()->()))
@@ -147,16 +150,18 @@ final class ContactAPI:SFCommonAPI {
                 var contactParams:[String:String] = [:]
                 
 
+                var sfdcLocUnitId = contact.locationUnitId
+                var sfdcAssignmentLocUnitId = contact.assignmentLocUnitId
                 
                 //...........contact info
                 
-                let isiOSLocationUnitId = Utility.isiOSGeneratedId(generatedId: contact.locationUnitId!)
+                let isiOSLocationUnitId = Utility.isiOSGeneratedId(generatedId: sfdcLocUnitId!)
                 
                 //if isiOSLocationUnitId is a UUID string then get salesforce locationUnit from unit object
                 if(isiOSLocationUnitId != nil){
-                    let locUnitId = LocationUnitAPI.shared.getSalesforceLocationUnitId(iOSLocUnitId: contact.locationUnitId!)
+                    let locUnitId = LocationUnitAPI.shared.getSalesforceLocationUnitId(iOSLocUnitId: sfdcLocUnitId!)
                     
-                    contact.locationUnitId = locUnitId //update locUnitId
+                    sfdcLocUnitId = locUnitId //update locUnitId
                     
                     if(Utility.isiOSGeneratedId(generatedId: locUnitId) != nil){
                         print("Error:- ios locationunitid")
@@ -167,9 +172,30 @@ final class ContactAPI:SFCommonAPI {
                     }
                 }
                 
-                contactDict["locationUnitId"] = contact.locationUnitId
+                let isiOSAssigmentLocUnitId = Utility.isiOSGeneratedId(generatedId: sfdcAssignmentLocUnitId!)
                 
-                contactDict["assignmentLocUnitId"] = contact.assignmentLocUnitId
+                //if isiOSAssigmentLocUnitId is a UUID string then get salesforce assignmentlocationUnit from unit object
+                if(isiOSAssigmentLocUnitId != nil){
+                    let assignmentLocUnitId = LocationUnitAPI.shared.getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId: sfdcAssignmentLocUnitId!)
+                    
+                    sfdcAssignmentLocUnitId = assignmentLocUnitId //update assignmentLocUnitId
+                    
+                    if(Utility.isiOSGeneratedId(generatedId: assignmentLocUnitId) != nil){
+                        print("Error:- ios locationunitid")
+                        return
+                    }
+                    else{
+                        //update assignmentLocationUnitId here
+                        
+                        //updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId: assignmentLocUnitId, iOSAssignmentLocUnitId: contact.assignmentLocUnitId!)
+                        
+                    }
+                }
+                
+                
+                contactDict["locationUnitId"] = sfdcLocUnitId
+                
+                contactDict["assignmentLocUnitId"] = sfdcAssignmentLocUnitId
                 //contactDict = update assignmentLocUnitId
                 
                 if(contact.actionStatus == actionStatus.edit.rawValue){
@@ -291,10 +317,10 @@ final class ContactAPI:SFCommonAPI {
             updateContactId(contactDataDict: contactDataDictonary)
             
 
-            updateContactIdInAssignmentLocationUnit(contactDataDict: contactDataDictonary)
-            updateContactIdInCase(contactDataDict: contactDataDictonary)
-            updateContactIdInSurveyResponse(contactDataDict: contactDataDictonary)
-            updateContactIdInEventsReg(contactDataDict: contactDataDictonary)
+//            updateContactIdInAssignmentLocationUnit(contactDataDict: contactDataDictonary)
+//            updateContactIdInCase(contactDataDict: contactDataDictonary)
+//            updateContactIdInSurveyResponse(contactDataDict: contactDataDictonary)
+//            updateContactIdInEventsReg(contactDataDict: contactDataDictonary)
             
         }
         else{
@@ -330,8 +356,8 @@ final class ContactAPI:SFCommonAPI {
             var updateObjectDic:[String:AnyObject] = [:]
             updateObjectDic["contactId"] = contactId as AnyObject
             updateObjectDic["actionStatus"] = "" as AnyObject
-            updateObjectDic["locationUnitId"] = locUnitId as AnyObject
-            updateObjectDic["assignmentLocUnitId"] = assignmentLocUnitId as AnyObject
+           // updateObjectDic["locationUnitId"] = locUnitId as AnyObject
+           // updateObjectDic["assignmentLocUnitId"] = assignmentLocUnitId as AnyObject
             updateObjectDic["syncDate"]  = Utility.currentDateAndTime() as AnyObject
             
             
@@ -449,19 +475,7 @@ final class ContactAPI:SFCommonAPI {
         
     }
     
-    func getContactName(contactId:String)-> String{
-        
-        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "contactId == %@" ,predicateValue: contactId,isPredicate:true) as! [Contact]
-        
-        if(contactRes.count > 0){
-            return (contactRes.first?.contactName)!
-        }
-        else{
-            return ""
-            
-        }
-        
-    }
+   
     
     func getSalesforceClientId(iOSClientId:String)->String{
         
@@ -475,6 +489,69 @@ final class ContactAPI:SFCommonAPI {
         
         return clientId
     }
+    
+    
+}
+
+extension ContactAPI{
+    
+    /// Get all the contacts of assignmentLocationUnit from core data.
+    ///
+    /// - Returns: array of contacts.
+    
+    //getIntakeContacts
+    func getAllContactsOnUnit(assignmentLocUnitId:String)->[Contact]? {
+        
+        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "assignmentLocUnitId == %@",predicateValue:assignmentLocUnitId, isPredicate:true) as? [Contact]
+        
+        return contactRes
+        
+    }
+    
+//    func getIntakeContacts(assignmentLocUnitId:String)->[Contact]? {
+//
+//        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "assignmentLocUnitId == %@",predicateValue: assignmentLocUnitId, isPredicate:true) as? [Contact]
+//
+//        return contactRes
+//    }
+    
+    
+    func getContactName(contactId:String)-> String{
+        
+        let queryString = getQueryString(contactId: contactId)
+        
+        
+        let contactRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: queryString ,predicateValue: contactId,isPredicate:true) as! [Contact]
+        
+        if(contactRes.count > 0){
+            return (contactRes.first?.contactName)!
+        }
+        else{
+            return ""
+            
+        }
+        
+    }
+    
+    
+    func getQueryString(contactId:String)->String{
+        
+        var queryString = ""
+        let isiOSContactId = Utility.isiOSGeneratedId(generatedId: contactId)
+        
+        //if isiOSContactId is a UUID string
+        if(isiOSContactId != nil){
+            queryString = "iOSContactId == %@"
+        }
+        else{
+            queryString = "contactId == %@"
+        }
+        
+        return queryString
+        
+        
+    }
+    
     
     
 }

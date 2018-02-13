@@ -83,12 +83,18 @@ class UnitListingViewController:BroadcastReceiverViewController,UITableViewDeleg
     var searchActive : Bool = false
     var locationUnitVC:LocationUnitViewController!
     
+    var sortDirection: ArrowDirection!
+    
     var canvasserTaskDataObject:CanvasserTaskDataObject!
+    
+    var isLoadingFirstTime = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupView()
+        
+        sortDirection = .up
         
         //Bind Locations data
         self.reloadView()
@@ -128,13 +134,26 @@ class UnitListingViewController:BroadcastReceiverViewController,UITableViewDeleg
     func reloadView(){
         DispatchQueue.main.async {
             self.arrLocationUnitsMain = self.viewModel.loadUnits(assignmentId: self.canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: self.canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
-            self.sortData(forHeaderIndex: UnitListingColoum.unitName.rawValue, direction: .up)
             
-            if let unitlistingHeader = self.viewModel.getUnitListingHeader(){
-                self.tableHeader.arrSortingHeader = unitlistingHeader
+            if self.searchActive {
+                if let unitlistingColoumn = UnitListingColoum(rawValue: UnitListingColoum.unitName.rawValue){
+                    self.arrLocationUnitsSorted = unitlistingColoumn.sort(inOrder: self.sortDirection, main: self.arrLocationUnitsMain)
+                    self.filterDataForSearchedText(searchText: self.unitListSearchbar.text!)
+                    self.lblUnits.text = "UNITS (\(self.arrLocationUnitsFiltered.count))"
+                }
+            } else {
+                self.sortData(forHeaderIndex: UnitListingColoum.unitName.rawValue, direction: self.sortDirection)
+                self.lblUnits.text = "UNITS (\(self.arrLocationUnitsSorted.count))"
+                
             }
-            self.lblUnits.text = "UNITS (\(self.arrLocationUnitsMain.count))"
-           
+            
+            if  self.isLoadingFirstTime{
+                self.isLoadingFirstTime = false
+                if let unitlistingHeader = self.viewModel.getUnitListingHeader(){
+                    self.tableHeader.arrSortingHeader = unitlistingHeader
+                }
+            }
+            
             self.tblUnits.reloadData()
         }
     }
@@ -152,7 +171,7 @@ class UnitListingViewController:BroadcastReceiverViewController,UITableViewDeleg
                 
             {
                  self.arrLocationUnitsSorted = unitlistingColoumn.sort(inOrder: direction, main: self.arrLocationUnitsMain)
-                self.arrLocationUnitsMain = self.arrLocationUnitsSorted
+               // self.arrLocationUnitsMain = self.arrLocationUnitsSorted
                 
             }
             tblUnits.reloadData()
@@ -170,24 +189,22 @@ extension UnitListingViewController{
 extension UnitListingViewController{
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchActive = true;
+       // searchActive = true;
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchActive = false;
+       // searchActive = false;
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
+       // searchActive = false;
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false;
+       // searchActive = false;
     }
     
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+    func filterDataForSearchedText(searchText: String) {
         arrLocationUnitsFiltered = arrLocationUnitsSorted.filter {
             
             var isSearch = false
@@ -200,6 +217,11 @@ extension UnitListingViewController{
             
             
         }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        filterDataForSearchedText(searchText: searchText)
         
         if(arrLocationUnitsFiltered.count == 0){
             searchActive = false;
@@ -237,7 +259,7 @@ extension UnitListingViewController {
             return arrLocationUnitsFiltered.count
         }
         
-        return self.arrLocationUnitsMain.count
+        return self.arrLocationUnitsSorted.count
         
         
     }
@@ -257,7 +279,7 @@ extension UnitListingViewController {
             cell.setupView(forCellObject:arrLocationUnitsFiltered[indexPath.row],index:indexPath)
         }
         else{
-            cell.setupView(forCellObject:arrLocationUnitsMain[indexPath.row],index:indexPath)
+            cell.setupView(forCellObject:arrLocationUnitsSorted[indexPath.row],index:indexPath)
         }
         
         
@@ -277,7 +299,7 @@ extension UnitListingViewController {
             selectedLocationUnitObj = arrLocationUnitsFiltered[indexPath.row]
         }
         else{
-            selectedLocationUnitObj = arrLocationUnitsMain[indexPath.row]
+            selectedLocationUnitObj = arrLocationUnitsSorted[indexPath.row]
         }
         
         

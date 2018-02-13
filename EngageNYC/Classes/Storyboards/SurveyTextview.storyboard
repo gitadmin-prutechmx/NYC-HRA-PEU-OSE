@@ -13,6 +13,9 @@
         <array key="Arial.ttf">
             <string>ArialMT</string>
         </array>
+        <array key="ArialBold.ttf">
+            <string>Arial-BoldMT</string>
+        </array>
         <array key="NHaasGroteskDSPro-45Lt.otf">
             <string>NHaasGroteskDSPro-45Lt</string>
         </array>
@@ -146,27 +149,49 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flL-hX-bu7" userLabel="NewClientBtn">
-                                        <rect key="frame" x="711" y="15" width="40" height="36"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Intake" translatesAutoresizingMaskIntoConstraints="NO" id="d2E-7O-wSG">
+                                        <rect key="frame" x="678" y="8" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="GpY-uh-ARY"/>
-                                            <constraint firstAttribute="height" constant="36" id="aFd-BL-p2k"/>
+                                            <constraint firstAttribute="height" constant="30" id="mI2-1E-ZMF"/>
+                                            <constraint firstAttribute="width" constant="30" id="xoZ-DX-XlX"/>
                                         </constraints>
-                                        <state key="normal" image="InTake"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client Intake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioP-MD-I1L">
+                                        <rect key="frame" x="642" y="41" width="97" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="97" id="CvU-5K-sIl"/>
+                                            <constraint firstAttribute="height" constant="16" id="iwM-Hh-4De"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQ0-FZ-3sd" userLabel="btnIntake">
+                                        <rect key="frame" x="642" y="8" width="97" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="97" id="Ioa-en-4pB"/>
+                                            <constraint firstAttribute="height" constant="46" id="r43-ak-Rne"/>
+                                        </constraints>
                                         <connections>
-                                            <action selector="btnInTakePressed:" destination="jex-pI-pA2" eventType="touchUpInside" id="XtE-TN-v0M"/>
+                                            <action selector="btnInTakePressed:" destination="jex-pI-pA2" eventType="touchUpInside" id="3Hf-D0-N7m"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="2px-R2-GDn"/>
+                                    <constraint firstAttribute="trailing" secondItem="ioP-MD-I1L" secondAttribute="trailing" constant="29" id="FG9-ui-WPN"/>
                                     <constraint firstItem="aBy-eY-pLb" firstAttribute="top" secondItem="kfb-yk-FvN" secondAttribute="top" constant="11" id="JuT-Sz-jyF"/>
-                                    <constraint firstAttribute="trailing" secondItem="flL-hX-bu7" secondAttribute="trailing" constant="17" id="O8W-9y-oV6"/>
-                                    <constraint firstAttribute="bottom" secondItem="flL-hX-bu7" secondAttribute="bottom" constant="14" id="Qza-yC-jNe"/>
-                                    <constraint firstItem="flL-hX-bu7" firstAttribute="top" secondItem="kfb-yk-FvN" secondAttribute="top" constant="15" id="rYw-CF-i6r"/>
+                                    <constraint firstAttribute="bottom" secondItem="iQ0-FZ-3sd" secondAttribute="bottom" constant="11" id="OBq-QY-EZd"/>
+                                    <constraint firstAttribute="bottom" secondItem="ioP-MD-I1L" secondAttribute="bottom" constant="8" id="Pmv-JG-UMj"/>
+                                    <constraint firstAttribute="trailing" secondItem="iQ0-FZ-3sd" secondAttribute="trailing" constant="29" id="Rja-n1-26P"/>
+                                    <constraint firstItem="ioP-MD-I1L" firstAttribute="top" secondItem="d2E-7O-wSG" secondAttribute="bottom" constant="3" id="XhR-zn-1ac"/>
+                                    <constraint firstItem="iQ0-FZ-3sd" firstAttribute="top" secondItem="kfb-yk-FvN" secondAttribute="top" constant="8" id="lUl-mc-pxb"/>
                                     <constraint firstAttribute="bottom" secondItem="aBy-eY-pLb" secondAttribute="bottom" constant="9" id="rae-Sr-pTK"/>
                                     <constraint firstItem="aBy-eY-pLb" firstAttribute="leading" secondItem="kfb-yk-FvN" secondAttribute="leading" constant="66" id="sAG-Dz-q9b"/>
+                                    <constraint firstAttribute="trailing" secondItem="d2E-7O-wSG" secondAttribute="trailing" constant="60" id="sPB-Vn-L4D"/>
+                                    <constraint firstItem="d2E-7O-wSG" firstAttribute="top" secondItem="kfb-yk-FvN" secondAttribute="top" constant="8" id="tER-5o-Qec"/>
+                                    <constraint firstItem="ioP-MD-I1L" firstAttribute="top" secondItem="d2E-7O-wSG" secondAttribute="bottom" constant="3" id="u2b-Mt-nic"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1tk-Cy-It7">
@@ -306,7 +331,7 @@
         <image name="CircularLeftArrow" width="530" height="530"/>
         <image name="CircularRightArrow" width="530" height="530"/>
         <image name="DropDown" width="48" height="48"/>
-        <image name="InTake" width="60" height="60"/>
+        <image name="Intake" width="100" height="100"/>
         <image name="NavigationBack" width="1000" height="1000"/>
         <image name="headerViewImage" width="1024" height="80"/>
     </resources>
