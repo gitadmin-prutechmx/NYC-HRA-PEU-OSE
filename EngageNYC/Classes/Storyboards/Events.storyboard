@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="Arial.ttf">
             <string>ArialMT</string>
+        </array>
+        <array key="NHaasGroteskDSPro-55Rg.otf">
+            <string>NHaasGroteskDSPro-55Rg</string>
         </array>
     </customFonts>
     <scenes>
@@ -39,9 +42,11 @@
                                 <rect key="frame" x="0.0" y="20" width="700" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vC-Z4-NHp">
-                                        <rect key="frame" x="645" y="13" width="33" height="30"/>
+                                        <rect key="frame" x="588" y="13" width="90" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="CloseBtn"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancel:" destination="ZLd-7g-pUE" eventType="touchUpInside" id="PEW-au-5ib"/>
                                         </connections>
@@ -49,8 +54,8 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="EVENTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVC-JA-H6m">
                                         <rect key="frame" x="205" y="8" width="291" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.1176470588" green="0.34901960780000002" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -160,15 +165,24 @@
                                     <constraint firstAttribute="height" constant="56" id="EfN-vI-kWI"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cp7-hJ-faZ">
+                                <rect key="frame" x="10" y="151" width="76" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="hRl-ps-GoD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="20"/>
+                                <color key="textColor" red="0.74509803919999995" green="0.57647058819999997" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1r-4w-Xti" userLabel="SeparatorView">
-                                <rect key="frame" x="8" y="145" width="684" height="2"/>
+                                <rect key="frame" x="8" y="193" width="684" height="2"/>
                                 <color key="backgroundColor" red="0.74509803919999995" green="0.57647058819999997" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="zxa-hd-hEZ"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KNe-50-aVw">
-                                <rect key="frame" x="8" y="147" width="684" height="45"/>
+                                <rect key="frame" x="8" y="195" width="684" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="atU-vf-NHX"/>
                                 </constraints>
@@ -177,7 +191,7 @@
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pgg-u9-LNC">
-                                <rect key="frame" x="8" y="190" width="684" height="466"/>
+                                <rect key="frame" x="8" y="236" width="684" height="418"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="eventCell" id="Lso-KL-8dh" customClass="EventsTableViewCell" customModule="EngageNYC" customModuleProvider="target">
@@ -259,7 +273,7 @@
                         <constraints>
                             <constraint firstItem="EJb-yA-DoS" firstAttribute="top" secondItem="E2S-c5-rxY" secondAttribute="bottom" constant="-4" id="197-DH-7r1"/>
                             <constraint firstItem="NaH-w0-x8e" firstAttribute="top" secondItem="taf-y0-XlU" secondAttribute="top" id="7nl-eU-f6H"/>
-                            <constraint firstItem="z9H-Iy-Jx1" firstAttribute="top" secondItem="Pgg-u9-LNC" secondAttribute="bottom" constant="11" id="8tl-b6-ndv"/>
+                            <constraint firstItem="z9H-Iy-Jx1" firstAttribute="top" secondItem="Pgg-u9-LNC" secondAttribute="bottom" constant="13" id="8tl-b6-ndv"/>
                             <constraint firstItem="XqY-HK-g5U" firstAttribute="leading" secondItem="PcX-0t-9z8" secondAttribute="leading" id="9nb-IN-atb"/>
                             <constraint firstAttribute="trailing" secondItem="E2S-c5-rxY" secondAttribute="trailing" id="AcS-M0-cgH"/>
                             <constraint firstItem="NaH-w0-x8e" firstAttribute="trailing" secondItem="PcX-0t-9z8" secondAttribute="trailing" id="Hqf-Ze-Ql7"/>
@@ -270,16 +284,18 @@
                             <constraint firstAttribute="trailing" secondItem="EJb-yA-DoS" secondAttribute="trailing" id="Orj-Ak-gYM"/>
                             <constraint firstItem="KNe-50-aVw" firstAttribute="top" secondItem="h1r-4w-Xti" secondAttribute="bottom" id="RUc-6z-LAB"/>
                             <constraint firstItem="z9H-Iy-Jx1" firstAttribute="top" secondItem="NaH-w0-x8e" secondAttribute="bottom" constant="2" id="SHA-wK-671"/>
+                            <constraint firstItem="Cp7-hJ-faZ" firstAttribute="leading" secondItem="PcX-0t-9z8" secondAttribute="leading" constant="10" id="Tb3-nW-gcL"/>
                             <constraint firstAttribute="trailing" secondItem="KNe-50-aVw" secondAttribute="trailing" constant="8" id="amy-cf-mKE"/>
+                            <constraint firstItem="h1r-4w-Xti" firstAttribute="top" secondItem="Cp7-hJ-faZ" secondAttribute="bottom" constant="21" id="buF-dJ-5wT"/>
                             <constraint firstItem="XqY-HK-g5U" firstAttribute="trailing" secondItem="PcX-0t-9z8" secondAttribute="trailing" id="fqc-Yi-PX3"/>
+                            <constraint firstItem="Cp7-hJ-faZ" firstAttribute="top" secondItem="EJb-yA-DoS" secondAttribute="bottom" constant="23" id="gAB-Cc-xch"/>
                             <constraint firstItem="Pgg-u9-LNC" firstAttribute="leading" secondItem="taf-y0-XlU" secondAttribute="leading" constant="8" id="iaC-zb-bAX"/>
                             <constraint firstItem="E2S-c5-rxY" firstAttribute="leading" secondItem="taf-y0-XlU" secondAttribute="leading" id="k31-Rp-fjV"/>
                             <constraint firstItem="NaH-w0-x8e" firstAttribute="leading" secondItem="PcX-0t-9z8" secondAttribute="leading" id="llR-Dc-UPv"/>
                             <constraint firstItem="z9H-Iy-Jx1" firstAttribute="top" secondItem="XqY-HK-g5U" secondAttribute="bottom" id="mwv-ur-EAR"/>
                             <constraint firstAttribute="trailing" secondItem="Pgg-u9-LNC" secondAttribute="trailing" constant="8" id="nQU-OO-lXJ"/>
                             <constraint firstItem="E2S-c5-rxY" firstAttribute="top" secondItem="hzk-gz-8fH" secondAttribute="bottom" id="oDO-y2-Hqq"/>
-                            <constraint firstItem="h1r-4w-Xti" firstAttribute="top" secondItem="EJb-yA-DoS" secondAttribute="bottom" constant="17" id="oGb-kE-Xhc"/>
-                            <constraint firstItem="Pgg-u9-LNC" firstAttribute="top" secondItem="KNe-50-aVw" secondAttribute="bottom" constant="-2" id="vlm-Nr-6Cp"/>
+                            <constraint firstItem="Pgg-u9-LNC" firstAttribute="top" secondItem="KNe-50-aVw" secondAttribute="bottom" constant="-4" id="vlm-Nr-6Cp"/>
                             <constraint firstItem="XqY-HK-g5U" firstAttribute="top" secondItem="E2S-c5-rxY" secondAttribute="bottom" constant="1" id="zNp-Ht-bYI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PcX-0t-9z8"/>
@@ -293,8 +309,10 @@
                         <outlet property="btnType" destination="YNg-IK-72C" id="hhW-8C-ogt"/>
                         <outlet property="imgBtnFrom" destination="ylk-Lk-eZF" id="UD6-td-5VP"/>
                         <outlet property="imgBtnTo" destination="OQf-CR-Zsu" id="hU6-0E-TUw"/>
+                        <outlet property="lblEvents" destination="Cp7-hJ-faZ" id="Rcm-8P-qR3"/>
                         <outlet property="lblFromDate" destination="5yi-A0-fM2" id="HO8-ix-5nz"/>
                         <outlet property="lblToDate" destination="Fac-1j-Hmj" id="MqE-13-ZzO"/>
+                        <outlet property="rightBarButton" destination="3vC-Z4-NHp" id="bIR-B5-Efj"/>
                         <outlet property="tblEvents" destination="Pgg-u9-LNC" id="4Dt-LP-V2r"/>
                     </connections>
                 </viewController>
@@ -378,8 +396,7 @@
     <resources>
         <image name="Background" width="1335" height="1339"/>
         <image name="Calendar" width="50" height="50"/>
-        <image name="CloseBtn" width="33" height="30"/>
-        <image name="Filter" width="15" height="15"/>
-        <image name="Reset" width="15" height="15"/>
+        <image name="Filter" width="25" height="25"/>
+        <image name="Reset" width="30" height="30"/>
     </resources>
 </document>

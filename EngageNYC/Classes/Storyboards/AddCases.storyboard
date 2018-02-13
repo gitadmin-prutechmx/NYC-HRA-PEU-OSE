@@ -14,8 +14,8 @@
         <array key="Arial.ttf">
             <string>ArialMT</string>
         </array>
-        <array key="NHaasGroteskDSPro-55Rg.otf">
-            <string>NHaasGroteskDSPro-55Rg</string>
+        <array key="ArialBold.ttf">
+            <string>Arial-BoldMT</string>
         </array>
     </customFonts>
     <scenes>
@@ -167,22 +167,28 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add Case" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGM-ra-yxj">
                                         <rect key="frame" x="224" y="18" width="252" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="21"/>
-                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ob3-bC-Uka">
-                                        <rect key="frame" x="642" y="16" width="36" height="36"/>
+                                        <rect key="frame" x="606" y="16" width="72" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Save"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnSavepressed:" destination="RjT-7i-fMH" eventType="touchUpInside" id="5iE-Rb-nvy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAA-nI-pvD">
-                                        <rect key="frame" x="21" y="16" width="36" height="36"/>
+                                        <rect key="frame" x="21" y="16" width="70" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="NavigationBack"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnBackAction:" destination="RjT-7i-fMH" eventType="touchUpInside" id="ti0-7P-Rkv"/>
                                         </connections>
@@ -198,39 +204,37 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fve-uo-Ap4" userLabel="FilterView">
-                                <rect key="frame" x="0.0" y="85" width="700" height="56"/>
+                                <rect key="frame" x="0.0" y="85" width="700" height="68"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IC9-lr-DAu">
-                                        <rect key="frame" x="582" y="14" width="35" height="33"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
-                                        <state key="normal" image="Issues">
-                                            <color key="titleColor" red="0.69803921570000005" green="0.70588235290000001" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="btnIssuesPressed:" destination="RjT-7i-fMH" eventType="touchUpInside" id="2dS-QD-KUa"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="59 Wooster St, New York, NY 10012" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fp8-8s-Hdw">
-                                        <rect key="frame" x="13" y="7.5" width="274" height="46"/>
+                                        <rect key="frame" x="29" y="11" width="488" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vbR-xV-FzQ">
-                                        <rect key="frame" x="645" y="14" width="35" height="33"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ViewNotes" translatesAutoresizingMaskIntoConstraints="NO" id="nBP-id-5cw">
+                                        <rect key="frame" x="629" y="11" width="28" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
-                                        <state key="normal" image="Note"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View Notes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pr-E9-85l">
+                                        <rect key="frame" x="609" y="42" width="64" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wgG-wZ-kgL">
+                                        <rect key="frame" x="609" y="11" width="64" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
-                                            <action selector="btnNotesPressed:" destination="RjT-7i-fMH" eventType="touchUpInside" id="o0Y-PQ-2DL"/>
+                                            <action selector="btnNotesPressed:" destination="RjT-7i-fMH" eventType="touchUpInside" id="OEZ-3e-1so"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.80392156859999997" green="0.80392156859999997" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="HsR-NM-1rd"/>
+                                    <constraint firstAttribute="height" constant="68" id="HsR-NM-1rd"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dex-8H-hhl">
@@ -263,7 +267,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="F9P-km-NK1" firstAttribute="top" secondItem="usn-bo-5dw" secondAttribute="top" id="4cw-eS-Bxd"/>
-                            <constraint firstItem="QOA-Ax-B4i" firstAttribute="top" secondItem="fve-uo-Ap4" secondAttribute="bottom" constant="-1" id="6zY-pX-UqD"/>
+                            <constraint firstItem="QOA-Ax-B4i" firstAttribute="top" secondItem="fve-uo-Ap4" secondAttribute="bottom" constant="-13" id="6zY-pX-UqD"/>
                             <constraint firstItem="dex-8H-hhl" firstAttribute="leading" secondItem="usn-bo-5dw" secondAttribute="leading" constant="10" id="Cez-ud-Xlb"/>
                             <constraint firstItem="VTM-b3-9pS" firstAttribute="top" secondItem="QOA-Ax-B4i" secondAttribute="bottom" constant="13" id="JDC-sc-HZ9"/>
                             <constraint firstItem="vfF-Sf-BLO" firstAttribute="leading" secondItem="Yx5-TI-SHY" secondAttribute="leading" id="LfP-4f-sVP"/>
@@ -292,10 +296,12 @@
                     <value key="contentSizeForViewInPopover" type="size" width="700" height="667"/>
                     <size key="freeformSize" width="700" height="667"/>
                     <connections>
-                        <outlet property="btnIssue" destination="IC9-lr-DAu" id="veo-QU-t7N"/>
-                        <outlet property="btnNotes" destination="vbR-xV-FzQ" id="GLy-fa-Bzi"/>
+                        <outlet property="btnNotes" destination="wgG-wZ-kgL" id="ouz-A1-m4D"/>
+                        <outlet property="cancelBtn" destination="ZAA-nI-pvD" id="9GI-fZ-jM2"/>
                         <outlet property="headerTitle" destination="UGM-ra-yxj" id="g1V-t0-ePN"/>
+                        <outlet property="imgNote" destination="nBP-id-5cw" id="pVk-em-KFl"/>
                         <outlet property="lblAdditionInfo" destination="Fp8-8s-Hdw" id="nj4-YT-rNj"/>
+                        <outlet property="lblNotes" destination="4pr-E9-85l" id="U1t-W0-YPf"/>
                         <outlet property="saveBtn" destination="ob3-bC-Uka" id="Za0-FQ-aUu"/>
                         <outlet property="tblCases" destination="QOA-Ax-B4i" id="hEh-1t-JFO"/>
                         <outlet property="txtNotes" destination="dex-8H-hhl" id="WOT-K9-YCL"/>
@@ -308,9 +314,6 @@
     </scenes>
     <resources>
         <image name="Background" width="1335" height="1339"/>
-        <image name="Issues" width="50" height="50"/>
-        <image name="NavigationBack" width="1000" height="1000"/>
-        <image name="Note" width="50" height="50"/>
-        <image name="Save" width="50" height="50"/>
+        <image name="ViewNotes" width="100" height="100"/>
     </resources>
 </document>

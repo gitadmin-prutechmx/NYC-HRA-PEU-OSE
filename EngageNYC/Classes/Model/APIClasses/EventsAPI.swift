@@ -115,13 +115,15 @@ final class EventsAPI : SFCommonAPI
                 var eventRegDict:[String:String] = [:]
                 var eventRegParams:[String:String] = [:]
                 
-                    let isiOSClientId = Utility.isiOSGeneratedId(generatedId: eventReg.clientId!)
+                var sfdcClientId = eventReg.clientId
+                
+                    let isiOSClientId = Utility.isiOSGeneratedId(generatedId: sfdcClientId!)
                     
                     //if isiOSClientId is a UUID string then get salesforce clientid from contact object
                     if(isiOSClientId != nil){
-                        let clientId = ContactAPI.shared.getSalesforceClientId(iOSClientId: eventReg.clientId!)
+                        let clientId = ContactAPI.shared.getSalesforceClientId(iOSClientId: sfdcClientId!)
                         
-                         eventReg.clientId = clientId //update contact id here
+                         sfdcClientId = clientId //update contact id here
                         
                         if(Utility.isiOSGeneratedId(generatedId: clientId) != nil){
                             print("Error:- iOS clientId")
@@ -129,7 +131,8 @@ final class EventsAPI : SFCommonAPI
                         }
                         else{
                             //update ClientId here
-                            updateClientId(salesforceClientId: clientId, iOSClientId: eventReg.clientId!)
+                            
+                            //updateClientId(salesforceClientId: clientId, iOSClientId: eventReg.clientId!)
                         }
                     }
                 
@@ -145,7 +148,7 @@ final class EventsAPI : SFCommonAPI
             
             
                 eventRegDict["AttendeeStatus"] = eventReg.attendeeStatus
-                eventRegDict["contactId"] = eventReg.clientId
+                eventRegDict["contactId"] = sfdcClientId
                 eventRegDict["eventId"] = eventReg.eventId
             
                 eventRegParams["eventReg"] = Utility.jsonToString(json: eventRegDict as AnyObject)!

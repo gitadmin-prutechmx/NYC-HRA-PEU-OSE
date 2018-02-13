@@ -27,6 +27,9 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
     @IBOutlet weak var lblAddress: UILabel!
     
     @IBOutlet weak var rightBarButton: UIButton!
+    @IBOutlet weak var leftBarButton: UIButton!
+    @IBOutlet weak var newUnitButton:UIButton!
+    
     var boroughPickListArray: [String]!
     let pickerView = UIPickerView()
     
@@ -51,6 +54,10 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
         if(contactObj != nil){
             populateAddress()
         }
+        
+        Utility.makeButtonBorder(btn: rightBarButton)
+        Utility.makeButtonBorder(btn: newUnitButton)
+        Utility.makeButtonBorder(btn: leftBarButton)
     
        
     }
@@ -192,7 +199,10 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
             popoverContent.popoverPresentationController?.sourceView = btnAptNumber
             popoverContent.popoverPresentationController?.sourceRect = btnAptNumber.bounds
             popoverContent.type = .unitsList
+            
+            popoverContent.iOSselectedId = self.contactObj.locationUnitId
             popoverContent.selectedId = self.contactObj.locationUnitId
+            
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
             popoverContent.delegate = self
             self.present(popoverContent, animated: true, completion: nil)

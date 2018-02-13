@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +18,7 @@
         <!--NewUnitViewController-->
         <scene sceneID="Arn-E2-RsX">
             <objects>
-                <viewController storyboardIdentifier="NewUnitViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H8c-FN-unW" userLabel="NewUnitViewController" customClass="NewUnitViewController" customModule="EngageNYCDev" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewUnitViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H8c-FN-unW" userLabel="NewUnitViewController" customClass="NewUnitViewController" customModule="EngageNYC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="UnO-1r-7eC">
                         <rect key="frame" x="0.0" y="0.0" width="700" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,31 +34,37 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vzm-FU-3UZ" userLabel="LeftBarButton">
-                                        <rect key="frame" x="20" y="28" width="30" height="30"/>
+                                        <rect key="frame" x="20" y="28" width="73" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="50p-B0-6D3"/>
+                                            <constraint firstAttribute="width" constant="73" id="50p-B0-6D3"/>
                                             <constraint firstAttribute="height" constant="30" id="x3s-Gr-WnN"/>
                                         </constraints>
-                                        <state key="normal" image="NavigationBack"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnLeftPressed:" destination="H8c-FN-unW" eventType="touchUpInside" id="aOv-p1-458"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zlO-Wy-gwF" userLabel="RightBarButton">
-                                        <rect key="frame" x="646" y="28" width="33" height="30"/>
+                                        <rect key="frame" x="605" y="28" width="74" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="33" id="Pme-Lw-je3"/>
+                                            <constraint firstAttribute="width" constant="74" id="Pme-Lw-je3"/>
                                             <constraint firstAttribute="height" constant="30" id="rFY-Kb-AtE"/>
                                         </constraints>
-                                        <state key="normal" image="Save"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnRightPressed:" destination="H8c-FN-unW" eventType="touchUpInside" id="0xY-Ke-koy"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Unit Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNL-YD-GZg">
-                                        <rect key="frame" x="298.5" y="32" width="103.5" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.11764705882352941" green="0.34901960784313724" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="290" y="31.5" width="120.5" height="22.5"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -257,7 +263,5 @@
     </scenes>
     <resources>
         <image name="Background" width="1335" height="1339"/>
-        <image name="NavigationBack" width="1000" height="1000"/>
-        <image name="Save" width="512" height="512"/>
     </resources>
 </document>

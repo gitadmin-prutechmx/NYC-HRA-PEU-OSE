@@ -12,6 +12,11 @@ class ListingPopOverDO{
     var id:String!
     var name:String!
     var additionalId:String!
+    var iOSId:String!
+    
+    init(){
+        iOSId = ""
+    }
 }
 
 enum virtualUnitName:String{
@@ -46,6 +51,7 @@ class ListingPopoverTableViewController: UITableViewController {
     var delegate : ListingPopoverDelegate?
     
     var selectedId : String?
+    var iOSselectedId : String?
     let IMAGE_WIDTH_MARGIN = 110
     
     
@@ -226,11 +232,22 @@ extension ListingPopoverTableViewController {
             
         else if(type == .unitsList || type == .eventsType || type == .surveyList || type == .clientList){
             
-            if selectedId == arrList[indexPath.row].id{
-                cell.lblImage.image = UIImage(named: "checked")
+            if(type == .clientList || type == .unitsList){
+                if(iOSselectedId == arrList[indexPath.row].iOSId || selectedId == arrList[indexPath.row].id){
+                     cell.lblImage.image = UIImage(named: "checked")
+                }
+                else{
+                    cell.lblImage.image = UIImage()
+                }
             }
+                
             else{
-                cell.lblImage.image = UIImage()
+                if selectedId == arrList[indexPath.row].id{
+                    cell.lblImage.image = UIImage(named: "checked")
+                }
+                else{
+                    cell.lblImage.image = UIImage()
+                }
             }
             
         }

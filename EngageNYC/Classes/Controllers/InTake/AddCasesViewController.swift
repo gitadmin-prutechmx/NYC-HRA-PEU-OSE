@@ -21,9 +21,12 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
     @IBOutlet weak var tblCases: UITableView!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
     
     @IBOutlet weak var btnNotes: UIButton!
-    @IBOutlet weak var btnIssue: UIButton!
+    @IBOutlet weak var lblNotes: UILabel!
+    @IBOutlet weak var imgNote: UIImageView!
+    
     
     var objCase:CaseDO!
     var viewModel:CaseViewModel!
@@ -46,6 +49,10 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
         self.setupView()
         self.reloadView()
         
+        Utility.makeButtonBorder(btn: saveBtn)
+        
+         Utility.makeButtonBorder(btn: cancelBtn)
+        
     }
     
     
@@ -58,6 +65,10 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
         txtNotes.textColor = UIColor.black
         self.tblCases?.tableFooterView = UIView()
         
+        btnNotes.isHidden = false
+        lblNotes.isHidden = false
+        imgNote.isHidden = false
+        
         
         if(objCase.caseActionStatus ==  enumCaseActionStatus.View.rawValue){
             saveBtn.isHidden = true
@@ -69,11 +80,17 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
             else{
                 headerTitle.text = objCase.caseNo
             }
+            
         }
         else if(objCase.caseActionStatus ==  enumCaseActionStatus.Add.rawValue){
             saveBtn.isHidden = false
             lblAdditionInfo.text = ""
             headerTitle.text = "Add Case"
+            
+            
+            btnNotes.isHidden = true
+            lblNotes.isHidden = true
+            imgNote.isHidden = true
         }
         else{
             saveBtn.isHidden = false
@@ -84,7 +101,7 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
             else{
                 headerTitle.text = objCase.caseNo
             }
-          
+            
             
         }
         
@@ -95,9 +112,7 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
 //        }
        
         
-        btnIssue.isHidden = true
-        btnNotes.isHidden = true
-        
+       
         
     }
     
@@ -119,10 +134,19 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
             self.tblCases.reloadData()
         }
     }
-    @IBAction func btnIssuesPressed(_ sender: Any) {
-    }
+   
     
     @IBAction func btnNotesPressed(_ sender: Any) {
+        
+        if let caseNotesVC = CaseNotesStoryboard().instantiateViewController(withIdentifier: "CaseNotesViewController") as? CaseNotesViewController{
+            
+            caseNotesVC.selectedCaseObj = objCase
+            
+            let navigationController = UINavigationController(rootViewController: caseNotesVC)
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            self.navigationController?.pushViewController(caseNotesVC, animated: true)
+        }
+        
     }
     
     @IBAction func btnBackAction(_ sender: Any)

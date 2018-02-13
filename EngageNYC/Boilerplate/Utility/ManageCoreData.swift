@@ -142,8 +142,8 @@ class ManageCoreData{
                 fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!)
                 
             }
-            if(predicateValue3 == nil){
-                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateFormat!, predicateValue!,predicateValue2!)
+            else if(predicateValue3 == nil){
+                fetchRequest.predicate = NSPredicate(format: predicateFormat!, predicateValue!,predicateValue2!)
                 
             }
             else {

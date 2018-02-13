@@ -96,6 +96,9 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         if(objContact != nil){
             populateContactObject()
         }
+        
+        Utility.makeButtonBorder(btn: rightBarButton)
+         Utility.makeButtonBorder(btn: leftbarbutton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,23 +140,26 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
         //leftbarbutton.isHidden = true
        
-        
         if(showAddressScreen){
-            if let image = UIImage(named: "CloseBtn.png") {
-                leftbarbutton.setImage(image, for: .normal)
-            }
-            if let image = UIImage(named: "Forward.png") {
-                rightBarButton.setImage(image, for: .normal)
-            }
+            rightBarButton.setTitle("Next", for: .normal)
         }
-        else{
-            if let image = UIImage(named: "NavigationBack.png") {
-                leftbarbutton.setImage(image, for: .normal)
-            }
-            if let image = UIImage(named: "Save.png") {
-                rightBarButton.setImage(image, for: .normal)
-            }
-        }
+        
+//        if(showAddressScreen){
+//            if let image = UIImage(named: "CloseBtn.png") {
+//                leftbarbutton.setImage(image, for: .normal)
+//            }
+//            if let image = UIImage(named: "Forward.png") {
+//                rightBarButton.setImage(image, for: .normal)
+//            }
+//        }
+//        else{
+//            if let image = UIImage(named: "NavigationBack.png") {
+//                leftbarbutton.setImage(image, for: .normal)
+//            }
+//            if let image = UIImage(named: "Save.png") {
+//                rightBarButton.setImage(image, for: .normal)
+//            }
+//        }
         
         
         

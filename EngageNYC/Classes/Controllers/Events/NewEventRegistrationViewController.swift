@@ -79,6 +79,8 @@ class NewEventRegistrationViewController: UIViewController,UITableViewDelegate,U
         
         self.setupView()
         self.reloadView()
+        
+        Utility.makeButtonBorder(btn: btnSave)
     }
     
     

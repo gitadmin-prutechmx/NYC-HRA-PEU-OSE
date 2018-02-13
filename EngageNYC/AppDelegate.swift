@@ -411,10 +411,11 @@ extension AppDelegate:BroadcastReceiverDelegate{
                 if SFUserAccountManager.sharedInstance().currentUser == nil{
                     SalesforceSDKManager.shared().launch()
                 }
-                Logger.shared.log(level: .info, msg: "Network Connectivity Changed: Connected to internet")
+                
+                Logger.shared.log(level: .info, msg: "Network Connectivity Changed: disconnected to connected")
             }
             else{
-                Logger.shared.log(level: .info, msg: "Network Connectivity Changed: Disconnected to internet")
+                Logger.shared.log(level: .info, msg: "Network Connectivity Changed: connected to disconnected")
             }
         }
     }

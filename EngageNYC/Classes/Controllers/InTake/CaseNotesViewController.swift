@@ -17,6 +17,7 @@ class CaseNoteDO{
 class CaseNotesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 {
    
+    @IBOutlet weak var lblCaseNotes: UILabel!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var tblCasenotes: UITableView!
     var viewModel:CaseViewModel!
@@ -33,6 +34,9 @@ class CaseNotesViewController: UIViewController,UITableViewDelegate,UITableViewD
     func reloadView(){
         
         self.arrCaseNotesMain = self.viewModel.loadCaseNotes(caseId: selectedCaseObj.caseId, assignmentLocUnitId: selectedCaseObj.assignmentLocUnitId)
+        
+        self.lblCaseNotes.text = "CASE NOTES (\(self.arrCaseNotesMain.count))"
+        
         self.tblCasenotes.reloadData()
         
     }
@@ -54,12 +58,10 @@ extension CaseNotesViewController {
         return self.arrCaseNotesMain.count
     }
     
-    // cell height
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
     
-    
+   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+       return 64.0
+}
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {

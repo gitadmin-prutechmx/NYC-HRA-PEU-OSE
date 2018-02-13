@@ -23,6 +23,8 @@ class EventsRegistrationViewController: BroadcastReceiverViewController,UITableV
     
     @IBOutlet weak var tblRegstrations: UITableView!
     
+    @IBOutlet weak var lblRegistrations: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
@@ -58,6 +60,9 @@ class EventsRegistrationViewController: BroadcastReceiverViewController,UITableV
         
         DispatchQueue.main.async {
             self.arrEventsRegMain = self.viewModel.loadEventsReg(objEvent: self.objEvent)
+            
+            self.lblRegistrations.text = "REGISTRATIONS (\(self.arrEventsRegMain.count))"
+            
             self.tblRegstrations.reloadData()
         }
     }

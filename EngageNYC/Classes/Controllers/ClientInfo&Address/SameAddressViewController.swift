@@ -10,6 +10,7 @@ import UIKit
 
 class SameAddressViewController: UIViewController {
     @IBOutlet weak var btnAptNo: UIButton!
+    @IBOutlet weak var btnNewUnit: UIButton!
     
     var canvasserTaskDataObject:CanvasserTaskDataObject!
     var viewModel:AddressInfoViewModel!
@@ -25,6 +26,8 @@ class SameAddressViewController: UIViewController {
         btnAptNo.layer.borderWidth = 1.0
         btnAptNo.clipsToBounds = true
         
+        Utility.makeButtonBorder(btn: btnNewUnit)
+        
         // Do any additional setup after loading the view.
     }
     
@@ -37,7 +40,10 @@ class SameAddressViewController: UIViewController {
             popoverContent.popoverPresentationController?.sourceView = btnAptNo
             popoverContent.popoverPresentationController?.sourceRect = btnAptNo.bounds
             popoverContent.type = .unitsList
+            
+            popoverContent.iOSselectedId = self.newContactObj.sameLocUnitId
             popoverContent.selectedId = self.newContactObj.sameLocUnitId
+            
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
             popoverContent.delegate = self
             self.present(popoverContent, animated: true, completion: nil)
