@@ -150,28 +150,60 @@ class RefreshAll: BroadcastReceiverNSObject
     }
     
     
-    
     func presentRefreshView(isFromSurveyScreen:Bool? = false , completion: (() -> Swift.Void)!){
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-   
-        if Static.refreshView == nil {
-            if let refreshView = RefreshStoryboard().instantiateViewController(withIdentifier: "RefreshViewController") as? RefreshViewController
+        
+        let refreshView = (RefreshStoryboard().instantiateViewController(withIdentifier: "RefreshViewController") as? RefreshViewController)!
+            
+            if (isFromSurveyScreen)!
             {
+                
+                var topRootViewController: UIViewController = (UIApplication.shared.keyWindow?.rootViewController)!
+                
+                while((topRootViewController.presentedViewController) != nil){
+                    topRootViewController = topRootViewController.presentedViewController!
+                    if topRootViewController.isKind(of: SurveyMultiOptionViewController.self) || topRootViewController.isKind(of: SurveyRadioOptionViewController.self)||topRootViewController.isKind(of: SurveyTextViewController.self)||topRootViewController.isKind(of: SubmitSurveyViewController.self)
+                    {
+                        topRootViewController.present(refreshView, animated: true, completion: {
+                            completion()
+                        })
+                    }
+                }
+                
+            } else {
                 appDelegate?.window?.rootViewController?.present(refreshView, animated: true, completion: {
                     completion()
                 })
-                Static.refreshView = refreshView
             }
-        }
-        else
-        {
-            appDelegate?.window?.rootViewController?.present(Static.refreshView!, animated: true, completion: {
-                completion()
-            })
-        }
+            
+            Static.refreshView = refreshView
 
-       
     }
+    
+    
+    
+    
+//    func presentRefreshView(isFromSurveyScreen:Bool? = false , completion: (() -> Swift.Void)!){
+//        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+//
+//        if Static.refreshView == nil {
+//            if let refreshView = RefreshStoryboard().instantiateViewController(withIdentifier: "RefreshViewController") as? RefreshViewController
+//            {
+//                appDelegate?.window?.rootViewController?.present(refreshView, animated: true, completion: {
+//                    completion()
+//                })
+//                Static.refreshView = refreshView
+//            }
+//        }
+//        else
+//        {
+//            appDelegate?.window?.rootViewController?.present(Static.refreshView!, animated: true, completion: {
+//                completion()
+//            })
+//        }
+//
+//
+//    }
     
     
 }

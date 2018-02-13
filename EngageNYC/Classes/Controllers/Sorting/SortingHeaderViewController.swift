@@ -56,10 +56,12 @@ extension SortingHeaderViewController : SortingTextCellDelegate{
                 assignmentVc.sortData(forHeaderIndex: object.index, direction: direction)
             }
             else if let unitVc = parentVC as? UnitListingViewController{
+                unitVc.sortDirection = direction
                 unitVc.sortData(forHeaderIndex: object.index, direction: direction)
             }
             
             else if let clientVc = parentVC as? ClientListingViewController{
+                clientVc.sortDirection = direction
                 clientVc.sortData(forHeaderIndex: object.index, direction: direction)
             }
         }

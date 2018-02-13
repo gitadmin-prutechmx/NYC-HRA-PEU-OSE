@@ -29,18 +29,21 @@ class NewClientInfoWithAddressViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.updateNavigation()
+       // self.updateNavigation()
         
         clientName.text = newContactObj.contactName
         
-    }
-    
-    func updateNavigation(){
-        if let image = UIImage(named: "Save.png") {
-            rightBarButton.setImage(image, for: .normal)
-        }
+        Utility.makeButtonBorder(btn: leftBarButton)
+         Utility.makeButtonBorder(btn: rightBarButton)
         
     }
+    
+//    func updateNavigation(){
+//        if let image = UIImage(named: "Save.png") {
+//            rightBarButton.setImage(image, for: .normal)
+//        }
+//        
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

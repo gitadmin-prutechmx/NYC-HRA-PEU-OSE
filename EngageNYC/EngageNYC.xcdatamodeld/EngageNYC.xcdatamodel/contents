@@ -33,6 +33,7 @@
         <attribute name="contactOutcome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="followUpDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="followUpType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iOSAssignmentLocUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastCanvassedBy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="surveyed" optional="YES" attributeType="String" syncable="YES"/>
@@ -194,10 +195,7 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
-        <attribute name="basemapDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="basemapUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="featureLayerUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="geodatabaseUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSyncON" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="offlineSyncTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="settingsId" optional="YES" attributeType="String" syncable="YES"/>
@@ -241,7 +239,7 @@
     <elements>
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="240"/>
         <element name="AssignmentLocation" positionX="-117" positionY="54" width="128" height="135"/>
-        <element name="AssignmentLocationUnit" positionX="-108" positionY="63" width="128" height="255"/>
+        <element name="AssignmentLocationUnit" positionX="-108" positionY="63" width="128" height="270"/>
         <element name="AssignmentNotes" positionX="-126" positionY="117" width="128" height="165"/>
         <element name="CaseNotes" positionX="-117" positionY="126" width="128" height="135"/>
         <element name="Cases" positionX="-126" positionY="45" width="128" height="270"/>
@@ -255,7 +253,7 @@
         <element name="Location" positionX="-2" positionY="-36" width="128" height="285"/>
         <element name="LocationUnit" positionX="-126" positionY="45" width="128" height="240"/>
         <element name="MetadataConfig" positionX="-117" positionY="54" width="128" height="75"/>
-        <element name="Setting" positionX="-126" positionY="45" width="128" height="150"/>
+        <element name="Setting" positionX="-126" positionY="45" width="128" height="105"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="195"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>

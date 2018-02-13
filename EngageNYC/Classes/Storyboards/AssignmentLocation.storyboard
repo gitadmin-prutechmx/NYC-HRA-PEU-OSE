@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,31 +37,37 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tza-4A-lsE" userLabel="LeftBarButton">
-                                        <rect key="frame" x="20" y="28" width="30" height="30"/>
+                                        <rect key="frame" x="20" y="28" width="84" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="DEV-CS-IYt"/>
+                                            <constraint firstAttribute="width" constant="84" id="DEV-CS-IYt"/>
                                             <constraint firstAttribute="height" constant="30" id="GE9-SA-TRz"/>
                                         </constraints>
-                                        <state key="normal" image="CloseBtn"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnLeftPressed:" destination="UOe-uk-hyd" eventType="touchUpInside" id="sAI-JA-26Q"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHM-7j-ggY" userLabel="RightBarButton">
-                                        <rect key="frame" x="646" y="28" width="33" height="30"/>
+                                        <rect key="frame" x="626" y="28" width="54" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Rh2-T1-tK7"/>
-                                            <constraint firstAttribute="width" constant="33" id="Sxo-MR-W8u"/>
+                                            <constraint firstAttribute="width" constant="54" id="Sxo-MR-W8u"/>
                                         </constraints>
-                                        <state key="normal" image="Save"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnRightPressed:" destination="UOe-uk-hyd" eventType="touchUpInside" id="Kho-Ib-NWY"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Iz-bc-zPK">
-                                        <rect key="frame" x="300.5" y="32" width="99.5" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.1176470588" green="0.34901960780000002" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="292" y="31.5" width="116" height="22.5"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -74,7 +80,7 @@
                                     <constraint firstItem="dHM-7j-ggY" firstAttribute="top" secondItem="dKD-Ba-meN" secondAttribute="top" constant="28" id="QqR-EP-8nx"/>
                                     <constraint firstItem="2Iz-bc-zPK" firstAttribute="centerY" secondItem="dKD-Ba-meN" secondAttribute="centerY" id="e2e-0V-LSu"/>
                                     <constraint firstAttribute="trailing" secondItem="d89-VB-Qu9" secondAttribute="trailing" id="f2T-Ky-A7e"/>
-                                    <constraint firstAttribute="trailing" secondItem="dHM-7j-ggY" secondAttribute="trailing" constant="21" id="j9F-40-9Xm"/>
+                                    <constraint firstAttribute="trailing" secondItem="dHM-7j-ggY" secondAttribute="trailing" constant="20" id="j9F-40-9Xm"/>
                                     <constraint firstItem="Tza-4A-lsE" firstAttribute="top" secondItem="dKD-Ba-meN" secondAttribute="top" constant="28" id="p54-ae-cut"/>
                                     <constraint firstAttribute="bottom" secondItem="dHM-7j-ggY" secondAttribute="bottom" constant="26" id="wWl-tF-s4e"/>
                                     <constraint firstAttribute="bottom" secondItem="Tza-4A-lsE" secondAttribute="bottom" constant="26" id="yAV-DO-n6A"/>
@@ -132,6 +138,7 @@
                     <size key="freeformSize" width="700" height="667"/>
                     <connections>
                         <outlet property="lblLocationName" destination="RY3-cp-60M" id="wh6-Ya-Q0p"/>
+                        <outlet property="leftBarButton" destination="Tza-4A-lsE" id="Wo9-CW-wlQ"/>
                         <outlet property="rightBarButton" destination="dHM-7j-ggY" id="sxk-5F-Uef"/>
                         <outlet property="segmentCtrl" destination="Let-lm-cbV" id="e7P-Jt-5ub"/>
                     </connections>
@@ -482,7 +489,5 @@
     </scenes>
     <resources>
         <image name="Background" width="1335" height="1339"/>
-        <image name="CloseBtn" width="33" height="30"/>
-        <image name="Save" width="50" height="50"/>
     </resources>
 </document>

@@ -35,12 +35,12 @@
                                         <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue Notes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Hb-8S-rYR">
-                                        <rect key="frame" x="298" y="19" width="104" height="30"/>
+                                        <rect key="frame" x="297" y="19" width="106" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="3BU-Kv-gAD"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="21"/>
-                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p7h-QV-bpm">
@@ -64,15 +64,24 @@
                                     <constraint firstAttribute="height" constant="65" id="fKR-bb-iHw"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ISSUE NOTES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1f-S5-xag">
+                                <rect key="frame" x="20" y="103" width="124.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="QDJ-6u-GMf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="20"/>
+                                <color key="textColor" red="0.74509803919999995" green="0.57647058819999997" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zgu-IT-Lpw">
-                                <rect key="frame" x="0.0" y="88" width="700" height="2"/>
+                                <rect key="frame" x="0.0" y="143" width="700" height="2"/>
                                 <color key="backgroundColor" red="0.74509803919999995" green="0.57647058819999997" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="hJd-Ni-dhu"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kxj-oF-P6m">
-                                <rect key="frame" x="0.0" y="91" width="700" height="45"/>
+                                <rect key="frame" x="0.0" y="146" width="700" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="I9y-3Q-WEK"/>
                                 </constraints>
@@ -81,7 +90,7 @@
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4fi-Im-ncG" userLabel="Tbl Issue Notes">
-                                <rect key="frame" x="0.0" y="140" width="700" height="527"/>
+                                <rect key="frame" x="0.0" y="195" width="700" height="472"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="issueNotesCell" rowHeight="64" id="KzX-cg-Vpl" userLabel="issueNotesCell" customClass="IssueNotesTableViewCell" customModule="EngageNYC" customModuleProvider="target">
@@ -94,11 +103,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lTq-Gm-z3I">
                                                     <rect key="frame" x="0.0" y="0.0" width="700" height="63.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loreum ipsum" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gR8-pb-2Yq" userLabel="Issue Notes">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gR8-pb-2Yq" userLabel="Issue Notes">
                                                             <rect key="frame" x="0.0" y="0.0" width="350" height="63.5"/>
+                                                            <string key="text">uiqwhdiuewqewfbhubqwuwqhfqhuwbqhcbebquebehvbibviebvqhbcqhvbgashdvdshjcvjhcvsjhcvhjcvhjascvhdvcghwvcivcivewciuvsic yghybhjkbhbhjkbkhjbh76779you</string>
                                                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
                                                             <color key="textColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
+                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21-10-2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="As9-X6-f2e" userLabel="Issue Date">
                                                             <rect key="frame" x="350" y="0.0" width="350" height="63.5"/>
@@ -136,7 +147,9 @@
                             <constraint firstItem="kxj-oF-P6m" firstAttribute="trailing" secondItem="96n-Lp-fqD" secondAttribute="trailing" id="3KO-Ol-ddx"/>
                             <constraint firstAttribute="trailing" secondItem="Zgu-IT-Lpw" secondAttribute="trailing" id="3aF-nQ-uby"/>
                             <constraint firstItem="c38-1w-EYg" firstAttribute="top" secondItem="96n-Lp-fqD" secondAttribute="top" id="7Vg-jh-OL8"/>
-                            <constraint firstItem="Zgu-IT-Lpw" firstAttribute="top" secondItem="c38-1w-EYg" secondAttribute="bottom" constant="3" id="VJ0-O8-Wx7"/>
+                            <constraint firstItem="v1f-S5-xag" firstAttribute="leading" secondItem="96n-Lp-fqD" secondAttribute="leading" constant="20" id="EGa-9n-SHX"/>
+                            <constraint firstItem="v1f-S5-xag" firstAttribute="top" secondItem="c38-1w-EYg" secondAttribute="bottom" constant="18" id="K2b-QX-a6e"/>
+                            <constraint firstItem="Zgu-IT-Lpw" firstAttribute="top" secondItem="v1f-S5-xag" secondAttribute="bottom" constant="19" id="NUS-pB-eYf"/>
                             <constraint firstItem="4fi-Im-ncG" firstAttribute="top" secondItem="kxj-oF-P6m" secondAttribute="bottom" constant="4" id="Vsm-n6-lHA"/>
                             <constraint firstItem="c38-1w-EYg" firstAttribute="leading" secondItem="Xdx-bI-Na1" secondAttribute="leading" id="cwf-VS-zzM"/>
                             <constraint firstItem="96n-Lp-fqD" firstAttribute="trailing" secondItem="c38-1w-EYg" secondAttribute="trailing" id="pA0-RO-vEP"/>
@@ -149,6 +162,7 @@
                     <size key="freeformSize" width="700" height="667"/>
                     <connections>
                         <outlet property="headerTitle" destination="3Hb-8S-rYR" id="EeQ-gI-hHB"/>
+                        <outlet property="lblIssueNotes" destination="v1f-S5-xag" id="yRP-dY-6yH"/>
                         <outlet property="tblIssueNotes" destination="4fi-Im-ncG" id="1pb-FV-Ax4"/>
                     </connections>
                 </viewController>

@@ -11,6 +11,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Arial.ttf">
+            <string>ArialMT</string>
+        </array>
         <array key="NHaasGroteskDSPro-45Lt.otf">
             <string>NHaasGroteskDSPro-45Lt</string>
         </array>
@@ -40,17 +43,20 @@
                                             <constraint firstAttribute="height" constant="30" id="H9A-jW-tzx"/>
                                             <constraint firstAttribute="width" constant="252" id="YE4-Yi-CXp"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="NHaasGroteskDSPro-55Rg" family="Neue Haas Grotesk Display Pro" pointSize="21"/>
-                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EaL-9z-GCZ">
-                                        <rect key="frame" x="642" y="16" width="36" height="36"/>
+                                        <rect key="frame" x="608" y="16" width="70" height="36"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="36" id="6dw-qk-exz"/>
+                                            <constraint firstAttribute="width" constant="70" id="6dw-qk-exz"/>
                                             <constraint firstAttribute="height" constant="36" id="HLK-rR-DpK"/>
                                         </constraints>
-                                        <state key="normal" image="Save"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnSaveAction:" destination="xXm-h7-mhb" eventType="touchUpInside" id="s13-BN-AM8"/>
                                         </connections>
@@ -224,6 +230,5 @@
     <resources>
         <image name="Background" width="1335" height="1339"/>
         <image name="NavigationBack" width="1000" height="1000"/>
-        <image name="Save" width="50" height="50"/>
     </resources>
 </document>

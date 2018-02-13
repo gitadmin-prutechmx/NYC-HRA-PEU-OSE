@@ -56,16 +56,17 @@ final class IssueAPI:SFCommonAPI {
                 var issueParams:[String:String] = [:]
                 
                 
+                 var sfdcCaseId = issueData.caseId
                 
                 //...........
                 
-                let isiOSCaseId = Utility.isiOSGeneratedId(generatedId: issueData.caseId!)
+                let isiOSCaseId = Utility.isiOSGeneratedId(generatedId: sfdcCaseId!)
                 
                 //if isiOSClientId is a UUID string then get salesforce contactId from contact object
                 if(isiOSCaseId != nil){
-                    let caseId = CaseAPI.shared.getSalesforceCaseId(iOSCaseId: issueData.caseId!)
+                    let caseId = CaseAPI.shared.getSalesforceCaseId(iOSCaseId: sfdcCaseId!)
                     
-                    issueData.caseId = caseId //update case id here
+                    sfdcCaseId = caseId //update case id here
                     
                     if(Utility.isiOSGeneratedId(generatedId: caseId) != nil){
                         print("Error:- ios caseId")
@@ -73,7 +74,7 @@ final class IssueAPI:SFCommonAPI {
                     }
                     else{
                         //update caseId here
-                        updateCaseId(salesforceCaseId: caseId, iOSCaseId: issueData.caseId!)
+                        //updateCaseId(salesforceCaseId: caseId, iOSCaseId: issueData.caseId!)
                     }
                 }
                 
@@ -88,7 +89,7 @@ final class IssueAPI:SFCommonAPI {
                 
               
                 
-                issueDict["caseId"] = issueData.caseId as AnyObject?
+                issueDict["caseId"] = sfdcCaseId as AnyObject?
                 
                 issueDict["issueType"] = issueData.issueType as AnyObject?
                 
@@ -290,6 +291,7 @@ final class IssueAPI:SFCommonAPI {
         issueData.assignmentId = objIssue.assignmentId
         issueData.caseId = objIssue.caseId
         issueData.notes = objIssue.notes
+        issueData.assignmentId = objIssue.assignmentId
 
         
         if(objIssue.caseId.isEmpty){
@@ -301,6 +303,12 @@ final class IssueAPI:SFCommonAPI {
         
         appDelegate.saveContext()
         
+//        if let noteVal = objIssue.notes{
+//            if(noteVal.isEmpty){
+//                saveIssueNotes(issueId: issueData.issueId!, objIssue: objIssue)
+//            }
+//
+//        }
         
         if(!objIssue.notes.isEmpty){
             saveIssueNotes(issueId: issueData.issueId!, objIssue: objIssue)
@@ -352,6 +360,14 @@ final class IssueAPI:SFCommonAPI {
             
         }
         else{
+            
+//            if let noteVal = objIssue.notes{
+//                if(noteVal.isEmpty){
+//                    saveIssueNotes(issueId: objIssue.issueId, objIssue: objIssue)
+//                }
+//
+//            }
+//
             if(!objIssue.notes.isEmpty){
                 saveIssueNotes(issueId: objIssue.issueId, objIssue: objIssue)
             }

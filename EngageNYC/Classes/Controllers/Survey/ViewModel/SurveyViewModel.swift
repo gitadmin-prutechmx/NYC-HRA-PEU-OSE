@@ -130,6 +130,7 @@ class SurveyViewModel{
                 let listingPopOverObj = ListingPopOverDO()
                 listingPopOverObj.id = contactData.contactId
                 listingPopOverObj.name = contactData.contactName
+                listingPopOverObj.iOSId = contactData.iOSContactId
                 listingPopOverObj.additionalId = contactData.unitName
                 
                 arrClients.append(listingPopOverObj)

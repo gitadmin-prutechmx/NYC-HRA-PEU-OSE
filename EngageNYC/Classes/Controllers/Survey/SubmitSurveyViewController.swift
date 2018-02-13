@@ -16,6 +16,7 @@ class SubmitSurveyViewController: UIViewController {
     @IBOutlet weak var btnSelectClient: UIButton!
     @IBOutlet weak var signatureView: YPDrawSignatureView!
     @IBOutlet weak var toolBarView: UIView!
+    @IBOutlet weak var btnAddNewClient: UIButton!
     
     @IBOutlet weak var lblSurveyName: UILabel!
     
@@ -28,7 +29,7 @@ class SubmitSurveyViewController: UIViewController {
         super.viewDidLoad()
         self.setUpView()
         
-        
+        Utility.makeButtonBorder(btn: btnAddNewClient)
     }
     
     func setUpView()

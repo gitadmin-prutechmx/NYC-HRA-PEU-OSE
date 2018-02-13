@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,32 +38,38 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GM4-UR-cs5" userLabel="RightBarButton">
-                                        <rect key="frame" x="647" y="28" width="33" height="30"/>
+                                        <rect key="frame" x="617" y="28" width="63" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="33" id="0vG-v0-Hz6"/>
+                                            <constraint firstAttribute="width" constant="63" id="0vG-v0-Hz6"/>
                                             <constraint firstAttribute="height" constant="30" id="vdC-Gw-K8x"/>
                                         </constraints>
-                                        <state key="normal" image="CloseBtn"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnRightPressed:" destination="yEC-jv-tOb" eventType="touchUpInside" id="YVw-0T-YZT"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3X-nr-MyZ">
-                                        <rect key="frame" x="303.5" y="32" width="93.5" height="21"/>
+                                        <rect key="frame" x="295.5" y="32" width="110.5" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="tts-zE-51O"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.11764705882352941" green="0.34901960784313724" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTW-ib-zZ1" userLabel="LeftBarButton">
-                                        <rect key="frame" x="20" y="28" width="30" height="30"/>
+                                        <rect key="frame" x="20" y="28" width="55" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="JrT-QG-6KJ"/>
-                                            <constraint firstAttribute="width" constant="30" id="qyw-jG-pMe"/>
+                                            <constraint firstAttribute="width" constant="55" id="qyw-jG-pMe"/>
                                         </constraints>
-                                        <state key="normal" image="NavigationBack"/>
+                                        <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                        <state key="normal" title="Back">
+                                            <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="btnLeftPressed:" destination="yEC-jv-tOb" eventType="touchUpInside" id="482-aD-3zF"/>
                                         </connections>
@@ -178,10 +185,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQs-WJ-8jP">
-                                        <rect key="frame" x="118" y="16" width="482" height="30"/>
+                                        <rect key="frame" x="118" y="16" width="426" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="482" id="4c3-1j-fZD"/>
+                                            <constraint firstAttribute="width" constant="426" id="4c3-1j-fZD"/>
                                             <constraint firstAttribute="height" constant="30" id="Wpt-YW-WJT"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
@@ -197,19 +204,21 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="lJ1-09-Cor" firstAttribute="top" secondItem="vUW-gS-bpo" secondAttribute="topMargin" constant="12" id="1Gm-8E-HnA"/>
-                                    <constraint firstAttribute="trailing" secondItem="iQs-WJ-8jP" secondAttribute="trailing" constant="12" id="99R-4t-r2V"/>
+                                    <constraint firstAttribute="trailing" secondItem="iQs-WJ-8jP" secondAttribute="trailing" constant="68" id="99R-4t-r2V"/>
                                     <constraint firstItem="lJ1-09-Cor" firstAttribute="leading" secondItem="vUW-gS-bpo" secondAttribute="leadingMargin" constant="6" id="XOp-3n-Ewo"/>
                                     <constraint firstItem="iQs-WJ-8jP" firstAttribute="top" secondItem="lJ1-09-Cor" secondAttribute="top" constant="-4" id="mjV-nR-bgR"/>
                                     <constraint firstAttribute="height" constant="62" id="qfu-tp-vmM"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L8V-ap-9hf">
-                                <rect key="frame" x="632" y="70" width="30" height="30"/>
+                                <rect key="frame" x="571" y="70" width="91" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="diE-xN-IAB"/>
+                                    <constraint firstAttribute="width" constant="91" id="diE-xN-IAB"/>
                                     <constraint firstAttribute="height" constant="30" id="s08-7j-LUy"/>
                                 </constraints>
-                                <state key="normal" image="Add"/>
+                                <state key="normal" title="New Unit">
+                                    <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="btnAddNewUnitPressed:" destination="UgE-Jb-bEQ" eventType="touchUpInside" id="Sti-vl-zga"/>
                                 </connections>
@@ -221,13 +230,14 @@
                             <constraint firstItem="X4S-tP-iWL" firstAttribute="trailing" secondItem="L8V-ap-9hf" secondAttribute="trailing" constant="22" id="4iW-0w-Tmp"/>
                             <constraint firstItem="vUW-gS-bpo" firstAttribute="leading" secondItem="X4S-tP-iWL" secondAttribute="leading" constant="8" id="R6N-Uy-VAe"/>
                             <constraint firstItem="vUW-gS-bpo" firstAttribute="top" secondItem="X4S-tP-iWL" secondAttribute="top" constant="35" id="ZPb-RM-31g"/>
-                            <constraint firstItem="L8V-ap-9hf" firstAttribute="leading" secondItem="vUW-gS-bpo" secondAttribute="trailing" constant="12" id="bTI-26-RvV"/>
+                            <constraint firstItem="L8V-ap-9hf" firstAttribute="leading" secondItem="vUW-gS-bpo" secondAttribute="trailing" constant="-49" id="bTI-26-RvV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="X4S-tP-iWL"/>
                     </view>
                     <size key="freeformSize" width="684" height="503"/>
                     <connections>
                         <outlet property="btnAptNo" destination="iQs-WJ-8jP" id="IUR-Of-prY"/>
+                        <outlet property="btnNewUnit" destination="L8V-ap-9hf" id="6Lg-oD-bc6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ka-q5-vkL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -403,11 +413,11 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QwR-PS-ZgL">
-                                                        <rect key="frame" x="150" y="16" width="457" height="30"/>
+                                                        <rect key="frame" x="150" y="16" width="393" height="30"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="B0Q-F5-MNp"/>
-                                                            <constraint firstAttribute="width" constant="457" id="eZt-Rj-aeG"/>
+                                                            <constraint firstAttribute="width" constant="393" id="eZt-Rj-aeG"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
                                                         <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -421,7 +431,7 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="QwR-PS-ZgL" secondAttribute="trailing" constant="5" id="LPi-Ez-ce9"/>
+                                                    <constraint firstAttribute="trailing" secondItem="QwR-PS-ZgL" secondAttribute="trailing" constant="69" id="LPi-Ez-ce9"/>
                                                     <constraint firstItem="Hrr-Ro-I7m" firstAttribute="leading" secondItem="qFs-hG-Wnf" secondAttribute="leadingMargin" constant="6" id="Li9-Xv-eqF"/>
                                                     <constraint firstItem="QwR-PS-ZgL" firstAttribute="top" secondItem="Hrr-Ro-I7m" secondAttribute="top" id="lFe-d9-yA5"/>
                                                     <constraint firstItem="Hrr-Ro-I7m" firstAttribute="top" secondItem="qFs-hG-Wnf" secondAttribute="topMargin" constant="8" id="niD-d2-X1O"/>
@@ -429,12 +439,14 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ud7-BH-TE7" userLabel="btnNewUnit">
-                                                <rect key="frame" x="630" y="340" width="30" height="30"/>
+                                                <rect key="frame" x="570" y="340" width="90" height="30"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="Pmt-Rh-jte"/>
+                                                    <constraint firstAttribute="width" constant="90" id="Pmt-Rh-jte"/>
                                                     <constraint firstAttribute="height" constant="30" id="xGZ-qb-3qT"/>
                                                 </constraints>
-                                                <state key="normal" image="Add"/>
+                                                <state key="normal" title="New Unit">
+                                                    <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="btnAddNewUnitPressed:" destination="OGe-CC-rj2" eventType="touchUpInside" id="WxW-3H-0SK"/>
                                                 </connections>
@@ -492,7 +504,7 @@
                                             <constraint firstItem="HAR-UH-o98" firstAttribute="top" secondItem="DZ8-6O-6lL" secondAttribute="top" constant="36" id="V8g-sL-XMe"/>
                                             <constraint firstAttribute="trailing" secondItem="POB-ou-b1N" secondAttribute="trailing" constant="8" id="W7c-ec-fsl"/>
                                             <constraint firstAttribute="trailing" secondItem="RWc-i8-7oA" secondAttribute="trailing" constant="8" id="f01-bo-RZP"/>
-                                            <constraint firstItem="ud7-BH-TE7" firstAttribute="leading" secondItem="qFs-hG-Wnf" secondAttribute="trailing" constant="10" id="fqS-9I-DBN"/>
+                                            <constraint firstItem="ud7-BH-TE7" firstAttribute="leading" secondItem="qFs-hG-Wnf" secondAttribute="trailing" constant="-50" id="fqS-9I-DBN"/>
                                             <constraint firstAttribute="trailing" secondItem="sdf-u0-Kik" secondAttribute="trailing" constant="8" id="gQ9-t4-rA9"/>
                                             <constraint firstItem="RWc-i8-7oA" firstAttribute="top" secondItem="qFs-hG-Wnf" secondAttribute="bottom" constant="11" id="gQE-HE-J6w"/>
                                             <constraint firstAttribute="trailing" secondItem="HAR-UH-o98" secondAttribute="trailing" constant="8" id="gZw-eS-41q"/>
@@ -530,6 +542,7 @@
                         <outlet property="aptNoView" destination="qFs-hG-Wnf" id="pRa-qh-V9e"/>
                         <outlet property="boroughView" destination="lOM-Pg-ptZ" id="2U3-wc-REx"/>
                         <outlet property="btnAptNumber" destination="QwR-PS-ZgL" id="F3G-p5-Bot"/>
+                        <outlet property="btnNewUnit" destination="ud7-BH-TE7" id="hal-7B-jDI"/>
                         <outlet property="streetNameView" destination="POB-ou-b1N" id="Gtd-08-CEM"/>
                         <outlet property="streetNumberView" destination="HAR-UH-o98" id="IJh-OH-cre"/>
                         <outlet property="txtAptFloor" destination="VPw-gQ-VMZ" id="jeX-Ov-46U"/>
@@ -546,9 +559,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add" width="30" height="30"/>
         <image name="Background" width="1335" height="1339"/>
-        <image name="CloseBtn" width="33" height="30"/>
-        <image name="NavigationBack" width="1000" height="1000"/>
     </resources>
 </document>

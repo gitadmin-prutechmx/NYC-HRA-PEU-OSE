@@ -172,20 +172,20 @@ final class LocationUnitAPI:SFCommonAPI {
             //update locationUnitId and assignmentLocationUnitId
             updateLocationUnit(unitDataDict: unitDataDict)
             
-            //update assignmentlocationUnitId
-            updateAssignmentLocationUnit(unitDataDict: unitDataDict)
-            
-            //update locationUnitId and and assignmentLocationUnitId
-            updateContact(unitDataDict: unitDataDict)
-
-            //update assignmentlocationUnitId
-            updateSurveyResponse(unitDataDict: unitDataDict)
-            
-           //update assignmentlocationUnitId
-           updateCases(unitDataDict: unitDataDict)
-            
-             //update case notes
-            updateAssignmentLocUnitInCaseNotes(unitDataDict: unitDataDict)
+//            //update assignmentlocationUnitId
+//            updateAssignmentLocationUnit(unitDataDict: unitDataDict)
+//
+//            //update locationUnitId and and assignmentLocationUnitId
+//            updateContact(unitDataDict: unitDataDict)
+//
+//            //update assignmentlocationUnitId
+//            updateSurveyResponse(unitDataDict: unitDataDict)
+//
+//           //update assignmentlocationUnitId
+//           updateCases(unitDataDict: unitDataDict)
+//
+//             //update case notes
+//            updateAssignmentLocUnitInCaseNotes(unitDataDict: unitDataDict)
            
              //No need right now
             //update assignment notes
@@ -263,7 +263,7 @@ final class LocationUnitAPI:SFCommonAPI {
         updateObjectDic["assignmentLocUnitId"] = assignmentLocUnitId as AnyObject
         
         
-        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.locationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: iOSAssignmentLocUnitId,isPredicate: true)
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue: iOSAssignmentLocUnitId,isPredicate: true)
         
     }
     

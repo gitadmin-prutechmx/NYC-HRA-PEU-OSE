@@ -14,6 +14,9 @@
         <array key="Arial.ttf">
             <string>ArialMT</string>
         </array>
+        <array key="ArialBold.ttf">
+            <string>Arial-BoldMT</string>
+        </array>
         <array key="NHaasGroteskDSPro-45Lt.otf">
             <string>NHaasGroteskDSPro-45Lt</string>
         </array>
@@ -147,27 +150,49 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="326-5c-MWd" userLabel="NewClientBtn">
-                                        <rect key="frame" x="711" y="15" width="40" height="36"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Intake" translatesAutoresizingMaskIntoConstraints="NO" id="pe7-92-ldl">
+                                        <rect key="frame" x="681" y="8" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="S9M-l5-ASu"/>
-                                            <constraint firstAttribute="height" constant="36" id="XkR-18-wr9"/>
+                                            <constraint firstAttribute="width" constant="30" id="Zrh-IB-geO"/>
+                                            <constraint firstAttribute="height" constant="30" id="oAF-ja-rlh"/>
                                         </constraints>
-                                        <state key="normal" image="InTake"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client Intake" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gs6-zG-JAD">
+                                        <rect key="frame" x="645" y="41" width="97" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="97" id="4UK-F0-zyU"/>
+                                            <constraint firstAttribute="height" constant="16" id="bJE-3a-Gjv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AcR-M2-Pgh" userLabel="btnIntake">
+                                        <rect key="frame" x="645" y="8" width="97" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="97" id="KP4-Xu-i4b"/>
+                                            <constraint firstAttribute="height" constant="46" id="Ldh-nx-J0r"/>
+                                        </constraints>
                                         <connections>
-                                            <action selector="btnInTakePressed:" destination="w1m-PM-1Dw" eventType="touchUpInside" id="rLW-IS-17y"/>
+                                            <action selector="btnInTakePressed:" destination="w1m-PM-1Dw" eventType="touchUpInside" id="yyC-vk-htI"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="326-5c-MWd" secondAttribute="trailing" constant="17" id="Ida-y3-MUD"/>
+                                    <constraint firstAttribute="trailing" secondItem="AcR-M2-Pgh" secondAttribute="trailing" constant="26" id="1p6-4d-CKI"/>
+                                    <constraint firstItem="pe7-92-ldl" firstAttribute="top" secondItem="aDN-du-RbI" secondAttribute="top" constant="8" id="2Er-Xj-Szd"/>
+                                    <constraint firstAttribute="bottom" secondItem="AcR-M2-Pgh" secondAttribute="bottom" constant="11" id="Ftx-9m-P9a"/>
                                     <constraint firstAttribute="height" constant="65" id="ImJ-Sp-PDm"/>
+                                    <constraint firstItem="gs6-zG-JAD" firstAttribute="top" secondItem="pe7-92-ldl" secondAttribute="bottom" constant="3" id="OX1-Gf-mFv"/>
                                     <constraint firstItem="cuw-2G-vKV" firstAttribute="leading" secondItem="aDN-du-RbI" secondAttribute="leading" constant="66" id="SEB-5H-3ci"/>
-                                    <constraint firstAttribute="bottom" secondItem="326-5c-MWd" secondAttribute="bottom" constant="14" id="lTQ-2y-8V6"/>
+                                    <constraint firstAttribute="trailing" secondItem="gs6-zG-JAD" secondAttribute="trailing" constant="26" id="hbS-L9-KnS"/>
+                                    <constraint firstItem="AcR-M2-Pgh" firstAttribute="top" secondItem="aDN-du-RbI" secondAttribute="top" constant="8" id="o9e-y4-1bs"/>
                                     <constraint firstItem="cuw-2G-vKV" firstAttribute="top" secondItem="aDN-du-RbI" secondAttribute="top" constant="11" id="qFs-cl-8vH"/>
-                                    <constraint firstItem="326-5c-MWd" firstAttribute="top" secondItem="aDN-du-RbI" secondAttribute="top" constant="15" id="upm-ld-ken"/>
+                                    <constraint firstAttribute="trailing" secondItem="pe7-92-ldl" secondAttribute="trailing" constant="57" id="rSP-AL-Ksn"/>
+                                    <constraint firstItem="gs6-zG-JAD" firstAttribute="top" secondItem="pe7-92-ldl" secondAttribute="bottom" constant="3" id="u4J-sF-WiV"/>
                                     <constraint firstAttribute="bottom" secondItem="cuw-2G-vKV" secondAttribute="bottom" constant="9" id="xVX-LT-5jW"/>
+                                    <constraint firstAttribute="bottom" secondItem="gs6-zG-JAD" secondAttribute="bottom" constant="8" id="yZc-DP-5Ju"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEQ-Rt-n3o">
@@ -392,7 +417,7 @@
         <image name="CircularLeftArrow" width="530" height="530"/>
         <image name="CircularRightArrow" width="530" height="530"/>
         <image name="DropDown" width="48" height="48"/>
-        <image name="InTake" width="60" height="60"/>
+        <image name="Intake" width="100" height="100"/>
         <image name="NavigationBack" width="1000" height="1000"/>
         <image name="headerViewImage" width="1024" height="80"/>
     </resources>

@@ -47,8 +47,10 @@ class  EventsViewController: UIViewController,UITableViewDelegate,UITableViewDat
     @IBOutlet weak var btnTo: UIButton!
     @IBOutlet weak var imgBtnTo: UIImageView!
     @IBOutlet weak var imgBtnFrom: UIImageView!
-    @IBOutlet weak var imgBtnFilter: UIImageView!
     
+    @IBOutlet weak var lblEvents: UILabel!
+    
+    @IBOutlet weak var rightBarButton: UIButton!
     var fromDate: Date!
     var toDate: Date!
     var strType: String!
@@ -66,6 +68,8 @@ class  EventsViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.setupView()
         fromDate = Date()
         toDate = Date()
+        
+        Utility.makeButtonBorder(btn: rightBarButton)
     }
     
     
@@ -98,6 +102,8 @@ class  EventsViewController: UIViewController,UITableViewDelegate,UITableViewDat
             self.strType = self.btnType.titleLabel?.text
             self.arrEventsMain = self.viewModel.loadEvents()
             self.arrFilter = self.arrEventsMain
+            
+            self.lblEvents.text = "EVENTS (\(self.arrEventsMain.count))"
             self.tblEvents.reloadData()
         }
     }
@@ -142,6 +148,8 @@ class  EventsViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
             
         }
+        
+         self.lblEvents.text = "EVENTS (\(self.arrEventsMain.count))"
         
         tblEvents.reloadData()
     }
@@ -227,6 +235,9 @@ class  EventsViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.arrEventsMain = self.arrFilter
         fromDate = Date()
         toDate = Date()
+        
+        self.lblEvents.text = "EVENTS (\(self.arrEventsMain.count))"
+        
         tblEvents.reloadData()
     }
     

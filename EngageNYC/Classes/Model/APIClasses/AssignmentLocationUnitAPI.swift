@@ -48,16 +48,7 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
         
     }
     
-    func getAssignmentLocationUnit(assignmentLocUnitId:String) -> AssignmentLocationUnit?{
-        
-        let assignmentLocUnitResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue ,predicateFormat: "assignmentLocUnitId == %@",predicateValue:assignmentLocUnitId, isPredicate:true) as! [AssignmentLocationUnit]
-        
-        if(assignmentLocUnitResults.count > 0){
-            return assignmentLocUnitResults.first
-        }
-        
-        return nil
-    }
+    
     
     func getAllUpdatedAssignmentLocationUnits() -> [AssignmentLocationUnit]?{
         
@@ -80,16 +71,19 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
                 var assignmentLocUnitParams:[String:String] = [:]
                 
                 
+                var sfdcClientId = assignmentLocUnit.contactId
+                var sfdcAssignmentLocUnitId = assignmentLocUnit.assignmentLocUnitId
+                
                 
                 //...........assignmentLocUnit info
                 
-                let isiOSAssignmentLocUnitId = Utility.isiOSGeneratedId(generatedId: assignmentLocUnit.assignmentLocUnitId!)
+                let isiOSAssignmentLocUnitId = Utility.isiOSGeneratedId(generatedId: sfdcAssignmentLocUnitId!)
 
                 //if isiOSLocationUnitId is a UUID string then get salesforce assignmentlocationUnit from unit object
                 if(isiOSAssignmentLocUnitId != nil){
-                    let assignmentLocUnitId = LocationUnitAPI.shared.getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId: assignmentLocUnit.assignmentLocUnitId!)
+                    let assignmentLocUnitId = LocationUnitAPI.shared.getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId: sfdcAssignmentLocUnitId!)
 
-                     assignmentLocUnit.assignmentLocUnitId = assignmentLocUnitId //update assignmentLocUnit id here
+                    sfdcAssignmentLocUnitId = assignmentLocUnitId //update assignmentLocUnit id here
                     
                     if(Utility.isiOSGeneratedId(generatedId: assignmentLocUnitId) != nil){
                         print("Error:- ios assignmentlocationunitid")
@@ -97,18 +91,19 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
                     }
                     else{
                         //update assignmentLocationUnitId here
-                        updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId: assignmentLocUnitId, iOSAssignmentLocUnitId: assignmentLocUnit.assignmentLocUnitId!)
+                        
+                       // updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId: assignmentLocUnitId, iOSAssignmentLocUnitId: assignmentLocUnit.assignmentLocUnitId!)
                     }
                 }
                 
                 
-                let isiOSClientId = Utility.isiOSGeneratedId(generatedId: assignmentLocUnit.contactId!)
+                let isiOSClientId = Utility.isiOSGeneratedId(generatedId: sfdcClientId!)
                 
                 //if isiOSClientId is a UUID string then get salesforce clientid from contact object
                 if(isiOSClientId != nil){
-                    let clientId = ContactAPI.shared.getSalesforceClientId(iOSClientId: assignmentLocUnit.contactId!)
+                    let clientId = ContactAPI.shared.getSalesforceClientId(iOSClientId: sfdcClientId!)
                     
-                    assignmentLocUnit.contactId = clientId //update clientId
+                    sfdcClientId = clientId //update clientId
                     
                     if(Utility.isiOSGeneratedId(generatedId: clientId) != nil){
                         print("Error:- ios clientId")
@@ -116,7 +111,8 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
                     }
                     else{
                         //update assignmentLocationUnitId here
-                        updateClientId(salesforceClientId: clientId, iOSClientId: assignmentLocUnit.contactId!)
+                        
+                       // updateClientId(salesforceClientId: clientId, iOSClientId: assignmentLocUnit.contactId!)
                     }
                 }
                 
@@ -126,7 +122,9 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
                 //intake :- update to survyed
                 //tenantId:- update to contactId
                 
-                assignmentLocUnitDict["assignmentLocationUnitId"] = assignmentLocUnit.assignmentLocUnitId
+                assignmentLocUnitDict["assignmentLocationUnitId"] = sfdcAssignmentLocUnitId
+                
+                assignmentLocUnitDict["iOSAssignmentLocUnitId"] = sfdcAssignmentLocUnitId
                 
                 
                 assignmentLocUnitDict["intake"] = assignmentLocUnit.surveyed
@@ -134,7 +132,7 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
                 assignmentLocUnitDict["contact"] = assignmentLocUnit.contacted
                 assignmentLocUnitDict["contactOutcome"] = assignmentLocUnit.contactOutcome
                 assignmentLocUnitDict["surveyId"] = assignmentLocUnit.surveyId
-                assignmentLocUnitDict["tenantId"] = assignmentLocUnit.contactId
+                assignmentLocUnitDict["tenantId"] = sfdcClientId
                 
                 assignmentLocUnitDict["notes"] = assignmentLocUnit.notes
                 
@@ -212,7 +210,7 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
     
     func parseAssignmentLocationUnit(jsonObject: Dictionary<String, AnyObject>){
         
-        let assignmentLocUnitId = jsonObject["assignmentLocationUnitId"] as? String
+        let assignmentLocUnitId = jsonObject["iOSAssignmentLocUnitId"] as? String
         
         var updateObjectDic:[String:AnyObject] = [:]
         
@@ -229,17 +227,7 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
     
     }
     
-    func updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId:String,iOSAssignmentLocUnitId:String){
-        
-        var updateObjectDic:[String:AnyObject] = [:]
-        
-        updateObjectDic["assignmentLocUnitId"] = salesforceAssignmentLocUnitId as AnyObject
-        
-        
-        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue:  iOSAssignmentLocUnitId,isPredicate: true)
-        
-    }
-    
+   
     
     
     func createNewTempAssignmentLocationUnit(assignmentLocUnitId:String,assignmentId:String){
@@ -260,6 +248,7 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
         assignmentLocUnit.lastCanvassedBy = ""
         assignmentLocUnit.surveySyncDate = ""
         assignmentLocUnit.surveyId = ""
+        assignmentLocUnit.iOSAssignmentLocUnitId = assignmentLocUnitId
         
         
         appDelegate.saveContext()
@@ -271,37 +260,37 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
  
     
     
-    func createNewAssignmentLocationUnit(assignmentLocUnitInfo:AssignmentLocationUnitInfoDO,assignmentId:String){
-        
-       
-            if(assignmentLocUnitInfo.contacted == boolVal.no.rawValue){
-                assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeNo == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeNo
-            }
-            else{
-                assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeYes == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeYes
-            }
-        
-       
-        
-        let assignmmentLocUnit = AssignmentLocationUnit(context:context)
-        assignmmentLocUnit.actionStatus = actionStatus.create.rawValue
-        assignmmentLocUnit.assignmentLocUnitId = assignmentLocUnitInfo.assignmentLocationUnitId
-        assignmmentLocUnit.attempted = assignmentLocUnitInfo.attempted
-        assignmmentLocUnit.contacted = assignmentLocUnitInfo.contacted
-        assignmmentLocUnit.surveyed = assignmentLocUnitInfo.surveyed
-        assignmmentLocUnit.contactOutcome = assignmentLocUnitInfo.contactOutcome
-        assignmmentLocUnit.contactId = assignmentLocUnitInfo.contactId
-        assignmmentLocUnit.followUpType = assignmentLocUnitInfo.followUpType
-        assignmmentLocUnit.followUpDate = assignmentLocUnitInfo.followUpDate
-        assignmmentLocUnit.assignmentId = assignmentId
-        assignmmentLocUnit.notes = assignmentLocUnitInfo.notes
-        assignmmentLocUnit.lastCanvassedBy = ""
-        assignmmentLocUnit.surveySyncDate = ""
-        assignmmentLocUnit.surveyId = ""
-        
-        appDelegate.saveContext()
-        
-    }
+//    func createNewAssignmentLocationUnit(assignmentLocUnitInfo:AssignmentLocationUnitInfoDO,assignmentId:String){
+//
+//
+//            if(assignmentLocUnitInfo.contacted == boolVal.no.rawValue){
+//                assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeNo == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeNo
+//            }
+//            else{
+//                assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeYes == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeYes
+//            }
+//
+//
+//
+//        let assignmmentLocUnit = AssignmentLocationUnit(context:context)
+//        assignmmentLocUnit.actionStatus = actionStatus.create.rawValue
+//        assignmmentLocUnit.assignmentLocUnitId = assignmentLocUnitInfo.assignmentLocationUnitId
+//        assignmmentLocUnit.attempted = assignmentLocUnitInfo.attempted
+//        assignmmentLocUnit.contacted = assignmentLocUnitInfo.contacted
+//        assignmmentLocUnit.surveyed = assignmentLocUnitInfo.surveyed
+//        assignmmentLocUnit.contactOutcome = assignmentLocUnitInfo.contactOutcome
+//        assignmmentLocUnit.contactId = assignmentLocUnitInfo.contactId
+//        assignmmentLocUnit.followUpType = assignmentLocUnitInfo.followUpType
+//        assignmmentLocUnit.followUpDate = assignmentLocUnitInfo.followUpDate
+//        assignmmentLocUnit.assignmentId = assignmentId
+//        assignmmentLocUnit.notes = assignmentLocUnitInfo.notes
+//        assignmmentLocUnit.lastCanvassedBy = ""
+//        assignmmentLocUnit.surveySyncDate = ""
+//        assignmmentLocUnit.surveyId = ""
+//
+//        appDelegate.saveContext()
+//
+//    }
     
     func updateAssignmentLocationUnit(assignmentLocUnitInfo:AssignmentLocationUnitInfoDO){
         
@@ -325,7 +314,9 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
         updateObjectDic["actionStatus"] = actionStatus.edit.rawValue as AnyObject?
         updateObjectDic["lastCanvassedBy"] = "" as AnyObject?
         
-        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue , updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue:  assignmentLocUnitInfo.assignmentLocationUnitId,isPredicate: true)
+        let queryString = getQueryString(assignmentLocUnitId: assignmentLocUnitInfo.assignmentLocationUnitId)
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue , updateKeyValue: updateObjectDic, predicateFormat: queryString, predicateValue:  assignmentLocUnitInfo.assignmentLocationUnitId,isPredicate: true)
         
     }
     
@@ -334,14 +325,60 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
         var updateObjectDic:[String:AnyObject] = [:]
         
         updateObjectDic["contactId"] = salesforceClientId as AnyObject
-        
-        
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "contactId == %@", predicateValue:  iOSClientId,isPredicate: true)
         
     }
     
+    func updateAssignmentLocationUnitId(salesforceAssignmentLocUnitId:String,iOSAssignmentLocUnitId:String){
+        
+        var updateObjectDic:[String:AnyObject] = [:]
+        
+        updateObjectDic["assignmentLocUnitId"] = salesforceAssignmentLocUnitId as AnyObject
+        
+        
+        ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue:  iOSAssignmentLocUnitId,isPredicate: true)
+        
+    }
+    
+    
     
    
     
+    
+}
+
+
+extension AssignmentLocationUnitAPI{
+    
+    func getAssignmentLocationUnit(assignmentLocUnitId:String) -> AssignmentLocationUnit?{
+        
+        let queryString = getQueryString(assignmentLocUnitId: assignmentLocUnitId)
+        
+        let assignmentLocUnitResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.assignmentLocationUnit.rawValue ,predicateFormat: queryString,predicateValue:assignmentLocUnitId, isPredicate:true) as! [AssignmentLocationUnit]
+        
+        if(assignmentLocUnitResults.count > 0){
+            return assignmentLocUnitResults.first
+        }
+        
+        return nil
+    }
+    
+    func getQueryString(assignmentLocUnitId:String)->String{
+        
+        var queryString = ""
+        let isiOSAssignmentLocUnitId = Utility.isiOSGeneratedId(generatedId: assignmentLocUnitId)
+        
+        //if isiOSAssignmentLocUnitId is a UUID string
+        if(isiOSAssignmentLocUnitId != nil){
+            queryString = "iOSAssignmentLocUnitId == %@"
+        }
+        else{
+            queryString = "assignmentLocUnitId == %@"
+        }
+        
+        return queryString
+        
+        
+    }
     
 }
