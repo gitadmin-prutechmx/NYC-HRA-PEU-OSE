@@ -193,7 +193,7 @@ class CaseViewModel{
             for caseData:Cases in cases{
                 
                 let objCase = CaseDO()
-                objCase.caseId = caseData.caseId
+                objCase.caseId = caseData.iOSCaseId
                 objCase.caseNo = caseData.caseNo
                 objCase.caseStatus = caseData.caseStatus
                 objCase.ownerName = caseData.caseOwner

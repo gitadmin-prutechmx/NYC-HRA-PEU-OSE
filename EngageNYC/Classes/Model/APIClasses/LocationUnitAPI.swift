@@ -397,18 +397,44 @@ final class LocationUnitAPI:SFCommonAPI {
     }
     
     
-    func getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId:String)->String{
+    func getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId:String,locationUnitId:String?=nil)->String{
         
         var assignmentLocationUnitId:String = ""
         
-        let locationUnitRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.locationUnit.rawValue,predicateFormat: "iOSAssignmentLocUnitId == %@" ,predicateValue: iOSAssignmentLocUnitId, isPredicate:true) as! [LocationUnit]
+        var locationUnitRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.locationUnit.rawValue,predicateFormat: "iOSAssignmentLocUnitId == %@" ,predicateValue: iOSAssignmentLocUnitId, isPredicate:true) as! [LocationUnit]
         
         if(locationUnitRes.count > 0){
             assignmentLocationUnitId = (locationUnitRes.first?.assignmentLocUnitId)!
         }
         
+        
+        
+        //for contact
+        if(assignmentLocationUnitId.isEmpty){
+            
+            let errorMsg = "assignmentLocationUnitId is empty."
+            
+            Logger.shared.log(level: .error, msg: errorMsg)
+            Utility.showSwiftErrorMessage(error: errorMsg)
+            
+            
+            if let locUnitId = locationUnitId{
+                
+                 locationUnitRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.locationUnit.rawValue,predicateFormat: "locationUnitId == %@" ,predicateValue: locUnitId, isPredicate:true) as! [LocationUnit]
+                
+                if(locationUnitRes.count > 0){
+                    assignmentLocationUnitId = (locationUnitRes.first?.assignmentLocUnitId)!
+                }
+                
+                
+            }
+        }
+        
         return assignmentLocationUnitId
     }
+    
+    
+    
     
     
     
