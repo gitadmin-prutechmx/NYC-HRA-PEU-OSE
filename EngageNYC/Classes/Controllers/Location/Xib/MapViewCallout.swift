@@ -25,6 +25,9 @@ class MapViewCallout: UIView
     
     @IBOutlet weak var lblName: UILabel!
     
+    @IBOutlet weak var editLocImg: UIImageView!
+    @IBOutlet weak var viewUnitsImg: UIImageView!
+    
     //    @IBOutlet weak var lblNoOfUnits: UILabel!
     //
     //    @IBOutlet weak var lblNoClients: UILabel!

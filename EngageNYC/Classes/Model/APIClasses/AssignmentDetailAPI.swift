@@ -305,14 +305,18 @@ extension AssignmentDetailAPI {
                 let locationUnitObject = LocationUnit(context: context)
                 
                 locationUnitObject.locationUnitId = (assignmentLocationUnit as AnyObject).value(forKey: "locationUnitId") as? String ?? ""
+                 locationUnitObject.iOSLoctionUnitId = locationUnitObject.locationUnitId
+                
                 locationUnitObject.unitName = (assignmentLocationUnit as AnyObject).value(forKey: "Name") as? String ?? ""
+                
+                locationUnitObject.assignmentLocUnitId = (assignmentLocationUnit as AnyObject).value(forKey: "assignmentLocUnitId") as? String ?? ""
+                locationUnitObject.iOSAssignmentLocUnitId = locationUnitObject.assignmentLocUnitId
+                
                 
                 locationUnitObject.assignmentId = assignmentObject.assignmentId
                 locationUnitObject.locationId = locationObject.locationId
                 locationUnitObject.assignmentLocId = locationObject.assignmentLocId
-                locationUnitObject.assignmentLocUnitId = (assignmentLocationUnit as AnyObject).value(forKey: "assignmentLocUnitId") as? String ?? ""
-                locationUnitObject.iOSAssignmentLocUnitId = locationUnitObject.assignmentLocUnitId
-               
+             
                 locationUnitObject.actionStatus = ""
                 locationUnitObject.syncDate = (assignmentLocationUnit as AnyObject).value(forKey: "unitSyncDate") as? String ?? ""
                 
@@ -389,6 +393,7 @@ extension AssignmentDetailAPI {
                     let contactObject = Contact(context: context)
                     
                     contactObject.contactId = (contact as AnyObject).value(forKey: "tenantId") as? String ?? ""
+                    contactObject.iOSContactId = (contact as AnyObject).value(forKey: "tenantId") as? String ?? ""
                     contactObject.contactName = (contact as AnyObject).value(forKey: "name") as? String ?? ""
                     contactObject.firstName = (contact as AnyObject).value(forKey: "firstName") as? String ?? ""
                     contactObject.middleName = (contact as AnyObject).value(forKey: "middleName") as? String ?? ""

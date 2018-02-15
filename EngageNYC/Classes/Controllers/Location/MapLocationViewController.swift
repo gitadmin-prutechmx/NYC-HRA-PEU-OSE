@@ -611,6 +611,9 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         view.lblLocationStatus.text = objLoc.locStatus
         view.lblAddress.text = objLoc.locName
         
+        view.editLocImg.tintColor = UIColor.init(red: 20/255.0, green: 123/255.0, blue: 237/255.0, alpha: 1.0)
+        view.viewUnitsImg.tintColor = UIColor.init(red: 20/255.0, green: 123/255.0, blue: 237/255.0, alpha: 1.0)
+        
         //Default (Pending) = #0b5394, Completed = #b0ffb6, Inaccessible/Vacant = #cccccc, In Progress = #ffff80, Address Does Not Exist = #ff6060
         
         

@@ -76,6 +76,7 @@ class RefreshAll: BroadcastReceiverNSObject
                                                 
                                                 Logger.shared.log(level: .info, msg: "Background syncing finish..")
                                                 Static.isBackgroundSync = false
+                                                self.callNotifications()
                                             }
                                             
                                         }
@@ -146,6 +147,12 @@ class RefreshAll: BroadcastReceiverNSObject
         CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
         
         CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.CLIENTLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+        
+        CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.INTAKECLIENTLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+        
+        CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.INTAKECASELISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+        
+        CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.INTAKEISSUELISTING_SYNC.rawValue, sender: nil, userInfo: nil)
         
     }
     
