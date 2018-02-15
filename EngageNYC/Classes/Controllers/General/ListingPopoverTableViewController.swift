@@ -51,7 +51,7 @@ class ListingPopoverTableViewController: UITableViewController {
     var delegate : ListingPopoverDelegate?
     
     var selectedId : String?
-    var iOSselectedId : String?
+    //var iOSselectedId : String?
     let IMAGE_WIDTH_MARGIN = 110
     
     
@@ -232,23 +232,14 @@ extension ListingPopoverTableViewController {
             
         else if(type == .unitsList || type == .eventsType || type == .surveyList || type == .clientList){
             
-            if(type == .clientList || type == .unitsList){
-                if(iOSselectedId == arrList[indexPath.row].iOSId || selectedId == arrList[indexPath.row].id){
-                     cell.lblImage.image = UIImage(named: "checked")
-                }
-                else{
-                    cell.lblImage.image = UIImage()
-                }
-            }
-                
-            else{
+          
                 if selectedId == arrList[indexPath.row].id{
                     cell.lblImage.image = UIImage(named: "checked")
                 }
                 else{
                     cell.lblImage.image = UIImage()
                 }
-            }
+            
             
         }
         

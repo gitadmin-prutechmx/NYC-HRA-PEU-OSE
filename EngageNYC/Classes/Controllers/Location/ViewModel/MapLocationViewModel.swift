@@ -35,6 +35,8 @@ class MapLocationViewModel{
         
         statusLocationDict = [:]
         
+        locationAddressDict = [:]
+        
         if let locations = LocationAPI.shared.getAllLocations(assignmentId: assignmentId){
             for location:Location in locations{
                 let objMapLocation = MapLocationDO()

@@ -68,14 +68,14 @@ class UnitListingViewModel{
                 
                 let objLocationUnit = LocationUnitDO()
                 objLocationUnit.unitName = locationUnit.unitName
-                objLocationUnit.locationUnitId = locationUnit.locationUnitId
+                objLocationUnit.locationUnitId = locationUnit.iOSLoctionUnitId
                 objLocationUnit.assignmentLocUnitId = locationUnit.iOSAssignmentLocUnitId
                 objLocationUnit.syncDate = locationUnit.syncDate!
                 
                 
-                if assignmentLocUnitsDict[locationUnit.assignmentLocUnitId!] != nil{
+                if assignmentLocUnitsDict[locationUnit.iOSAssignmentLocUnitId!] != nil{
                     
-                    let assignmentLocUnitObj = assignmentLocUnitsDict[locationUnit.assignmentLocUnitId!]
+                    let assignmentLocUnitObj = assignmentLocUnitsDict[locationUnit.iOSAssignmentLocUnitId!]
                     
                     objLocationUnit.attempted = (assignmentLocUnitObj?.attempted)!
                     objLocationUnit.contacted = (assignmentLocUnitObj?.contacted)!
@@ -83,9 +83,9 @@ class UnitListingViewModel{
                     
                 }
                 
-                if contactDict[locationUnit.locationUnitId!] != nil{
+                if contactDict[locationUnit.iOSLoctionUnitId!] != nil{
                     
-                    let contactCount = contactDict[locationUnit.locationUnitId!]
+                    let contactCount = contactDict[locationUnit.iOSLoctionUnitId!]
                     objLocationUnit.totalContacts = contactCount!
                 }
                 

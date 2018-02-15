@@ -415,7 +415,7 @@ class Utility{
             popoverContent.popoverPresentationController?.sourceRect = btnSelectedClientName.bounds
             popoverContent.type = .clientList
             
-            popoverContent.iOSselectedId = surveyObj.clientId
+            //popoverContent.iOSselectedId = surveyObj.clientId
             popoverContent.selectedId = surveyObj.clientId
             
             popoverContent.arrList = viewModel.getAllContactsOnUnit(assignmentLocUnitId: surveyObj.assignmentLocUnitId)

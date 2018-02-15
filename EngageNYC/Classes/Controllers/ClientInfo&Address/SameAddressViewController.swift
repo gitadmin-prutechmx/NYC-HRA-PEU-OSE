@@ -41,7 +41,7 @@ class SameAddressViewController: UIViewController {
             popoverContent.popoverPresentationController?.sourceRect = btnAptNo.bounds
             popoverContent.type = .unitsList
             
-            popoverContent.iOSselectedId = self.newContactObj.sameLocUnitId
+            //popoverContent.iOSselectedId = self.newContactObj.sameLocUnitId
             popoverContent.selectedId = self.newContactObj.sameLocUnitId
             
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)

@@ -22,10 +22,10 @@ class AddressInfoViewModel{
             
             for locationUnitData in locationUnits{
                 let listingPopOverObj = ListingPopOverDO()
-                listingPopOverObj.id = locationUnitData.locationUnitId
-                listingPopOverObj.iOSId = locationUnitData.iOSLoctionUnitId
+                listingPopOverObj.id = locationUnitData.iOSLoctionUnitId
+                //listingPopOverObj.iOSId = locationUnitData.iOSLoctionUnitId
                 listingPopOverObj.name = locationUnitData.unitName
-                listingPopOverObj.additionalId = locationUnitData.assignmentLocUnitId
+                listingPopOverObj.additionalId = locationUnitData.iOSAssignmentLocUnitId
                
                 
                 arrLocationUnits.append(listingPopOverObj)
