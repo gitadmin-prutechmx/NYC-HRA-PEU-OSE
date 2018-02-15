@@ -103,7 +103,7 @@ class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITe
             popoverContent.popoverPresentationController?.sourceRect = btnAptNumber.bounds
             popoverContent.type = .unitsList
             
-            popoverContent.iOSselectedId = self.newContactObj.diffLocUnitId
+           // popoverContent.iOSselectedId = self.newContactObj.diffLocUnitId
             popoverContent.selectedId = self.newContactObj.diffLocUnitId
             
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)

@@ -176,7 +176,7 @@ final class ContactAPI:SFCommonAPI {
                 
                 //if isiOSAssigmentLocUnitId is a UUID string then get salesforce assignmentlocationUnit from unit object
                 if(isiOSAssigmentLocUnitId != nil){
-                    let assignmentLocUnitId = LocationUnitAPI.shared.getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId: sfdcAssignmentLocUnitId!)
+                    let assignmentLocUnitId = LocationUnitAPI.shared.getSalesforceAssignmentLocationUnitId(iOSAssignmentLocUnitId: sfdcAssignmentLocUnitId!,locationUnitId: sfdcLocUnitId)
                     
                     sfdcAssignmentLocUnitId = assignmentLocUnitId //update assignmentLocUnitId
                     
@@ -196,7 +196,6 @@ final class ContactAPI:SFCommonAPI {
                 contactDict["locationUnitId"] = sfdcLocUnitId
                 
                 contactDict["assignmentLocUnitId"] = sfdcAssignmentLocUnitId
-                //contactDict = update assignmentLocUnitId
                 
                 if(contact.actionStatus == actionStatus.edit.rawValue){
                     contactDict["tenantId"] = contact.contactId

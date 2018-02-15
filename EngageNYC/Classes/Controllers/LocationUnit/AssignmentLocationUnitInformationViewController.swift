@@ -266,6 +266,8 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
                 }
                     //else tap to clientlisting screen
                 else{
+                     self.assignmentLocUnitInfoObj.contactId = self.canvasserTaskDataObject.contactObj.contactId
+                    
                     self.assignmentLocUnitInfoObj.contactName = self.viewModel.getContactName(contactId: self.canvasserTaskDataObject.contactObj.contactId)
                 }
                 
@@ -302,12 +304,12 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
                 //If New Unit Create then that case there is no assignmentLocationUnit that time
                 //
                 
-                
-                self.assignmentLocUnitInfoObj.contactName = self.viewModel.getContactName(contactId: self.canvasserTaskDataObject.contactObj.contactId)
-                
-                self.assignmentLocUnitInfoObj.contactId = self.canvasserTaskDataObject.contactObj.contactId
-                
-                self.disableNextBtn()
+//
+//                self.assignmentLocUnitInfoObj.contactName = self.viewModel.getContactName(contactId: self.canvasserTaskDataObject.contactObj.contactId)
+//
+//                self.assignmentLocUnitInfoObj.contactId = self.canvasserTaskDataObject.contactObj.contactId
+//
+//                self.disableNextBtn()
                 
             }
             

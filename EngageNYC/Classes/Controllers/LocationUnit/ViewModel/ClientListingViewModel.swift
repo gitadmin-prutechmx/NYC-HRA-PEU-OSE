@@ -90,7 +90,7 @@ class ClientListingViewModel{
                 objContact.middleName = contact.middleName!
                 objContact.suffix = contact.suffix!
                 objContact.dob = contact.dob!
-                objContact.contactId = contact.contactId!
+                objContact.contactId = contact.iOSContactId!
                 objContact.contactName = contact.contactName!
                 objContact.email = contact.email!
                 objContact.age = contact.age!
@@ -110,13 +110,13 @@ class ClientListingViewModel{
                 objContact.assignmentLocId = contact.assignmentLocId
                 objContact.syncDate = contact.syncDate!
                 
-                if caseDict[contact.contactId!] != nil{
-                    let caseCount = caseDict[contact.contactId!]
+                if caseDict[objContact.contactId!] != nil{
+                    let caseCount = caseDict[objContact.contactId!]
                     objContact.totalCases = caseCount!
                 }
                 
-                if openCaseDict[contact.contactId!] != nil{
-                    let openCaseCount = openCaseDict[contact.contactId!]
+                if openCaseDict[objContact.contactId!] != nil{
+                    let openCaseCount = openCaseDict[objContact.contactId!]
                     objContact.openCases = openCaseCount!
                 }
                 
@@ -144,8 +144,8 @@ class ClientListingViewModel{
             
             for locUnitData in locationUnits{
                 
-                if unitDict[locUnitData.locationUnitId!] == nil{
-                    unitDict[locUnitData.locationUnitId!] = locUnitData.unitName!
+                if unitDict[locUnitData.iOSLoctionUnitId!] == nil{
+                    unitDict[locUnitData.iOSLoctionUnitId!] = locUnitData.unitName!
                 }
                 
             }
@@ -212,7 +212,7 @@ class ClientListingViewModel{
                 objContact.middleName = contact.middleName!
                 objContact.suffix = contact.suffix!
                 objContact.dob = contact.dob!
-                objContact.contactId = contact.contactId!
+                objContact.contactId = contact.iOSContactId!
                 objContact.contactName = contact.contactName!
                 objContact.email = contact.email!
                 objContact.age = contact.age!
@@ -235,13 +235,13 @@ class ClientListingViewModel{
                 
                 objContact.createdById = contact.createdById
 
-                if caseDict[contact.contactId!] != nil{
-                    let caseCount = caseDict[contact.contactId!]
+                if caseDict[objContact.contactId!] != nil{
+                    let caseCount = caseDict[objContact.contactId!]
                     objContact.totalCases = caseCount!
                 }
                 
-                if openCaseDict[contact.contactId!] != nil{
-                    let openCaseCount = openCaseDict[contact.contactId!]
+                if openCaseDict[objContact.contactId!] != nil{
+                    let openCaseCount = openCaseDict[objContact.contactId!]
                     objContact.openCases = openCaseCount!
                 }
                 

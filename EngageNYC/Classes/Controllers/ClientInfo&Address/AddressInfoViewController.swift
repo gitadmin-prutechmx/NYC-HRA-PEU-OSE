@@ -200,7 +200,7 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
             popoverContent.popoverPresentationController?.sourceRect = btnAptNumber.bounds
             popoverContent.type = .unitsList
             
-            popoverContent.iOSselectedId = self.contactObj.locationUnitId
+            //popoverContent.iOSselectedId = self.contactObj.locationUnitId
             popoverContent.selectedId = self.contactObj.locationUnitId
             
             popoverContent.arrList = self.viewModel.getAllLocationUnitsWithoutVirtualUnit(assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId, assignmentLocId: canvasserTaskDataObject.locationObj.objMapLocation.assignmentLocId)
