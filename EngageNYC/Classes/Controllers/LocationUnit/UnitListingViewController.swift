@@ -312,13 +312,14 @@ extension UnitListingViewController {
             assignmentLocationUnitVC.isUnitListing = true
             
             let completionHandler:(AssignmentLocationUnitViewController)->Void = { objassignmentLocUnitVC in
+                
                 print(objassignmentLocUnitVC)
                 
                 
                 //ToShow Survey
                 self.surveyVM = SurveyViewModel.getViewModel()
                 
-                Utility.initializeSurvey(surveyVM: self.surveyVM, canvasserTaskDataObject: self.canvasserTaskDataObject, vctrl: self.locationUnitVC,contactId:objassignmentLocUnitVC.assignmentLocUnitInfoObj.contactId)
+                Utility.initializeSurvey(surveyVM: self.surveyVM, canvasserTaskDataObject: self.canvasserTaskDataObject, vctrl: self.locationUnitVC,contactId:objassignmentLocUnitVC.assignmentLocUnitInfoObj.contactId,isClientInTake:objassignmentLocUnitVC.isClientInTake)
                 
                 
                 

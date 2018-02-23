@@ -162,6 +162,7 @@ extension ListingPopoverTableViewController {
         cell.isUserInteractionEnabled = true
         cell.alpha = 1
         
+        
         cell.setupCell(title: arrList[indexPath.row].name)
         
         
@@ -214,6 +215,11 @@ extension ListingPopoverTableViewController {
             if(arrList[indexPath.row].name == InTakeCase.issues.rawValue){
                 cell.lblImage.image = UIImage(named: "Issues")
             }
+            if(arrList[indexPath.row].name == InTakeCase.remove.rawValue){
+                cell.lblImage.image = UIImage(named: "Remove")
+                
+            }
+            
             
         }
             
@@ -225,7 +231,12 @@ extension ListingPopoverTableViewController {
             if(arrList[indexPath.row].name == InTakeIssue.notes.rawValue){
                 cell.lblImage.image = UIImage(named: "Note")
             }
+            if(arrList[indexPath.row].name == InTakeCase.remove.rawValue){
+                cell.lblImage.image = UIImage(named: "Remove")
+                
+            }
             
+          
             
         }
             

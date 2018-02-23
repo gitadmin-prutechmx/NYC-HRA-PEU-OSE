@@ -104,7 +104,7 @@ class SubmitSurveyViewController: UIViewController {
     }
     
     @IBAction func btnLoginUserNamePressed(_ sender: Any) {
-        Utility.openNavigationItem(btnLoginUserName: self.btnLogin, vc: self)
+        Utility.openNavigationItem(btnLoginUserName: self.btnLogin, vc: self,isSurveyModule:true)
     }
     
     @IBAction func btnSubmitSurveyPress(_ sender: Any) {

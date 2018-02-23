@@ -185,7 +185,7 @@ final class SurveyAPI:SFCommonAPI{
         
         var updateObjectDic:[String:AnyObject] = [:]
         
-        updateObjectDic["actionStatus"] = "" as AnyObject
+        updateObjectDic["actionStatus"] = actionStatus.doneSurvey.rawValue as AnyObject
         
         
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.surveyResponse.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocUnitId == %@", predicateValue:  assignmentLocUnitId,isPredicate: true)

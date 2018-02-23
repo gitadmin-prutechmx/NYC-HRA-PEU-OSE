@@ -4,9 +4,9 @@
 <array>
 	<dict>
 		<key>id</key>
-		<string>EditIssue</string>
+		<string>Edit Issue</string>
 		<key>name</key>
-		<string>EditIssue</string>
+		<string>Edit Issue</string>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -14,5 +14,11 @@
 		<key>name</key>
 		<string>Notes</string>
 	</dict>
+    <dict>
+        <key>id</key>
+        <string>Remove</string>
+        <key>name</key>
+        <string>Remove</string>
+    </dict>
 </array>
 </plist>

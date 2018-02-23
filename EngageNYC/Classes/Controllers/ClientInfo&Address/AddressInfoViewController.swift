@@ -69,6 +69,10 @@ class AddressInfoViewController: UIViewController,UIPickerViewDelegate,UITextFie
         txtZip.text = contactObj.zip
         txtAptFloor.text = contactObj.floor
         btnAptNumber.setTitle(contactObj.aptNo, for: .normal)
+        
+        if let index = boroughPickListArray.index(of: contactObj.borough){
+            pickerView.selectRow(index, inComponent: 0, animated: true)
+        }
     }
     
     

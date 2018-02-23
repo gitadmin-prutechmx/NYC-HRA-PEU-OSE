@@ -234,6 +234,8 @@ class ClientListingViewModel{
                 objContact.syncDate = contact.syncDate!
                 
                 objContact.createdById = contact.createdById
+                objContact.primaryLang = contact.primaryLang!
+                objContact.otherLang = contact.otherLang!
 
                 if caseDict[objContact.contactId!] != nil{
                     let caseCount = caseDict[objContact.contactId!]

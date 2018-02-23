@@ -32,6 +32,9 @@ class ContactDO{
     var aptNo:String = ""
     var floor:String = ""
     
+    var primaryLang:String = ""
+    var otherLang:String = ""
+    
     var iOSContactId:String!
     
     var actionStatus:String = ""
@@ -409,7 +412,7 @@ extension ClientListingViewController {
                 //ToShow Survey
                 self.surveyVM = SurveyViewModel.getViewModel()
                 
-                Utility.initializeSurvey(surveyVM: self.surveyVM, canvasserTaskDataObject: self.canvasserTaskDataObject, vctrl: self,contactId:objassignmentLocUnitVC.assignmentLocUnitInfoObj.contactId)
+                Utility.initializeSurvey(surveyVM: self.surveyVM, canvasserTaskDataObject: self.canvasserTaskDataObject, vctrl: self,contactId:objassignmentLocUnitVC.assignmentLocUnitInfoObj.contactId,isClientInTake:objassignmentLocUnitVC.isClientInTake)
                 
                 
                 
