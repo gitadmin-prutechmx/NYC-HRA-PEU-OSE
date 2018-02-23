@@ -443,8 +443,13 @@ final class IssueAPI:SFCommonAPI {
         
     }
     
-    func deleteIssueTempRecord(){
+    func deleteTempIssueRecords(){
         ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.issues.rawValue, predicateFormat: "actionStatus == %@", predicateValue: actionStatus.temp.rawValue, isPredicate: true)
+    }
+    
+    func deleteTempIssue(objIssue:IssueDO){
+        ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.issues.rawValue, predicateFormat: "issueId == %@", predicateValue: objIssue.issueId, isPredicate: true)
+        ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.issueNotes.rawValue, predicateFormat: "issueId == %@", predicateValue: objIssue.issueId, isPredicate: true)
     }
     
     

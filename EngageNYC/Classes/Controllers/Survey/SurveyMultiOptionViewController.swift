@@ -116,10 +116,20 @@ class SurveyMultiOptionViewController: UIViewController,UICollectionViewDelegate
             Utility.surveyPageControl(pageControl: pageControl, surveyObj: surveyObj)
 
             
+            
         }
         
     }
     
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if(surveyObj.isClientInTake){
+            surveyObj.isClientInTake = false
+            Utility.showInTake(vc: self,canvasserTaskDataObject: canvasserTaskDataObject)
+        }
+    }
     
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -180,7 +190,7 @@ class SurveyMultiOptionViewController: UIViewController,UICollectionViewDelegate
         
     }
     @IBAction func btnLoginUserNamePressed(_ sender: Any) {
-        Utility.openNavigationItem(btnLoginUserName: self.btnLogin, vc: self)
+        Utility.openNavigationItem(btnLoginUserName: self.btnLogin, vc: self,isSurveyModule:true)
     }
     
     @IBAction func btnSurveySelectPressed(_ sender: Any) {

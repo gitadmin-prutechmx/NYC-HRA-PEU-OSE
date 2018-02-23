@@ -54,6 +54,7 @@ class IntakeIssueViewController: BroadcastReceiverViewController,UITableViewData
     var selectedIssueObj:IssueDO!
     
     var inTakeIssuesNavItems:[ListingPopOverDO]!
+    var origInTakeIssuesNavItems:[ListingPopOverDO]!
     
     
     override func viewDidLoad() {
@@ -72,6 +73,7 @@ class IntakeIssueViewController: BroadcastReceiverViewController,UITableViewData
     
     func setUpMoreNavItems(){
         inTakeIssuesNavItems = Utility.setUpNavItems(resourceFileName: "InTakeIssue")
+        origInTakeIssuesNavItems = inTakeIssuesNavItems
     }
     
     override func onReceive(notification: NSNotification) {
@@ -133,6 +135,9 @@ class IntakeIssueViewController: BroadcastReceiverViewController,UITableViewData
             }
             
             
+            if(self.arrIssueMain.contains {$0.dbActionStatus == actionStatus.temp.rawValue}){
+                self.inTakeVC.saveBtn.isHidden = false
+            }
             
             
             self.lblIssues.text = "ISSUES (\(self.arrIssueMain.count))"
@@ -146,6 +151,18 @@ class IntakeIssueViewController: BroadcastReceiverViewController,UITableViewData
         let indexRow = (sender as AnyObject).tag
         
         selectedIssueObj = arrIssueMain[indexRow!]
+
+        
+        if(selectedIssueObj.dbActionStatus != actionStatus.temp.rawValue){
+            inTakeIssuesNavItems =  inTakeIssuesNavItems.filter{$0.name != InTakeIssue.remove.rawValue}
+        }
+        else{
+             inTakeIssuesNavItems =  origInTakeIssuesNavItems
+        }
+        
+    
+        
+        
         
         Utility.showInTakeNavItems(btn: (sender) as! UIButton, type: .inTakeIssueList, navItems: inTakeIssuesNavItems, vctrl: self)
         
@@ -207,6 +224,12 @@ extension IntakeIssueViewController:ListingPopoverDelegate{
             
             print("Notes")
             
+        }
+        
+        else if(obj.name == InTakeIssue.remove.rawValue){
+            
+            viewModel.deleteTempIssue(objIssue: self.selectedIssueObj)
+            self.reloadView()
         }
         
     }

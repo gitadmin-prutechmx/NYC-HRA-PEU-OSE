@@ -19,8 +19,13 @@
         <attribute name="actionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="assignmentLocId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attempt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneExt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="propertyContactTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="propertyName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalUnits" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="AssignmentLocationUnit" representedClassName="AssignmentLocationUnit" syncable="YES" codeGenerationType="class">
@@ -100,7 +105,9 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationUnitId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="middleName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="otherLang" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primaryLang" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="streetName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="streetNum" optional="YES" attributeType="String" syncable="YES"/>
@@ -238,13 +245,13 @@
     </entity>
     <elements>
         <element name="Assignment" positionX="-333" positionY="-18" width="128" height="240"/>
-        <element name="AssignmentLocation" positionX="-117" positionY="54" width="128" height="135"/>
+        <element name="AssignmentLocation" positionX="-117" positionY="54" width="128" height="210"/>
         <element name="AssignmentLocationUnit" positionX="-108" positionY="63" width="128" height="270"/>
         <element name="AssignmentNotes" positionX="-126" positionY="117" width="128" height="165"/>
         <element name="CaseNotes" positionX="-117" positionY="126" width="128" height="135"/>
         <element name="Cases" positionX="-126" positionY="45" width="128" height="270"/>
         <element name="Chart" positionX="-126" positionY="45" width="128" height="105"/>
-        <element name="Contact" positionX="-99" positionY="72" width="128" height="435"/>
+        <element name="Contact" positionX="-99" positionY="72" width="128" height="465"/>
         <element name="DropDown" positionX="-126" positionY="45" width="128" height="90"/>
         <element name="Events" positionX="-117" positionY="54" width="128" height="270"/>
         <element name="EventsReg" positionX="-108" positionY="63" width="128" height="165"/>

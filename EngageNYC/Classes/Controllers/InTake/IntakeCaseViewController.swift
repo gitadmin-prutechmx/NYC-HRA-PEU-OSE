@@ -65,7 +65,8 @@ class IntakeCaseViewController: BroadcastReceiverViewController,UITableViewDataS
     var inTakeVC:IntakeViewController!
     var selectedCaseObj:CaseDO!
     
-     var inTakeCaseNavItems:[ListingPopOverDO]!
+    var inTakeCaseNavItems:[ListingPopOverDO]!
+    var origInTakeCaseNavItems:[ListingPopOverDO]!
 
     
     override func viewDidLoad() {
@@ -86,6 +87,7 @@ class IntakeCaseViewController: BroadcastReceiverViewController,UITableViewDataS
     
     func setUpMoreNavItems(){
         inTakeCaseNavItems = Utility.setUpNavItems(resourceFileName: "InTakeCase")
+        origInTakeCaseNavItems = inTakeCaseNavItems
     }
     
     override func onReceive(notification: NSNotification) {
@@ -125,6 +127,9 @@ class IntakeCaseViewController: BroadcastReceiverViewController,UITableViewDataS
                 self.arrCaseMain = self.viewModel.loadTempCases(assignmentLocUnitId: self.canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId,arrCases: [])
             }
             
+            if(self.arrCaseMain.contains {$0.dbActionStatus == actionStatus.temp.rawValue}){
+                self.inTakeVC.saveBtn.isHidden = false
+            }
          
             
             self.lblCase.text = "CASES (\(self.arrCaseMain.count))"
@@ -138,6 +143,15 @@ class IntakeCaseViewController: BroadcastReceiverViewController,UITableViewDataS
         let indexRow = (sender as AnyObject).tag
         
         selectedCaseObj = arrCaseMain[indexRow!]
+        
+        if(selectedCaseObj.dbActionStatus != actionStatus.temp.rawValue){
+            inTakeCaseNavItems =  inTakeCaseNavItems.filter{$0.name != InTakeCase.remove.rawValue}
+        }
+        else{
+             inTakeCaseNavItems =  origInTakeCaseNavItems
+        }
+        
+        
         
         Utility.showInTakeNavItems(btn: (sender) as! UIButton, type: .inTakeCaseList, navItems: inTakeCaseNavItems, vctrl: self)
         
@@ -227,6 +241,14 @@ extension IntakeCaseViewController:ListingPopoverDelegate{
             }
             
         }
+        else if(obj.name == InTakeCase.remove.rawValue){
+            
+            viewModel.deleteTempCase(objCase: self.selectedCaseObj)
+            self.reloadView()
+        }
+        
+        
+        
     }
 }
 

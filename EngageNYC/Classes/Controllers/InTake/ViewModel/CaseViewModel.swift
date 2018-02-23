@@ -263,6 +263,9 @@ class CaseViewModel{
          CaseAPI.shared.updateCase(objCase: objResCase)
     }
     
+    func deleteTempCase(objCase:CaseDO){
+        CaseAPI.shared.deleteTempCase(objCase: objCase)
+    }
     
     
     func prepareCaseResponse(objCase:CaseDO)->CaseDO{

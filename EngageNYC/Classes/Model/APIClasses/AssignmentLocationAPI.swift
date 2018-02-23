@@ -43,6 +43,11 @@ final class AssignmentLocationAPI:SFCommonAPI {
         updateObjectDic["locStatus"] = assignmentLocInfoObj.locStatus as AnyObject?
         updateObjectDic["notes"] = assignmentLocInfoObj.notes as AnyObject?
         updateObjectDic["actionStatus"] = actionStatus.edit.rawValue as AnyObject?
+        updateObjectDic["propertyName"] = assignmentLocInfoObj.propertyName as AnyObject?
+        updateObjectDic["propertyContactTitle"] = assignmentLocInfoObj.propertyContactTitle as AnyObject?
+        updateObjectDic["phoneNo"] = assignmentLocInfoObj.phoneNo as AnyObject?
+        updateObjectDic["phoneExt"] = assignmentLocInfoObj.phoneExt as AnyObject?
+        
         
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.assignmentLocation.rawValue, updateKeyValue: updateObjectDic, predicateFormat: "assignmentLocId == %@", predicateValue:  assignmentLocInfoObj.assignmentLocationId,isPredicate: true)
         
@@ -64,6 +69,12 @@ final class AssignmentLocationAPI:SFCommonAPI {
                 assignmentLocDict["assignmentLocationId"] = assignmentLocation.assignmentLocId
                 assignmentLocDict["Notes"] = assignmentLocation.notes
                 assignmentLocDict["attempt"] = assignmentLocation.attempt
+                
+                 assignmentLocDict["locationId"] = assignmentLocation.locationId
+                 assignmentLocDict["propertyName"] = assignmentLocation.propertyName
+                 assignmentLocDict["propertyContactTitle"] = assignmentLocation.propertyContactTitle
+                 assignmentLocDict["phoneNo"] = assignmentLocation.phoneNo
+                 assignmentLocDict["phoneExt"] = assignmentLocation.phoneExt
                 
                 
                 assignmentLocParams["location"] = Utility.jsonToString(json: assignmentLocDict as AnyObject)!

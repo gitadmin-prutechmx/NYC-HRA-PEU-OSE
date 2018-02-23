@@ -597,7 +597,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yud-in-fnN" userLabel="NextBtn">
-                                <rect key="frame" x="259" y="388" width="142" height="44"/>
+                                <rect key="frame" x="168" y="388" width="142" height="44"/>
                                 <color key="backgroundColor" red="0.17300331960000001" green="0.59518459079999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="142" id="peK-5H-sMn"/>
@@ -611,15 +611,30 @@
                                     <action selector="btnSurveyAction:" destination="sDk-Cn-Jh7" eventType="touchUpInside" id="WbB-Jt-704"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1CQ-4h-cgc" userLabel="NextBtn">
+                                <rect key="frame" x="349" y="388" width="142" height="44"/>
+                                <color key="backgroundColor" red="0.17300331960000001" green="0.59518459079999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                <state key="normal" title="Client Intake">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnClientIntakePressed:" destination="sDk-Cn-Jh7" eventType="touchUpInside" id="zzj-ex-4Ev"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="2by-ss-r9n" firstAttribute="bottom" secondItem="yud-in-fnN" secondAttribute="bottom" constant="4" id="28f-Rq-0NZ"/>
+                            <constraint firstItem="2by-ss-r9n" firstAttribute="trailing" secondItem="1CQ-4h-cgc" secondAttribute="trailing" constant="169" id="4nF-BA-ABX"/>
                             <constraint firstItem="yud-in-fnN" firstAttribute="top" secondItem="UWe-L2-vni" secondAttribute="bottom" constant="8" id="ArD-oc-QBQ"/>
                             <constraint firstItem="UWe-L2-vni" firstAttribute="leading" secondItem="2by-ss-r9n" secondAttribute="leading" id="Cri-Cy-2jb"/>
-                            <constraint firstItem="yud-in-fnN" firstAttribute="centerX" secondItem="W4E-TX-c0d" secondAttribute="centerX" id="Jcj-Ye-lXF"/>
+                            <constraint firstItem="yud-in-fnN" firstAttribute="centerX" secondItem="W4E-TX-c0d" secondAttribute="centerX" constant="-91" id="Jcj-Ye-lXF"/>
                             <constraint firstItem="2by-ss-r9n" firstAttribute="trailing" secondItem="UWe-L2-vni" secondAttribute="trailing" id="Sir-Pf-dn0"/>
+                            <constraint firstItem="1CQ-4h-cgc" firstAttribute="leading" secondItem="yud-in-fnN" secondAttribute="trailing" constant="39" id="WDb-KD-zeR"/>
+                            <constraint firstItem="1CQ-4h-cgc" firstAttribute="top" secondItem="UWe-L2-vni" secondAttribute="bottom" constant="8" id="Wcb-Jx-06X"/>
                             <constraint firstItem="UWe-L2-vni" firstAttribute="top" secondItem="2by-ss-r9n" secondAttribute="top" id="uZK-r7-kdk"/>
+                            <constraint firstItem="2by-ss-r9n" firstAttribute="bottom" secondItem="1CQ-4h-cgc" secondAttribute="bottom" constant="4" id="y1l-k4-WlM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2by-ss-r9n"/>
                     </view>
@@ -627,6 +642,7 @@
                     <connections>
                         <outlet property="NotesTextArea" destination="kwK-7f-Ljx" id="OUZ-79-eHx"/>
                         <outlet property="assignmentUnitInfoView" destination="UWe-L2-vni" id="rg3-qh-Yur"/>
+                        <outlet property="btnClientIntake" destination="1CQ-4h-cgc" id="sHY-xL-1ut"/>
                         <outlet property="btnNext" destination="yud-in-fnN" id="CII-Lc-S7M"/>
                         <outlet property="tblAssignmentLocationUnit" destination="xGG-yG-6PJ" id="y7i-c8-aw9"/>
                     </connections>

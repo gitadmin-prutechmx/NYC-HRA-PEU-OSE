@@ -155,9 +155,9 @@ class AddIssueViewController: UIViewController,UITableViewDataSource,UITableView
                 viewModel.SaveIssueInCoreData(objIssue:objIssue)
                 msg = "Issue has been created successfully."
                 
-                if(self.objIssue.caseId.isEmpty){
-                    self.inTakeVC.saveBtn.isHidden = false
-                }
+//                if(self.objIssue.caseId.isEmpty){
+//                    self.inTakeVC.saveBtn.isHidden = false
+//                }
             }
             else{
                 viewModel.UpdateIssueInCoreData(objIssue:objIssue)

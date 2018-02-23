@@ -87,9 +87,11 @@ class Utility{
     
     
     
-    class func initializeSurvey(surveyVM:SurveyViewModel,canvasserTaskDataObject:CanvasserTaskDataObject,vctrl:UIViewController,surveyId:String?=nil,contactId:String){
+    class func initializeSurvey(surveyVM:SurveyViewModel,canvasserTaskDataObject:CanvasserTaskDataObject,vctrl:UIViewController,surveyId:String?=nil,contactId:String,isClientInTake:Bool=false){
         
         var surveyObj = surveyVM.isSurveyTaken(assignmentLocUnitId: canvasserTaskDataObject.locationUnitObj.assignmentLocUnitId)
+        
+        
         
         if surveyObj == nil{
             if surveyId != nil{
@@ -120,6 +122,7 @@ class Utility{
                     surveyObject.assignmentId = canvasserTaskDataObject.assignmentObj.assignmentId
                     surveyObj?.clientId = contactId
                     surveyObj?.canvasserContactId = canvasserTaskDataObject.userObj.contactId
+                    surveyObj?.isClientInTake = isClientInTake
                     //surveyObject.locationUnitVC = vctrl as! LocationUnitViewController
                     
                     Utility.showSurvey(surveyObject: surveyObject, canvasserTaskDataObject: canvasserTaskDataObject, surveyVM: surveyVM, vctrl: vctrl)
@@ -152,6 +155,7 @@ class Utility{
         else{
             
             surveyObject.currentSurveyPage = surveyObject.surveyQuestionArrayIndex + 1 //Not use this time
+            
             
             if(surveyObject.surveyQuestionArrayIndex > surveyObject.totalSurveyQuestions){
                 surveyObject.surveyQuestionArrayIndex = surveyObject.surveyQuestionArrayIndex - 1
@@ -482,7 +486,7 @@ class Utility{
     }
     
     
-    class func openNavigationItem(btnLoginUserName:UIButton, vc:UIViewController,isDashboard:Bool?=false){
+    class func openNavigationItem(btnLoginUserName:UIButton, vc:UIViewController,isDashboard:Bool?=false,isSurveyModule:Bool?=false){
         
         let path = Bundle.main.path(forResource: "NavigationItem", ofType: "plist")
         guard let navArray = NSArray(contentsOfFile: path!) as? [[String:Any]] else { return }
@@ -500,6 +504,11 @@ class Utility{
             
             if(isDashboard == true){
                 if(name != NavigationItems.home.rawValue){
+                    navObjects.append(listingPopOverObj)
+                }
+            }
+            else if(isSurveyModule == true){
+                if(name != NavigationItems.refreshData.rawValue){
                     navObjects.append(listingPopOverObj)
                 }
             }
@@ -926,6 +935,8 @@ class Utility{
         
        
     }
+    
+    
     
     
     

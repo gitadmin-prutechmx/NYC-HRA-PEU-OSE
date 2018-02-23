@@ -43,6 +43,7 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
     var multiPickListApiName:String  = ""
     var inTakeVC:IntakeViewController!
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
@@ -164,9 +165,9 @@ class AddCasesViewController: UIViewController,UITableViewDataSource,UITableView
             viewModel.SaveCaseInCoreData(objCase:objCase)
              msg = "Case has been created successfully."
             
-            if(self.objCase.clientId.isEmpty){
-                self.inTakeVC.saveBtn.isHidden = false
-            }
+//            if(self.objCase.clientId.isEmpty){
+//                self.inTakeVC.saveBtn.isHidden = false
+//            }
         }
         else{
             viewModel.UpdateCaseInCoreData(objCase:objCase)

@@ -93,13 +93,22 @@ class SurveyTextViewController: UIViewController
             }
             
             Utility.surveyPageControl(pageControl: pageControl, surveyObj: surveyObj)
-            
+         
         }
         
         
      
         
         
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if(surveyObj.isClientInTake){
+            surveyObj.isClientInTake = false
+            Utility.showInTake(vc: self,canvasserTaskDataObject: canvasserTaskDataObject)
+        }
     }
     
     
@@ -125,7 +134,7 @@ class SurveyTextViewController: UIViewController
     
     @IBAction func btnLoginUserNamePressed(_ sender: Any) {
         
-        Utility.openNavigationItem(btnLoginUserName: self.btnLogin, vc: self)
+        Utility.openNavigationItem(btnLoginUserName: self.btnLogin, vc: self,isSurveyModule:true)
     }
     
     
