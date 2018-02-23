@@ -76,7 +76,7 @@ class RefreshAll: BroadcastReceiverNSObject
                                                 
                                                 Logger.shared.log(level: .info, msg: "Background syncing finish..")
                                                 Static.isBackgroundSync = false
-                                                self.callNotifications()
+                                                //self.callNotifications()
                                             }
                                             
                                         }

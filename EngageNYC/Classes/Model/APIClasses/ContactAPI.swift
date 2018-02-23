@@ -41,6 +41,23 @@ final class ContactAPI:SFCommonAPI {
     
     func saveNewContact(objNewContact:NewContactDO,isSameUnit:Bool){
         
+        let fname = objNewContact.firstName.capitalizingFirstLetter()
+        let mname = objNewContact.middleName
+        let lname = objNewContact.lastName.capitalizingFirstLetter()
+        
+        var middleTempName = mname
+        
+        if(!middleTempName.isEmpty){
+            middleTempName =  " " + middleTempName + " "
+        }
+        else{
+            middleTempName = " "
+        }
+        
+        let contactName = fname  + middleTempName  + lname
+        
+        
+        
         let newContact = Contact(context:context)
         
         newContact.assignmentId = objNewContact.assignmentId
@@ -51,10 +68,10 @@ final class ContactAPI:SFCommonAPI {
         newContact.iOSContactId = objNewContact.contactId
         newContact.contactId = objNewContact.contactId
         newContact.actionStatus = actionStatus.create.rawValue
-        newContact.contactName = objNewContact.contactName
-        newContact.firstName = objNewContact.firstName
-        newContact.middleName = objNewContact.middleName
-        newContact.lastName = objNewContact.lastName
+        newContact.contactName = contactName
+        newContact.firstName = fname
+        newContact.middleName = mname
+        newContact.lastName = lname
         newContact.suffix = objNewContact.suffix
         newContact.phone = objNewContact.phone
         newContact.email = objNewContact.email
@@ -78,7 +95,8 @@ final class ContactAPI:SFCommonAPI {
         newContact.syncDate = objNewContact.syncDate
         newContact.createdById = objNewContact.createdById
         
-       
+        newContact.primaryLang = objNewContact.primaryLang
+        newContact.otherLang = objNewContact.otherLang
         
         appDelegate.saveContext()
         
@@ -89,11 +107,27 @@ final class ContactAPI:SFCommonAPI {
         
         var updateObjectDic:[String:AnyObject] = [:]
         
+        let fname = objContact.firstName.capitalizingFirstLetter()
+        let mname = objContact.middleName
+        let lname = objContact.lastName.capitalizingFirstLetter()
         
-        updateObjectDic["contactName"] = objContact.contactName as AnyObject
-        updateObjectDic["firstName"] = objContact.firstName as AnyObject
-        updateObjectDic["lastName"] = objContact.lastName as AnyObject
-        updateObjectDic["middleName"] = objContact.middleName as AnyObject
+        
+        var middleTempName = mname
+        
+        if(!middleTempName.isEmpty){
+            middleTempName =  " " + middleTempName + " "
+        }
+        else{
+            middleTempName = " "
+        }
+        
+        let contactName = fname + middleTempName  + lname
+        
+        
+        updateObjectDic["contactName"] = contactName as AnyObject
+        updateObjectDic["firstName"] = fname as AnyObject
+        updateObjectDic["lastName"] = lname as AnyObject
+        updateObjectDic["middleName"] = mname as AnyObject
         updateObjectDic["suffix"] = objContact.suffix as AnyObject
         updateObjectDic["phone"] = objContact.phone as AnyObject
         updateObjectDic["email"] = objContact.email as AnyObject
@@ -116,6 +150,8 @@ final class ContactAPI:SFCommonAPI {
         updateObjectDic["iOSContactId"] = objContact.iOSContactId as AnyObject
         updateObjectDic["createdById"] = objContact.createdById as AnyObject
         
+        updateObjectDic["primaryLang"] = objContact.primaryLang as AnyObject
+        updateObjectDic["otherLang"] = objContact.otherLang as AnyObject
         
         var queryString = getQueryString(contactId: objContact.contactId)
         
@@ -245,6 +281,10 @@ final class ContactAPI:SFCommonAPI {
                     
                     contactDict["birthdate"] = dateFormatter.string(from: date)
                 }
+                
+                
+                contactDict["primaryLang"] = contact.primaryLang
+                contactDict["otherLang"] = contact.otherLang
                 
                 
                 contactParams["tenant"] = Utility.jsonToString(json: contactDict as AnyObject)!

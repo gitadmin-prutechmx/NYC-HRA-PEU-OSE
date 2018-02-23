@@ -491,9 +491,16 @@ final class CaseAPI:SFCommonAPI {
     
    
     
-    func deleteCaseTempRecord(){
+    func deleteTempCaseRecords(){
         ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.cases.rawValue, predicateFormat: "actionStatus == %@", predicateValue: actionStatus.temp.rawValue, isPredicate: true)
     }
+    
+    func deleteTempCase(objCase:CaseDO){
+        ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.cases.rawValue, predicateFormat: "caseId == %@", predicateValue: objCase.caseId, isPredicate: true)
+        
+        ManageCoreData.deleteRecord(salesforceEntityName: coreDataEntity.caseNotes.rawValue, predicateFormat: "caseId == %@", predicateValue: objCase.caseId, isPredicate: true)
+    }
+    
     
     
     func getSalesforceCaseId(iOSCaseId:String)->String{

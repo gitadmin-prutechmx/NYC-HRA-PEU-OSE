@@ -185,6 +185,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     @IBOutlet weak var tblAssignmentLocationUnit: UITableView!
     
     @IBOutlet weak var btnNext:UIButton!
+    @IBOutlet weak var btnClientIntake: UIButton!
     
     @IBOutlet weak var assignmentUnitInfoView: UIView!
     
@@ -198,6 +199,10 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     var ContactsPicklist:[DropDownDO]!
     
     
+    var attemptSwitch:UISwitch!
+    var contactSwitch:UISwitch!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
@@ -208,6 +213,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     func setUpUI(){
         
         btnNext.layer.cornerRadius = 5.0
+        btnClientIntake.layer.cornerRadius = 5.0
         
         NotesTextArea.layer.cornerRadius = 5
         NotesTextArea.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
@@ -330,21 +336,24 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     }
     
     
-    
-    
     func enableNextBtn(){
         
         btnNext.isEnabled = true
+        btnClientIntake.isEnabled = true
         btnNext.alpha = 1
+        btnClientIntake.alpha = 1
         
     }
     
     func disableNextBtn(){
         
         btnNext.isEnabled = false
+        btnClientIntake.isEnabled = false
         btnNext.alpha = 0.5
+        btnClientIntake.alpha = 0.5
         
     }
+
     
     func checkEnableNextButton(){
         
@@ -374,6 +383,16 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
         
         if(sender.isOn)
         {
+            //Enable attempt and contact to yes when surveyed yes
+            assignmentLocUnitInfoObj.attempted = boolVal.yes.rawValue
+            assignmentLocUnitInfoObj.contacted = boolVal.yes.rawValue
+            assignmentLocUnitInfoObj.contactOutcomeYes = "Conduct Survey/Intake"
+            
+           
+            attemptSwitch.isOn = true
+            contactSwitch.isOn = true
+            contactOutcomeCell.detailTextLabel?.text = assignmentLocUnitInfoObj.contactOutcomeYes
+            
             assignmentLocUnitInfoObj.surveyed = boolVal.yes.rawValue
             
             checkEnableNextButton()
@@ -382,6 +401,9 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
         }
         else
         {
+            assignmentLocUnitInfoObj.contactOutcomeYes = "Select Outcome"
+            contactOutcomeCell.detailTextLabel?.text =  self.assignmentLocUnitInfoObj.contactOutcomeYes
+            
             assignmentLocUnitInfoObj.surveyed = boolVal.no.rawValue
             
             
@@ -423,10 +445,15 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     @IBAction func btnSurveyAction(_ sender: Any)
     {
         if(delegate != nil){
-            delegate?.goToSurvey()
+            delegate?.goToSurvey(isClientInTake: false)
         }
     }
     
+    @IBAction func btnClientIntakePressed(_ sender: Any) {
+        if(delegate != nil){
+            delegate?.goToSurvey(isClientInTake: true)
+        }
+    }
     
     
 }
@@ -452,7 +479,7 @@ extension AssignmentLocationUnitInformationViewController
         return UITableViewAutomaticDimension
     }
     
-    
+   
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
@@ -469,7 +496,7 @@ extension AssignmentLocationUnitInformationViewController
             cell.selectionStyle = .none
             
             //accessory switch
-            let attemptSwitch = UISwitch(frame: CGRect.zero)
+            attemptSwitch = UISwitch(frame: CGRect.zero)
             
             if assignmentLocUnitInfoObj != nil {
                 if(assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue){
@@ -500,7 +527,7 @@ extension AssignmentLocationUnitInformationViewController
             cell.selectionStyle = .none
             
             //accessory switch
-            let contactSwitch = UISwitch(frame: CGRect.zero)
+            contactSwitch = UISwitch(frame: CGRect.zero)
             
             if assignmentLocUnitInfoObj != nil {
                 if(assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue){
@@ -718,13 +745,24 @@ extension AssignmentLocationUnitInformationViewController
             
             if(assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue){
                 dynamicPicklistObj.selectedDynamicPickListValue = self.assignmentLocUnitInfoObj.contactOutcomeYes
-                dynamicPicklistObj.dynamicPickListArray = self.reasonPicklist
+                
+                if(self.assignmentLocUnitInfoObj.surveyed == boolVal.no.rawValue){
+                    
+                dynamicPicklistObj.dynamicPickListArray = self.reasonPicklist.filter{$0.name != "Conduct Survey/Intake"}
+                    
+                }
+                else{
+                     dynamicPicklistObj.dynamicPickListArray = self.reasonPicklist
+                }
+            
+                
             }
             else{
                 dynamicPicklistObj.selectedDynamicPickListValue = self.assignmentLocUnitInfoObj.contactOutcomeNo
                 dynamicPicklistObj.dynamicPickListArray = self.contactOutcomePicklist
             }
             
+           
             
             dynamicPicklistObj.dynamicPicklistName = "Contact Outcome"
             

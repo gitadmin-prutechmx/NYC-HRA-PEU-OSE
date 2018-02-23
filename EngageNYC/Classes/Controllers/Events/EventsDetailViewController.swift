@@ -17,7 +17,16 @@ class MetadataConfigDO{
     var apiName:String = ""
     var sectionName:String = ""
     
+init(fieldName:String) {
     
+        self.sequence = ""
+        self.pickListValue = ""
+        self.fieldName = fieldName
+        self.dataType = ""
+        self.apiName = ""
+        self.sectionName = ""
+
+    }
 init(sequence:String,pickListValue:String,fieldName:String,dataType:String,apiName:String,sectionName:String) {
         self.sequence = sequence
         self.pickListValue = pickListValue

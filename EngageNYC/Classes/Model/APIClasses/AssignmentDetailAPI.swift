@@ -271,7 +271,13 @@ extension AssignmentDetailAPI {
             assignmnetLocationObject.locStatus = locationObject.locStatus
             assignmnetLocationObject.totalUnits =  locationObject.totalUnits
             assignmnetLocationObject.actionStatus = ""
+            assignmnetLocationObject.locationId = locationObject.locationId
+            assignmnetLocationObject.propertyName =  (assignmentLocation as AnyObject).value(forKey: "propertyName") as? String ?? ""
+            assignmnetLocationObject.propertyContactTitle = (assignmentLocation as AnyObject).value(forKey: "propertyContactTitle") as? String ?? ""
+            assignmnetLocationObject.phoneNo = (assignmentLocation as AnyObject).value(forKey: "phoneNo") as? String ?? ""
+            assignmnetLocationObject.phoneExt = (assignmentLocation as AnyObject).value(forKey: "phoneExt") as? String ?? ""
             
+          
             appDelegate.saveContext()
             
             //AssignmentLNotes
@@ -307,7 +313,8 @@ extension AssignmentDetailAPI {
                 locationUnitObject.locationUnitId = (assignmentLocationUnit as AnyObject).value(forKey: "locationUnitId") as? String ?? ""
                  locationUnitObject.iOSLoctionUnitId = locationUnitObject.locationUnitId
                 
-                locationUnitObject.unitName = (assignmentLocationUnit as AnyObject).value(forKey: "Name") as? String ?? ""
+                
+                locationUnitObject.unitName = ((assignmentLocationUnit as AnyObject).value(forKey: "Name") as? String)?.uppercased() ?? ""
                 
                 locationUnitObject.assignmentLocUnitId = (assignmentLocationUnit as AnyObject).value(forKey: "assignmentLocUnitId") as? String ?? ""
                 locationUnitObject.iOSAssignmentLocUnitId = locationUnitObject.assignmentLocUnitId
@@ -394,10 +401,24 @@ extension AssignmentDetailAPI {
                     
                     contactObject.contactId = (contact as AnyObject).value(forKey: "tenantId") as? String ?? ""
                     contactObject.iOSContactId = (contact as AnyObject).value(forKey: "tenantId") as? String ?? ""
-                    contactObject.contactName = (contact as AnyObject).value(forKey: "name") as? String ?? ""
-                    contactObject.firstName = (contact as AnyObject).value(forKey: "firstName") as? String ?? ""
+                    
+                    contactObject.firstName = ((contact as AnyObject).value(forKey: "firstName") as? String)?.capitalizingFirstLetter() ?? ""
                     contactObject.middleName = (contact as AnyObject).value(forKey: "middleName") as? String ?? ""
-                    contactObject.lastName = (contact as AnyObject).value(forKey: "lastName") as? String ?? ""
+                    contactObject.lastName = ((contact as AnyObject).value(forKey: "lastName") as? String)?.capitalizingFirstLetter() ?? ""
+                    
+                    //contactObject.contactName = (contact as AnyObject).value(forKey: "name") as? String ?? ""
+                    
+                    var middleName =  contactObject.middleName!
+                    
+                    if(!contactObject.middleName!.isEmpty){
+                        middleName =  " " + contactObject.middleName! + " "
+                    }
+                    else{
+                        middleName = " "
+                    }
+                    
+                    contactObject.contactName =  contactObject.firstName! + middleName + contactObject.lastName!
+                    
                     contactObject.suffix = (contact as AnyObject).value(forKey: "suffix") as? String ?? ""
                     contactObject.phone = (contact as AnyObject).value(forKey: "phone") as? String ?? ""
                     contactObject.email = (contact as AnyObject).value(forKey: "email") as? String ?? ""
@@ -420,6 +441,9 @@ extension AssignmentDetailAPI {
                     contactObject.createdById = (contact as AnyObject).value(forKey: "CreatedById") as? String ?? ""
                     
                     contactObject.actionStatus = ""
+                    
+                    contactObject.primaryLang = (contact as AnyObject).value(forKey: "primaryLang") as? String ?? ""
+                    contactObject.otherLang = (contact as AnyObject).value(forKey: "otherLang") as? String ?? ""
                     
                     appDelegate.saveContext()
                 }

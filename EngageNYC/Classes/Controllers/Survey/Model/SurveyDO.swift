@@ -14,6 +14,7 @@ import Foundation
 
 class SurveyDO{
     
+    
     var surveyId:String!
     var surveyName:String!
     var surveyQuestion:String!
@@ -35,6 +36,8 @@ class SurveyDO{
     var clientId:String!
     
     var assignmentId:String!
+    
+    var isClientInTake:Bool!
     
     init(){
         surveyId = ""
@@ -59,6 +62,7 @@ class SurveyDO{
         canvasserContactId = ""
         
         assignmentId = ""
+        isClientInTake = false
         
     }
  

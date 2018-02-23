@@ -891,7 +891,7 @@ extension MapLocationViewController{
                         
                         for feature:AGSFeature in features{
                             
-                             let objectIdVal = feature.attributes["OBJECTID"] as! Int
+                             let objectIdVal = feature.attributes["F__OBJECTID"] as! Int ?? feature.attributes["OBJECTID"] as! Int
                             
                             arrObjectIds.append(objectIdVal)
                         }

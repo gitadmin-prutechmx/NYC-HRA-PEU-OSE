@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol UpdateAssignmentLocationUnit {
-    func goToSurvey()
+    func goToSurvey(isClientInTake:Bool)
 }
 
 class AssignmentLocationUnitViewController: UIViewController {
@@ -34,6 +34,7 @@ class AssignmentLocationUnitViewController: UIViewController {
     var assignmentLocUnitInfoVC:AssignmentLocationUnitInformationViewController!
     var assignmentLocUnitHistoryVC:AssignmentLocationUnitHistoryViewController!
     
+    var isClientInTake:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -216,7 +217,10 @@ class AssignmentLocationUnitViewController: UIViewController {
 
 
 extension AssignmentLocationUnitViewController:UpdateAssignmentLocationUnit{
-    func goToSurvey() {
+    func goToSurvey(isClientInTake:Bool) {
+        
+        self.isClientInTake = isClientInTake
+        
         self.viewModel.updateAssignmentLocationUnit(assignmentLocationUnitInfoObj: self.assignmentLocUnitInfoObj,assignmentId: canvasserTaskDataObject.assignmentObj.assignmentId)
         
         self.dismiss(animated: true, completion: {

@@ -17,4 +17,16 @@ class ClientInfoViewModel{
     func saveNewContact(objNewContactDO:NewContactDO){
         ContactAPI.shared.saveNewContact(objNewContact:objNewContactDO,isSameUnit:true)
     }
+    
+    func getPrimaryLangPicklist(objectType:String,fieldName:String)->[String]{
+        
+        var arrPrimaryLang = [String]()
+        if let picklist =  PicklistAPI.shared.getPicklist(objectType: objectType, fieldName: fieldName){
+            let primaryLangStr = picklist.value!
+            arrPrimaryLang = String(primaryLangStr.dropLast()).components(separatedBy: ";")
+        }
+        
+        return arrPrimaryLang
+        
+    }
 }

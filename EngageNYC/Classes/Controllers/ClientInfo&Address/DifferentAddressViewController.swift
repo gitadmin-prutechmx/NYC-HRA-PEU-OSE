@@ -77,6 +77,10 @@ class DifferentAddressViewController: UIViewController,UIPickerViewDelegate,UITe
         
         boroughPickListArray =  self.viewModel.getBoroughPicklist(objectType: "Contact", fieldName: "Borough__c")
         
+        if let index = boroughPickListArray.index(of: txtBorough.text!){
+            pickerView.selectRow(index, inComponent: 0, animated: true)
+        }
+        
     }
     
     func donePicker()
@@ -164,7 +168,7 @@ extension DifferentAddressViewController{
         let newLength = currentCharacterCount + value.count
         if(newLength > 9)
         {
-            self.newContactObj.streetNum = txtZip.text!
+            self.newContactObj.zip = txtZip.text!
             return false
         }
         

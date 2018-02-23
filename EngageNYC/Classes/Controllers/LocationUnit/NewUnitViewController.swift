@@ -21,6 +21,7 @@ enum actionStatus:String{
     case no = ""
     case inProgressSurvey = "InProgress"
     case completeSurvey = "Complete"
+    case doneSurvey = "Done"
     case temp = "Temp"
 }
 enum privateHomeEnum:String{
@@ -189,7 +190,7 @@ class NewUnitViewController: UIViewController,UITextFieldDelegate {
                 }
                 else{
                     self.locUnitId = genLocUnitId
-                    self.assignmentLocUnitId = genLocUnitId
+                    self.assignmentLocUnitId = genAssignmentLocUnitId
                     self.completionHandler?(self)
                     self.navigationController?.popViewController(animated: true)
                 }

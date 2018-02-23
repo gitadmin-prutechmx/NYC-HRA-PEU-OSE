@@ -25,8 +25,8 @@ class InTakeViewModel{
     
     func deleteAllTempRecords(){
         
-        CaseAPI.shared.deleteCaseTempRecord()
-        IssueAPI.shared.deleteIssueTempRecord()
+        CaseAPI.shared.deleteTempCaseRecords()
+        IssueAPI.shared.deleteTempIssueRecords()
     }
     
     func updateInTakeBinding(clientId:String,caseId:String,assignmentLocUnitId:String,assignmentId:String)->Bool{
