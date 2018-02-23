@@ -34,6 +34,9 @@ class NewContactDO{
     var diffLocUnitId:String = ""
     var floor:String = ""
     
+    var primaryLang:String = ""
+    var otherLang:String = ""
+    
     
     var assignmentId:String!
     var assignmentLocId:String!
@@ -41,11 +44,12 @@ class NewContactDO{
     var createdById:String!
     
     
+    
 }
 
 
 
-class ClientInfoViewController: UIViewController, UITextFieldDelegate {
+class ClientInfoViewController: UIViewController, UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate {
     @IBOutlet weak var leftbarbutton: UIButton!
     @IBOutlet weak var rightBarButton: UIButton!
     
@@ -64,12 +68,19 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtEmailName: UITextField!
     @IBOutlet weak var txtPhoneName: UITextField!
     @IBOutlet weak var txtDobName: UITextField!
+    @IBOutlet weak var txtPrimaryLang: UITextField!
+    @IBOutlet weak var txtOtherLang: UITextField!
     
     var objNewContact:NewContactDO = NewContactDO()
     var objContact:ContactDO!
     
     
     var picker = UIDatePicker()
+    
+    let primaryLangPickerView = UIPickerView()
+    var primaryLangPickListArray: [String]!
+     var selectedRow = 0
+   
     
     var canvasserTaskDataObject:CanvasserTaskDataObject!
     var newClientInfoWithAddressVC:NewClientInfoWithAddressViewController!
@@ -93,6 +104,9 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
         lblHeadertitle.text = "New Client Info"
         
+        self.setUpDatePicker()
+        self.setUpPrimaryLangPicker()
+        
         if(objContact != nil){
             populateContactObject()
         }
@@ -103,7 +117,6 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.setUpDatePicker()
         self.navigationController?.isNavigationBarHidden = true;
     }
     
@@ -115,6 +128,14 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         txtSuffixName.text = objContact.suffix
         txtPhoneName.text = objContact.phone.toPhoneNumber()
         txtEmailName.text = objContact.email
+        txtPrimaryLang.text = objContact.primaryLang
+        txtOtherLang.text = objContact.otherLang
+        
+        if let index = primaryLangPickListArray.index(of: objContact.primaryLang){
+            primaryLangPickerView.selectRow(index, inComponent: 0, animated: true)
+        }
+        
+        
         
         lblHeadertitle.text = objContact.contactName
         
@@ -213,6 +234,62 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+ 
+    func setUpPrimaryLangPicker(){
+        primaryLangPickerView.delegate = self
+        primaryLangPickerView.backgroundColor = .white
+        primaryLangPickerView.showsSelectionIndicator = true
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = false
+        toolBar.tintColor = UIColor.init(red: 0.0/255.0, green: 86.0/255.0, blue: 153.0/255.0, alpha: 1)
+        toolBar.barTintColor = UIColor.white
+        
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.donePrimaryLangPicker))
+        
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style:UIBarButtonItemStyle.plain, target: self, action: #selector(self.cancelPrimaryLangPicker))
+        
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        txtPrimaryLang.inputView = primaryLangPickerView
+        txtPrimaryLang.inputAssistantItem.leadingBarButtonGroups.removeAll()
+        txtPrimaryLang.inputAssistantItem.trailingBarButtonGroups.removeAll()
+        txtPrimaryLang.inputAccessoryView = toolBar
+        
+        primaryLangPickListArray =  self.viewModel.getPrimaryLangPicklist(objectType: "Contact", fieldName: "Primary_Language__c")
+        
+       
+    }
+    
+    func donePrimaryLangPicker()
+    {
+        txtPrimaryLang.text = primaryLangPickListArray[selectedRow] as? String
+        
+         if(objContact != nil){
+             self.objContact.primaryLang = txtPrimaryLang.text!
+        }
+         else{
+            self.objNewContact.primaryLang = txtPrimaryLang.text!
+        }
+        
+       
+        txtPrimaryLang.resignFirstResponder()
+        
+    }
+    
+    func cancelPrimaryLangPicker()
+    {
+        txtPrimaryLang.resignFirstResponder()
+    }
+    
+    
+    
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -238,6 +315,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         objContact.suffix = txtSuffixName.text!
         objContact.phone = txtPhoneName.text!
         objContact.email = txtEmailName.text!
+        objContact.otherLang = txtOtherLang.text!
         
         if let dob = txtDobName.text{
             
@@ -294,6 +372,7 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
         objNewContact.suffix = txtSuffixName.text!
         objNewContact.phone = txtPhoneName.text!
         objNewContact.email = txtEmailName.text!
+        objNewContact.otherLang = txtOtherLang.text!
         
         if let dob = txtDobName.text{
             
@@ -527,8 +606,6 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate {
                 
             }
         }
-        
-        
         
         
         return true
@@ -779,6 +856,13 @@ extension ClientInfoViewController{
             return newLength <= 40 // Bool
             
         }
+        else if textField == txtOtherLang{
+            
+            guard let text = txtOtherLang.text else { return true }
+            let newLength = text.count + string.count - range.length
+            return newLength <= 50 // Bool
+            
+        }
         else
         {
             return true
@@ -788,6 +872,41 @@ extension ClientInfoViewController{
     }
     
     
+    
+    
+}
+
+
+extension ClientInfoViewController{
+    
+    //Mark Pickerview delegate methods
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
+    {
+        return 1
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+      
+        return self.primaryLangPickListArray.count
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
+        return primaryLangPickListArray[row]
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        selectedRow = row
+        
+    }
+    
+
     
     
 }

@@ -68,7 +68,7 @@ class UnitsCustomTableViewCell: UITableViewCell {
             contact.image = UIImage()
         }
         
-        if(object.surveyStatus == actionStatus.completeSurvey.rawValue){
+        if(object.surveyStatus == actionStatus.completeSurvey.rawValue || object.surveyStatus == actionStatus.doneSurvey.rawValue){
             surveyStatus.image = UIImage(named: "Yes")
         }
         else if(object.surveyStatus == actionStatus.inProgressSurvey.rawValue){

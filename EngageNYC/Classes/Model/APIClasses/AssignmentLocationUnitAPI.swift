@@ -124,7 +124,7 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
                 
                 assignmentLocUnitDict["assignmentLocationUnitId"] = sfdcAssignmentLocUnitId
                 
-                assignmentLocUnitDict["iOSAssignmentLocUnitId"] = sfdcAssignmentLocUnitId
+                assignmentLocUnitDict["iOSAssignmentLocUnitId"] = assignmentLocUnit.assignmentLocUnitId
                 
                 
                 assignmentLocUnitDict["intake"] = assignmentLocUnit.surveyed

@@ -113,7 +113,7 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
-                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no"/>
                                                                 <connections>
                                                                     <outlet property="delegate" destination="H8c-FN-unW" id="qz8-bs-643"/>
                                                                 </connections>

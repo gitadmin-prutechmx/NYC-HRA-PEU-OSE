@@ -21,7 +21,7 @@ class AssignmentLocationViewModel{
         
         if let assignmentLoc = AssignmentLocationAPI.shared.getAssignmentLocation(assignmentLocId: assignmentLocId){
             
-            assignmentLocationInfoObj =  AssignmentLocationInfoDO(assignmentLocUnitId: assignmentLoc.assignmentLocId!, attempted: assignmentLoc.attempt!, locStatus:  assignmentLoc.locStatus!, totalUnits: assignmentLoc.totalUnits!, notes: assignmentLoc.notes!)
+            assignmentLocationInfoObj =  AssignmentLocationInfoDO(assignmentLocUnitId: assignmentLoc.assignmentLocId!, attempted: assignmentLoc.attempt!, locStatus:  assignmentLoc.locStatus!, totalUnits: assignmentLoc.totalUnits!, notes: assignmentLoc.notes!,propertyName:assignmentLoc.propertyName!,propertyContactTitle:assignmentLoc.propertyContactTitle!,phoneNo:assignmentLoc.phoneNo!,phoneExt:assignmentLoc.phoneExt!)
             
 //            assignmentLocationInfoObj.assignmentLocationId = assignmentLoc.assignmentLocId
 //
@@ -36,7 +36,7 @@ class AssignmentLocationViewModel{
         return assignmentLocationInfoObj
     }
     
-    func getLocationStatusPicklist(objectType:String,fieldName:String)->[DropDownDO]{
+    func getPicklistOnLocation(objectType:String,fieldName:String)->[DropDownDO]{
         
         var pickListArr:[DropDownDO] = []
         
@@ -56,6 +56,38 @@ class AssignmentLocationViewModel{
         return pickListArr
         
     }
+    
+    func loadAssigmentLocInfoDetail()->[MetadataConfigObjects]{
+        
+        var metadataConfigArray = [MetadataConfigObjects]()
+        
+        
+        var arrayLocInfoValue:[MetadataConfigDO] =  []
+        
+        arrayLocInfoValue.append(MetadataConfigDO(fieldName: enumAssignmentLocInfo.attempt.rawValue))
+        arrayLocInfoValue.append(MetadataConfigDO(fieldName: enumAssignmentLocInfo.canvassingStatus.rawValue))
+        arrayLocInfoValue.append(MetadataConfigDO(fieldName: enumAssignmentLocInfo.totalUnits.rawValue))
+        
+        var arrayPropertyContactInfoValue:[MetadataConfigDO] =  []
+        
+        arrayPropertyContactInfoValue.append(MetadataConfigDO(fieldName: enumAssignmentLocInfo.name.rawValue))
+        arrayPropertyContactInfoValue.append(MetadataConfigDO(fieldName: enumAssignmentLocInfo.phoneNo.rawValue))
+        arrayPropertyContactInfoValue.append(MetadataConfigDO(fieldName: enumAssignmentLocInfo.phoneExt.rawValue))
+         arrayPropertyContactInfoValue.append(MetadataConfigDO(fieldName: enumAssignmentLocInfo.propertyContactTitle.rawValue))
+        
+        
+        metadataConfigArray.append(MetadataConfigObjects(sectionName: assignmentLocInfoSection.locInformation.rawValue, sectionObjects: arrayLocInfoValue))
+        
+        metadataConfigArray.append(MetadataConfigObjects(sectionName: assignmentLocInfoSection.propertyInformation.rawValue, sectionObjects: arrayPropertyContactInfoValue))
+        
+        
+        return metadataConfigArray
+        
+        
+    }
+    
+
+    
     
     
     func getAssignmentLocationNotes(assignmentLocId:String)->[AssignmentLocationNotesDO]{

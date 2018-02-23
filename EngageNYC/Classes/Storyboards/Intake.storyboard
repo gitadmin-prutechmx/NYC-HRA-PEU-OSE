@@ -56,7 +56,7 @@
                                         <rect key="frame" x="17" y="9" width="77" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
-                                        <state key="normal" title="Cancel">
+                                        <state key="normal" title="Close">
                                             <color key="titleColor" red="0.078431372549019607" green="0.4823529411764706" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>

@@ -52,7 +52,7 @@ final class LocationUnitAPI:SFCommonAPI {
         newUnit.assignmentLocId = objNewUnit.assignmentLocId
         newUnit.locationId = objNewUnit.locationId
         
-        newUnit.unitName = objNewUnit.unitName
+        newUnit.unitName = objNewUnit.unitName.uppercased()
         newUnit.notes = objNewUnit.unitNotes
         newUnit.isVirtualUnit = objNewUnit.isVirtualUnit
         newUnit.isPrivateHome = objNewUnit.isPrivateHome

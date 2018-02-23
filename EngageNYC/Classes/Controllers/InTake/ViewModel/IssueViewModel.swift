@@ -127,6 +127,9 @@ class IssueViewModel{
          IssueAPI.shared.updateIssue(objIssue: objIssue)
     }
     
+    func deleteTempIssue(objIssue:IssueDO){
+        IssueAPI.shared.deleteTempIssue(objIssue: objIssue)
+    }
     
     
 }

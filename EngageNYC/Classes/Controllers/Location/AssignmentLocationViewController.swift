@@ -52,9 +52,9 @@ class AssignmentLocationViewController: UIViewController
         lblLocationName.text = canvasserTaskDataObject.locationObj.objMapLocation.locName
         rightBarButton.isEnabled = false
         
-       Utility.makeButtonBorder(btn: self.leftBarButton)
-       Utility.makeButtonBorder(btn: self.rightBarButton)
-      
+        Utility.makeButtonBorder(btn: self.leftBarButton)
+        Utility.makeButtonBorder(btn: self.rightBarButton)
+        
     }
     
     
@@ -68,9 +68,9 @@ class AssignmentLocationViewController: UIViewController
         {
             assignmentLocInfoVC = controller
             
-         
+            
             controller.assignmentLocInfoObj = assignmentLocInfoObj
-             controller.assignmentLocInfoObj.assignmentLocVC = self
+            controller.assignmentLocInfoObj.assignmentLocVC = self
             controller.viewModel = self.viewModel
             controller.canvasserTaskDataObject = self.canvasserTaskDataObject
         }
@@ -121,10 +121,10 @@ class AssignmentLocationViewController: UIViewController
                 if(self.assignmentLocHistoryVC == nil){
                     if let assignmentLocHistory = AssignmentLocationStoryboard().instantiateViewController(withIdentifier: "AssignmentLocationHistoryViewController") as? AssignmentLocationHistoryViewController{
                         
-                      
+                        
                         assignmentLocHistory.canvasserTaskDataObject = self.canvasserTaskDataObject
                         assignmentLocHistory.viewModel = self.viewModel
-                       
+                        
                         
                         self.assignmentLocHistoryVC = assignmentLocHistory
                         panelCtrl = assignmentLocHistory
@@ -132,7 +132,7 @@ class AssignmentLocationViewController: UIViewController
                 }
                 else{
                     
-                   
+                    
                     self.assignmentLocHistoryVC.canvasserTaskDataObject = self.canvasserTaskDataObject
                     self.assignmentLocHistoryVC.viewModel = self.viewModel
                     
@@ -201,7 +201,7 @@ class AssignmentLocationViewController: UIViewController
             
         }
         else{
-             self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
         
     }
@@ -211,23 +211,65 @@ class AssignmentLocationViewController: UIViewController
         
         self.rightBarButton.isEnabled = false
         
-        self.viewModel.updateAssignmentLocation(assignmentLocationInfoObj: assignmentLocInfoObj)
-        
-        self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        if(!assignmentLocInfoObj.phoneNo.isEmpty && assignmentLocInfoObj.phoneNo.count < 14)
+        {
             
-            if(self.delegate != nil){
-                self.delegate?.updateLocationStatus(assignmentLocId: self.assignmentLocInfoObj.assignmentLocationId, locStatus: self.assignmentLocInfoObj.locStatus)
+            self.view.makeToast("Phone number should be in 10 digit.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
             }
-//                //Notification Center:- reload unitlisting
-//                CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.LOCATIONLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
-//
+            
+            self.rightBarButton.isEnabled = true
+            
+        }
+        
+        else if(!assignmentLocInfoObj.phoneExt.isEmpty && assignmentLocInfoObj.phoneNo.isEmpty)
+        {
+            
+            self.view.makeToast("Please enter phone number.", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            self.rightBarButton.isEnabled = true
+            
+        }
+        else{
+            
+            
+            self.viewModel.updateAssignmentLocation(assignmentLocationInfoObj: assignmentLocInfoObj)
+            
+            self.view.makeToast("Location has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if(self.delegate != nil){
+                    self.delegate?.updateLocationStatus(assignmentLocId: self.assignmentLocInfoObj.assignmentLocationId, locStatus: self.assignmentLocInfoObj.locStatus)
+                }
+                
                 self.dismiss(animated: true, completion: nil)
                 
             }
         }
         
+        
+        
+    }
     
-
+    
+    
 }
 
 extension AssignmentLocationViewController{

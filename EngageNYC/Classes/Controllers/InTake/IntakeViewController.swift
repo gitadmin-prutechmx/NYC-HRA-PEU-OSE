@@ -15,19 +15,21 @@ enum Intake: String{
 }
 
 enum InTakeClient:String{
-    case client = "EditClient"
+    case client = "Edit Client"
     case cases = "Cases"
 }
 
 enum InTakeCase:String{
     case notes = "Notes"
-    case cases = "EditCase"
+    case cases = "Edit Case"
     case issues = "Issues"
+    case remove = "Remove"
 }
 
 enum InTakeIssue:String{
-    case issue = "EditIssue"
+    case issue = "Edit Issue"
     case notes = "Notes"
+    case remove = "Remove"
 }
 
 enum inTakeSegment:Int{
