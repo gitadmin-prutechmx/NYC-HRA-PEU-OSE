@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>${PRODUCT_NAME}  ${ENVIRONMENT}</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.1</string>
 	<key>CFBundleVersion</key>
-	<string>22</string>
+	<string>27</string>
 	<key>ESRIRuntimeLiteLicenseKey</key>
 	<string>$(ESRI_RUNTIME_LITE_LICENSE_KEY)</string>
 	<key>ESRIRuntimeSMPNAExtensionLicenseKey</key>
@@ -87,6 +89,8 @@
 	</array>
 	<key>SFDCOAuthLoginHost</key>
 	<string>$(SF_LOGIN_HOST)</string>
+	<key>SFEnvironment</key>
+	<string>$(ENVIRONMENT)</string>
 	<key>SFLoginHost</key>
 	<string>$(SF_LOGIN_HOST)</string>
 	<key>SFOAuthRedirectURI</key>

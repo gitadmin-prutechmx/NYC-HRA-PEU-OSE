@@ -45,7 +45,6 @@
 		8A02D84420033350007E6560 /* NHaasGroteskTXPro-75Bd.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A02D82E2003334F007E6560 /* NHaasGroteskTXPro-75Bd.otf */; };
 		8A02D84520033350007E6560 /* NHaasGroteskTXPro-76BdIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A02D82F2003334F007E6560 /* NHaasGroteskTXPro-76BdIt.otf */; };
 		8A02D86C20036D03007E6560 /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02D86B20036D03007E6560 /* AssignmentTableViewCell.swift */; };
-		8A06FA7E20216F9800F4C745 /* MapData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A06FA7D20216F9800F4C745 /* MapData.zip */; };
 		8A0AD02520286E4500F67237 /* CustomContextSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0AD02420286E4500F67237 /* CustomContextSheet.swift */; };
 		8A2CC784200CD1B400CD1819 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2CC783200CD1B400CD1819 /* DateTableViewCell.swift */; };
 		8A2CC786200CD22800CD1819 /* NewEventRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2CC785200CD22800CD1819 /* NewEventRegistrationViewController.swift */; };
@@ -85,6 +84,10 @@
 		8A6D01DD20107AC00029651E /* SurveyTextview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6D01D920107ABF0029651E /* SurveyTextview.storyboard */; };
 		8A6D01DE20107AC00029651E /* SurveyRadioOption.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6D01DA20107ABF0029651E /* SurveyRadioOption.storyboard */; };
 		8A6D01DF20107AC00029651E /* SurveyMultiOption.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6D01DB20107AC00029651E /* SurveyMultiOption.storyboard */; };
+		8A74CAED2045666400447B80 /* Pods_EngageNYC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A74CAEE2045666400447B80 /* Pods_EngageNYC.framework */; };
+		8A74CB02204580CD00447B80 /* MapDataDev.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A74CAFF204580CC00447B80 /* MapDataDev.zip */; };
+		8A74CB03204580CD00447B80 /* MapDataQA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A74CB00204580CD00447B80 /* MapDataQA.zip */; };
+		8A74CB04204580CD00447B80 /* MapDataUAT.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A74CB01204580CD00447B80 /* MapDataUAT.zip */; };
 		8A78D31C201C60630085E096 /* IssueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78D31B201C60630085E096 /* IssueAPI.swift */; };
 		8A78D31E201C633B0085E096 /* InTakeIssue.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A78D31D201C633B0085E096 /* InTakeIssue.plist */; };
 		8A78D320201C68CF0085E096 /* AddIssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78D31F201C68CF0085E096 /* AddIssueTableViewCell.swift */; };
@@ -214,7 +217,6 @@
 		8AF68CEF201448E100A1BD41 /* SurveyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF68CEE201448E100A1BD41 /* SurveyViewModel.swift */; };
 		8AF68CF120144A5F00A1BD41 /* SurveyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF68CF020144A5F00A1BD41 /* SurveyAPI.swift */; };
 		8AF68CF420145E1700A1BD41 /* SurveyDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF68CF320145E1700A1BD41 /* SurveyDO.swift */; };
-		F07F4F0ABB32122D0846720B /* Pods_EngageNYC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB42462B4474762556D3232 /* Pods_EngageNYC.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -240,6 +242,8 @@
 		20B1222044964C9EA62F3AE4 /* Pods-EngageNYC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.debug.xcconfig"; sourceTree = "<group>"; };
 		2DB42462B4474762556D3232 /* Pods_EngageNYC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EngageNYC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30F82021FDD70010DE5470B8 /* Pods-EngageNYCDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYCDev.release.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYCDev/Pods-EngageNYCDev.release.xcconfig"; sourceTree = "<group>"; };
+		3F8CD06C1DA464A6FB9ED4C4 /* Pods-EngageNYC.dev release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.dev release.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.dev release.xcconfig"; sourceTree = "<group>"; };
+		41821147D018340ECABC8A11 /* Pods-EngageNYC.dev debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.dev debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.dev debug.xcconfig"; sourceTree = "<group>"; };
 		438543A608078C74DA9D02EF /* Pods-KnockUAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockUAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KnockUAT/Pods-KnockUAT.debug.xcconfig"; sourceTree = "<group>"; };
 		5D0FC9DC1F6A7D03000F9994 /* EngageNYC.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EngageNYC.xcdatamodel; sourceTree = "<group>"; };
 		5D56CF051EE007060019882F /* EngageNYC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngageNYC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,6 +259,7 @@
 		5D56CF2D1EE007070019882F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = EngageNYCTests/Info.plist; sourceTree = "<group>"; };
 		5DC9E9E91EEA7E59009A6396 /* EngageNYC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EngageNYC-Bridging-Header.h"; sourceTree = "<group>"; };
 		5DE3C9861EF28C2600012C47 /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ArcGIS.bundle; sourceTree = "<group>"; };
+		7B8339F703D426ADE533C2B5 /* Pods-EngageNYC.qa debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.qa debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.qa debug.xcconfig"; sourceTree = "<group>"; };
 		8361D8AB9EC26ADC2A936556 /* Pods-EngageNYCDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYCDev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYCDev/Pods-EngageNYCDev.debug.xcconfig"; sourceTree = "<group>"; };
 		8A02D7FD200332E9007E6560 /* GaugeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeLayer.swift; sourceTree = "<group>"; };
 		8A02D7FE200332E9007E6560 /* GaugeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaugeView.swift; sourceTree = "<group>"; };
@@ -293,7 +298,6 @@
 		8A02D82F2003334F007E6560 /* NHaasGroteskTXPro-76BdIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NHaasGroteskTXPro-76BdIt.otf"; sourceTree = "<group>"; };
 		8A02D86B20036D03007E6560 /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
 		8A0462931FACD9550070D173 /* EngageNYC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EngageNYC.entitlements; sourceTree = "<group>"; };
-		8A06FA7D20216F9800F4C745 /* MapData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapData.zip; sourceTree = "<group>"; };
 		8A0AD02420286E4500F67237 /* CustomContextSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomContextSheet.swift; sourceTree = "<group>"; };
 		8A2CC783200CD1B400CD1819 /* DateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		8A2CC785200CD22800CD1819 /* NewEventRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventRegistrationViewController.swift; sourceTree = "<group>"; };
@@ -333,6 +337,10 @@
 		8A6D01D920107ABF0029651E /* SurveyTextview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SurveyTextview.storyboard; sourceTree = "<group>"; };
 		8A6D01DA20107ABF0029651E /* SurveyRadioOption.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SurveyRadioOption.storyboard; sourceTree = "<group>"; };
 		8A6D01DB20107AC00029651E /* SurveyMultiOption.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SurveyMultiOption.storyboard; sourceTree = "<group>"; };
+		8A74CAEE2045666400447B80 /* Pods_EngageNYC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_EngageNYC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A74CAFF204580CC00447B80 /* MapDataDev.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapDataDev.zip; sourceTree = "<group>"; };
+		8A74CB00204580CD00447B80 /* MapDataQA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapDataQA.zip; sourceTree = "<group>"; };
+		8A74CB01204580CD00447B80 /* MapDataUAT.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapDataUAT.zip; sourceTree = "<group>"; };
 		8A78D31B201C60630085E096 /* IssueAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAPI.swift; sourceTree = "<group>"; };
 		8A78D31D201C633B0085E096 /* InTakeIssue.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InTakeIssue.plist; sourceTree = "<group>"; };
 		8A78D31F201C68CF0085E096 /* AddIssueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIssueTableViewCell.swift; sourceTree = "<group>"; };
@@ -466,8 +474,11 @@
 		8C12DC89C47024B15F219F53 /* Pods-Knock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.release.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.release.xcconfig"; sourceTree = "<group>"; };
 		A9DDC459DE57CF007385D800 /* Pods_EngageNYCDev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EngageNYCDev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1486C9C4836237A402A7C99 /* Pods-EngageNYC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.release.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.release.xcconfig"; sourceTree = "<group>"; };
+		C1E5BA2DFDBB57C3DD464685 /* Pods-EngageNYC.uat release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.uat release.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.uat release.xcconfig"; sourceTree = "<group>"; };
 		C8B0A00E82F5B02E7CFEC158 /* Pods-Knock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Knock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Knock/Pods-Knock.debug.xcconfig"; sourceTree = "<group>"; };
 		CD8025E0B584A73C2E41F2D1 /* Pods_KnockUAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KnockUAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90DF8B5450D7B76E269B25D /* Pods-EngageNYC.qa release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.qa release.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.qa release.xcconfig"; sourceTree = "<group>"; };
+		ED73C70A8111D7C02E281D40 /* Pods-EngageNYC.uat debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngageNYC.uat debug.xcconfig"; path = "Pods/Target Support Files/Pods-EngageNYC/Pods-EngageNYC.uat debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,7 +486,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F07F4F0ABB32122D0846720B /* Pods_EngageNYC.framework in Frameworks */,
+				8A74CAED2045666400447B80 /* Pods_EngageNYC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +510,7 @@
 		3EE8BD51BAB8EC44A5D4B3EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A74CAEE2045666400447B80 /* Pods_EngageNYC.framework */,
 				032CE60F442F02DB2CA47B45 /* Pods_Knock.framework */,
 				CD8025E0B584A73C2E41F2D1 /* Pods_KnockUAT.framework */,
 				2DB42462B4474762556D3232 /* Pods_EngageNYC.framework */,
@@ -600,7 +612,9 @@
 		8A02D7FF200332E9007E6560 /* MapData */ = {
 			isa = PBXGroup;
 			children = (
-				8A06FA7D20216F9800F4C745 /* MapData.zip */,
+				8A74CAFF204580CC00447B80 /* MapDataDev.zip */,
+				8A74CB00204580CD00447B80 /* MapDataQA.zip */,
+				8A74CB01204580CD00447B80 /* MapDataUAT.zip */,
 			);
 			path = MapData;
 			sourceTree = "<group>";
@@ -1117,6 +1131,12 @@
 				C1486C9C4836237A402A7C99 /* Pods-EngageNYC.release.xcconfig */,
 				8361D8AB9EC26ADC2A936556 /* Pods-EngageNYCDev.debug.xcconfig */,
 				30F82021FDD70010DE5470B8 /* Pods-EngageNYCDev.release.xcconfig */,
+				41821147D018340ECABC8A11 /* Pods-EngageNYC.dev debug.xcconfig */,
+				3F8CD06C1DA464A6FB9ED4C4 /* Pods-EngageNYC.dev release.xcconfig */,
+				7B8339F703D426ADE533C2B5 /* Pods-EngageNYC.qa debug.xcconfig */,
+				ED73C70A8111D7C02E281D40 /* Pods-EngageNYC.uat debug.xcconfig */,
+				E90DF8B5450D7B76E269B25D /* Pods-EngageNYC.qa release.xcconfig */,
+				C1E5BA2DFDBB57C3DD464685 /* Pods-EngageNYC.uat release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1256,6 +1276,7 @@
 				8A02D83B20033350007E6560 /* NHaasGroteskDSPro-55Rg.otf in Resources */,
 				8A7A45042008C32300AE3BE3 /* DatePickerListingPopOver.storyboard in Resources */,
 				8A02D83720033350007E6560 /* NHaasGroteskDSPro-66MdIt.otf in Resources */,
+				8A74CB04204580CD00447B80 /* MapDataUAT.zip in Resources */,
 				8A02D84120033350007E6560 /* NHaasGroteskTXPro-65Md.otf in Resources */,
 				8A6D01DE20107AC00029651E /* SurveyRadioOption.storyboard in Resources */,
 				8A02D84320033350007E6560 /* NHaasGroteskDSPro-56It.otf in Resources */,
@@ -1269,9 +1290,9 @@
 				8ACDB6A520021F0F00FF360E /* ListingPopOver.storyboard in Resources */,
 				8A02D83320033350007E6560 /* NHaasGroteskDSPro-95Blk.otf in Resources */,
 				8A02D84420033350007E6560 /* NHaasGroteskTXPro-75Bd.otf in Resources */,
-				8A06FA7E20216F9800F4C745 /* MapData.zip in Resources */,
 				8A78D32D201ECCC80085E096 /* IssueNotes.storyboard in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
+				8A74CB03204580CD00447B80 /* MapDataQA.zip in Resources */,
 				8A7A451A2008CA7E00AE3BE3 /* MapLocation.storyboard in Resources */,
 				8A02D83120033350007E6560 /* NHaasGroteskDSPro-36XLtIt.otf in Resources */,
 				8A02D83D20033350007E6560 /* NHaasGroteskDSPro-75Bd.otf in Resources */,
@@ -1304,6 +1325,7 @@
 				8A02D83520033350007E6560 /* NHaasGroteskDSPro-46LtIt.otf in Resources */,
 				8A7A450D2008C43A00AE3BE3 /* EventsRegistration.storyboard in Resources */,
 				8A6D01DC20107AC00029651E /* SubmitSurvey.storyboard in Resources */,
+				8A74CB02204580CD00447B80 /* MapDataDev.zip in Resources */,
 				8A7A4542200BAE2400AE3BE3 /* AssignmentLocationUnit.storyboard in Resources */,
 				8A59DB4F20151A7900BDB9F2 /* Intake.storyboard in Resources */,
 				8A7A453A200B96C700AE3BE3 /* NewUnit.storyboard in Resources */,
@@ -1631,7 +1653,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		5D56CF2E1EE007070019882F /* Debug */ = {
+		5D56CF2E1EE007070019882F /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1679,9 +1701,9 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Debug;
+			name = "Dev Debug";
 		};
-		5D56CF2F1EE007070019882F /* Release */ = {
+		5D56CF2F1EE007070019882F /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1722,18 +1744,19 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = "Dev Release";
 		};
-		5D56CF311EE007070019882F /* Debug */ = {
+		5D56CF311EE007070019882F /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 20B1222044964C9EA62F3AE4 /* Pods-EngageNYC.debug.xcconfig */;
+			baseConfigurationReference = 41821147D018340ECABC8A11 /* Pods-EngageNYC.dev debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
 				CODE_SIGN_ENTITLEMENTS = EngageNYC.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Das Nobel (ZTNLPMSDLU)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
+				ENVIRONMENT = DEV;
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1770,17 +1793,18 @@
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
-			name = Debug;
+			name = "Dev Debug";
 		};
-		5D56CF321EE007070019882F /* Release */ = {
+		5D56CF321EE007070019882F /* Dev Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C1486C9C4836237A402A7C99 /* Pods-EngageNYC.release.xcconfig */;
+			baseConfigurationReference = 3F8CD06C1DA464A6FB9ED4C4 /* Pods-EngageNYC.dev release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
 				CODE_SIGN_ENTITLEMENTS = EngageNYC.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dastagir Nobel (YNCE3DFDTN)";
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
+				ENVIRONMENT = DEV;
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1819,9 +1843,9 @@
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
-			name = Release;
+			name = "Dev Release";
 		};
-		5D56CF341EE007070019882F /* Debug */ = {
+		5D56CF341EE007070019882F /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -1834,9 +1858,9 @@
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngageNYC.app/EngageNYC";
 			};
-			name = Debug;
+			name = "Dev Debug";
 		};
-		5D56CF351EE007070019882F /* Release */ = {
+		5D56CF351EE007070019882F /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -1849,9 +1873,9 @@
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngageNYC.app/EngageNYC";
 			};
-			name = Release;
+			name = "Dev Release";
 		};
-		5D56CF371EE007070019882F /* Debug */ = {
+		5D56CF371EE007070019882F /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -1863,9 +1887,9 @@
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = EngageNYC;
 			};
-			name = Debug;
+			name = "Dev Debug";
 		};
-		5D56CF381EE007070019882F /* Release */ = {
+		5D56CF381EE007070019882F /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -1877,7 +1901,507 @@
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = EngageNYC;
 			};
-			name = Release;
+			name = "Dev Release";
+		};
+		8A74CAEF20456F5900447B80 /* QA Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "QA Debug";
+		};
+		8A74CAF020456F5900447B80 /* QA Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B8339F703D426ADE533C2B5 /* Pods-EngageNYC.qa debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-qa";
+				CODE_SIGN_ENTITLEMENTS = EngageNYC.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Das Nobel (ZTNLPMSDLU)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				ENABLE_BITCODE = NO;
+				ENVIRONMENT = QA;
+				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
+				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Charts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Toast-Swift\"",
+					"$(HOME)/Library/SDKs/ArcGIS/iOS/Frameworks/Static",
+				);
+				INFOPLIST_FILE = EngageNYC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Charts\"",
+					"-framework",
+					"\"Toast_Swift\"",
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d97d283e-bd2e-4312-8a21-b41e84651be3";
+				PROVISIONING_PROFILE_SPECIFIER = PushNotification_EngageNYCDev_Debug;
+				SF_CONSUMER_KEY = 3MVG9ic.6IFhNpPr.AOTz1Aja2UhajRQd9e0sGmm3tyiFpfTdywXZmSu_k9t2ZyAQ4qkJDlGAuKE6St8UMYV7;
+				SF_LOGIN_HOST = "nyc-mayorpeu--qa.cs32.my.salesforce.com";
+				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = "QA Debug";
+		};
+		8A74CAF120456F5900447B80 /* QA Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngageNYC.app/EngageNYC";
+			};
+			name = "QA Debug";
+		};
+		8A74CAF220456F5900447B80 /* QA Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EngageNYC;
+			};
+			name = "QA Debug";
+		};
+		8A74CAF320456F6400447B80 /* UAT Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "UAT Debug";
+		};
+		8A74CAF420456F6400447B80 /* UAT Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED73C70A8111D7C02E281D40 /* Pods-EngageNYC.uat debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-uat";
+				CODE_SIGN_ENTITLEMENTS = EngageNYC.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Das Nobel (ZTNLPMSDLU)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				ENABLE_BITCODE = NO;
+				ENVIRONMENT = UAT;
+				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
+				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Charts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Toast-Swift\"",
+					"$(HOME)/Library/SDKs/ArcGIS/iOS/Frameworks/Static",
+				);
+				INFOPLIST_FILE = EngageNYC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Charts\"",
+					"-framework",
+					"\"Toast_Swift\"",
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d97d283e-bd2e-4312-8a21-b41e84651be3";
+				PROVISIONING_PROFILE_SPECIFIER = PushNotification_EngageNYCDev_Debug;
+				SF_CONSUMER_KEY = 3MVG9ic.6IFhNpPr8GIEr8R0j25Wf7FJvQXGFDGTgWUsgBwOUUKxTOeyCltrF0fWu9kYbv3OQyqiQDdGdO6OA;
+				SF_LOGIN_HOST = "nyc-mayorpeu--uat.cs32.my.salesforce.com";
+				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = "UAT Debug";
+		};
+		8A74CAF520456F6400447B80 /* UAT Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngageNYC.app/EngageNYC";
+			};
+			name = "UAT Debug";
+		};
+		8A74CAF620456F6400447B80 /* UAT Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EngageNYC;
+			};
+			name = "UAT Debug";
+		};
+		8A74CAF720456F7300447B80 /* QA Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "QA Release";
+		};
+		8A74CAF820456F7300447B80 /* QA Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E90DF8B5450D7B76E269B25D /* Pods-EngageNYC.qa release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-qa";
+				CODE_SIGN_ENTITLEMENTS = EngageNYC.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dastagir Nobel (YNCE3DFDTN)";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				ENABLE_BITCODE = NO;
+				ENVIRONMENT = QA;
+				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
+				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Charts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Toast-Swift\"",
+					"$(HOME)/Library/SDKs/ArcGIS/iOS/Frameworks/Static",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = EngageNYC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Charts\"",
+					"-framework",
+					"\"Toast_Swift\"",
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0639c803-5cc1-4cc6-8839-26d662187126";
+				PROVISIONING_PROFILE_SPECIFIER = PushNotification_EngageNYCDev_Testflight;
+				SF_CONSUMER_KEY = 3MVG9ic.6IFhNpPr.AOTz1Aja2UhajRQd9e0sGmm3tyiFpfTdywXZmSu_k9t2ZyAQ4qkJDlGAuKE6St8UMYV7;
+				SF_LOGIN_HOST = "nyc-mayorpeu--qa.cs32.my.salesforce.com";
+				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = "QA Release";
+		};
+		8A74CAF920456F7300447B80 /* QA Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngageNYC.app/EngageNYC";
+			};
+			name = "QA Release";
+		};
+		8A74CAFA20456F7300447B80 /* QA Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EngageNYC;
+			};
+			name = "QA Release";
+		};
+		8A74CAFB20456F8800447B80 /* UAT Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "UAT Release";
+		};
+		8A74CAFC20456F8800447B80 /* UAT Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1E5BA2DFDBB57C3DD464685 /* Pods-EngageNYC.uat release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-uat";
+				CODE_SIGN_ENTITLEMENTS = EngageNYC.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dastagir Nobel (YNCE3DFDTN)";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				ENABLE_BITCODE = NO;
+				ENVIRONMENT = UAT;
+				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
+				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Charts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Toast-Swift\"",
+					"$(HOME)/Library/SDKs/ArcGIS/iOS/Frameworks/Static",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = EngageNYC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"Charts\"",
+					"-framework",
+					"\"Toast_Swift\"",
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCDev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0639c803-5cc1-4cc6-8839-26d662187126";
+				PROVISIONING_PROFILE_SPECIFIER = PushNotification_EngageNYCDev_Testflight;
+				SF_CONSUMER_KEY = 3MVG9ic.6IFhNpPr8GIEr8R0j25Wf7FJvQXGFDGTgWUsgBwOUUKxTOeyCltrF0fWu9kYbv3OQyqiQDdGdO6OA;
+				SF_LOGIN_HOST = "nyc-mayorpeu--uat.cs32.my.salesforce.com";
+				SWIFT_OBJC_BRIDGING_HEADER = "EngageNYC/EngageNYC-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = "UAT Release";
+		};
+		8A74CAFD20456F8800447B80 /* UAT Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EngageNYC.app/EngageNYC";
+			};
+			name = "UAT Release";
+		};
+		8A74CAFE20456F8800447B80 /* UAT Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = YNCE3DFDTN;
+				INFOPLIST_FILE = EngageNYCUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtxb2b.EngageNYCUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = EngageNYC;
+			};
+			name = "UAT Release";
 		};
 /* End XCBuildConfiguration section */
 
@@ -1885,38 +2409,54 @@
 		5D56CF001EE007060019882F /* Build configuration list for PBXProject "EngageNYC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5D56CF2E1EE007070019882F /* Debug */,
-				5D56CF2F1EE007070019882F /* Release */,
+				5D56CF2E1EE007070019882F /* Dev Debug */,
+				8A74CAEF20456F5900447B80 /* QA Debug */,
+				8A74CAF320456F6400447B80 /* UAT Debug */,
+				5D56CF2F1EE007070019882F /* Dev Release */,
+				8A74CAF720456F7300447B80 /* QA Release */,
+				8A74CAFB20456F8800447B80 /* UAT Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Dev Release";
 		};
 		5D56CF301EE007070019882F /* Build configuration list for PBXNativeTarget "EngageNYC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5D56CF311EE007070019882F /* Debug */,
-				5D56CF321EE007070019882F /* Release */,
+				5D56CF311EE007070019882F /* Dev Debug */,
+				8A74CAF020456F5900447B80 /* QA Debug */,
+				8A74CAF420456F6400447B80 /* UAT Debug */,
+				5D56CF321EE007070019882F /* Dev Release */,
+				8A74CAF820456F7300447B80 /* QA Release */,
+				8A74CAFC20456F8800447B80 /* UAT Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Dev Release";
 		};
 		5D56CF331EE007070019882F /* Build configuration list for PBXNativeTarget "EngageNYCTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5D56CF341EE007070019882F /* Debug */,
-				5D56CF351EE007070019882F /* Release */,
+				5D56CF341EE007070019882F /* Dev Debug */,
+				8A74CAF120456F5900447B80 /* QA Debug */,
+				8A74CAF520456F6400447B80 /* UAT Debug */,
+				5D56CF351EE007070019882F /* Dev Release */,
+				8A74CAF920456F7300447B80 /* QA Release */,
+				8A74CAFD20456F8800447B80 /* UAT Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Dev Release";
 		};
 		5D56CF361EE007070019882F /* Build configuration list for PBXNativeTarget "EngageNYCUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5D56CF371EE007070019882F /* Debug */,
-				5D56CF381EE007070019882F /* Release */,
+				5D56CF371EE007070019882F /* Dev Debug */,
+				8A74CAF220456F5900447B80 /* QA Debug */,
+				8A74CAF620456F6400447B80 /* UAT Debug */,
+				5D56CF381EE007070019882F /* Dev Release */,
+				8A74CAFA20456F7300447B80 /* QA Release */,
+				8A74CAFE20456F8800447B80 /* UAT Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Dev Release";
 		};
 /* End XCConfigurationList section */
 

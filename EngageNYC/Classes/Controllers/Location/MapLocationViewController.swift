@@ -22,6 +22,11 @@ enum locationStatus:String{
     case addressNotExist = "Address Does Not Exist"
 }
 
+enum environment:String{
+    case dev = "DEV"
+    case qa = "QA"
+    case uat = "UAT"
+}
 
 class MapLocationDO{
     var locId : String!
@@ -255,13 +260,26 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         
         do {
         
+            var mapDataZipFile = "MapDataDev"
             
+            if let SFEnvironment = Constant.shared.getSystemConstant(withKey: .SF_ENVIRONMENT_KEY) as? String{
+                if SFEnvironment == environment.dev.rawValue{
+                    mapDataZipFile = "MapDataDev"
+                }
+                else if SFEnvironment == environment.qa.rawValue{
+                    mapDataZipFile = "MapDataQA"
+                }
+                else if SFEnvironment == environment.uat.rawValue{
+                    mapDataZipFile = "MapDataUAT"
+                }
+                
+            }
             
-            let mapDataPath = Bundle.main.path(forResource: "MapData", ofType: "zip")
+            let mapDataPath = Bundle.main.path(forResource: mapDataZipFile, ofType: "zip")
    
             let unZipFilePath = try Zip.quickUnzipFile(URL(string: mapDataPath!)!) // Unzip
                 
-            let mapDirpath = unZipFilePath.absoluteString + "MapData"
+            let mapDirpath = unZipFilePath.absoluteString + mapDataZipFile
       
             vtpkMapFile = URL(string:(mapDirpath + "/NewYorkCity.vtpk"))
             styleResourcesDirectory = URL(string:(mapDirpath + "/VTPKResources"))
@@ -891,7 +909,7 @@ extension MapLocationViewController{
                         
                         for feature:AGSFeature in features{
                             
-                             let objectIdVal = feature.attributes["F__OBJECTID"] as! Int ?? feature.attributes["OBJECTID"] as! Int
+                             let objectIdVal = feature.attributes["F__OBJECTID"] as? Int ?? feature.attributes["OBJECTID"] as! Int
                             
                             arrObjectIds.append(objectIdVal)
                         }
