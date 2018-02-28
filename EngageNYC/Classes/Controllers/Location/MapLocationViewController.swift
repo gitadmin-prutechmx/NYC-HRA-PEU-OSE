@@ -95,6 +95,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     
     private var sheet:CustomContextSheet!
     
+    var objectIdFieldName:String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -545,6 +547,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                                     //featureTable.layerInfo?.drawingInfo?.renderer?.toJSON()
                                     //featureTable.numberOfFeatures
                                     
+                                    self.objectIdFieldName = (featureTable.layerInfo?.objectIDFieldName)!
+                                    
                                     self.featureLayer = AGSFeatureLayer(featureTable: (self.geodatabaseFeatureTable)!)
                                     
                                     self.featureLayer.definitionExpression = (self.filterfeaturesExpression)
@@ -903,13 +907,9 @@ extension MapLocationViewController{
                         
                         var arrObjectIds = [Int]()
                         
-                        
-                       
-                        
-                        
                         for feature:AGSFeature in features{
                             
-                             let objectIdVal = feature.attributes["F__OBJECTID"] as? Int ?? feature.attributes["OBJECTID"] as! Int
+                            let objectIdVal = feature.attributes[self.objectIdFieldName] as! Int
                             
                             arrObjectIds.append(objectIdVal)
                         }
