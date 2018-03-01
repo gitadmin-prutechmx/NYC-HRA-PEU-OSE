@@ -60,8 +60,10 @@ final class UserDetailAPI: SFCommonAPI
             self.UserDetailFromJSONList(jsonResponse: response)
             completion()
         }) { (error) in
-            Logger.shared.log(level: .error, msg: error)
-            Utility.displayErrorMessage(errorMsg: error)
+            let errorMsg = "Error in UserDetail Api: \(error)"
+            
+            Logger.shared.log(level: .error, msg: errorMsg)
+            Utility.displayErrorMessage(errorMsg: errorMsg)
             print(error)
             //failure(error)
         }

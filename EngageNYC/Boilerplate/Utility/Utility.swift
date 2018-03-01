@@ -869,7 +869,7 @@ class Utility{
         
         if(NetworkUtility.shared.isConnected() == true){
             
-            if(Static.isRefreshBtnClick == false){
+            if(Static.isRefreshBtnClick == false && Static.isBackgroundSync == false){
                 
                 Static.isBackgroundSync = true
                 

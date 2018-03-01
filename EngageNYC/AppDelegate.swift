@@ -60,7 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SalesforceSDKManager.shared().launchErrorAction = {
             [unowned self] (error: Error, launchActionList: SFSDKLaunchAction) in
-            Logger.shared.log(level: .error, msg: error.localizedDescription)
+            
+            Logger.shared.log(level: .error, msg:"Error during SDK launch: \(error.localizedDescription)")
             self.initializeAppViewState()
             SalesforceSDKManager.shared().launch()
         }
