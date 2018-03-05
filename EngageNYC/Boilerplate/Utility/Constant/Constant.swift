@@ -27,6 +27,9 @@ enum SystemConstantKey: String {
     case SF_OAUTH_REDIRECT_URI = "SFOAuthRedirectURI"
     case SF_AUTH_SCOPES = "SFAuthScopes"
     case SF_ENVIRONMENT_KEY = "SFEnvironment"
+    case ESRI_PORTAL_LINK = "ESRIPortalLink"
+    case ESRI_USERNAME = "ESRIUsername"
+    case ESRI_PASSWORD = "ESRIPassword"
     case ESRI_RUNTIME_LITE_LICENSE_KEY = "ESRIRuntimeLiteLicenseKey"
     case ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "ESRIRuntimeSMPNAExtensionLicenseKey"
 }

@@ -22,15 +22,25 @@ class RefreshAll: BroadcastReceiverNSObject
         return Singleton.instance
     }
     
+    /**
+     -This method will fire a full refresh Data from all models/api classes we have.
+     */
+    func refreshESRIData()
+    {
+        presentRefreshView() {
+            self.syncUpESRILayer()
+        }
+    }
+    
     
     
     /**
      -This method will fire a full refresh Data from all models/api classes we have.
      */
-    func refreshFullData(isFromSurveyScreen:Bool?=false, isLogout:Bool? = false)
+    func refreshFullData(isFromSurveyScreen:Bool?=false, isLogout:Bool? = false,isFirstTimeLoad:Bool?=false)
     {
         presentRefreshView(isFromSurveyScreen: isFromSurveyScreen) {
-            self.synUpAllObjects(isLogout: isLogout)
+            self.synUpAllObjects(isLogout: isLogout,isFirstTimeLoad:isFirstTimeLoad)
         }
     }
     
@@ -41,9 +51,25 @@ class RefreshAll: BroadcastReceiverNSObject
     }
     
     
+    func syncUpESRILayer(){
+        ESRIAPI.shared.syncUpCompletion {
+            DispatchQueue.main.async {
+                if let refreshView  = Static.refreshView {
+                    refreshView.dismiss(animated: true, completion: nil)
+                    Static.refreshView = nil
+                    
+                    Static.isRefreshBtnClick = false
+                    
+                     CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.LOCATIONLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+                }
+            }
+        }
+    }
     
     
-    func synUpAllObjects(isLogout:Bool? = false,isBackgroundSync:Bool?=false){
+    
+    
+    func synUpAllObjects(isLogout:Bool? = false,isBackgroundSync:Bool?=false,isFirstTimeLoad:Bool?=false){
         // 1. AssignmentLocation
         // 2. New Unit
         // 3. Contact
@@ -70,7 +96,7 @@ class RefreshAll: BroadcastReceiverNSObject
                                         else{
                                             
                                             if(isBackgroundSync == false){
-                                                self.syncDownAllObjects()
+                                                self.syncDownAllObjects(isFirstTimeLoad:isFirstTimeLoad)
                                             }
                                             else{
                                                 
@@ -92,7 +118,7 @@ class RefreshAll: BroadcastReceiverNSObject
         
     }
     
-    func syncDownAllObjects(){
+    func syncDownAllObjects(isFirstTimeLoad:Bool?=false){
         
         UserDetailAPI.shared.syncDownWithCompletion {
             
@@ -108,18 +134,34 @@ class RefreshAll: BroadcastReceiverNSObject
                                 
                                 EventsAPI.shared.syncDownWithCompletion{
                                     
-                                    
-                                    DispatchQueue.main.async {
-                                        if let refreshView  = Static.refreshView {
-                                            refreshView.dismiss(animated: true, completion: nil)
-                                            Static.refreshView = nil
-                                            
-                                            Static.isRefreshBtnClick = false
-                                            
-                                            self.callNotifications()
+                                    if(isFirstTimeLoad)!{
+                                        
+                                        var mapDataZipFile = "MapDataDev"
+                                        
+                                        if let SFEnvironment = Constant.shared.getSystemConstant(withKey: .SF_ENVIRONMENT_KEY) as? String{
+                                            if SFEnvironment == environment.dev.rawValue{
+                                                mapDataZipFile = "MapDataDev"
+                                            }
+                                            else if SFEnvironment == environment.qa.rawValue{
+                                                mapDataZipFile = "MapDataQA"
+                                            }
+                                            else if SFEnvironment == environment.uat.rawValue{
+                                                mapDataZipFile = "MapDataUAT"
+                                            }
                                             
                                         }
+                                        
+                                        Utility.saveUnZipFilePath(mapDataZipFile: mapDataZipFile)
+                                        
+                                        ESRIAPI.shared.syncUpCompletion {
+                                            self.closeRefreshPopUp()
+                                        }
                                     }
+                                    else{
+                                        self.closeRefreshPopUp()
+                                    }
+                                    
+                                    
                                 }
                             }
                             
@@ -136,6 +178,21 @@ class RefreshAll: BroadcastReceiverNSObject
         
         
         
+    }
+    
+    
+    func closeRefreshPopUp(){
+        DispatchQueue.main.async {
+            if let refreshView  = Static.refreshView {
+                refreshView.dismiss(animated: true, completion: nil)
+                Static.refreshView = nil
+                
+                Static.isRefreshBtnClick = false
+                
+                self.callNotifications()
+                
+            }
+        }
     }
     
     func callNotifications(){

@@ -10,6 +10,7 @@ import UIKit
 
 enum NavigationItems:String {
     case refreshData = "Refresh Data"
+    case refreshLocation = "Refresh Locations"
     case home = "Home"
     case events = "Events"
     case accessNYC = "Access NYC"
@@ -143,7 +144,7 @@ class DashboardViewController: BroadcastReceiverViewController {
         CustomNotificationCenter.registerReceiver(receiver: self.broadcastReceiver, notificationName: SF_NOTIFICATION.DASHBOARD_SYNC)
 
         if(isFirstTimeLoad){
-            RefreshAll.sharedInstance.refreshFullData()
+            RefreshAll.sharedInstance.refreshFullData(isFirstTimeLoad:isFirstTimeLoad)
         }
         else{
             self.bindView()

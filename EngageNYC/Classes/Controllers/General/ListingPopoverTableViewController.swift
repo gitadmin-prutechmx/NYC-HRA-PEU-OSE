@@ -184,6 +184,9 @@ extension ListingPopoverTableViewController {
             else if(arrList[indexPath.row].name == NavigationItems.refreshData.rawValue){
                 cell.lblImage.image = UIImage(named: "Refresh")
             }
+            else if(arrList[indexPath.row].name == NavigationItems.refreshLocation.rawValue){
+                cell.lblImage.image = UIImage(named: "RefreshLoc")
+            }
             else if(arrList[indexPath.row].name == NavigationItems.settings.rawValue){
                 cell.lblImage.image = UIImage(named: "Settings")
             }

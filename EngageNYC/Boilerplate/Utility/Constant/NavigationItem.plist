@@ -26,6 +26,12 @@
 			<key>name</key>
 			<string>Refresh Data</string>
 		</dict>
+        <dict>
+            <key>id</key>
+            <string>Refresh Locations</string>
+            <key>name</key>
+            <string>Refresh Locations</string>
+        </dict>
 		<dict>
 			<key>id</key>
 			<string>Settings</string>

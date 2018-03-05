@@ -180,6 +180,7 @@
 		8A7A455F200C4A8D00AE3BE3 /* ClientInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A7A455D200C4A8C00AE3BE3 /* ClientInfo.storyboard */; };
 		8A7A4561200C4B0C00AE3BE3 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7A4560200C4B0C00AE3BE3 /* StringExtension.swift */; };
 		8A7A4564200C5C2000AE3BE3 /* AddressInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7A4563200C5C2000AE3BE3 /* AddressInfoViewModel.swift */; };
+		8A7F0BA9204D21BB00ABDFDF /* ESRIAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7F0BA8204D21BB00ABDFDF /* ESRIAPI.swift */; };
 		8A98D36F20188D280044460E /* CaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A98D36E20188D270044460E /* CaseViewModel.swift */; };
 		8A98D37120188DC80044460E /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A98D37020188DC80044460E /* IssueViewModel.swift */; };
 		8A98D3762018B5110044460E /* SortingHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A98D3732018B5110044460E /* SortingHeaderViewController.swift */; };
@@ -433,6 +434,7 @@
 		8A7A455D200C4A8C00AE3BE3 /* ClientInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClientInfo.storyboard; sourceTree = "<group>"; };
 		8A7A4560200C4B0C00AE3BE3 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		8A7A4563200C5C2000AE3BE3 /* AddressInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInfoViewModel.swift; sourceTree = "<group>"; };
+		8A7F0BA8204D21BB00ABDFDF /* ESRIAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESRIAPI.swift; sourceTree = "<group>"; };
 		8A98D36E20188D270044460E /* CaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseViewModel.swift; sourceTree = "<group>"; };
 		8A98D37020188DC80044460E /* IssueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
 		8A98D3732018B5110044460E /* SortingHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingHeaderViewController.swift; sourceTree = "<group>"; };
@@ -761,6 +763,7 @@
 				8A6D01C920104CB50029651E /* AssignmentHistoryAPI.swift */,
 				8AF68CF020144A5F00A1BD41 /* SurveyAPI.swift */,
 				8A78D31B201C60630085E096 /* IssueAPI.swift */,
+				8A7F0BA8204D21BB00ABDFDF /* ESRIAPI.swift */,
 			);
 			path = APIClasses;
 			sourceTree = "<group>";
@@ -1501,6 +1504,7 @@
 				8A6D01D520107AB00029651E /* SurveyRadioOptionViewController.swift in Sources */,
 				8A78D31C201C60630085E096 /* IssueAPI.swift in Sources */,
 				8A02D812200332E9007E6560 /* SVIndefiniteAnimatedView.m in Sources */,
+				8A7F0BA9204D21BB00ABDFDF /* ESRIAPI.swift in Sources */,
 				8A6D01CA20104CB50029651E /* AssignmentHistoryAPI.swift in Sources */,
 				8A7A44DA200875B800AE3BE3 /* SalesforceRestApiUrl.swift in Sources */,
 				8A6D01C8200F35030029651E /* AssignmentLocationUnitViewModel.swift in Sources */,
@@ -1757,8 +1761,11 @@
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
 				ENVIRONMENT = DEV;
+				ESRI_PASSWORD = "lo9(ki8*";
+				ESRI_PORTAL_LINK = "https://mtxgis.maps.arcgis.com";
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				ESRI_USERNAME = dasnobel;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -1805,8 +1812,11 @@
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
 				ENVIRONMENT = DEV;
+				ESRI_PASSWORD = "lo9(ki8*";
+				ESRI_PORTAL_LINK = "https://mtxgis.maps.arcgis.com";
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				ESRI_USERNAME = dasnobel;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -1964,8 +1974,11 @@
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
 				ENVIRONMENT = QA;
+				ESRI_PASSWORD = "lo9(ki8*";
+				ESRI_PORTAL_LINK = "https://mtxgis.maps.arcgis.com";
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				ESRI_USERNAME = dasnobel;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -2092,8 +2105,11 @@
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
 				ENVIRONMENT = UAT;
+				ESRI_PASSWORD = "lo9(ki8*";
+				ESRI_PORTAL_LINK = "https://mtxgis.maps.arcgis.com";
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				ESRI_USERNAME = dasnobel;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -2212,8 +2228,11 @@
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
 				ENVIRONMENT = QA;
+				ESRI_PASSWORD = "lo9(ki8*";
+				ESRI_PORTAL_LINK = "https://mtxgis.maps.arcgis.com";
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				ESRI_USERNAME = dasnobel;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -2334,8 +2353,11 @@
 				DEVELOPMENT_TEAM = YNCE3DFDTN;
 				ENABLE_BITCODE = NO;
 				ENVIRONMENT = UAT;
+				ESRI_PASSWORD = "lo9(ki8*";
+				ESRI_PORTAL_LINK = "https://mtxgis.maps.arcgis.com";
 				ESRI_RUNTIME_LITE_LICENSE_KEY = "runtimelite,1000,rud5534926029,none,LHH93PJPXLJMXH46C006";
 				ESRI_RUNTIME_SMPNA_EXTENSION_LICENSE_KEY = "runtimesmpna,1000,rud000103692,07-sep-2017,HC4TL0PL40MLF9HHT041";
+				ESRI_USERNAME = dasnobel;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",

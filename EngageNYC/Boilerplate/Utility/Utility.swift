@@ -486,7 +486,7 @@ class Utility{
     }
     
     
-    class func openNavigationItem(btnLoginUserName:UIButton, vc:UIViewController,isDashboard:Bool?=false,isSurveyModule:Bool?=false){
+    class func openNavigationItem(btnLoginUserName:UIButton, vc:UIViewController,isDashboard:Bool?=false,isMapLocation:Bool?=false,isSurveyModule:Bool?=false){
         
         let path = Bundle.main.path(forResource: "NavigationItem", ofType: "plist")
         guard let navArray = NSArray(contentsOfFile: path!) as? [[String:Any]] else { return }
@@ -503,17 +503,22 @@ class Utility{
             listingPopOverObj.name = name
             
             if(isDashboard == true){
-                if(name != NavigationItems.home.rawValue){
+                if(name != NavigationItems.home.rawValue && name != NavigationItems.refreshLocation.rawValue){
                     navObjects.append(listingPopOverObj)
                 }
             }
+            else if(isMapLocation == true){
+                navObjects.append(listingPopOverObj)
+            }
             else if(isSurveyModule == true){
-                if(name != NavigationItems.refreshData.rawValue){
+                if(name != NavigationItems.refreshData.rawValue && name != NavigationItems.refreshLocation.rawValue){
                     navObjects.append(listingPopOverObj)
                 }
             }
             else{
-                navObjects.append(listingPopOverObj)
+                if(name != NavigationItems.refreshLocation.rawValue){
+                    navObjects.append(listingPopOverObj)
+                }
             }
             
             
@@ -665,6 +670,8 @@ class Utility{
                     navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
                     vc.present(navigationController, animated: true)
                 }
+            case .refreshLocation:
+                RefreshAll.sharedInstance.refreshESRIData()
             }
         }
         
@@ -935,6 +942,24 @@ class Utility{
         
        
     }
+    
+    class func saveUnZipFilePath(mapDataZipFile:String){
+        
+        do {
+            let mapDataPath = Bundle.main.path(forResource: mapDataZipFile, ofType: "zip")
+            
+            let unZipFilePath = try Zip.quickUnzipFile(URL(string: mapDataPath!)!) // Unzip
+            
+            let mapDirpath = unZipFilePath.absoluteString + mapDataZipFile
+            
+            SettingsAPI.shared.updateMapZipFilePathSetting(mapZipFilePath: mapDirpath)
+        }
+        catch {
+            Utility.showSwiftErrorMessage(error: "Something went wrong while unzip geodatabase.")
+        }
+        
+    }
+    
     
     
     

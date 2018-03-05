@@ -130,15 +130,13 @@ extension UserDetailAPI{
         //Setting
         if let settingRes = SettingsAPI.shared.getSettings(){
             
+            let layerLink = jsonObject.value(forKey: "esriLayerLink") as? String ?? ""
+            
             if(settingRes.count == 0){
-                let settingObject = Setting(context: context)
-                settingObject.settingsId = "1"
-                settingObject.offlineSyncTime = "2"
-                settingObject.featureLayerUrl = jsonObject.value(forKey: "esriLayerLink") as? String ?? ""
-                settingObject.isSyncON = true
-                
-                appDelegate.saveContext()
-                
+                SettingsAPI.shared.saveSettings(layerLink:layerLink)
+            }
+            else{
+                SettingsAPI.shared.updateESRILayerLink(layerLink: layerLink)
             }
         }
        

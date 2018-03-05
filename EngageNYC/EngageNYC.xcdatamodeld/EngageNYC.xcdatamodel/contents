@@ -204,6 +204,7 @@
     <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
         <attribute name="featureLayerUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSyncON" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="mapZipFilePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="offlineSyncTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="settingsId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -260,7 +261,7 @@
         <element name="Location" positionX="-2" positionY="-36" width="128" height="285"/>
         <element name="LocationUnit" positionX="-126" positionY="45" width="128" height="240"/>
         <element name="MetadataConfig" positionX="-117" positionY="54" width="128" height="75"/>
-        <element name="Setting" positionX="-126" positionY="45" width="128" height="105"/>
+        <element name="Setting" positionX="-126" positionY="45" width="128" height="120"/>
         <element name="SurveyQuestion" positionX="169" positionY="78" width="128" height="120"/>
         <element name="SurveyResponse" positionX="135" positionY="243" width="128" height="195"/>
         <element name="SurveyUnit" positionX="-126" positionY="45" width="128" height="150"/>

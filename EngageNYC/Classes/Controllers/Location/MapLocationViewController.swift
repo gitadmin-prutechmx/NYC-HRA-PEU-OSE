@@ -83,7 +83,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     var viewModel:MapLocationViewModel!
     var canvasserTaskDataObject:CanvasserTaskDataObject!
     var filterfeaturesExpression = ""
-    var isUpdateLocationView = false
+   
     var selectedLocationObj:MapLocationDO!
     
     var styleResourcesDirectory:URL!
@@ -96,6 +96,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     private var sheet:CustomContextSheet!
     
     var objectIdFieldName:String = ""
+    
+    var isUpdateLayer = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,7 +138,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     }
     
     @IBAction func btnLoginNamePressed(_ sender: Any) {
-        Utility.openNavigationItem(btnLoginUserName: btnLoginName, vc: self)
+        Utility.openNavigationItem(btnLoginUserName: btnLoginName,vc: self, isMapLocation:true)
     }
     
     func resetMap(){
@@ -230,7 +232,8 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         CustomNotificationCenter.registerReceiver(receiver: self.broadcastReceiver, notificationName: SF_NOTIFICATION.LOCATIONLISTING_SYNC)
         
         self.bindView()
-        self.UnzipMapFile()
+        self.getVtpkMapFilePath()
+        //self.UnzipMapFile()
     }
     
     func reloadView(){
@@ -257,59 +260,17 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     }
     
    
-    
-    func UnzipMapFile(){
+    func getVtpkMapFilePath(){
         
-        do {
-        
-            var mapDataZipFile = "MapDataDev"
-            
-            if let SFEnvironment = Constant.shared.getSystemConstant(withKey: .SF_ENVIRONMENT_KEY) as? String{
-                if SFEnvironment == environment.dev.rawValue{
-                    mapDataZipFile = "MapDataDev"
-                }
-                else if SFEnvironment == environment.qa.rawValue{
-                    mapDataZipFile = "MapDataQA"
-                }
-                else if SFEnvironment == environment.uat.rawValue{
-                    mapDataZipFile = "MapDataUAT"
-                }
-                
-            }
-            
-            let mapDataPath = Bundle.main.path(forResource: mapDataZipFile, ofType: "zip")
-   
-            let unZipFilePath = try Zip.quickUnzipFile(URL(string: mapDataPath!)!) // Unzip
-                
-            let mapDirpath = unZipFilePath.absoluteString + mapDataZipFile
-      
-            vtpkMapFile = URL(string:(mapDirpath + "/NewYorkCity.vtpk"))
-            styleResourcesDirectory = URL(string:(mapDirpath + "/VTPKResources"))
-                
-//                containerDirectory = unZipFilePath.appendingPathComponent("MapData")
-//
-//                vtpkMapFile = URL(fileURLWithPath: "NewYorkCity.vtpk", relativeTo: containerDirectory)
-//
-//                styleResourcesDirectory = URL(fileURLWithPath: "VTPKResources", isDirectory: true, relativeTo: containerDirectory)
-                
-                
-                
-                print(unZipFilePath)
-                
-            
-            
-        }
-        catch {
-            Utility.showSwiftErrorMessage(error: "Something went wrong while unzip geodatabase.")
-        }
-        
-        
+        let mapDirpath =  SettingsAPI.shared.getMapZipFilePath()
+        vtpkMapFile = URL(string:(mapDirpath + "/NewYorkCity.vtpk"))
+        styleResourcesDirectory = URL(string:(mapDirpath + "/VTPKResources"))
     }
     
+   
     
     func showVTPKMap(){
         
-         isUpdateLocationView = false
         
     
         
@@ -356,6 +317,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
             //add graphic overlays
             self.mapView.graphicsOverlays.addObjects(from: [self.routeGraphicsOverlay, self.markerGraphicsOverlay])
         
+            self.isUpdateLayer = false
             self.showLayers()
        
             
@@ -368,8 +330,6 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     
     
     func showMap(isSyncDataFromLoc:Bool?=false){
-        
-        isUpdateLocationView = false
         
         //initialize map package
         self.mapPackage = AGSMobileMapPackage(name: "NewYorkCity")
@@ -557,12 +517,10 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                                     
                                     self.featureLayerExtent =  featureTable.layerInfo!.extent!
                                     
-                                    
-                                    if(self.isUpdateLocationView == false){
+                                    if(self.isUpdateLayer == false){
                                         self.mapView.setViewpoint(AGSViewpoint(targetExtent: self.featureLayerExtent!), completion: nil)
-                                        
-                                       // self.highlightFeatures(inLayer: featureLayer, forIDs: [])
                                     }
+                                    
                                     
                                 }
                                 else{
@@ -577,13 +535,16 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
                             }
                         }
                         
-                        if(self.isUpdateLocationView == false && self.arrMapLocationsMain.count > 0){
+                        if(self.arrMapLocationsMain.count > 0){
                             
                             //set arrObjectIds based on status
                             
                            self.updatePinColor()
                             
-                           self.selectFeature(isShowCallOut: false, objLoc:self.arrMapLocationsMain[0])
+                            if(self.isUpdateLayer == false){
+                                 self.selectFeature(isShowCallOut: false, objLoc:self.arrMapLocationsMain[0])
+                            }
+                          
                             
                            
                         }
@@ -1100,11 +1061,14 @@ extension MapLocationViewController{
         
         selectedIndex = indexPath
         
-        if(searchActive && arrMapLocationsFiltered.count > 0){
+        
+        if(searchActive && arrMapLocationsFiltered.count > 0 && indexPath.row < self.arrMapLocationsFiltered.count){
             self.selectFeature(objLoc: arrMapLocationsFiltered[indexPath.row])
         }
         else{
-            self.selectFeature(objLoc: arrMapLocationsMain[indexPath.row])
+            if(indexPath.row < self.arrMapLocationsMain.count){
+                self.selectFeature(objLoc: arrMapLocationsMain[indexPath.row])
+            }
         }
         
         
@@ -1124,6 +1088,7 @@ extension MapLocationViewController{
 
 extension MapLocationViewController : AssignmentLocationDelegate{
     func updateLocationStatus(assignmentLocId: String,locStatus:String) {
+        
         //update location status
         self.viewModel.updateLocationStatus(assignmentLocId:assignmentLocId,locStatus:locStatus)
         
@@ -1141,7 +1106,14 @@ extension MapLocationViewController : AssignmentLocationDelegate{
             
             self.arrMapLocationsMain = self.viewModel.loadLocations(assignmentId: self.canvasserTaskDataObject.assignmentObj.assignmentId)
             
+            self.lblLocation.text = "Locations (\(self.arrMapLocationsMain.count))"
             
+            self.filterfeaturesExpression = self.viewModel.filterfeaturesExpression
+            let endIndex = self.filterfeaturesExpression.index(self.filterfeaturesExpression.endIndex, offsetBy: -3)
+            self.filterfeaturesExpression = self.filterfeaturesExpression.substring(to: endIndex)
+            
+            
+         
             if(self.searchActive){
                 self.arrMapLocationsFiltered = self.arrMapLocationsMain.filter {
                     
@@ -1155,13 +1127,26 @@ extension MapLocationViewController : AssignmentLocationDelegate{
                     
                     
                 }
+                
+                self.lblLocation.text = "Locations (\(self.arrMapLocationsFiltered.count))"
+                
+                
             }
             
             self.tblLocations.reloadData()
-            self.updatePinColor()
+           
+            self.isUpdateLayer = true
+            self.showLayers()
             
-            self.tblLocations.selectRow(at: self.selectedIndex, animated: false, scrollPosition: .none)
-            self.tblLocations.delegate?.tableView!(self.tblLocations, didSelectRowAt: self.selectedIndex!) //update map pin window status header color
+            //self.updatePinColor()
+            
+            if(self.selectedIndex != nil){
+                
+                self.tblLocations.selectRow(at: self.selectedIndex, animated: false, scrollPosition: .none)
+                self.tblLocations.delegate?.tableView!(self.tblLocations, didSelectRowAt: self.selectedIndex!) //update map pin window status header color
+                
+            }
+            
         }
     }
     
