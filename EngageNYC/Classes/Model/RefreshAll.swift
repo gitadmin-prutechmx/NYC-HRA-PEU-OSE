@@ -136,22 +136,7 @@ class RefreshAll: BroadcastReceiverNSObject
                                     
                                     if(isFirstTimeLoad)!{
                                         
-                                        var mapDataZipFile = "MapDataDev"
-                                        
-                                        if let SFEnvironment = Constant.shared.getSystemConstant(withKey: .SF_ENVIRONMENT_KEY) as? String{
-                                            if SFEnvironment == environment.dev.rawValue{
-                                                mapDataZipFile = "MapDataDev"
-                                            }
-                                            else if SFEnvironment == environment.qa.rawValue{
-                                                mapDataZipFile = "MapDataQA"
-                                            }
-                                            else if SFEnvironment == environment.uat.rawValue{
-                                                mapDataZipFile = "MapDataUAT"
-                                            }
-                                            
-                                        }
-                                        
-                                        Utility.saveUnZipFilePath(mapDataZipFile: mapDataZipFile)
+                                        Utility.saveUnZipFilePath(basemapZipFile: "Basemap")
                                         
                                         ESRIAPI.shared.syncUpCompletion {
                                             self.closeRefreshPopUp()

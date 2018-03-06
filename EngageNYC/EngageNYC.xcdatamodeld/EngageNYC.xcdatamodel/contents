@@ -202,9 +202,9 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
+        <attribute name="baseMapZipFilePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="featureLayerUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSyncON" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="mapZipFilePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="offlineSyncTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="settingsId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

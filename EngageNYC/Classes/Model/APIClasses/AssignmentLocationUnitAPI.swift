@@ -255,52 +255,17 @@ final class AssignmentLocationUnitAPI:SFCommonAPI {
         
     }
     
-    
-    
- 
-    
-    
-//    func createNewAssignmentLocationUnit(assignmentLocUnitInfo:AssignmentLocationUnitInfoDO,assignmentId:String){
-//
-//
-//            if(assignmentLocUnitInfo.contacted == boolVal.no.rawValue){
-//                assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeNo == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeNo
-//            }
-//            else{
-//                assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeYes == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeYes
-//            }
-//
-//
-//
-//        let assignmmentLocUnit = AssignmentLocationUnit(context:context)
-//        assignmmentLocUnit.actionStatus = actionStatus.create.rawValue
-//        assignmmentLocUnit.assignmentLocUnitId = assignmentLocUnitInfo.assignmentLocationUnitId
-//        assignmmentLocUnit.attempted = assignmentLocUnitInfo.attempted
-//        assignmmentLocUnit.contacted = assignmentLocUnitInfo.contacted
-//        assignmmentLocUnit.surveyed = assignmentLocUnitInfo.surveyed
-//        assignmmentLocUnit.contactOutcome = assignmentLocUnitInfo.contactOutcome
-//        assignmmentLocUnit.contactId = assignmentLocUnitInfo.contactId
-//        assignmmentLocUnit.followUpType = assignmentLocUnitInfo.followUpType
-//        assignmmentLocUnit.followUpDate = assignmentLocUnitInfo.followUpDate
-//        assignmmentLocUnit.assignmentId = assignmentId
-//        assignmmentLocUnit.notes = assignmentLocUnitInfo.notes
-//        assignmmentLocUnit.lastCanvassedBy = ""
-//        assignmmentLocUnit.surveySyncDate = ""
-//        assignmmentLocUnit.surveyId = ""
-//
-//        appDelegate.saveContext()
-//
-//    }
+
     
     func updateAssignmentLocationUnit(assignmentLocUnitInfo:AssignmentLocationUnitInfoDO){
         
         var updateObjectDic:[String:AnyObject] = [:]
         
         if(assignmentLocUnitInfo.contacted == boolVal.no.rawValue){
-            assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeNo == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeNo
+            assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeNo == contactOutcomePlaceholder.selectOutcome.rawValue ? "" : assignmentLocUnitInfo.contactOutcomeNo
         }
         else{
-            assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeYes == "Select Outcome" ? "" : assignmentLocUnitInfo.contactOutcomeYes
+            assignmentLocUnitInfo.contactOutcome = assignmentLocUnitInfo.contactOutcomeYes == contactOutcomePlaceholder.selectOutcome.rawValue ? "" : assignmentLocUnitInfo.contactOutcomeYes
         }
         
         updateObjectDic["attempted"] = assignmentLocUnitInfo.attempted as AnyObject?

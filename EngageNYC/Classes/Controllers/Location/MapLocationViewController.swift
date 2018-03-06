@@ -28,6 +28,12 @@ enum environment:String{
     case uat = "UAT"
 }
 
+enum enumGeodatabase:String{
+    case dev = "NewYorkLayers_DEV"
+    case qa = "NewYorkLayers_QA"
+    case uat = "NewYorkLayers_UAT"
+}
+
 class MapLocationDO{
     var locId : String!
     var locName : String!
@@ -262,10 +268,12 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
    
     func getVtpkMapFilePath(){
         
-        let mapDirpath =  SettingsAPI.shared.getMapZipFilePath()
-        vtpkMapFile = URL(string:(mapDirpath + "/NewYorkCity.vtpk"))
-        styleResourcesDirectory = URL(string:(mapDirpath + "/VTPKResources"))
+        let basemapDirpath =  SettingsAPI.shared.getBaseMapZipFilePath()
+        vtpkMapFile = URL(string:(basemapDirpath + "/NewYorkCity.vtpk"))
+        styleResourcesDirectory = URL(string:(basemapDirpath + "/VTPKResources"))
     }
+    
+   
     
    
     
@@ -470,7 +478,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
     func showLayers(){
         
         //instantiate geodatabase with name
-        self.geodatabase = AGSGeodatabase(name: "NewYorkLayers")
+        self.geodatabase = AGSGeodatabase(name: Utility.getGeoDatabase())
         
         
         

@@ -926,6 +926,13 @@ class Utility{
     
     }
     
+    class func convertToDateFormat(strDate:String)->Date{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        
+        return dateFormatter.date(from: strDate)!
+    }
+    
     class func makeButtonBorder(btn:UIButton){
         btn.backgroundColor = .clear
         btn.layer.cornerRadius = 5
@@ -943,21 +950,40 @@ class Utility{
        
     }
     
-    class func saveUnZipFilePath(mapDataZipFile:String){
+    class func saveUnZipFilePath(basemapZipFile:String){
         
         do {
-            let mapDataPath = Bundle.main.path(forResource: mapDataZipFile, ofType: "zip")
+            let basemapDataPath = Bundle.main.path(forResource: basemapZipFile, ofType: "zip")
             
-            let unZipFilePath = try Zip.quickUnzipFile(URL(string: mapDataPath!)!) // Unzip
+            let unZipFilePath = try Zip.quickUnzipFile(URL(string: basemapDataPath!)!) // Unzip
             
-            let mapDirpath = unZipFilePath.absoluteString + mapDataZipFile
+            let basemapDirpath = unZipFilePath.absoluteString + basemapZipFile
             
-            SettingsAPI.shared.updateMapZipFilePathSetting(mapZipFilePath: mapDirpath)
+            SettingsAPI.shared.updateMapZipFilePathSetting(basemapZipFilePath: basemapDirpath)
         }
         catch {
             Utility.showSwiftErrorMessage(error: "Something went wrong while unzip geodatabase.")
         }
         
+    }
+    
+    class func getGeoDatabase()->String{
+        
+        var geodatabaseStr:String = enumGeodatabase.dev.rawValue
+        
+        if let SFEnvironment = Constant.shared.getSystemConstant(withKey: .SF_ENVIRONMENT_KEY) as? String{
+            if SFEnvironment == environment.dev.rawValue{
+                geodatabaseStr = enumGeodatabase.dev.rawValue
+            }
+            else if SFEnvironment == environment.qa.rawValue{
+                geodatabaseStr = enumGeodatabase.qa.rawValue
+            }
+            else if SFEnvironment == environment.uat.rawValue{
+                geodatabaseStr = enumGeodatabase.uat.rawValue
+            }
+        }
+        
+        return geodatabaseStr
     }
     
     

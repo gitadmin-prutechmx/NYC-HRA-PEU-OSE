@@ -38,17 +38,17 @@ final class SettingsAPI
         
     }
     
-    func getMapZipFilePath()->String{
+    func getBaseMapZipFilePath()->String{
         
-        var mapFilepath:String = ""
+        var baseMapFilepath:String = ""
         
         let  settingRes = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.settings.rawValue, isPredicate:false) as! [Setting]
         
-        if let filePath = settingRes.first?.mapZipFilePath{
-            mapFilepath = filePath
+        if let filePath = settingRes.first?.baseMapZipFilePath{
+            baseMapFilepath = filePath
         }
         
-        return mapFilepath
+        return baseMapFilepath
        
         
     }
@@ -68,7 +68,7 @@ final class SettingsAPI
         settingObject.offlineSyncTime = "2"
         settingObject.featureLayerUrl = layerLink
         settingObject.isSyncON = true
-        settingObject.mapZipFilePath = ""
+        settingObject.baseMapZipFilePath = ""
         
         appDelegate.saveContext()
     }
@@ -85,11 +85,11 @@ final class SettingsAPI
         
     }
     
-    func updateMapZipFilePathSetting(mapZipFilePath:String){
+    func updateMapZipFilePathSetting(basemapZipFilePath:String){
         
         var updateObjectDic:[String:AnyObject] = [:]
         
-        updateObjectDic["mapZipFilePath"] = mapZipFilePath as AnyObject
+        updateObjectDic["baseMapZipFilePath"] = basemapZipFilePath as AnyObject
         
         ManageCoreData.updateRecord(salesforceEntityName: coreDataEntity.settings.rawValue, updateKeyValue: updateObjectDic,isPredicate: false)
         

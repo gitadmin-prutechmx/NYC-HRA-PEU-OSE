@@ -25,6 +25,10 @@ enum boolVal:String{
     case no = "No"
 }
 
+enum contactOutcomePlaceholder:String{
+    case selectOutcome = "Select Outcome"
+}
+
 class AssignmentLocationUnitInfoDO{
     
      var isObjectChanged:Bool!
@@ -357,7 +361,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     
     func checkEnableNextButton(){
         
-        if(self.assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue && self.assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue  && self.assignmentLocUnitInfoObj.surveyed == boolVal.yes.rawValue){
+        if(self.assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue && self.assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue && self.assignmentLocUnitInfoObj.surveyed == boolVal.yes.rawValue){
             
             self.enableNextBtn()
         }
@@ -401,7 +405,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
         }
         else
         {
-            assignmentLocUnitInfoObj.contactOutcomeYes = "Select Outcome"
+            assignmentLocUnitInfoObj.contactOutcomeYes = contactOutcomePlaceholder.selectOutcome.rawValue
             contactOutcomeCell.detailTextLabel?.text =  self.assignmentLocUnitInfoObj.contactOutcomeYes
             
             assignmentLocUnitInfoObj.surveyed = boolVal.no.rawValue
@@ -419,7 +423,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
             assignmentLocUnitInfoObj.contacted = boolVal.yes.rawValue
             
             if(self.assignmentLocUnitInfoObj.contactOutcomeYes.isEmpty){
-                self.assignmentLocUnitInfoObj.contactOutcomeYes = "Select Outcome"
+                self.assignmentLocUnitInfoObj.contactOutcomeYes = contactOutcomePlaceholder.selectOutcome.rawValue
             }
             contactOutcomeCell.detailTextLabel?.text = self.assignmentLocUnitInfoObj.contactOutcomeYes
             
@@ -430,7 +434,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
             assignmentLocUnitInfoObj.contacted = boolVal.no.rawValue
             
             if(self.assignmentLocUnitInfoObj.contactOutcomeNo.isEmpty){
-                self.assignmentLocUnitInfoObj.contactOutcomeNo = "Select Outcome"
+                self.assignmentLocUnitInfoObj.contactOutcomeNo = contactOutcomePlaceholder.selectOutcome.rawValue
             }
             
             contactOutcomeCell.detailTextLabel?.text = self.assignmentLocUnitInfoObj.contactOutcomeNo
@@ -561,12 +565,12 @@ extension AssignmentLocationUnitInformationViewController
             
             
             if(self.assignmentLocUnitInfoObj.contactOutcomeNo.isEmpty && self.assignmentLocUnitInfoObj.contactOutcomeYes.isEmpty){
-                contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
+                contactOutcomeCell.detailTextLabel?.text = contactOutcomePlaceholder.selectOutcome.rawValue
             }
             else{
                 if(assignmentLocUnitInfoObj.contacted == boolVal.no.rawValue){
                     if(self.assignmentLocUnitInfoObj.contactOutcomeNo.isEmpty){
-                        contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
+                        contactOutcomeCell.detailTextLabel?.text = contactOutcomePlaceholder.selectOutcome.rawValue
                     }
                     else{
                         contactOutcomeCell.detailTextLabel?.text = self.assignmentLocUnitInfoObj.contactOutcomeNo
@@ -574,7 +578,7 @@ extension AssignmentLocationUnitInformationViewController
                 }
                 else{
                     if(self.assignmentLocUnitInfoObj.contactOutcomeYes.isEmpty){
-                        contactOutcomeCell.detailTextLabel?.text = "Select Outcome"
+                        contactOutcomeCell.detailTextLabel?.text = contactOutcomePlaceholder.selectOutcome.rawValue
                     }
                     else{
                         contactOutcomeCell.detailTextLabel?.text = self.assignmentLocUnitInfoObj.contactOutcomeYes

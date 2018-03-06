@@ -38,7 +38,7 @@ final class ESRIAPI{
     
     func syncUpCompletion(completion: @escaping (()->()))
     {
-        generatedGeodatabase = AGSGeodatabase(name: "NewYorkLayers")
+        generatedGeodatabase = AGSGeodatabase(name: Utility.getGeoDatabase())
         
         if(generatedGeodatabase != nil){
            

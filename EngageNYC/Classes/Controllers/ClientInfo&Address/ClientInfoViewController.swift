@@ -607,6 +607,34 @@ class ClientInfoViewController: UIViewController, UITextFieldDelegate,UIPickerVi
             }
         }
         
+        if let dobStr = txtDobName.text{
+ 
+            if(!dobStr.isEmpty){
+                
+                if(Utility.convertToDateFormat(strDate: dobStr) > Date()){
+                    
+                    self.view.makeToast("DOB is greater than today date", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                        if didTap {
+                            print("Completion with tap")
+                            
+                        } else {
+                            print("Completion without tap")
+                        }
+                        
+                        
+                    }
+                    
+                    
+                    return false
+                    
+                    
+                }
+                
+                
+            }
+        }
+        
         
         return true
         
@@ -705,7 +733,7 @@ extension ClientInfoViewController{
     {
         
         picker.datePickerMode = .date
-        picker.maximumDate =  Date()
+        //picker.maximumDate =  Date()
         
         var components = DateComponents()
         components.year = -100
@@ -713,11 +741,11 @@ extension ClientInfoViewController{
         
         picker.minimumDate = minDate
         
-        if let dateStr = txtDobName.text{
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy"
-            //picker.date = dateFormatter.date(from: dateStr)!
-        }
+//        if let dateStr = txtDobName.text{
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "MM/dd/yyyy"
+//            picker.date = dateFormatter.date(from: dateStr)!
+//        }
         
         
         sender.inputView = picker

@@ -85,9 +85,6 @@
 		8A6D01DE20107AC00029651E /* SurveyRadioOption.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6D01DA20107ABF0029651E /* SurveyRadioOption.storyboard */; };
 		8A6D01DF20107AC00029651E /* SurveyMultiOption.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6D01DB20107AC00029651E /* SurveyMultiOption.storyboard */; };
 		8A74CAED2045666400447B80 /* Pods_EngageNYC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A74CAEE2045666400447B80 /* Pods_EngageNYC.framework */; };
-		8A74CB02204580CD00447B80 /* MapDataDev.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A74CAFF204580CC00447B80 /* MapDataDev.zip */; };
-		8A74CB03204580CD00447B80 /* MapDataQA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A74CB00204580CD00447B80 /* MapDataQA.zip */; };
-		8A74CB04204580CD00447B80 /* MapDataUAT.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8A74CB01204580CD00447B80 /* MapDataUAT.zip */; };
 		8A78D31C201C60630085E096 /* IssueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78D31B201C60630085E096 /* IssueAPI.swift */; };
 		8A78D31E201C633B0085E096 /* InTakeIssue.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A78D31D201C633B0085E096 /* InTakeIssue.plist */; };
 		8A78D320201C68CF0085E096 /* AddIssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78D31F201C68CF0085E096 /* AddIssueTableViewCell.swift */; };
@@ -211,6 +208,10 @@
 		8ACDB6A92002252800FF360E /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACDB6A82002252800FF360E /* ChartsViewController.swift */; };
 		8AD1F6BB201EFE5900B3C000 /* CaseNotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1F6B9201EFE5900B3C000 /* CaseNotesTableViewCell.swift */; };
 		8AD1F6BC201EFE5900B3C000 /* IssueNotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1F6BA201EFE5900B3C000 /* IssueNotesTableViewCell.swift */; };
+		8AF00320204E413500292795 /* Basemap.zip in Resources */ = {isa = PBXBuildFile; fileRef = 8AF0031F204E413500292795 /* Basemap.zip */; };
+		8AF00325204E42AF00292795 /* NewYorkLayers_QA.geodatabase in Resources */ = {isa = PBXBuildFile; fileRef = 8AF00322204E42AF00292795 /* NewYorkLayers_QA.geodatabase */; };
+		8AF00326204E42AF00292795 /* NewYorkLayers_UAT.geodatabase in Resources */ = {isa = PBXBuildFile; fileRef = 8AF00323204E42AF00292795 /* NewYorkLayers_UAT.geodatabase */; };
+		8AF00328204E47DC00292795 /* NewYorkLayers_DEV.geodatabase in Resources */ = {isa = PBXBuildFile; fileRef = 8AF00327204E47DC00292795 /* NewYorkLayers_DEV.geodatabase */; };
 		8AF68CA5201236F800A1BD41 /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF68CA2201236F800A1BD41 /* SettingsSwitchTableViewCell.swift */; };
 		8AF68CA6201236F800A1BD41 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF68CA3201236F800A1BD41 /* SettingsViewController.swift */; };
 		8AF68CA7201236F800A1BD41 /* SettingsSliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF68CA4201236F800A1BD41 /* SettingsSliderTableViewCell.swift */; };
@@ -339,9 +340,6 @@
 		8A6D01DA20107ABF0029651E /* SurveyRadioOption.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SurveyRadioOption.storyboard; sourceTree = "<group>"; };
 		8A6D01DB20107AC00029651E /* SurveyMultiOption.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SurveyMultiOption.storyboard; sourceTree = "<group>"; };
 		8A74CAEE2045666400447B80 /* Pods_EngageNYC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_EngageNYC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A74CAFF204580CC00447B80 /* MapDataDev.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapDataDev.zip; sourceTree = "<group>"; };
-		8A74CB00204580CD00447B80 /* MapDataQA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapDataQA.zip; sourceTree = "<group>"; };
-		8A74CB01204580CD00447B80 /* MapDataUAT.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = MapDataUAT.zip; sourceTree = "<group>"; };
 		8A78D31B201C60630085E096 /* IssueAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAPI.swift; sourceTree = "<group>"; };
 		8A78D31D201C633B0085E096 /* InTakeIssue.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InTakeIssue.plist; sourceTree = "<group>"; };
 		8A78D31F201C68CF0085E096 /* AddIssueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIssueTableViewCell.swift; sourceTree = "<group>"; };
@@ -466,6 +464,10 @@
 		8ACDB6A82002252800FF360E /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		8AD1F6B9201EFE5900B3C000 /* CaseNotesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseNotesTableViewCell.swift; sourceTree = "<group>"; };
 		8AD1F6BA201EFE5900B3C000 /* IssueNotesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueNotesTableViewCell.swift; sourceTree = "<group>"; };
+		8AF0031F204E413500292795 /* Basemap.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Basemap.zip; sourceTree = "<group>"; };
+		8AF00322204E42AF00292795 /* NewYorkLayers_QA.geodatabase */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewYorkLayers_QA.geodatabase; sourceTree = "<group>"; };
+		8AF00323204E42AF00292795 /* NewYorkLayers_UAT.geodatabase */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewYorkLayers_UAT.geodatabase; sourceTree = "<group>"; };
+		8AF00327204E47DC00292795 /* NewYorkLayers_DEV.geodatabase */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewYorkLayers_DEV.geodatabase; sourceTree = "<group>"; };
 		8AF68CA2201236F800A1BD41 /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		8AF68CA3201236F800A1BD41 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8AF68CA4201236F800A1BD41 /* SettingsSliderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSliderTableViewCell.swift; sourceTree = "<group>"; };
@@ -614,9 +616,10 @@
 		8A02D7FF200332E9007E6560 /* MapData */ = {
 			isa = PBXGroup;
 			children = (
-				8A74CAFF204580CC00447B80 /* MapDataDev.zip */,
-				8A74CB00204580CD00447B80 /* MapDataQA.zip */,
-				8A74CB01204580CD00447B80 /* MapDataUAT.zip */,
+				8AF00327204E47DC00292795 /* NewYorkLayers_DEV.geodatabase */,
+				8AF00322204E42AF00292795 /* NewYorkLayers_QA.geodatabase */,
+				8AF00323204E42AF00292795 /* NewYorkLayers_UAT.geodatabase */,
+				8AF0031F204E413500292795 /* Basemap.zip */,
 			);
 			path = MapData;
 			sourceTree = "<group>";
@@ -1279,13 +1282,13 @@
 				8A02D83B20033350007E6560 /* NHaasGroteskDSPro-55Rg.otf in Resources */,
 				8A7A45042008C32300AE3BE3 /* DatePickerListingPopOver.storyboard in Resources */,
 				8A02D83720033350007E6560 /* NHaasGroteskDSPro-66MdIt.otf in Resources */,
-				8A74CB04204580CD00447B80 /* MapDataUAT.zip in Resources */,
 				8A02D84120033350007E6560 /* NHaasGroteskTXPro-65Md.otf in Resources */,
 				8A6D01DE20107AC00029651E /* SurveyRadioOption.storyboard in Resources */,
 				8A02D84320033350007E6560 /* NHaasGroteskDSPro-56It.otf in Resources */,
 				8A02D83420033350007E6560 /* NHaasGroteskTXPro-56It.otf in Resources */,
 				8A02D813200332E9007E6560 /* SVProgressHUD.bundle in Resources */,
 				8A02D83020033350007E6560 /* NHaasGroteskDSPro-76BdIt.otf in Resources */,
+				8AF00328204E47DC00292795 /* NewYorkLayers_DEV.geodatabase in Resources */,
 				8AB12EF32019DB6500481212 /* InTakeClient.plist in Resources */,
 				8A78D31E201C633B0085E096 /* InTakeIssue.plist in Resources */,
 				8A6D01C2200DF8220029651E /* AddressInfo.storyboard in Resources */,
@@ -1295,7 +1298,6 @@
 				8A02D84420033350007E6560 /* NHaasGroteskTXPro-75Bd.otf in Resources */,
 				8A78D32D201ECCC80085E096 /* IssueNotes.storyboard in Resources */,
 				5D56CF131EE007060019882F /* Assets.xcassets in Resources */,
-				8A74CB03204580CD00447B80 /* MapDataQA.zip in Resources */,
 				8A7A451A2008CA7E00AE3BE3 /* MapLocation.storyboard in Resources */,
 				8A02D83120033350007E6560 /* NHaasGroteskDSPro-36XLtIt.otf in Resources */,
 				8A02D83D20033350007E6560 /* NHaasGroteskDSPro-75Bd.otf in Resources */,
@@ -1310,9 +1312,12 @@
 				8A7A454C200BC2AE00AE3BE3 /* DynamicPicklist.storyboard in Resources */,
 				8A7A44B62008618E00AE3BE3 /* Refresh.storyboard in Resources */,
 				8A59DB5120151A7900BDB9F2 /* IntakeCase.storyboard in Resources */,
+				8AF00326204E42AF00292795 /* NewYorkLayers_UAT.geodatabase in Resources */,
+				8AF00320204E413500292795 /* Basemap.zip in Resources */,
 				8A78D324201DA4870085E096 /* DynamicMultiPicklist.storyboard in Resources */,
 				8A02D84220033350007E6560 /* NHaasGroteskTXPro-66MdIt.otf in Resources */,
 				8A98D3772018B5110044460E /* SortingTextCell.xib in Resources */,
+				8AF00325204E42AF00292795 /* NewYorkLayers_QA.geodatabase in Resources */,
 				5D56CF0E1EE007060019882F /* Dashboard.storyboard in Resources */,
 				8ACDB6922001F11E00FF360E /* LaunchScreen.xib in Resources */,
 				8A7A455E200C4A8D00AE3BE3 /* NewClientInfoWithAddress.storyboard in Resources */,
@@ -1328,7 +1333,6 @@
 				8A02D83520033350007E6560 /* NHaasGroteskDSPro-46LtIt.otf in Resources */,
 				8A7A450D2008C43A00AE3BE3 /* EventsRegistration.storyboard in Resources */,
 				8A6D01DC20107AC00029651E /* SubmitSurvey.storyboard in Resources */,
-				8A74CB02204580CD00447B80 /* MapDataDev.zip in Resources */,
 				8A7A4542200BAE2400AE3BE3 /* AssignmentLocationUnit.storyboard in Resources */,
 				8A59DB4F20151A7900BDB9F2 /* Intake.storyboard in Resources */,
 				8A7A453A200B96C700AE3BE3 /* NewUnit.storyboard in Resources */,
