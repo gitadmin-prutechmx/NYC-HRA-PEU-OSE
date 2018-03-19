@@ -96,7 +96,7 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P7Q-jx-08L" userLabel="moreBtn">
                                                                     <rect key="frame" x="67" y="15" width="30" height="30"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <state key="normal" image="more"/>
+                                                                    <state key="normal" image="More"/>
                                                                     <connections>
                                                                         <action selector="btnMorePressed:" destination="55M-Ao-pkR" eventType="touchUpInside" id="Xib-KJ-mde"/>
                                                                     </connections>
@@ -237,6 +237,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="more" width="50" height="50"/>
+        <image name="More" width="50" height="50"/>
     </resources>
 </document>

@@ -50,7 +50,7 @@ class AssignmentLocationViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         lblLocationName.text = canvasserTaskDataObject.locationObj.objMapLocation.locName
-        rightBarButton.isEnabled = false
+        rightBarButton.isEnabled = true
         
         Utility.makeButtonBorder(btn: self.leftBarButton)
         Utility.makeButtonBorder(btn: self.rightBarButton)
@@ -208,7 +208,8 @@ class AssignmentLocationViewController: UIViewController
     
     
     @IBAction func btnRightPressed(_ sender: Any) {
-        
+       
+       if(assignmentLocInfoObj.isObjectChanged){
         self.rightBarButton.isEnabled = false
         
         if(!assignmentLocInfoObj.phoneNo.isEmpty && assignmentLocInfoObj.phoneNo.count < 14)
@@ -248,6 +249,54 @@ class AssignmentLocationViewController: UIViewController
             self.rightBarButton.isEnabled = true
             
         }
+        else if (assignmentLocInfoObj.locStatus == "Do Not Walk" && assignmentLocInfoObj.notes.isEmpty) {
+            
+            self.view.makeToast("Please document reason for 'Do Not Walk' in Notes", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            self.rightBarButton.isEnabled = true
+        }
+        else if (assignmentLocInfoObj.locStatus == "Temporarily Inaccessible" && assignmentLocInfoObj.notes.isEmpty) {
+            
+            self.view.makeToast("Please document reason for 'Temporarily Inaccessible' in Notes", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            self.rightBarButton.isEnabled = true
+        }
+        else if (assignmentLocInfoObj.locStatus == "Permanently Inaccessible" && assignmentLocInfoObj.notes.isEmpty) {
+            
+            self.view.makeToast("Please document reason for 'Permanently Inaccessible' in Notes", duration: 1.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                if didTap {
+                    print("Completion with tap")
+                    
+                } else {
+                    print("Completion without tap")
+                }
+                
+                
+            }
+            
+            self.rightBarButton.isEnabled = true
+        }
         else{
             
             
@@ -263,7 +312,9 @@ class AssignmentLocationViewController: UIViewController
                 
             }
         }
-        
+       } else {
+            self.dismiss(animated: true, completion: nil)
+        }
         
         
     }

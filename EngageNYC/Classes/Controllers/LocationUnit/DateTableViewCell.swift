@@ -7,9 +7,10 @@
 //
 
 
-protocol DateTableViewCellDelegate {
+@objc protocol DateTableViewCellDelegate {
     
     func selectDate(forDate date: Date)
+    @objc optional func clearDate()
 }
 
 class DateTableViewCell: UITableViewCell {
@@ -39,6 +40,14 @@ class DateTableViewCell: UITableViewCell {
         
         dateDelegate(val: datePicker.date)
 
+    }
+    
+    @IBAction func btnClearAction(_ sender: UIButton) {
+        
+        
+        detail.text = "Select Date"
+        delegate?.clearDate!()
+        
     }
     
     @IBAction func btnTodayAction(_ sender: UIButton)

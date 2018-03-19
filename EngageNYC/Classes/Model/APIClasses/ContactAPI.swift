@@ -379,8 +379,8 @@ final class ContactAPI:SFCommonAPI {
         
         let iOSContactId = contactDataDict["iOSTenantId"] as! String?
         let contactId = contactDataDict["tenantId"] as! String?
-        let locUnitId = contactDataDict["locUnitId"] as! String?
-        let assignmentLocUnitId = contactDataDict["assignmentLocUnitId"] as! String?
+        //let locUnitId = contactDataDict["locUnitId"] as! String?
+        //let assignmentLocUnitId = contactDataDict["assignmentLocUnitId"] as! String?
     
         
         let contactResults = ManageCoreData.fetchData(salesforceEntityName: coreDataEntity.contact.rawValue,predicateFormat: "actionStatus == %@ OR actionStatus == %@ AND contactId == %@" ,predicateValue: actionStatus.create.rawValue,predicateValue2: actionStatus.edit.rawValue, predicateValue3: iOSContactId, isPredicate:true) as! [Contact]

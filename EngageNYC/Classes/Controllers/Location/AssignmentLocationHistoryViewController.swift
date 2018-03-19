@@ -86,6 +86,13 @@ extension AssignmentLocationHistoryViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        let alertCtrl = Alert.showUIAlert(title: "Notes", message: arrAssignmentLocNotesMain[indexPath.row].notes, vc: self)
         
+        let notesAction: UIAlertAction = UIAlertAction(title: "Close", style: .cancel)
+        { action -> Void in
+            
+        }
+        
+        alertCtrl.addAction(notesAction)
     }
 }

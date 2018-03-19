@@ -50,7 +50,7 @@ class LocationTableViewCell: UITableViewCell {
              imgLocStatus.isHidden = false
              imgLocStatus.image = UIImage(named: "InProgress")
         }
-        else if(object.locStatus == locationStatus.inaccessible.rawValue || object.locStatus == locationStatus.addressNotExist.rawValue || object.locStatus == locationStatus.vacant.rawValue){
+        else if( object.locStatus == locationStatus.addressNotExist.rawValue || object.locStatus == locationStatus.vacant.rawValue || object.locStatus == locationStatus.temporarilyInaccessible.rawValue || object.locStatus == locationStatus.permanentlyInaccessible.rawValue || object.locStatus == locationStatus.doNotWalk.rawValue || object.locStatus == locationStatus.nonResidential.rawValue){
             imgLocStatus.isHidden = false
             imgLocStatus.image = UIImage(named: "Blocked")
             

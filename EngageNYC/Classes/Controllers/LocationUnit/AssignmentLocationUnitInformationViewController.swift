@@ -147,16 +147,17 @@ class AssignmentLocationUnitInfoDO{
     func EnableDisableSaveBtn(){
         
         
-        if(self.attempted == self.oldAttempted && self.contacted == self.oldContacted && self.notes == self.oldNotes && self.surveyed == self.oldSurveyed && self.contactId == self.oldContactId && self.followUpDate == self.oldFollowUpDate && self.followUpType == self.oldFollowUpType && (self.contactOutcomeYes == self.oldContactOutcomeYes  || self.contactOutcomeNo == self.oldContactOutcomeNo)){
-            assignmentLocUnitVC.rightBarButton.isEnabled = false
+        if(self.attempted == self.oldAttempted && self.contacted == self.oldContacted && self.notes == self.oldNotes && self.surveyed == self.oldSurveyed && self.contactId == self.oldContactId && self.followUpDate == self.oldFollowUpDate && self.followUpType == self.oldFollowUpType && (self.contactOutcomeYes == self.oldContactOutcomeYes || self.contactOutcomeNo == self.oldContactOutcomeNo)){
+           // assignmentLocUnitVC.rightBarButton.isEnabled = false
             isObjectChanged = false
-            print("Object not changed")
+           // print("Object not changed")
             //disable save button
         }
         else{
-            assignmentLocUnitVC.rightBarButton.isEnabled = true
+       
+           // assignmentLocUnitVC.rightBarButton.isEnabled = true
             isObjectChanged = true
-            print("Object changed")
+           // print("Object changed")
         }
     }
 }
@@ -361,7 +362,7 @@ class AssignmentLocationUnitInformationViewController: UIViewController,UITableV
     
     func checkEnableNextButton(){
         
-        if(self.assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue && self.assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue && self.assignmentLocUnitInfoObj.surveyed == boolVal.yes.rawValue){
+        if(self.assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue && self.assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue  && self.assignmentLocUnitInfoObj.surveyed == boolVal.yes.rawValue){
             
             self.enableNextBtn()
         }
@@ -574,6 +575,9 @@ extension AssignmentLocationUnitInformationViewController
                     }
                     else{
                         contactOutcomeCell.detailTextLabel?.text = self.assignmentLocUnitInfoObj.contactOutcomeNo
+                        if(self.assignmentLocUnitInfoObj.contactOutcomeNo == "Callback Requested"){
+                            self.assignmentLocUnitInfoObj.followUpType = "Phone"
+                        }
                     }
                 }
                 else{
@@ -919,6 +923,11 @@ extension AssignmentLocationUnitInformationViewController
 extension AssignmentLocationUnitInformationViewController : DateTableViewCellDelegate{
     func selectDate(forDate date: Date){
         self.followUpDate = date
+    }
+    
+    func clearDate(){
+        self.followUpDate = nil
+        assignmentLocUnitInfoObj.followUpDate = ""
     }
 }
 

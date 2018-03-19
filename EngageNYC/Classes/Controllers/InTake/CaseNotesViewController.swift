@@ -84,4 +84,15 @@ extension CaseNotesViewController {
         return 0
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let alertCtrl = Alert.showUIAlert(title: "Notes", message: arrCaseNotesMain[indexPath.row].caseNotes, vc: self)
+        
+        let notesAction: UIAlertAction = UIAlertAction(title: "Close", style: .cancel)
+        { action -> Void in
+            
+        }
+        
+        alertCtrl.addAction(notesAction)
+    }
+    
 }

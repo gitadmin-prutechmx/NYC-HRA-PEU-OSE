@@ -17,9 +17,12 @@ enum locationStatus:String{
     case pending = "Pending"
     case inprogress = "In Progress"
     case completed = "Completed"
-    case inaccessible = "Inaccessible"
+    case temporarilyInaccessible = "Temporarily Inaccessible"
     case vacant = "Vacant"
     case addressNotExist = "Address Does Not Exist"
+    case doNotWalk = "Do Not Walk"
+    case nonResidential = "Non-Residential"
+    case permanentlyInaccessible = "Permanently Inaccessible"
 }
 
 enum environment:String{
@@ -617,7 +620,7 @@ class MapLocationViewController: BroadcastReceiverViewController ,UITableViewDat
         else if(objLoc.locStatus == locationStatus.completed.rawValue){
             view.viewLocationStatus.backgroundColor = UIColor(red: 176/255.0, green: 255/255.0, blue: 182/255.0, alpha: 1.0)
         }
-        else if(objLoc.locStatus == locationStatus.inaccessible.rawValue || objLoc.locStatus == locationStatus.vacant.rawValue){
+        else if(objLoc.locStatus == locationStatus.temporarilyInaccessible.rawValue){
             view.viewLocationStatus.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1.0)
         }
         else if(objLoc.locStatus == locationStatus.inprogress.rawValue){
@@ -763,7 +766,6 @@ extension MapLocationViewController{
         let normalSymbol = AGSPictureMarkerSymbol(image: UIImage(named: "MapPinBlue")!)
         
         let oidField = (featureLayer.featureTable as? AGSArcGISFeatureTable)?.objectIDField ?? "OBJECTID"
-        
         let renderer = AGSUniqueValueRenderer(fieldNames: [oidField],
                                               
                                               uniqueValues: arrAGSUniqueValues,
@@ -783,9 +785,12 @@ extension MapLocationViewController{
         //pending
         //inprogress
         //completed
-        //inaccessible
+        //temporarily inaccessible
         //vacant
         //address does not exist
+        //permanently inaccessible
+        //do not walk
+        //non residential
         
         getAllStatusAGSUniqueValues(status: locationStatus.pending.rawValue, callback: {
             (arrPendingAGSUniqueValues) in
@@ -793,38 +798,52 @@ extension MapLocationViewController{
                 (arrInProgressAGSUniqueValues) in
                 self.getAllStatusAGSUniqueValues(status: locationStatus.completed.rawValue, callback: {
                     (arrCompletedAGSUniqueValues) in
-                    self.getAllStatusAGSUniqueValues(status: locationStatus.inaccessible.rawValue, callback: {
+                    self.getAllStatusAGSUniqueValues(status: locationStatus.temporarilyInaccessible.rawValue, callback: {
                         (arrInAccessibleAGSUniqueValues) in
                         self.getAllStatusAGSUniqueValues(status: locationStatus.vacant.rawValue, callback: {
                             (arrVacantAGSUniqueValues) in
                             self.getAllStatusAGSUniqueValues(status: locationStatus.addressNotExist.rawValue, callback: {
                                 (arrAddressNotExistAGSUniqueValues) in
-                                
-                                var arrAGSUniqueValues = [AGSUniqueValue]()
-                                
-                                if let arr = arrPendingAGSUniqueValues as? [AGSUniqueValue] {
-                                    arrAGSUniqueValues.append(contentsOf: arr)
-                                }
-                                if let arr = arrInProgressAGSUniqueValues as? [AGSUniqueValue] {
-                                    arrAGSUniqueValues.append(contentsOf: arr)
-                                }
-                                if let arr = arrCompletedAGSUniqueValues as? [AGSUniqueValue] {
-                                    arrAGSUniqueValues.append(contentsOf: arr)
-                                }
-                                if let arr = arrInAccessibleAGSUniqueValues as? [AGSUniqueValue] {
-                                    arrAGSUniqueValues.append(contentsOf: arr)
-                                }
-                                if let arr = arrVacantAGSUniqueValues as? [AGSUniqueValue] {
-                                    arrAGSUniqueValues.append(contentsOf: arr)
-                                }
-                                if let arr = arrAddressNotExistAGSUniqueValues as? [AGSUniqueValue] {
-                                    arrAGSUniqueValues.append(contentsOf: arr)
-                                }
-                                
-                                
-                                
-                                self.highlightFeatures(inLayer: self.featureLayer, arrAGSUniqueValues: arrAGSUniqueValues)
-                                
+                                self.getAllStatusAGSUniqueValues(status: locationStatus.permanentlyInaccessible.rawValue, callback: {
+                                    (arrPermanentlyInaccessibleAGSUniqueValues) in
+                                    self.getAllStatusAGSUniqueValues(status: locationStatus.nonResidential.rawValue, callback: {
+                                        (arrNonResidentialAGSUniqueValues) in
+                                        self.getAllStatusAGSUniqueValues(status: locationStatus.doNotWalk.rawValue, callback: {
+                                            (arrDoNotWalkAGSUniqueValues) in
+                                            var arrAGSUniqueValues = [AGSUniqueValue]()
+                                            
+                                            if let arr = arrPendingAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrInProgressAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrCompletedAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrInAccessibleAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrVacantAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrAddressNotExistAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrPermanentlyInaccessibleAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrNonResidentialAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            if let arr = arrDoNotWalkAGSUniqueValues as? [AGSUniqueValue] {
+                                                arrAGSUniqueValues.append(contentsOf: arr)
+                                            }
+                                            
+                                            self.highlightFeatures(inLayer: self.featureLayer, arrAGSUniqueValues: arrAGSUniqueValues)
+                                    })
+                                  })
+                               })
                             })
                         })
                         
@@ -928,7 +947,7 @@ extension MapLocationViewController{
             markerImage = UIImage(named: "MapPinGreen")!
             pinSymbol = AGSPictureMarkerSymbol(image: markerImage)
         }
-        else if(status == locationStatus.vacant.rawValue || status == locationStatus.inaccessible.rawValue){
+        else if(status == locationStatus.temporarilyInaccessible.rawValue){
             markerImage = UIImage(named: "MapPinGray")!
             pinSymbol = AGSPictureMarkerSymbol(image: markerImage)
         }

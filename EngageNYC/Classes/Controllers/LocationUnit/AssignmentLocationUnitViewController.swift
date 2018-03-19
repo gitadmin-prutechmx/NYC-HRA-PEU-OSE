@@ -41,7 +41,7 @@ class AssignmentLocationUnitViewController: UIViewController {
         
         headerTitle.text = canvasserTaskDataObject.locationUnitObj.locationUnitName
         lblLocationName.text = canvasserTaskDataObject.locationObj.objMapLocation.locName
-        rightBarButton.isEnabled = false
+        rightBarButton.isEnabled = true
         
         Utility.makeButtonBorder(btn: leftBarButton)
         Utility.makeButtonBorder(btn: rightBarButton)
@@ -177,40 +177,115 @@ class AssignmentLocationUnitViewController: UIViewController {
     
     @IBAction func btnLeftPressed(_ sender: Any) {
         
-        let alertCtrl = Alert.showUIAlert(title: "Message", message: Static.exitMessage, vc: self)
+        if (self.assignmentLocUnitInfoObj.isObjectChanged) {
         
-        let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
-        { action -> Void in
+            let alertCtrl = Alert.showUIAlert(title: "Message", message: Static.exitMessage, vc: self)
             
-        }
+            let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
+            { action -> Void in
+                
+            }
+            
+            alertCtrl.addAction(cancelAction)
+            
+            let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
+                
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+            alertCtrl.addAction(okAction)
         
-        alertCtrl.addAction(cancelAction)
-        
-        let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
-            
-            
+        } else {
             self.dismiss(animated: true, completion: nil)
         }
-        alertCtrl.addAction(okAction)
-        
-        
     }
     
     
     @IBAction func btnRightPressed(_ sender: Any) {
         
-        self.viewModel.updateAssignmentLocationUnit(assignmentLocationUnitInfoObj: self.assignmentLocUnitInfoObj,assignmentId:canvasserTaskDataObject.assignmentObj.assignmentId)
-        
-        self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+        if (self.assignmentLocUnitInfoObj.isObjectChanged) {
+            var flag = false
+            //print("Yes : \(self.assignmentLocUnitInfoObj.contactOutcomeYes)")
+            //print("No : \(self.assignmentLocUnitInfoObj.contactOutcomeNo)")
+           
+            if ((self.assignmentLocUnitInfoObj.contactName == "") &&
+                 (self.assignmentLocUnitInfoObj.contactOutcomeNo == "Moved (Local)" ||
+                 self.assignmentLocUnitInfoObj.contactOutcomeNo == "Moved (Out of NYC)" ||
+                 self.assignmentLocUnitInfoObj.contactOutcomeNo == "Deceased" ||
+                 self.assignmentLocUnitInfoObj.contactOutcomeNo == "Wrong Client Address" ||
+                 self.assignmentLocUnitInfoObj.contactOutcomeNo == "Callback Requested")){
+                let alertCtrl = Alert.showUIAlert(title: "Message", message: "Please select Contact for this Contact Outcome to apply", vc: self)
+                
+                let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .cancel)
+                { action -> Void in
+                    
+                }
+                flag = true
+                alertCtrl.addAction(cancelAction)
+                
+            }
             
-            //Notification Center:- reload unitlisting
-            CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+            if (self.assignmentLocUnitInfoObj.followUpType == "Phone" && self.assignmentLocUnitInfoObj.contactName == ""){
+                let alertCtrl = Alert.showUIAlert(title: "Message", message: "Please select Contact", vc: self)
+                
+                let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .cancel)
+                { action -> Void in
+                    
+                }
+                flag = true
+                alertCtrl.addAction(cancelAction)
+                
+            }
             
-            self.dismiss(animated: true, completion: nil)
+            if (self.assignmentLocUnitInfoObj.contactName != "" && self.assignmentLocUnitInfoObj.followUpDate == "" && !self.assignmentLocUnitInfoObj.followUpType.isEmpty){
+                let alertCtrl = Alert.showUIAlert(title: "Message", message: "Please select Follow-Up Date", vc: self)
+                
+                let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .cancel)
+                { action -> Void in
+                    
+                }
+                flag = true
+                alertCtrl.addAction(cancelAction)
+            }
+           
+            if ((self.assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue &&
+                self.assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue &&
+                self.assignmentLocUnitInfoObj.contactOutcomeYes == "Select Outcome") ||
+                (self.assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue &&
+                    self.assignmentLocUnitInfoObj.contacted == boolVal.no.rawValue &&
+                    self.assignmentLocUnitInfoObj.contactOutcomeNo == "Select Outcome") ||
+                 (self.assignmentLocUnitInfoObj.attempted == boolVal.yes.rawValue &&
+                    self.assignmentLocUnitInfoObj.contacted == boolVal.no.rawValue &&
+                    self.assignmentLocUnitInfoObj.contactOutcomeNo.isEmpty) ||
+                (self.assignmentLocUnitInfoObj.attempted == boolVal.no.rawValue && self.assignmentLocUnitInfoObj.contacted == boolVal.yes.rawValue  &&  self.assignmentLocUnitInfoObj.contactOutcomeYes == "Select Outcome")){
+              
+                let alertCtrl = Alert.showUIAlert(title: "Message", message: "Please select Contact Outcome", vc: self)
+                
+                let cancelAction: UIAlertAction = UIAlertAction(title: "Ok", style: .cancel)
+                { action -> Void in
+                    
+                }
+                flag = true
+                alertCtrl.addAction(cancelAction)
+            }
             
+            if (!flag){
+            
+            self.viewModel.updateAssignmentLocationUnit(assignmentLocationUnitInfoObj: self.assignmentLocUnitInfoObj,assignmentId:canvasserTaskDataObject.assignmentObj.assignmentId)
+            
+            self.view.makeToast("Unit has been updated successfully.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                
+                //Notification Center:- reload unitlisting
+                CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.UNITLISTING_SYNC.rawValue, sender: nil, userInfo: nil)
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }
+            }
+            
+        } else {
+                self.dismiss(animated: true, completion: nil)
         }
-        
-        
     }
 }
 
