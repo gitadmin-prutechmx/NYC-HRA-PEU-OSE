@@ -184,6 +184,8 @@
 		8A98D3772018B5110044460E /* SortingTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A98D3742018B5110044460E /* SortingTextCell.xib */; };
 		8A98D3782018B5110044460E /* SortingTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A98D3752018B5110044460E /* SortingTextCell.swift */; };
 		8A98D37A2018B51F0044460E /* NibDesignable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A98D3792018B51F0044460E /* NibDesignable.swift */; };
+		8AA0155C2064EB6D00236BB7 /* TimerApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA0155B2064EB6D00236BB7 /* TimerApplication.swift */; };
+		8AA0155E2064EB9E00236BB7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA0155D2064EB9E00236BB7 /* main.swift */; };
 		8AB12EF32019DB6500481212 /* InTakeClient.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8AB12EF22019DB6500481212 /* InTakeClient.plist */; };
 		8AB12EF5201A0CB600481212 /* InTakeCase.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8AB12EF4201A0CB500481212 /* InTakeCase.plist */; };
 		8ACDB62E20014AD200FF360E /* NavigationItem.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8ACDB62120014AD200FF360E /* NavigationItem.plist */; };
@@ -439,6 +441,8 @@
 		8A98D3742018B5110044460E /* SortingTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortingTextCell.xib; sourceTree = "<group>"; };
 		8A98D3752018B5110044460E /* SortingTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingTextCell.swift; sourceTree = "<group>"; };
 		8A98D3792018B51F0044460E /* NibDesignable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibDesignable.swift; sourceTree = "<group>"; };
+		8AA0155B2064EB6D00236BB7 /* TimerApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerApplication.swift; sourceTree = "<group>"; };
+		8AA0155D2064EB9E00236BB7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8AB12EF22019DB6500481212 /* InTakeClient.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InTakeClient.plist; sourceTree = "<group>"; };
 		8AB12EF4201A0CB500481212 /* InTakeCase.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InTakeCase.plist; sourceTree = "<group>"; };
 		8ACDB62120014AD200FF360E /* NavigationItem.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NavigationItem.plist; sourceTree = "<group>"; };
@@ -549,6 +553,7 @@
 		5D56CF071EE007060019882F /* EngageNYC */ = {
 			isa = PBXGroup;
 			children = (
+				8AA0155A2064EB4E00236BB7 /* SessionTimeout */,
 				8A02D7FA200332E9007E6560 /* SharedResources */,
 				8ACDB684200151E500FF360E /* Classes */,
 				8ACDB61E20014AD200FF360E /* Boilerplate */,
@@ -913,6 +918,15 @@
 				8A98D3742018B5110044460E /* SortingTextCell.xib */,
 			);
 			path = Sorting;
+			sourceTree = "<group>";
+		};
+		8AA0155A2064EB4E00236BB7 /* SessionTimeout */ = {
+			isa = PBXGroup;
+			children = (
+				8AA0155B2064EB6D00236BB7 /* TimerApplication.swift */,
+				8AA0155D2064EB9E00236BB7 /* main.swift */,
+			);
+			path = SessionTimeout;
 			sourceTree = "<group>";
 		};
 		8ACDB61E20014AD200FF360E /* Boilerplate */ = {
@@ -1538,6 +1552,7 @@
 				8A7A45062008C33400AE3BE3 /* DatePickerListingPopOver.swift in Sources */,
 				8A7A44D32008740600AE3BE3 /* ChartAPI.swift in Sources */,
 				8ACDB63220014AD200FF360E /* BroadcastReceiver.swift in Sources */,
+				8AA0155C2064EB6D00236BB7 /* TimerApplication.swift in Sources */,
 				8A78D329201E16E30085E096 /* SettingsViewModel.swift in Sources */,
 				8A7A45252008DC8100AE3BE3 /* UnitsCustomTableViewCell.swift in Sources */,
 				8A02D80F200332E9007E6560 /* GaugeView.swift in Sources */,
@@ -1554,6 +1569,7 @@
 				8A02D811200332E9007E6560 /* MBProgressHUD.m in Sources */,
 				8AF68CA7201236F800A1BD41 /* SettingsSliderTableViewCell.swift in Sources */,
 				8ACDB63020014AD200FF360E /* Logger.swift in Sources */,
+				8AA0155E2064EB9E00236BB7 /* main.swift in Sources */,
 				8ACDB63520014AD200FF360E /* BroadcastReceiverViewController.swift in Sources */,
 				8A6D01D620107AB00029651E /* SurveyOptionsButtonCell.swift in Sources */,
 				8A7A4564200C5C2000AE3BE3 /* AddressInfoViewModel.swift in Sources */,

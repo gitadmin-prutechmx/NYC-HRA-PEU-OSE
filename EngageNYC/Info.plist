@@ -103,6 +103,8 @@
 	<string>testsfdc:///mobilesdk/detect/oauth/done</string>
 	<key>SFRemoteAccessConsumerKey</key>
 	<string>$(SF_CONSUMER_KEY)</string>
+    <key>SessionTimeOut</key>
+    <string>2</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NHaasGroteskDSPro-15UltTh</string>

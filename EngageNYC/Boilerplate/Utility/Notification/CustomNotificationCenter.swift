@@ -42,7 +42,7 @@ public enum SF_NOTIFICATION: String {
     case INTAKEISSUELISTING_SYNC = "intakeissuelisting.sync"
     
     
-    
+    case APP_TIMEOUT = "app.timeout"
 }
 
 /**

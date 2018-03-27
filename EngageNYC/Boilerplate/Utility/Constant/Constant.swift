@@ -22,6 +22,7 @@ enum ConstantKey: String {
 }
 
 enum SystemConstantKey: String {
+    case SESSION_TIMEOUT = "SessionTimeOut"
     case SF_REMOTE_ACTION_CONSUMER_KEY = "SFRemoteAccessConsumerKey"
     case SF_LOGIN_HOST = "SFLoginHost"
     case SF_OAUTH_REDIRECT_URI = "SFOAuthRedirectURI"

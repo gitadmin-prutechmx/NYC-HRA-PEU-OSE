@@ -102,6 +102,9 @@ class RefreshAll: BroadcastReceiverNSObject
                                                 
                                                 Logger.shared.log(level: .info, msg: "Background syncing finish..")
                                                 Static.isBackgroundSync = false
+                                                if(Static.isSessionExpired){
+                                                    SFAuthenticationManager.shared().logout()
+                                                }
                                                 //self.callNotifications()
                                             }
                                             

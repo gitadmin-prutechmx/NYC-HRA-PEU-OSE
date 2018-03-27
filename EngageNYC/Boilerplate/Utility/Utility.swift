@@ -102,7 +102,7 @@ class Utility{
                 if(surveyObj == nil){
                     
                     vctrl.view.makeToast("There is no default survey on this assignment.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                      
+                        
                     }
                     
                     
@@ -135,7 +135,7 @@ class Utility{
             }
             
         }
-       
+        
         
         
     }
@@ -216,7 +216,7 @@ class Utility{
             
             if(isShowDashboard!){
                 vctrl.performSegue(withIdentifier: "UnwindBackToDashboardIdentifier", sender: self)
-               
+                
             }
             else{
                 
@@ -347,7 +347,7 @@ class Utility{
         return exists && isDirectory.boolValue
     }
     
-   
+    
     
     
     class func getEventFormattedAddress(eventObj:Events)->String{
@@ -388,7 +388,7 @@ class Utility{
         
         view.configureContent(title: title, body: error, iconImage: nil, iconText: nil, buttonImage: nil, buttonTitle: "Dismiss", buttonTapHandler: { _ in SwiftMessages.hide() })
         
-         let iconStyle: IconStyle
+        let iconStyle: IconStyle
         
         iconStyle = .light
         
@@ -536,7 +536,7 @@ class Utility{
         }
     }
     
-   
+    
     
     class func selectedNavigationItem(obj:ListingPopOverDO,vc:UIViewController,isFromSurveyScreen:Bool? = false,isSubmitSurvey:Bool?=false,canvasserTaskDataObject:CanvasserTaskDataObject?=nil,surveyVM:SurveyViewModel?=nil,surveyObj:SurveyDO?=nil){
         
@@ -552,12 +552,12 @@ class Utility{
                     vc.performSegue(withIdentifier: "UnwindBackToDashboardIdentifier", sender: self)
                     
                     
-//                    if let dashboardVC = dashboardStoryboard().instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController
-//                    {
-//                        dashboardVC.isFirstTimeLoad = false
-//                        dashboardVC.modalPresentationStyle = UIModalPresentationStyle.formSheet
-//                        vc.navigationController?.pushViewController(dashboardVC, animated: true)
-//                    }
+                    //                    if let dashboardVC = dashboardStoryboard().instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController
+                    //                    {
+                    //                        dashboardVC.isFirstTimeLoad = false
+                    //                        dashboardVC.modalPresentationStyle = UIModalPresentationStyle.formSheet
+                    //                        vc.navigationController?.pushViewController(dashboardVC, animated: true)
+                    //                    }
                 }
                 else{
                     
@@ -569,29 +569,29 @@ class Utility{
             case .refreshData:
                 
                 
-                    if(NetworkUtility.shared.isConnected() == true){
+                if(NetworkUtility.shared.isConnected() == true){
+                    
+                    if(Static.isBackgroundSync == false){
                         
-                        if(Static.isBackgroundSync == false){
-                            
-                            Static.isRefreshBtnClick = true
-                            
-                            RefreshAll.sharedInstance.refreshFullData(isFromSurveyScreen: isFromSurveyScreen)
-                        }
-                        else{
-                            vc.view.makeToast("Background syncing is in progress. Please try after some time.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
-                                
-                            }
-                        }
+                        Static.isRefreshBtnClick = true
+                        
+                        RefreshAll.sharedInstance.refreshFullData(isFromSurveyScreen: isFromSurveyScreen)
                     }
                     else{
-                        
-                        Static.isBackgroundSync = false
-                        Static.isRefreshBtnClick = false
-                        
-                        vc.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        vc.view.makeToast("Background syncing is in progress. Please try after some time.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
                             
                         }
                     }
+                }
+                else{
+                    
+                    Static.isBackgroundSync = false
+                    Static.isRefreshBtnClick = false
+                    
+                    vc.view.makeToast("No internet connection.", duration: 2.0, position: .center , title: nil, image: nil, style:nil) { (didTap: Bool) -> Void in
+                        
+                    }
+                }
                 
                 
                 Logger.shared.log(level: .verbose, msg: "RefreshData: \(obj.name)")
@@ -631,29 +631,29 @@ class Utility{
                 }
                 
             case .signOut:
-        
-                    let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to logout?", vc: vc)
+                
+                let alertCtrl = Alert.showUIAlert(title: "Message", message: "Are you sure you want to logout?", vc: vc)
+                
+                let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
+                { action -> Void in
                     
-                    let cancelAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel)
-                    { action -> Void in
+                }
+                
+                alertCtrl.addAction(cancelAction)
+                
+                let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
+                    
+                    if(isFromSurveyScreen)!{
                         
+                        updateSurveyofUnit(surveyVM: surveyVM!, surveyObj: surveyObj!,isSubmitSurvey: isSubmitSurvey)
+                        RefreshAll.sharedInstance.refreshFullData(isFromSurveyScreen: true, isLogout: true)
+                    }
+                    else{
+                        RefreshAll.sharedInstance.refreshFullData(isLogout: true)
                     }
                     
-                    alertCtrl.addAction(cancelAction)
-                    
-                    let okAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
-                        
-                        if(isFromSurveyScreen)!{
-                            
-                            updateSurveyofUnit(surveyVM: surveyVM!, surveyObj: surveyObj!,isSubmitSurvey: isSubmitSurvey)
-                              RefreshAll.sharedInstance.refreshFullData(isFromSurveyScreen: true, isLogout: true)
-                        }
-                        else{
-                            RefreshAll.sharedInstance.refreshFullData(isLogout: true)
-                        }
-                        
-                    }
-                    alertCtrl.addAction(okAction)
+                }
+                alertCtrl.addAction(okAction)
                 
                 
                 Logger.shared.log(level: .verbose, msg: "Signout: \(obj.name)")
@@ -891,6 +891,46 @@ class Utility{
         
     }
     
+    
+    // the timeout in seconds, after which should perform custom actions
+    // such as disconnecting the user
+    //    private var timeoutInSeconds: TimeInterval {
+    //        // 2 minutes
+    //        return 2 * 60
+    //    }
+    //
+    
+    // reset the timer because there was user interaction
+    class func resetSessionTimer() {
+        if let sessionTimer = Static.sessionTimer {
+            sessionTimer.invalidate()
+        }
+        
+        Logger.shared.log(level: .info, msg: "Session Timer Start")
+        
+        if let sessionTimeOut = Constant.shared.getSystemConstant(withKey: .SESSION_TIMEOUT) as? String{
+            
+            Static.sessionTimer = Timer.scheduledTimer(timeInterval: TimeInterval(Int(sessionTimeOut)! * 60),
+                                                       target: self,
+                                                       selector: #selector(timeHasExceeded),
+                                                       userInfo: nil,
+                                                       repeats: false)
+        }
+        
+    }
+    
+    // if the timer reaches the limit as defined in timeoutInSeconds, post this notification
+    @objc class func timeHasExceeded() {
+        if let sessionTimer = Static.sessionTimer {
+            sessionTimer.invalidate()
+        }
+        
+        CustomNotificationCenter.sendNotification(notificationName: SF_NOTIFICATION.APP_TIMEOUT.rawValue, sender: nil, userInfo: nil)
+    }
+    
+    
+    
+    
     class func displayErrorMessage(errorMsg:String){
         Static.isBackgroundSync = false
         Static.isRefreshBtnClick = false
@@ -918,12 +958,12 @@ class Utility{
     }
     
     class func currentDateAndTime()-> String{
-    
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-    
+        
         return dateFormatter.string(from: Date())
-    
+        
     }
     
     class func convertToDateFormat(strDate:String)->Date{
@@ -944,10 +984,10 @@ class Utility{
         btn.isHidden = isHidden
         lbl.isHidden = isHidden
         if(isHidden){
-             img.image = UIImage()
+            img.image = UIImage()
         }
         
-       
+        
     }
     
     class func saveUnZipFilePath(basemapZipFile:String){
