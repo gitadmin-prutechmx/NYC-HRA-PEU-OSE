@@ -1,10 +1,4 @@
-//
-//  ATNetworkUtility.swift
-//  aligntech-stpe
-//
-//  Created by Blaine Rothrock on 5/2/17.
-//  Copyright © 2017 Align Technology Inc. All rights reserved.
-//
+
 
 import Foundation
 import SystemConfiguration

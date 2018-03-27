@@ -1,10 +1,4 @@
-//
-// SortingHeaderViewController.swift
-//  aligntech-stpe
-//
-//  Created by Anmol Mathur on 25/07/17.
-//  Copyright © 2017 Align Technology Inc. All rights reserved.
-//
+
 
 import UIKit
 
