@@ -104,7 +104,7 @@
 	<key>SFRemoteAccessConsumerKey</key>
 	<string>$(SF_CONSUMER_KEY)</string>
     <key>SessionTimeOut</key>
-    <string>2</string>
+    <string>30</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NHaasGroteskDSPro-15UltTh</string>
